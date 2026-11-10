@@ -1,7 +1,7 @@
 /**
  * Lesson 0.1's figure: reading a mathematical text by its roles and a proof by its justifications. A DOM island
  * (text, not a canvas). The learner labels each block of a short text (definition, claim, example, proof) and picks,
- * for each numbered line of the proof, what justifies it: the claim's hypothesis, a definition, algebra, a known fact,
+ * for each numbered line of the proof, what justifies it: the claim's hypothesis, a definition, algebra, an accepted fact or an earlier result,
  * or nothing (a gap). Every pick is marked right or wrong by shape (✓ filled, ✗ hollow) as well as colour, and the
  * feedback box explains the latest pick.
  *

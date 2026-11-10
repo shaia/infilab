@@ -278,6 +278,59 @@ questions:
           זו הנגדית. בשורה "$P$ שקר, $Q$ אמת" היא שקר (הנחה אמת, מסקנה שקר), ואילו $P\Rightarrow Q$ אמת.
         misconception: MC-inverse-equivalent
 
+  - id: Q-0.2-valid-inference
+    type: multi
+    objectives: [OBJ-0.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהנוסחאות הבאות הן טאוטולוגיות, כלומר דרכי היסק שמותר להשתמש בהן בהוכחה? סמנו את כולן.
+    choices:
+      - text: '$\bigl(P\land(P\Rightarrow Q)\bigr)\Rightarrow Q$'
+        correct: true
+        feedback: >-
+          נכון. זה כלל הניתוק (משפט 0.2.17(א)): אם $Q$ שקר, אז $P$ שקר או ש-$P\Rightarrow Q$ שקר, ובשני המקרים
+          ההנחה שקר.
+      - text: '$\bigl((P\Rightarrow Q)\land\neg Q\bigr)\Rightarrow\neg P$'
+        correct: true
+        feedback: >-
+          נכון. המסקנה $\neg P$ שקר רק כש-$P$ אמת. אז אם $Q$ אמת, $\neg Q$ שקר; ואם $Q$ שקר, $P\Rightarrow Q$ שקר.
+          בשני המקרים ההנחה שקר. זה הקונטרפוזיטיב (משפט 0.2.15) בצורת היסק.
+      - text: '$\bigl((P\Rightarrow Q)\land Q\bigr)\Rightarrow P$'
+        feedback: >-
+          לא. בהשמה $P=\mathrm{F}$, $Q=\mathrm{T}$ ההנחה אמת (גם $P\Rightarrow Q$ אמת) והמסקנה $P$ שקר. "הוכחנו את
+          המסקנה, ולכן ההנחה נכונה" הוא שימוש בהפוכה $Q\Rightarrow P$.
+        misconception: MC-converse-equivalent
+      - text: '$\bigl((P\Rightarrow Q)\land\neg P\bigr)\Rightarrow\neg Q$'
+        feedback: >-
+          לא. באותה השמה, $P=\mathrm{F}$, $Q=\mathrm{T}$, ההנחה אמת והמסקנה $\neg Q$ שקר. "ההנחה שקרית, ולכן המסקנה
+          שקרית" הוא שימוש בנגדית $\neg P\Rightarrow\neg Q$.
+        misconception: MC-inverse-equivalent
+
+  - id: Q-0.2-iff-vs-equiv
+    type: mc
+    objectives: [OBJ-0.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$P\Rightarrow Q\equiv\neg P\lor Q$. איזו מהאמירות הבאות נכונה?
+    choices:
+      - text: 'הנוסחה $(P\Rightarrow Q)\iff(\neg P\lor Q)$ אמת בכל ארבע ההשמות ל-$P$ ול-$Q$'
+        correct: true
+        feedback: >-
+          נכון. לפי טענה 0.2.6(א), $A\equiv B$ בדיוק כש-$A\iff B$ היא טאוטולוגיה: לשתי העמודות אותו ערך בכל שורה,
+          ולכן ה"אם ורק אם" ביניהן אמת בכל שורה.
+      - text: 'גם $P\iff Q$ אמת בכל ההשמות, כי הסימן $\iff$ פירושו "שקול"'
+        feedback: >-
+          $P\iff Q$ היא נוסחה עם ערך בכל השמה, ובהשמה $P=\mathrm{T}$, $Q=\mathrm{F}$ היא שקר. הסימן $\equiv$ הוא
+          שאומר "שקול", והוא טענה על שתי נוסחאות.
+        misconception: MC-iff-vs-equivalence
+      - text: '$(P\Rightarrow Q)\equiv(\neg P\lor Q)$ היא עמודה חמישית בטבלה, ויש לה ערך בכל שורה'
+        feedback: >-
+          $A\equiv B$ אינה נוסחה ואינה עמודה: היא אמירה על שתי עמודות, שנכונה או לא נכונה פעם אחת לכל הטבלה.
+          העמודה שמתאימה לה היא $A\iff B$.
+        misconception: MC-iff-vs-equivalence
+
   - id: Q-0.2-div4-even
     type: mc
     objectives: [OBJ-0.2-3]
@@ -334,7 +387,7 @@ questions:
     type: twotier
     objectives: [OBJ-0.2-3]
     qualitative: true
-    level: exam
+    level: mid
     prompt: >-
       איזה תנאי הוא "$x^2<1$" לכך ש-"$x<1$" (עבור $x$ ממשי)?
     choices:

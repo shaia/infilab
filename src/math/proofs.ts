@@ -3,14 +3,17 @@
  *
  * System:        a short mathematical text, as lesson 0.1's figure (ProofReader) shows it: a few blocks, each with
  *                a role (definition, claim, example, proof), and a proof made of numbered lines. Each line has one
- *                justification: the claim's hypothesis, a definition, algebra, a known fact, or none (a gap).
+ *                justification: the claim's hypothesis, a definition, algebra, an accepted fact or an earlier
+ *                numbered result, or none (a gap).
  * Dynamics:      none. A learner's answers are graded against the key here.
  * Boundary:      the key is one justification per line. The texts are written so that each line makes a single
  *                move, and its feedback names the earlier lines it uses ("from line 2, by algebra"): "an earlier
  *                line" is never a justification on its own: a line either stands alone (the hypothesis, a known
  *                fact, an identity) or comes from earlier lines, and the question is which rule lets it do so.
- *                "Algebra" includes multiplying or dividing an inequality by a positive number; the known facts are
- *                the list lesson 0.1 states (anchor #known-facts), and never the claim itself or its rewording.
+ *                "Algebra" is a rule of accepted facts (א)/(ב) applied to both sides (an inequality multiplied by a
+ *                positive number keeps its direction). "Known" is an accepted fact (א)–(ו), the closed list lesson
+ *                0.1 states (anchor #known-facts), or a numbered result already proved (טענה 0.1.k); never the
+ *                claim itself or its rewording.
  * Ignored:       logical rules (contrapositive, cases, contradiction): they come in lessons 0.2 and 0.4, and the
  *                presets avoid them.
  * Valid when:    every preset passes `presetProblems` (tests/math/proofs.test.ts): ids unique, every line keyed,
@@ -38,7 +41,7 @@ export const JUSTIFICATION_LABEL: Record<Justification, string> = {
   hypothesis: 'ההנחה',
   definition: 'הגדרה',
   algebra: 'חשבון',
-  known: 'עובדה ידועה',
+  known: 'עובדה מקובלת או טענה קודמת',
   none: 'אין הצדקה (פער)',
 };
 
@@ -146,8 +149,8 @@ export const PRESETS: Record<string, ProofPreset> = {
             text: '$k+m$ מספר שלם.',
             just: 'known',
             uses: [2],
-            why: 'סכום של שני שלמים הוא שלם: עובדה ידועה מבית הספר, שהקורס מקבל בינתיים.',
-            wrong: { algebra: 'אין כאן חישוב: השורה אומרת איזה סוג מספר הוא $k+m$. זו עובדה שאנחנו כבר יודעים.' },
+            why: 'סכום של שני שלמים הוא שלם: עובדה מקובלת (א), שהשלמים סגורים לחיבור.',
+            wrong: { algebra: 'אין כאן חישוב: השורה אומרת איזה סוג מספר הוא $k+m$. זו אחת מהעובדות המקובלות שברשימה.' },
           },
           {
             n: 5,
@@ -206,8 +209,8 @@ export const PRESETS: Record<string, ProofPreset> = {
             text: '$(x-1)^2\\ge 0$.',
             just: 'known',
             uses: [1],
-            why: 'ריבוע של מספר ממשי אינו שלילי: עובדה ידועה מבית הספר, מהרשימה שבשיעור. בפרק 1 נוכיח אותה מהתכונות היסודיות של המספרים הממשיים. השורה לא יוצאת משום שורה קודמת: עובדה ידועה יכולה להופיע בכל מקום בהוכחה.',
-            wrong: { algebra: 'אין כאן חישוב: זו עובדה על ריבועים שאנחנו כבר יודעים.' },
+            why: 'ריבוע של מספר ממשי אינו שלילי: עובדה מקובלת (ב), עם $x-1$ במקום $x$. בפרק 1 נוכיח אותה מהאקסיומות של המספרים הממשיים. השורה לא יוצאת משום שורה קודמת: עובדה מקובלת יכולה להופיע בכל מקום בהוכחה.',
+            wrong: { algebra: 'אין כאן חישוב: זו עובדה על ריבועים, מרשימת העובדות המקובלות.' },
           },
           {
             n: 4,
@@ -272,8 +275,8 @@ export const PRESETS: Record<string, ProofPreset> = {
             text: '$n=\\sqrt{n^2}$.',
             just: 'known',
             uses: [1],
-            why: '$n$ טבעי, ולכן חיובי, ולמספר $t\\ge 0$ מתקיים $\\sqrt{t^2}=t$: עובדה ידועה מהרשימה שבשיעור.',
-            wrong: { algebra: 'הוצאת שורש אינה אחד מכללי החשבון של השיעור. השוויון $\\sqrt{t^2}=t$ ל-$t\\ge 0$ נמצא ברשימת העובדות הידועות.' },
+            why: '$n$ טבעי, ולכן חיובי, ולמספר $t\\ge 0$ מתקיים $\\sqrt{t^2}=t$: מסקנה 0.1.11, שנובעת מהיחידות של השורש בעובדה המקובלת (ה).',
+            wrong: { algebra: 'הוצאת שורש אינה אחד מכללי החשבון (א) ו-(ב). השוויון $\\sqrt{t^2}=t$ ל-$t\\ge 0$ הוא מסקנה 0.1.11, טענה שכבר הוכחה.' },
           },
           {
             n: 4,
@@ -287,10 +290,10 @@ export const PRESETS: Record<string, ProofPreset> = {
             text: 'המספר $\\sqrt{2k}$ הוא $2$ כפול מספר שלם.',
             just: 'none',
             uses: [4],
-            why: 'זה הפער. השורה טוענת את מה שצריך להוכיח, בניסוח אחר, ושום הגדרה, הנחה, חשבון או עובדה ידועה לא נותנים אותה. הטענה עצמה נכונה, ונוכיח אותה בשיעור 0.4 בדרך אחרת. אבל ההוכחה הזו לא מוכיחה אותה.',
+            why: 'זה הפער. השורה טוענת את מה שצריך להוכיח, בניסוח אחר, ושום הגדרה, הנחה, חשבון, עובדה מקובלת או טענה קודמת לא נותנים אותה. הטענה עצמה נכונה, והוכחנו אותה בטענה 0.1.6 בדרך אחרת. אבל ההוכחה הזו לא מוכיחה אותה.',
             wrong: {
               algebra: 'איזה חשבון מוציא מ-$\\sqrt{2k}$ גורם 2? אין כזה: השורש של זוגי אינו אפילו בהכרח שלם ($\\sqrt{2}$, $\\sqrt{6}$).',
-              known: 'ברשימת העובדות הידועות אין "השורש של זוגי הוא זוגי", וזה לא מקרה: זו הטענה שאנחנו מוכיחים, בניסוח אחר, ואותה אסור להניח.',
+              known: 'ברשימת העובדות המקובלות אין "השורש של זוגי הוא זוגי", ואף טענה ממוספרת לא אומרת את זה. זו הטענה שאנחנו מוכיחים, בניסוח אחר, ואותה אסור להניח.',
               definition: 'ההגדרה של "זוגי" אומרת מה צריך להראות, לא שזה נכון. מי הראה ש-$\\sqrt{2k}$ הוא 2 כפול שלם?',
             },
           },
@@ -360,7 +363,7 @@ export const PRESETS: Record<string, ProofPreset> = {
             text: 'וזה נכון, כי ריבוע אינו שלילי.',
             just: 'known',
             uses: [3],
-            why: 'עובדה ידועה. אבל היא מאשרת את השורה האחרונה, לא את הראשונה: ההוכחה הלכה בכיוון ההפוך.',
+            why: 'עובדה מקובלת (ב): ריבוע אינו שלילי. אבל היא מאשרת את השורה האחרונה, לא את הראשונה: ההוכחה הלכה בכיוון ההפוך.',
           },
         ],
       },
@@ -426,7 +429,7 @@ export function lineFeedback(line: ProofLine, j: Justification): { ok: boolean; 
     const from = line.uses.length ? ` (משתמשת ב${line.uses.map((u) => `-(${u})`).join(' וב')})` : '';
     return { ok: true, text: `${line.why}${line.just === 'none' ? '' : from}` };
   }
-  if (j === 'none') return { ok: false, text: line.wrong?.none ?? 'יש לשורה הזו הצדקה. חפשו אותה בשורות הקודמות, בהגדרה, בהנחה, בחשבון או בעובדה ידועה.' };
+  if (j === 'none') return { ok: false, text: line.wrong?.none ?? 'יש לשורה הזו הצדקה. חפשו אותה בשורות הקודמות, בהגדרה, בהנחה, בחשבון, בעובדה מקובלת או בטענה שכבר הוכחה.' };
   return { ok: false, text: line.wrong?.[j] ?? GENERIC_LINE_HINT };
 }
 

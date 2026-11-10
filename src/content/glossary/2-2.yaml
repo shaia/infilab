@@ -21,6 +21,21 @@
     הקטע הפתוח $(L-\varepsilon, L+\varepsilon)$, כל המספרים שמרחקם מ-$L$ קטן מ-$\varepsilon$. בהגדרת הגבול,
     מ-$N$ והלאה כל איברי הסדרה בתוך הרצועה.
   lesson: '2.2'
+- id: fitting-n
+  term: N שמתאים לאפסילון
+  en: an N that works for epsilon
+  definition: >-
+    בהינתן סדרה $a_n$, מספר $L$ ו-$\varepsilon>0$: מספר $N\in\mathbb{N}$ מתאים ל-$\varepsilon$ אם
+    $|a_n-L|<\varepsilon$ לכל $n>N$. $a_n\to L$ פירושו שלכל $\varepsilon>0$ יש $N$ שמתאים לו (הגדרה 2.2.1).
+  lesson: '2.2'
+- id: ceiling
+  term: ערך שלם עליון
+  en: ceiling
+  symbol: '\lceil x\rceil'
+  definition: >-
+    $\lceil x\rceil=-\lfloor -x\rfloor$, השלם הקטן ביותר שגדול או שווה ל-$x$: $\lceil x\rceil-1<x\le\lceil x\rceil$.
+    למשל $\lceil 2.5\rceil=3$, $\lceil 3\rceil=3$ ו-$\lceil -2.5\rceil=-2$. נקרא גם "תקרה".
+  lesson: '2.2'
 - id: tail
   term: זנב של סדרה
   en: tail of a sequence

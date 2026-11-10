@@ -53,8 +53,83 @@ describe('exact identities: the mathematics the presets state', () => {
     expect(Number.isInteger(Math.sqrt(2))).toBe(false);
     expect(Number.isInteger(Math.sqrt(6))).toBe(false);
     expect(6 ** 2).toBe(36);
-    // the claim is true on a window (0.4 proves it): every n ≤ 1000 with n² even is even
+    // the claim is true on a window (lesson 0.1 proves it, טענה 0.1.6): every n ≤ 1000 with n² even is even
     for (const n of range(1, 1000)) if ((n * n) % 2 === 0) expect(n % 2).toBe(0);
+  });
+});
+
+/** The remainder of a on division by b ∈ ℕ, in [0, b) (JavaScript's % keeps the sign of a). */
+const rem = (a: number, b: number) => ((a % b) + b) % b;
+const even = (n: number) => rem(n, 2) === 0;
+const divides = (a: number, b: number) => (a === 0 ? b === 0 : rem(b, Math.abs(a)) === 0);
+
+describe('exact identities: the numbered results of lesson 0.1 on a window (evidence; the lesson proves them)', () => {
+  const Z = range(-60, 60);
+  it('למה 0.1.3: n = 2q + r with r ∈ {0, 1}; r = 0 exactly for the even n', () => {
+    for (const n of Z) {
+      const r = rem(n, 2);
+      const q = (n - r) / 2;
+      expect([0, 1]).toContain(r);
+      expect(Number.isInteger(q) && 2 * q + r === n).toBe(true);
+      expect(r === 0).toBe(even(n));
+    }
+    expect([-7 === -4 * 2 + 1, 17 === 3 * 5 + 2]).toEqual([true, true]); // the glossary's examples
+  });
+  it('טענה 0.1.4 and 0.1.7: parity of a + b and ab; ab is even exactly when a or b is', () => {
+    for (const a of Z) {
+      for (const b of Z) {
+        if (even(a) && even(b)) expect(even(a + b)).toBe(true);
+        if (!even(a) && !even(b)) expect(even(a + b) && !even(a * b)).toBe(true);
+        if (even(a) && !even(b)) expect(even(a + b)).toBe(false);
+        if (even(a)) expect(even(a * b)).toBe(true);
+        expect(even(a * b)).toBe(even(a) || even(b));
+        if (even(a + b)) expect(even(a - b)).toBe(true); // ex-0-1-3 (ב)
+      }
+    }
+    // the converses fail: 1 + 1 = 2 even with 1 odd; 1·2 = 2 even with 1 odd
+    expect([even(1 + 1), even(1), even(1 * 2)]).toEqual([true, false, true]);
+  });
+  it('טענה 0.1.5: a|a, 1|a, a|0; transitivity; a|bx+cy; a|b ⇒ a ≤ b on ℕ; and the counterexamples to dropping ℕ', () => {
+    for (const a of range(-12, 12)) {
+      expect(divides(a, a) && divides(1, a) && divides(a, 0)).toBe(true);
+      for (const b of range(-12, 12)) {
+        for (const c of range(-12, 12)) {
+          if (divides(a, b) && divides(b, c)) expect(divides(a, c)).toBe(true);
+          if (divides(a, b) && divides(a, c)) for (const x of [-3, 0, 2]) for (const y of [-1, 5]) expect(divides(a, b * x + c * y)).toBe(true);
+          if (divides(a, b + c) && divides(a, b)) expect(divides(a, c)).toBe(true); // ex-0-1-3 (ג)
+        }
+        if (a > 0 && b > 0 && divides(a, b)) expect(a).toBeLessThanOrEqual(b);
+        if (a > 0 && b > 0 && divides(a, b) && divides(b, a)) expect(a).toBe(b);
+      }
+    }
+    expect([divides(2, -2), divides(-2, 2)]).toEqual([true, true]); // 2 ≠ −2: (5) needs a, b ∈ ℕ
+    expect(divides(3, 0)).toBe(true); // 3 > 0: (4) needs b ∈ ℕ
+    expect([divides(2, 2), divides(2, 3), divides(2, 1 + 1), divides(2, 1)]).toEqual([true, false, true, false]);
+  });
+  it('טענה 0.1.6: n² even ⇔ n even; n(n + 1) even; and 4 | n² does not give 4 | n (n = 2)', () => {
+    for (const n of Z) {
+      expect(even(n * n)).toBe(even(n));
+      expect(even(n * (n + 1))).toBe(true);
+    }
+    expect([divides(4, 2 * 2), divides(4, 2)]).toEqual([true, false]);
+    for (const q of range(-10, 10)) expect((4 * q + 2) ** 2).toBe(4 * (4 * q * q + 4 * q + 1));
+  });
+  it('טענה 0.1.10: for a, b ≥ 0, a < b ⇔ a² < b² and a ≤ b ⇔ a² ≤ b²; each direction fails without its hypothesis', () => {
+    const R = range(0, 40).map((i) => i / 4);
+    for (const a of R) {
+      for (const b of R) {
+        expect(a < b).toBe(a * a < b * b);
+        expect(a <= b).toBe(a * a <= b * b);
+      }
+    }
+    // a² < b² with b ≥ 0 already gives a < b, for any real a
+    for (const a of range(-40, 40).map((i) => i / 4)) for (const b of R) if (a * a < b * b) expect(a).toBeLessThan(b);
+    expect([-3 < 2, (-3) ** 2 > 2 ** 2]).toEqual([true, true]); // ⇒ needs a ≥ 0
+    expect([1 ** 2 < (-2) ** 2, 1 > -2]).toEqual([true, true]); // ⇐ needs b ≥ 0
+  });
+  it('מסקנה 0.1.11: √(t²) = t for t ≥ 0, and √((−2)²) = 2 ≠ −2', () => {
+    for (const t of range(0, 50)) expect(Math.sqrt(t * t)).toBe(t);
+    expect(Math.sqrt((-2) ** 2)).toBe(2);
   });
 });
 

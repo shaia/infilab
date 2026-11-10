@@ -104,9 +104,9 @@ test.describe('lesson 0.5: mathematical induction', () => {
     }
   });
 
-  test('the Check has the six bank questions, and worked solutions stay closed until opened', async ({ page }) => {
+  test('the Check has the eight bank questions, and worked solutions stay closed until opened', async ({ page }) => {
     await page.goto(LESSON);
-    for (const id of ['Q-0.5-step-meaning', 'Q-0.5-what-to-prove', 'Q-0.5-start-point', 'Q-0.5-no-base', 'Q-0.5-bernoulli-why', 'Q-0.5-step-too-early']) {
+    for (const id of ['Q-0.5-step-meaning', 'Q-0.5-what-to-prove', 'Q-0.5-start-point', 'Q-0.5-no-base', 'Q-0.5-bernoulli-why', 'Q-0.5-step-too-early', 'Q-0.5-strong-why', 'Q-0.5-well-ordering-z']) {
       await expect(page.locator(`[data-qid="${id}"]`)).toHaveCount(1);
     }
     const examples = page.locator('[id^="ex-0-5-"]');

@@ -4,20 +4,20 @@
   en: mathematical induction
   definition: >-
     שיטה להוכיח טענה $P(n)$ לכל $n$ טבעי: מוכיחים את $P(1)$ (הבסיס), ומוכיחים שלכל $n$, $P(n)$ גורר את
-    $P(n+1)$ (הצעד).
+    $P(n+1)$ (הצעד). השיטה נשענת על עקרון האינדוקציה.
   lesson: '0.5'
 - id: induction-base
   term: בסיס האינדוקציה
   en: base case
   definition: >-
-    ההוכחה שהטענה נכונה עבור המספר הראשון, בדרך כלל $n=1$. אפשר להתחיל ממספר אחר $n_0$, ואז הטענה מוכחת
+    ההוכחה שהטענה נכונה עבור המספר הראשון, בדרך כלל $n=1$. אפשר להתחיל ממספר שלם אחר $n_0$, ואז הטענה מוכחת
     לכל $n\ge n_0$.
   lesson: '0.5'
 - id: induction-hypothesis
   term: הנחת האינדוקציה
   en: induction hypothesis
   definition: >-
-    ההנחה, בצעד, שהטענה נכונה עבור $n$ מסוים. משתמשים בה כדי להוכיח את הטענה עבור $n+1$.
+    ההנחה, בצעד, שהטענה נכונה עבור $n$ מסוים שקבענו. משתמשים בה כדי להוכיח את הטענה עבור $n+1$.
   lesson: '0.5'
 - id: induction-step
   term: צעד האינדוקציה
@@ -30,28 +30,77 @@
   en: Bernoulli's inequality
   symbol: '(1+x)^n\ge 1+nx'
   definition: >-
-    לכל $x\ge -1$ ולכל $n$ טבעי, $(1+x)^n\ge 1+nx$. מוכיחים אותו באינדוקציה, והתנאי $x\ge -1$ דרוש בצעד.
+    לכל $x\ge -1$ ולכל $n$ טבעי, $(1+x)^n\ge 1+nx$, עם שוויון אם ורק אם $n=1$ או $x=0$. מוכיחים אותו
+    באינדוקציה, והתנאי $x\ge -1$ דרוש בצעד.
   reject: [אי שוויון ברנולי]
   lesson: '0.5'
 - id: induction-principle
   term: עקרון האינדוקציה
   en: principle of mathematical induction
   definition: >-
-    אם $P(1)$ נכונה, ולכל $n$ טבעי $P(n)$ גוררת את $P(n+1)$, אז $P(n)$ נכונה לכל $n$ טבעי. בגרסה עם בסיס
-    $n_0$: אם $P(n_0)$ נכונה, ולכל $n\ge n_0$ הטענה $P(n)$ גוררת את $P(n+1)$, אז $P(n)$ נכונה לכל $n\ge n_0$.
+    אקסיומה על הטבעיים: אם $S\subseteq\mathbb{N}$, $1\in S$, ולכל $n\in S$ גם $n+1\in S$, אז $S=\mathbb{N}$.
+    בצורה של טענות: אם $P(1)$ נכונה, ולכל $n$ טבעי $P(n)$ גוררת את $P(n+1)$, אז $P(n)$ נכונה לכל $n$ טבעי.
   lesson: '0.5'
 - id: summation-sign
   term: סימן הסכום
   en: summation notation
   symbol: '\sum_{k=1}^{n} a_k'
   definition: >-
-    קיצור לסכום $a_1+a_2+\dots+a_n$. האות $k$ היא אינדקס הסכימה: היא עוברת על $1,2,\dots,n$, ואפשר להחליף
-    אותה בכל אות אחרת בלי לשנות את הסכום. למשל $\sum_{k=1}^{4} k^2=1+4+9+16=30$.
+    הסכום $a_1+a_2+\dots+a_n$, מוגדר ברקורסיה: $\sum_{k=1}^{1}a_k=a_1$ ו-$\sum_{k=1}^{n+1}a_k=\sum_{k=1}^{n}a_k+a_{n+1}$.
+    האות $k$ היא אינדקס הסכימה, ואפשר להחליף אותה בכל אות אחרת בלי לשנות את הסכום. למשל
+    $\sum_{k=1}^{4} k^2=1+4+9+16=30$.
+  lesson: '0.5'
+- id: product-sign
+  term: סימן המכפלה
+  en: product notation
+  symbol: '\prod_{k=1}^{n} a_k'
+  definition: >-
+    המכפלה $a_1\cdot a_2\cdots a_n$, מוגדרת ברקורסיה: $\prod_{k=1}^{1}a_k=a_1$ ו-$\prod_{k=1}^{n+1}a_k=\left(\prod_{k=1}^{n}a_k\right)a_{n+1}$.
+    למשל $a^n=\prod_{k=1}^{n}a$ ו-$n!=\prod_{k=1}^{n}k$.
   lesson: '0.5'
 - id: factorial
   term: עצרת
   en: factorial
   symbol: 'n!'
   definition: >-
-    המכפלה $n!=1\cdot 2\cdot\dots\cdot n$ של הטבעיים עד $n$. למשל $4!=24$, ומתקיים $(n+1)!=(n+1)\cdot n!$.
+    המכפלה $n!=1\cdot 2\cdot\dots\cdot n$ של הטבעיים עד $n$, ו-$0!=1$. למשל $4!=24$, ומתקיים $(n+1)!=(n+1)\cdot n!$
+    לכל שלם $n\ge0$.
+  lesson: '0.5'
+- id: strong-induction
+  term: אינדוקציה שלמה
+  en: strong induction
+  definition: >-
+    גרסה של אינדוקציה שבה הצעד מניח את הטענה לכל המספרים הקודמים, לא רק לקודם: אם לכל $n\ge n_0$, מכך ש-$P(k)$
+    נכונה לכל $n_0\le k<n$ נובעת $P(n)$, אז $P(n)$ נכונה לכל $n\ge n_0$. נובעת מעקרון האינדוקציה.
+  lesson: '0.5'
+- id: well-ordering-principle
+  term: עקרון הסדר הטוב
+  en: well-ordering principle
+  definition: >-
+    לכל קבוצה לא ריקה של מספרים טבעיים יש איבר קטן ביותר. שקול לעקרון האינדוקציה. ל-$\mathbb{Z}$, ולקבוצת המספרים
+    $\frac1n$, אין איבר קטן ביותר.
+  lesson: '0.5'
+- id: binomial-coefficient
+  term: מקדם בינומי
+  en: binomial coefficient
+  symbol: '\binom{n}{k}'
+  definition: >-
+    לשלמים $0\le k\le n$: $\binom{n}{k}=\frac{n!}{k!\,(n-k)!}$. למשל $\binom{n}{0}=\binom{n}{n}=1$ ו-$\binom{n}{2}=\frac{n(n-1)}{2}$.
+    תמיד מספר טבעי.
+  lesson: '0.5'
+- id: pascal-identity
+  term: זהות פסקל
+  en: Pascal's identity
+  symbol: '\binom{n}{k-1}+\binom{n}{k}=\binom{n+1}{k}'
+  definition: >-
+    לכל $n$ טבעי ולכל $1\le k\le n$: $\binom{n}{k-1}+\binom{n}{k}=\binom{n+1}{k}$. בונה כל שורה של משולש פסקל
+    מהקודמת לה.
+  lesson: '0.5'
+- id: binomial-theorem
+  term: הבינום של ניוטון
+  en: binomial theorem
+  symbol: '(a+b)^n=\sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^k'
+  definition: >-
+    לכל $a,b$ ממשיים ולכל $n$ טבעי, $(a+b)^n=\sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^k$, עם המוסכמה $x^0=1$. מוכיחים
+    באינדוקציה, בעזרת זהות פסקל.
   lesson: '0.5'

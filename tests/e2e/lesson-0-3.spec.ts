@@ -58,6 +58,8 @@ test.describe('lesson 0.3: quantifiers and negation', () => {
   });
 
   test('∃y ∀x on "mother": every y the student picks loses, and three of them tick the task', async ({ page }) => {
+    // three rounds of ~60 key presses (21 ms each in the page; Playwright's overhead dominates): ~25 s alone
+    test.slow();
     await page.goto(LESSON);
     const fig = await ready(page, 'fig-0-3a');
     await pickOrder(fig, '∃y ∀x');
@@ -95,6 +97,8 @@ test.describe('lesson 0.3: quantifiers and negation', () => {
   });
 
   test('a text step never ticks a task', async ({ page }) => {
+    // visits every text step of a long, fully proved lesson: over 30 s under a loaded parallel run
+    test.slow();
     await page.goto(LESSON);
     for (const step of await page.locator('.step[data-fig="fig-0-3a"], .step[data-fig="fig-0-3b"]').all()) {
       await step.scrollIntoViewIfNeeded();

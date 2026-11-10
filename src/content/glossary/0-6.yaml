@@ -108,8 +108,9 @@
   en: inverse function
   symbol: 'f^{-1}'
   definition: >-
-    עבור $f:A\to B$ חד-חד-ערכית ועל, $f^{-1}:B\to A$ שולחת כל $y$ ל-$x$ היחיד שמקיים $f(x)=y$. אז
-    $f^{-1}(f(x))=x$ ו-$f(f^{-1}(y))=y$. היא אינה $\frac{1}{f}$.
+    פונקציה $g:B\to A$ שמבטלת את $f:A\to B$ משני הצדדים: $g\circ f=\mathrm{id}_A$ ו-$f\circ g=\mathrm{id}_B$.
+    היא קיימת בדיוק כש-$f$ חד-חד-ערכית ועל, והיא יחידה; מסמנים אותה $f^{-1}$, ו-$f^{-1}(y)$ הוא המקור היחיד של
+    $y$. היא אינה $\frac{1}{f}$.
   lesson: '0.6'
 - id: empty-set
   term: הקבוצה הריקה
@@ -147,4 +148,70 @@
     הצמצום של $f:A\to B$ לתת-קבוצה $S\subseteq A$ הוא הפונקציה $S\to B$ שנותנת לכל $x\in S$ את אותו ערך $f(x)$:
     משנים רק את התחום. לצמצום יכולות להיות תכונות שאין ל-$f$: $x^2$ מ-$\mathbb{R}$ אל $\mathbb{R}$ אינה
     חד-חד-ערכית, וצמצומה ל-$[0,\infty)$ כן. כשמקטינים גם את הטווח (למשל אל התמונה), אומרים זאת בנפרד.
+  lesson: '0.6'
+- id: power-set
+  term: קבוצת החזקה
+  en: power set
+  symbol: '\mathcal{P}(A)'
+  definition: >-
+    קבוצת כל התת-קבוצות של $A$: $\mathcal{P}(A)=\{X:\ X\subseteq A\}$. תמיד $\emptyset\in\mathcal{P}(A)$ ו-$A\in\mathcal{P}(A)$.
+  lesson: '0.6'
+- id: ordered-pair
+  term: זוג סדור
+  en: ordered pair
+  symbol: '(a,b)'
+  definition: >-
+    שני איברים בסדר קבוע. $(a,b)=(c,d)$ אם ורק אם $a=c$ וגם $b=d$; לכן $(1,2)\ne(2,1)$, אף ש-$\{1,2\}=\{2,1\}$.
+  lesson: '0.6'
+- id: cartesian-product
+  term: מכפלה קרטזית
+  en: Cartesian product
+  symbol: 'A\times B'
+  definition: >-
+    קבוצת כל הזוגות הסדורים $(a,b)$ עם $a\in A$ ו-$b\in B$. המישור הוא $\mathbb{R}\times\mathbb{R}$.
+  lesson: '0.6'
+- id: indexed-family
+  term: משפחה של קבוצות
+  en: indexed family of sets
+  symbol: '\bigcup_{i\in I}A_i'
+  definition: >-
+    קבוצה $A_i$ לכל אינדקס $i$ בקבוצה לא ריקה $I$. האיחוד $\bigcup_{i\in I}A_i$ הוא קבוצת ה-$x$ שנמצאים
+    ב-$A_i$ עבור $i$ אחד לפחות, והחיתוך $\bigcap_{i\in I}A_i$ קבוצת ה-$x$ שנמצאים ב-$A_i$ לכל $i$.
+  lesson: '0.6'
+- id: function-graph
+  term: גרף של פונקציה
+  en: graph of a function
+  symbol: '\Gamma_f'
+  definition: >-
+    עבור $f:A\to B$, הקבוצה $\Gamma_f=\{(x,f(x)):\ x\in A\}\subseteq A\times B$. בהגדרה הפורמלית פונקציה היא
+    תחום, טווח ותת-קבוצה של $A\times B$ שבה לכל $x\in A$ יש זוג אחד בדיוק שמתחיל ב-$x$.
+  lesson: '0.6'
+- id: set-preimage
+  term: מקור של קבוצה
+  en: preimage of a set
+  symbol: 'f^{-1}(D)'
+  definition: >-
+    עבור $f:A\to B$ ו-$D\subseteq B$, $f^{-1}(D)=\{x\in A:\ f(x)\in D\}$. מוגדר לכל פונקציה, הפיכה או לא, והוא
+    תת-קבוצה של התחום.
+  lesson: '0.6'
+- id: left-inverse
+  term: הפוכה משמאל
+  en: left inverse
+  definition: >-
+    $g:B\to A$ היא הפוכה משמאל של $f:A\to B$ אם $g\circ f=\mathrm{id}_A$. כש-$A$ לא ריקה, יש כזו בדיוק
+    כש-$f$ חד-חד-ערכית. היא אינה בהכרח יחידה.
+  lesson: '0.6'
+- id: right-inverse
+  term: הפוכה מימין
+  en: right inverse
+  definition: >-
+    $h:B\to A$ היא הפוכה מימין של $f:A\to B$ אם $f\circ h=\mathrm{id}_B$. אם יש כזו, $f$ היא על. היא אינה בהכרח
+    יחידה.
+  lesson: '0.6'
+- id: finite-set
+  term: קבוצה סופית
+  en: finite set
+  definition: >-
+    לקבוצה $A$ יש $n$ איברים אם יש פונקציה חד-חד-ערכית ועל מ-$\{1,\dots,n\}$ אל $A$ (ול-$\emptyset$ יש 0
+    איברים). $A$ סופית אם יש לה $n$ איברים עבור $n$ כלשהו, ואינסופית אחרת; $\mathbb{N}$ אינסופית.
   lesson: '0.6'

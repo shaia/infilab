@@ -88,6 +88,8 @@ test.describe('lesson 0.2: statements, connectives and implication', () => {
   });
 
   test('a text step never ticks a task, even one that sets the comparison to the converse', async ({ page }) => {
+    // visits every text step of a long, fully proved lesson: over 30 s under a loaded parallel run
+    test.slow();
     await page.goto(LESSON);
     for (const step of await page.locator('.step[data-fig^="fig-0-2"]').all()) {
       await step.scrollIntoViewIfNeeded();

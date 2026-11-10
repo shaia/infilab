@@ -89,7 +89,7 @@ questions:
       - text: מחליפים כל איבר עשירי ב-$0$
         feedback: >-
           זה משנה. אינסוף איברים שווים ל-$0$, ולכן ברצועה עם $\varepsilon = 1$ סביב $5$ לא נמצאים כל האיברים מ-$N$
-          והלאה, לאף $N$. הסדרה החדשה כבר לא מתכנסת.
+          והלאה, לאף $N$. הסדרה החדשה כבר לא שואפת ל-5.
         misconception: MC-limit-infinitely-often
       - text: מוסיפים לכל איבר $\frac{1}{n}$
         correct: true
@@ -329,3 +329,70 @@ questions:
         feedback: >-
           גם ל-$\frac1n$ אף איבר אינו שווה ל-0, והיא שואפת ל-0. גבול אינו ערך שהסדרה מגיעה אליו.
         misconception: MC-limit-all-terms
+
+  - id: Q-2.2-forms
+    type: multi
+    objectives: [OBJ-2.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהניסוחים הבאים **שקולים** להגדרה של $a_n\to L$, כלומר מתקיימים בדיוק כשההגדרה מתקיימת? סמנו את
+      כולם.
+    choices:
+      - text: '$\forall\varepsilon>0\ \exists N\in\mathbb{N}\ \forall n>N:\ |a_n-L|\le\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון (טענה 2.2.5 (א)). בכיוון הקשה מפעילים את הניסוח עם $\frac\varepsilon2$, ומקבלים
+          $|a_n-L|\le\frac\varepsilon2<\varepsilon$.
+      - text: '$\forall\varepsilon>0\ \exists N\in\mathbb{N}\ \forall n\ge N:\ |a_n-L|<\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון (טענה 2.2.5 (ב)). אם $N$ מתאים להגדרה, $N+1$ מתאים לניסוח הזה, ולהפך אותו $N$ מתאים.
+      - text: '$\forall\varepsilon>0\ \exists N\in\mathbb{N}\ \forall n>N:\ |a_n-L|<5\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון (טענה 2.2.5 (ד) עם $c=5$). בכיוון הקשה מפעילים את הניסוח עם $\frac\varepsilon5>0$.
+      - text: '$\exists N\in\mathbb{N}\ \forall\varepsilon>0\ \forall n>N:\ |a_n-L|<\varepsilon$'
+        feedback: >-
+          כאן אותו $N$ צריך להתאים לכל $\varepsilon$, ולפי טענה 2.2.4 זה אומר ש-$a_n=L$ מ-$N$ והלאה. $\frac1n\to0$
+          אבל אינה מקיימת את זה.
+        misconception: MC-limit-quantifier-order
+      - text: '$\forall\varepsilon>0\ \forall N\in\mathbb{N}\ \exists n>N:\ |a_n-L|<\varepsilon$'
+        feedback: >-
+          זה אומר רק שבכל רצועה יש אינסוף איברים. $(-1)^n$ מקיימת את זה עם $L=1$ (האיברים הזוגיים), ואינה שואפת
+          ל-1 (משפט 2.2.8 עם $\varepsilon=\frac12$).
+        misconception: MC-limit-infinitely-often
+    explanation: >-
+      טענה 2.2.5: אי-שוויון חלש, $n\ge N$, $N$ ממשי, קבוע כפול $\varepsilon$ ו-$\frac1k$ שקולים כולם להגדרה.
+      סדר הכמתים, לעומת זאת, אסור להחליף.
+
+  - id: Q-2.2-sign
+    type: twotier
+    objectives: [OBJ-2.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$a_n\to3$. האם בהכרח $a_n>0$ לכל $n\in\mathbb{N}$?
+    choices:
+      - text: לא בהכרח
+        correct: true
+        feedback: >-
+          נכון. $a_n=3-\frac5n$ שואפת ל-3 (מסקנה 2.2.14 וטענה 2.2.10), ו-$a_1=-2<0$.
+      - text: כן, בהכרח
+        feedback: >-
+          הגבול קובע רק את הזנב. $a_n=3-\frac5n$ שואפת ל-3, ו-$a_1=-2$.
+        misconception: MC-limit-all-terms
+    reasons:
+      - text: 'לפי טענה 2.2.15 רק מאיזה $N$ והלאה $a_n>\frac32$; האיברים הראשונים יכולים להיות כל דבר'
+        correct: true
+        feedback: >-
+          בדיוק. ובדוגמה $3-\frac5n$: $a_n>\frac32$ שקול ל-$\frac5n<\frac32$, כלומר ל-$n\ge4$.
+      - text: 'גבול חיובי פירושו שכל האיברים קרובים לגבול, ולכן חיוביים'
+        feedback: >-
+          ההגדרה מבטיחה קרבה רק ל-$n>N$. מספר סופי של איברים בהתחלה לא משפיע על הגבול (מסקנה 2.2.12).
+        misconception: MC-limit-all-terms
+      - text: 'אילו היה איבר שלילי, הגבול היה שלילי או אפס'
+        feedback: >-
+          איבר אחד, או אלף, לא משנים גבול (מסקנה 2.2.12). ואפילו אם **כל** האיברים חיוביים, הגבול יכול להיות
+          אפס: $\frac1n\to0$. אי-שוויון חזק לא עובר לגבול.
+        misconception: MC-limit-keeps-strict

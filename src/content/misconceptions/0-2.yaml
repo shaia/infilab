@@ -59,6 +59,16 @@
     $Q\Rightarrow P$: בלי $P$ אין $Q$. למשל, להיות זוגי הכרחי כדי להתחלק ב-4, ולא מספיק לכך.
   remedy: { lesson: '0.2', anchor: necessary-sufficient, label: 'תנאי הכרחי ותנאי מספיק' }
 
+- id: MC-iff-vs-equivalence
+  title: מבלבלים בין הקשר "אם ורק אם" לבין שקילות של שתי נוסחאות
+  belief: >-
+    $P\iff Q$ ו-$P\equiv Q$ אומרים אותו דבר, ולכן $P\iff Q$ נכונה תמיד, או ש-$A\equiv B$ היא עוד עמודה בטבלה.
+  truth: >-
+    $A\iff B$ היא נוסחה, עם ערך בכל השמה; למשל $P\iff Q$ שקר בהשמה $P=\mathrm{T}$, $Q=\mathrm{F}$. $A\equiv B$ היא
+    טענה על שתי נוסחאות: אותו ערך בכל השמה. הקשר ביניהן (טענה 0.2.6(א)): $A\equiv B$ בדיוק כש-$A\iff B$ היא
+    טאוטולוגיה.
+  remedy: { lesson: '0.2', anchor: formulas, label: 'נוסחאות, טאוטולוגיות ושקילות לוגית' }
+
 - id: MC-implication-as-iff
   title: קוראים את "אם P אז Q" כ"P אם ורק אם Q"
   belief: >-

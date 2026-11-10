@@ -26,6 +26,35 @@ describe('exact identities', () => {
       expect(partialSum((k) => k / 2 ** k, n)).toBe(2 - (n + 2) / 2 ** n);
     }
   });
+  it('geometric sum 1 + q + … + qⁿ⁻¹ = (qⁿ − 1)/(q − 1) for q = 2, 3, −2 and n ≤ 30 (proposition 0.5.8(b))', () => {
+    for (const q of [2, 3, -2]) for (let n = 1; n <= 30; n++) expect(partialSum((k) => q ** (k - 1), n)).toBe((q ** n - 1) / (q - 1));
+  });
+  it('Pascal: C(n,k−1) + C(n,k) = C(n+1,k), and the binomial theorem (a+b)ⁿ = Σ C(n,k)aⁿ⁻ᵏbᵏ on integers (lemma 0.5.22, theorem 0.5.24)', () => {
+    const fact = (m: number) => {
+      let f = 1;
+      for (let i = 2; i <= m; i++) f *= i;
+      return f;
+    };
+    const C = (n: number, k: number) => fact(n) / (fact(k) * fact(n - k));
+    for (let n = 1; n <= 18; n++) for (let k = 1; k <= n; k++) expect(C(n, k - 1) + C(n, k)).toBe(C(n + 1, k));
+    for (let n = 0; n <= 18; n++) for (let k = 0; k <= n; k++) expect(Number.isInteger(C(n, k)) && C(n, k) >= 1).toBe(true);
+    for (const [a, b] of [[2, 3], [-1, 4], [0, 5], [3, 0], [1, 1]]) {
+      for (let n = 1; n <= 12; n++) {
+        let s = 0;
+        for (let k = 0; k <= n; k++) s += C(n, k) * a ** (n - k) * b ** k; // JS: 0 ** 0 === 1, the lesson's convention
+        expect(s).toBe((a + b) ** n);
+      }
+    }
+    expect(C(5, 2)).toBe(10);
+  });
+  it('every integer n ≥ 8 is 3a + 5b with a, b ≥ 0, and 7 is not (W-0.5-07)', () => {
+    const rep = (n: number) => {
+      for (let b = 0; 5 * b <= n; b++) if ((n - 5 * b) % 3 === 0) return true;
+      return false;
+    };
+    expect([1, 2, 4, 7].some(rep)).toBe(false);
+    for (let n = 8; n <= 500; n++) expect(rep(n)).toBe(true);
+  });
   it('6 divides 7ⁿ − 1 for n ≤ 18 (7ⁿ exact below 2⁵³)', () => {
     for (let n = 1; n <= 18; n++) expect((7 ** n - 1) % 6).toBe(0);
   });
@@ -64,6 +93,15 @@ describe('the chain (the principle of induction on a window)', () => {
     expect(smallestFullBase(f)).toBe(10);
     expect(chain(f, 10).reach).toBe(14);
   });
+  it('2n³ − (n+1)³ = n³ − 3n² − 3n − 1: −10 at n = 3, positive from n = 4 (proposition 0.5.12, step 1)', () => {
+    expect(3 ** 3 - 3 * 9 - 3 * 3 - 1).toBe(-10);
+    expect(2 * 27).toBe(54);
+    expect(4 ** 3).toBe(64);
+    for (let n = 4; n <= 2000; n++) {
+      expect(2 * n ** 3 - (n + 1) ** 3).toBe(n ** 3 - 3 * n * n - 3 * n - 1);
+      expect(n ** 3 - 3 * n * n - 3 * n - 1).toBeGreaterThan(0);
+    }
+  });
   it('the step of 2ⁿ > n³ needs (1 + 1/n)³ ≤ 2: false at n = 3, true from n = 4 (125/64)', () => {
     expect((1 + 1 / 3) ** 3).toBeGreaterThan(2);
     expect((1 + 1 / 4) ** 3).toBe(125 / 64);
@@ -99,6 +137,33 @@ describe('analytic inequalities (evidence on a grid; the proofs are in the lesso
     expect((1 - 4) ** 3).toBe(-27);
     expect(1 + 3 * -4).toBe(-11);
     expect(chain(f, 1, f.window, -4)).toEqual({ base: true, reach: 2, brokenAt: 2 });
+  });
+  it('Bernoulli on [−2, −1) (W-0.5-09): (1+x)ⁿ stays in [−1, 1] and above 1 + nx; x = −3 is equality at n = 3 and fails at n = 5', () => {
+    for (let i = 0; i < 1000; i++) {
+      const x = -2 + i * 0.001;
+      for (let n = 1; n <= 60; n++) {
+        const p = (1 + x) ** n;
+        expect(p).toBeGreaterThanOrEqual(-1);
+        expect(p).toBeLessThanOrEqual(1);
+        expect(atLeast(p, 1 + n * x), `x=${x} n=${n}`).toBe(true);
+      }
+    }
+    expect((-2) ** 3).toBe(1 + 3 * -3);
+    expect((-2) ** 5).toBe(-32);
+    expect(1 + 5 * -3).toBe(-14);
+    expect((-1.5) ** 7).toBeCloseTo(-17.0859375, 12);
+    expect(1 + 7 * -2.5).toBe(-16.5);
+  });
+  it('strict Bernoulli (theorem 0.5.19(b)): (1+x)ⁿ > 1 + nx for n ≥ 2, x ≥ −1, x ≠ 0, including x = −1', () => {
+    for (let i = 0; i <= 400; i++) {
+      const x = -1 + i * 0.01;
+      if (Math.abs(x) < 1e-9) continue;
+      for (let n = 2; n <= 30; n++) expect((1 + x) ** n - (1 + n * x)).toBeGreaterThan(0);
+    }
+  });
+  it('the improved Bernoulli fails for negative x: x = −0.9, n = 3 gives 0.001 < 0.73 (example 5, check)', () => {
+    expect((1 - 0.9) ** 3).toBeCloseTo(0.001, 15);
+    expect(1 + 3 * -0.9 + 3 * 0.81).toBeCloseTo(0.73, 12);
   });
   it('for x = −2.5 the first failure is n = 7, for x = −3 it is n = 5; for x = −2 none in the window', () => {
     const f = FAMILIES.bernoulli;

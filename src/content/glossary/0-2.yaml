@@ -44,7 +44,40 @@
   term: טבלת אמת
   en: truth table
   definition: >-
-    טבלה שמראה את ערך האמת של פסוק מורכב לכל צירוף של ערכי האמת של חלקיו; לשני פסוקים יש ארבע שורות.
+    טבלה שרושמת את הערך של נוסחה בכל ההשמות לאותיות שלה; לשתי אותיות יש ארבע השמות, ולכן ארבע שורות.
+  lesson: '0.2'
+- id: propositional-formula
+  term: נוסחה (לוגית)
+  en: propositional formula
+  definition: >-
+    ביטוי שנבנה מאותיות פסוק ($P$, $Q$, …) במספר סופי של צעדים: כל אות היא נוסחה, ואם $A$ ו-$B$ נוסחאות אז גם
+    $\neg A$, $(A\land B)$, $(A\lor B)$, $(A\Rightarrow B)$ ו-$(A\iff B)$ נוסחאות.
+  lesson: '0.2'
+- id: subformula
+  term: תת-נוסחה
+  en: subformula
+  definition: >-
+    נוסחה שהופיעה בדרך הבנייה של נוסחה אחרת. למשל $\neg Q$ ו-$P\land\neg Q$ הן תת-נוסחאות של
+    $\neg(P\land\neg Q)$.
+  lesson: '0.2'
+- id: truth-assignment
+  term: השמה
+  en: truth assignment
+  definition: >-
+    בחירה של ערך אמת, T או F, לכל אחת מאותיות הפסוק. כל השמה היא שורה אחת בטבלת האמת.
+  lesson: '0.2'
+- id: tautology
+  term: טאוטולוגיה
+  en: tautology
+  definition: >-
+    נוסחה שהיא אמת בכל השמה לאותיות שלה, כמו $P\lor\neg P$ או $(P\land(P\Rightarrow Q))\Rightarrow Q$.
+  lesson: '0.2'
+- id: modus-ponens
+  term: כלל הניתוק
+  en: modus ponens
+  definition: >-
+    הטאוטולוגיה $(P\land(P\Rightarrow Q))\Rightarrow Q$: מי שיודע ש-$P$ נכון וש-$P\Rightarrow Q$ נכון יודע ש-$Q$
+    נכון.
   lesson: '0.2'
 - id: converse
   term: הטענה ההפוכה
@@ -63,6 +96,7 @@
   en: contrapositive
   definition: >-
     הקונטרפוזיטיב של $P\Rightarrow Q$ הוא $\neg Q\Rightarrow\neg P$. הוא שקול לטענה המקורית.
+  reject: [קונטרפוזיציה]
   lesson: '0.2'
 - id: sufficient-condition
   term: תנאי מספיק
@@ -92,9 +126,10 @@
 - id: logically-equivalent
   term: שקולים
   en: logically equivalent
+  symbol: 'A\equiv B'
   definition: >-
-    שני פסוקים מורכבים הם שקולים אם יש להם אותו ערך אמת בכל שורה של טבלת האמת המשותפת שלהם. אז מותר להחליף
-    אחד בשני בכל הוכחה.
+    שתי נוסחאות הן שקולות, $A\equiv B$, אם יש להן אותו ערך בכל השמה לאותיות שמופיעות בהן. אז מותר להחליף אחת
+    בשנייה, גם בתוך נוסחה גדולה יותר.
   lesson: '0.2'
 - id: de-morgan-logic
   term: כללי דה-מורגן

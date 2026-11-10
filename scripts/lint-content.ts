@@ -359,10 +359,14 @@ for (const m of misconceptions) {
 
 /* -------------------------------------------------------------- lessons */
 
-const BEYOND_SYLLABUS = new Set(chapters.filter((c) => c.beyondSyllabus).map((c) => c.n));
-/** A lesson fits one sitting of DEFAULT_CAP minutes, worked examples included; per-chapter exceptions by the user's decision only. */
-const DEFAULT_CAP = 90;
-const MINUTES_CAP: Record<number, number> = {};
+// No time cap on a lesson (2026-11-10): the course is "heavily mathematical, with rigorous proofs" (the user, pointing
+// at advinfi2lab), and a proof is never cut to fit a sitting. `minutes` is the honest estimate; the schema bounds it.
+/** A numbered result: **למה 0.5.3.**, **משפט 2.2.4 (יחידות).**, **מסקנה 0.6.7א.** */
+const NUMBERED = /\*\*(למה|טענה|משפט|מסקנה)\s+(\d+\.\d+\.\d+[א-ת]?)/g;
+/** Words that stand in for an argument. */
+const HAND_WAVE = /ברור ש|קל לראות|באופן דומה|מובן מאליו/;
+/** A proof task in a worked example or a workbook problem. */
+const PROOF_TASK = /הוכיחו|הפריכו/;
 const TEMPLATE = ['Hook', 'Predict', 'Explore', 'Explain', 'Example', 'Check', 'Watch', 'Summary'];
 /** A prose line of MDX: Markdown joins it with its neighbours into one paragraph. */
 const prose = (s: string) => s.trim() !== '' && !/^\s*(<|\$\$|\||-|\*|#)/.test(s) && !s.includes('="') && !s.includes('$$');
@@ -417,11 +421,30 @@ for (const l of lessons) {
       if (!seenQ.has(qid)) fail(l.file, `<Check> asks for unknown question ${qid}`, true);
     }
   }
-  // A lesson fits one sitting, worked examples included; a chapter beyond the syllabus has no cap.
-  // A chapter whose honest times run over gets an entry in MINUTES_CAP, by the user's decision only.
-  const [chapter, n] = l.id.split('.').map(Number);
-  const cap = MINUTES_CAP[chapter] ?? DEFAULT_CAP;
-  if (!BEYOND_SYLLABUS.has(chapter) && l.minutes > cap) fail(l.file, `minutes: ${l.minutes} is over the ${cap}-minute cap of chapter ${chapter}`);
+  const n = Number(l.id.split('.')[1]);
+
+  // Rigor (CLAUDE.md, "Rigor"): the lesson's theory, before the worked examples, is a formal text of numbered
+  // results, each proved in full where it is stated. A result proved elsewhere says so in its own line
+  // ("מוכח בשיעור …", or "(ללא הוכחה" with the user's agreement).
+  const theory = l.body.split(/<Example\b/)[0];
+  const results = [...theory.matchAll(NUMBERED)];
+  const seenNo = new Set<string>();
+  results.forEach((m, i) => {
+    const [, kind, no] = m;
+    if (!no.startsWith(`${l.id}.`)) fail(l.file, `${kind} ${no}: a result of lesson ${l.id} is numbered ${l.id}.k`);
+    if (seenNo.has(no)) fail(l.file, `${kind} ${no} is numbered twice`);
+    seenNo.add(no);
+    const line = theory.slice(m.index, theory.indexOf('\n', m.index));
+    const span = theory.slice(m.index, results[i + 1]?.index ?? theory.length);
+    if (!/\*\*הוכחה/.test(span) && !/מוכח בשיעור|\(ללא הוכחה/.test(line)) fail(l.file, `${kind} ${no} is stated without a **הוכחה** before the next numbered result`);
+  });
+  if (results.length < 3) fail(l.file, `${results.length} numbered results (למה / טענה / משפט / מסקנה ${l.id}.k): a lesson proves at least 3`, true);
+  for (const m of theory.matchAll(/\*\*(למה|טענה|משפט)\s*[.:(]/g)) fail(l.file, `an unnumbered **${m[1]}**: number every result (${m[1]} ${l.id}.k)`);
+  for (const [i, line] of l.body.split('\n').entries()) if (HAND_WAVE.test(line)) fail(l.file, `body line ${i + 1}: "${line.match(HAND_WAVE)![0]}" stands in for an argument`);
+  // Proof-first practice: at least 3 of the worked examples ask for a proof.
+  const examplePrompts = [...l.body.matchAll(/<Example\s+id="[^"]+"[^>]*>([\s\S]*?)<Solution>/g)].map((m) => m[1]);
+  const proofExamples = examplePrompts.filter((t) => PROOF_TASK.test(t)).length;
+  if (examplePrompts.length >= 6 && proofExamples < 3) fail(l.file, `${proofExamples} of the worked examples ask for a proof (הוכיחו / הפריכו); at least 3`, true);
   // Lessons sort by `order`; a renumbering once changed ids and left the old orders behind.
   if (l.order !== n) fail(l.file, `order: ${l.order} does not match the lesson number ${l.id}`);
   // Every worked example states its idea before the proof or the computation: the habit the course exists to build.
@@ -461,6 +484,13 @@ for (const { file, data } of workbooks) {
     if (k < 2) fail(file, `only ${k} practice problem(s) at level ${level} (aim for 3 basic, 4 mid, 3 exam)`, true);
   }
   if (practice.filter((p) => p.qualitative).length < 3) fail(file, 'fewer than 3 qualitative practice problems', true);
+  // Proof-first practice: at least 5 of the 10 practice problems ask for a proof.
+  const proofProblems = practice.filter((p) => PROOF_TASK.test(p.prompt)).length;
+  if (practice.length && proofProblems < 5) fail(file, `${proofProblems} practice problems ask for a proof (הוכיחו / הפריכו); at least 5`, true);
+  for (const item of [...practice, ...challenge]) {
+    const text = [item.prompt, ...(item.solution ?? []).map((s) => s.text)].join('\n');
+    if (HAND_WAVE.test(text)) fail(`${file} ${item.id}`, `"${text.match(HAND_WAVE)![0]}" stands in for an argument`);
+  }
   for (const o of lesson.objectives) {
     if (!practice.some((p) => p.objectives?.includes(o))) fail(file, `objective ${o} has no practice problem`, true);
   }

@@ -68,6 +68,8 @@ test.describe('lesson 0.1: how to read a proof', () => {
   });
 
   test('a text step never ticks a task: steps switch the text and highlight, never answer', async ({ page }) => {
+    // visits every text step of a long, fully proved lesson: over 30 s under a loaded parallel run
+    test.slow();
     await page.goto(LESSON);
     for (const step of await page.locator('.step[data-fig^="fig-0-1"]').all()) {
       await step.scrollIntoViewIfNeeded();

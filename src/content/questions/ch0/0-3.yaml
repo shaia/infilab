@@ -305,3 +305,57 @@ questions:
         feedback: >-
           (I) נכונה לפי הנתון: לכל אדם יש אמא בקבוצה. רק (II) נופלת, בגלל האישה בלי הילדים.
         misconception: MC-quantifier-roles-swapped
+
+  - id: Q-0.3-distribute
+    type: multi
+    objectives: [OBJ-0.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      יהיו $P(x)$ ו-$R(x)$ טענות פתוחות על קבוצה $A$. אילו מהגרירות הבאות נכונות **לכל** $A$, $P$ ו-$R$? סמנו את
+      כולן.
+    choices:
+      - text: '$\big(\forall x\in A:\ P(x)\big)\lor\big(\forall x\in A:\ R(x)\big)\ \Rightarrow\ \forall x\in A:\ \big(P(x)\lor R(x)\big)$'
+        correct: true
+        feedback: >-
+          נכון (טענה 0.3.16). אם, למשל, $P(a)$ אמיתי לכל $a$, אז גם $P(a)\lor R(a)$ אמיתי לכל $a$.
+      - text: '$\forall x\in A:\ \big(P(x)\lor R(x)\big)\ \Rightarrow\ \big(\forall x\in A:\ P(x)\big)\lor\big(\forall x\in A:\ R(x)\big)$'
+        feedback: >-
+          "לכל" אינו מתפלג על "או". דוגמה נגדית: $A=\mathbb{R}$, $P(x)$: $x\ge 0$, $R(x)$: $x<0$. כל מספר ממשי
+          מקיים אחד מהשניים, אבל לא כל המספרים אי-שליליים ($x=-1$) ולא כולם שליליים ($x=0$).
+        misconception: MC-quantifier-distribute-or
+      - text: '$\exists x\in A:\ \big(P(x)\land R(x)\big)\ \Rightarrow\ \big(\exists x\in A:\ P(x)\big)\land\big(\exists x\in A:\ R(x)\big)$'
+        correct: true
+        feedback: >-
+          נכון (טענה 0.3.16). האיבר שמקיים את שניהם הוא דוגמה גם ל-$\exists x:\ P(x)$ וגם ל-$\exists x:\ R(x)$.
+      - text: '$\big(\exists x\in A:\ P(x)\big)\land\big(\exists x\in A:\ R(x)\big)\ \Rightarrow\ \exists x\in A:\ \big(P(x)\land R(x)\big)$'
+        feedback: >-
+          "קיים" אינו מתפלג על "וגם": הדוגמה ל-$P$ והדוגמה ל-$R$ יכולות להיות איברים שונים. עם $P(x)$: $x\ge 0$
+          ו-$R(x)$: $x<0$ בממשיים, $x=0$ ו-$x=-1$ הן דוגמאות, ואין $x$ שמקיים את שניהם.
+        misconception: MC-exists-distribute-and
+
+  - id: Q-0.3-unique
+    type: mc
+    objectives: [OBJ-0.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      לאיזה ערך של $a$ הטענה $\exists! x\in\mathbb{R}:\ x^2=a$ ("קיים $x$ ממשי יחיד כך ש-$x^2=a$") נכונה?
+    choices:
+      - text: '$a=0$'
+        correct: true
+        feedback: >-
+          נכון. קיום: $x=0$. יחידות: אם $x\ne 0$ אז $x^2>0$, ולכן $x=0$ הוא הפתרון היחיד.
+      - text: '$a=1$'
+        feedback: >-
+          יש פתרון, אבל לא יחיד: $1^2=1$ וגם $(-1)^2=1$. "קיים יחיד" דורש קיום **וגם** יחידות.
+        misconception: MC-unique-existence
+      - text: '$a=-1$'
+        feedback: >-
+          אין שני פתרונות שונים, אבל גם אין אף פתרון: $x^2\ge 0$ לכל $x$ ממשי. היחידות מתקיימת כאן באמת ריקה, והקיום
+          נכשל.
+        misconception: MC-unique-existence
+      - text: לכל $a\ge 0$
+        feedback: >-
+          לכל $a>0$ יש שני פתרונות, $\sqrt a$ ו-$-\sqrt a$, ולכן אין יחידות. רק $a=0$ נותן פתרון אחד בדיוק.
+        misconception: MC-unique-existence

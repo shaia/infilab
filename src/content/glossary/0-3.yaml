@@ -1,4 +1,19 @@
 # Terms first defined in lesson 0.3 (quantifiers and negation).
+- id: open-statement
+  term: טענה פתוחה
+  en: open statement (predicate)
+  definition: >-
+    ביטוי עם משתנה, כמו $x>3$, שנעשה פסוק (נכון או שקרי) כשמציבים במשתנה איבר של קבוצה נתונה. כמת הופך טענה
+    פתוחה לפסוק (הגדרה 0.3.1).
+  lesson: '0.3'
+- id: unique-existence
+  term: קיים יחיד
+  en: unique existence
+  symbol: '\exists!'
+  definition: >-
+    $\exists! x\in A:\ P(x)$ פירושו: יש בדיוק איבר אחד של $A$ שמקיים את $P$. מוכיחים טענה כזו בשני חלקים: קיום
+    (יש איבר כזה) ויחידות (כל שני איברים שמקיימים את $P$ שווים).
+  lesson: '0.3'
 - id: quantifier
   term: כמת
   en: quantifier

@@ -171,3 +171,120 @@ describe('theorems of the lesson, checked on every function between small sets',
     }
   });
 });
+
+/** Every subset of {0, …, m−1}, as a sorted list. */
+const subsets = (m: number): number[][] =>
+  Array.from({ length: 1 << m }, (_, mask) => identity(m).filter((x) => mask & (1 << x)));
+const same = (a: readonly number[], b: readonly number[]) => a.length === b.length && a.every((x, i) => x === b[i]);
+const inter = (a: readonly number[], b: readonly number[]) => a.filter((x) => b.includes(x));
+const minus = (a: readonly number[], b: readonly number[]) => a.filter((x) => !b.includes(x));
+const union = (a: readonly number[], b: readonly number[]) => [...new Set([...a, ...b])].sort((x, y) => x - y);
+const SHAPES: [number, number][] = [[1, 1], [2, 2], [3, 3], [3, 2], [2, 3], [4, 3], [3, 4]];
+
+describe('exact identities: the numbered results of lesson 0.6, on every function between small sets', () => {
+  it('0.6.13–0.6.14: f(C₁ ∪ C₂) = f(C₁) ∪ f(C₂), f(C₁ ∩ C₂) ⊆ f(C₁) ∩ f(C₂); f⁻¹ preserves ∪, ∩, ∖ and complements', () => {
+    for (const [m, n] of [[3, 3], [3, 2], [2, 3]] as const) {
+      for (const f of allFunctions(m, n)) {
+        for (const C1 of subsets(m)) for (const C2 of subsets(m)) {
+          expect(imageOf(f, union(C1, C2))).toEqual(union(imageOf(f, C1), imageOf(f, C2)));
+          for (const y of imageOf(f, inter(C1, C2))) expect(inter(imageOf(f, C1), imageOf(f, C2))).toContain(y);
+        }
+        for (const D1 of subsets(n)) for (const D2 of subsets(n)) {
+          expect(preimageOf(f, union(D1, D2))).toEqual(union(preimageOf(f, D1), preimageOf(f, D2)));
+          expect(preimageOf(f, inter(D1, D2))).toEqual(inter(preimageOf(f, D1), preimageOf(f, D2)));
+          expect(preimageOf(f, minus(D1, D2))).toEqual(minus(preimageOf(f, D1), preimageOf(f, D2)));
+        }
+        for (const D of subsets(n)) expect(preimageOf(f, minus(identity(n), D))).toEqual(minus(identity(m), preimageOf(f, D)));
+      }
+    }
+  });
+  it('0.6.15 and 0.6.17: f(f⁻¹(D)) ⊆ D, with equality for every D exactly when f is onto; f(C₁ ∩ C₂) = f(C₁) ∩ f(C₂) for all C₁, C₂ exactly when f is injective', () => {
+    for (const [m, n] of SHAPES) {
+      for (const f of allFunctions(m, n)) {
+        let pushEq = true;
+        for (const D of subsets(n)) {
+          const back = imageOf(f, preimageOf(f, D));
+          for (const y of back) expect(D).toContain(y);
+          if (!same(back, D)) pushEq = false;
+          // workbook W-0.6-09: f(f⁻¹(D)) = D ∩ f(A)
+          expect(back).toEqual(inter(D, image(f)));
+        }
+        expect(pushEq).toBe(isSurjective(f, n));
+        let capEq = true;
+        let diffEq = true;
+        for (const C1 of subsets(m)) for (const C2 of subsets(m)) {
+          if (!same(imageOf(f, inter(C1, C2)), inter(imageOf(f, C1), imageOf(f, C2)))) capEq = false;
+          // worked example 0.6-6: f(C) ∖ f(D) ⊆ f(C ∖ D), equality for all C, D exactly when f is injective
+          const left = minus(imageOf(f, C1), imageOf(f, C2));
+          const right = imageOf(f, minus(C1, C2));
+          for (const y of left) expect(right).toContain(y);
+          if (!same(left, right)) diffEq = false;
+        }
+        expect(capEq).toBe(isInjective(f));
+        expect(diffEq).toBe(isInjective(f));
+      }
+    }
+  });
+  it('0.6.25: for a nonempty domain, f is injective exactly when it has a left inverse; it is onto exactly when it has a right inverse', () => {
+    for (const [m, n] of SHAPES) {
+      const fs = [...allFunctions(m, n)];
+      const gs = [...allFunctions(n, m)];
+      for (const f of fs) {
+        expect(gs.some((g) => same(compose(g, f), identity(m)))).toBe(isInjective(f));
+        expect(gs.some((h) => same(compose(f, h), identity(n)))).toBe(isSurjective(f, n));
+        // the right inverse of 0.6.25(ג): the least preimage of each point
+        if (isSurjective(f, n)) {
+          const h = identity(n).map((y) => Math.min(...preimage(f, y)));
+          expect(compose(f, h)).toEqual(identity(n));
+        }
+      }
+    }
+  });
+  it('0.6.24: (g∘f)⁻¹ = f⁻¹∘g⁻¹ for every pair of bijections of a 3-element set, and the other order fails for some pair', () => {
+    const bij = [...allFunctions(3, 3)].filter((f) => isInjective(f));
+    let otherOrderFails = false;
+    for (const f of bij) for (const g of bij) {
+      const inv = inverse(compose(g, f), 3)!;
+      expect(inv).toEqual(compose(inverse(f, 3)!, inverse(g, 3)!));
+      if (!same(inv, compose(inverse(g, 3)!, inverse(f, 3)!))) otherOrderFails = true;
+    }
+    expect(otherOrderFails).toBe(true);
+  });
+  it('worked example 0.6-5: f∘f = f with f injective or onto forces f = id; without them it does not', () => {
+    let idempotentNotId = false;
+    for (const m of [1, 2, 3, 4]) {
+      for (const f of allFunctions(m, m)) {
+        if (!same(compose(f, f), f)) continue;
+        if (isInjective(f) || isSurjective(f, m)) expect(f).toEqual(identity(m));
+        else idempotentNotId = true;
+      }
+    }
+    expect(idempotentNotId).toBe(true);
+  });
+  it('workbook W-0.6-10(ב): f(C) ∩ D = f(C ∩ f⁻¹(D)); W-0.6-09: an onto f cancels on the right, and without onto it need not', () => {
+    for (const [m, n] of [[3, 3], [3, 2], [2, 3]] as const) {
+      for (const f of allFunctions(m, n)) {
+        for (const C of subsets(m)) for (const D of subsets(n)) {
+          expect(inter(imageOf(f, C), D)).toEqual(imageOf(f, inter(C, preimageOf(f, D))));
+        }
+      }
+    }
+    let notOntoFails = false;
+    for (const [m, n] of [[2, 2], [2, 3], [3, 2]] as const) {
+      for (const f of allFunctions(m, n)) for (const g of allFunctions(n, 2)) for (const h of allFunctions(n, 2)) {
+        if (!same(compose(g, f), compose(h, f))) continue;
+        if (isSurjective(f, n)) expect(g).toEqual(h);
+        else if (!same(g, h)) notOntoFails = true;
+      }
+    }
+    expect(notOntoFails).toBe(true);
+  });
+  it('challenge W-0.6-c2: f(f⁻¹(f(C))) = f(C) and f⁻¹(f(f⁻¹(D))) = f⁻¹(D) for every function and every C, D', () => {
+    for (const [m, n] of SHAPES) {
+      for (const f of allFunctions(m, n)) {
+        for (const C of subsets(m)) expect(imageOf(f, preimageOf(f, imageOf(f, C)))).toEqual(imageOf(f, C));
+        for (const D of subsets(n)) expect(preimageOf(f, imageOf(f, preimageOf(f, D)))).toEqual(preimageOf(f, D));
+      }
+    }
+  });
+});

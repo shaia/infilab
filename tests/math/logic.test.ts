@@ -133,3 +133,56 @@ describe('non-equivalences, each with the rows that separate them', () => {
     expect(falsifying(parse('((P ∧ Q) ∨ R) ⇒ (R ∨ S)'))).toEqual([{ P: T, Q: T, R: F, S: F }]);
   });
 });
+
+describe('exact identities: the numbered laws of lesson 0.2 (each exhaustive, hence the lesson’s proof checked)', () => {
+  it('Theorem 0.2.9: double negation and both De Morgan laws', () => {
+    expect(eq('¬¬P', 'P')).toBe(true);
+    expect(eq('¬(P ∧ Q)', '¬P ∨ ¬Q')).toBe(true);
+    expect(eq('¬(P ∨ Q)', '¬P ∧ ¬Q')).toBe(true);
+  });
+  it('Theorem 0.2.10: commutative, associative and both distributive laws for ∧ and ∨', () => {
+    expect(eq('P ∧ Q', 'Q ∧ P') && eq('P ∨ Q', 'Q ∨ P')).toBe(true);
+    expect(eq('(P ∧ Q) ∧ R', 'P ∧ (Q ∧ R)') && eq('(P ∨ Q) ∨ R', 'P ∨ (Q ∨ R)')).toBe(true);
+    expect(eq('P ∧ (Q ∨ R)', '(P ∧ Q) ∨ (P ∧ R)')).toBe(true);
+    expect(eq('P ∨ (Q ∧ R)', '(P ∨ Q) ∧ (P ∨ R)')).toBe(true);
+  });
+  it('after Theorem 0.2.10 and workbook 5: ⇒ is neither commutative nor associative (rows FTF, FFF separate)', () => {
+    expect(eq('P ⇒ Q', 'Q ⇒ P')).toBe(false);
+    expect(differingRows(parse('P ⇒ (Q ⇒ R)'), parse('(P ⇒ Q) ⇒ R'))).toEqual([5, 7]);
+  });
+  it('Proposition 0.2.12 at n = 3 and n = 4: De Morgan for several formulas', () => {
+    expect(eq('¬(P ∧ Q ∧ R)', '¬P ∨ ¬Q ∨ ¬R')).toBe(true);
+    expect(eq('¬(P ∨ Q ∨ R ∨ S)', '¬P ∧ ¬Q ∧ ¬R ∧ ¬S')).toBe(true);
+  });
+  it('Lemma 0.2.7 (substitution), the instances the lesson uses: ¬¬Q ∨ ¬P for ¬Q ⇒ ¬P, ¬¬P ∧ ¬Q for ¬(¬P ∨ Q)', () => {
+    expect(eq('¬Q ⇒ ¬P', '¬¬Q ∨ ¬P')).toBe(true);
+    expect(eq('¬(¬P ∨ Q)', '¬¬P ∧ ¬Q')).toBe(true);
+  });
+  it('Proposition 0.2.6(א): A ≡ B exactly when A ⇔ B is a tautology', () => {
+    expect(tautology(parse('(P ⇒ Q) ⇔ (¬P ∨ Q)'))).toBe(true);
+    expect(tautology(parse('(P ⇒ Q) ⇔ (Q ⇒ P)'))).toBe(false);
+    expect(tautology(parse('P ⇔ Q'))).toBe(false);
+  });
+  it('Theorem 0.2.17: modus ponens, chaining, cases and contradiction are tautologies', () => {
+    for (const f of [
+      '(P ∧ (P ⇒ Q)) ⇒ Q',
+      '((P ⇒ Q) ∧ (Q ⇒ R)) ⇒ (P ⇒ R)',
+      '((P ⇒ R) ∧ (Q ⇒ R)) ⇒ ((P ∨ Q) ⇒ R)',
+      '(¬P ⇒ (Q ∧ ¬Q)) ⇒ P',
+    ])
+      expect(tautology(parse(f)), f).toBe(true);
+  });
+  it('after Theorem 0.2.17: affirming the conclusion and denying the hypothesis fail at P = F, Q = T', () => {
+    expect(falsifying(parse('((P ⇒ Q) ∧ Q) ⇒ P'))).toEqual([{ P: F, Q: T }]);
+    expect(falsifying(parse('((P ⇒ Q) ∧ ¬P) ⇒ ¬Q'))).toEqual([{ P: F, Q: T }]);
+    expect(tautology(parse('((P ⇒ Q) ∧ ¬Q) ⇒ ¬P'))).toBe(true);
+  });
+  it('Corollary 0.2.18: what implies a contradiction is false', () => {
+    expect(tautology(parse('(P ⇒ (Q ∧ ¬Q)) ⇒ ¬P'))).toBe(true);
+  });
+  it('workbook 8: (P ⇒ Q) ∧ (P ⇒ R) ≡ P ⇒ (Q ∧ R), and (P ⇒ R) ∨ (Q ⇒ R) ≡ (P ∧ Q) ⇒ R (false only at TTF)', () => {
+    expect(eq('(P ⇒ Q) ∧ (P ⇒ R)', 'P ⇒ (Q ∧ R)')).toBe(true);
+    expect(eq('(P ⇒ R) ∨ (Q ⇒ R)', '(P ∧ Q) ⇒ R')).toBe(true);
+    expect(falsifying(parse('(P ⇒ R) ∨ (Q ⇒ R)'))).toEqual([{ P: T, Q: T, R: F }]);
+  });
+});
