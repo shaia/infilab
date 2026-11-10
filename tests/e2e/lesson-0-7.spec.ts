@@ -1,18 +1,12 @@
-import { expect, test, type Locator, type Page } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { freezeSteps, hydrated, inked, progress } from './helpers';
 
 const LESSON = '/lessons/0-7/';
+const FIG = 'fig-0-7a';
 
-/** Set a range input as a student would: the value, then an input event. */
-const slide = (s: Locator, v: number) =>
-  s.evaluate((el: HTMLInputElement, value) => {
-    el.value = String(value);
-    el.dispatchEvent(new Event('input', { bubbles: true }));
-  }, v);
-
-/** Bring a figure into view, wait for its island, stop text steps from driving it, and reset it. */
-async function ready(page: Page, fig: string) {
-  const f = page.locator(`#${fig}`);
+/** Bring the figure into view, wait for its island, stop text steps from driving it, and reset it. */
+async function ready(page: Page) {
+  const f = page.locator(`#${FIG}`);
   await f.scrollIntoViewIfNeeded();
   await hydrated(f.locator('canvas'));
   await freezeSteps(page);
@@ -20,76 +14,88 @@ async function ready(page: Page, fig: string) {
   return f;
 }
 
-test.describe('lesson 0.7: inequalities and absolute value', () => {
-  test('both figures draw, in LTR math space', async ({ page }) => {
+/** Drive the figure from the keyboard: arrows move between the elements of U (in order), Enter marks. */
+async function keys(page: Page, seq: string[]) {
+  await page.locator(`#${FIG} canvas`).focus();
+  for (const k of seq) await page.keyboard.press(k);
+}
+
+test.describe('lesson 0.7: sets', () => {
+  test('the figure draws, in LTR math space', async ({ page }) => {
     await page.goto(LESSON);
-    const canvases = page.locator('.sim-stage canvas');
-    await expect(canvases).toHaveCount(2);
-    for (let i = 0; i < 2; i++) {
-      const c = canvases.nth(i);
-      await c.scrollIntoViewIfNeeded();
-      await expect(c).toHaveCSS('direction', 'ltr');
-      await expect.poll(() => inked(c)).toBeGreaterThan(200);
-    }
+    const c = page.locator('.sim-stage canvas');
+    await expect(c).toHaveCount(1);
+    await c.scrollIntoViewIfNeeded();
+    await expect(c).toHaveCSS('direction', 'ltr');
+    await expect.poll(() => inked(c)).toBeGreaterThan(200);
   });
 
-  test('centre 2 and radius 3 make the band the open interval (−1, 5), and that ticks the task; ≤ closes it', async ({ page }) => {
+  test('marking A∖(B∪C) from the keyboard: wrong, then exactly {1, 2}, which ticks the task', async ({ page }) => {
     await page.goto(LESSON);
-    const fig = await ready(page, 'fig-0-7a');
-    // band view sliders: a, r, x
-    const [a, r] = [fig.locator('input[type=range]').nth(0), fig.locator('input[type=range]').nth(1)];
-    await expect(fig.locator('[data-readout="set"]')).toContainText('(0, 2)');
-    await slide(a, 2);
-    await slide(r, 3);
-    await expect(fig.locator('[data-readout="set"]')).toContainText('(−1, 5)');
-    await expect.poll(async () => (await progress(page))?.tasks?.['fig-0-7a:centre-radius']).toBeTruthy();
-    await fig.getByRole('button', { name: '|x − a| ≤ r' }).click();
-    await expect(fig.locator('[data-readout="set"]')).toContainText('[−1, 5]');
+    const fig = await ready(page);
+    const verdict = fig.locator('[data-readout="verdict"]');
+    await expect(fig.locator('[data-readout="target"]')).toContainText('A∖(B∪C)');
+    // mark 1, then 3 (wrong): one missing, one extra
+    await keys(page, ['Enter', 'ArrowRight', 'ArrowRight', 'Enter']);
+    await expect(verdict).toContainText('עוד לא');
+    // unmark 3, mark 2
+    await keys(page, ['Enter', 'ArrowLeft', 'Enter']);
+    await expect(fig.locator('[data-readout="marked"]')).toContainText('{1, 2}');
+    await expect(verdict).toContainText('זו בדיוק הקבוצה');
+    await expect.poll(async () => (await progress(page))?.tasks?.[`${FIG}:shade-difference`]).toBeTruthy();
   });
 
-  test('|x + y| = |x| + |y| once x and y have the same sign, and that ticks the task', async ({ page }) => {
+  test('(A∩B)ᶜ is everything but 3 and 4; marking it ticks the second task', async ({ page }) => {
     await page.goto(LESSON);
-    const fig = await ready(page, 'fig-0-7a');
-    await fig.getByRole('button', { name: 'אי-שוויון המשולש' }).click();
-    await expect(fig.locator('[data-readout="tri"]')).toContainText('✗');
-    await slide(fig.locator('input[type=range]').nth(1), 2);
-    await expect(fig.locator('[data-readout="tri"]')).toContainText('|x + y| = 5 = 5 = |x| + |y|');
-    await expect.poll(async () => (await progress(page))?.tasks?.['fig-0-7a:equality-case']).toBeTruthy();
+    const fig = await ready(page);
+    await fig.getByRole('button', { name: /\(A∩B\)ᶜ/ }).click();
+    // U = {1, …, 8}: mark 1, 2, 5, 6, 7, 8
+    await keys(page, ['Enter', 'ArrowRight', 'Enter', 'ArrowRight', 'ArrowRight', 'ArrowRight', 'Enter', 'ArrowRight', 'Enter', 'ArrowRight', 'Enter', 'ArrowRight', 'Enter']);
+    await expect(fig.locator('[data-readout="marked"]')).toContainText('{1, 2, 5, 6, 7, 8}');
+    await expect(fig.locator('[data-readout="verdict"]')).toContainText('זו בדיוק הקבוצה');
+    await expect.poll(async () => (await progress(page))?.tasks?.[`${FIG}:shade-complement`]).toBeTruthy();
   });
 
-  test('the sum of distances to 2 and −1 is never below 3: c = 3 leaves the set empty and ticks the task', async ({ page }) => {
+  test('the witness hunt: 1 lies in both sides, 6 in one only, which ticks the third task', async ({ page }) => {
     await page.goto(LESSON);
-    const fig = await ready(page, 'fig-0-7a');
-    await fig.getByRole('button', { name: 'סכום מרחקים' }).click();
-    // two-distances view sliders: a, b, c, x
-    const c = fig.locator('input[type=range]').nth(2);
-    await expect(fig.locator('[data-readout="set"]')).toContainText('(−2, 3)');
-    await slide(c, 3);
-    await expect(fig.locator('[data-readout="set"]')).toContainText('∅');
-    await expect.poll(async () => (await progress(page))?.tasks?.['fig-0-7a:two-distances']).toBeTruthy();
-    await slide(c, 3.5);
-    await expect(fig.locator('[data-readout="set"]')).toContainText('(−1.25, 2.25)');
+    const fig = await ready(page);
+    await fig.getByRole('button', { name: /A∖\(B∖C\)/ }).click();
+    const verdict = fig.locator('[data-readout="verdict"]');
+    await keys(page, ['Enter']);
+    await expect(verdict).toContainText('אינו מבדיל');
+    await keys(page, ['ArrowRight', 'ArrowRight', 'ArrowRight', 'ArrowRight', 'ArrowRight', 'Enter']);
+    await expect(fig.locator('[data-readout="marked"]')).toContainText('6');
+    await expect(verdict).toContainText('דוגמה נגדית');
+    await expect.poll(async () => (await progress(page))?.tasks?.[`${FIG}:find-witness`]).toBeTruthy();
   });
 
-  test('a text step never ticks a task', async ({ page }) => {
+  test('a text step never ticks a task, even the steps that show a finished marking', async ({ page }) => {
     await page.goto(LESSON);
-    for (const step of await page.locator('.step[data-fig="fig-0-7a"]').all()) {
+    for (const step of await page.locator(`.step[data-fig="${FIG}"]`).all()) {
       await step.scrollIntoViewIfNeeded();
       await page.waitForTimeout(120);
     }
     await page.waitForTimeout(400);
-    const tasks = (await progress(page))?.tasks ?? {};
-    for (const t of ['centre-radius', 'equality-case', 'two-distances']) expect(tasks[`fig-0-7a:${t}`]).toBeFalsy();
+    const t = (await progress(page))?.tasks ?? {};
+    expect(t[`${FIG}:shade-difference`]).toBeFalsy();
+    expect(t[`${FIG}:shade-complement`]).toBeFalsy();
+    expect(t[`${FIG}:find-witness`]).toBeFalsy();
   });
 
-  test('the Check has the six bank questions, six worked examples, and the anchors other lessons link to exist', async ({ page }) => {
+  test('the Check has its five bank questions, and worked solutions stay closed until opened', async ({ page }) => {
     await page.goto(LESSON);
-    for (const id of ['Q-0.7-abs-less', 'Q-0.7-abs-distance', 'Q-0.7-abs-greater', 'Q-0.7-sum-bound', 'Q-0.7-which-hold', 'Q-0.7-amgm-sign']) {
+    for (const id of ['Q-0.7-operations', 'Q-0.7-element-subset', 'Q-0.7-complement', 'Q-0.7-nested-intersection', 'Q-0.7-power-membership']) {
       await expect(page.locator(`[data-qid="${id}"]`)).toHaveCount(1);
     }
-    await expect(page.locator('[id^="ex-0-7-"]')).toHaveCount(6);
-    for (const id of ['centre-radius', 'solving', 'equality', 'reverse', 'estimates', 'fractions']) {
-      await expect(page.locator(`#${id}`)).toHaveCount(1);
+    const examples = page.locator('[id^="ex-0-7-"]');
+    await expect(examples).toHaveCount(6);
+    await expect(examples.first().locator('details').first()).not.toHaveAttribute('open', '');
+  });
+
+  test('every misconception anchor of the lesson exists on the page', async ({ page }) => {
+    await page.goto(LESSON);
+    for (const a of ['set-operations', 'de-morgan', 'double-inclusion', 'power-set', 'product', 'nested-empty', 'power-set-ops']) {
+      await expect(page.locator(`[id="${a}"]`)).toHaveCount(1);
     }
   });
 });

@@ -78,20 +78,7 @@ test.describe('lesson 0.5: mathematical induction', () => {
     await expect.poll(async () => (await progress(page))?.tasks?.['fig-0-5b:late-base']).toBeTruthy();
   });
 
-  test('Bernoulli with x = −4 breaks at the link 2 ⇒ 3, and only the student’s own x ticks the task', async ({ page }) => {
-    await page.goto(LESSON);
-    const fig = await ready(page, 'fig-0-5b');
-    await fig.getByRole('button', { name: 'ברנולי' }).click();
-    await push(fig);
-    await expect(fig.locator('[data-readout="verdict"]')).toContainText('P(10)');
-    // the sliders are: base n₀, then x
-    await slide(fig.locator('input[type=range]').nth(1), -4);
-    await push(fig);
-    await expect(fig.locator('[data-readout="verdict"]')).toContainText('P(2) ⇒ P(3)');
-    await expect.poll(async () => (await progress(page))?.tasks?.['fig-0-5b:bernoulli-break']).toBeTruthy();
-  });
-
-  test('text steps never tick a task, even the one that sets x = −4', async ({ page }) => {
+  test('text steps never tick a task', async ({ page }) => {
     await page.goto(LESSON);
     for (const step of await page.locator('.step[data-fig="fig-0-5b"], .step[data-fig="fig-0-5a"]').all()) {
       await step.scrollIntoViewIfNeeded();
@@ -99,14 +86,14 @@ test.describe('lesson 0.5: mathematical induction', () => {
     }
     await page.waitForTimeout(400);
     const tasks = (await progress(page))?.tasks ?? {};
-    for (const t of ['fig-0-5a:topple', 'fig-0-5a:no-base', 'fig-0-5a:broken-link', 'fig-0-5b:late-base', 'fig-0-5b:bernoulli-break']) {
+    for (const t of ['fig-0-5a:topple', 'fig-0-5a:no-base', 'fig-0-5a:broken-link', 'fig-0-5b:late-base']) {
       expect(tasks[t]).toBeFalsy();
     }
   });
 
-  test('the Check has the eight bank questions, and worked solutions stay closed until opened', async ({ page }) => {
+  test('the Check has the six bank questions, and worked solutions stay closed until opened', async ({ page }) => {
     await page.goto(LESSON);
-    for (const id of ['Q-0.5-step-meaning', 'Q-0.5-what-to-prove', 'Q-0.5-start-point', 'Q-0.5-no-base', 'Q-0.5-bernoulli-why', 'Q-0.5-step-too-early', 'Q-0.5-strong-why', 'Q-0.5-well-ordering-z']) {
+    for (const id of ['Q-0.5-step-meaning', 'Q-0.5-what-to-prove', 'Q-0.5-sum-definition', 'Q-0.5-start-point', 'Q-0.5-no-base', 'Q-0.5-step-too-early']) {
       await expect(page.locator(`[data-qid="${id}"]`)).toHaveCount(1);
     }
     const examples = page.locator('[id^="ex-0-5-"]');

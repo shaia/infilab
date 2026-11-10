@@ -1,0 +1,7 @@
+---
+/** Lesson-0.7 figure: <Spread figure={SetVenn} figureProps={{…}}>. */
+import SetVenn, { type SetVennProps } from './SetVenn';
+type Props = SetVennProps;
+---
+
+<SetVenn client:visible {...Astro.props} />

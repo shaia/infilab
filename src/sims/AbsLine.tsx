@@ -1,5 +1,5 @@
 /**
- * Lesson 0.7's figure: absolute value as distance on the number line. Four views of one line (math space, LTR):
+ * Lesson 0.9's figure: absolute value as distance on the number line. Four views of one line (math space, LTR):
  *
  * - `band`: the set {x : |x − a| ρ r} for ρ ∈ {<, ≤, >, ≥}, drawn in the ε-band colours (it is exactly the
  *   neighbourhood lesson 2.2 calls the ε-band), with a draggable centre a, a radius handle at a + r, and a test

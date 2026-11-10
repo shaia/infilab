@@ -1,0 +1,85 @@
+# Terms first defined in lesson 0.9 (inequalities and absolute value).
+- id: absolute-value
+  term: ערך מוחלט
+  en: absolute value
+  symbol: '|x|'
+  definition: >-
+    $|x|=x$ כש-$x\ge 0$ ו-$|x|=-x$ כש-$x<0$ (הגדרה 0.9.1). $|x-a|$ הוא המרחק בין $x$ ל-$a$ על ישר המספרים.
+  lesson: '0.9'
+- id: real-distance
+  term: מרחק
+  en: distance
+  symbol: 'd(x,y)=|x-y|'
+  definition: >-
+    המרחק בין שני מספרים ממשיים $x,y$ הוא $d(x,y)=|x-y|$ (הגדרה 0.9.1). הוא אי-שלילי, שווה לאפס רק כש-$x=y$,
+    סימטרי, ומקיים את אי-שוויון המשולש $d(x,z)\le d(x,y)+d(y,z)$.
+  lesson: '0.9'
+- id: real-interval
+  term: קטע
+  en: interval
+  symbol: '(a,b),\ [a,b]'
+  definition: >-
+    קבוצת כל המספרים בין שני קצוות (הגדרה 0.9.4): הקטע הפתוח $(a,b)=\{x:\ a<x<b\}$ בלי הקצוות, הסגור $[a,b]$
+    איתם, וגם קטעים חצי-פתוחים וקטעים אינסופיים כמו $[a,\infty)=\{x:\ x\ge a\}$.
+  lesson: '0.9'
+- id: triangle-inequality
+  term: אי-שוויון המשולש
+  en: triangle inequality
+  symbol: '|a+b|\le|a|+|b|'
+  definition: >-
+    לכל $a,b$ ממשיים, $|a+b|\le|a|+|b|$, ושוויון בדיוק כש-$ab\ge0$ (משפט 0.9.7). בצורתו ההפוכה:
+    $\big||a|-|b|\big|\le|a-b|$ (מסקנה 0.9.9).
+  reject: [אי שוויון המשולש]
+  lesson: '0.9'
+- id: am-gm-inequality
+  term: אי-שוויון הממוצעים
+  en: AM-GM inequality
+  symbol: '\frac{a+b}{2}\ge\sqrt{ab}'
+  definition: >-
+    לכל $a,b\ge 0$, הממוצע החשבוני גדול או שווה לממוצע ההנדסי: $\frac{a+b}{2}\ge\sqrt{ab}$, ושוויון רק כש-$a=b$
+    (משפט 0.9.13). ל-$n$ מספרים אי-שליליים: $a_1\cdots a_n\le\left(\frac{a_1+\dots+a_n}{n}\right)^n$, ושוויון רק
+    כשכולם שווים (משפט 0.9.14).
+  reject: [אי שוויון הממוצעים]
+  lesson: '0.9'
+- id: cauchy-schwarz
+  term: אי-שוויון קושי-שוורץ
+  en: Cauchy-Schwarz inequality
+  symbol: '\left(\sum a_kb_k\right)^2\le\sum a_k^2\sum b_k^2'
+  definition: >-
+    לכל $a_1,\dots,a_n,b_1,\dots,b_n$ ממשיים, $\left(\sum_{k=1}^n a_kb_k\right)^2\le\left(\sum_{k=1}^n
+    a_k^2\right)\left(\sum_{k=1}^n b_k^2\right)$, ושוויון בדיוק כשכל ה-$a_k$ אפס או כש-$b_k=\lambda a_k$ לכל $k$
+    (משפט 0.9.16).
+  reject: [אי שוויון קושי-שוורץ, קושי שוורץ]
+  lesson: '0.9'
+- id: interval-centre-radius
+  term: מרכז ורדיוס של קטע
+  en: centre and radius of an interval
+  symbol: '|x-a|<r'
+  definition: >-
+    לקטע $(a-r,a+r)$, עם $r>0$, המרכז הוא $a$ והרדיוס הוא $r$. זו בדיוק קבוצת ה-$x$ שמקיימים $|x-a|<r$: המספרים
+    שמרחקם מ-$a$ קטן מ-$r$ (מסקנה 0.9.6). לכל קטע פתוח $(p,q)$ המרכז הוא האמצע $\frac{p+q}{2}$ והרדיוס חצי האורך
+    $\frac{q-p}{2}$.
+  lesson: '0.9'
+- id: arithmetic-mean
+  term: ממוצע חשבוני
+  en: arithmetic mean
+  symbol: '\frac{a+b}{2}'
+  definition: >-
+    הממוצע החשבוני של $a$ ו-$b$ הוא $\frac{a+b}{2}$: האמצע של הקטע שביניהם על ישר המספרים. של $a_1,\dots,a_n$:
+    $\frac{a_1+\dots+a_n}{n}$.
+  lesson: '0.9'
+- id: geometric-mean
+  term: ממוצע הנדסי
+  en: geometric mean
+  symbol: '\sqrt{ab}'
+  definition: >-
+    הממוצע ההנדסי של שני מספרים אי-שליליים $a,b$ הוא $\sqrt{ab}$. אי-שוויון הממוצעים משווה אותו לממוצע החשבוני,
+    ורק עבור $a,b\ge 0$.
+  lesson: '0.9'
+- id: add-and-subtract
+  term: הוספה והחסרה
+  en: adding and subtracting a term
+  definition: >-
+    כותבים ביטוי כסכום של חלקים שיודעים לחסום, בעזרת מחובר שמוסיפים ומחסירים: $x+1=(x-1)+2$, ואז אי-שוויון
+    המשולש נותן $|x+1|\le|x-1|+2$.
+  lesson: '0.9'

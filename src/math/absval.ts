@@ -1,7 +1,7 @@
 /**
  * MODEL SPECIFICATION
  *
- * System:        solution sets of the absolute-value inequalities of lesson 0.7, as unions of intervals with
+ * System:        solution sets of the absolute-value inequalities of lesson 0.9, as unions of intervals with
  *                exact endpoints and open or closed ends: |x − a| ρ r and |x − a| + |x − b| ρ c, where ρ is one
  *                of <, ≤, >, ≥; and the two sides of the triangle inequality |x + y| ≤ |x| + |y|, its reverse
  *                form ||x| − |y|| ≤ |x − y|, and the two means (a + b)/2 and √(ab).

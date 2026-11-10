@@ -1,4 +1,4 @@
-/** The solution sets and inequalities behind lesson 0.7's figure, filed by accuracy category. */
+/** The solution sets and inequalities behind lesson 0.9's figure, filed by accuracy category. */
 
 import { describe, expect, it } from 'vitest';
 import {
@@ -50,11 +50,11 @@ describe('exact identities: solution sets by cases agree with the definition at 
 });
 
 describe('exact identities: the numbers the lesson, its bank and its workbook quote', () => {
-  it('|x − 3| < 2 is (1, 5), and |x + 2| ≤ 1 is [−3, −1] (the bank’s Q-0.7-abs-less, Q-0.7-abs-distance)', () => {
+  it('|x − 3| < 2 is (1, 5), and |x + 2| ≤ 1 is [−3, −1] (the bank’s Q-0.9-abs-less, Q-0.9-abs-distance)', () => {
     expect(fmtSet(solveAbs(3, 2, '<'))).toBe('(1, 5)');
     expect(fmtSet(solveAbs(-2, 1, '<='))).toBe('[−3, −1]');
   });
-  it('|2x + 1| ≥ 3 is |x + 1/2| ≥ 3/2: (−∞, −2] ∪ [1, ∞) (Q-0.7-abs-greater)', () => {
+  it('|2x + 1| ≥ 3 is |x + 1/2| ≥ 3/2: (−∞, −2] ∪ [1, ∞) (Q-0.9-abs-greater)', () => {
     expect(fmtSet(solveAbs(-0.5, 1.5, '>='))).toBe('(−∞, −2] ∪ [1, ∞)');
   });
   it('the band (−1, 5) of the figure’s task is centre 2, radius 3, strict', () => {
@@ -68,7 +68,7 @@ describe('exact identities: the numbers the lesson, its bank and its workbook qu
     expect(Math.max(...dists)).toBeLessThan(3);
     expect(Math.min(...dists)).toBeGreaterThan(1);
   });
-  it('|x − 1| + |x + 2| < 5 is (−3, 2), of length 5 (Q-0.7-two-terms); ≤ 4 around ±1 is [−2, 2] (Q-0-exam-3)', () => {
+  it('|x − 1| + |x + 2| < 5 is (−3, 2), of length 5 (Q-0.9-two-terms); ≤ 4 around ±1 is [−2, 2] (Q-0-exam-3)', () => {
     expect(fmtSet(solveSumDist(1, -2, 5, '<'))).toBe('(−3, 2)');
     expect(fmtSet(solveSumDist(1, -1, 4, '<='))).toBe('[−2, 2]');
   });
@@ -110,10 +110,10 @@ describe('analytic identities: the triangle inequality, its reverse form and the
         if (a === b) expect(gm).toBeCloseTo(am, 12);
         else expect(am - gm).toBeGreaterThan(1e-9);
       }
-    // a = b = −1: ab = 1 ≥ 0 but (a + b)/2 = −1 < 1 = √(ab) (Q-0.7-amgm-sign)
+    // a = b = −1: ab = 1 ≥ 0 but (a + b)/2 = −1 < 1 = √(ab) (Q-0.9-amgm-sign)
     expect(() => means(-1, -1)).toThrow(RangeError);
   });
-  it('x + 9/x ≥ 6 for x > 0, with equality at x = 3 (Q-0.7-amgm-min)', () => {
+  it('x + 9/x ≥ 6 for x > 0, with equality at x = 3 (Q-0.9-amgm-min)', () => {
     for (let k = 1; k <= 400; k++) {
       const x = k / 40;
       expect(x + 9 / x).toBeGreaterThanOrEqual(6 - 1e-12);

@@ -1,371 +1,322 @@
-# Lesson 0.6 — sets and functions.
+# Lesson 0.6 — strong induction, well-ordering, Bernoulli's inequality, the binomial theorem.
 # Objectives (src/course.ts):
-#   OBJ-0.6-1  operate on sets (union, intersection, difference, complement); prove set equality by double inclusion
-#   OBJ-0.6-2  define function, domain, codomain and image; check whether a function is injective and onto
-#   OBJ-0.6-3  compose functions and find an inverse function, and know when it exists
+#   OBJ-0.6-1  prove by strong induction; use the well-ordering principle and its equivalence to induction
+#   OBJ-0.6-2  prove and use Bernoulli's inequality; show by a counterexample that the hypothesis on x is needed
+#   OBJ-0.6-3  prove Pascal's identity and the binomial theorem, and use them
+# Q-0.6-strong-why, -well-ordering-z, -bernoulli-why, -bernoulli-proof, -bernoulli-condition came from lesson 0.5's bank.
 chapter: 0
 questions:
-  - id: Q-0.6-operations
-    type: multi
-    objectives: [OBJ-0.6-1]
-    level: basic
-    prompt: >-
-      יהיו $A=\{1,2,3,4\}$ ו-$B=\{3,4,5\}$. אילו מהשוויונות הבאים נכונים? סמנו את כולם.
-    choices:
-      - text: '$A\cap B=\{3,4\}$'
-        correct: true
-        feedback: נכון. החיתוך הוא האיברים שנמצאים בשתי הקבוצות.
-      - text: '$A\setminus B=\{1,2\}$'
-        correct: true
-        feedback: נכון. מוציאים מ-$A$ את האיברים שנמצאים ב-$B$, כלומר את $3$ ואת $4$.
-      - text: '$B\setminus A=\{1,2\}$'
-        feedback: >-
-          $B\setminus A$ הם האיברים של $B$ שאינם ב-$A$: רק $5$. ההפרש אינו סימטרי:
-          $B\setminus A=\{5\}\ne A\setminus B$.
-        misconception: MC-set-difference-rules
-      - text: '$A\cup B=\{3,4\}$'
-        feedback: >-
-          זה החיתוך. האיחוד הוא האיברים שנמצאים ב-$A$ **או** ב-$B$: $A\cup B=\{1,2,3,4,5\}$.
-        misconception: MC-or-as-and
-
-  - id: Q-0.6-complement
+  - id: Q-0.6-bernoulli-why
     type: mc
-    objectives: [OBJ-0.6-1]
+    objectives: [OBJ-0.6-2]
     qualitative: true
     level: mid
     prompt: >-
-      יהיו $A,B\subseteq\mathbb{R}$, ונסמן ב-$X^c$ את המשלים של $X$ ב-$\mathbb{R}$. לאיזו קבוצה שווה
-      $(A\cap B)^c$?
+      בצעד של הוכחת אי-שוויון ברנולי, $(1+x)^n\ge 1+nx$ עבור $x\ge -1$, כותבים:
+      $$(1+x)^{n+1}=(1+x)^n(1+x)\ge(1+nx)(1+x).$$
+      מה מצדיק את אי-השוויון?
     choices:
-      - text: '$A^c\cup B^c$'
+      - text: 'הנחת האינדוקציה, יחד עם העובדה ש-$1+x\ge 0$'
         correct: true
         feedback: >-
-          נכון. $x\notin A\cap B$ פירושו "לא ($x\in A$ וגם $x\in B$)", כלומר $x\notin A$ **או** $x\notin B$. זה
-          כלל דה-מורגן, אותו כלל כמו בשלילת "וגם".
-      - text: '$A^c\cap B^c$'
+          נכון. כפל של אי-שוויון במספר אי-שלילי שומר עליו. בשביל זה ההנחה $x\ge -1$: עם $1+x<0$ הכפל היה הופך
+          את הכיוון.
+      - text: הנחת האינדוקציה בלבד
         feedback: >-
-          דוגמה נגדית: $A=(0,2)$, $B=(1,3)$. המספר $\frac12$ נמצא ב-$A$ ולא ב-$B$, ולכן $\frac12\in(A\cap B)^c$;
-          אבל $\frac12\notin A^c$, ולכן גם לא בחיתוך המשלימים. המשלים הופך חיתוך לאיחוד.
-        misconception: MC-complement-de-morgan
-      - text: '$A\cup B$'
+          הנחת האינדוקציה נותנת $(1+x)^n\ge 1+nx$, אבל כדי לכפול את שני האגפים ב-$1+x$ בלי להפוך את הכיוון צריך
+          $1+x\ge 0$. בלי זה הצעד נופל.
+        misconception: MC-bernoulli-any-x
+      - text: אי-שוויון ברנולי עבור $n+1$
         feedback: >-
-          איברים של $A\cap B$ נמצאים גם ב-$A\cup B$, ולכן $A\cup B$ לא יכולה להיות המשלים של $A\cap B$ (אלא אם
-          החיתוך ריק).
-        misconception: MC-complement-de-morgan
+          את אי-השוויון עבור $n+1$ אנחנו מוכיחים עכשיו, ולכן אסור להשתמש בו.
+        misconception: MC-induction-hypothesis-circular
 
-  - id: Q-0.6-distributive
+  - id: Q-0.6-bernoulli-proof
     type: rank
-    objectives: [OBJ-0.6-1]
+    objectives: [OBJ-0.6-2]
     level: exam
     prompt: >-
-      הוכיחו: לכל שלוש קבוצות $A$, $B$, $C$ מתקיים $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$.
+      הוכיחו באינדוקציה את אי-שוויון ברנולי: לכל $x\ge -1$ ולכל $n$ טבעי, $(1+x)^n\ge 1+nx$.
     help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
     items:
-      - id: plan
-        label: 'נוכיח שתי הכלות: כל אגף מוכל באגף השני.'
-      - id: take-left
-        label: 'יהי $x\in A\cap(B\cup C)$. אז $x\in A$, וגם $x\in B$ או $x\in C$.'
-      - id: cases-left
-        label: 'אם $x\in B$ אז $x\in A\cap B$, ואם $x\in C$ אז $x\in A\cap C$; בכל מקרה $x\in(A\cap B)\cup(A\cap C)$.'
-      - id: take-right
-        label: 'להפך, יהי $x\in(A\cap B)\cup(A\cap C)$. בשני המקרים $x\in A$, וגם $x\in B$ או $x\in C$.'
-      - id: conclude
-        label: 'לכן $x\in A\cap(B\cup C)$. הוכחנו את שתי ההכלות, ולכן הקבוצות שוות.'
-    order: [plan, take-left, cases-left, take-right, conclude]
+      - id: base
+        label: 'בסיס: עבור $n=1$ שני האגפים שווים ל-$1+x$.'
+      - id: hyp
+        label: 'נניח ש-$(1+x)^n\ge 1+nx$ עבור $n$ טבעי מסוים.'
+      - id: multiply
+        label: 'כיוון ש-$1+x\ge 0$, מותר לכפול את ההנחה ב-$1+x$: $(1+x)^{n+1}\ge(1+nx)(1+x)$.'
+      - id: expand
+        label: 'נפתח סוגריים: $(1+nx)(1+x)=1+(n+1)x+nx^2$.'
+      - id: drop
+        label: '$nx^2\ge 0$, ולכן $(1+x)^{n+1}\ge 1+(n+1)x$, וזו הטענה עבור $n+1$.'
+    order: [base, hyp, multiply, expand, drop]
     correctFeedback: >-
-      נכון. זו התבנית של כל הוכחת שוויון קבוצות: "יהי $x$ באגף שמאל... לכן $x$ באגף ימין", ואחר כך להפך.
+      נכון. שני מקומות דורשים הצדקה: הכפל ב-$1+x$ (כאן נכנס $x\ge -1$), והשמטת $nx^2$ (שהוא אי-שלילי).
     wrongFeedback: >-
-      כל הכלה מתחילה ב"יהי $x$" באחד האגפים ומסתיימת בכך ש-$x$ באגף השני. סיימו הכלה אחת לפני שמתחילים את
-      השנייה.
+      כדי להשמיט את $nx^2$ צריך קודם לקבל אותו, בפתיחת הסוגריים; וכדי לפתוח סוגריים צריך קודם את המכפלה
+      $(1+nx)(1+x)$, שבאה מהכפל בהנחה.
 
-  - id: Q-0.6-one-inclusion
+  - id: Q-0.6-bernoulli-condition
+    type: twotier
+    objectives: [OBJ-0.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם $(1+x)^n\ge 1+nx$ לכל $x$ ממשי ולכל $n$ טבעי?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. בלי התנאי $x\ge -1$ אי-השוויון יכול להיכשל.
+      - text: כן
+        feedback: >-
+          נסו $x=-4$ ו-$n=3$: $(-3)^3=-27$, בעוד $1+3\cdot(-4)=-11$, ו-$-27<-11$.
+        misconception: MC-bernoulli-any-x
+    reasons:
+      - text: 'עבור $x=-4$ ו-$n=3$ אגף שמאל הוא $-27$ ואגף ימין $-11$'
+        correct: true
+        feedback: >-
+          בדיוק. דוגמה נגדית אחת מספיקה. ההוכחה נופלת בדיוק בצעד: כש-$1+x<0$, כפל בו הופך את כיוון אי-השוויון.
+      - text: ההוכחה באינדוקציה עובדת לכל $x$
+        feedback: >-
+          בצעד כופלים את הנחת האינדוקציה ב-$1+x$. אם $1+x<0$ הכפל הופך את הכיוון, וההוכחה לא עוברת.
+        misconception: MC-bernoulli-any-x
+      - text: בבסיס $n=1$ יש שוויון לכל $x$, ולכן אי-השוויון נכון לכל $x$
+        feedback: >-
+          הבסיס אכן נכון לכל $x$, אבל אינדוקציה צריכה גם צעד, והצעד דורש $x\ge -1$.
+        misconception: MC-bernoulli-any-x
+
+  - id: Q-0.6-strong-why
+    type: mc
+    objectives: [OBJ-0.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מוכיחים שכל מספר טבעי $n\ge2$ הוא מכפלה של ראשוניים. אם $n$ אינו ראשוני, כותבים $n=de$ עם שלמים
+      $2\le d<n$ ו-$2\le e<n$. למה כאן צריך אינדוקציה שלמה, ולא מספיקה הנחת האינדוקציה הרגילה, הטענה עבור $n-1$?
+    choices:
+      - text: 'כי $d$ ו-$e$ יכולים להיות כל מספרים בין $2$ ל-$n-1$, ולכן צריך את הטענה לכל המספרים הקטנים מ-$n$'
+        correct: true
+        feedback: >-
+          נכון. למשל $12=2\cdot6$: הצעד משתמש בטענה עבור 2 ועבור 6, ולא עבור 11. הטענה עבור $n-1$ לא אומרת דבר על
+          $d$ ועל $e$. אינדוקציה שלמה נותנת את הטענה לכל $k$ עם $2\le k<n$, ובפרט ל-$d$ ול-$e$.
+      - text: 'כי באינדוקציה שלמה לא צריך לבדוק אף מקרה בנפרד, וכך חוסכים את הבסיס'
+        feedback: >-
+          לא זו הסיבה, וגם זה לא נכון: עבור $n=2$ אין מספרים קודמים, ולכן את המקרה הזה מוכיחים בלי עזרה (2 ראשוני,
+          מכפלה של ראשוני אחד). אינדוקציה שלמה נחוצה כאן בגלל **אילו** מקרים קודמים הצעד צריך.
+        misconception: MC-strong-induction-no-cases
+      - text: 'אין צורך: מהטענה עבור $n-1$ אפשר להסיק אותה עבור $d$ ועבור $e$, כי הם קטנים מ-$n$'
+        feedback: >-
+          "קטנים מ-$n$" אינו הצדקה. הטענה עבור $n-1$ היא על המספר $n-1$ בלבד, ושום חוליה לא מעבירה אותה אל $d$ או
+          אל $e$. כל מעבר בצעד צריך הנחה או טענה שהוכחה, וכאן חסרה בדיוק ההנחה על $d$ ועל $e$.
+        misconception: MC-step-justification-vague
+
+  - id: Q-0.6-well-ordering-z
     type: twotier
     objectives: [OBJ-0.6-1]
     qualitative: true
     level: mid
     prompt: >-
-      כדי להוכיח ש-$A=B$, סטודנטית הראתה שכל איבר של $A$ נמצא ב-$B$. האם זה מספיק?
+      האם לכל קבוצה לא ריקה של מספרים **שלמים** יש איבר קטן ביותר?
     choices:
       - text: לא
         correct: true
-        feedback: נכון. היא הוכיחה הכלה אחת מתוך שתיים.
+        feedback: נכון. עקרון הסדר הטוב הוא על קבוצות של טבעיים, ולשלמים הוא לא נכון.
       - text: כן
         feedback: >-
-          דוגמה נגדית: $A=\{1\}$ ו-$B=\{1,2\}$. כל איבר של $A$ נמצא ב-$B$, והקבוצות שונות.
-        misconception: MC-set-equality-one-inclusion
+          ל-$\mathbb{Z}$ עצמה אין איבר קטן ביותר: לכל שלם $m$ גם $m-1$ שלם, ו-$m-1<m$.
+        misconception: MC-well-ordering-any-set
     reasons:
-      - text: 'זה מראה רק $A\subseteq B$; למשל $\{1\}\subseteq\{1,2\}$, והקבוצות שונות'
+      - text: 'לקבוצה $\mathbb{Z}$ אין איבר קטן ביותר: לכל שלם $m$, גם $m-1$ שלם וקטן ממנו'
         correct: true
         feedback: >-
-          בדיוק. חסר $B\subseteq A$: צריך גם להראות שכל איבר של $B$ נמצא ב-$A$.
-      - text: אם כל האיברים של $A$ נמצאים ב-$B$, הקבוצות זהות
+          בדיוק. דוגמה נגדית אחת מספיקה. גם הקבוצה $\{-1,-2,-3,\dots\}$ היא דוגמה נגדית.
+      - text: 'כן, כי זה עקרון הסדר הטוב'
         feedback: >-
-          ל-$B$ עשויים להיות איברים נוספים. "כל איבר של $A$ ב-$B$" פירושו רק ש-$A$ מוכלת ב-$B$.
-        misconception: MC-set-equality-one-inclusion
-      - text: חסר רק לבדוק שאיבר אחד של $B$ נמצא ב-$A$
+          עקרון הסדר הטוב מניח שהקבוצה מוכלת ב-$\mathbb{N}$. ההוכחה שלו משתמשת באינדוקציה, שמתחילה ב-1; בשלמים
+          אין מקום להתחיל ממנו.
+        misconception: MC-well-ordering-any-set
+      - text: 'לא, כי גם לקבוצה אינסופית של טבעיים, כמו המספרים הזוגיים, אין איבר קטן ביותר'
         feedback: >-
-          איבר אחד לא מספיק: צריך שכל איבר של $B$ יהיה ב-$A$. ב-$A=\{1\}$, $B=\{1,2\}$, האיבר $1$ של $B$ נמצא
-          ב-$A$, והקבוצות עדיין שונות.
-        misconception: MC-examples-are-proof
+          המסקנה "לא" נכונה, אבל הנימוק שגוי: לכל קבוצה לא ריקה של טבעיים, גם אינסופית, יש איבר קטן ביותר; לזוגיים
+          הוא 2. הדוגמה הנגדית צריכה לצאת מ-$\mathbb{N}$.
+        misconception: MC-well-ordering-any-set
 
-  - id: Q-0.6-domain-image
-    type: mc
-    objectives: [OBJ-0.6-2]
-    qualitative: true
-    level: basic
-    prompt: >-
-      תהי $f:\mathbb{R}\to\mathbb{R}$, $f(x)=x^2$. מהם התחום, הטווח והתמונה של $f$?
-    choices:
-      - text: 'תחום $\mathbb{R}$, טווח $\mathbb{R}$, תמונה $[0,\infty)$'
-        correct: true
-        feedback: >-
-          נכון. התחום והטווח כתובים בהגדרה $f:\mathbb{R}\to\mathbb{R}$. התמונה היא מה שמתקבל בפועל: כל מספר
-          אי-שלילי $y$ מתקבל ($y=(\sqrt y)^2$), ושליליים לא.
-      - text: 'תחום $\mathbb{R}$, טווח $[0,\infty)$, תמונה $[0,\infty)$'
-        feedback: >-
-          הטווח הוא חלק מההגדרה של הפונקציה, כאן $\mathbb{R}$ (מה שכתוב אחרי החץ). מה שהפונקציה מקבלת בפועל,
-          $[0,\infty)$, נקרא התמונה.
-        misconception: MC-domain-codomain-image
-      - text: 'תחום $[0,\infty)$, טווח $\mathbb{R}$, תמונה $\mathbb{R}$'
-        feedback: >-
-          התחום הוא הקבוצה שלפני החץ, $\mathbb{R}$: מותר להציב גם מספרים שליליים. והתמונה אינה $\mathbb{R}$, כי
-          $x^2$ אף פעם אינו שלילי.
-        misconception: MC-domain-codomain-image
-
-  - id: Q-0.6-injective-definition
-    type: mc
-    objectives: [OBJ-0.6-2]
-    qualitative: true
-    level: basic
-    prompt: >-
-      מהי ההגדרה של "$f:A\to B$ חד-חד-ערכית"?
-    choices:
-      - text: 'לכל $x_1,x_2\in A$: אם $f(x_1)=f(x_2)$ אז $x_1=x_2$'
-        correct: true
-        feedback: >-
-          נכון. בשקילות (קונטרפוזיטיב): נקודות שונות הולכות לערכים שונים.
-      - text: 'לכל $x_1,x_2\in A$: אם $x_1=x_2$ אז $f(x_1)=f(x_2)$'
-        feedback: >-
-          זה נכון לכל פונקציה, כי פונקציה נותנת ערך אחד לכל נקודה; למשל גם $x^2$ מקיימת את זה. חד-חד-ערכית היא
-          הגרירה ההפוכה.
-        misconception: MC-injective-reversed
-      - text: 'לכל $y\in B$ קיים $x\in A$ כך ש-$f(x)=y$'
-        feedback: >-
-          זו ההגדרה של "על": כל איבר של הטווח מתקבל. זו תכונה אחרת.
-        misconception: MC-injective-onto-confused
-
-  - id: Q-0.6-which-injective
-    type: multi
-    objectives: [OBJ-0.6-2]
+  - id: Q-0.6-strong-bases
+    type: numeric
+    objectives: [OBJ-0.6-1]
     level: mid
     prompt: >-
-      אילו מהפונקציות הבאות חד-חד-ערכיות? סמנו את כולן.
-    choices:
-      - text: '$f:[0,\infty)\to\mathbb{R}$, $f(x)=x^2$'
-        correct: true
+      מוכיחים באינדוקציה שלמה שכל שלם $n\ge12$ אפשר לכתוב בצורה $n=3a+7b$ עם שלמים $a,b\ge0$. הנימוק בצעד:
+      "לפי ההנחה $n-3=3a+7b$, ולכן $n=3(a+1)+7b$". בכמה ערכים של $n$ צריך לבדוק את הטענה ישירות, בלי הנימוק הזה?
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $n=12,13,14$. הנימוק צריך את הטענה עבור $n-3$, וההנחה של אינדוקציה שלמה מבסיס 12 אומרת משהו רק על
+      מספרים שהם לפחות 12, כלומר רק כש-$n\ge15$. ישירות: $12=3\cdot4$, $13=3\cdot2+7$, $14=7\cdot2$.
+    wrongFeedback: >-
+      בדקו לאילו $n$ המספר $n-3$ עדיין לפחות 12. את כל ה-$n$ שלפני כן, מ-12 והלאה, הנימוק לא מכסה.
+    commonWrong:
+      - value: 1
         feedback: >-
-          נכון. אם $x_1^2=x_2^2$ עם $x_1,x_2\ge 0$, אז $(x_1-x_2)(x_1+x_2)=0$. אם $x_1+x_2=0$, שני המספרים
-          האי-שליליים הם אפס; אחרת $x_1-x_2=0$. בשני המקרים $x_1=x_2$.
-      - text: '$f:\mathbb{R}\to[0,\infty)$, $f(x)=x^2$'
+          בסיס אחד, $n=12$, לא מספיק: עבור $n=13$ הנימוק משתמש ב-10, ועבור $n=14$ ב-11, ועליהם ההנחה לא אומרת דבר.
+          11 אף אינו מהצורה $3a+7b$.
+        misconception: MC-strong-induction-no-cases
+      - value: 0
         feedback: >-
-          $f(-1)=f(1)$, ולכן היא לא חד-חד-ערכית. היא **על** (כל $y\ge 0$ מתקבל), אבל זו תכונה אחרת.
-        misconception: MC-injective-onto-confused
-      - text: '$f:\mathbb{R}\to\mathbb{R}$, $f(x)=2x+1$'
-        correct: true
+          באינדוקציה שלמה ההנחה עבור $n=12$ ריקה (אין מספרים קודמים מ-12), ולכן את 12 מוכיחים בלי עזרה, וכך גם כל
+          $n$ שהנימוק לא מכסה.
+        misconception: MC-strong-induction-no-cases
+      - value: 4
         feedback: >-
-          נכון. $2x_1+1=2x_2+1$ גורר $x_1=x_2$.
-      - text: '$f:\mathbb{R}\to\mathbb{R}$, $f(x)=x^2$'
-        feedback: >-
-          אותה נוסחה כמו בבחירה הראשונה, אבל תחום אחר: כאן $f(-1)=f(1)=1$. חד-חד-ערכיות תלויה בתחום, לא רק
-          בנוסחה.
-        misconception: MC-formula-is-function
+          עבור $n=15$ הנימוק כבר עובד: $15-3=12$, וההנחה אומרת שהטענה נכונה עבור 12. מספיק לבדוק את 12, 13 ו-14.
 
-  - id: Q-0.6-bounded-onto
-    type: twotier
-    objectives: [OBJ-0.6-2]
+  - id: Q-0.6-wo-to-induction
+    type: mc
+    objectives: [OBJ-0.6-1]
     qualitative: true
-    level: exam
+    level: mid
     prompt: >-
-      תהי $f:\mathbb{R}\to\mathbb{R}$, $f(x)=\frac{x}{1+|x|}$. מה נכון לגבי $f$?
+      בהוכחה שעקרון הסדר הטוב גורר את עקרון האינדוקציה: $S\subseteq\mathbb{N}$, $1\in S$, ולכל $n\in S$ גם
+      $n+1\in S$. מניחים בשלילה ש-$S\ne\mathbb{N}$, ולוקחים את $m$, המספר הטבעי הקטן ביותר שאינו ב-$S$. למה
+      $m-1\in S$?
     choices:
-      - text: חד-חד-ערכית ולא על
+      - text: '$m\ne1$ כי $1\in S$, ולכן $m-1$ טבעי; ו-$m-1<m$, ו-$m$ הקטן ביותר מחוץ ל-$S$, ולכן $m-1$ לא מחוץ ל-$S$'
         correct: true
         feedback: >-
-          נכון. $f$ שולחת נקודות שונות לערכים שונים, אבל כל ערכיה בקטע $(-1,1)$, ולכן, למשל, $2$ אינו מתקבל.
-      - text: חד-חד-ערכית ועל
+          נכון. שני הנימוקים נחוצים: בלי $m\ne1$ המספר $m-1$ הוא 0, שאינו טבעי. ואז התנאי על $S$ נותן $m\in S$,
+          סתירה.
+      - text: 'לפי הנחת האינדוקציה, $S$ מכילה את כל המספרים הקטנים מ-$m$'
         feedback: >-
-          לכל $x$ מתקיים $|f(x)|=\frac{|x|}{1+|x|}<1$. לכן $2$, שנמצא בטווח $\mathbb{R}$, אינו מתקבל, ו-$f$ אינה
-          על.
-        misconception: MC-domain-codomain-image
-      - text: על ולא חד-חד-ערכית
+          אין כאן הנחת אינדוקציה: את עקרון האינדוקציה רוצים **להוכיח** מהסדר הטוב, ולהשתמש בו כאן זה מעגלי.
+          הנימוק הוא המינימליות של $m$.
+        misconception: MC-induction-hypothesis-circular
+      - text: 'כי לכל קבוצה של מספרים שלמים יש איבר קטן ביותר, ו-$m-1$ שלם'
         feedback: >-
-          זה הפוך. $f$ אינה על ($|f(x)|<1$), והיא כן חד-חד-ערכית: אם $f(x_1)=f(x_2)$, ל-$x_1$ ול-$x_2$ אותו סימן
-          ואותו $|f|$, ולכן אותו $|x|$.
-        misconception: MC-injective-onto-confused
-    reasons:
-      - text: >-
-          $|f(x)|=1-\frac{1}{1+|x|}<1$, ולכן $2$ אינו בתמונה; ו-$f(x)$ באותו סימן כמו $x$, ו-$|f(x)|$ גדל
-          ממש עם $|x|$, ולכן ערכים שווים באים מאותו $x$
-        correct: true
-        feedback: >-
-          בדיוק. "על" נבדק מול הטווח: התמונה היא $(-1,1)$ והטווח $\mathbb{R}$. חד-חד-ערכיות נבדקת לפי ההגדרה:
-          $f(x_1)=f(x_2)$ גורר אותו סימן ואותו ערך מוחלט, כלומר $x_1=x_2$.
-      - text: 'לכל $y$ אפשר לפתור את המשוואה $y=\frac{x}{1+|x|}$ ולמצוא $x$'
-        feedback: >-
-          רק כש-$|y|<1$. עבור $y=2$: אם $x\ge 0$ מקבלים $x=2+2x$, כלומר $x=-2<0$, סתירה; ואם $x<0$ אז $f(x)<0<2$.
-          אין פתרון.
-        misconception: MC-domain-codomain-image
-      - text: 'הטווח הוא $\mathbb{R}$, ולכן התמונה היא $\mathbb{R}$'
-        feedback: >-
-          הטווח הוא רק לאן $f$ מוגדרת לשלוח. התמונה היא מה שמתקבל בפועל, כאן $(-1,1)$, והיא יכולה להיות קטנה
-          מהטווח.
-        misconception: MC-domain-codomain-image
+          עקרון הסדר הטוב הוא על קבוצות לא ריקות של **טבעיים**; לשלמים הוא לא נכון. וכאן הוא כבר הופעל, כדי לבחור
+          את $m$; מה שנשאר הוא להשתמש במינימליות של $m$.
+        misconception: MC-well-ordering-any-set
 
-  - id: Q-0.6-compose
+  - id: Q-0.6-bernoulli-bound
+    type: numeric
+    objectives: [OBJ-0.6-2]
+    level: basic
+    prompt: >-
+      איזה חסם מלמטה נותן אי-שוויון ברנולי על $(1.02)^{40}$? כתבו את המספר $1+nx$ המתאים.
+    answer: 1.8
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $x=0.02\ge-1$ ו-$n=40$, ולכן $(1.02)^{40}\ge1+40\cdot0.02=1.8$. (הערך האמיתי בערך $2.208$.)
+    wrongFeedback: >-
+      כתבו $1.02=1+x$, כלומר $x=0.02$, ובדקו ש-$x\ge-1$. החסם הוא $1+nx$ עם $n=40$.
+    commonWrong:
+      - value: 41.8
+        feedback: >-
+          הצבתם $x=1.02$. בברנולי הבסיס של החזקה הוא $1+x$, ולכן $x=0.02$.
+      - value: 2.208
+        feedback: >-
+          זה הערך האמיתי של $(1.02)^{40}$ בקירוב, לא החסם. ברנולי נותן מספר קטן ממנו, $1.8$, בלי לחשב חזקה.
+      - value: 0.8
+        feedback: >-
+          שכחתם את ה-1: החסם הוא $1+nx$, לא $nx$.
+
+  - id: Q-0.6-pascal-value
     type: numeric
     objectives: [OBJ-0.6-3]
     level: basic
     prompt: >-
-      יהיו $f(x)=2x+1$ ו-$g(x)=x^2$, שתיהן מ-$\mathbb{R}$ אל $\mathbb{R}$. חשבו את $(f\circ g)(3)$.
-    answer: 19
+      חשבו בעזרת זהות פסקל, בלי עצרות: $\binom62+\binom63$.
+    answer: 35
     tolerance: 0.001
     correctFeedback: >-
-      נכון. $(f\circ g)(3)=f(g(3))=f(9)=2\cdot 9+1=19$: קודם הפונקציה הימנית, $g$.
+      נכון. לפי זהות פסקל עם $n=6$ ו-$k=3$: $\binom62+\binom63=\binom73=35$. ובדיקה: $15+20=35$.
     wrongFeedback: >-
-      $(f\circ g)(x)=f(g(x))$: הציבו קודם ב-$g$, ואת התוצאה הציבו ב-$f$.
+      זהות פסקל: $\binom{n}{k-1}+\binom nk=\binom{n+1}{k}$. כאן $n=6$, ו-$k-1=2$, כלומר $k=3$.
     commonWrong:
-      - value: 49
+      - value: 21
         feedback: >-
-          $49=g(f(3))=7^2$: הפעלתם קודם את $f$. ב-$f\circ g$ מפעילים קודם את $g$ (הימנית).
-        misconception: MC-composition-order-swapped
-      - value: 63
+          זה $\binom72$. בזהות פסקל המקדם התחתון של התוצאה הוא הגדול מבין השניים, $k=3$: $\binom73=35$.
+      - value: 56
         feedback: >-
-          $63=f(3)\cdot g(3)=7\cdot 9$ הוא מכפלה, לא הרכבה. הרכבה פירושה להציב את $g(3)$ בתוך $f$.
+          זה $\binom83$. השורה עולה באחד בלבד: מ-6 ל-7.
 
-  - id: Q-0.6-inverse-exists
-    type: twotier
-    objectives: [OBJ-0.6-3]
-    qualitative: true
-    level: mid
-    prompt: >-
-      לאילו מהפונקציות יש פונקציה הפוכה: (I) $f:\mathbb{R}\to\mathbb{R}$, $f(x)=x^2$; (II)
-      $f:[0,\infty)\to[0,\infty)$, $f(x)=x^2$?
-    choices:
-      - text: רק ל-(II)
-        correct: true
-        feedback: >-
-          נכון. (II) חד-חד-ערכית ועל, וההפוכה שלה היא $f^{-1}(y)=\sqrt y$. (I) אינה חד-חד-ערכית ($f(-1)=f(1)$)
-          וגם אינה על ($-1$ לא מתקבל).
-      - text: לשתיהן, וההפוכה היא $\sqrt y$
-        feedback: >-
-          ב-(I) $\sqrt{f(x)}=\sqrt{x^2}=|x|$, ולכן $\sqrt y$ לא מחזירה את $x=-3$. ול-$y=-1$ אין שום מקור. אותה
-          נוסחה, פונקציות שונות.
-        misconception: MC-inverse-without-injective
-      - text: לאף אחת, כי $x^2$ אינה חד-חד-ערכית
-        feedback: >-
-          ב-(II) התחום הוא $[0,\infty)$, ושם $x^2$ כן חד-חד-ערכית. התכונה תלויה בתחום, לא רק בנוסחה.
-        misconception: MC-formula-is-function
-    reasons:
-      - text: 'יש הפוכה בדיוק כשהפונקציה חד-חד-ערכית ועל; (I) נכשלת בשני התנאים, ו-(II) מקיימת את שניהם'
-        correct: true
-        feedback: >-
-          בדיוק. בלי חד-חד-ערכיות אין ל-$y$ מקור **יחיד**, ובלי על יש $y$ שאין לו מקור בכלל.
-      - text: 'ההפוכה של $x^2$ היא $\frac{1}{x^2}$, והיא מוגדרת רק כש-$x\ne 0$'
-        feedback: >-
-          $\frac{1}{x^2}$ הוא אחד חלקי הפונקציה, לא הפונקציה ההפוכה. ההפוכה צריכה לבטל את $f$: $f^{-1}(f(x))=x$.
-          למשל $f(2)=4$, ו-$\frac14\ne 2$.
-        misconception: MC-inverse-is-reciprocal
-      - text: לכל פונקציה שיש לה נוסחה שמבטלת אותה יש הפוכה, ו-$\sqrt y$ מבטלת את $x^2$
-        feedback: >-
-          $\sqrt{x^2}=|x|$, לא $x$, ולכן ב-(I) הנוסחה לא מבטלת את $f$. השאלה היא על הפונקציה (תחום, טווח וכלל),
-          לא על הנוסחה.
-        misconception: MC-formula-is-function
-
-  - id: Q-0.6-inverse-value
+  - id: Q-0.6-binomial-coef
     type: numeric
     objectives: [OBJ-0.6-3]
     level: mid
     prompt: >-
-      הפונקציה $f:\mathbb{R}\setminus\{1\}\to\mathbb{R}\setminus\{2\}$, $f(x)=\frac{2x+1}{x-1}$, חד-חד-ערכית ועל.
-      חשבו את $f^{-1}(5)$.
-    answer: 2
+      מהו המקדם של $x^3$ בפיתוח של $(2+x)^5$?
+    answer: 40
     tolerance: 0.001
     correctFeedback: >-
-      נכון. מחפשים $x$ עם $\frac{2x+1}{x-1}=5$: $2x+1=5x-5$, כלומר $x=2$. ובדיקה: $f(2)=\frac{5}{1}=5$. (באופן
-      כללי $f^{-1}(y)=\frac{y+1}{y-2}$.)
+      נכון. לפי הבינום עם $a=2$, $b=x$ ו-$n=5$, המחובר עם $x^3$ הוא $\binom53\,2^{5-3}x^3=10\cdot4\,x^3=40x^3$.
     wrongFeedback: >-
-      $f^{-1}(5)$ הוא ה-$x$ שעבורו $f(x)=5$. פתרו את המשוואה $\frac{2x+1}{x-1}=5$ ובדקו את התשובה בהצבה.
+      המחובר הכללי הוא $\binom5k\,2^{5-k}x^k$. המקדם של $x^3$ מתקבל עם $k=3$.
     commonWrong:
-      - value: 2.75
+      - value: 80
         feedback: >-
-          $2.75=\frac{11}{4}=f(5)$: הצבתם $5$ ב-$f$. צריך את ה-$x$ שעבורו $f(x)=5$.
-      - value: 0.36363636
+          חישבתם $\binom53\cdot2^3$. החזקה של $a=2$ היא $n-k=2$, לא $k$: $\binom53\cdot2^2=40$.
+        misconception: MC-binomial-exponent-swap
+      - value: 10
         feedback: >-
-          $\frac{4}{11}=\frac{1}{f(5)}$ הוא אחד חלקי ערך הפונקציה, לא ערך הפונקציה ההפוכה.
-        misconception: MC-inverse-is-reciprocal
+          זה רק $\binom53$. גם החזקה $2^{5-3}=4$ של המחובר הראשון היא חלק מהמקדם.
+        misconception: MC-binomial-exponent-swap
+      - value: 0
+        feedback: >-
+          $(2+x)^5$ אינו $2^5+x^5$: בפיתוח יש גם המחוברים האמצעיים, ואחד מהם הוא $40x^3$.
+        misconception: MC-power-of-sum
 
-  - id: Q-0.6-composition-injective
+  - id: Q-0.6-binomial-step
+    type: mc
+    objectives: [OBJ-0.6-3]
+    level: mid
+    prompt: >-
+      בצעד של ההוכחה של הבינום של ניוטון, אחרי הכפל ב-$a+b$, מקבלים שני סכומים. המחובר עם $a^{n+1-k}b^k$
+      (כש-$1\le k\le n$) מופיע בשניהם, עם המקדמים $\binom nk$ ו-$\binom n{k-1}$. מה הופך את הסכום שלהם למקדם
+      של הנוסחה עבור $n+1$?
+    choices:
+      - text: 'זהות פסקל: $\binom{n}{k-1}+\binom nk=\binom{n+1}{k}$'
+        correct: true
+        feedback: >-
+          נכון. מותר להפעיל אותה כי $n\ge1$ ו-$1\le k\le n$. את המחוברים עם $k=0$ ו-$k=n+1$, שמופיעים רק בסכום אחד,
+          מטפלים בנפרד: $a^{n+1}$ ו-$b^{n+1}$.
+      - text: '$(a+b)^{n+1}=a^{n+1}+b^{n+1}$, ולכן המחוברים האמצעיים מתבטלים'
+        feedback: >-
+          חזקה של סכום אינה סכום חזקות: כבר $(1+1)^2=4\ne2$. המחוברים האמצעיים לא מתבטלים; זהות פסקל מאחדת אותם.
+        misconception: MC-power-of-sum
+      - text: 'הסימטריה $\binom nk=\binom n{n-k}$'
+        feedback: >-
+          הסימטריה נכונה, אבל היא לא מחברת שני מקדמים לאחד. בכל מעבר בהוכחה צריך את העובדה שמצדיקה **אותו**, וכאן
+          זו זהות פסקל.
+        misconception: MC-step-justification-vague
+
+  - id: Q-0.6-improved-bernoulli
     type: twotier
-    objectives: [OBJ-0.6-3, OBJ-0.6-2]
+    objectives: [OBJ-0.6-2, OBJ-0.6-3]
     qualitative: true
     level: exam
     prompt: >-
-      יהיו $f:A\to B$ ו-$g:B\to C$, ונניח ש-$g\circ f$ חד-חד-ערכית. האם $f$ בהכרח חד-חד-ערכית?
-    choices:
-      - text: כן
-        correct: true
-        feedback: נכון. הפונקציה שמופעלת **ראשונה** חייבת להיות חד-חד-ערכית.
-      - text: לא בהכרח; זו $g$ שחייבת להיות חד-חד-ערכית
-        feedback: >-
-          ב-$g\circ f$ מופעלת קודם $f$. אם $f$ הייתה שולחת שתי נקודות שונות לאותו ערך, $g$ הייתה מקבלת אותו ערך
-          פעמיים והתוצאה הייתה שווה. ודווקא $g$ לא חייבת: $f(x)=x$ מ-$[0,\infty)$ אל $\mathbb{R}$, ו-$g(x)=x^2$ מ-$\mathbb{R}$ אל $\mathbb{R}$.
-        misconception: MC-composition-order-swapped
-    reasons:
-      - text: 'אם $f(x_1)=f(x_2)$, אז $g(f(x_1))=g(f(x_2))$, ומחד-חד-ערכיות של $g\circ f$ נובע $x_1=x_2$'
-        correct: true
-        feedback: >-
-          בדיוק. ההוכחה בודקת את ההגדרה של $f$ ישירות: מניחים $f(x_1)=f(x_2)$ ומסיקים $x_1=x_2$.
-      - text: 'גם $f$ וגם $g$ חייבות להיות חד-חד-ערכיות, כי הרכבה של חד-חד-ערכיות היא חד-חד-ערכית'
-        feedback: >-
-          הטענה "אם $f$ ו-$g$ חד-חד-ערכיות אז $g\circ f$ חד-חד-ערכית" נכונה, אבל כאן משתמשים בהפוכה שלה, שאינה
-          נובעת ממנה. $g(x)=x^2$ מ-$\mathbb{R}$ אל $\mathbb{R}$ אינה חד-חד-ערכית, ובכל זאת $g\circ f$ חד-חד-ערכית
-          עבור $f(x)=x$ מ-$[0,\infty)$ אל $\mathbb{R}$.
-        misconception: MC-converse-equivalent
-      - text: 'אם $x_1=x_2$ אז $f(x_1)=f(x_2)$, ולכן $f$ חד-חד-ערכית'
-        feedback: >-
-          זה נכון לכל פונקציה ואינו ההגדרה של חד-חד-ערכית. צריך את הגרירה ההפוכה: $f(x_1)=f(x_2)\Rightarrow x_1=x_2$.
-        misconception: MC-injective-reversed
-
-  - id: Q-0.6-self-injective
-    type: twotier
-    objectives: [OBJ-0.6-2]
-    qualitative: true
-    level: mid
-    prompt: >-
-      תהי $f:\mathbb{N}\to\mathbb{N}$ חד-חד-ערכית. האם $f$ בהכרח על?
+      מהבינום של ניוטון, $(1+x)^n=1+nx+\frac{n(n-1)}{2}x^2+\dots$. האם
+      $(1+x)^n\ge1+nx+\frac{n(n-1)}{2}x^2$ לכל $x\ge-1$ ולכל $n$ טבעי?
     choices:
       - text: לא
         correct: true
-        feedback: >-
-          נכון. בקבוצה אינסופית חד-חד-ערכיות לא מבטיחה "על": $f(n)=n+1$ חד-חד-ערכית, ול-$1$ אין מקור.
+        feedback: נכון. לכל $x\ge0$ זה נכון, אבל עבור $x$ שלילי זה יכול להיכשל.
       - text: כן
         feedback: >-
-          זה נכון לפונקציה מקבוצה סופית לעצמה, לא ב-$\mathbb{N}$. $f(n)=2n$ חד-חד-ערכית ($2n=2m$ גורר $n=m$), ול-$3$
-          אין מקור, כי $2n$ זוגי.
-        misconception: MC-self-injective-onto
+          נסו $x=-0.9$ ו-$n=3$: $(0.1)^3=0.001$, ואילו $1-2.7+3\cdot0.81=0.73$.
+        misconception: MC-binomial-drop-negative-terms
     reasons:
-      - text: '$f(n)=n+1$ חד-חד-ערכית, ו-$1$ אינו מתקבל כי $n+1\ge 2$'
+      - text: 'עבור $x=-0.9$ ו-$n=3$ אגף שמאל $0.001$ ואגף ימין $0.73$'
         correct: true
         feedback: >-
-          בדיוק. דוגמה נגדית אחת מפריכה את הטענה הכללית. זה המלון של שיעור 0.6: כל אורח עובר לחדר הבא, והחדר הראשון
-          מתפנה.
-      - text: 'כל איבר נשלח למקום משלו ואף איבר לא נעלם, ולכן כל המקומות בתמונה'
+          בדיוק. ובאופן כללי עבור $n=3$ ההפרש הוא בדיוק $x^3$, שלילי לכל $x<0$: המחובר שהשמטנו שלילי.
+      - text: 'מהבינום: משמיטים את שאר המחוברים, והסכום רק קטן'
         feedback: >-
-          הנימוק הזה סופר: בקבוצה סופית, $n$ ערכים שונים בקבוצה של $n$ איברים ממלאים אותה. ב-$\mathbb{N}$ אין ספירה
-          כזו, ו-$n\mapsto 2n$ משאירה את כל האי-זוגיים בחוץ.
-        misconception: MC-self-injective-onto
-      - text: 'בדקנו את כל הפונקציות החד-חד-ערכיות מ-$\{1,2,3\}$ לעצמה, וכולן על'
+          השמטה מקטינה סכום רק כשהמחוברים שמשמיטים אי-שליליים. כש-$x<0$ המחוברים עם חזקה אי-זוגית של $x$ שליליים
+          (הערה 0.6.12).
+        misconception: MC-binomial-drop-negative-terms
+      - text: 'זה נכון כי זה חזק יותר מברנולי, וברנולי נכון לכל $x\ge-1$'
         feedback: >-
-          הבדיקה נכונה לקבוצה הסופית, אבל היא לא אומרת דבר על $\mathbb{N}$. דוגמאות על קבוצות אחרות אינן הוכחה, וכאן
-          המסקנה אפילו שקרית.
-        misconception: MC-examples-are-proof
+          טענה חזקה יותר לא נובעת מטענה חלשה ממנה. ההוכחה של הגרסה המשופרת משמיטה בצעד את $cx^3$, ולכן היא דורשת
+          $x\ge0$.
+        misconception: MC-binomial-drop-negative-terms

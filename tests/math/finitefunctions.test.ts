@@ -1,4 +1,4 @@
-/** Lesson 0.6's finite functions, filed by accuracy category. Everything here is exact integer bookkeeping. */
+/** Lesson 0.8's finite functions, filed by accuracy category. Everything here is exact integer bookkeeping. */
 
 import { describe, expect, it } from 'vitest';
 import {
@@ -181,8 +181,8 @@ const minus = (a: readonly number[], b: readonly number[]) => a.filter((x) => !b
 const union = (a: readonly number[], b: readonly number[]) => [...new Set([...a, ...b])].sort((x, y) => x - y);
 const SHAPES: [number, number][] = [[1, 1], [2, 2], [3, 3], [3, 2], [2, 3], [4, 3], [3, 4]];
 
-describe('exact identities: the numbered results of lesson 0.6, on every function between small sets', () => {
-  it('0.6.13–0.6.14: f(C₁ ∪ C₂) = f(C₁) ∪ f(C₂), f(C₁ ∩ C₂) ⊆ f(C₁) ∩ f(C₂); f⁻¹ preserves ∪, ∩, ∖ and complements', () => {
+describe('exact identities: the numbered results of lesson 0.8, on every function between small sets', () => {
+  it('0.8.3–0.8.4: f(C₁ ∪ C₂) = f(C₁) ∪ f(C₂), f(C₁ ∩ C₂) ⊆ f(C₁) ∩ f(C₂); f⁻¹ preserves ∪, ∩, ∖ and complements', () => {
     for (const [m, n] of [[3, 3], [3, 2], [2, 3]] as const) {
       for (const f of allFunctions(m, n)) {
         for (const C1 of subsets(m)) for (const C2 of subsets(m)) {
@@ -198,7 +198,7 @@ describe('exact identities: the numbered results of lesson 0.6, on every functio
       }
     }
   });
-  it('0.6.15 and 0.6.17: f(f⁻¹(D)) ⊆ D, with equality for every D exactly when f is onto; f(C₁ ∩ C₂) = f(C₁) ∩ f(C₂) for all C₁, C₂ exactly when f is injective', () => {
+  it('0.8.5 and 0.8.7: f(f⁻¹(D)) ⊆ D, with equality for every D exactly when f is onto; f(C₁ ∩ C₂) = f(C₁) ∩ f(C₂) for all C₁, C₂ exactly when f is injective', () => {
     for (const [m, n] of SHAPES) {
       for (const f of allFunctions(m, n)) {
         let pushEq = true;
@@ -206,7 +206,7 @@ describe('exact identities: the numbered results of lesson 0.6, on every functio
           const back = imageOf(f, preimageOf(f, D));
           for (const y of back) expect(D).toContain(y);
           if (!same(back, D)) pushEq = false;
-          // workbook W-0.6-09: f(f⁻¹(D)) = D ∩ f(A)
+          // workbook W-0.8-10(א): f(f⁻¹(D)) = D ∩ f(A)
           expect(back).toEqual(inter(D, image(f)));
         }
         expect(pushEq).toBe(isSurjective(f, n));
@@ -214,7 +214,7 @@ describe('exact identities: the numbered results of lesson 0.6, on every functio
         let diffEq = true;
         for (const C1 of subsets(m)) for (const C2 of subsets(m)) {
           if (!same(imageOf(f, inter(C1, C2)), inter(imageOf(f, C1), imageOf(f, C2)))) capEq = false;
-          // worked example 0.6-6: f(C) ∖ f(D) ⊆ f(C ∖ D), equality for all C, D exactly when f is injective
+          // worked example ex-0-8-6: f(C) ∖ f(D) ⊆ f(C ∖ D), equality for all C, D exactly when f is injective
           const left = minus(imageOf(f, C1), imageOf(f, C2));
           const right = imageOf(f, minus(C1, C2));
           for (const y of left) expect(right).toContain(y);
@@ -225,14 +225,14 @@ describe('exact identities: the numbered results of lesson 0.6, on every functio
       }
     }
   });
-  it('0.6.25: for a nonempty domain, f is injective exactly when it has a left inverse; it is onto exactly when it has a right inverse', () => {
+  it('0.8.15: for a nonempty domain, f is injective exactly when it has a left inverse; it is onto exactly when it has a right inverse', () => {
     for (const [m, n] of SHAPES) {
       const fs = [...allFunctions(m, n)];
       const gs = [...allFunctions(n, m)];
       for (const f of fs) {
         expect(gs.some((g) => same(compose(g, f), identity(m)))).toBe(isInjective(f));
         expect(gs.some((h) => same(compose(f, h), identity(n)))).toBe(isSurjective(f, n));
-        // the right inverse of 0.6.25(ג): the least preimage of each point
+        // the right inverse of 0.8.15(ג): the least preimage of each point
         if (isSurjective(f, n)) {
           const h = identity(n).map((y) => Math.min(...preimage(f, y)));
           expect(compose(f, h)).toEqual(identity(n));
@@ -240,7 +240,7 @@ describe('exact identities: the numbered results of lesson 0.6, on every functio
       }
     }
   });
-  it('0.6.24: (g∘f)⁻¹ = f⁻¹∘g⁻¹ for every pair of bijections of a 3-element set, and the other order fails for some pair', () => {
+  it('0.8.14: (g∘f)⁻¹ = f⁻¹∘g⁻¹ for every pair of bijections of a 3-element set, and the other order fails for some pair', () => {
     const bij = [...allFunctions(3, 3)].filter((f) => isInjective(f));
     let otherOrderFails = false;
     for (const f of bij) for (const g of bij) {
@@ -250,7 +250,7 @@ describe('exact identities: the numbered results of lesson 0.6, on every functio
     }
     expect(otherOrderFails).toBe(true);
   });
-  it('worked example 0.6-5: f∘f = f with f injective or onto forces f = id; without them it does not', () => {
+  it('worked example ex-0-8-5: f∘f = f with f injective or onto forces f = id; without them it does not', () => {
     let idempotentNotId = false;
     for (const m of [1, 2, 3, 4]) {
       for (const f of allFunctions(m, m)) {
@@ -261,7 +261,7 @@ describe('exact identities: the numbered results of lesson 0.6, on every functio
     }
     expect(idempotentNotId).toBe(true);
   });
-  it('workbook W-0.6-10(ב): f(C) ∩ D = f(C ∩ f⁻¹(D)); W-0.6-09: an onto f cancels on the right, and without onto it need not', () => {
+  it('workbook W-0.8-10(ב): f(C) ∩ D = f(C ∩ f⁻¹(D)); W-0.8-09: an onto f cancels on the right, and without onto it need not', () => {
     for (const [m, n] of [[3, 3], [3, 2], [2, 3]] as const) {
       for (const f of allFunctions(m, n)) {
         for (const C of subsets(m)) for (const D of subsets(n)) {
@@ -279,12 +279,44 @@ describe('exact identities: the numbered results of lesson 0.6, on every functio
     }
     expect(notOntoFails).toBe(true);
   });
-  it('challenge W-0.6-c2: f(f⁻¹(f(C))) = f(C) and f⁻¹(f(f⁻¹(D))) = f⁻¹(D) for every function and every C, D', () => {
+  it('challenge W-0.8-c2: f(f⁻¹(f(C))) = f(C) and f⁻¹(f(f⁻¹(D))) = f⁻¹(D) for every function and every C, D', () => {
     for (const [m, n] of SHAPES) {
       for (const f of allFunctions(m, n)) {
         for (const C of subsets(m)) expect(imageOf(f, preimageOf(f, imageOf(f, C)))).toEqual(imageOf(f, C));
         for (const D of subsets(n)) expect(preimageOf(f, imageOf(f, preimageOf(f, D)))).toEqual(preimageOf(f, D));
       }
     }
+  });
+});
+
+describe('exact identities: the split lesson 0.8 (worked examples ex-0-8-1, ex-0-8-4; workbook W-03, W-06, W-07)', () => {
+  // x ↦ x² on {−2, …, 2} into {0, …, 4}: the figure's preset; indices of A are −2…2 shifted by 2, of B are the values
+  const SQ = DIAGRAMS.square;
+  const sq = asFunction(SQ.f, SQ.A.length)!;
+  const A = (xs: number[]) => xs.map((x) => x + 2);
+  const back = (is: number[]) => is.map((i) => i - 2);
+  it('ex-0-8-1: f({−2,1}) = {1,4}, f⁻¹({1,4}) = {−2,−1,1,2}, f⁻¹({2,3}) = ∅, f⁻¹({0,2}) = {0}', () => {
+    expect(imageOf(sq, A([-2, 1]))).toEqual([1, 4]);
+    expect(back(preimageOf(sq, [1, 4]))).toEqual([-2, -1, 1, 2]);
+    expect(preimageOf(sq, [2, 3])).toEqual([]);
+    expect(back(preimageOf(sq, [0, 2]))).toEqual([0]);
+    expect(imageOf(sq, preimageOf(sq, [0, 2]))).toEqual([0]);
+    expect(imageOf(sq, inter(A([-1]), A([1])))).toEqual([]);
+    expect(inter(imageOf(sq, A([-1])), imageOf(sq, A([1])))).toEqual([1]);
+  });
+  it('W-0.8-06: f(C) ⊆ D exactly when C ⊆ f⁻¹(D), for every function between small sets and every C, D', () => {
+    const sub = (X: number[], Y: number[]) => X.every((x) => Y.includes(x));
+    for (const [m, n] of SHAPES)
+      for (const f of allFunctions(m, n))
+        for (const C of subsets(m)) for (const D of subsets(n)) expect(sub(imageOf(f, C), D)).toBe(sub(C, preimageOf(f, D)));
+  });
+  it('pigeonhole (0.8.18א) as used in ex-0-8-4, W-0.8-07 and the bank: no injection from 5 into 4, 6 into 5, 8 into 7', () => {
+    for (const [m, n] of [[5, 4], [6, 5], [8, 7]] as const) {
+      let any = false;
+      for (const f of allFunctions(m, n)) if (isInjective(f)) any = true;
+      expect(any).toBe(false);
+    }
+    // with as many pigeons as holes there is an injection: 4 into 4, 5 into 5, 7 into 7
+    for (const n of [4, 5, 7]) expect(isInjective(identity(n))).toBe(true);
   });
 });

@@ -74,7 +74,7 @@ questions:
         type: numeric
         points: 5
         standalone: false
-        objectives: [OBJ-0.7-3]
+        objectives: [OBJ-0.9-3]
         prompt: >-
           מהו החסם מלמעלה על $S_{100}=1+\frac14+\dots+\frac{1}{100^2}$ שנובע מסעיף א?
         answer: 1.99
@@ -194,7 +194,7 @@ questions:
       - label: א
         type: mc
         points: 6
-        objectives: [OBJ-0.7-1]
+        objectives: [OBJ-0.9-1]
         prompt: >-
           מהי קבוצת הפתרונות של $|x-1|+|x+1|\le 4$?
         choices:
@@ -214,7 +214,7 @@ questions:
       - label: ב
         type: open
         points: 10
-        objectives: [OBJ-0.7-2]
+        objectives: [OBJ-0.9-2]
         prompt: >-
           הוכיחו: אם $|x-1|<1$ אז $|x^2-1|\le 3|x-1|$.
         solution:
@@ -246,7 +246,7 @@ questions:
         type: open
         points: 6
         standalone: false
-        objectives: [OBJ-0.7-3, OBJ-0.3-1]
+        objectives: [OBJ-0.9-3, OBJ-0.3-1]
         prompt: >-
           יהי $\varepsilon>0$, ונבחר $\delta=\min\left(1,\frac{\varepsilon}{3}\right)$. הוכיחו שלכל $x$ עם
           $|x-1|<\delta$ מתקיים $|x^2-1|<\varepsilon$.
@@ -271,7 +271,7 @@ questions:
       - label: ד
         type: twotier
         points: 3
-        objectives: [OBJ-0.7-3, OBJ-0.4-2]
+        objectives: [OBJ-0.9-3, OBJ-0.4-2]
         qualitative: true
         prompt: >-
           האם הבחירה $\delta=\frac{\varepsilon}{3}$ לבדה, בלי המינימום עם $1$, מבטיחה לכל $\varepsilon>0$ שמ-$|x-1|<\delta$

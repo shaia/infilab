@@ -2,7 +2,8 @@
  * MODEL SPECIFICATION
  *
  * System:        a family of statements P(1), P(2), … and the bookkeeping of a proof by induction: the base
- *                P(n₀) and the links P(n) ⇒ P(n+1). Lesson 0.5's figure (InductionChain) draws them as dominoes.
+ *                P(n₀) and the links P(n) ⇒ P(n+1). The figure of lessons 0.5 and 0.6 (InductionChain) draws them as
+ *                dominoes.
  * Dynamics:      the chain: if the base holds, domino n₀ falls, and domino n+1 falls whenever domino n fell and
  *                the link n ⇒ n+1 holds. `chain` returns how far that goes inside a finite window.
  * Boundary:      every truth value is computed for n ≤ window only. A row of true statements in the window is
@@ -10,8 +11,9 @@
  *                A link is the implication P(n) ⇒ P(n+1) evaluated on the two truth values, so it is true
  *                whenever P(n) is false (a false premise; lesson 0.2): that is why "1 + … + n = n(n+1)/2 + 1"
  *                has every link holding and nothing falling.
- * Ignored:       exact arithmetic for Bernoulli's inequality. (1+x)ⁿ and 1 + nx are doubles; at n = 1 they are
- *                equal, and `atLeast` counts a difference within a relative 1e-12 as equality. The sums and the
+ * Ignored:       exact arithmetic for Bernoulli's inequality and its two variants (strict; with the x² term).
+ *                (1+x)ⁿ and 1 + nx are doubles; at n = 1 they are equal (and the x² variant also at n = 2), and
+ *                `atLeast` counts a difference within a relative 1e-12 as equality, `greater` as not greater. The sums and the
  *                powers of 2 are integers far below 2⁵³, hence exact.
  * Valid when:    n ≤ 40 (2ⁿ and n³ exact, (1+x)ⁿ finite for |1+x| ≤ 6).
  * Failure modes: a statement that first fails after the window looks proven by the window; the horses
@@ -21,6 +23,10 @@
 
 /** a ≥ b, with a relative 1e-12 allowance for rounding (Bernoulli is an equality at n = 1 and at x = 0). */
 export const atLeast = (a: number, b: number): boolean => a >= b - 1e-12 * Math.max(1, Math.abs(a), Math.abs(b));
+/** a > b beyond rounding: the strict form of Bernoulli is false at n = 1 and at x = 0, where the sides are equal. */
+export const greater = (a: number, b: number): boolean => !atLeast(b, a);
+/** 1 + nx + n(n−1)x²/2: the first three terms of the binomial expansion of (1+x)ⁿ (lesson 0.6, remark 0.6.12) */
+export const bernoulliSquare = (n: number, x: number): number => 1 + n * x + ((n * (n - 1)) / 2) * x * x;
 
 /** Statement n of a family, with the numbers that decide it (for the figure's readout). */
 export interface Verdict {
@@ -32,7 +38,7 @@ export interface Verdict {
   rel: string;
 }
 
-export type FamilyId = 'sum' | 'sum-plus-one' | 'horses' | 'cube' | 'bernoulli';
+export type FamilyId = 'sum' | 'sum-plus-one' | 'horses' | 'cube' | 'bernoulli' | 'bernoulli-strict' | 'bernoulli-sq';
 
 export interface Family {
   /** button label; a formula is wrapped in LRI … PDI so the RTL control panel does not reverse it */
@@ -121,6 +127,41 @@ export const FAMILIES: Record<FamilyId, Family> = {
       x >= -1
         ? 'כאן ⁦x ≥ −1⁩, ולכן ⁦1 + x ≥ 0⁩, והכפל של הנחת האינדוקציה ב-⁦1 + x⁩ שומר על כיוון אי-השוויון: הטיעון של הצעד עובד.'
         : 'כאן ⁦1 + x < 0⁩: כפל ב-⁦1 + x⁩ הופך את כיוון אי-השוויון, והטיעון של הצעד לא עובד. הגרירה עצמה יכולה עדיין להיות נכונה, למשל כש-⁦P(n)⁩ שקרית.',
+  },
+  'bernoulli-strict': {
+    name: 'ברנולי, אי-שוויון חזק',
+    formula: 'P(n): (1 + x)ⁿ > 1 + nx',
+    window: 10,
+    hasX: true,
+    P: (n, x) => greater((1 + x) ** n, 1 + n * x),
+    verdict: (n, x) => ({ holds: greater((1 + x) ** n, 1 + n * x), lhs: `(1 + x)^${n} = ${num((1 + x) ** n)}`, rhs: `1 + ${n}x = ${num(1 + n * x)}`, rel: '>' }),
+    linkNote: (n, x) =>
+      x === 0
+        ? 'כש-⁦x = 0⁩ שני האגפים שווים ל-1 לכל n: אי-השוויון החזק שקרי לכל n.'
+        : n === 1
+          ? 'עבור ⁦n = 1⁩ שני האגפים שווים ל-⁦1 + x⁩, ולכן ⁦P(1)⁩ שקרית לכל x: הבסיס של משפט 0.6.6(ב) הוא ⁦n = 2⁩.'
+          : x >= -1
+            ? 'כאן ⁦x ≥ −1⁩ ו-⁦x ≠ 0⁩: מ-⁦n = 2⁩ הצעד של משפט 0.6.6(ב) עובד.'
+            : 'כאן ⁦1 + x < 0⁩, והטיעון של הצעד במשפט 0.6.6(ב) לא חל.',
+  },
+  'bernoulli-sq': {
+    name: 'ברנולי משופר',
+    formula: 'P(n): (1 + x)ⁿ ≥ 1 + nx + n(n−1)x²/2',
+    window: 10,
+    hasX: true,
+    P: (n, x) => atLeast((1 + x) ** n, bernoulliSquare(n, x)),
+    verdict: (n, x) => ({
+      holds: atLeast((1 + x) ** n, bernoulliSquare(n, x)),
+      lhs: `(1 + x)^${n} = ${num((1 + x) ** n)}`,
+      rhs: `1 + ${n}x + ${(n * (n - 1)) / 2}x² = ${num(bernoulliSquare(n, x))}`,
+      rel: '≥',
+    }),
+    linkNote: (n, x) =>
+      x >= 0
+        ? 'כאן ⁦x ≥ 0⁩: בצעד נשאר המחובר ⁦cx³⁩ עם ⁦c ≥ 0⁩, והוא אי-שלילי, ולכן מותר להשמיט אותו (דוגמה 4).'
+        : n === 2
+          ? 'כאן ⁦x < 0⁩: ⁦(1 + x)³ − (1 + 3x + 3x²) = x³ < 0⁩, ולכן ⁦P(3)⁩ שקרית. בצעד נשאר מחובר שלילי, ואסור להשמיט אותו.'
+          : 'כאן ⁦x < 0⁩: בצעד נשאר מחובר שלילי, ואסור להשמיט אותו; הגרירה יכולה להיות נכונה רק כי ⁦P(n)⁩ שקרית או ⁦P(n+1)⁩ נכונה במקרה.',
   },
 };
 

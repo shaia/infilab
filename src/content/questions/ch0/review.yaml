@@ -1,5 +1,5 @@
 # Chapter 0 — review questions over the whole chapter, from easy to hard.
-# Every lesson 0.1–0.7 is touched; most questions combine two lessons.
+# Every lesson 0.1–0.9 is touched; most questions combine two lessons.
 chapter: 0
 questions:
   - id: Q-0-review-01
@@ -53,7 +53,7 @@ questions:
 
   - id: Q-0-review-03
     type: numeric
-    objectives: [OBJ-0.6-3]
+    objectives: [OBJ-0.8-2]
     level: basic
     prompt: >-
       יהיו $f(x)=x^2-1$ ו-$g(x)=x+3$, שתיהן מ-$\mathbb{R}$ אל $\mathbb{R}$. חשבו את $(g\circ f)(2)$.
@@ -69,11 +69,11 @@ questions:
           $24=f(g(2))=f(5)$: הפעלתם קודם את $g$. ב-$g\circ f$ הפונקציה הימנית, $f$, פועלת ראשונה.
         misconception: MC-composition-order-swapped
     hints:
-      - 'חזרו לשיעור 0.6: הרכבה של פונקציות. איזו פונקציה פועלת ראשונה?'
+      - 'חזרו לשיעור 0.8: הרכבה של פונקציות. איזו פונקציה פועלת ראשונה?'
 
   - id: Q-0-review-04
     type: mc
-    objectives: [OBJ-0.7-1]
+    objectives: [OBJ-0.9-1]
     level: basic
     prompt: >-
       מהי קבוצת הפתרונות של $|x+1|<3$?
@@ -91,7 +91,7 @@ questions:
           זה רק התנאי $x+1<3$. $x=-10$ מקיים אותו, אבל $|{-10}+1|=9$. חסר התנאי $x+1>-3$.
         misconception: MC-abs-one-side
     hints:
-      - 'חזרו לשיעור 0.7: $|t|<r$ הוא שני אי-שוויונות, $-r<t<r$.'
+      - 'חזרו לשיעור 0.9: $|t|<r$ הוא שני אי-שוויונות, $-r<t<r$.'
 
   - id: Q-0-review-05
     type: mc
@@ -124,7 +124,7 @@ questions:
 
   - id: Q-0-review-06
     type: twotier
-    objectives: [OBJ-0.2-3, OBJ-0.6-3, OBJ-0.6-2]
+    objectives: [OBJ-0.2-3, OBJ-0.8-2, OBJ-0.8-1]
     qualitative: true
     level: mid
     prompt: >-
@@ -160,11 +160,11 @@ questions:
         misconception: MC-converse-equivalent
     hints:
       - 'חזרו לשיעור 0.2: "הכרחי" פירושו שבלעדיו אין, ו"מספיק" שבזכותו יש.'
-      - 'חזרו לשיעור 0.6: מתי יש לפונקציה פונקציה הפוכה.'
+      - 'חזרו לשיעור 0.8: מתי יש לפונקציה פונקציה הפוכה.'
 
   - id: Q-0-review-07
     type: rank
-    objectives: [OBJ-0.5-1, OBJ-0.5-2, OBJ-0.7-3]
+    objectives: [OBJ-0.5-1, OBJ-0.5-2, OBJ-0.9-3]
     level: mid
     prompt: >-
       הוכיחו באינדוקציה: לכל $n$ טבעי, $n!\ge 2^{n-1}$.
@@ -187,11 +187,11 @@ questions:
       הבסיס ראשון. בצעד, קודם מפרקים את $(n+1)!$ כדי שההנחה תופיע בו, ורק אחר כך מעריכים את הגורם $n+1$.
     hints:
       - 'חזרו לשיעור 0.5: מבנה של הוכחת אי-שוויון באינדוקציה.'
-      - 'חזרו לשיעור 0.7: איך מקטינים ביטוי כדי לקבל חסם מלמטה.'
+      - 'חזרו לשיעור 0.9: איך מקטינים ביטוי כדי לקבל חסם מלמטה.'
 
   - id: Q-0-review-08
     type: multi
-    objectives: [OBJ-0.3-1, OBJ-0.3-3, OBJ-0.7-1]
+    objectives: [OBJ-0.3-1, OBJ-0.3-3, OBJ-0.9-1]
     qualitative: true
     level: mid
     prompt: >-
@@ -218,11 +218,11 @@ questions:
         misconception: MC-examples-are-proof
     hints:
       - 'חזרו לשיעור 0.3: מה משתנה כשמחליפים את סדר "לכל" ו"קיים".'
-      - 'חזרו לשיעור 0.7: $|x-k|$ הוא המרחק בין $x$ ל-$k$.'
+      - 'חזרו לשיעור 0.9: $|x-k|$ הוא המרחק בין $x$ ל-$k$.'
 
   - id: Q-0-review-09
     type: twotier
-    objectives: [OBJ-0.6-1, OBJ-0.4-2]
+    objectives: [OBJ-0.7-1, OBJ-0.4-2]
     qualitative: true
     level: mid
     prompt: >-
@@ -251,7 +251,7 @@ questions:
           גם במספרים זה לא נכון: $a-(b-c)=a-b+c$. עבור $a=b=c=1$ אגף שמאל $1$ ואגף ימין $-1$.
         misconception: MC-set-difference-rules
     hints:
-      - 'חזרו לשיעור 0.6: פעולות על קבוצות. נסו קבוצות קטנות מאוד, עם איבר אחד.'
+      - 'חזרו לשיעור 0.7: פעולות על קבוצות. נסו קבוצות קטנות מאוד, עם איבר אחד.'
       - 'חזרו לשיעור 0.4: כדי להפריך טענת "לכל" מספיקה דוגמה נגדית אחת.'
 
   - id: Q-0-review-10
@@ -284,7 +284,7 @@ questions:
 
   - id: Q-0-review-11
     type: numeric
-    objectives: [OBJ-0.5-2, OBJ-0.7-3]
+    objectives: [OBJ-0.6-2, OBJ-0.9-3]
     level: mid
     prompt: >-
       אי-שוויון ברנולי נותן חסם מלמטה על $(1.01)^{100}$. מהו החסם?
@@ -304,12 +304,12 @@ questions:
           זה הערך האמיתי של $(1.01)^{100}$ (בקירוב), לא החסם שברנולי נותן. ברנולי נותן מספר קטן ממנו בהרבה, $2$,
           אבל בלי שום חישוב של חזקות.
     hints:
-      - 'חזרו לשיעור 0.5: אי-שוויון ברנולי, $(1+x)^n\ge 1+nx$ עבור $x\ge -1$.'
-      - 'חזרו לשיעור 0.7: חסם מלמטה הוא מספר שהביטוי לא קטן ממנו.'
+      - 'חזרו לשיעור 0.6: אי-שוויון ברנולי, $(1+x)^n\ge 1+nx$ עבור $x\ge -1$.'
+      - 'חזרו לשיעור 0.9: חסם מלמטה הוא מספר שהביטוי לא קטן ממנו.'
 
   - id: Q-0-review-12
     type: mc
-    objectives: [OBJ-0.5-3, OBJ-0.5-2, OBJ-0.7-3]
+    objectives: [OBJ-0.5-3, OBJ-0.5-2, OBJ-0.9-3]
     qualitative: true
     level: exam
     prompt: >-
@@ -336,7 +336,7 @@ questions:
 
   - id: Q-0-review-13
     type: twotier
-    objectives: [OBJ-0.6-2, OBJ-0.3-2, OBJ-0.4-2]
+    objectives: [OBJ-0.8-1, OBJ-0.3-2, OBJ-0.4-2]
     qualitative: true
     level: exam
     prompt: >-
@@ -365,11 +365,11 @@ questions:
         misconception: MC-injective-reversed
     hints:
       - 'חזרו לשיעור 0.3: שללו את ההגדרה "לכל $x_1,x_2$: אם $f(x_1)=f(x_2)$ אז $x_1=x_2$".'
-      - 'חזרו לשיעור 0.6: פרקו $x^3-x=x(x-1)(x+1)$ וחפשו שורשים.'
+      - 'חזרו לשיעור 0.8: פרקו $x^3-x=x(x-1)(x+1)$ וחפשו שורשים.'
 
   - id: Q-0-review-14
     type: mc
-    objectives: [OBJ-0.7-1, OBJ-0.7-2]
+    objectives: [OBJ-0.9-1, OBJ-0.9-2]
     level: exam
     prompt: >-
       לאילו $x$ ממשיים מתקיים $|x|+|x-2|=2$?
@@ -394,11 +394,11 @@ questions:
           דווקא הקטע שבין הנקודות.
         misconception: MC-abs-union-intersection
     hints:
-      - 'חזרו לשיעור 0.7: פצלו לפי הנקודות $0$ ו-$2$, או חשבו על סכום המרחקים מ-$0$ ומ-$2$.'
+      - 'חזרו לשיעור 0.9: פצלו לפי הנקודות $0$ ו-$2$, או חשבו על סכום המרחקים מ-$0$ ומ-$2$.'
 
   - id: Q-0-review-15
     type: twotier
-    objectives: [OBJ-0.4-3, OBJ-0.6-1]
+    objectives: [OBJ-0.4-3, OBJ-0.7-1]
     qualitative: true
     level: exam
     prompt: >-
@@ -428,4 +428,4 @@ questions:
         misconception: MC-examples-are-proof
     hints:
       - 'חזרו לשיעור 0.4: "אם ורק אם" מוכיחים בשני כיוונים.'
-      - 'חזרו לשיעור 0.6: שוויון קבוצות מוכיחים בהכלה דו-כיוונית.'
+      - 'חזרו לשיעור 0.7: שוויון קבוצות מוכיחים בהכלה דו-כיוונית.'

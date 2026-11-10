@@ -1,71 +1,66 @@
-# Misconceptions first detected in lesson 0.7 (inequalities and absolute value).
-- id: MC-abs-one-side
-  title: פותרים אי-שוויון עם ערך מוחלט בלי לפצל למקרים
+# Misconceptions first detected in lesson 0.7 (sets).
+- id: MC-set-difference-rules
+  title: מטפלים בהפרש קבוצות כאילו היה סימטרי או קיבוצי
   belief: >-
-    $|x-3|<2$ פירושו $x-3<2$, כלומר $x<5$; את הערך המוחלט פשוט "מורידים".
+    $A\setminus B=B\setminus A$, או $A\setminus(B\setminus C)=(A\setminus B)\setminus C$, כמו באיחוד.
   truth: >-
-    $|t|<r$ פירושו $-r<t<r$: שני תנאים. $|x-3|<2$ הוא $-2<x-3<2$, כלומר $1<x<5$. בביטוי עם כמה ערכים מוחלטים
-    מפצלים לפי הנקודות שבהן כל ביטוי מחליף סימן, ופותרים בכל קטע בנפרד.
-  remedy: { lesson: '0.7', anchor: solving, label: 'אי-שוויונות עם ערך מוחלט' }
+    הפרש אינו סימטרי ואינו קיבוצי. עבור $A=\{1,2,3,4\}$ ו-$B=\{3,4,5\}$: $A\setminus B=\{1,2\}$ אבל
+    $B\setminus A=\{5\}$. עבור $A=B=C=\{1\}$: $A\setminus(B\setminus C)=\{1\}$ אבל $(A\setminus B)\setminus C$ ריקה.
+  remedy: { lesson: '0.7', anchor: set-operations, label: 'פעולות על קבוצות' }
 
-- id: MC-abs-union-intersection
-  title: מבלבלים מתי הפתרון הוא קטע ומתי איחוד של קטעים
+- id: MC-complement-de-morgan
+  title: חושבים שהמשלים של חיתוך הוא חיתוך המשלימים
   belief: >-
-    גם $|t|>r$ נותן קטע אחד, למשל $-r>t>r$, או $-r<t<r$.
+    $(A\cap B)^c=A^c\cap B^c$, ו-$(A\cup B)^c=A^c\cup B^c$.
   truth: >-
-    $|t|<r$ הוא "וגם" ($-r<t$ וגם $t<r$): קטע אחד. $|t|>r$ הוא "או" ($t>r$ או $t<-r$): איחוד של שני קטעים.
-    "$-r>t>r$" אינו מתקיים לאף $t$ כש-$r>0$.
-  remedy: { lesson: '0.7', anchor: fig-0-7a, label: 'אי-שוויונות עם ערך מוחלט: קטע מול איחוד' }
+    לפי כללי דה-מורגן המשלים מחליף חיתוך באיחוד: $(A\cap B)^c=A^c\cup B^c$ ו-$(A\cup B)^c=A^c\cap B^c$. זה
+    אותו כלל כמו בשלילה: "לא (וגם)" הוא "(לא) או (לא)".
+  remedy: { lesson: '0.7', anchor: de-morgan, label: 'משלים וכללי דה-מורגן' }
 
-- id: MC-abs-distance-sign
-  title: קוראים את |x+a| כמרחק מ-a
+- id: MC-set-equality-one-inclusion
+  title: מוכיחים שוויון קבוצות בהכלה אחת
   belief: >-
-    $|x+2|$ הוא המרחק של $x$ מ-$2$.
+    אם כל איבר של $A$ נמצא ב-$B$, אז $A=B$.
   truth: >-
-    $|x-a|$ הוא המרחק בין $x$ ל-$a$. לכן $|x+2|=|x-(-2)|$ הוא המרחק מ-$-2$, ו-$|x+2|\le 1$ הוא הקטע
-    $[-3,-1]$ סביב $-2$.
-  remedy: { lesson: '0.7', anchor: centre-radius, label: 'ערך מוחלט כמרחק: מרכז ורדיוס' }
+    זה מראה רק $A\subseteq B$. שוויון דורש גם $B\subseteq A$: $\{1\}\subseteq\{1,2\}$, והקבוצות שונות. שוויון
+    קבוצות מוכיחים בהכלה דו-כיוונית.
+  remedy: { lesson: '0.7', anchor: double-inclusion, label: 'שוויון קבוצות בהכלה דו-כיוונית' }
 
-- id: MC-reverse-triangle-direction
-  title: הופכים את כיוון אי-שוויון המשולש בצורתו ההפוכה
+- id: MC-element-vs-subset
+  title: מבלבלים בין איבר של קבוצה לבין תת-קבוצה שלה
   belief: >-
-    $|a-b|\le|a|-|b|$, או $|a+b|\ge|a|+|b|$; או שהפרש של חסמים חוסם הפרש.
+    $1\subseteq\{1,2\}$, או $\{1\}\in\{1,2\}$; ובקבוצת החזקה: $1\in\mathcal{P}(\{1,2\})$.
   truth: >-
-    אי-שוויון המשולש חוסם מלמעלה: $|a+b|\le|a|+|b|$. הצורה ההפוכה חוסמת מלמטה: $|a-b|\ge\big||a|-|b|\big|$.
-    עבור $a=0$, $b=1$: $|a-b|=1$ ואילו $|a|-|b|=-1$.
-  remedy: { lesson: '0.7', anchor: reverse, label: 'אי-שוויון המשולש וצורתו ההפוכה' }
+    $x\in A$ אומר ש-$x$ הוא אחד האיברים של $A$; $X\subseteq A$ אומר שכל איבר של $X$ הוא איבר של $A$. לכן
+    $1\in\{1,2\}$ ו-$\{1\}\subseteq\{1,2\}$, אבל $\{1\}\notin\{1,2\}$. האיברים של $\mathcal{P}(A)$ הם תת-קבוצות
+    של $A$: $\{1\}\in\mathcal{P}(\{1,2\})$, ו-$1\notin\mathcal{P}(\{1,2\})$.
+  remedy: { lesson: '0.7', anchor: power-set, label: 'קבוצת החזקה: איברים שהם קבוצות' }
 
-- id: MC-amgm-negative
-  title: משתמשים באי-שוויון הממוצעים גם למספרים שליליים
+- id: MC-nested-intersection-nonempty
+  title: חושבים שחיתוך של קבוצות לא ריקות שכל אחת מוכלת בקודמת אינו ריק
   belief: >-
-    $\frac{a+b}{2}\ge\sqrt{ab}$ לכל $a,b$ שעבורם השורש מוגדר.
+    אם $A_1\supseteq A_2\supseteq A_3\supseteq\dots$ וכל $A_n$ לא ריקה, אז גם $\bigcap_{n=1}^{\infty}A_n$ לא
+    ריקה: "משהו חייב להישאר".
   truth: >-
-    אי-שוויון הממוצעים דורש $a,b\ge 0$. עבור $a=b=-1$: $\frac{a+b}{2}=-1$ ו-$\sqrt{ab}=1$. ההוכחה,
-    $(\sqrt a-\sqrt b)^2\ge 0$, משתמשת ב-$\sqrt a$ וב-$\sqrt b$, שמוגדרים רק לאי-שליליים.
-  remedy: { lesson: '0.7', anchor: estimates, label: 'אי-שוויון הממוצעים' }
+    לא בהכרח. עבור $A_n=\{k\in\mathbb{N}:\ k\ge n\}$ כל $A_n$ לא ריקה ו-$A_{n+1}\subseteq A_n$, אבל החיתוך ריק:
+    כל $m\in\mathbb{N}$ אינו ב-$A_{m+1}$. לכל איבר יש קבוצה במשפחה שהוא כבר לא בה.
+  remedy: { lesson: '0.7', anchor: nested-empty, label: 'חיתוך ריק של קבוצות לא ריקות' }
 
-- id: MC-bound-fraction-direction
-  title: מקטינים את המונה או מגדילים את המכנה כשרוצים חסם מלמעלה
+- id: MC-power-set-union
+  title: חושבים שקבוצת החזקה של איחוד היא איחוד קבוצות החזקה
   belief: >-
-    כדי לחסום שבר מלמעלה אפשר לפשט אותו בכל דרך, למשל להחליף את $n+1$ במונה ב-$n$, או להגדיל את המכנה.
+    $\mathcal{P}(A\cup B)=\mathcal{P}(A)\cup\mathcal{P}(B)$, כמו שמתקיים לחיתוך.
   truth: >-
-    לשבר חיובי, חסם **מלמעלה** מקבלים כשמגדילים את המונה או מקטינים את המכנה. $\frac{n+1}{n^2+5}\le\frac{2n}{n^2}$
-    נכון ($n+1\le 2n$, $n^2+5\ge n^2$), אבל $\frac{n+1}{n^2+5}\le\frac{n}{n^2}$ נכשל כבר ב-$n=6$.
-  remedy: { lesson: '0.7', anchor: fractions, label: 'הערכות: חסם מלמעלה ומלמטה' }
+    תמיד $\mathcal{P}(A)\cup\mathcal{P}(B)\subseteq\mathcal{P}(A\cup B)$, אבל השוויון נכון רק כש-$A\subseteq B$ או
+    $B\subseteq A$. עבור $A=\{1\}$ ו-$B=\{2\}$: $\{1,2\}\in\mathcal{P}(A\cup B)$, והיא אינה תת-קבוצה של $A$ ואינה
+    תת-קבוצה של $B$.
+  remedy: { lesson: '0.7', anchor: power-set-ops, label: 'קבוצת החזקה של חיתוך ושל איחוד' }
 
-- id: MC-order-abs-additive
-  title: חושבים שהערך המוחלט של סכום הוא סכום הערכים המוחלטים
+- id: MC-pair-order
+  title: מתייחסים לזוג סדור כאל קבוצה של שני איברים
   belief: >-
-    $|a+b|=|a|+|b|$ לכל $a,b$, כי הערך המוחלט "מוחק את המינוסים".
+    $(1,2)=(2,1)$, ולכן $A\times B=B\times A$; או: $(a,b)$ הוא $\{a,b\}$.
   truth: >-
-    תמיד $|a+b|\le|a|+|b|$ (אי-שוויון המשולש), ושוויון יש בדיוק כש-$ab\ge0$. למשל $|1+(-1)|=0<2$.
-  remedy: { lesson: '0.7', anchor: equality, label: 'אי-שוויון המשולש: מתי יש שוויון' }
-
-- id: MC-triangle-equality-case
-  title: חושבים שבאי-שוויון המשולש יש שוויון רק במקרים מיוחדים מאוד
-  belief: >-
-    $|x+y|=|x|+|y|$ רק כש-$x=y$, או רק כשאחד המספרים הוא $0$.
-  truth: >-
-    יש שוויון בדיוק כש-$xy\ge 0$: כש-$x$ ו-$y$ באותו סימן, או שאחד מהם $0$. למשל $|2+5|=7=|2|+|5|$ אף ש-$2\ne 5$,
-    ו-$|{-1}+(-3)|=4=|{-1}|+|{-3}|$. הסיבה: $|x+y|^2=x^2+2xy+y^2$ ו-$(|x|+|y|)^2=x^2+2|xy|+y^2$.
-  remedy: { lesson: '0.7', anchor: equality, label: 'אי-שוויון המשולש: מתי יש שוויון' }
+    בזוג סדור הסדר קובע: $(a,b)=(c,d)$ רק כש-$a=c$ וגם $b=d$, ולכן $(1,2)\ne(2,1)$. במכפלה $A\times B$ האיבר
+    הראשון בא מ-$A$ והשני מ-$B$: עבור $A=\{1\}$, $B=\{2\}$, $A\times B=\{(1,2)\}\ne\{(2,1)\}=B\times A$.
+  remedy: { lesson: '0.7', anchor: product, label: 'זוג סדור ומכפלה' }

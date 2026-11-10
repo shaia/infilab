@@ -1,217 +1,48 @@
-# Terms first defined in lesson 0.6 (sets and functions).
-- id: set
-  term: קבוצה
-  en: set
+# Terms first defined in lesson 0.6 (strong induction, well-ordering, Bernoulli, the binomial theorem).
+- id: bernoulli-inequality
+  term: אי-שוויון ברנולי
+  en: Bernoulli's inequality
+  symbol: '(1+x)^n\ge 1+nx'
   definition: >-
-    אוסף של עצמים, שנקראים איברי הקבוצה. קבוצה נקבעת רק לפי האיברים שלה: אין בה סדר ואין בה חזרות.
+    לכל $x\ge -1$ ולכל $n$ טבעי, $(1+x)^n\ge 1+nx$, עם שוויון אם ורק אם $n=1$ או $x=0$. מוכיחים אותו
+    באינדוקציה, והתנאי $x\ge -1$ דרוש בצעד.
+  reject: [אי שוויון ברנולי]
   lesson: '0.6'
-- id: set-element
-  term: איבר של קבוצה
-  en: element
-  symbol: 'x\in A'
+- id: strong-induction
+  term: אינדוקציה שלמה
+  en: strong induction
   definition: >-
-    $x\in A$ פירושו ש-$x$ שייך לקבוצה $A$; $x\notin A$ פירושו שאינו שייך.
+    גרסה של אינדוקציה שבה הצעד מניח את הטענה לכל המספרים הקודמים, לא רק לקודם: אם לכל $n\ge n_0$, מכך ש-$P(k)$
+    נכונה לכל $n_0\le k<n$ נובעת $P(n)$, אז $P(n)$ נכונה לכל $n\ge n_0$. נובעת מעקרון האינדוקציה.
   lesson: '0.6'
-- id: subset
-  term: תת-קבוצה
-  en: subset
-  symbol: 'A\subseteq B'
+- id: well-ordering-principle
+  term: עקרון הסדר הטוב
+  en: well-ordering principle
   definition: >-
-    $A\subseteq B$ ($A$ מוכלת ב-$B$) אם כל איבר של $A$ הוא איבר של $B$. שתי קבוצות שוות אם $A\subseteq B$ וגם
-    $B\subseteq A$ (הכלה דו-כיוונית).
-  reject: [תת קבוצה]
+    לכל קבוצה לא ריקה של מספרים טבעיים יש איבר קטן ביותר. שקול לעקרון האינדוקציה. ל-$\mathbb{Z}$, ולקבוצת המספרים
+    $\frac1n$, אין איבר קטן ביותר.
   lesson: '0.6'
-- id: set-union
-  term: איחוד
-  en: union
-  symbol: 'A\cup B'
+- id: binomial-coefficient
+  term: מקדם בינומי
+  en: binomial coefficient
+  symbol: '\binom{n}{k}'
   definition: >-
-    $A\cup B$ היא קבוצת כל ה-$x$ ש-$x\in A$ **או** $x\in B$.
+    לשלמים $0\le k\le n$: $\binom{n}{k}=\frac{n!}{k!\,(n-k)!}$. למשל $\binom{n}{0}=\binom{n}{n}=1$ ו-$\binom{n}{2}=\frac{n(n-1)}{2}$.
+    תמיד מספר טבעי.
   lesson: '0.6'
-- id: set-intersection
-  term: חיתוך
-  en: intersection
-  symbol: 'A\cap B'
+- id: pascal-identity
+  term: זהות פסקל
+  en: Pascal's identity
+  symbol: '\binom{n}{k-1}+\binom{n}{k}=\binom{n+1}{k}'
   definition: >-
-    $A\cap B$ היא קבוצת כל ה-$x$ ש-$x\in A$ **וגם** $x\in B$.
+    לכל $n$ טבעי ולכל $1\le k\le n$: $\binom{n}{k-1}+\binom{n}{k}=\binom{n+1}{k}$. בונה כל שורה של משולש פסקל
+    מהקודמת לה.
   lesson: '0.6'
-- id: set-difference
-  term: הפרש קבוצות
-  en: set difference
-  symbol: 'A\setminus B'
+- id: binomial-theorem
+  term: הבינום של ניוטון
+  en: binomial theorem
+  symbol: '(a+b)^n=\sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^k'
   definition: >-
-    $A\setminus B$ היא קבוצת כל ה-$x$ ש-$x\in A$ ו-$x\notin B$. בדרך כלל $A\setminus B\ne B\setminus A$.
-  lesson: '0.6'
-- id: set-complement
-  term: משלים
-  en: complement
-  symbol: 'A^c'
-  definition: >-
-    המשלים של $A$ ביחס לקבוצה גדולה $U$ (אצלנו בדרך כלל $U=\mathbb{R}$) הוא $A^c=U\setminus A$.
-  lesson: '0.6'
-- id: function
-  term: פונקציה
-  en: function
-  symbol: 'f:A\to B'
-  definition: >-
-    כלל שמתאים לכל איבר $x$ של קבוצה $A$ איבר אחד ויחיד $f(x)$ של קבוצה $B$. פונקציה נקבעת על ידי התחום,
-    הטווח והכלל יחד, לא על ידי הנוסחה לבדה.
-  lesson: '0.6'
-- id: function-domain
-  term: תחום
-  en: domain
-  definition: >-
-    הקבוצה $A$ ב-$f:A\to B$: הקבוצה שעל איבריה הפונקציה מוגדרת.
-  lesson: '0.6'
-- id: function-codomain
-  term: טווח
-  en: codomain
-  definition: >-
-    הקבוצה $B$ ב-$f:A\to B$: הקבוצה שאליה הפונקציה שולחת. לא כל איבר של הטווח חייב להתקבל.
-  lesson: '0.6'
-- id: function-image
-  term: תמונה
-  en: image (range)
-  symbol: 'f(A)'
-  definition: >-
-    קבוצת הערכים שהפונקציה מקבלת בפועל, $f(A)=\{f(x):\ x\in A\}$. היא מוכלת בטווח, ושווה לו בדיוק כש-$f$ על.
-  lesson: '0.6'
-- id: injective-function
-  term: חד-חד-ערכית
-  en: injective (one-to-one)
-  definition: >-
-    $f$ חד-חד-ערכית אם לכל $x_1,x_2$ בתחום, $f(x_1)=f(x_2)$ גורר $x_1=x_2$: נקודות שונות הולכות לערכים שונים.
-  reject: [חד חד ערכית]
-  lesson: '0.6'
-- id: surjective-function
-  term: על
-  en: surjective (onto)
-  definition: >-
-    $f:A\to B$ היא על אם לכל $y\in B$ קיים $x\in A$ כך ש-$f(x)=y$, כלומר התמונה שווה לטווח.
-  lesson: '0.6'
-- id: bijective-function
-  term: חד-חד-ערכית ועל
-  en: bijective (bijection)
-  definition: >-
-    פונקציה שהיא גם חד-חד-ערכית וגם על. בדיוק לפונקציות כאלה יש פונקציה הפוכה.
-  lesson: '0.6'
-- id: function-composition
-  term: הרכבה
-  en: composition
-  symbol: 'g\circ f'
-  definition: >-
-    $(g\circ f)(x)=g(f(x))$: קודם מפעילים את $f$, ואת התוצאה מציבים ב-$g$. מוגדרת כשהתמונה של $f$ מוכלת בתחום
-    של $g$.
-  lesson: '0.6'
-- id: inverse-function
-  term: פונקציה הפוכה
-  en: inverse function
-  symbol: 'f^{-1}'
-  definition: >-
-    פונקציה $g:B\to A$ שמבטלת את $f:A\to B$ משני הצדדים: $g\circ f=\mathrm{id}_A$ ו-$f\circ g=\mathrm{id}_B$.
-    היא קיימת בדיוק כש-$f$ חד-חד-ערכית ועל, והיא יחידה; מסמנים אותה $f^{-1}$, ו-$f^{-1}(y)$ הוא המקור היחיד של
-    $y$. היא אינה $\frac{1}{f}$.
-  lesson: '0.6'
-- id: empty-set
-  term: הקבוצה הריקה
-  en: empty set
-  symbol: '\emptyset'
-  definition: >-
-    הקבוצה שאין בה אף איבר, $\emptyset$. היא תת-קבוצה של כל קבוצה.
-  lesson: '0.6'
-- id: de-morgan-sets
-  term: כללי דה-מורגן לקבוצות
-  en: De Morgan's laws (sets)
-  symbol: '(A\cup B)^c=A^c\cap B^c'
-  definition: >-
-    המשלים מחליף איחוד בחיתוך ולהפך: $(A\cup B)^c=A^c\cap B^c$ ו-$(A\cap B)^c=A^c\cup B^c$. אלה כללי
-    השלילה של "או" ושל "וגם", כשהם נאמרים על שייכות לקבוצה.
-  lesson: '0.6'
-- id: preimage
-  term: מקור
-  en: preimage
-  definition: >-
-    עבור $f:A\to B$ ו-$y\in B$, איבר $x\in A$ שמקיים $f(x)=y$ נקרא מקור של $y$. לאיבר של הטווח יכולים להיות
-    כמה מקורות, או אף לא אחד. $f$ על אם לכל $y$ יש מקור, וחד-חד-ערכית אם לכל $y$ יש לכל היותר מקור אחד.
-  lesson: '0.6'
-- id: identity-function
-  term: פונקציית הזהות
-  en: identity function
-  symbol: '\mathrm{id}_A'
-  definition: >-
-    הפונקציה $\mathrm{id}_A:A\to A$ ששולחת כל איבר לעצמו: $\mathrm{id}_A(x)=x$.
-  lesson: '0.6'
-- id: function-restriction
-  term: צמצום של פונקציה
-  en: restriction
-  definition: >-
-    הצמצום של $f:A\to B$ לתת-קבוצה $S\subseteq A$ הוא הפונקציה $S\to B$ שנותנת לכל $x\in S$ את אותו ערך $f(x)$:
-    משנים רק את התחום. לצמצום יכולות להיות תכונות שאין ל-$f$: $x^2$ מ-$\mathbb{R}$ אל $\mathbb{R}$ אינה
-    חד-חד-ערכית, וצמצומה ל-$[0,\infty)$ כן. כשמקטינים גם את הטווח (למשל אל התמונה), אומרים זאת בנפרד.
-  lesson: '0.6'
-- id: power-set
-  term: קבוצת החזקה
-  en: power set
-  symbol: '\mathcal{P}(A)'
-  definition: >-
-    קבוצת כל התת-קבוצות של $A$: $\mathcal{P}(A)=\{X:\ X\subseteq A\}$. תמיד $\emptyset\in\mathcal{P}(A)$ ו-$A\in\mathcal{P}(A)$.
-  lesson: '0.6'
-- id: ordered-pair
-  term: זוג סדור
-  en: ordered pair
-  symbol: '(a,b)'
-  definition: >-
-    שני איברים בסדר קבוע. $(a,b)=(c,d)$ אם ורק אם $a=c$ וגם $b=d$; לכן $(1,2)\ne(2,1)$, אף ש-$\{1,2\}=\{2,1\}$.
-  lesson: '0.6'
-- id: cartesian-product
-  term: מכפלה קרטזית
-  en: Cartesian product
-  symbol: 'A\times B'
-  definition: >-
-    קבוצת כל הזוגות הסדורים $(a,b)$ עם $a\in A$ ו-$b\in B$. המישור הוא $\mathbb{R}\times\mathbb{R}$.
-  lesson: '0.6'
-- id: indexed-family
-  term: משפחה של קבוצות
-  en: indexed family of sets
-  symbol: '\bigcup_{i\in I}A_i'
-  definition: >-
-    קבוצה $A_i$ לכל אינדקס $i$ בקבוצה לא ריקה $I$. האיחוד $\bigcup_{i\in I}A_i$ הוא קבוצת ה-$x$ שנמצאים
-    ב-$A_i$ עבור $i$ אחד לפחות, והחיתוך $\bigcap_{i\in I}A_i$ קבוצת ה-$x$ שנמצאים ב-$A_i$ לכל $i$.
-  lesson: '0.6'
-- id: function-graph
-  term: גרף של פונקציה
-  en: graph of a function
-  symbol: '\Gamma_f'
-  definition: >-
-    עבור $f:A\to B$, הקבוצה $\Gamma_f=\{(x,f(x)):\ x\in A\}\subseteq A\times B$. בהגדרה הפורמלית פונקציה היא
-    תחום, טווח ותת-קבוצה של $A\times B$ שבה לכל $x\in A$ יש זוג אחד בדיוק שמתחיל ב-$x$.
-  lesson: '0.6'
-- id: set-preimage
-  term: מקור של קבוצה
-  en: preimage of a set
-  symbol: 'f^{-1}(D)'
-  definition: >-
-    עבור $f:A\to B$ ו-$D\subseteq B$, $f^{-1}(D)=\{x\in A:\ f(x)\in D\}$. מוגדר לכל פונקציה, הפיכה או לא, והוא
-    תת-קבוצה של התחום.
-  lesson: '0.6'
-- id: left-inverse
-  term: הפוכה משמאל
-  en: left inverse
-  definition: >-
-    $g:B\to A$ היא הפוכה משמאל של $f:A\to B$ אם $g\circ f=\mathrm{id}_A$. כש-$A$ לא ריקה, יש כזו בדיוק
-    כש-$f$ חד-חד-ערכית. היא אינה בהכרח יחידה.
-  lesson: '0.6'
-- id: right-inverse
-  term: הפוכה מימין
-  en: right inverse
-  definition: >-
-    $h:B\to A$ היא הפוכה מימין של $f:A\to B$ אם $f\circ h=\mathrm{id}_B$. אם יש כזו, $f$ היא על. היא אינה בהכרח
-    יחידה.
-  lesson: '0.6'
-- id: finite-set
-  term: קבוצה סופית
-  en: finite set
-  definition: >-
-    לקבוצה $A$ יש $n$ איברים אם יש פונקציה חד-חד-ערכית ועל מ-$\{1,\dots,n\}$ אל $A$ (ול-$\emptyset$ יש 0
-    איברים). $A$ סופית אם יש לה $n$ איברים עבור $n$ כלשהו, ואינסופית אחרת; $\mathbb{N}$ אינסופית.
+    לכל $a,b$ ממשיים ולכל $n$ טבעי, $(a+b)^n=\sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^k$, עם המוסכמה $x^0=1$. מוכיחים
+    באינדוקציה, בעזרת זהות פסקל.
   lesson: '0.6'

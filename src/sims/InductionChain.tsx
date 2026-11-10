@@ -1,5 +1,5 @@
 /**
- * Lesson 0.5's figure: a proof by induction as a row of dominoes. Domino n is the statement P(n), drawn left to
+ * The figure of lessons 0.5 and 0.6: a proof by induction as a row of dominoes. Domino n is the statement P(n), drawn left to
  * right (math space, LTR). Above each pair of neighbours an arc is the link P(n) ⇒ P(n+1): holding (solid, ✓) or
  * broken (gapped, ✗); in the horses family the links start as claims (dashed, ?) and show their status when the
  * chain reaches them or the student inspects them. Pushing the base P(n₀) topples the chain: a domino falls when
@@ -25,6 +25,8 @@ const TASK_LABEL: Record<string, string> = {
   'broken-link': 'ב"הוכחה" שכל המספרים שווים, מצאו את החוליה השבורה ולחצו עליה.',
   'late-base': 'בטענה ⁦2ⁿ > n³⁩, הזיזו את הבסיס אל ה-n₀ הקטן ביותר שממנו השרשרת מגיעה עד סוף החלון, ודחפו.',
   'bernoulli-break': 'בברנולי, שנו את x עד שהשרשרת מ-⁦P(1)⁩ נעצרת לפני סוף החלון, ודחפו.',
+  'strict-base': 'באי-השוויון החזק ⁦(1 + x)ⁿ > 1 + nx⁩, הזיזו את הבסיס אל ה-n₀ הקטן ביותר שממנו השרשרת מגיעה עד סוף החלון, ודחפו.',
+  'square-break': 'בברנולי המשופר, שנו את x עד שהשרשרת מ-⁦P(1)⁩ נעצרת לפני סוף החלון, ודחפו.',
 };
 
 /** the selected item: a domino P(n), or the link P(n) ⇒ P(n+1) */
@@ -119,6 +121,8 @@ export default function InductionChain(props: InductionChainProps) {
     if (has('no-base') && next.fam === 'sum-plus-one' && !r.base) markTask(`${props.id}:no-base`);
     if (has('late-base') && next.fam === 'cube' && userN0.current && next.n0 === smallestFullBase(f)) markTask(`${props.id}:late-base`);
     if (has('bernoulli-break') && next.fam === 'bernoulli' && userX.current && next.n0 === 1 && r.brokenAt !== null) markTask(`${props.id}:bernoulli-break`);
+    if (has('strict-base') && next.fam === 'bernoulli-strict' && userN0.current && next.n0 === smallestFullBase(f, f.window, next.x)) markTask(`${props.id}:strict-base`);
+    if (has('square-break') && next.fam === 'bernoulli-sq' && userX.current && next.n0 === 1 && r.brokenAt !== null) markTask(`${props.id}:square-break`);
     setLive(verdictText(next));
   };
 

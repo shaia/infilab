@@ -25,15 +25,6 @@
   definition: >-
     ההוכחה שלכל $n$ (מהבסיס והלאה), אם הטענה נכונה עבור $n$ אז היא נכונה עבור $n+1$.
   lesson: '0.5'
-- id: bernoulli-inequality
-  term: אי-שוויון ברנולי
-  en: Bernoulli's inequality
-  symbol: '(1+x)^n\ge 1+nx'
-  definition: >-
-    לכל $x\ge -1$ ולכל $n$ טבעי, $(1+x)^n\ge 1+nx$, עם שוויון אם ורק אם $n=1$ או $x=0$. מוכיחים אותו
-    באינדוקציה, והתנאי $x\ge -1$ דרוש בצעד.
-  reject: [אי שוויון ברנולי]
-  lesson: '0.5'
 - id: induction-principle
   term: עקרון האינדוקציה
   en: principle of mathematical induction
@@ -65,42 +56,4 @@
   definition: >-
     המכפלה $n!=1\cdot 2\cdot\dots\cdot n$ של הטבעיים עד $n$, ו-$0!=1$. למשל $4!=24$, ומתקיים $(n+1)!=(n+1)\cdot n!$
     לכל שלם $n\ge0$.
-  lesson: '0.5'
-- id: strong-induction
-  term: אינדוקציה שלמה
-  en: strong induction
-  definition: >-
-    גרסה של אינדוקציה שבה הצעד מניח את הטענה לכל המספרים הקודמים, לא רק לקודם: אם לכל $n\ge n_0$, מכך ש-$P(k)$
-    נכונה לכל $n_0\le k<n$ נובעת $P(n)$, אז $P(n)$ נכונה לכל $n\ge n_0$. נובעת מעקרון האינדוקציה.
-  lesson: '0.5'
-- id: well-ordering-principle
-  term: עקרון הסדר הטוב
-  en: well-ordering principle
-  definition: >-
-    לכל קבוצה לא ריקה של מספרים טבעיים יש איבר קטן ביותר. שקול לעקרון האינדוקציה. ל-$\mathbb{Z}$, ולקבוצת המספרים
-    $\frac1n$, אין איבר קטן ביותר.
-  lesson: '0.5'
-- id: binomial-coefficient
-  term: מקדם בינומי
-  en: binomial coefficient
-  symbol: '\binom{n}{k}'
-  definition: >-
-    לשלמים $0\le k\le n$: $\binom{n}{k}=\frac{n!}{k!\,(n-k)!}$. למשל $\binom{n}{0}=\binom{n}{n}=1$ ו-$\binom{n}{2}=\frac{n(n-1)}{2}$.
-    תמיד מספר טבעי.
-  lesson: '0.5'
-- id: pascal-identity
-  term: זהות פסקל
-  en: Pascal's identity
-  symbol: '\binom{n}{k-1}+\binom{n}{k}=\binom{n+1}{k}'
-  definition: >-
-    לכל $n$ טבעי ולכל $1\le k\le n$: $\binom{n}{k-1}+\binom{n}{k}=\binom{n+1}{k}$. בונה כל שורה של משולש פסקל
-    מהקודמת לה.
-  lesson: '0.5'
-- id: binomial-theorem
-  term: הבינום של ניוטון
-  en: binomial theorem
-  symbol: '(a+b)^n=\sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^k'
-  definition: >-
-    לכל $a,b$ ממשיים ולכל $n$ טבעי, $(a+b)^n=\sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^k$, עם המוסכמה $x^0=1$. מוכיחים
-    באינדוקציה, בעזרת זהות פסקל.
   lesson: '0.5'

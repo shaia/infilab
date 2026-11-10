@@ -1,5 +1,5 @@
 /**
- * Lesson 0.6's figure: a function between finite sets, drawn as arrows. A on the left, B on the right (and C
+ * Lesson 0.8's figure: a function between finite sets, drawn as arrows. A on the left, B on the right (and C
  * further right for a composition), each a column of labelled dots in an oval. The learner draws arrows (click a
  * dot of A, then a dot of B; or the keyboard) and the figure says, live and exactly, whether the arrows form a
  * function (every element of A has exactly one arrow), whether it is injective and onto, and what its image is.

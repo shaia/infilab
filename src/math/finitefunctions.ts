@@ -2,7 +2,7 @@
  * MODEL SPECIFICATION
  *
  * System:        finite sets A = {0, …, m−1}, B = {0, …, n−1} (and C for a composition), shown with labels,
- *                and a relation from A to B given as a list of arrows (pairs (a, b)). Lesson 0.6's figure asks
+ *                and a relation from A to B given as a list of arrows (pairs (a, b)). Lesson 0.8's figure asks
  *                of such a relation: is it a function (every element of A has exactly one arrow)? Is the
  *                function injective, surjective? What is its image, the preimage of a point, g∘f, f⁻¹?
  * Dynamics:      none; the learner adds and removes arrows.

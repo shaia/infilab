@@ -1,458 +1,503 @@
-# Workbook of lesson 0.7 — inequalities and absolute value.
+# Workbook of lesson 0.7 — sets.
 # Objectives (src/course.ts):
-#   OBJ-0.7-1  solve inequalities with absolute values and describe the solution as an interval or a union of intervals
-#   OBJ-0.7-2  prove and use the triangle inequality and its reverse form
-#   OBJ-0.7-3  use the AM-GM inequality and simple estimates to bound an expression from above and from below
-# Every solution set below was recomputed with src/math/absval.ts (solveAbs, solveSumDist) and checked against a direct
-# evaluation on a grid; every bound was checked on n ≤ 200000 or on a grid of x; W-07 on random positive tuples.
-# Solutions cite the numbered results of the lesson (0.7.1–0.7.19) by number.
+#   OBJ-0.7-1  operate on sets; prove set equality by double inclusion
+#   OBJ-0.7-2  prove the laws of the operations and De Morgan's laws, also for a family of sets
+#   OBJ-0.7-3  work with the power set and the Cartesian product, and prove claims about them
+# W-01, W-04 and W-05 come from the old lesson 0.6 (sets and functions, split on 2026-11-10); the rest are new.
+# Every finite claim is checked in tests/math/sets.test.ts (W-03, W-08, W-09, c2 on every triple of subsets of a
+# 4-element set); the interval endpoints of W-01 and W-10 by a scratch script on a grid of rationals.
 lesson: '0.7'
 practice:
   - id: W-0.7-01
     level: basic
     objectives: [OBJ-0.7-1]
     prompt: >-
-      פתרו את אי-השוויון $|4x-1|\le 7$, וכתבו את הפתרון כקטע. מהם המרכז והרדיוס של הקטע?
-    answer: '$\left[-\frac32,\ 2\right]$, עם מרכז $\frac14$ ורדיוס $\frac74$.'
+      יהיו $A=(-2,4]$ ו-$B=[0,6)$, תת-קבוצות של $\mathbb{R}$, והמשלים נלקח ב-$\mathbb{R}$.
+
+      (א) מצאו את $A\cap B$, $A\cup B$, $A\setminus B$ ו-$B\setminus A$.
+
+      (ב) מצאו את $(A\cup B)^c$ ואת $A^c\cap B^c$, והשוו.
+    answer: >-
+      (א) $A\cap B=[0,4]$, $A\cup B=(-2,6)$, $A\setminus B=(-2,0)$, $B\setminus A=(4,6)$.
+
+      (ב) שתיהן $(-\infty,-2]\cup[6,\infty)$, כמו שכלל דה-מורגן אומר.
     solution:
       - kind: idea
         text: >-
-          לפי טענה 0.7.5(ב), $|t|\le r$ שקול ל-$-r\le t\le r$. פותחים את הערך המוחלט לשרשרת אחת ומבודדים את $x$ בכל
-          שלושת האגפים יחד; כל מעבר הוא שקילות.
+          מסמנים את שני הקטעים על ציר המספרים ובודקים כל קצה בנפרד: $-2\notin A$, $4\in A$, $0\in B$, $6\notin B$.
       - kind: computation
         text: >-
-          $$|4x-1|\le 7 \iff -7\le 4x-1\le 7 \iff -6\le 4x\le 8 \iff -\frac32\le x\le 2$$
-
-          הוספנו 1 לכל האגפים, ואחר כך כפלנו ב-$\frac14$. המספר $\frac14$ חיובי, ולכן כיווני אי-השוויונות נשמרים
-          (עובדה מקובלת (ב)).
+          (א) בחיתוך צריך $x\ge0$ (בגלל $B$) וגם $x\le4$ (בגלל $A$): $A\cap B=[0,4]$. באיחוד כל $x$ עם $-2<x<6$ נמצא
+          באחד הקטעים, והקצוות $-2$ ו-$6$ אינם באף אחד: $A\cup B=(-2,6)$.
       - kind: computation
         text: >-
-          לפי מסקנה 0.7.6(ד), המרכז הוא האמצע: $\frac{-\frac32+2}{2}=\frac14$, והרדיוס הוא חצי האורך:
-          $\frac{2-\left(-\frac32\right)}{2}=\frac74$.
+          $A\setminus B$: ב-$A$ ולא ב-$B$, כלומר $-2<x<0$; הנקודה $0$ ב-$B$, ולכן בחוץ: $A\setminus B=(-2,0)$.
+          $B\setminus A$: ב-$B$ ולא ב-$A$, כלומר $4<x<6$; הנקודה $4$ ב-$A$: $B\setminus A=(4,6)$.
+      - kind: computation
+        text: >-
+          (ב) $(A\cup B)^c=\mathbb{R}\setminus(-2,6)=(-\infty,-2]\cup[6,\infty)$. מצד שני
+          $A^c=(-\infty,-2]\cup(4,\infty)$ ו-$B^c=(-\infty,0)\cup[6,\infty)$. מספר נמצא בשתיהן אם הוא $\le-2$ (אז הוא
+          גם קטן מ-0), או $\ge6$ (אז הוא גם גדול מ-4). מספר בין $-2$ ל-$6$ אינו באחת מהן.
       - kind: check
         text: >-
-          לפי למה 0.7.2(ו), $|4x-1|=\left|4\left(x-\frac14\right)\right|=4\left|x-\frac14\right|$, ולכן אי-השוויון הוא
-          $\left|x-\frac14\right|\le\frac74$: לפי מסקנה 0.7.6(ב) זה בדיוק הקטע שמרכזו $\frac14$ ורדיוסו $\frac74$.
-          נקודות קצה: $x=2$ נותן $|7|=7\le 7$, ו-$x=-\frac32$ נותן $|-7|=7$. שתיהן שייכות, ולכן הסוגריים מרובעים.
+          הנקודות $-2$ ו-$6$ שייכות ל-$(A\cup B)^c$, ולכן הסוגריים שם מרובעים. ו-$-2$ אכן ב-$A^c$ (כי $-2\notin A$) וגם
+          ב-$B^c$ (כי $-2<0$).
       - kind: result
-        text: '$\left[-\frac32,\ 2\right]$, המרכז $\frac14$ והרדיוס $\frac74$.'
+        text: >-
+          $A\cap B=[0,4]$, $A\cup B=(-2,6)$, $A\setminus B=(-2,0)$, $B\setminus A=(4,6)$, ו-$(A\cup B)^c=A^c\cap
+          B^c=(-\infty,-2]\cup[6,\infty)$.
 
   - id: W-0.7-02
     level: basic
     qualitative: true
-    objectives: [OBJ-0.7-1]
+    objectives: [OBJ-0.7-3]
     prompt: >-
-      תארו במילים, בעזרת מרחק, ואחר כך כקטע, כאיחוד של קטעים או כקבוצה אחרת, את קבוצת הפתרונות של:
+      יהיו $A=\{a,b\}$ ו-$B=\{1,2,3\}$.
 
-      (א) $|x-5|>0$.
+      (א) רשמו את $\mathcal{P}(A)$ ואת $A\times B$.
 
-      (ב) $|x+3|\le 0$.
+      (ב) רשמו את $\mathcal{P}(B)$ בעזרת טענה 0.7.11: קודם תת-הקבוצות של $\{1,2\}$, ואחר כך אותן קבוצות עם $3$.
 
-      (ג) $|x-1|<-2$.
+      (ג) נכון או לא נכון, ולמה: $(1,a)\in A\times B$; $\{a\}\in\mathcal{P}(A)$; $\{a\}\subseteq A\times B$;
+      $\emptyset\in\mathcal{P}(A\times B)$.
     answer: >-
-      (א) $(-\infty,5)\cup(5,\infty)$, כל המספרים חוץ מ-5. (ב) $\{-3\}$. (ג) הקבוצה הריקה.
+      (א) $\mathcal{P}(A)=\{\emptyset,\{a\},\{b\},\{a,b\}\}$, ו-$A\times B$ היא ששת הזוגות $(a,1),(a,2),(a,3),(b,1),(b,2),(b,3)$.
+      (ב) $\mathcal{P}(B)=\{\emptyset,\{1\},\{2\},\{1,2\},\{3\},\{1,3\},\{2,3\},\{1,2,3\}\}$. (ג) לא; נכון; לא; נכון.
     solution:
-      - kind: idea
+      - kind: definition
         text: >-
-          טענה 0.7.5 נכונה לכל $r$ ממשי, גם כש-$r\le 0$, ולכן אפשר להפעיל אותה כאן כרגיל. במילים, הכול נובע מלמה
-          0.7.2(א): מרחק אינו שלילי, ושווה לאפס רק כשהנקודות שוות.
+          $\mathcal{P}(A)$ היא קבוצת כל התת-קבוצות של $A$, ו-$A\times B$ קבוצת כל הזוגות $(x,y)$ עם $x\in A$ ו-$y\in B$
+          (הגדרה 0.7.7).
+      - kind: computation
+        text: >-
+          (א) תת-הקבוצות של $\{a,b\}$: בלי אף איבר, עם אחד מהם, ועם שניהם: $\emptyset,\{a\},\{b\},\{a,b\}$. ובמכפלה,
+          לכל אחד משני האיברים של $A$ שלוש אפשרויות מ-$B$: $(a,1),(a,2),(a,3),(b,1),(b,2),(b,3)$.
+      - kind: theorem
+        text: >-
+          (ב) $B=\{1,2,3\}=[3]$, ולפי טענה 0.7.11(א) עם $n=2$,
+          $\mathcal{P}([3])=\mathcal{P}([2])\cup\{X\cup\{3\}:\ X\in\mathcal{P}([2])\}$. תת-הקבוצות של $[2]=\{1,2\}$ הן
+          $\emptyset,\{1\},\{2\},\{1,2\}$, ובהוספת $3$ לכל אחת מקבלים $\{3\},\{1,3\},\{2,3\},\{1,2,3\}$. לפי 0.7.11(ב)
+          אף קבוצה לא נרשמה פעמיים.
       - kind: step
         text: >-
-          (א) לפי טענה 0.7.5(ג) עם $r=0$: $|x-5|>0$ אם ורק אם $x-5>0$ או $x-5<0$, כלומר $x\ne 5$. הקבוצה היא כל הישר
-          בלי הנקודה 5: $(-\infty,5)\cup(5,\infty)$. במילים: המרחק של $x$ מ-5 חיובי בדיוק כש-$x\ne 5$.
-      - kind: step
-        text: >-
-          (ב) לפי טענה 0.7.5(ב) עם $r=0$: $|x+3|\le 0$ אם ורק אם $0\le x+3\le 0$, כלומר $x+3=0$, כלומר $x=-3$. הקבוצה
-          היא $\{-3\}=[-3,-3]$: "קטע" ברדיוס 0.
-      - kind: step
-        text: >-
-          (ג) לפי טענה 0.7.5(א) עם $r=-2$: $|x-1|<-2$ אם ורק אם $2<x-1<-2$, ואז $2<-2$, שקר. אין פתרון: הקבוצה
-          ריקה. במילים: מרחק אינו שלילי, ולכן אף פעם אינו קטן מ-$-2$.
+          (ג) $(1,a)\notin A\times B$: האיבר הראשון של זוג ב-$A\times B$ שייך ל-$A$, ו-$1\notin A$. $\{a\}\in\mathcal{P}(A)$,
+          כי $\{a\}\subseteq A$. $\{a\}\not\subseteq A\times B$: האיבר $a$ אינו זוג, ולכן אינו איבר של $A\times B$.
+          $\emptyset\in\mathcal{P}(A\times B)$, כי $\emptyset$ מוכלת בכל קבוצה (טענה 0.7.3(ב)).
       - kind: check
         text: >-
-          ב-(ב) ההנחה $r>0$ של מסקנה 0.7.6 אינה מתקיימת, ולכן משתמשים ישירות בטענה 0.7.5, שאין בה הנחה על $r$.
-          בדיקת נקודות: $x=5$ נותן $0>0$, שקר; $x=-3$ נותן $0\le 0$, אמת; $x=1$ נותן $0<-2$, שקר.
+          ב-$\mathcal{P}(B)$ שמונה קבוצות, פי שניים מארבע תת-הקבוצות של $\{1,2\}$, כמו בהערה 0.7.12. ושימו לב ל-$(a,1)\in A\times B$: הזוג עם
+          אותם שני איברים בסדר ההפוך כן נמצא שם.
       - kind: result
         text: >-
-          (א) $\mathbb{R}$ בלי 5, כלומר $(-\infty,5)\cup(5,\infty)$. (ב) $\{-3\}$. (ג) $\emptyset$.
+          $\mathcal{P}(A)=\{\emptyset,\{a\},\{b\},\{a,b\}\}$, ב-$A\times B$ שישה זוגות, ל-$\mathcal{P}(B)$ שמונה איברים
+          (רשומים בסעיף (ב)); בסעיף (ג) הטענות השנייה והרביעית נכונות.
 
   - id: W-0.7-03
     level: basic
-    objectives: [OBJ-0.7-2]
+    objectives: [OBJ-0.7-1, OBJ-0.7-2]
     prompt: >-
-      ידוע ש-$|x-3|<0.5$ ו-$|y-1|<0.2$.
+      יהיו $U=\{1,2,\dots,10\}$, $A$ קבוצת המספרים הזוגיים ב-$U$ ו-$B$ קבוצת הכפולות של $3$ ב-$U$; המשלים ב-$U$.
 
-      (א) חסמו מלמעלה את $|x-y-2|$.
+      (א) מצאו את $A\cup B$, $A\cap B$, $A\setminus B$ ו-$B\setminus A$.
 
-      (ב) חסמו את $|x|$ מלמטה וגם מלמעלה.
-    answer: '(א) $|x-y-2|<0.7$. (ב) $2.5<|x|<3.5$.'
+      (ב) חשבו את $(A\cup B)^c$ ואת $A^c\cap B^c$, ואחר כך את $(A\cap B)^c$ ואת $A^c\cup B^c$. איזה משפט צופה את
+      התוצאה?
+    answer: >-
+      (א) $A\cup B=\{2,3,4,6,8,9,10\}$, $A\cap B=\{6\}$, $A\setminus B=\{2,4,8,10\}$, $B\setminus A=\{3,9\}$.
+      (ב) $(A\cup B)^c=A^c\cap B^c=\{1,5,7\}$, $(A\cap B)^c=A^c\cup B^c=U\setminus\{6\}$; משפט 0.7.6.
     solution:
-      - kind: idea
-        text: >-
-          כותבים את הביטוי בעזרת הכמויות שיודעים לחסום, $x-3$ ו-$y-1$ (הוספה והחסרה), ומפעילים את משפט 0.7.7 לחסם
-          מלמעלה ואת טענה 0.7.11 לשני הכיוונים.
       - kind: computation
         text: >-
-          (א) $x-y-2=(x-3)-(y-1)$. לפי משפט 0.7.7 עם $x-3$ ו-$-(y-1)$, ולפי למה 0.7.2(ה):
-
-          $$|x-y-2|\le|x-3|+|y-1|<0.5+0.2=0.7$$
+          $A=\{2,4,6,8,10\}$ ו-$B=\{3,6,9\}$.
       - kind: computation
         text: >-
-          (ב) לפי טענה 0.7.11 עם $a=3$ ו-$r=0.5$: $|3|-0.5<|x|<|3|+0.5$, כלומר $2.5<|x|<3.5$.
+          (א) באיחוד כל מספר שבאחת מהן: $\{2,3,4,6,8,9,10\}$. בחיתוך רק $6$, שהוא זוגי וכפולה של $3$. $A\setminus B$
+          מוציא מ-$A$ את $6$: $\{2,4,8,10\}$. $B\setminus A$ מוציא מ-$B$ את $6$: $\{3,9\}$.
+      - kind: computation
+        text: >-
+          (ב) $(A\cup B)^c=\{1,5,7\}$. $A^c=\{1,3,5,7,9\}$ ו-$B^c=\{1,2,4,5,7,8,10\}$, והחיתוך שלהן $\{1,5,7\}$.
+      - kind: computation
+        text: >-
+          $(A\cap B)^c=U\setminus\{6\}=\{1,2,3,4,5,7,8,9,10\}$, ו-$A^c\cup B^c$: כל מספר שאינו זוגי או אינו כפולה
+          של $3$, כלומר כל מספר חוץ מ-$6$. שוב אותה קבוצה.
+      - kind: theorem
+        text: >-
+          משפט 0.7.6(א)(ב) (דה-מורגן) אומר ששני השוויונות נכונים לכל שתי קבוצות; כאן ראינו אותם בדוגמה אחת.
       - kind: check
         text: >-
-          ישירות: לפי מסקנה 0.7.6(א), $|x-3|<0.5$ פירושו $2.5<x<3.5$, ולכן $x$ חיובי ו-$|x|=x$ באותו קטע. ב-(א) שימו
-          לב שהחסמים **מתחברים** גם כשבביטוי יש חיסור: $x=3.45$, $y=0.85$ מקיימים את ההנחות ($0.45<0.5$,
-          $0.15<0.2$), ונותנים $|3.45-0.85-2|=0.6$, יותר מכל אחד משני החסמים $0.5$ ו-$0.2$.
+          $A\cup B$ ו-$(A\cup B)^c$ זרות ויחד הן $U$: שבעה מספרים ועוד שלושה, עשרה.
       - kind: result
-        text: '(א) $|x-y-2|<0.7$. (ב) $2.5<|x|<3.5$.'
+        text: >-
+          $A\cup B=\{2,3,4,6,8,9,10\}$, $A\cap B=\{6\}$, $A\setminus B=\{2,4,8,10\}$, $B\setminus A=\{3,9\}$;
+          $(A\cup B)^c=A^c\cap B^c=\{1,5,7\}$ ו-$(A\cap B)^c=A^c\cup B^c=U\setminus\{6\}$.
 
   - id: W-0.7-04
     level: mid
-    objectives: [OBJ-0.7-1]
+    objectives: [OBJ-0.7-2]
     prompt: >-
-      פתרו את אי-השוויון $|x-1|+|x-4|\ge 5$.
-    answer: '$(-\infty,0]\cup[5,\infty)$.'
+      לכל $n\in\mathbb{N}$ תהי $A_n=\{k\in\mathbb{Z}:\ -n\le k\le n\}$, והמשלים נלקח ב-$U=\mathbb{Z}$.
+
+      (א) הוכיחו: $\bigcup_{n=1}^{\infty}A_n=\mathbb{Z}$.
+
+      (ב) הוכיחו: $\bigcap_{n=1}^{\infty}A_n=\{-1,0,1\}$.
+
+      (ג) מצאו, בעזרת משפט 0.7.10, את $\bigcap_{n=1}^{\infty}A_n^c$ ואת $\bigcup_{n=1}^{\infty}A_n^c$.
+    answer: >-
+      (א) לכל $k\ge0$, $k\in A_{k+1}$; לכל $k<0$, $k\in A_{-k}$. (ב) החיתוך הוא $A_1=\{-1,0,1\}$, כי $A_1\subseteq A_n$
+      לכל $n$. (ג) $\bigcap_n A_n^c=\emptyset$ ו-$\bigcup_n A_n^c=\mathbb{Z}\setminus\{-1,0,1\}$.
     solution:
+      - kind: definition
+        text: >-
+          לפי הגדרה 0.7.9, $k\in\bigcup_n A_n$ אם $k\in\mathbb{Z}$ ו**קיים** $n\in\mathbb{N}$ עם $k\in A_n$, ו-$k\in\bigcap_n
+          A_n$ אם $k\in\mathbb{Z}$ ו-$k\in A_n$ **לכל** $n\in\mathbb{N}$.
       - kind: idea
         text: >-
-          שני ערכים מוחלטים מחליפים סימן ב-$x=1$ וב-$x=4$. מפצלים את הישר לשלושה חלקים, ובכל אחד כותבים את הסכום בלי
-          ערך מוחלט (הגדרה 0.7.1). כל $x$ נמצא בדיוק בחלק אחד, ולכן הפתרון הוא האיחוד.
+          באיחוד מוצאים לכל $k$ קטע אחד גדול מספיק. בחיתוך, הקבוצה הקטנה ביותר, $A_1$, מכריעה, כי היא מוכלת בכולן.
+          את (ג) לא מחשבים מחדש: משפט 0.7.10 מעביר את התשובות של (א) ו-(ב) למשלימים.
       - kind: step
         text: >-
-          $x\ge 4$: הסכום הוא $(x-1)+(x-4)=2x-5$. התנאי $2x-5\ge 5$ נותן $x\ge 5$. בחלק הזה: $[5,\infty)$.
+          (א) (⊆) כל $A_n$ מוכלת ב-$\mathbb{Z}$, ולכן גם האיחוד. (⊇) יהי $k\in\mathbb{Z}$. אם $k\ge0$, נבחר
+          $n=k+1\in\mathbb{N}$: $-n<0\le k$ ו-$k<k+1=n$, ולכן $k\in A_n$. אם $k<0$, נבחר $n=-k$: זה שלם חיובי, ולכן
+          $n\ge1$ (אין שלם בין $0$ ל-$1$, עובדה מקובלת (ג)), כלומר $n\in\mathbb{N}$; ו-$-n=k\le k$, $k<0<n$, ולכן
+          $k\in A_n$.
       - kind: step
         text: >-
-          $1\le x<4$: הסכום הוא $(x-1)+(4-x)=3$, ו-$3\ge 5$ אף פעם. אין פתרונות בחלק הזה.
-      - kind: step
+          (ב) קודם $A_1=\{k\in\mathbb{Z}:\ -1\le k\le1\}=\{-1,0,1\}$, כי אין שלם בין $-1$ ל-$0$ ואין שלם בין $0$ ל-$1$
+          (עובדה מקובלת (ג)). (⊆) אם $k$ בחיתוך, אז בפרט $k\in A_1$. (⊇) יהי $k\in\{-1,0,1\}$ ויהי $n\in\mathbb{N}$.
+          אז $n\ge1$, ולכן $-n\le-1\le k\le1\le n$, כלומר $k\in A_n$. זה לכל $n$, ולכן $k$ בחיתוך.
+      - kind: theorem
         text: >-
-          $x<1$: הסכום הוא $(1-x)+(4-x)=5-2x$. התנאי $5-2x\ge 5$ נותן $x\le 0$. בחלק הזה: $(-\infty,0]$.
+          (ג) לפי משפט 0.7.10 (דה-מורגן למשפחה), $\bigcap_n A_n^c=\big(\bigcup_n A_n\big)^c=\mathbb{Z}\setminus\mathbb{Z}=\emptyset$,
+          ו-$\bigcup_n A_n^c=\big(\bigcap_n A_n\big)^c=\mathbb{Z}\setminus\{-1,0,1\}$.
       - kind: check
         text: >-
-          לפי מסקנה 0.7.8(ב), הסכום הוא לפחות $|1-4|=3$, ושווה ל-3 בדיוק בין הנקודות, כמו שיצא בחלק האמצעי. מחוץ להן
-          הוא גדל ב-2 על כל יחידה שמתרחקים, ולכן כדי להגיע ל-5 צריך להתרחק יחידה אחת מעבר לכל קצה: עד 0 או מ-5. בדיקת
-          נקודה: $x=0$ נותן $1+4=5$ (שייך), $x=0.5$ נותן $0.5+3.5=4$ (לא שייך).
+          ישירות: $A_n^c$ היא קבוצת השלמים עם $k<-n$ או $k>n$. המספר $5$ נמצא ב-$A_1^c$, ולכן באיחוד המשלימים;
+          אבל $5\in A_5$, כלומר $5\notin A_5^c$, ולכן אינו בחיתוך המשלימים. כך לכל שלם $k$: הוא ב-$A_n$ לכל
+          $n$ גדול מספיק, ולכן לא בכל המשלימים.
       - kind: result
-        text: '$(-\infty,0]\cup[5,\infty)$.'
+        text: >-
+          $\bigcup_n A_n=\mathbb{Z}$, $\bigcap_n A_n=\{-1,0,1\}$, $\bigcap_n A_n^c=\emptyset$,
+          $\bigcup_n A_n^c=\mathbb{Z}\setminus\{-1,0,1\}$.
 
   - id: W-0.7-05
     level: mid
     qualitative: true
     objectives: [OBJ-0.7-1]
     prompt: >-
-      (א) פתרו את $|x-1|<|x-3|$, ותארו את התשובה במילים בעזרת מרחקים.
+      נכון או לא נכון לכל שלוש קבוצות $A$, $B$, $C$? הוכיחו, או הביאו דוגמה נגדית.
 
-      (ב) הוכיחו או הפריכו: לכל $x,y$ ממשיים, אם $|x|<|y|$ אז $x<y$.
-    answer: '(א) $(-\infty,2)$: המספרים שקרובים ל-1 יותר מאשר ל-3. (ב) הטענה שקרית: $x=1$, $y=-2$.'
+      (א) $A\setminus(A\setminus B)=A\cap B$.
+
+      (ב) $(A\cup B)\setminus C=A\cup(B\setminus C)$.
+    answer: >-
+      (א) נכון. (ב) לא נכון: $A=C=\{1\}$, $B=\emptyset$ נותנות $\emptyset$ באגף שמאל ו-$\{1\}$ באגף ימין.
     solution:
       - kind: idea
         text: >-
-          לפי למה 0.7.3 ("בפרט"), $|u|<|v|\iff u^2<v^2$: הערכים המוחלטים מבטיחים שהאגפים אי-שליליים, ולכן מותר
-          להעלות בריבוע. בלי ערכים מוחלטים, כמו ב-(ב), השוואה של גדלים לא אומרת כלום על הסדר.
+          לתרגם כל צד לתנאי ש-$x$ מקיים. ב-(א) התנאים מתבררים כשקולים, ולכן מוכיחים שתי הכלות. ב-(ב) באגף ימין $C$ לא
+          מוציאה כלום מ-$A$, ולכן מחפשים איבר של $A$ שנמצא ב-$C$.
+      - kind: step
+        text: >-
+          (א) $x\in A\setminus(A\setminus B)$ פירושו $x\in A$ ו-$x\notin A\setminus B$. איבר של $A$ אינו ב-$A\setminus
+          B$ בדיוק כשהוא ב-$B$ (אחרת הוא היה ב-$A$ ולא ב-$B$).
+      - kind: step
+        text: >-
+          (⊆) יהי $x\in A\setminus(A\setminus B)$. אז $x\in A$, ולפי הצעד הקודם $x\in B$, כלומר $x\in A\cap B$. (⊇)
+          יהי $x\in A\cap B$. אז $x\in A$, ו-$x\notin A\setminus B$ כי $x\in B$. לכן $x\in A\setminus(A\setminus B)$.
       - kind: computation
         text: >-
-          (א) $$|x-1|<|x-3| \iff (x-1)^2<(x-3)^2 \iff x^2-2x+1<x^2-6x+9 \iff 4x<8 \iff x<2$$
-      - kind: step
-        text: >-
-          במילים: $x$ קרוב יותר ל-1 מאשר ל-3 בדיוק כשהוא משמאל לאמצע ביניהם, 2. הנקודה 2 עצמה במרחק 1 משתיהן, ולכן לא
-          שייכת.
-      - kind: step
-        text: >-
-          (ב) נפריך. דוגמה נגדית: $x=1$, $y=-2$. אז $|x|=1<2=|y|$, אבל $x=1>-2=y$. הערך המוחלט מודד גודל, לא מקום על
-          הישר.
+          (ב) $A=C=\{1\}$, $B=\emptyset$: אגף שמאל $(\{1\}\cup\emptyset)\setminus\{1\}=\emptyset$. אגף ימין
+          $\{1\}\cup(\emptyset\setminus\{1\})=\{1\}$. הקבוצות שונות.
       - kind: check
         text: >-
-          ב-(א), $x=0$: $|{-1}|=1<3=|{-3}|$ (שייך); $x=2.5$: $1.5<0.5$ שקר (לא שייך). ב-(ב), מה שכן נכון הוא
-          $x\le|x|<|y|$ (למה 0.7.2(ג)), כלומר $x<|y|$.
+          מה כן נכון ב-(ב): $(A\cup B)\setminus C\subseteq A\cup(B\setminus C)$ תמיד, ושוויון מתקיים כש-$A$ ו-$C$ זרות
+          (אין להן איבר משותף). דוגמה שבה האגפים יוצאים שווים, למשל כש-$C=\emptyset$, אינה הוכחה של (ב).
       - kind: result
-        text: '(א) $(-\infty,2)$. (ב) הטענה שקרית; $x=1$, $y=-2$.'
+        text: >-
+          (א) נכון, בהכלה דו-כיוונית. (ב) לא נכון: $A=C=\{1\}$, $B=\emptyset$.
 
   - id: W-0.7-06
     level: mid
-    objectives: [OBJ-0.7-2]
+    objectives: [OBJ-0.7-1]
     prompt: >-
-      הוכיחו שלכל $a,b$ ממשיים $|a|+|b|\le|a+b|+|a-b|$.
-    answer: '$2|a|\le|a+b|+|a-b|$ ו-$2|b|\le|a+b|+|a-b|$; מחברים ומחלקים ב-2.'
+      יהיו $A$ ו-$B$ קבוצות. הוכיחו שארבע הטענות הבאות שקולות: (1) $A\subseteq B$; (2) $A\cup B=B$; (3)
+      $A\cap B=A$; (4) $A\setminus B=\emptyset$.
+    answer: >-
+      מוכיחים שרשרת סגורה של גרירות: (1)⇒(2)⇒(3)⇒(4)⇒(1). כל גרירה היא הכלה דו-כיוונית קצרה או הוכחה בשלילה.
     solution:
-      - kind: goal
-        text: '$|a|+|b|\le|a+b|+|a-b|$ לכל $a,b$.'
       - kind: idea
         text: >-
-          את $2a$ ואת $2b$ אפשר לכתוב בעזרת $a+b$ ו-$a-b$: $2a=(a+b)+(a-b)$ ו-$2b=(a+b)-(a-b)$. משפט 0.7.7 על כל אחד
-          מהם נותן חסם, ומחברים.
-      - kind: theorem
-        text: >-
-          לפי למה 0.7.2(ו) ומשפט 0.7.7: $2|a|=|2a|=|(a+b)+(a-b)|\le|a+b|+|a-b|$.
-      - kind: theorem
-        text: >-
-          לפי משפט 0.7.7 עם $a+b$ ו-$-(a-b)$, ולפי למה 0.7.2(ה): $2|b|=|(a+b)-(a-b)|\le|a+b|+|a-b|$.
+          במקום להוכיח שש שקילויות, מוכיחים ארבע גרירות במעגל: כל טענה גוררת את הבאה, והאחרונה את הראשונה. אז כל
+          אחת גוררת כל אחת אחרת, בהליכה על המעגל.
       - kind: step
         text: >-
-          מחברים את שני אי-השוויונות: $2|a|+2|b|\le 2\big(|a+b|+|a-b|\big)$, וכופלים ב-$\frac12$, שהוא חיובי.
+          (1)⇒(2). (⊆) יהי $x\in A\cup B$. אם $x\in B$, סיימנו; אם $x\in A$, אז $x\in B$ לפי (1). (⊇) $B\subseteq
+          A\cup B$, כי כל $x\in B$ מקיים "$x\in A$ או $x\in B$".
+      - kind: step
+        text: >-
+          (2)⇒(3). (⊆) כל איבר של $A\cap B$ נמצא ב-$A$. (⊇) יהי $x\in A$. אז $x\in A\cup B=B$ לפי (2), ולכן
+          $x\in A\cap B$.
+      - kind: step
+        text: >-
+          (3)⇒(4). נניח בשלילה ש-$x\in A\setminus B$. אז $x\in A=A\cap B$ לפי (3), ולכן $x\in B$, בסתירה ל-$x\notin
+          B$. לכן ל-$A\setminus B$ אין איברים, ולפי טענה 0.7.3(ב) $A\setminus B=\emptyset$.
+      - kind: step
+        text: >-
+          (4)⇒(1). יהי $x\in A$. אילו $x\notin B$, היה $x\in A\setminus B=\emptyset$, ואין בה איברים. לכן $x\in B$.
       - kind: check
         text: >-
-          $a=3$, $b=-1$: אגף שמאל $4$, אגף ימין $|2|+|4|=6$. ו-$a=b=1$: אגף שמאל $2$, אגף ימין $2+0=2$, שוויון.
+          עם $A=\{1\}$, $B=\{1,2\}$ כל ארבע הטענות נכונות; עם $A=\{1,3\}$, $B=\{1,2\}$ כולן לא נכונות: $A\cup
+          B=\{1,2,3\}\ne B$, $A\cap B=\{1\}\ne A$, ו-$A\setminus B=\{3\}$.
       - kind: result
-        text: '$|a|+|b|\le|a+b|+|a-b|$ לכל $a,b$ ממשיים.'
+        text: >-
+          $A\subseteq B$ אם ורק אם $A\cup B=B$, אם ורק אם $A\cap B=A$, אם ורק אם $A\setminus B=\emptyset$.
 
   - id: W-0.7-07
-    level: exam
+    level: mid
+    qualitative: true
     objectives: [OBJ-0.7-3]
     prompt: >-
-      (א) הוכיחו שלכל $n\in\mathbb{N}$ ולכל $a_1,\dots,a_n>0$ מתקיים
-      $\left(\sum_{k=1}^n a_k\right)\left(\sum_{k=1}^n\frac{1}{a_k}\right)\ge n^2$, ושוויון מתקיים אם ורק אם כל
-      ה-$a_k$ שווים.
+      הוכיחו או הפריכו, לכל קבוצות $A$, $B$, $C$:
 
-      (ב) הסיקו שלכל $a,b,c>0$ מתקיים $(a+b+c)\left(\frac1a+\frac1b+\frac1c\right)\ge 9$, וחשבו את אגף שמאל עבור
-      $a=1$, $b=2$, $c=4$.
-    answer: '(א) קושי-שוורץ עם $\sqrt{a_k}$ ו-$\frac{1}{\sqrt{a_k}}$. (ב) $n=3$; עבור $1,2,4$ אגף שמאל $\frac{49}{4}=12.25$.'
+      (א) אם $A\times B=A\times C$, אז $B=C$.
+
+      (ב) אם $A\ne\emptyset$ ו-$A\times B=A\times C$, אז $B=C$.
+    answer: >-
+      (א) לא נכון: $A=\emptyset$, $B=\{1\}$, $C=\{2\}$, ושתי המכפלות ריקות. (ב) נכון: עם $a\in A$, כל $b\in B$ נותן
+      $(a,b)\in A\times C$, ולכן $b\in C$; ולהפך.
     solution:
       - kind: idea
         text: >-
-          המכפלה $\sqrt{a_k}\cdot\frac{1}{\sqrt{a_k}}=1$ לא תלויה ב-$k$. במשפט 0.7.16 עם $x_k=\sqrt{a_k}$ ו-$y_k=\frac{1}{\sqrt{a_k}}$
-          אגף שמאל הוא $n^2$, ואגף ימין הוא בדיוק המכפלה שלנו.
-      - kind: step
-        text: >-
-          לכל $k$, $a_k>0$, ולכן $\sqrt{a_k}$ מוגדר (עובדה מקובלת (ה)) ושונה מאפס (אחרת $a_k=(\sqrt{a_k})^2=0$), כלומר
-          $\sqrt{a_k}>0$. נגדיר $x_k=\sqrt{a_k}$ ו-$y_k=\frac{1}{\sqrt{a_k}}$. אז $x_ky_k=1$, $x_k^2=a_k$, ו-$y_k^2=\frac{1}{(\sqrt{a_k})^2}=\frac{1}{a_k}$.
-      - kind: theorem
-        text: >-
-          לפי משפט 0.7.16:
-
-          $$n^2=\Big(\sum_{k=1}^n x_ky_k\Big)^2\le\Big(\sum_{k=1}^n x_k^2\Big)\Big(\sum_{k=1}^n y_k^2\Big)=\Big(\sum_{k=1}^n a_k\Big)\Big(\sum_{k=1}^n\frac1{a_k}\Big)$$
-      - kind: step
-        text: >-
-          שוויון. לפי משפט 0.7.16, יש שוויון אם ורק אם כל $x_k=0$ (בלתי אפשרי, כי $x_k>0$), או שיש $\lambda$ עם
-          $y_k=\lambda x_k$ לכל $k$, כלומר $\frac{1}{\sqrt{a_k}}=\lambda\sqrt{a_k}$, כלומר $1=\lambda a_k$. אז
-          $\lambda\ne 0$ ו-$a_k=\frac1\lambda$ לכל $k$: כולם שווים. ולהפך, אם כל $a_k=c$, אגף שמאל הוא
-          $nc\cdot\frac nc=n^2$.
+          מ-$(a,b)\in A\times C$ אפשר לקרוא את $b\in C$, אבל רק אם יש בכלל זוג כזה: צריך איבר $a\in A$. כש-$A$ ריקה,
+          כל המכפלות שלה ריקות (טענה 0.7.14(ד)), והן לא "זוכרות" את $B$.
       - kind: computation
         text: >-
-          (ב) זה (א) עם $n=3$. עבור $a=1$, $b=2$, $c=4$: $7\cdot\left(1+\frac12+\frac14\right)=7\cdot\frac74=\frac{49}{4}=12.25\ge 9$.
+          (א) $A=\emptyset$, $B=\{1\}$, $C=\{2\}$. לפי טענה 0.7.14(ד), $A\times B=\emptyset=A\times C$, אבל $B\ne C$.
+      - kind: step
+        text: >-
+          (ב) כיוון ש-$A\ne\emptyset$, יש $a\in A$. (⊆) יהי $b\in B$. אז $(a,b)\in A\times B=A\times C$, כלומר
+          $(a,b)=(a',c)$ עם $a'\in A$ ו-$c\in C$. לפי תכונת הזוג הסדור $b=c\in C$.
+      - kind: step
+        text: >-
+          (⊇) יהי $c\in C$. אז $(a,c)\in A\times C=A\times B$, ולפי אותו נימוק $c\in B$. לכן $B=C$ (טענה 0.7.3(ד)).
       - kind: check
         text: >-
-          $a=b=c=5$: $15\cdot\frac35=9$, שוויון, כמו ש-(א) מבטיח. ל-$n=2$ זו מסקנה 0.7.15 בתחפושת:
-          $(a+b)\left(\frac1a+\frac1b\right)=2+\frac ab+\frac ba\ge 2+2=4$.
+          ההנחה $A\ne\emptyset$ שימשה בשורה הראשונה של (ב), וזו בדיוק ההנחה שהדוגמה הנגדית של (א) מפרה.
       - kind: result
         text: >-
-          (א) $\left(\sum a_k\right)\left(\sum\frac1{a_k}\right)\ge n^2$, ושוויון בדיוק כשכל ה-$a_k$ שווים. (ב)
-          $(a+b+c)\left(\frac1a+\frac1b+\frac1c\right)\ge 9$; עבור $1,2,4$ הערך $12.25$.
+          (א) לא נכון. (ב) נכון: מכפלה בקבוצה לא ריקה אפשר "לצמצם".
 
   - id: W-0.7-08
     level: exam
     qualitative: true
-    objectives: [OBJ-0.7-2, OBJ-0.7-3]
+    objectives: [OBJ-0.7-2]
     prompt: >-
-      נניח $|x-1|<1$. הוכיחו או הפריכו כל טענה:
+      ההפרש הסימטרי של שתי קבוצות הוא $X\triangle Y=(X\setminus Y)\cup(Y\setminus X)$. לכל שלוש קבוצות $A$, $B$, $C$:
 
-      (א) $|x^3-1|\le 7|x-1|$.
+      (א) הוכיחו: $A\cap(B\triangle C)=(A\cap B)\triangle(A\cap C)$.
 
-      (ב) $|x^3-1|\le 3|x-1|$.
-    answer: '(א) נכון. (ב) לא נכון: $x=1.9$ נותן $|x^3-1|=5.859>2.7=3|x-1|$.'
+      (ב) הפריכו: $A\cup(B\triangle C)=(A\cup B)\triangle(A\cup C)$.
+    answer: >-
+      (א) לכל $x$ שני האגפים אומרים "$x\in A$, ו-$x$ נמצא בדיוק באחת מ-$B$, $C$". (ב) $A=B=C=\{1\}$: אגף שמאל $\{1\}$,
+      אגף ימין $\emptyset$.
     solution:
+      - kind: definition
+        text: >-
+          $x\in X\triangle Y$ אם ורק אם $x$ נמצא בדיוק באחת מהקבוצות $X$, $Y$: ב-$X$ ולא ב-$Y$, או ב-$Y$ ולא ב-$X$.
       - kind: idea
         text: >-
-          מפרקים $x^3-1=(x-1)(x^2+x+1)$, ואז צריך לחסום את $|x^2+x+1|$ מלמעלה. לשם כך חוסמים קודם את $|x|$ בעזרת
-          ההנחה וטענה 0.7.11.
+          חלוקה למקרים לפי "$x\in A$?", כמו בטבלת שייכות. כש-$x\notin A$, שני האגפים של (א) לא מכילים אותו; כש-$x\in A$,
+          החיתוך עם $A$ לא משנה דבר. ב-(ב), איבר של $A$ נמצא באגף שמאל תמיד, אבל ב-$A\cup B$ וגם ב-$A\cup C$, ולכן
+          לא בהפרש הסימטרי שלהן.
+      - kind: step
+        text: >-
+          (א) מקרה $x\notin A$: אז $x\notin A\cap(B\triangle C)$, וגם $x\notin A\cap B$ ו-$x\notin A\cap C$, ולכן $x$
+          אינו באף אחת מהן ואינו ב-$(A\cap B)\triangle(A\cap C)$.
+      - kind: step
+        text: >-
+          מקרה $x\in A$: אז $x\in A\cap B$ אם ורק אם $x\in B$, ו-$x\in A\cap C$ אם ורק אם $x\in C$. לכן $x$ נמצא
+          בדיוק באחת מ-$A\cap B$, $A\cap C$ אם ורק אם הוא נמצא בדיוק באחת מ-$B$, $C$, כלומר אם ורק אם $x\in
+          A\cap(B\triangle C)$.
+      - kind: step
+        text: >-
+          בשני המקרים $x$ שייך לאגף שמאל אם ורק אם הוא שייך לאגף ימין, ולפי הגדרה 0.7.1 האגפים שווים.
       - kind: computation
-        text: '$|x^3-1|=|x-1|\cdot|x^2+x+1|$, לפי למה 0.7.2(ו).'
-      - kind: theorem
         text: >-
-          לפי טענה 0.7.11 עם $a=1$ ו-$r=1$: $|x|<|1|+1=2$. לפי טענה 0.7.10 לשלושה מחוברים ולפי למה 0.7.2(ו):
-          $|x^2+x+1|\le|x|^2+|x|+1<4+2+1=7$.
-      - kind: step
-        text: >-
-          (א) $|x-1|\ge 0$, ולכן מותר לכפול בו את $|x^2+x+1|<7$: $|x^3-1|=|x-1|\cdot|x^2+x+1|\le 7|x-1|$ (עם $\le$,
-          כי כש-$x=1$ שני האגפים אפס). הטענה נכונה.
-      - kind: step
-        text: >-
-          (ב) נפריך. דוגמה נגדית: $x=1.9$, ואכן $|x-1|=0.9<1$. אז $x^3-1=6.859-1=5.859$, ואילו $3|x-1|=2.7$.
+          (ב) $A=B=C=\{1\}$. אגף שמאל: $B\triangle C=\emptyset$, ו-$A\cup\emptyset=\{1\}$. אגף ימין: $A\cup B=A\cup
+          C=\{1\}$, ו-$\{1\}\triangle\{1\}=\emptyset$. ו-$\{1\}\ne\emptyset$.
       - kind: check
         text: >-
-          למה 3 לא מספיק? $|x^3-1|=|x-1|\cdot(x^2+x+1)$, ו-$x^2+x+1-3=(x-1)(x+2)$. לכן בקטע $(0,2)$ הגורם
-          $x^2+x+1$ לכל היותר 3 בדיוק כש-$x\le 1$, וגדול מ-3 לכל $1<x<2$; ליד $x=2$ הוא כמעט 7. החסם 3 נכון בחלק
-          $(0,1]$ ונכשל בכל נקודה של $(1,2)$, גם קרוב מאוד ל-1.
+          בטבלת שייכות של $A$, $B$, $C$, (א) נבדק בכל שמונת האזורים, ו-(ב) נכשל בדיוק באזורים שבתוך $A$: שם אגף שמאל
+          מכיל את $x$ ואגף ימין לא.
       - kind: result
-        text: '(א) נכון. (ב) לא נכון, למשל $x=1.9$.'
+        text: >-
+          (א) חיתוך מתפלג על הפרש סימטרי. (ב) איחוד לא: $A=B=C=\{1\}$ היא דוגמה נגדית.
 
   - id: W-0.7-09
-    level: mid
+    level: exam
     objectives: [OBJ-0.7-3]
     prompt: >-
-      (א) הוכיחו שלכל $n$ טבעי $\frac{1}{2n}\le\frac{3n^2-n}{n^3+2n+1}\le\frac3n$.
-
-      (ב) מצאו בעזרת (א) מספר $N$ כך שלכל $n>N$ מתקיים $\frac{3n^2-n}{n^3+2n+1}<0.01$.
-    answer: '(א) למה 0.7.18 וטענה 0.7.19. (ב) $N=300$.'
+      הוכיחו: לכל שתי קבוצות $A$ ו-$B$, $A\times B=B\times A$ אם ורק אם $A=B$ או $A=\emptyset$ או $B=\emptyset$.
+    answer: >-
+      ($\Leftarrow$) כש-$A=B$ אין מה להוכיח, וכשאחת ריקה שתי המכפלות ריקות. ($\Rightarrow$) אם שתיהן לא ריקות,
+      $(a,b)\in A\times B=B\times A$ נותן $a\in B$, ו-$b\in A$.
     solution:
+      - kind: goal
+        text: >-
+          גרירה בכל כיוון. בכיוון ($\Rightarrow$) נניח $A\times B=B\times A$, וגם ש-$A$ ו-$B$ לא ריקות (אחרת סיימנו),
+          ונוכיח $A=B$ בהכלה דו-כיוונית.
       - kind: idea
         text: >-
-          החזקה הגבוהה ביותר של $n$ במונה היא $n^2$ ובמכנה $n^3$; מחליפים כל מחובר בכפולה שלה, בעזרת טענה 0.7.19
-          ($1\le n\le n^2\le n^3$ לכל $n\in\mathbb{N}$). חסם מלמעלה: מגדילים את המונה ומקטינים את המכנה; חסם מלמטה:
-          להפך. ההנחות של למה 0.7.18 מתקיימות: המונה $3n^2-n=n(3n-1)$ אי-שלילי, וכל המכנים חיוביים.
+          איבר של $A$ שעומד **ראשון** בזוג של $A\times B$ חייב, בגלל השוויון, להיות ראשון בזוג של $B\times A$, כלומר
+          איבר של $B$. כדי לבנות זוג צריך איבר כלשהו בקבוצה השנייה, ולכן צריך שתיהן לא ריקות.
       - kind: step
         text: >-
-          מלמעלה: $3n^2-n\le 3n^2$ (הורדנו מחובר שלילי), ו-$n^3+2n+1\ge n^3>0$. לפי למה 0.7.18 עם $p=3n^2-n$, $P=3n^2$,
-          $q=n^3+2n+1$ ו-$Q=n^3$: $\frac{3n^2-n}{n^3+2n+1}\le\frac{3n^2}{n^3}=\frac3n$.
+          ($\Leftarrow$) אם $A=B$, שני האגפים הם $A\times A$. אם $A=\emptyset$ או $B=\emptyset$, אז לפי טענה 0.7.14(ד)
+          גם $A\times B=\emptyset$ וגם $B\times A=\emptyset$.
       - kind: step
         text: >-
-          מלמטה: לפי טענה 0.7.19, $n\le n^2$, ולכן $3n^2-n\ge 3n^2-n^2=2n^2$. וגם $2n\le 2n^3$ ו-$1\le n^3$, ולכן
-          $n^3+2n+1\le n^3+2n^3+n^3=4n^3$. לפי למה 0.7.18 עם $p=2n^2$, $P=3n^2-n$, $q=4n^3$ ו-$Q=n^3+2n+1$:
-          $\frac{2n^2}{4n^3}\le\frac{3n^2-n}{n^3+2n+1}$, ו-$\frac{2n^2}{4n^3}=\frac{1}{2n}$.
-      - kind: computation
+          ($\Rightarrow$), (⊆): יהי $a\in A$, ונבחר $b\in B$ כלשהו ($B\ne\emptyset$). אז $(a,b)\in A\times B=B\times A$,
+          כלומר $(a,b)=(b',a')$ עם $b'\in B$ ו-$a'\in A$. לפי תכונת הזוג הסדור $a=b'\in B$.
+      - kind: step
         text: >-
-          (ב) מספיק ש-$\frac3n<0.01$, כלומר $n>300$. לכן $N=300$ מתאים: אם $n>300$, אז
-          $\frac{3n^2-n}{n^3+2n+1}\le\frac3n<0.01$.
+          ($\Rightarrow$), (⊇): יהי $b\in B$, ונבחר $a\in A$ ($A\ne\emptyset$). אז $(a,b)\in A\times B=B\times A$, כלומר
+          $(a,b)=(b'',a'')$ עם $a''\in A$, ולכן $b=a''\in A$. לפי טענה 0.7.3(ד), $A=B$.
       - kind: check
         text: >-
-          $n=1$: $\frac12\le\frac24=\frac12\le 3$, והחסם התחתון מתקבל. $n=2$: $\frac14\le\frac{10}{13}\le\frac32$. ב-(ב)
-          החסם כמעט הדוק: עבור $n=299$ השבר הוא בערך $0.01002$, עדיין לא קטן מ-$0.01$, ועבור $n=300$ הוא בערך
-          $0.00999$.
+          כל אחת משלוש האפשרויות נחוצה: $A=\{1\}$, $B=\{2\}$ נותנות $\{(1,2)\}\ne\{(2,1)\}$; ו-$A=\emptyset$, $B=\{2\}$
+          נותנות שוויון ($\emptyset=\emptyset$) אף ש-$A\ne B$. הטענה נבדקה גם על כל זוג תת-קבוצות של קבוצה בת ארבעה
+          איברים.
       - kind: result
-        text: '(א) $\frac{1}{2n}\le\frac{3n^2-n}{n^3+2n+1}\le\frac3n$. (ב) $N=300$.'
+        text: >-
+          $A\times B=B\times A$ בדיוק כש-$A=B$ או כשאחת הקבוצות ריקה.
 
   - id: W-0.7-10
     level: exam
-    qualitative: true
-    objectives: [OBJ-0.7-1, OBJ-0.7-2]
+    objectives: [OBJ-0.7-2]
     prompt: >-
-      לכל $c$ ממשי נסמן $A_c=\{x\in\mathbb{R}:\ |x+1|+|x-3|<c\}$.
+      לכל $t\in[0,1]$ יהי $A_t=[t,t+1]$, תת-קבוצה של $U=\mathbb{R}$ (קבוצת האינדקסים היא $I=[0,1]$).
 
-      (א) הוכיחו בעזרת אי-שוויון המשולש שלכל $x$ מתקיים $|x+1|+|x-3|\ge 4$, ומצאו את כל ה-$x$ שבהם יש שוויון.
+      (א) הוכיחו: $\bigcup_{t\in[0,1]}A_t=[0,2]$.
 
-      (ב) לאילו $c$ הקבוצה $A_c$ ריקה?
+      (ב) הוכיחו: $\bigcap_{t\in[0,1]}A_t=\{1\}$.
 
-      (ג) מצאו $c$ שעבורו $A_c$ הוא קטע באורך $10$, ומצאו את הקטע.
-    answer: '(א) שוויון בדיוק ב-$[-1,3]$. (ב) $c\le 4$. (ג) $c=10$, והקטע $(-4,6)$.'
+      (ג) מצאו בעזרת משפט 0.7.10 את $\bigcap_{t\in[0,1]}A_t^c$ ואת $\bigcup_{t\in[0,1]}A_t^c$.
+    answer: >-
+      (א) $y\in[0,2]$ נמצא ב-$A_y$ כש-$y\le1$ וב-$A_1$ כש-$y>1$. (ב) $1\in A_t$ לכל $t$, ו-$A_0\cap A_1=\{1\}$. (ג)
+      $\bigcap_t A_t^c=(-\infty,0)\cup(2,\infty)$ ו-$\bigcup_t A_t^c=\mathbb{R}\setminus\{1\}$.
     solution:
+      - kind: definition
+        text: >-
+          לפי הגדרה 0.7.9, $y\in\bigcup_t A_t$ אם **קיים** $t\in[0,1]$ עם $t\le y\le t+1$, ו-$y\in\bigcap_t A_t$ אם
+          $t\le y\le t+1$ **לכל** $t\in[0,1]$. כאן קבוצת האינדקסים אינה $\mathbb{N}$ אלא קטע, וההגדרה לא משתנה.
       - kind: idea
         text: >-
-          $|x+1|+|x-3|$ הוא סכום המרחקים של $x$ מ-$-1$ ומ-3. לפי מסקנה 0.7.8 הוא לא קטן מהמרחק בין שתי הנקודות, 4.
-          מעבר לזה, פיצול למקרים נותן את $A_c$ במפורש.
+          באיחוד מוצאים לכל $y$ אינדקס מתאים. בחיתוך, שתי קבוצות במשפחה, $A_0=[0,1]$ ו-$A_1=[1,2]$, כבר נחתכות רק ב-$1$.
+      - kind: step
+        text: >-
+          (א) (⊆) אם $y\in A_t$ עם $0\le t\le1$, אז $0\le t\le y$ ו-$y\le t+1\le2$, ולכן $y\in[0,2]$. (⊇) יהי
+          $y\in[0,2]$. אם $y\le1$, נבחר $t=y\in[0,1]$, ו-$y\in[y,y+1]=A_y$. אם $y>1$, נבחר $t=1$: $1<y\le2$, ולכן
+          $y\in[1,2]=A_1$.
+      - kind: step
+        text: >-
+          (ב) (⊇) לכל $t\in[0,1]$: $t\le1$ ו-$1\le t+1$ (כי $t\ge0$), ולכן $1\in A_t$. (⊆) יהי $y$ בחיתוך. בפרט
+          $y\in A_0=[0,1]$, ולכן $y\le1$, וגם $y\in A_1=[1,2]$, ולכן $y\ge1$. לפי עובדה מקובלת (ב), $y=1$.
       - kind: theorem
         text: >-
-          (א) לפי משפט 0.7.7 ולמה 0.7.2(ה): $|x+1|+|x-3|=|x+1|+|3-x|\ge|(x+1)+(3-x)|=4$. לפי מקרה השוויון במשפט, יש
-          שוויון בדיוק כש-$(x+1)(3-x)\ge 0$, כלומר (מסקנה 0.7.8(א), שלב 2) כש-$x+1$ ו-$3-x$ שניהם אי-שליליים או שניהם
-          אי-חיוביים. השני בלתי אפשרי ($x\le-1$ וגם $x\ge 3$), והראשון הוא $-1\le x\le 3$.
-      - kind: step
-        text: >-
-          (ב) לפי מסקנה 0.7.8(ג) עם $a=-1$, $b=3$: $A_c$ ריקה אם ורק אם $c\le|-1-3|=4$. ישירות: אם $c\le 4$, לכל $x$
-          הסכום לפחות $4\ge c$; אם $c>4$, $x=0$ נותן סכום $4<c$.
-      - kind: step
-        text: >-
-          (ג) נניח $c>4$ ונפצל. עבור $x\ge 3$ הסכום $2x-2$, והתנאי $2x-2<c$ נותן $x<\frac{c+2}{2}$. עבור $-1\le x<3$ הסכום
-          $4<c$, תמיד. עבור $x<-1$ הסכום $2-2x$, והתנאי נותן $x>\frac{2-c}{2}$. ביחד
-          $A_c=\left(\frac{2-c}{2},\ \frac{2+c}{2}\right)$, קטע באורך $c$.
-      - kind: computation
-        text: '(ג) האורך $c=10$, והקטע $\left(\frac{2-10}{2},\ \frac{2+10}{2}\right)=(-4,6)$.'
+          (ג) לפי משפט 0.7.10, $\bigcap_t A_t^c=\big(\bigcup_t A_t\big)^c=\mathbb{R}\setminus[0,2]=(-\infty,0)\cup(2,\infty)$,
+          ו-$\bigcup_t A_t^c=\big(\bigcap_t A_t\big)^c=\mathbb{R}\setminus\{1\}$.
       - kind: check
         text: >-
-          $x=-4$: $3+7=10$, לא קטן מ-10, ולכן הקצה לא שייך. $x=5.9$: $6.9+2.9=9.8<10$, שייך. ובמקרה הגבולי $c=4$: הקבוצה
-          $\{x:\ |x+1|+|x-3|\le 4\}$ היא $[-1,3]$, אבל עם $<$ היא ריקה, כמו ב-(ב).
+          ישירות: $2.5$ אינו באף $A_t$ (כי $t+1\le2$), ולכן הוא בכל המשלימים. ו-$0.5\in A_1^c$, כי $0.5\notin[1,2]$,
+          ולכן הוא באיחוד המשלימים; כך כל $y\ne1$: אם $y<1$, אז $y\in A_1^c$, ואם $y>1$, אז $y\in A_0^c$.
       - kind: result
-        text: '(א) הסכום לפחות 4, ושוויון בדיוק ב-$[-1,3]$. (ב) $c\le 4$. (ג) $c=10$, והקטע $(-4,6)$.'
+        text: >-
+          $\bigcup_t A_t=[0,2]$, $\bigcap_t A_t=\{1\}$, $\bigcap_t A_t^c=(-\infty,0)\cup(2,\infty)$,
+          $\bigcup_t A_t^c=\mathbb{R}\setminus\{1\}$.
 
 challenge:
   - id: W-0.7-c1
     stars: 1
-    objectives: [OBJ-0.7-2]
+    objectives: [OBJ-0.7-2, OBJ-0.7-3]
     prompt: >-
-      $\max\{x,y\}$ הוא הגדול מבין שני המספרים, ו-$\min\{x,y\}$ הוא הקטן מביניהם (כש-$x=y$ שניהם שווים ל-$x$).
-
-      (א) הוכיחו שלכל $x,y$ ממשיים
-
-      $$\max\{x,y\}=\frac{x+y+|x-y|}{2},\qquad \min\{x,y\}=\frac{x+y-|x-y|}{2}.$$
-
-      (ב) הסיקו שלכל $a,b,c,d$ ממשיים $\big|\max\{a,b\}-\max\{c,d\}\big|\le|a-c|+|b-d|$.
+      לכל $a\in\mathbb{R}$ תהי $A_a=\{(x,\,a(x^2-1)):\ x\in\mathbb{R}\}$, תת-קבוצה של $\mathbb{R}\times\mathbb{R}$ (הגרף של
+      הפרבולה $y=a(x^2-1)$). הוכיחו: $\bigcap_{a\in\mathbb{R}}A_a=\{(-1,0),(1,0)\}$.
     answer: >-
-      (א) בשני מקרים, $x\ge y$ ו-$x<y$. (ב) מציבים את הנוסחה של (א), ומפעילים את טענה 0.7.10 ואת מסקנה 0.7.9.
+      שתי הנקודות נמצאות בכל $A_a$, כי $a(1-1)=0$. ולהפך, נקודה בחיתוך נמצאת ב-$A_0$, ולכן היא $(x,0)$, וגם ב-$A_1$,
+      ולכן $0=x^2-1$, כלומר $x=\pm1$.
     solution:
+      - kind: definition
+        text: >-
+          המשפחה היא $A_a$, $a\in I=\mathbb{R}$, בתוך $U=\mathbb{R}\times\mathbb{R}$. נקודה $p$ נמצאת בחיתוך אם לכל
+          $a\in\mathbb{R}$ יש $x\in\mathbb{R}$ עם $p=(x,a(x^2-1))$.
       - kind: idea
         text: >-
-          (א) הממוצע $\frac{x+y}{2}$ נמצא באמצע בין $x$ ל-$y$, וחצי המרחק ביניהם, $\frac{|x-y|}{2}$, מביא ממנו אל הגדול
-          (בהוספה) או אל הקטן (בהחסרה). (ב) הנוסחה הופכת הפרש של מקסימומים לסכום של הפרשים ושל הפרש של ערכים מוחלטים,
-          ואת האחרון חוסמת הצורה ההפוכה.
+          כדי להראות שנקודה בחיתוך, בודקים אותה מול **כל** $a$. כדי להגביל את החיתוך מספיקות שתי קבוצות במשפחה:
+          $A_0$ (ציר ה-$x$) ו-$A_1$ (הפרבולה $y=x^2-1$); לפי הגדרה 0.7.9 החיתוך של כל המשפחה מוכל בחיתוך שלהן (כל איבר שלו נמצא בכל $A_a$, ובפרט בשתיהן).
       - kind: step
         text: >-
-          (א) אם $x\ge y$, אז $|x-y|=x-y$, ו-$\frac{x+y+(x-y)}{2}=x=\max\{x,y\}$, ו-$\frac{x+y-(x-y)}{2}=y=\min\{x,y\}$.
-          אם $x<y$, אז $|x-y|=y-x$, ו-$\frac{x+y+(y-x)}{2}=y=\max\{x,y\}$, ו-$\frac{x+y-(y-x)}{2}=x=\min\{x,y\}$.
-      - kind: computation
+          (⊇) יהי $a\in\mathbb{R}$. עם $x=1$: $(1,a(1^2-1))=(1,0)$, ולכן $(1,0)\in A_a$; עם $x=-1$: $(-1,a((-1)^2-1))=(-1,0)\in
+          A_a$. זה לכל $a$, ולכן שתי הנקודות בחיתוך.
+      - kind: step
         text: >-
-          (ב) לפי (א):
-
-          $$\max\{a,b\}-\max\{c,d\}=\frac{(a-c)+(b-d)+\big(|a-b|-|c-d|\big)}{2}$$
-      - kind: theorem
+          (⊆) תהי $p$ בחיתוך. מ-$p\in A_0$: $p=(x,0\cdot(x^2-1))=(x,0)$ עבור $x\in\mathbb{R}$ כלשהו. מ-$p\in A_1$:
+          $p=(x',x'^2-1)$ עבור $x'$ כלשהו. לפי תכונת הזוג הסדור $x=x'$ ו-$0=x^2-1$.
+      - kind: step
         text: >-
-          לפי טענה 0.7.10 לשלושה מחוברים, ואז לפי מסקנה 0.7.9:
-
-          $$\big|\max\{a,b\}-\max\{c,d\}\big|\le\frac{|a-c|+|b-d|+\big||a-b|-|c-d|\big|}{2}\le\frac{|a-c|+|b-d|+|(a-b)-(c-d)|}{2}$$
-      - kind: theorem
-        text: >-
-          $(a-b)-(c-d)=(a-c)-(b-d)$, ולכן לפי משפט 0.7.7 (עם $a-c$ ו-$-(b-d)$) $|(a-b)-(c-d)|\le|a-c|+|b-d|$. מציבים:
-          $\big|\max\{a,b\}-\max\{c,d\}\big|\le\frac{2|a-c|+2|b-d|}{2}=|a-c|+|b-d|$.
+          $x^2-1=(x-1)(x+1)=0$, ומכפלה של שני מספרים היא אפס רק כשאחד מהם אפס (אם $x-1\ne0$ כופלים בהופכי שלו, עובדה
+          מקובלת (א)). לכן $x=1$ או $x=-1$, ו-$p\in\{(-1,0),(1,0)\}$.
       - kind: check
         text: >-
-          $a=3$, $b=0$, $c=1$, $d=0$: אגף שמאל $|3-1|=2$, אגף ימין $2+0=2$: שוויון, ולכן החסם אינו ניתן לשיפור באופן
-          כללי. ובמשמעות: אם מזיזים כל אחד משני מספרים במעט, המקסימום שלהם זז לכל היותר בסכום ההזזות.
+          גיאומטרית: כל הפרבולות $y=a(x^2-1)$ עוברות דרך שתי הנקודות שבהן $x^2-1=0$, וזה כל מה שמשותף להן. ונקודה כמו
+          $(0,0)$ נמצאת ב-$A_0$ ואינה ב-$A_1$, כי $0\ne0^2-1$.
       - kind: result
         text: >-
-          (א) $\max\{x,y\}=\frac{x+y+|x-y|}{2}$ ו-$\min\{x,y\}=\frac{x+y-|x-y|}{2}$. (ב)
-          $\big|\max\{a,b\}-\max\{c,d\}\big|\le|a-c|+|b-d|$.
+          $\bigcap_{a\in\mathbb{R}}A_a=\{(-1,0),(1,0)\}$.
     source:
-      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Volume I (version 6.3)'
-      year: 2026
-      problem: 'Section 1.3, Exercise 1.3.2'
-      url: 'https://www.jirka.org/ra/realanal.pdf'
-      verified: '2026-11-09'
+      name: 'Richard Hammack, Book of Proof (third edition, edition 3.4)'
+      year: 2018
+      problem: 'Chapter 8, Exercise 23'
+      url: 'https://richardhammack.github.io/BookOfProof/Main.pdf'
+      verified: '2026-11-10'
       adapted: true
 
   - id: W-0.7-c2
     stars: 1
-    objectives: [OBJ-0.7-2, OBJ-0.7-3]
+    objectives: [OBJ-0.7-3]
     prompt: >-
-      (א) מצאו מספר $M$ כך ש-$|x^3-x^2+8x|\le M$ לכל $-2\le x\le 10$. השתמשו באי-שוויון המשולש בלבד.
-
-      (ב) הוכיחו, בלי נגזרות, שהמספר הקטן ביותר $M$ שמתאים הוא $980$.
+      יהיו $A$, $B$, $C$ קבוצות, $B\ne\emptyset$, ונניח ש-$A\times B\subseteq B\times C$. הוכיחו ש-$A\subseteq C$, והראו
+      שבלי ההנחה $B\ne\emptyset$ המסקנה עלולה להיכשל.
     answer: >-
-      (א) למשל $M=1180$. (ב) נסמן $f(x)=x^3-x^2+8x$. אז $f(10)=980$, ולכן $M$ קטן מ-980 לא מתאים. ו-980 מתאים: עבור
-      $0\le x\le 10$ מתקיים $0\le f(x)\le f(10)=980$, ועבור $-2\le x<0$ מתקיים $|f(x)|\le 28$.
+      יהי $a\in A$ ו-$b\in B$. מ-$(a,b)\in B\times C$ נובע $a\in B$; ואז $(a,a)\in A\times B\subseteq B\times C$ נותן
+      $a\in C$. בלי ההנחה: $A=\{1\}$, $B=C=\emptyset$.
     solution:
+      - kind: goal
+        text: >-
+          יהי $a\in A$; צריך להראות $a\in C$. מה שאנחנו יודעים על $C$ מגיע רק מהמקום **השני** בזוגות של $B\times C$.
       - kind: idea
         text: >-
-          (א) טענה 0.7.10 מחליפה כל מחובר בערך המוחלט שלו, ואז מספיק לחסום את $|x|$, שהוא לכל היותר 10 בקטע. (ב) חסם
-          שמתקבל בנקודה מסוימת הוא הקטן ביותר; כאן החשוד הוא $x=10$, ומראים שהביטוי אף פעם לא עובר את ערכו שם, בעזרת
-          פירוק לגורמים.
-      - kind: theorem
-        text: >-
-          (א) לפי טענה 0.7.10 לשלושה מחוברים ולמה 0.7.2(ו): $|x^3-x^2+8x|\le|x|^3+|x|^2+8|x|$. בקטע $[-2,10]$ מתקיים
-          $|x|\le 10$, ולכן הסכום לכל היותר $1000+100+80=1180$.
-      - kind: computation
-        text: >-
-          (ב) נסמן $f(x)=x^3-x^2+8x$. אז $f(10)=1000-100+80=980$, ולכן אף $M$ קטן מ-980 לא מתאים. נותר להראות
-          ש-$|f(x)|\le 980$ בכל הקטע.
+          כדי ש-$a$ יעמוד במקום השני בזוג של $A\times B$, צריך ש-$a\in B$. לכן מראים קודם ש-$a\in B$, בעזרת זוג
+          שבו $a$ עומד ראשון, ואז משתמשים בזוג $(a,a)$.
       - kind: step
         text: >-
-          עבור $0\le x\le 10$: $f(x)=x\left(x^2-x+8\right)\ge 0$, כי $x^2-x+8=\left(x-\frac12\right)^2+\frac{31}{4}>0$. נותר
-          להראות ש-$f(10)-f(x)\ge 0$. ההפרש מתאפס ב-$x=10$, ולכן כדאי לחפש בו את הגורם $10-x$. כל אחד משלושת החלקים
-          מתפרק כך: $1000-x^3=(10-x)\left(100+10x+x^2\right)$, $100-x^2=(10-x)(10+x)$, ו-$80-8x=8(10-x)$. לכן
-
-          $$f(10)-f(x)=(1000-x^3)-(100-x^2)+(80-8x)=(10-x)\left[\left(x^2+10x+100\right)-(10+x)+8\right]=(10-x)\left(x^2+9x+98\right)$$
-
-          שני הגורמים אי-שליליים ($x\le 10$, ו-$x^2+9x+98>0$ כש-$x\ge 0$), ולכן $0\le f(x)\le 980$.
+          כיוון ש-$B\ne\emptyset$, יש $b\in B$. אז $(a,b)\in A\times B\subseteq B\times C$, כלומר $(a,b)=(b',c)$ עם $b'\in B$
+          ו-$c\in C$. לפי תכונת הזוג הסדור $a=b'\in B$.
       - kind: step
         text: >-
-          עבור $-2\le x<0$: $|f(x)|=|x|\cdot\left(x^2-x+8\right)$, ו-$|x|\le 2$, $x^2\le 4$, $-x\le 2$, ולכן
-          $|f(x)|\le 2\cdot(4+2+8)=28\le 980$.
+          עכשיו $a\in A$ ו-$a\in B$, ולכן $(a,a)\in A\times B\subseteq B\times C$: $(a,a)=(b'',c'')$ עם $c''\in C$, ולפי תכונת
+          הזוג הסדור $a=c''\in C$. זה לכל $a\in A$, ולכן $A\subseteq C$.
       - kind: check
         text: >-
-          בדיקת הפירוק ב-$x=0$: $f(10)-f(0)=980$, ו-$(10-0)(0+0+98)=980$. ו-$f(-2)=-8-4-16=-28$, בדיוק החסם של המקרה
-          השלילי. ההערכה הגסה של (א), 1180, נכונה לגמרי; היא רק לא הקטנה ביותר, כי אי-שוויון המשולש "מבזבז" כשהמחוברים
-          בסימנים שונים ($-x^2$ שלילי).
+          ההנחה $B\ne\emptyset$ שימשה רק בבחירת $b$. בלעדיה: $A=\{1\}$, $B=C=\emptyset$. אז $A\times B=\emptyset$ (טענה
+          0.7.14(ד)), והיא מוכלת בכל קבוצה, אבל $A=\{1\}\not\subseteq\emptyset=C$. הטענה נבדקה גם על כל שלשה של תת-קבוצות
+          של קבוצה בת ארבעה איברים.
       - kind: result
-        text: '(א) $M=1180$ מתאים. (ב) הקטן ביותר הוא $980=f(10)$.'
+        text: >-
+          אם $B\ne\emptyset$ ו-$A\times B\subseteq B\times C$, אז $A\subseteq C$; בלי $B\ne\emptyset$ זה לא נכון.
     source:
-      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Volume I (version 6.3)'
-      year: 2026
-      problem: 'Section 1.3, Exercise 1.3.3'
-      url: 'https://www.jirka.org/ra/realanal.pdf'
-      verified: '2026-11-09'
+      name: 'Richard Hammack, Book of Proof (third edition, edition 3.4)'
+      year: 2018
+      problem: 'Chapter 8, Exercise 31'
+      url: 'https://richardhammack.github.io/BookOfProof/Main.pdf'
+      verified: '2026-11-10'
       adapted: true

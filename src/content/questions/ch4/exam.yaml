@@ -175,7 +175,7 @@ questions:
       - label: ג
         type: open
         points: 7
-        objectives: [OBJ-4.4-3, OBJ-0.7-3]
+        objectives: [OBJ-4.4-3, OBJ-0.9-3]
         level: exam
         prompt: >-
           עבור $f(x)=\frac{x}{1+x^2}$ מצאו את התמונה $f(\mathbb{R})$, והוכיחו.

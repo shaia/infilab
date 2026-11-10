@@ -1,8 +1,9 @@
 # Lesson 0.5 — mathematical induction.
 # Objectives (src/course.ts):
 #   OBJ-0.5-1  state and carry out a proof by induction: base, induction hypothesis, step
-#   OBJ-0.5-2  prove sum formulas and inequalities by induction, Bernoulli's inequality included
+#   OBJ-0.5-2  prove sum formulas and inequalities by induction; define sums, products and powers by recursion
 #   OBJ-0.5-3  spot a flawed induction proof (a missing base, or a step that does not work for every n)
+# Strong induction, well-ordering, Bernoulli and the binomial theorem moved to lesson 0.6 (Q-0.6-*) on 2026-11-10.
 chapter: 0
 questions:
   - id: Q-0.5-step-meaning
@@ -111,85 +112,6 @@ questions:
       - value: 4
         feedback: >-
           עבור $n=4$ מקבלים $16=16$, שוויון ולא אי-שוויון ממש. הבסיס הראשון שעובד הוא $n=5$.
-
-  - id: Q-0.5-bernoulli-why
-    type: mc
-    objectives: [OBJ-0.5-2]
-    qualitative: true
-    level: mid
-    prompt: >-
-      בצעד של הוכחת אי-שוויון ברנולי, $(1+x)^n\ge 1+nx$ עבור $x\ge -1$, כותבים:
-      $$(1+x)^{n+1}=(1+x)^n(1+x)\ge(1+nx)(1+x).$$
-      מה מצדיק את אי-השוויון?
-    choices:
-      - text: 'הנחת האינדוקציה, יחד עם העובדה ש-$1+x\ge 0$'
-        correct: true
-        feedback: >-
-          נכון. כפל של אי-שוויון במספר אי-שלילי שומר עליו. בשביל זה ההנחה $x\ge -1$: עם $1+x<0$ הכפל היה הופך
-          את הכיוון.
-      - text: הנחת האינדוקציה בלבד
-        feedback: >-
-          הנחת האינדוקציה נותנת $(1+x)^n\ge 1+nx$, אבל כדי לכפול את שני האגפים ב-$1+x$ בלי להפוך את הכיוון צריך
-          $1+x\ge 0$. בלי זה הצעד נופל.
-        misconception: MC-bernoulli-any-x
-      - text: אי-שוויון ברנולי עבור $n+1$
-        feedback: >-
-          את אי-השוויון עבור $n+1$ אנחנו מוכיחים עכשיו, ולכן אסור להשתמש בו.
-        misconception: MC-induction-hypothesis-circular
-
-  - id: Q-0.5-bernoulli-proof
-    type: rank
-    objectives: [OBJ-0.5-2]
-    level: exam
-    prompt: >-
-      הוכיחו באינדוקציה את אי-שוויון ברנולי: לכל $x\ge -1$ ולכל $n$ טבעי, $(1+x)^n\ge 1+nx$.
-    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
-    items:
-      - id: base
-        label: 'בסיס: עבור $n=1$ שני האגפים שווים ל-$1+x$.'
-      - id: hyp
-        label: 'נניח ש-$(1+x)^n\ge 1+nx$ עבור $n$ טבעי מסוים.'
-      - id: multiply
-        label: 'כיוון ש-$1+x\ge 0$, מותר לכפול את ההנחה ב-$1+x$: $(1+x)^{n+1}\ge(1+nx)(1+x)$.'
-      - id: expand
-        label: 'נפתח סוגריים: $(1+nx)(1+x)=1+(n+1)x+nx^2$.'
-      - id: drop
-        label: '$nx^2\ge 0$, ולכן $(1+x)^{n+1}\ge 1+(n+1)x$, וזו הטענה עבור $n+1$.'
-    order: [base, hyp, multiply, expand, drop]
-    correctFeedback: >-
-      נכון. שני מקומות דורשים הצדקה: הכפל ב-$1+x$ (כאן נכנס $x\ge -1$), והשמטת $nx^2$ (שהוא אי-שלילי).
-    wrongFeedback: >-
-      כדי להשמיט את $nx^2$ צריך קודם לקבל אותו, בפתיחת הסוגריים; וכדי לפתוח סוגריים צריך קודם את המכפלה
-      $(1+nx)(1+x)$, שבאה מהכפל בהנחה.
-
-  - id: Q-0.5-bernoulli-condition
-    type: twotier
-    objectives: [OBJ-0.5-2]
-    qualitative: true
-    level: mid
-    prompt: >-
-      האם $(1+x)^n\ge 1+nx$ לכל $x$ ממשי ולכל $n$ טבעי?
-    choices:
-      - text: לא
-        correct: true
-        feedback: נכון. בלי התנאי $x\ge -1$ אי-השוויון יכול להיכשל.
-      - text: כן
-        feedback: >-
-          נסו $x=-4$ ו-$n=3$: $(-3)^3=-27$, בעוד $1+3\cdot(-4)=-11$, ו-$-27<-11$.
-        misconception: MC-bernoulli-any-x
-    reasons:
-      - text: 'עבור $x=-4$ ו-$n=3$ אגף שמאל הוא $-27$ ואגף ימין $-11$'
-        correct: true
-        feedback: >-
-          בדיוק. דוגמה נגדית אחת מספיקה. ההוכחה נופלת בדיוק בצעד: כש-$1+x<0$, כפל בו הופך את כיוון אי-השוויון.
-      - text: ההוכחה באינדוקציה עובדת לכל $x$
-        feedback: >-
-          בצעד כופלים את הנחת האינדוקציה ב-$1+x$. אם $1+x<0$ הכפל הופך את הכיוון, וההוכחה לא עוברת.
-        misconception: MC-bernoulli-any-x
-      - text: בבסיס $n=1$ יש שוויון לכל $x$, ולכן אי-השוויון נכון לכל $x$
-        feedback: >-
-          הבסיס אכן נכון לכל $x$, אבל אינדוקציה צריכה גם צעד, והצעד דורש $x\ge -1$.
-        misconception: MC-bernoulli-any-x
 
   - id: Q-0.5-no-base
     type: twotier
@@ -304,58 +226,31 @@ questions:
           הבסיס תקין, והבעיה בצעד: מבסיס אחר אותה הנחה חלשה עדיין לא נותנת את הטענה עבור $n+1$.
         misconception: MC-induction-stuck-move-base
 
-  - id: Q-0.5-strong-why
+  - id: Q-0.5-sum-definition
     type: mc
-    objectives: [OBJ-0.5-1]
-    qualitative: true
-    level: mid
+    objectives: [OBJ-0.5-1, OBJ-0.5-2]
+    level: basic
     prompt: >-
-      מוכיחים שכל מספר טבעי $n\ge2$ הוא מכפלה של ראשוניים. אם $n$ אינו ראשוני, כותבים $n=de$ עם שלמים
-      $2\le d<n$ ו-$2\le e<n$. למה כאן צריך אינדוקציה שלמה, ולא מספיקה הנחת האינדוקציה הרגילה, הטענה עבור $n-1$?
+      סימן הסכום מוגדר ברקורסיה: $\sum_{k=1}^{1}a_k=a_1$, ולכל $n$ טבעי
+      $\sum_{k=1}^{n+1}a_k=\sum_{k=1}^{n}a_k+a_{n+1}$. מוכיחים באינדוקציה ש-$\sum_{k=1}^{n}2^{k-1}=2^n-1$ לכל $n$
+      טבעי. מה כותבים בצעד, אחרי הנחת האינדוקציה?
     choices:
-      - text: 'כי $d$ ו-$e$ יכולים להיות כל מספרים בין $2$ ל-$n-1$, ולכן צריך את הטענה לכל המספרים הקטנים מ-$n$'
+      - text: '$\sum_{k=1}^{n+1}2^{k-1}=\sum_{k=1}^{n}2^{k-1}+2^{n}=(2^n-1)+2^n=2^{n+1}-1$'
         correct: true
         feedback: >-
-          נכון. למשל $12=2\cdot6$: הצעד משתמש בטענה עבור 2 ועבור 6, ולא עבור 11. הטענה עבור $n-1$ לא אומרת דבר על
-          $d$ ועל $e$. אינדוקציה שלמה נותנת את הטענה לכל $k$ עם $2\le k<n$, ובפרט ל-$d$ ול-$e$.
-      - text: 'כי באינדוקציה שלמה לא צריך לבדוק אף מקרה בנפרד, וכך חוסכים את הבסיס'
+          נכון. לפי ההגדרה מפרידים את המחובר האחרון, $a_{n+1}=2^{(n+1)-1}=2^n$; את הסכום עד $n$ מחליפים לפי הנחת
+          האינדוקציה; ו-$2^n+2^n=2\cdot2^n=2^{n+1}$.
+      - text: '$\sum_{k=1}^{n+1}2^{k-1}=2^{n+1}-1$, לפי הנוסחה עבור $n+1$'
         feedback: >-
-          לא זו הסיבה, וגם זה לא נכון: עבור $n=2$ אין מספרים קודמים, ולכן את המקרה הזה מוכיחים בלי עזרה (2 ראשוני,
-          מכפלה של ראשוני אחד). אינדוקציה שלמה נחוצה כאן בגלל **אילו** מקרים קודמים הצעד צריך.
-        misconception: MC-strong-induction-no-cases
-      - text: 'אין צורך: מהטענה עבור $n-1$ אפשר להסיק אותה עבור $d$ ועבור $e$, כי הם קטנים מ-$n$'
+          הנוסחה עבור $n+1$ היא מה שצריך להוכיח בצעד, ולכן אסור להשתמש בה. מותר להשתמש רק בנוסחה עבור $n$, אחרי
+          שמפרידים את המחובר האחרון לפי ההגדרה.
+        misconception: MC-induction-hypothesis-circular
+      - text: '$\sum_{k=1}^{n+1}2^{k-1}=\sum_{k=1}^{n}2^{k-1}+2^{n+1}=3\cdot2^n-1$, ולכן הנוסחה נכשלת'
         feedback: >-
-          "קטנים מ-$n$" אינו הצדקה. הטענה עבור $n-1$ היא על המספר $n-1$ בלבד, ושום חוליה לא מעבירה אותה אל $d$ או
-          אל $e$. כל מעבר בצעד צריך הנחה או טענה שהוכחה, וכאן חסרה בדיוק ההנחה על $d$ ועל $e$.
+          המחובר האחרון הוא $a_{n+1}$, כלומר $2^{k-1}$ עם $k=n+1$: $2^{n}$, לא $2^{n+1}$. כל מעבר צריך להיות מוצדק
+          בהגדרה, גם הצבה שנראית מובנת.
         misconception: MC-step-justification-vague
-
-  - id: Q-0.5-well-ordering-z
-    type: twotier
-    objectives: [OBJ-0.5-1]
-    qualitative: true
-    level: mid
-    prompt: >-
-      האם לכל קבוצה לא ריקה של מספרים **שלמים** יש איבר קטן ביותר?
-    choices:
-      - text: לא
-        correct: true
-        feedback: נכון. עקרון הסדר הטוב הוא על קבוצות של טבעיים, ולשלמים הוא לא נכון.
-      - text: כן
+      - text: 'בודקים $n=1,2,3$: $1=2^1-1$, $1+2=2^2-1$, $1+2+4=2^3-1$, ולכן הנוסחה נכונה'
         feedback: >-
-          ל-$\mathbb{Z}$ עצמה אין איבר קטן ביותר: לכל שלם $m$ גם $m-1$ שלם, ו-$m-1<m$.
-        misconception: MC-well-ordering-any-set
-    reasons:
-      - text: 'לקבוצה $\mathbb{Z}$ אין איבר קטן ביותר: לכל שלם $m$, גם $m-1$ שלם וקטן ממנו'
-        correct: true
-        feedback: >-
-          בדיוק. דוגמה נגדית אחת מספיקה. גם הקבוצה $\{-1,-2,-3,\dots\}$ היא דוגמה נגדית.
-      - text: 'כן, כי זה עקרון הסדר הטוב'
-        feedback: >-
-          עקרון הסדר הטוב מניח שהקבוצה מוכלת ב-$\mathbb{N}$. ההוכחה שלו משתמשת באינדוקציה, שמתחילה ב-1; בשלמים
-          אין מקום להתחיל ממנו.
-        misconception: MC-well-ordering-any-set
-      - text: 'לא, כי גם לקבוצה אינסופית של טבעיים, כמו המספרים הזוגיים, אין איבר קטן ביותר'
-        feedback: >-
-          המסקנה "לא" נכונה, אבל הנימוק שגוי: לכל קבוצה לא ריקה של טבעיים, גם אינסופית, יש איבר קטן ביותר; לזוגיים
-          הוא 2. הדוגמה הנגדית צריכה לצאת מ-$\mathbb{N}$.
-        misconception: MC-well-ordering-any-set
+          שלוש בדיקות הן לא צעד: הן לא מראות שהנוסחה עבור $n$ גוררת אותה עבור $n+1$, לכל $n$.
+        misconception: MC-examples-are-proof

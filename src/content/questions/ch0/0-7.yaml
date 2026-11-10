@@ -1,339 +1,367 @@
-# Lesson 0.7 — inequalities and absolute value.
+# Lesson 0.7 — sets.
 # Objectives (src/course.ts):
-#   OBJ-0.7-1  solve inequalities with absolute values and describe the solution as an interval or a union of intervals
-#   OBJ-0.7-2  prove and use the triangle inequality and its reverse form
-#   OBJ-0.7-3  use the AM-GM inequality and simple estimates to bound an expression from above and from below
+#   OBJ-0.7-1  operate on sets (union, intersection, difference, complement); prove set equality by double inclusion
+#   OBJ-0.7-2  prove the laws of the operations and De Morgan's laws, also for a family of sets
+#   OBJ-0.7-3  work with the power set and the Cartesian product, and prove claims about them
+# Every finite claim below is recomputed in tests/math/sets.test.ts or by src/math/sets.ts in a scratch script.
 chapter: 0
 questions:
-  - id: Q-0.7-abs-less
+  - id: Q-0.7-operations
+    type: multi
+    objectives: [OBJ-0.7-1]
+    level: basic
+    prompt: >-
+      יהיו $A=\{1,2,3,4\}$ ו-$B=\{3,4,5\}$. אילו מהשוויונות הבאים נכונים? סמנו את כולם.
+    choices:
+      - text: '$A\cap B=\{3,4\}$'
+        correct: true
+        feedback: נכון. החיתוך הוא האיברים שנמצאים בשתי הקבוצות.
+      - text: '$A\setminus B=\{1,2\}$'
+        correct: true
+        feedback: נכון. מוציאים מ-$A$ את האיברים שנמצאים ב-$B$, כלומר את $3$ ואת $4$.
+      - text: '$B\setminus A=\{1,2\}$'
+        feedback: >-
+          $B\setminus A$ הם האיברים של $B$ שאינם ב-$A$: רק $5$. ההפרש אינו סימטרי:
+          $B\setminus A=\{5\}\ne A\setminus B$.
+        misconception: MC-set-difference-rules
+      - text: '$A\cup B=\{3,4\}$'
+        feedback: >-
+          זה החיתוך. האיחוד הוא האיברים שנמצאים ב-$A$ **או** ב-$B$: $A\cup B=\{1,2,3,4,5\}$.
+        misconception: MC-or-as-and
+
+  - id: Q-0.7-union-or
     type: mc
+    objectives: [OBJ-0.7-1]
+    level: basic
+    prompt: >-
+      יהיו $A$ ו-$B$ קבוצות. מתי $x\in A\cup B$?
+    choices:
+      - text: 'כש-$x\in A$ או $x\in B$, וגם כש-$x$ בשתיהן'
+        correct: true
+        feedback: >-
+          נכון. "או" במתמטיקה הוא "או" כולל (שיעור 0.2): איבר של $A\cap B$ שייך גם ל-$A\cup B$.
+      - text: 'כש-$x$ נמצא בדיוק באחת מהקבוצות'
+        feedback: >-
+          זה "או" מוציא, והוא נותן את ההפרש הסימטרי $(A\setminus B)\cup(B\setminus A)$, לא את האיחוד. למשל עם
+          $A=\{1,2\}$, $B=\{2,3\}$: $2\in A\cup B$, אף שהוא בשתיהן.
+        misconception: MC-or-exclusive
+      - text: 'כש-$x\in A$ וגם $x\in B$'
+        feedback: >-
+          זה החיתוך $A\cap B$. באיחוד מספיקה אחת מהשייכויות: עם $A=\{1\}$, $B=\{2\}$, $1\in A\cup B$ אף ש-$1\notin B$.
+        misconception: MC-or-as-and
+
+  - id: Q-0.7-element-subset
+    type: multi
     objectives: [OBJ-0.7-1]
     qualitative: true
     level: basic
     prompt: >-
-      מהי קבוצת הפתרונות של $|x-3|<2$?
+      אילו מהטענות הבאות נכונות? סמנו את כולן.
     choices:
-      - text: '$(1,5)$'
+      - text: '$1\in\{1,2\}$'
+        correct: true
+        feedback: נכון. $1$ הוא אחד משני האיברים של הקבוצה.
+      - text: '$\{1\}\subseteq\{1,2\}$'
+        correct: true
+        feedback: נכון. האיבר היחיד של $\{1\}$, המספר $1$, נמצא ב-$\{1,2\}$.
+      - text: '$\emptyset\subseteq\{1,2\}$'
         correct: true
         feedback: >-
-          נכון. $|x-3|<2$ פירושו שהמרחק של $x$ מ-$3$ קטן מ-$2$, כלומר $-2<x-3<2$, ולכן $1<x<5$.
-      - text: '$(-\infty,5)$'
+          נכון, לפי טענה 0.7.3(ב): "כל איבר של $\emptyset$ נמצא ב-$\{1,2\}$" נכון באמת ריקה.
+      - text: '$\{1\}\in\{1,2\}$'
         feedback: >-
-          זה רק החצי $x-3<2$. גם $x=-10$ מקיים אותו, אבל $|{-10}-3|=13$. $|t|<2$ הוא שני תנאים: $t<2$ **וגם**
-          $t>-2$.
-        misconception: MC-abs-one-side
-      - text: '$(-\infty,1)\cup(5,\infty)$'
+          האיברים של $\{1,2\}$ הם המספרים $1$ ו-$2$, ואף אחד מהם אינו הקבוצה $\{1\}$. הנכון הוא
+          $\{1\}\subseteq\{1,2\}$: הכלה, לא שייכות.
+        misconception: MC-element-vs-subset
+      - text: '$1\subseteq\{1,2\}$'
         feedback: >-
-          זה הפתרון של $|x-3|>2$: המספרים ש**רחוקים** מ-$3$ יותר מ-$2$. כאן מבקשים את הקרובים, קטע אחד סביב $3$.
-        misconception: MC-abs-union-intersection
+          $\subseteq$ הוא יחס בין שתי קבוצות, ו-$1$ הוא מספר, לא קבוצה של איברים של $\{1,2\}$. הנכון הוא $1\in\{1,2\}$.
+        misconception: MC-element-vs-subset
 
-  - id: Q-0.7-abs-distance
-    type: mc
-    objectives: [OBJ-0.7-1]
-    qualitative: true
-    level: basic
-    prompt: >-
-      הקבוצה $\{x\in\mathbb{R}:\ |x+2|\le 1\}$ היא קבוצת הנקודות שמרחקן מנקודה מסוימת הוא לכל היותר $1$. מהי
-      הנקודה, ומהי הקבוצה?
-    choices:
-      - text: 'הנקודה $-2$, והקבוצה $[-3,-1]$'
-        correct: true
-        feedback: >-
-          נכון. $|x+2|=|x-(-2)|$ הוא המרחק של $x$ מ-$-2$. הנקודות במרחק עד $1$ ממנה הן הקטע הסגור $[-3,-1]$.
-      - text: 'הנקודה $2$, והקבוצה $[1,3]$'
-        feedback: >-
-          המרחק מ-$a$ הוא $|x-a|$. לכן $|x+2|$ הוא המרחק מ-$-2$. בדקו: $x=2$ נותן $|2+2|=4$, שאינו קטן מ-$1$.
-        misconception: MC-abs-distance-sign
-      - text: 'הנקודה $-2$, והקבוצה $(-\infty,-1]$'
-        feedback: >-
-          זה רק התנאי $x+2\le 1$. גם $x=-10$ מקיים אותו, אבל מרחקו מ-$-2$ הוא $8$. צריך גם $x+2\ge -1$.
-        misconception: MC-abs-one-side
-
-  - id: Q-0.7-abs-greater
-    type: mc
-    objectives: [OBJ-0.7-1]
-    level: mid
-    prompt: >-
-      מהי קבוצת הפתרונות של $|2x+1|\ge 3$?
-    choices:
-      - text: '$(-\infty,-2]\cup[1,\infty)$'
-        correct: true
-        feedback: >-
-          נכון. $|t|\ge 3$ פירושו $t\ge 3$ **או** $t\le -3$. כאן $2x+1\ge 3$ נותן $x\ge 1$, ו-$2x+1\le -3$ נותן
-          $x\le -2$.
-      - text: '$[-2,1]$'
-        feedback: >-
-          זה הפתרון של $|2x+1|\le 3$. למשל $x=0$ נמצא בקטע, אבל $|2\cdot 0+1|=1<3$. "גדול מ" נותן איחוד של שני
-          קטעים, לא קטע אחד.
-        misconception: MC-abs-union-intersection
-      - text: '$[1,\infty)$'
-        feedback: >-
-          זה רק המקרה $2x+1\ge 3$. גם $x=-5$ מקיים את אי-השוויון: $|{-9}|=9\ge 3$.
-        misconception: MC-abs-one-side
-      - text: 'אין פתרון, כי צריך $-2\ge x\ge 1$'
-        feedback: >-
-          שני התנאים מחוברים ב"או", לא ב"וגם", ולכן אי אפשר לכתוב אותם כשרשרת אחת. כל $x\ge 1$ וכל $x\le -2$ הוא
-          פתרון.
-        misconception: MC-abs-union-intersection
-
-  - id: Q-0.7-abs-squares
+  - id: Q-0.7-one-inclusion
     type: twotier
     objectives: [OBJ-0.7-1]
     qualitative: true
     level: mid
     prompt: >-
-      האם לכל $x,y$ ממשיים מתקיים: $|x|<|y|$ אם ורק אם $x^2<y^2$?
+      כדי להוכיח ש-$A=B$, סטודנטית הראתה שכל איבר של $A$ נמצא ב-$B$. האם זה מספיק?
     choices:
-      - text: כן
-        correct: true
-        feedback: >-
-          נכון. זה מאפשר להיפטר מערכים מוחלטים בהעלאה בריבוע: למשל $|x-1|<|x+1|$ שקול ל-$(x-1)^2<(x+1)^2$,
-          כלומר ל-$x>0$.
       - text: לא
+        correct: true
+        feedback: נכון. היא הוכיחה הכלה אחת מתוך שתיים.
+      - text: כן
         feedback: >-
-          $x^2=|x|^2$ ו-$y^2=|y|^2$, ו-$|x|$, $|y|$ אי-שליליים. על מספרים אי-שליליים העלאה בריבוע שומרת על הסדר
-          בשני הכיוונים.
-        misconception: MC-square-preserves-order
+          דוגמה נגדית: $A=\{1\}$ ו-$B=\{1,2\}$. כל איבר של $A$ נמצא ב-$B$, והקבוצות שונות.
+        misconception: MC-set-equality-one-inclusion
     reasons:
-      - text: '$x^2=|x|^2$ ו-$y^2=|y|^2$, ועל מספרים אי-שליליים $a<b$ אם ורק אם $a^2<b^2$'
+      - text: 'זה מראה רק $A\subseteq B$; למשל $\{1\}\subseteq\{1,2\}$, והקבוצות שונות'
         correct: true
         feedback: >-
-          בדיוק. ההוכחה של הכיוון האחרון: אם $0\le a<b$ אז $a^2\le ab<b^2$; ואם $a\ge b\ge 0$ אז $a^2\ge b^2$.
-      - text: 'לכל $x,y$ ממשיים $x<y$ אם ורק אם $x^2<y^2$, ובפרט עבור $|x|$ ו-$|y|$'
+          בדיוק. חסר $B\subseteq A$: צריך גם להראות שכל איבר של $B$ נמצא ב-$A$.
+      - text: אם כל האיברים של $A$ נמצאים ב-$B$, הקבוצות זהות
         feedback: >-
-          המסקנה נכונה, אבל הנימוק שגוי: $-3<2$ ו-$9>4$. העלאה בריבוע שומרת על הסדר רק במספרים אי-שליליים, ולכן
-          הערכים המוחלטים חשובים כאן.
-        misconception: MC-square-preserves-order
-      - text: '$x=-3$, $y=2$ היא דוגמה נגדית'
+          ל-$B$ עשויים להיות איברים נוספים. "כל איבר של $A$ ב-$B$" פירושו רק ש-$A$ מוכלת ב-$B$.
+        misconception: MC-set-equality-one-inclusion
+      - text: חסר רק לבדוק שאיבר אחד של $B$ נמצא ב-$A$
         feedback: >-
-          עבור $x=-3$, $y=2$: $|x|<|y|$ שקר ($3<2$) וגם $x^2<y^2$ שקר ($9<4$). שני הצדדים שקריים, וזה מתאים ל"אם ורק
-          אם".
-        misconception: MC-counterexample-wrong-shape
+          איבר אחד לא מספיק: צריך שכל איבר של $B$ יהיה ב-$A$. ב-$A=\{1\}$, $B=\{1,2\}$, האיבר $1$ של $B$ נמצא
+          ב-$A$, והקבוצות עדיין שונות.
+        misconception: MC-examples-are-proof
 
-  - id: Q-0.7-two-terms
-    type: numeric
-    objectives: [OBJ-0.7-1]
-    level: exam
-    prompt: >-
-      קבוצת הפתרונות של $|x-1|+|x+2|<5$ היא קטע פתוח $(a,b)$. מהו האורך $b-a$ של הקטע?
-    answer: 5
-    tolerance: 0.001
-    correctFeedback: >-
-      נכון. מפצלים לפי $-2$ ו-$1$. עבור $x\ge 1$: $2x+1<5$, כלומר $x<2$. עבור $-2\le x<1$: הסכום הוא $3<5$, תמיד.
-      עבור $x<-2$: $-2x-1<5$, כלומר $x>-3$. ביחד $(-3,2)$, באורך $5$.
-    wrongFeedback: >-
-      הנקודות $x=1$ ו-$x=-2$ מחלקות את הישר לשלושה קטעים; בכל אחד מהם כתבו את הסכום בלי ערך מוחלט ופתרו.
-    commonWrong:
-      - value: 4
-        feedback: >-
-          זה האורך של $[-2,2)$: שכחתם את המקרה $x<-2$. שם $|x-1|+|x+2|=-2x-1$, וגם $-3<x<-2$ פותרים.
-        misconception: MC-abs-one-side
-      - value: 2
-        feedback: >-
-          זה סכום האורכים של $(-3,-2)$ ושל $(1,2)$: שכחתם את הקטע האמצעי $-2\le x<1$, שבו הסכום קבוע ושווה ל-$3$,
-          ולכן כולו פתרון.
-        misconception: MC-abs-one-side
-    explanation: >-
-      בקטע האמצעי הסכום קבוע: $|x-1|+|x+2|$ הוא סכום המרחקים מ-$1$ ומ-$-2$, וכל נקודה ביניהן נמצאת במרחק כולל
-      $3$ משתיהן.
-
-  - id: Q-0.7-which-hold
-    type: multi
+  - id: Q-0.7-complement
+    type: mc
     objectives: [OBJ-0.7-2]
     qualitative: true
     level: mid
     prompt: >-
-      אילו מהטענות הבאות נכונות לכל $a,b$ ממשיים? סמנו את כולן.
+      יהיו $A,B\subseteq\mathbb{R}$, ונסמן ב-$X^c$ את המשלים של $X$ ב-$\mathbb{R}$. לאיזו קבוצה שווה
+      $(A\cap B)^c$?
     choices:
-      - text: '$|a+b|\le|a|+|b|$'
-        correct: true
-        feedback: נכון. זה אי-שוויון המשולש.
-      - text: '$|a+b|=|a|+|b|$'
-        feedback: >-
-          $a=1$, $b=-1$: $|1+(-1)|=0$ ואילו $|1|+|{-1}|=2$. שוויון יש רק כש-$a$ ו-$b$ באותו סימן (או שאחד מהם $0$).
-        misconception: MC-order-abs-additive
-      - text: '$|a-b|\ge|a|-|b|$'
+      - text: '$A^c\cup B^c$'
         correct: true
         feedback: >-
-          נכון. זו הצורה ההפוכה: $|a|=|(a-b)+b|\le|a-b|+|b|$.
-      - text: '$|a-b|\le|a|-|b|$'
+          נכון. $x\notin A\cap B$ פירושו "לא ($x\in A$ וגם $x\in B$)", כלומר $x\notin A$ **או** $x\notin B$. זה
+          כלל דה-מורגן, אותו כלל כמו בשלילת "וגם".
+      - text: '$A^c\cap B^c$'
         feedback: >-
-          $a=0$, $b=1$: אגף שמאל $1$ ואגף ימין $-1$. הצורה ההפוכה חוסמת את $|a-b|$ **מלמטה**, לא מלמעלה.
-        misconception: MC-reverse-triangle-direction
-      - text: '$|ab|=|a|\cdot|b|$'
-        correct: true
+          דוגמה נגדית: $A=(0,2)$, $B=(1,3)$. המספר $\frac12$ נמצא ב-$A$ ולא ב-$B$, ולכן $\frac12\in(A\cap B)^c$;
+          אבל $\frac12\notin A^c$, ולכן גם לא בחיתוך המשלימים. המשלים הופך חיתוך לאיחוד.
+        misconception: MC-complement-de-morgan
+      - text: '$A\cup B$'
         feedback: >-
-          נכון. הערך המוחלט כפלי: בודקים את ארבעת צירופי הסימנים של $a$ ו-$b$, ובכולם שני האגפים שווים.
+          איברים של $A\cap B$ נמצאים גם ב-$A\cup B$, ולכן $A\cup B$ לא יכולה להיות המשלים של $A\cap B$ (אלא אם
+          החיתוך ריק).
+        misconception: MC-complement-de-morgan
 
-  - id: Q-0.7-triangle-proof
+  - id: Q-0.7-distributive
     type: rank
     objectives: [OBJ-0.7-2]
     level: exam
     prompt: >-
-      הוכיחו את אי-שוויון המשולש: לכל $a,b$ ממשיים, $|a+b|\le|a|+|b|$.
+      הוכיחו: לכל שלוש קבוצות $A$, $B$, $C$ מתקיים $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$.
     help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
     items:
-      - id: basic
-        label: 'לכל $t$ ממשי $-|t|\le t\le|t|$ (בודקים את המקרים $t\ge 0$ ו-$t<0$).'
-      - id: apply
-        label: 'לכן $-|a|\le a\le|a|$ ו-$-|b|\le b\le|b|$.'
-      - id: add
-        label: 'נחבר את שני אי-השוויונות: $-(|a|+|b|)\le a+b\le|a|+|b|$.'
+      - id: plan
+        label: 'נוכיח שתי הכלות: כל אגף מוכל באגף השני.'
+      - id: take-left
+        label: 'יהי $x\in A\cap(B\cup C)$. אז $x\in A$, וגם $x\in B$ או $x\in C$.'
+      - id: cases-left
+        label: 'אם $x\in B$ אז $x\in A\cap B$, ואם $x\in C$ אז $x\in A\cap C$; בכל מקרה $x\in(A\cap B)\cup(A\cap C)$.'
+      - id: take-right
+        label: 'להפך, יהי $x\in(A\cap B)\cup(A\cap C)$. בשני המקרים $x\in A$, וגם $x\in B$ או $x\in C$.'
       - id: conclude
-        label: 'כיוון שלכל $c\ge 0$ מתקיים $|y|\le c$ אם ורק אם $-c\le y\le c$, מקבלים $|a+b|\le|a|+|b|$.'
-    order: [basic, apply, add, conclude]
+        label: 'לכן $x\in A\cap(B\cup C)$. הוכחנו את שתי ההכלות, ולכן הקבוצות שוות.'
+    order: [plan, take-left, cases-left, take-right, conclude]
     correctFeedback: >-
-      נכון. שימו לב לשלב האחרון: הוא מתרגם בחזרה מ"$y$ בין $-c$ ל-$c$" ל"$|y|\le c$", אותו כלל שבו פותרים
-      $|t|\le r$.
+      נכון. זו התבנית של כל הוכחת שוויון קבוצות: "יהי $x$ באגף שמאל... לכן $x$ באגף ימין", ואחר כך להפך.
     wrongFeedback: >-
-      קודם עובדה כללית על כל מספר, אחר כך מפעילים אותה על $a$ ועל $b$, מחברים, ובסוף חוזרים לערך מוחלט.
+      כל הכלה מתחילה ב"יהי $x$" באחד האגפים ומסתיימת בכך ש-$x$ באגף השני. סיימו הכלה אחת לפני שמתחילים את
+      השנייה.
 
-  - id: Q-0.7-reverse-step
+  - id: Q-0.7-diff-assoc
+    type: twotier
+    objectives: [OBJ-0.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם לכל שלוש קבוצות $A$, $B$, $C$ מתקיים $A\setminus(B\setminus C)=(A\setminus B)\setminus C$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. איבר של $A\cap C$ נמצא תמיד באגף שמאל, ואף פעם לא באגף ימין; כל קבוצות שבהן $A\cap C\ne\emptyset$
+          הן דוגמה נגדית.
+      - text: כן
+        feedback: >-
+          דוגמה נגדית: $A=B=C=\{1\}$. אגף שמאל $\{1\}\setminus\emptyset=\{1\}$, אגף ימין
+          $\emptyset\setminus\{1\}=\emptyset$. הסוגריים בהפרש משנים, בניגוד לאיחוד ולחיתוך.
+        misconception: MC-set-difference-rules
+    reasons:
+      - text: 'עם $A=B=C=\{1\}$ אגף שמאל הוא $\{1\}$ ואגף ימין ריק'
+        correct: true
+        feedback: >-
+          בדיוק. דוגמה נגדית אחת מפריכה טענה על **כל** הקבוצות. ובטבלת השייכות: האגפים שונים בדיוק באזורים של
+          $A\cap C$.
+      - text: 'הפרש מתנהג כמו איחוד, ולכן אפשר להזיז סוגריים'
+        feedback: >-
+          איחוד קיבוצי (משפט 0.7.5(ב)), אבל הפרש לא: $A\setminus(B\setminus C)=(A\setminus B)\cup(A\cap C)$, וזה גדול
+          יותר מ-$(A\setminus B)\setminus C$ כש-$A\cap C\ne\emptyset$.
+        misconception: MC-set-difference-rules
+      - text: 'בדקנו את $A=\{1,2\}$, $B=\{2\}$, $C=\{3\}$, ושני האגפים יצאו $\{1\}$'
+        feedback: >-
+          החישוב נכון ($B\setminus C=\{2\}$, ושני האגפים $\{1\}$), אבל דוגמה אחת שבה האגפים שווים אינה הוכחה. כאן
+          $A\cap C=\emptyset$, ולכן הדוגמה פשוט לא פוגשת את האזור שבו הם שונים.
+        misconception: MC-examples-are-proof
+
+  - id: Q-0.7-nested-intersection
+    type: twotier
+    objectives: [OBJ-0.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לכל $n\in\mathbb{N}$ תהי $A_n=\{k\in\mathbb{N}:\ k\ge n\}$. כל $A_n$ לא ריקה, ו-$A_{n+1}\subseteq A_n$. מהי
+      $\bigcap_{n=1}^{\infty}A_n$?
+    choices:
+      - text: '$\emptyset$'
+        correct: true
+        feedback: >-
+          נכון. לכל $m\in\mathbb{N}$, $m\notin A_{m+1}$, ולכן $m$ אינו בחיתוך.
+      - text: 'קבוצה לא ריקה, כי כל $A_n$ לא ריקה וכל אחת מוכלת בקודמת'
+        feedback: >-
+          זה נכון למשפחה **סופית** $A_1\supseteq\dots\supseteq A_N$, שהחיתוך שלה הוא $A_N$. באינסוף קבוצות אין
+          "אחרונה": כל $m$ נפלט כבר ב-$A_{m+1}$.
+        misconception: MC-nested-intersection-nonempty
+      - text: '$\mathbb{N}$'
+        feedback: >-
+          $\mathbb{N}$ הוא **האיחוד**: כל $k$ נמצא ב-$A_1$. החיתוך דורש $k\in A_n$ **לכל** $n$, ו-$k\notin A_{k+1}$.
+        misconception: MC-quantifier-mistranslated
+    reasons:
+      - text: 'לכל $m\in\mathbb{N}$, $m\notin A_{m+1}$, כי $m\ge m+1$ היה נותן $0\ge1$'
+        correct: true
+        feedback: >-
+          בדיוק. כדי להראות ש-$m$ אינו בחיתוך מספיקה קבוצה **אחת** במשפחה שהוא לא בה: שלילה של "לכל $n$".
+      - text: 'החיתוך מכיל את המספר הגדול ביותר, שנמצא בכל הקבוצות'
+        feedback: >-
+          אין מספר טבעי גדול ביותר: לכל $m$ גם $m+1\in\mathbb{N}$. ולכל $m$, $m\notin A_{m+1}$.
+        misconception: MC-nested-intersection-nonempty
+      - text: 'בכל אחת מהקבוצות יש אינסוף איברים, ולכן גם בחיתוך'
+        feedback: >-
+          גודל של כל קבוצה לבדה לא קובע את החיתוך. כאן כל $A_n$ אינסופית, והחיתוך בכל זאת ריק.
+        misconception: MC-nested-intersection-nonempty
+
+  - id: Q-0.7-family-demorgan
     type: mc
     objectives: [OBJ-0.7-2]
     level: mid
     prompt: >-
-      רוצים להוכיח את הצורה ההפוכה של אי-שוויון המשולש. הצעד הראשון הוא $|a|-|b|\le|a-b|$. איזה טיעון מוכיח אותו?
+      תהי $A_n\subseteq U$ לכל $n\in\mathbb{N}$, והמשלים ב-$U$. לאיזו קבוצה שווה
+      $\big(\bigcap_{n=1}^{\infty}A_n\big)^c$?
     choices:
-      - text: 'כותבים $a=(a-b)+b$ ומפעילים את אי-שוויון המשולש: $|a|\le|a-b|+|b|$'
+      - text: '$\bigcup_{n=1}^{\infty}A_n^c$'
         correct: true
         feedback: >-
-          נכון. מעבירים אגף ומקבלים $|a|-|b|\le|a-b|$. אותו טיעון עם $a$ ו-$b$ מוחלפים נותן $|b|-|a|\le|a-b|$, ושני
-          אלה יחד הם $\big||a|-|b|\big|\le|a-b|$.
-      - text: '$|a-b|=|a|-|b|$, ולכן בפרט $|a|-|b|\le|a-b|$'
+          נכון, לפי משפט 0.7.10: $x$ אינו בחיתוך אם ורק אם **קיים** $n$ עם $x\notin A_n$, כלומר $x\in A_n^c$
+          עבור $n$ כלשהו.
+      - text: '$\bigcap_{n=1}^{\infty}A_n^c$'
         feedback: >-
-          השוויון הזה שקר בדרך כלל: $a=1$, $b=-1$ נותן $|a-b|=2$ ו-$|a|-|b|=0$. ערך מוחלט אינו "נפתח" על הפרש.
-        misconception: MC-order-abs-additive
-      - text: 'מאי-שוויון המשולש $|a-b|\le|a|-|b|$, ומעבירים אגפים'
+          שלילה של "לכל $n$" היא "קיים $n$", ולא "לכל $n$" של השלילה. עם $U=\{1,2\}$, $A_1=\{1\}$ ו-$A_n=\{2\}$
+          לכל $n\ge2$: החיתוך ריק, ולכן המשלים שלו $\{1,2\}$, אבל $\bigcap_n A_n^c=\{2\}\cap\{1\}=\emptyset$.
+        misconception: MC-complement-de-morgan
+      - text: '$\bigcup_{n=1}^{\infty}A_n$'
         feedback: >-
-          אי-שוויון המשולש לא אומר את זה; עבור $a=0$, $b=1$ זה $1\le -1$. אי-שוויון המשולש הוא חסם **מלמעלה** על
-          סכום: $|x+y|\le|x|+|y|$.
-        misconception: MC-reverse-triangle-direction
+          איבר שנמצא בכל ה-$A_n$ נמצא גם באיחוד שלהן, ולכן האיחוד לא יכול להיות המשלים של החיתוך (אלא אם החיתוך
+          ריק).
+        misconception: MC-complement-de-morgan
 
-  - id: Q-0.7-sum-bound
+  - id: Q-0.7-power-set-count
     type: numeric
-    objectives: [OBJ-0.7-2]
+    objectives: [OBJ-0.7-3]
     level: basic
     prompt: >-
-      ידוע ש-$|x-2|<0.1$ ו-$|y+1|<0.2$. מהו החסם מלמעלה על $|x+y-1|$ שמתקבל מאי-שוויון המשולש?
-    answer: 0.3
+      לקבוצה $\{1,2,3,4\}$ יש $16$ תת-קבוצות. לפי טענה 0.7.11, כמה תת-קבוצות יש לקבוצה $\{1,2,3,4,5\}$?
+    answer: 32
     tolerance: 0.001
     correctFeedback: >-
-      נכון. $x+y-1=(x-2)+(y+1)$, ולכן $|x+y-1|\le|x-2|+|y+1|<0.1+0.2=0.3$.
+      נכון. לפי טענה 0.7.11 עם $n=4$, התת-קבוצות של $\{1,2,3,4,5\}$ הן $16$ התת-קבוצות של $\{1,2,3,4\}$, ועוד $16$
+      הקבוצות שמתקבלות מהן בהוספת $5$: שונות זו מזו (0.7.11(ג)) ושונות מהראשונות (0.7.11(ב)). המספר מוכפל (הערה
+      0.7.12).
     wrongFeedback: >-
-      כתבו את $x+y-1$ כסכום של שני הביטויים שאתם יודעים לחסום, $x-2$ ו-$y+1$, והפעילו את אי-שוויון המשולש.
+      לפי טענה 0.7.11, כל תת-קבוצה של $\{1,2,3,4,5\}$ היא תת-קבוצה של $\{1,2,3,4\}$, או תת-קבוצה כזו ועוד $5$. כמה
+      יש מכל סוג?
     commonWrong:
-      - value: 0.1
+      - value: 17
         feedback: >-
-          $0.2-0.1$ הוא הפרש החסמים, אבל חסמים מחברים: אי-שוויון המשולש נותן $|u+v|\le|u|+|v|$, ושתי השגיאות
-          יכולות להצטבר.
-        misconception: MC-reverse-triangle-direction
-      - value: 0.02
+          הוספתם רק את $\{5\}$. אבל $5$ אפשר להוסיף ל**כל** אחת מ-$16$ התת-קבוצות של $\{1,2,3,4\}$, ולכל אחת מתקבלת
+          קבוצה חדשה: $\{1,5\}$, $\{1,2,5\}$, ועד $\{1,2,3,4,5\}$.
+      - value: 31
         feedback: >-
-          $0.1\cdot 0.2$ הוא מכפלת החסמים. הביטוי $x+y-1$ הוא **סכום** של $x-2$ ו-$y+1$, ולכן החסמים מתחברים.
+          שכחתם קבוצה אחת מהמשפחה השנייה, כנראה את $\{5\}=\emptyset\cup\{5\}$: גם $\emptyset$ היא תת-קבוצה של
+          $\{1,2,3,4\}$ (טענה 0.7.3(ב)), ולכן גם ממנה מתקבלת קבוצה עם $5$.
 
-  - id: Q-0.7-amgm-sign
-    type: twotier
+  - id: Q-0.7-power-membership
+    type: multi
     objectives: [OBJ-0.7-3]
     qualitative: true
     level: mid
     prompt: >-
-      האם $\frac{a+b}{2}\ge\sqrt{ab}$ לכל $a,b$ ממשיים שעבורם $ab\ge 0$?
+      תהי $A=\{1,2\}$. אילו מהטענות הבאות נכונות? סמנו את כולן.
     choices:
-      - text: לא
+      - text: '$\emptyset\in\mathcal{P}(A)$'
         correct: true
-        feedback: נכון. אי-שוויון הממוצעים דורש $a,b\ge 0$, ולא רק $ab\ge 0$.
-      - text: כן
-        feedback: >-
-          $a=b=-1$: $ab=1\ge 0$, אבל $\frac{a+b}{2}=-1$ ו-$\sqrt{ab}=1$.
-        misconception: MC-amgm-negative
-    reasons:
-      - text: 'עבור $a=b=-1$ אגף שמאל $-1$ ואגף ימין $1$'
+        feedback: נכון. $\emptyset\subseteq A$ (טענה 0.7.3(ב)), ולכן היא איבר של $\mathcal{P}(A)$.
+      - text: '$\{1\}\in\mathcal{P}(A)$'
+        correct: true
+        feedback: נכון. $\{1\}\subseteq A$.
+      - text: '$\{\emptyset\}\subseteq\mathcal{P}(A)$'
         correct: true
         feedback: >-
-          בדיוק. כש-$a$ ו-$b$ שליליים, הממוצע החשבוני שלילי והשורש אי-שלילי.
-      - text: 'ההוכחה $(\sqrt a-\sqrt b)^2\ge 0$ עובדת לכל $a,b$ עם $ab\ge 0$'
+          נכון. האיבר היחיד של $\{\emptyset\}$ הוא $\emptyset$, ו-$\emptyset\in\mathcal{P}(A)$.
+      - text: '$1\in\mathcal{P}(A)$'
         feedback: >-
-          ההוכחה משתמשת ב-$\sqrt a$ וב-$\sqrt b$ בנפרד, ואלה מוגדרים רק כש-$a,b\ge 0$. כש-$a,b<0$ אין בה משמעות.
-        misconception: MC-amgm-negative
-      - text: '$(a-b)^2\ge 0$ לכל $a,b$, ומזה נובע אי-השוויון'
+          איברי $\mathcal{P}(A)$ הם **קבוצות** שמוכלות ב-$A$. $1$ הוא איבר של $A$, לא תת-קבוצה שלה; הנכון הוא
+          $\{1\}\in\mathcal{P}(A)$.
+        misconception: MC-element-vs-subset
+      - text: '$\{1\}\subseteq\mathcal{P}(A)$'
         feedback: >-
-          $(a-b)^2\ge 0$ נותן $\frac{a^2+b^2}{2}\ge ab$, שזה אי-שוויון אחר (הממוצעים של $a^2$ ו-$b^2$), והוא נכון לכל
-          $a,b$. אי-שוויון הממוצעים של $a$ ו-$b$ עצמם דורש $a,b\ge 0$.
-        misconception: MC-amgm-negative
+          $\{1\}\subseteq\mathcal{P}(A)$ אומר שהאיבר $1$ הוא איבר של $\mathcal{P}(A)$, וזה לא נכון. $\{1\}$ הוא
+          **איבר** של $\mathcal{P}(A)$, לא תת-קבוצה שלה.
+        misconception: MC-element-vs-subset
 
-  - id: Q-0.7-amgm-min
-    type: numeric
+  - id: Q-0.7-product-pairs
+    type: multi
     objectives: [OBJ-0.7-3]
-    level: mid
+    level: basic
     prompt: >-
-      מהו הערך הקטן ביותר של $x+\frac{9}{x}$ עבור $x>0$?
-    answer: 6
-    tolerance: 0.001
-    correctFeedback: >-
-      נכון. לפי אי-שוויון הממוצעים, $x+\frac9x\ge 2\sqrt{x\cdot\frac9x}=2\cdot 3=6$, ובשוויון כש-$x=\frac9x$,
-      כלומר $x=3$. החסם $6$ מתקבל, ולכן הוא הערך הקטן ביותר.
-    wrongFeedback: >-
-      הפעילו את אי-שוויון הממוצעים על $a=x$ ו-$b=\frac9x$, שמכפלתם קבועה, ובדקו שיש $x$ שבו מתקבל שוויון.
-    commonWrong:
-      - value: 3
+      יהיו $A=\{1,2\}$ ו-$B=\{a,b,c\}$. אילו מהטענות הבאות נכונות? סמנו את כולן.
+    choices:
+      - text: '$(2,c)\in A\times B$'
+        correct: true
+        feedback: נכון. $2\in A$ ו-$c\in B$.
+      - text: 'ב-$A\times B$ יש שישה זוגות'
+        correct: true
         feedback: >-
-          $3$ הוא ה-$x$ שבו מתקבל המינימום, לא הערך עצמו: $3+\frac93=6$.
-      - value: 10
+          נכון: $(1,a),(1,b),(1,c),(2,a),(2,b),(2,c)$. לכל אחד משני האיברים של $A$ שלוש אפשרויות מ-$B$.
+      - text: '$(c,2)\in A\times B$'
         feedback: >-
-          $10$ הוא הערך ב-$x=1$. ערך בנקודה אחת לא נותן את המינימום; צריך חסם מלמטה שמתקיים לכל $x>0$.
-        misconception: MC-examples-are-proof
+          באיבר של $A\times B$ האיבר **הראשון** בא מ-$A$. ב-$(c,2)$ האיבר הראשון הוא $c\notin A$. בזוג סדור הסדר
+          קובע: $(c,2)\ne(2,c)$.
+        misconception: MC-pair-order
+      - text: '$A\times B=B\times A$'
+        feedback: >-
+          $(1,a)\in A\times B$, אבל $(1,a)\notin B\times A$, כי האיבר הראשון של זוג ב-$B\times A$ שייך ל-$B$. שתי
+          הקבוצות שונות, אף שבשתיהן שישה זוגות.
+        misconception: MC-pair-order
 
-  - id: Q-0.7-fraction-bound
-    type: mc
+  - id: Q-0.7-power-union
+    type: twotier
     objectives: [OBJ-0.7-3]
     qualitative: true
     level: exam
     prompt: >-
-      איזו מההערכות הבאות נכונה **לכל** $n$ טבעי?
+      האם לכל שתי קבוצות $A$ ו-$B$ מתקיים $\mathcal{P}(A\cup B)=\mathcal{P}(A)\cup\mathcal{P}(B)$?
     choices:
-      - text: '$\frac{n+1}{n^2+5}\le\frac{2n}{n^2}=\frac2n$'
+      - text: לא
         correct: true
         feedback: >-
-          נכון. הגדלנו את המונה ($n+1\le 2n$ לכל $n\ge 1$) והקטנו את המכנה ($n^2+5\ge n^2$); שתי הפעולות מגדילות
-          שבר חיובי, ולכן מקבלים חסם מלמעלה. הערכה כזו היא בדיוק מה שצריך בהוכחות גבול בפרק 2.
-      - text: '$\frac{n+1}{n^2+5}\le\frac{n}{n^2}=\frac1n$'
+          נכון. תמיד יש הכלה אחת, $\mathcal{P}(A)\cup\mathcal{P}(B)\subseteq\mathcal{P}(A\cup B)$, ושוויון רק כשאחת
+          הקבוצות מוכלת בשנייה (טענה 0.7.13).
+      - text: כן
         feedback: >-
-          החלפת $n+1$ ב-$n$ **מקטינה** את המונה, וזה לא נותן חסם מלמעלה. ואכן עבור $n=6$: $\frac{7}{41}\approx
-          0.171$, גדול מ-$\frac16\approx 0.167$.
-        misconception: MC-bound-fraction-direction
-      - text: '$\frac{n+1}{n^2+5}\le\frac{n+1}{n^2+5n}$'
-        feedback: >-
-          $n^2+5n\ge n^2+5$, כלומר הגדלתם את המכנה, והשבר קטן. כבר עבור $n=2$: $\frac39>\frac{3}{14}$.
-        misconception: MC-bound-fraction-direction
-      - text: '$\frac{n+1}{n^2+5}\ge\frac1n$'
-        feedback: >-
-          זה חסם מלמטה שנכשל כבר ב-$n=1$: $\frac26=\frac13<1$. הוא מתקיים רק החל מ-$n=5$, ולא לכל $n$.
-        misconception: MC-bound-fraction-direction
-
-  - id: Q-0.7-equality-case
-    type: mc
-    objectives: [OBJ-0.7-2]
-    qualitative: true
-    level: mid
-    prompt: >-
-      לאילו זוגות $x,y$ ממשיים מתקיים **שוויון** באי-שוויון המשולש, $|x+y|=|x|+|y|$?
-    choices:
-      - text: 'בדיוק כש-$xy\ge 0$'
+          עם $A=\{1\}$ ו-$B=\{2\}$: $\{1,2\}\in\mathcal{P}(A\cup B)$, אבל $\{1,2\}$ אינה מוכלת ב-$A$ ואינה מוכלת
+          ב-$B$. בחיתוך זה כן עובד: $\mathcal{P}(A\cap B)=\mathcal{P}(A)\cap\mathcal{P}(B)$.
+        misconception: MC-power-set-union
+    reasons:
+      - text: 'עם $A=\{1\}$, $B=\{2\}$ הקבוצה $\{1,2\}$ נמצאת באגף שמאל ולא באגף ימין'
         correct: true
         feedback: >-
-          נכון. שני האגפים אי-שליליים, ולכן הם שווים בדיוק כשהריבועים שווים: $x^2+2xy+y^2=x^2+2|xy|+y^2$, כלומר
-          $xy=|xy|$, כלומר $xy\ge 0$.
-      - text: 'רק כש-$x=y$'
+          בדיוק. תת-קבוצה של $A\cup B$ יכולה לקחת איבר מכל אחת מהקבוצות, ואז היא לא מוכלת באף אחת.
+      - text: 'החיתוך מתנהג כך, ולכן גם האיחוד'
         feedback: >-
-          $x=2$, $y=5$: $|2+5|=7=|2|+|5|$, אף ש-$x\ne y$. מה שקובע הוא הסימנים, לא הערכים.
-        misconception: MC-triangle-equality-case
-      - text: 'רק כש-$x=0$ או $y=0$'
+          $X\subseteq A\cap B$ שקול ל-"$X\subseteq A$ וגם $X\subseteq B$", ולכן החיתוך עובר. אבל $X\subseteq A\cup B$
+          אינו שקול ל-"$X\subseteq A$ או $X\subseteq B$": $\{1,2\}\subseteq\{1\}\cup\{2\}$.
+        misconception: MC-power-set-union
+      - text: 'לפי טענה 0.7.8, $A\subseteq A\cup B$ נותן $\mathcal{P}(A)\subseteq\mathcal{P}(A\cup B)$, וזה מספיק לשוויון'
         feedback: >-
-          $x=-1$, $y=-3$: $|{-4}|=4=|{-1}|+|{-3}|$, ושניהם שונים מאפס. שוויון יש בכל פעם שהמספרים לא בסימנים
-          מנוגדים.
-        misconception: MC-triangle-equality-case
-      - text: 'לכל $x,y$'
-        feedback: >-
-          $x=1$, $y=-1$: $|1+(-1)|=0$, ואילו $|1|+|{-1}|=2$. כשהסימנים מנוגדים, חלק מהמרחק "מתבטל".
-        misconception: MC-order-abs-additive
+          זה נותן רק הכלה אחת, $\mathcal{P}(A)\cup\mathcal{P}(B)\subseteq\mathcal{P}(A\cup B)$. לשוויון צריך גם את
+          ההכלה ההפוכה, והיא נכשלת.
+        misconception: MC-set-equality-one-inclusion
