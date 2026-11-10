@@ -1,0 +1,25 @@
+# Terms first defined in lesson 5.4.
+- id: higher-derivative
+  term: נגזרת מסדר גבוה
+  en: higher-order derivative
+  symbol: 'f^{(n)}'
+  definition: >-
+    $f''=(f')'$, ובאופן כללי $f^{(n+1)}=\left(f^{(n)}\right)'$. $f$ גזירה $n$ פעמים בנקודה אם $f^{(n-1)}$ מוגדרת
+    בסביבה של הנקודה וגזירה בה.
+  lesson: '5.4'
+- id: continuously-differentiable
+  term: גזירה ברציפות
+  en: continuously differentiable
+  symbol: 'C^1'
+  definition: >-
+    $f$ גזירה ברציפות בקטע פתוח אם היא גזירה בכל נקודה שלו ופונקציית הנגזרת $f'$ רציפה בו. כל פונקציה גזירה
+    ברציפות גזירה, אבל לא להפך: $x^2\sin\frac1x$ (עם 0 ב-0).
+  lesson: '5.4'
+- id: leibniz-rule
+  term: נוסחת לייבניץ
+  en: Leibniz rule
+  symbol: '(fg)^{(n)}=\sum_{k=0}^{n}\binom nk f^{(k)}g^{(n-k)}'
+  definition: >-
+    הנגזרת ה-$n$-ית של מכפלה של שתי פונקציות גזירות $n$ פעמים: $(fg)^{(n)}=\sum_{k=0}^{n}\binom nk f^{(k)}g^{(n-k)}$.
+    מוכיחים אותה באינדוקציה, בעזרת כלל המכפלה וזהות פסקל.
+  lesson: '5.4'

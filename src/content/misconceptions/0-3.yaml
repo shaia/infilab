@@ -1,0 +1,64 @@
+# Misconceptions first detected in lesson 0.3 (quantifiers and negation).
+- id: MC-negation-partial
+  title: שוללים רק חלק מהטענה
+  belief: >-
+    כדי לשלול טענה עם כמתים מספיק לשלול את התנאי שבסוף, או להפוך רק את הכמת הראשון.
+  truth: >-
+    שלילה עוברת על הטענה משמאל לימין: כל "לכל" הופך ל"קיים", כל "קיים" הופך ל"לכל", והתנאי שבסוף נשלל.
+    שלילת $|x|<\varepsilon$ היא $|x|\ge\varepsilon$.
+  remedy: { lesson: '0.3', anchor: 'negation', label: 'שלילה של טענה עם כמתים' }
+
+- id: MC-quantifier-swap
+  title: חושבים שסדר הכמתים לא משנה
+  belief: >-
+    "לכל $x$ קיים $y$" ו"קיים $y$ כך שלכל $x$" אומרים אותו דבר.
+  truth: >-
+    ב"לכל $x$ קיים $y$" מותר ל-$y$ להיות תלוי ב-$x$; ב"קיים $y$ לכל $x$" אותו $y$ אחד צריך להתאים לכל $x$
+    יחד. $\forall x\ \exists y:\ y>x$ נכונה בממשיים, ו-$\exists y\ \forall x:\ y>x$ שקרית: אין מספר גדול מכולם.
+  remedy: { lesson: '0.3', anchor: 'fig-0-3a', label: 'סדר הכמתים: המשחק באיור 0.3א' }
+
+- id: MC-quantifier-mistranslated
+  title: מתרגמים משפט בעברית לכמת הלא נכון
+  belief: >-
+    "יש" ו"כל" מתורגמים לפי התחושה, ומשפט כמו "ריבוע של מספר אי-זוגי הוא אי-זוגי" הוא על מספר אחד.
+  truth: >-
+    "לכל", "כל" ו"תמיד" הם $\forall$; "יש", "קיים" ו"לפחות אחד" הם $\exists$. משפט כללי בלי כמת גלוי ("ריבוע של
+    מספר אי-זוגי...") הוא טענה על **כל** המספרים, עם כמת סמוי $\forall$.
+  remedy: { lesson: '0.3', anchor: 'translate', label: 'מעברית לכמתים' }
+
+- id: MC-restricted-quantifier-connective
+  title: מחברים כמת לתנאי בקשר הלא נכון
+  belief: >-
+    כשמסמנים ב-$P(n)$ את "$n$ אי-זוגי", הטענה "כל מספר אי-זוגי מקיים $Q$" נכתבת $\forall n:\ P(n)\land Q(n)$,
+    והטענה "יש מספר אי-זוגי שמקיים $Q$" נכתבת עם גרירה.
+  truth: >-
+    עם "לכל" התנאי בא בגרירה: $\forall n:\ P(n)\Rightarrow Q(n)$. עם "קיים" הוא בא ב"וגם":
+    $\exists n:\ P(n)\land Q(n)$. "לכל $n$: $n$ אי-זוגי וגם $Q(n)$" טוען שכל המספרים אי-זוגיים.
+  remedy: { lesson: '0.3', anchor: 'translate', label: 'מעברית לכמתים' }
+
+- id: MC-negation-domain
+  title: שוללים גם את התחום של הכמת
+  belief: >-
+    השלילה של "לכל $x>0$, $P(x)$" היא "קיים $x\le 0$ כך ש-$P(x)$ לא מתקיים".
+  truth: >-
+    התחום של הכמת נשאר במקומו: השלילה של $\forall x>0:\ P(x)$ היא $\exists x>0:\ \neg P(x)$. טענה על
+    המספרים החיוביים נשללת בעזרת מספר חיובי.
+  remedy: { lesson: '0.3', anchor: 'negation', label: 'שלילה של טענה עם כמתים' }
+
+- id: MC-negation-strict-inequality
+  title: שוללים אי-שוויון חזק לאי-שוויון חזק הפוך
+  belief: >-
+    השלילה של $a<b$ היא $a>b$.
+  truth: >-
+    השלילה של $a<b$ היא $a\ge b$: גם המקרה $a=b$ שולל את $a<b$. באותו אופן השלילה של $a\le b$ היא $a>b$.
+  remedy: { lesson: '0.3', anchor: 'negation', label: 'שלילה של טענה עם כמתים' }
+
+- id: MC-quantifier-roles-swapped
+  title: מחליפים את התפקידים של המשתנים
+  belief: >-
+    "לכל $x$ קיים $y$ כך ש-$R(x,y)$" ו"לכל $y$ קיים $x$ כך ש-$R(x,y)$" אומרים אותו דבר, כי בשתיהן יש "לכל" ואחריו
+    "קיים".
+  truth: >-
+    חשוב גם איזה משתנה הולך עם איזה כמת. "לכל אדם יש אמא" נכונה, ו"לכל אישה יש אדם שהיא אמו" שקרית: יש נשים בלי
+    ילדים. ב-$\forall x\ \exists y$ כל עמודה צריכה נקודה מלאה, וב-$\forall y\ \exists x$ כל שורה.
+  remedy: { lesson: '0.3', anchor: 'order', label: 'סדר הכמתים, ואיזה משתנה הולך עם איזה כמת' }

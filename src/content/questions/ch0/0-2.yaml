@@ -1,0 +1,365 @@
+# Lesson 0.2 — statements, connectives and implication.
+# Objectives (src/course.ts):
+#   OBJ-0.2-1  truth tables of implication, equivalence, "and", "or"; why an implication with a false hypothesis is true
+#   OBJ-0.2-2  a statement, its converse, its inverse and its contrapositive; which of them are equivalent
+#   OBJ-0.2-3  "necessary condition" and "sufficient condition" in words and in symbols
+chapter: 0
+questions:
+  - id: Q-0.2-false-premise
+    type: twotier
+    objectives: [OBJ-0.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם הפסוק "אם $2+2=5$ אז $3$ זוגי" אמת?
+    choices:
+      - text: אמת
+        correct: true
+        feedback: >-
+          נכון. ההנחה $2+2=5$ שקרית, וגרירה עם הנחה שקרית היא אמת: היא לא הבטיחה דבר למקרה הזה.
+      - text: שקר
+        feedback: >-
+          גרירה שקרית רק כשההנחה אמת והמסקנה שקר. כאן ההנחה שקר, ולכן הגרירה אמת, גם אם המסקנה שקר.
+        misconception: MC-false-premise-implication
+      - text: זה לא פסוק, אין לו ערך אמת
+        feedback: >-
+          לכל אחד משני החלקים יש ערך אמת, ולכן גם לגרירה. במתמטיקה הגרירה לא דורשת "קשר" בין החלקים; היא
+          נקבעת לפי טבלת האמת.
+        misconception: MC-false-premise-implication
+    reasons:
+      - text: 'גרירה $P\Rightarrow Q$ שקרית רק כש-$P$ אמת ו-$Q$ שקר, וכאן $P$ שקר'
+        correct: true
+        feedback: >-
+          בדיוק. חשבו על הבטחה: "אם ירד גשם אביא מטרייה". אם לא ירד גשם, לא הפרתי את ההבטחה, בין שהבאתי מטרייה ובין שלא.
+      - text: שני החלקים שקריים, ולכן גם הפסוק כולו שקרי
+        feedback: >-
+          כך מתנהג "וגם", לא גרירה. בשורה "שקר, שקר" של טבלת האמת הגרירה היא אמת.
+        misconception: MC-false-premise-implication
+      - text: אין קשר בין $2+2$ לזוגיות של $3$, ולכן הגרירה שקרית
+        feedback: >-
+          ערך האמת של גרירה תלוי רק בערכי האמת של שני החלקים, לא בשאלה אם יש ביניהם "קשר" בתוכן.
+        misconception: MC-false-premise-implication
+
+  - id: Q-0.2-bonus
+    type: mc
+    objectives: [OBJ-0.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      המרצה הודיע: "אם תגישו את כל התרגילים, תקבלו בונוס". סטודנטית אחת לא הגישה את כל התרגילים, ובכל זאת קיבלה
+      בונוס. האם המרצה הפר את ההודעה שלו?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. ההודעה היא גרירה $P\Rightarrow Q$, והיא מופרת רק כש-$P$ אמת ו-$Q$ שקר: מישהו הגיש הכול ולא קיבל
+          בונוס. כאן $P$ שקר, ולכן הגרירה אמת, מה שלא יהיה $Q$.
+      - text: כן, כי ההודעה אמרה שרק מי שמגיש הכול מקבל בונוס
+        feedback: >-
+          ההודעה לא אמרה "רק". "אם תגישו, תקבלו" היא $P\Rightarrow Q$; "רק מי שמגיש מקבל" היא $Q\Rightarrow P$,
+          ההפוכה. ביחד הן "אם ורק אם", וזו טענה חזקה יותר ממה שהמרצה אמר.
+        misconception: MC-implication-as-iff
+      - text: אי אפשר לדעת, כי ההודעה לא דיברה על מי שלא הגיש הכול
+        feedback: >-
+          דווקא בגלל שההודעה לא דיברה על המקרה הזה, אי אפשר להפר אותה בו. גרירה עם הנחה שקרית היא אמת: זו האמת
+          הריקה.
+        misconception: MC-false-premise-implication
+
+  - id: Q-0.2-table-row
+    type: mc
+    objectives: [OBJ-0.2-1]
+    level: basic
+    prompt: >-
+      באיזו שורה של טבלת האמת הפסוק $P\Rightarrow Q$ שקר?
+    choices:
+      - text: '$P$ אמת, $Q$ שקר'
+        correct: true
+        feedback: >-
+          נכון. זו השורה היחידה: ההנחה התקיימה והמסקנה לא. בשלוש השורות האחרות הגרירה אמת.
+      - text: '$P$ שקר, $Q$ אמת'
+        feedback: >-
+          כש-$P$ שקר הגרירה אמת, מה שלא יהיה $Q$. למשל, "לכל $x$, אם $x>2$ אז $x^2>4$" נכונה גם עבור $x=-3$,
+          שבו $P$ שקר ו-$Q$ אמת.
+        misconception: MC-false-premise-implication
+      - text: '$P$ שקר, $Q$ שקר'
+        feedback: >-
+          כש-$P$ שקר הגרירה אמת. בטענה "לכל $x$, אם $x>2$ אז $x^2>4$", המקרה $x=0$ הוא "שקר, שקר", והטענה לא
+          נפגעת ממנו.
+        misconception: MC-false-premise-implication
+
+  - id: Q-0.2-count-rows
+    type: numeric
+    objectives: [OBJ-0.2-1]
+    level: mid
+    prompt: >-
+      בכמה מארבע השורות של טבלת האמת הפסוק $(P\Rightarrow Q)\land(Q\Rightarrow P)$ הוא אמת?
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. השורות "אמת, אמת" ו"שקר, שקר". בשתי האחרות אחת הגרירות שקרית. זו בדיוק טבלת האמת של
+      $P\iff Q$: הפסוק אמת כש-$P$ ו-$Q$ מקבלים אותו ערך.
+    wrongFeedback: >-
+      מלאו את הטבלה עמודה אחר עמודה: $P\Rightarrow Q$, אחר כך $Q\Rightarrow P$, ובסוף "וגם" שלהן.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          ספרתם רק את "אמת, אמת". בשורה "שקר, שקר" שתי הגרירות אמת (ההנחה שקרית בשתיהן), ולכן גם ה"וגם".
+        misconception: MC-false-premise-implication
+      - value: 3
+        feedback: >-
+          $3$ הוא מספר השורות שבהן $P\Rightarrow Q$ לבדה אמת. צריך גם את $Q\Rightarrow P$, שנכשלת בשורה $P$ שקר,
+          $Q$ אמת.
+
+  - id: Q-0.2-or
+    type: twotier
+    objectives: [OBJ-0.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם הפסוק "$x>0$ או $x<5$" אמת **לכל** מספר ממשי $x$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. לכל $x$ לפחות אחד משני התנאים מתקיים.
+      - text: לא
+        feedback: >-
+          בדקו את שלושת המקרים: $x\le 0$ (אז $x<5$), $0<x<5$ (שניהם), $x\ge 5$ (אז $x>0$). בכל מקרה לפחות תנאי
+          אחד מתקיים, ו"או" לא דורש יותר.
+        misconception: MC-or-exclusive
+    reasons:
+      - text: 'אם $x\le 0$ אז $x<5$, ואם $x>0$ החלק הראשון אמת; "או" אמת כשלפחות אחד מהחלקים אמת'
+        correct: true
+        feedback: >-
+          בדיוק. קבוצת הפתרונות של "או" היא איחוד קבוצות הפתרונות: $(0,\infty)\cup(-\infty,5)=\mathbb{R}$.
+      - text: כש-$0<x<5$ שני החלקים אמת, ו"או" דורש שרק אחד מהם יהיה אמת
+        feedback: >-
+          במתמטיקה "או" כוללני: גם כששני החלקים אמת, "או" אמת. כשמתכוונים ל"בדיוק אחד" אומרים זאת במפורש.
+        misconception: MC-or-exclusive
+      - text: הפסוק אמת רק כששני התנאים מתקיימים, וזה קורה רק ב-$(0,5)$
+        feedback: >-
+          זה התנאי של "וגם": החיתוך $(0,5)$. "או" נותן את האיחוד, שהוא כל הישר.
+        misconception: MC-or-as-and
+
+  - id: Q-0.2-negate-implication
+    type: mc
+    objectives: [OBJ-0.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      איזה פסוק שקול לשלילה $\neg(P\Rightarrow Q)$?
+    choices:
+      - text: '$P\land\neg Q$'
+        correct: true
+        feedback: >-
+          נכון. $P\Rightarrow Q$ שקר בשורה אחת בלבד, $P$ אמת ו-$Q$ שקר, ולכן השלילה אמת בדיוק בשורה הזו: "$P$
+          וגם לא $Q$".
+      - text: '$P\Rightarrow\neg Q$'
+        feedback: >-
+          בשורה "$P$ שקר" שני הפסוקים, $P\Rightarrow Q$ ו-$P\Rightarrow\neg Q$, אמת, ולכן השני אינו השלילה של
+          הראשון. השלילה של גרירה אינה גרירה.
+        misconception: MC-implication-negation
+      - text: '$\neg P\Rightarrow\neg Q$'
+        feedback: >-
+          זו הטענה הנגדית. בשורה "$P$ אמת, $Q$ אמת" גם $P\Rightarrow Q$ וגם $\neg P\Rightarrow\neg Q$ אמת, ולכן
+          היא אינה השלילה.
+        misconception: MC-implication-negation
+      - text: '$\neg P\land Q$'
+        feedback: >-
+          בשורה "$P$ שקר, $Q$ אמת" הפסוק הזה אמת, אבל שם גם $P\Rightarrow Q$ אמת. השלילה צריכה להיות אמת בדיוק
+          כש-$P\Rightarrow Q$ שקר.
+        misconception: MC-implication-negation
+
+  - id: Q-0.2-contrapositive
+    type: mc
+    objectives: [OBJ-0.2-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהו הקונטרפוזיטיב של הטענה "אם $n$ מתחלק ב-$4$, אז $n$ זוגי"?
+    choices:
+      - text: אם $n$ אינו זוגי, אז $n$ אינו מתחלק ב-$4$
+        correct: true
+        feedback: >-
+          נכון. מחליפים את הסדר ושוללים את שני החלקים: $\neg Q\Rightarrow\neg P$. היא נכונה, כמו הטענה
+          המקורית, כי שתיהן שקולות.
+      - text: אם $n$ זוגי, אז $n$ מתחלק ב-$4$
+        feedback: >-
+          זו הטענה ההפוכה, $Q\Rightarrow P$. היא אפילו לא נכונה: $6$ זוגי ולא מתחלק ב-$4$.
+        misconception: MC-converse-equivalent
+      - text: אם $n$ אינו מתחלק ב-$4$, אז $n$ אינו זוגי
+        feedback: >-
+          זו הטענה הנגדית, $\neg P\Rightarrow\neg Q$, והיא לא נכונה: $6$ אינו מתחלק ב-$4$ ובכל זאת זוגי.
+        misconception: MC-inverse-equivalent
+
+  - id: Q-0.2-which-follow
+    type: multi
+    objectives: [OBJ-0.2-2, OBJ-0.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע שלכל $x$ ממשי: אם $x>2$ אז $x^2>4$. אילו מהטענות הבאות נכונות לכל $x$ ממשי? סמנו את כולן.
+    choices:
+      - text: אם $x^2>4$ אז $x>2$
+        feedback: >-
+          זו ההפוכה, והיא לא נובעת. דוגמה נגדית: $x=-3$, שעבורו $x^2=9>4$ אבל $x<2$.
+        misconception: MC-converse-equivalent
+      - text: אם $x\le 2$ אז $x^2\le 4$
+        feedback: >-
+          זו הנגדית, והיא לא נובעת. גם כאן $x=-3$: $x\le 2$, ובכל זאת $x^2=9>4$.
+        misconception: MC-inverse-equivalent
+      - text: אם $x^2\le 4$ אז $x\le 2$
+        correct: true
+        feedback: >-
+          נכון. זה הקונטרפוזיטיב של הטענה הנתונה, ולכן הוא נכון בדיוק כשהיא נכונה.
+      - text: $x>2$ רק אם $x^2>4$
+        correct: true
+        feedback: >-
+          נכון. "$P$ רק אם $Q$" פירושו $P\Rightarrow Q$: בלי $x^2>4$ אין $x>2$. זה ניסוח אחר של הטענה הנתונה.
+
+  - id: Q-0.2-converse-fails
+    type: twotier
+    objectives: [OBJ-0.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הטענה "אם $n$ מתחלק ב-$6$ אז $n$ מתחלק ב-$3$" נכונה. האם מכאן נובע ש"אם $n$ מתחלק ב-$3$ אז $n$ מתחלק
+      ב-$6$"?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. הטענה השנייה היא ההפוכה של הראשונה, וטענה נכונה לא אומרת דבר על ההפוכה לה.
+      - text: כן
+        feedback: >-
+          ההפוכה אינה שקולה לטענה. כאן היא אפילו שקרית: $3$ מתחלק ב-$3$ ולא ב-$6$.
+        misconception: MC-converse-equivalent
+    reasons:
+      - text: 'זו הטענה ההפוכה, והיא אינה שקולה לטענה המקורית; דוגמה נגדית: $n=3$'
+        correct: true
+        feedback: >-
+          בדיוק. ההפוכה צריכה הוכחה משלה, ולפעמים, כמו כאן, היא פשוט לא נכונה.
+      - text: ההפוכה של טענה נכונה תמיד נכונה
+        feedback: >-
+          לא: $n=3$ מתחלק ב-$3$ ולא ב-$6$. ההפוכה שקולה לנגדית, לא לטענה עצמה.
+        misconception: MC-converse-equivalent
+      - text: ההפוכה של טענה נכונה תמיד שקרית
+        feedback: >-
+          גם זה לא. "אם $n$ זוגי אז $n+1$ אי-זוגי" נכונה, וגם ההפוכה לה, "אם $n+1$ אי-זוגי אז $n$ זוגי", נכונה.
+          אין קשר קבוע, ולכן צריך לבדוק כל פעם.
+        misconception: MC-converse-equivalent
+
+  - id: Q-0.2-equivalent-forms
+    type: multi
+    objectives: [OBJ-0.2-1, OBJ-0.2-2]
+    level: exam
+    prompt: >-
+      אילו מהפסוקים הבאים שקולים ל-$P\Rightarrow Q$, כלומר מקבלים אותו ערך אמת בכל ארבע השורות של טבלת האמת?
+      סמנו את כולם.
+    choices:
+      - text: '$\neg Q\Rightarrow\neg P$'
+        correct: true
+        feedback: >-
+          נכון. זה הקונטרפוזיטיב. הוא שקר רק כש-$\neg Q$ אמת ו-$\neg P$ שקר, כלומר כש-$P$ אמת ו-$Q$ שקר: אותה
+          שורה בדיוק.
+      - text: '$\neg P\lor Q$'
+        correct: true
+        feedback: >-
+          נכון. "או" שקרי רק כששני החלקים שקריים: $\neg P$ שקרי ו-$Q$ שקרי, כלומר $P$ אמת ו-$Q$ שקרי. זו בדיוק
+          השורה היחידה שבה $P\Rightarrow Q$ שקרית, ולכן לשני הפסוקים אותה עמודה.
+      - text: '$\neg(P\land\neg Q)$'
+        correct: true
+        feedback: >-
+          נכון. $P\land\neg Q$ אמת בדיוק בשורה שבה הגרירה שקרית, ולכן השלילה שלו אמת בדיוק כשהגרירה אמת.
+      - text: '$Q\Rightarrow P$'
+        feedback: >-
+          זו ההפוכה. בשורה "$P$ שקר, $Q$ אמת" היא שקר, ואילו $P\Rightarrow Q$ אמת.
+        misconception: MC-converse-equivalent
+      - text: '$\neg P\Rightarrow\neg Q$'
+        feedback: >-
+          זו הנגדית. בשורה "$P$ שקר, $Q$ אמת" היא שקר (הנחה אמת, מסקנה שקר), ואילו $P\Rightarrow Q$ אמת.
+        misconception: MC-inverse-equivalent
+
+  - id: Q-0.2-div4-even
+    type: mc
+    objectives: [OBJ-0.2-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      השלימו: "$n$ מתחלק ב-$4$" הוא תנאי ... לכך ש-$n$ זוגי.
+    choices:
+      - text: מספיק, ולא הכרחי
+        correct: true
+        feedback: >-
+          נכון. אם $n$ מתחלק ב-$4$ הוא בוודאי זוגי, ולכן התנאי מספיק. הוא לא הכרחי: $6$ זוגי ולא מתחלק ב-$4$.
+      - text: הכרחי, ולא מספיק
+        feedback: >-
+          הפוך. "הכרחי" היה אומר שכל זוגי מתחלק ב-$4$, ו-$6$ מפריך את זה. התכונה שהיא הכרחית ולא מספיקה היא
+          "זוגי", ביחס ל"מתחלק ב-4".
+        misconception: MC-necessary-sufficient-swap
+      - text: הכרחי ומספיק
+        feedback: >-
+          "הכרחי ומספיק" פירושו שקילות, כלומר שגם כל מספר זוגי מתחלק ב-$4$. זו ההפוכה, ו-$6$ מפריך אותה.
+        misconception: MC-converse-equivalent
+      - text: לא הכרחי ולא מספיק
+        feedback: >-
+          התנאי כן מספיק: $n=4k$ גורר $n=2\cdot 2k$, כלומר $n$ זוגי.
+        misconception: MC-necessary-sufficient-swap
+
+  - id: Q-0.2-necessary-symbols
+    type: mc
+    objectives: [OBJ-0.2-3]
+    level: mid
+    prompt: >-
+      מה פירוש "$P$ הוא תנאי הכרחי ל-$Q$" בסימנים?
+    choices:
+      - text: '$Q\Rightarrow P$'
+        correct: true
+        feedback: >-
+          נכון. "הכרחי" אומר שבלי $P$ אין $Q$, כלומר כל פעם ש-$Q$ מתקיים גם $P$ מתקיים. בניסוח אחר: "$Q$ רק
+          אם $P$".
+      - text: '$P\Rightarrow Q$'
+        feedback: >-
+          זו ההגדרה של תנאי **מספיק**: מספיק לדעת $P$ כדי לדעת $Q$. למשל, "מתחלק ב-4" מספיק ל"זוגי", אבל לא
+          הכרחי לו.
+        misconception: MC-necessary-sufficient-swap
+      - text: '$\neg Q\Rightarrow\neg P$'
+        feedback: >-
+          זה הקונטרפוזיטיב של $P\Rightarrow Q$, ולכן שקול לו: שוב "מספיק". "הכרחי" שקול ל-$\neg P\Rightarrow\neg Q$.
+        misconception: MC-necessary-sufficient-swap
+      - text: '$P\iff Q$'
+        feedback: >-
+          זה "הכרחי **ומספיק**". "הכרחי" לבדו הוא רק כיוון אחד.
+        misconception: MC-necessary-sufficient-swap
+
+  - id: Q-0.2-square-condition
+    type: twotier
+    objectives: [OBJ-0.2-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      איזה תנאי הוא "$x^2<1$" לכך ש-"$x<1$" (עבור $x$ ממשי)?
+    choices:
+      - text: מספיק, ולא הכרחי
+        correct: true
+        feedback: נכון. $x^2<1$ גורר $x<1$, אבל יש $x<1$ שאינם מקיימים $x^2<1$.
+      - text: הכרחי, ולא מספיק
+        feedback: >-
+          "הכרחי" אומר $x<1\Rightarrow x^2<1$, ו-$x=-5$ מפריך את זה. הכיוון שכן נכון הוא $x^2<1\Rightarrow x<1$,
+          כלומר "מספיק".
+        misconception: MC-necessary-sufficient-swap
+      - text: הכרחי ומספיק
+        feedback: >-
+          זה היה אומר שהשניים שקולים. $x=-5$ מקיים $x<1$ ולא $x^2<1$.
+        misconception: MC-converse-equivalent
+    reasons:
+      - text: '$x^2<1$ גורר $-1<x<1$ ובפרט $x<1$; אבל $x=-5$ מקיים $x<1$ ו-$x^2=25$'
+        correct: true
+        feedback: >-
+          בדיוק. כיוון אחד מוכיחים, ואת הכיוון השני מפריכים בדוגמה נגדית אחת.
+      - text: '$x<1$ גורר $x^2<1$, כי מעלים את שני האגפים בריבוע'
+        feedback: >-
+          העלאה בריבוע שומרת על אי-שוויון רק כששני הצדדים אי-שליליים. $-5<1$, אבל $25>1$.
+        misconception: MC-square-preserves-order
+      - text: 'שני התנאים שקולים, כי $1^2=1$'
+        feedback: >-
+          $1^2=1$ לא אומר דבר על מספרים שליליים. התנאי $x^2<1$ שקול ל-$-1<x<1$, ולא ל-$x<1$.
+        misconception: MC-converse-equivalent

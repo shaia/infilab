@@ -1,0 +1,25 @@
+# Terms first defined in lesson 4.1 (continuity at a point).
+- id: continuity-at-point
+  term: רציפות בנקודה
+  en: continuity at a point
+  symbol: '\lim_{x\to x_0} f(x)=f(x_0)'
+  definition: >-
+    $f$ רציפה בנקודה $x_0$ של התחום שלה אם לכל $\varepsilon>0$ קיים $\delta>0$ כך שלכל $x$ בתחום עם
+    $|x-x_0|<\delta$ מתקיים $|f(x)-f(x_0)|<\varepsilon$. שקול לכך שהגבול ב-$x_0$ קיים ושווה ל-$f(x_0)$, ולכך
+    שלכל סדרה $x_n\to x_0$ בתחום מתקיים $f(x_n)\to f(x_0)$ (היינה).
+  lesson: '4.1'
+- id: continuous-function
+  term: פונקציה רציפה
+  en: continuous function
+  definition: >-
+    פונקציה שרציפה בכל נקודה של תחום ההגדרה שלה. נקודה מחוץ לתחום אינה נקודת אי-רציפות: $\frac1x$ היא פונקציה
+    רציפה. "רציפה בקטע $I$" פירושו רציפה בכל נקודה של $I$ (ובקצה של קטע סגור: רציפה מהצד שבתוך הקטע).
+  lesson: '4.1'
+- id: one-sided-continuity
+  term: רציפות חד-צדדית
+  en: one-sided continuity
+  definition: >-
+    $f$ רציפה מימין ב-$x_0$ אם $\lim_{x\to x_0^+}f(x)=f(x_0)$, ומשמאל אם $\lim_{x\to x_0^-}f(x)=f(x_0)$. $f$
+    רציפה ב-$x_0$ אם ורק אם היא רציפה בה מימין ומשמאל.
+  reject: [רציפות חד צדדית]
+  lesson: '4.1'

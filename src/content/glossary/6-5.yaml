@@ -1,0 +1,9 @@
+# Terms first defined in lesson 6.5.
+- id: lagrange-remainder
+  term: שארית לגרנז'
+  en: Lagrange form of the remainder
+  symbol: 'R_n(x) = \frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}'
+  definition: >-
+    אם $f$ גזירה $n+1$ פעמים בקטע שבין $a$ ל-$x$, אז $f(x) = T_n(x) + R_n(x)$, כאשר
+    $R_n(x) = \frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$ עבור נקודה $c$ כלשהי בין $a$ ל-$x$, שתלויה ב-$x$.
+  lesson: '6.5'

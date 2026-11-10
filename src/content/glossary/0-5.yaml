@@ -1,0 +1,57 @@
+# Terms first defined in lesson 0.5 (mathematical induction).
+- id: mathematical-induction
+  term: אינדוקציה מתמטית
+  en: mathematical induction
+  definition: >-
+    שיטה להוכיח טענה $P(n)$ לכל $n$ טבעי: מוכיחים את $P(1)$ (הבסיס), ומוכיחים שלכל $n$, $P(n)$ גורר את
+    $P(n+1)$ (הצעד).
+  lesson: '0.5'
+- id: induction-base
+  term: בסיס האינדוקציה
+  en: base case
+  definition: >-
+    ההוכחה שהטענה נכונה עבור המספר הראשון, בדרך כלל $n=1$. אפשר להתחיל ממספר אחר $n_0$, ואז הטענה מוכחת
+    לכל $n\ge n_0$.
+  lesson: '0.5'
+- id: induction-hypothesis
+  term: הנחת האינדוקציה
+  en: induction hypothesis
+  definition: >-
+    ההנחה, בצעד, שהטענה נכונה עבור $n$ מסוים. משתמשים בה כדי להוכיח את הטענה עבור $n+1$.
+  lesson: '0.5'
+- id: induction-step
+  term: צעד האינדוקציה
+  en: induction step
+  definition: >-
+    ההוכחה שלכל $n$ (מהבסיס והלאה), אם הטענה נכונה עבור $n$ אז היא נכונה עבור $n+1$.
+  lesson: '0.5'
+- id: bernoulli-inequality
+  term: אי-שוויון ברנולי
+  en: Bernoulli's inequality
+  symbol: '(1+x)^n\ge 1+nx'
+  definition: >-
+    לכל $x\ge -1$ ולכל $n$ טבעי, $(1+x)^n\ge 1+nx$. מוכיחים אותו באינדוקציה, והתנאי $x\ge -1$ דרוש בצעד.
+  reject: [אי שוויון ברנולי]
+  lesson: '0.5'
+- id: induction-principle
+  term: עקרון האינדוקציה
+  en: principle of mathematical induction
+  definition: >-
+    אם $P(1)$ נכונה, ולכל $n$ טבעי $P(n)$ גוררת את $P(n+1)$, אז $P(n)$ נכונה לכל $n$ טבעי. בגרסה עם בסיס
+    $n_0$: אם $P(n_0)$ נכונה, ולכל $n\ge n_0$ הטענה $P(n)$ גוררת את $P(n+1)$, אז $P(n)$ נכונה לכל $n\ge n_0$.
+  lesson: '0.5'
+- id: summation-sign
+  term: סימן הסכום
+  en: summation notation
+  symbol: '\sum_{k=1}^{n} a_k'
+  definition: >-
+    קיצור לסכום $a_1+a_2+\dots+a_n$. האות $k$ היא אינדקס הסכימה: היא עוברת על $1,2,\dots,n$, ואפשר להחליף
+    אותה בכל אות אחרת בלי לשנות את הסכום. למשל $\sum_{k=1}^{4} k^2=1+4+9+16=30$.
+  lesson: '0.5'
+- id: factorial
+  term: עצרת
+  en: factorial
+  symbol: 'n!'
+  definition: >-
+    המכפלה $n!=1\cdot 2\cdot\dots\cdot n$ של הטבעיים עד $n$. למשל $4!=24$, ומתקיים $(n+1)!=(n+1)\cdot n!$.
+  lesson: '0.5'

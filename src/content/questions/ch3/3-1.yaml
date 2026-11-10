@@ -1,0 +1,339 @@
+# Lesson 3.1 — real functions.
+# Objectives (src/course.ts):
+#   OBJ-3.1-1  find the domain and sketch the graph, including piecewise functions
+#   OBJ-3.1-2  prove that a function is monotone, bounded, even, odd or periodic
+#   OBJ-3.1-3  build new functions by operations, composition and inversion, with the domain of each
+chapter: 3
+questions:
+  - id: Q-3.1-domain
+    type: mc
+    objectives: [OBJ-3.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהו תחום ההגדרה הטבעי של $f(x)=\frac{x^2-1}{x-1}$?
+    choices:
+      - text: '$\mathbb{R}\setminus\{1\}$'
+        correct: true
+        feedback: >-
+          נכון. הבעיה היחידה היא חלוקה באפס, והמכנה מתאפס רק ב-$x=1$. על $\mathbb{R}\setminus\{1\}$ אפשר לצמצם
+          ולקבל $f(x)=x+1$, אבל ב-1 עצמו אין ל-$f$ ערך.
+      - text: '$\mathbb{R}$'
+        feedback: >-
+          כאן צמצמו קודם ($\frac{x^2-1}{x-1}=x+1$) וקבעו את התחום אחר כך. הצמצום נכון רק כש-$x\neq 1$: ב-$x=1$
+          הנוסחה של $f$ דורשת לחלק באפס, ולכן $f$ אינה מוגדרת שם.
+        misconception: MC-domain-from-simplified-formula
+      - text: '$\mathbb{R}\setminus\{-1,1\}$'
+        feedback: >-
+          ב-$x=-1$ המונה מתאפס, אבל המכנה הוא $-2$, ו-$\frac{0}{-2}=0$ הוא ערך מותר. רק אפס במכנה מוציא נקודה
+          מהתחום.
+        misconception: MC-domain-excludes-numerator-zeros
+    explanation: >-
+      $\frac{x^2-1}{x-1}$ ו-$x+1$ הן שתי פונקציות שונות: אותו כלל על $\mathbb{R}\setminus\{1\}$, תחומים שונים.
+      ההבדל הזה בדיוק יחזור בשיעור 3.3: לגבול ב-1 הוא לא משנה דבר.
+
+  - id: Q-3.1-domain-count
+    type: numeric
+    objectives: [OBJ-3.1-1]
+    level: mid
+    prompt: >-
+      כמה מספרים **שלמים** נמצאים בתחום ההגדרה הטבעי של $f(x)=\frac{\sqrt{9-x^2}}{x-1}$?
+    answer: 6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. השורש דורש $9-x^2\ge 0$, כלומר $-3\le x\le 3$; המכנה דורש $x\neq 1$. התחום הוא
+      $[-3,1)\cup(1,3]$, והשלמים בו הם $-3,-2,-1,0,2,3$.
+    wrongFeedback: >-
+      כתבו את שני התנאים בנפרד: מה השורש דורש, ומה המכנה דורש. התחום הוא החיתוך שלהם.
+    commonWrong:
+      - value: 7
+        feedback: >-
+          ספרתם את כל השלמים בקטע $[-3,3]$ ושכחתם את המכנה: ב-$x=1$ מחלקים באפס.
+      - value: 4
+        feedback: >-
+          ב-$x=\pm 3$ השורש הוא $\sqrt0=0$, וזה מותר: התנאי הוא $9-x^2\ge0$, לא $9-x^2>0$. שורש של אפס מוגדר;
+          רק המכנה אסור שיתאפס.
+
+  - id: Q-3.1-piecewise
+    type: multi
+    objectives: [OBJ-3.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      נתונה הפונקציה
+      $$f(x)=\begin{cases} x+3, & x\le 0\\ x^2, & 0<x<2\\ 7, & x\ge 2 \end{cases}$$
+      אילו מהטענות הבאות נכונות? סמנו את כולן.
+    choices:
+      - text: 'הנקודה $(0,3)$ נמצאת על הגרף'
+        correct: true
+        feedback: >-
+          נכון. $x=0$ מקיים את התנאי $x\le0$, ולכן $f(0)=0+3=3$.
+      - text: 'הנקודה $(0,0)$ נמצאת על הגרף'
+        feedback: >-
+          הענף $x^2$ חל רק כש-$0<x<2$, ו-0 אינו בקטע הזה. בשרטוט, הקשת של $x^2$ מתחילה בעיגול ריק ב-$(0,0)$.
+          לכל $x$ יש נקודה אחת בלבד על הגרף, וב-0 היא $(0,3)$.
+        misconception: MC-piecewise-boundary-point
+      - text: '$f(2)=4$'
+        feedback: >-
+          $x=2$ מקיים את התנאי $x\ge2$, ולכן $f(2)=7$. הענף $x^2$ היה נותן 4, אבל הוא חל רק כש-$x<2$.
+        misconception: MC-piecewise-boundary-point
+      - text: 'הערך $3.5$ מתקבל: יש $x$ עם $f(x)=3.5$'
+        correct: true
+        feedback: >-
+          נכון. בענף האמצעי $x^2=3.5$ עבור $x=\sqrt{3.5}\approx1.87$, שנמצא בקטע $(0,2)$. (גם בענף הראשון:
+          $x+3=3.5$ נותן $x=0.5$, אבל $0.5$ אינו מקיים $x\le0$, ולכן הוא לא נחשב.)
+
+  - id: Q-3.1-even-or-odd
+    type: twotier
+    objectives: [OBJ-3.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם כל פונקציה $f:\mathbb{R}\to\mathbb{R}$ היא זוגית או אי-זוגית?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. רוב הפונקציות אינן לא זה ולא זה.
+      - text: כן
+        feedback: >-
+          "זוגית" ו"אי-זוגית" אינן שתי האפשרויות היחידות. $f(x)=x+1$ אינה זוגית ואינה אי-זוגית.
+        misconception: MC-function-even-or-odd
+    reasons:
+      - text: 'עבור $f(x)=x+1$: הערך $f(-1)=0$ שונה גם מ-$f(1)=2$ וגם מהמספר הנגדי לו'
+        correct: true
+        feedback: >-
+          בדיוק. זוגיות דורשת $f(-x)=f(x)$ לכל $x$, ואי-זוגיות דורשת $f(-x)=-f(x)$ לכל $x$. נקודה אחת
+          ($x=1$) שבה שני השוויונות נכשלים מספיקה כדי להפריך את שניהם.
+      - text: 'כל פונקציה היא סכום של פונקציה זוגית ופונקציה אי-זוגית, ולכן היא אחת מהן'
+        feedback: >-
+          הפירוק נכון: $f(x)=\frac{f(x)+f(-x)}{2}+\frac{f(x)-f(-x)}{2}$. אבל סכום של זוגית ואי-זוגית אינו בדרך
+          כלל זוגי ואינו אי-זוגי: $x+1$ הוא סכום של $1$ (זוגית) ושל $x$ (אי-זוגית).
+        misconception: MC-function-even-or-odd
+      - text: 'אם $f(0)\neq0$ הפונקציה אינה אי-זוגית, ולכן היא זוגית'
+        feedback: >-
+          החלק הראשון נכון (לפונקציה אי-זוגית שמוגדרת ב-0 יש $f(0)=-f(0)$, כלומר $f(0)=0$), אבל ממנו לא נובע
+          דבר על זוגיות. $x+1$ מקיימת $f(0)=1$ ואינה זוגית.
+        misconception: MC-function-even-or-odd
+
+  - id: Q-3.1-monotone-samples
+    type: twotier
+    objectives: [OBJ-3.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הפונקציה $f:[1,\infty)\to\mathbb{R}$ מקיימת $f(n)<f(n+1)$ לכל $n\in\mathbb{N}$. האם $f$ בהכרח עולה?
+    choices:
+      - text: לא בהכרח
+        correct: true
+        feedback: נכון. התנאי מדבר רק על הנקודות השלמות.
+      - text: כן
+        feedback: >-
+          עולה פירושו $x<y \Rightarrow f(x)<f(y)$ (או $\le$) לכל $x,y$ בתחום, לא רק לשלמים. בין שני שלמים
+          הפונקציה יכולה לרדת.
+        misconception: MC-monotone-from-samples
+    reasons:
+      - text: 'עבור $f(x)=x+\sin(2\pi x)$: $f(n)=n$, אבל $f(1.25)=2.25>0.75=f(1.75)$'
+        correct: true
+        feedback: >-
+          בדיוק: $\sin(2\pi n)=0$, ולכן בשלמים $f(n)=n$ עולה; אבל $\sin(2.5\pi)=1$ ו-$\sin(3.5\pi)=-1$, כך
+          ש-$1.25<1.75$ ובכל זאת $f(1.25)>f(1.75)$.
+      - text: 'הסדרה $f(n)$ עולה, ופונקציה מתנהגת כמו הסדרה שלה'
+        feedback: >-
+          הסדרה $f(n)$ רואה רק את הערכים בשלמים. הדוגמה $x+\sin(2\pi x)$ מראה שבין השלמים יכול לקרות כל דבר.
+        misconception: MC-monotone-from-samples
+      - text: 'בדקנו אינסוף נקודות, וזה מספיק כדי להוכיח טענה על הפונקציה'
+        feedback: >-
+          אינסוף נקודות אינן כל הנקודות. מונוטוניות היא טענה על **כל** זוג $x<y$, ולכן הוכחה שלה מתחילה ב"יהיו
+          $x<y$ כלשהם בתחום".
+        misconception: MC-monotone-from-samples
+
+  - id: Q-3.1-bounded
+    type: mc
+    objectives: [OBJ-3.1-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזו מהטענות הבאות נכונה לגבי $f(x)=\frac{1}{1+x^2}$ על $\mathbb{R}$?
+    choices:
+      - text: 'חסומה, מקבלת ערך מקסימלי, ואינה מקבלת ערך מינימלי'
+        correct: true
+        feedback: >-
+          נכון. $1+x^2\ge1$, ולכן $0<f(x)\le1$ לכל $x$, ו-$f(0)=1$ הוא המקסימום. את 0 היא לא מקבלת אף פעם
+          (המונה הוא 1), ולכל ערך חיובי $c<1$ יש $x$ עם $f(x)<c$: אין ערך מינימלי.
+      - text: 'חסומה, ומקבלת גם ערך מקסימלי וגם ערך מינימלי'
+        feedback: >-
+          החסם התחתון 0 אינו מתקבל: $\frac{1}{1+x^2}=0$ אין לו פתרון. ואין ערך מינימלי אחר, כי $f(x)$ קטן כרצוננו
+          כש-$x$ גדול. חסם של פונקציה אינו חייב להתקבל.
+        misconception: MC-bounded-attains-bounds
+      - text: 'חסומה מלעיל בלבד: היא מתקרבת ל-0 בלי להגיע אליו, ולכן אינה חסומה מלרע'
+        feedback: >-
+          חסומה מלרע פירושו שיש $m$ עם $f(x)\ge m$ לכל $x$, ו-$m=0$ מתאים. העובדה ש-0 לא מתקבל לא סותרת את זה:
+          חסם אינו חייב להיות ערך של הפונקציה.
+        misconception: MC-bounded-attains-bounds
+
+  - id: Q-3.1-bounded-proof
+    type: rank
+    objectives: [OBJ-3.1-2]
+    level: exam
+    prompt: >-
+      הוכיחו ש-$f(x)=\frac{x}{1+x^2}$ חסומה על $\mathbb{R}$, ובפרט ש-$|f(x)|\le\frac12$ לכל $x$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: sq
+        label: 'יהי $x\in\mathbb{R}$. מתקיים $(|x|-1)^2\ge0$, כי ריבוע אינו שלילי.'
+      - id: expand
+        label: 'פותחים סוגריים ומשתמשים ב-$|x|^2=x^2$: מקבלים $x^2-2|x|+1\ge0$.'
+      - id: rearrange
+        label: 'מעבירים אגף: $2|x|\le 1+x^2$.'
+      - id: divide
+        label: 'מחלקים ב-$2(1+x^2)$, שהוא חיובי ולכן לא הופך את אי-השוויון: $\frac{|x|}{1+x^2}\le\frac12$.'
+      - id: conclude
+        label: 'לכן $|f(x)|\le\frac12$ לכל $x$, ו-$f$ חסומה (מלעיל ב-$\frac12$ ומלרע ב-$-\frac12$).'
+    order: [sq, expand, rearrange, divide, conclude]
+    correctFeedback: >-
+      נכון. שימו לב איך ההוכחה נכתבת "מהסוף": בטיוטה מתחילים מהמטרה $2|x|\le1+x^2$ ומגלים שהיא ריבוע, ובהוכחה
+      מתחילים מהריבוע. הערך $\frac12$ מתקבל ב-$x=1$, כך שהחסם הדוק.
+    wrongFeedback: >-
+      כל שלב צריך להשתמש רק במה שכבר נכתב לפניו. איזה שלב לא נשען על אף שלב קודם? משם מתחילים.
+
+  - id: Q-3.1-period
+    type: twotier
+    objectives: [OBJ-3.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $T>0$ נקרא מחזור של $f$ אם $f(x+T)=f(x)$ לכל $x$. האם לכל פונקציה מחזורית $f:\mathbb{R}\to\mathbb{R}$ יש
+      מחזור חיובי קטן ביותר?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. הדוגמה הפשוטה ביותר היא פונקציה קבועה.
+      - text: כן
+        feedback: >-
+          לפונקציות כמו $\sin$ יש מחזור קטן ביותר ($2\pi$), אבל זה לא נכון תמיד. לפונקציה קבועה כל $T>0$ הוא
+          מחזור, ואין $T$ חיובי קטן מכולם.
+        misconception: MC-periodic-has-least-period
+    reasons:
+      - text: 'לפונקציה קבועה כל $T>0$ הוא מחזור, ולקבוצה $(0,\infty)$ אין איבר קטן ביותר'
+        correct: true
+        feedback: >-
+          בדיוק. האינפימום של קבוצת המחזורים הוא 0, והוא אינו מחזור חיובי. (בשיעור 3.2 תפגשו פונקציה לא קבועה
+          עם אותה תכונה: פונקציית דיריכלה.)
+      - text: 'קבוצת המחזורים חסומה מלרע ב-0, ולכן יש לה מינימום'
+        feedback: >-
+          לקבוצה חסומה מלרע יש **אינפימום** (אקסיומת השלמות), אבל לא בהכרח מינימום. לפונקציה קבועה האינפימום
+          של המחזורים הוא 0, ו-0 אינו מחזור חיובי.
+        misconception: MC-bounded-attains-bounds
+      - text: 'אם $T$ מחזור אז גם $2T$, $3T$ וכן הלאה, ולכן הקטן ביותר הוא $T$'
+        feedback: >-
+          נכון ש-$2T$ ו-$3T$ הם מחזורים, אבל זה לא אומר שאין מחזור קטן מ-$T$. לפונקציה קבועה גם $\frac{T}{2}$
+          מחזור, וגם $\frac{T}{100}$.
+        misconception: MC-periodic-has-least-period
+
+  - id: Q-3.1-compose-domain
+    type: mc
+    objectives: [OBJ-3.1-3]
+    level: mid
+    prompt: >-
+      $f(x)=\sqrt{x}$ ו-$g(x)=1-x^2$. מהו התחום של $f\circ g$, כלומר של $f(g(x))=\sqrt{1-x^2}$?
+    choices:
+      - text: '$[-1,1]$'
+        correct: true
+        feedback: >-
+          נכון. $g$ מוגדרת לכל $x$, אבל צריך גם ש-$g(x)$ יהיה בתחום של $f$, כלומר $1-x^2\ge0$. זה מתקיים בדיוק
+          כש-$-1\le x\le1$.
+      - text: '$\mathbb{R}$'
+        feedback: >-
+          זה התחום של $g$ בלבד. ב-$x=2$ מקבלים $g(2)=-3$, ואת $f(-3)=\sqrt{-3}$ אי אפשר לחשב. התחום של $f\circ
+          g$ הוא $\{x : g(x)\in D_f\}$.
+        misconception: MC-composition-domain-one-function
+      - text: '$[0,\infty)$'
+        feedback: >-
+          זה התחום של $f$, אבל $f$ מקבלת את $g(x)$, לא את $x$. ב-$x=2$, שנמצא בקטע הזה, $g(2)=-3$ ו-$\sqrt{-3}$
+          אינו מוגדר. וב-$x=-\frac12$, שאינו בקטע, דווקא $g=\frac34$ ו-$f$ מוגדרת.
+        misconception: MC-composition-domain-one-function
+      - text: '$[0,1]$'
+        feedback: >-
+          זה החיתוך של $[0,\infty)$ עם $[-1,1]$, אבל התחום של הרכבה אינו חיתוך של תחומים. ב-$x=-\frac12$
+          מקבלים $\sqrt{1-\frac14}=\frac{\sqrt3}{2}$, ולכן $-\frac12$ בתחום.
+        misconception: MC-composition-domain-one-function
+
+  - id: Q-3.1-inverse
+    type: mc
+    objectives: [OBJ-3.1-3]
+    level: basic
+    prompt: >-
+      $f:\mathbb{R}\to\mathbb{R}$, $f(x)=2x+3$. מהי $f^{-1}(x)$?
+    choices:
+      - text: '$\frac{x-3}{2}$'
+        correct: true
+        feedback: >-
+          נכון. פותרים $y=2x+3$ עבור $x$: $x=\frac{y-3}{2}$. בדיקה: $f\left(\frac{y-3}{2}\right)=(y-3)+3=y$.
+      - text: '$\frac{1}{2x+3}$'
+        feedback: >-
+          זו $\frac{1}{f(x)}$, לא הפונקציה ההפוכה. הסימון $f^{-1}$ פירושו הפונקציה שמבטלת את $f$: למשל
+          $f(0)=3$, ולכן $f^{-1}(3)$ צריך להיות $0$, אבל $\frac{1}{2\cdot3+3}=\frac19$.
+        misconception: MC-inverse-is-reciprocal
+      - text: '$\frac{x}{2}-3$'
+        feedback: >-
+          ביטלתם את הכפל לפני ההוספה. $f$ כופלת ב-2 **ואחר כך** מוסיפה 3, ולכן ההפוכה מחסירה 3 קודם ומחלקת
+          אחר כך. בדיקה: $f(0)=3$, אבל $\frac32-3\neq0$.
+        misconception: MC-inverse-wrong-order
+      - text: '$2x-3$'
+        feedback: >-
+          הפכתם רק את פעולת ההוספה. בדיקה: $f(0)=3$, אבל $2\cdot3-3=3\neq0$. ההפוכה צריכה לבטל גם את הכפל ב-2.
+        misconception: MC-inverse-wrong-order
+
+  - id: Q-3.1-inverse-injective
+    type: twotier
+    objectives: [OBJ-3.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f:\mathbb{R}\to[0,\infty)$, $f(x)=x^2$. האם $g(y)=\sqrt{y}$ היא הפונקציה ההפוכה של $f$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. ל-$f$ על $\mathbb{R}$ אין הפוכה בכלל. אחרי צמצום התחום ל-$[0,\infty)$, $\sqrt{y}$ כן ההפוכה.
+      - text: כן
+        feedback: >-
+          בדקו את $g(f(x))=x$ ב-$x=-1$: $g(f(-1))=\sqrt1=1\neq-1$. הפונקציה $\sqrt{y}$ מבטלת את $x^2$ רק על
+          $[0,\infty)$.
+        misconception: MC-inverse-without-injective
+    reasons:
+      - text: '$f(-1)=f(1)$, כך ש-$f$ אינה חד-חד-ערכית, ולפונקציה כזו אין הפוכה'
+        correct: true
+        feedback: >-
+          בדיוק. אם הייתה הפוכה $h$, אז $-1=h(f(-1))=h(1)=h(f(1))=1$, סתירה. באופן כללי $\sqrt{x^2}=|x|$.
+      - text: '$\sqrt{x^2}=x$ לכל $x$, ולכן $g$ מבטלת את $f$'
+        feedback: >-
+          $\sqrt{x^2}$ הוא המספר **האי-שלילי** שריבועו $x^2$, כלומר $|x|$. עבור $x=-1$ מקבלים 1, לא $-1$.
+        misconception: MC-inverse-without-injective
+      - text: 'ההפוכה של $x^2$ היא $\frac{1}{x^2}$'
+        feedback: >-
+          $\frac{1}{x^2}$ הוא אחד חלקי $f$, לא הפוכה. ההפוכה צריכה לקיים $h(f(x))=x$, ו-$\frac{1}{x^4}$ אינו $x$.
+        misconception: MC-inverse-is-reciprocal
+
+  - id: Q-3.1-compose-order
+    type: numeric
+    objectives: [OBJ-3.1-3]
+    level: basic
+    prompt: >-
+      $f(x)=x+1$ ו-$g(x)=x^2$. חשבו את $(f\circ g)(2)-(g\circ f)(2)$.
+    answer: -4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $(f\circ g)(2)=f(g(2))=f(4)=5$ ו-$(g\circ f)(2)=g(f(2))=g(3)=9$, וההפרש $5-9=-4$. הרכבה אינה חילופית.
+    wrongFeedback: >-
+      $(f\circ g)(x)=f(g(x))$: קודם מפעילים את $g$ ואת התוצאה מציבים ב-$f$. חשבו כל אחת מההרכבות לחוד.
+    commonWrong:
+      - value: 4
+        feedback: >-
+          החלפתם את סדר ההרכבה: $(f\circ g)(2)$ הוא $f(g(2))=5$, ו-$(g\circ f)(2)$ הוא $g(f(2))=9$. הסימון נקרא
+          מימין לשמאל: הפונקציה הימנית פועלת ראשונה.
+        misconception: MC-composition-order-swapped
+      - value: 0
+        feedback: >-
+          הנחתם שהסדר לא משנה. בדרך כלל $f\circ g\neq g\circ f$: כאן $f(g(2))=5$ ו-$g(f(2))=9$.
+        misconception: MC-composition-order-swapped

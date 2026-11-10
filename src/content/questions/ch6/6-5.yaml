@@ -1,0 +1,295 @@
+# Lesson 6.5 — the Taylor remainder and error estimates.
+# Objectives (src/course.ts):
+#   OBJ-6.5-1  state and prove the Lagrange form of the remainder
+#   OBJ-6.5-2  bound the error of an approximation and choose a degree that guarantees a given accuracy
+#   OBJ-6.5-3  classify critical points by higher derivatives, through the Taylor expansion
+chapter: 6
+questions:
+  - id: Q-6.5-form
+    type: mc
+    objectives: [OBJ-6.5-1]
+    level: basic
+    prompt: >-
+      $f$ גזירה $n+1$ פעמים בקטע שבין $a$ ל-$x$, ו-$T_n$ פולינום טיילור שלה מסדר $n$ סביב $a$. איך נראית
+      השארית $R_n(x) = f(x)-T_n(x)$ בצורת לגרנז'?
+    choices:
+      - text: '$\frac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}$ עבור $c$ כלשהי בין $a$ ל-$x$'
+        correct: true
+        feedback: >-
+          נכון. זה בדיוק "האיבר הבא" בפיתוח, אבל עם הנגזרת בנקודה לא ידועה $c$ במקום ב-$a$.
+      - text: '$\frac{f^{(n)}(c)}{n!}(x-a)^{n}$ עבור $c$ כלשהי בין $a$ ל-$x$'
+        feedback: >-
+          זה הסדר של האיבר האחרון ב-$T_n$, לא של השארית. השארית אחרי $T_n$ היא מסדר $n+1$.
+        misconception: MC-remainder-wrong-order
+      - text: '$\frac{f^{(n+1)}(a)}{(n+1)!}(x-a)^{n+1}$'
+        feedback: >-
+          זה האיבר הבא של $T_{n+1}$, לא השארית. בשארית הנגזרת מחושבת בנקודה $c$ בין $a$ ל-$x$, שאינה ידועה.
+        misconception: MC-remainder-c-at-center
+      - text: '$\frac{f^{(n+1)}(c)}{n!}(x-a)^{n+1}$ עבור $c$ כלשהי בין $a$ ל-$x$'
+        feedback: >-
+          העצרת צריכה להתאים לסדר הנגזרת והחזקה: $(n+1)!$.
+        misconception: MC-remainder-wrong-order
+
+  - id: Q-6.5-c-depends
+    type: twotier
+    objectives: [OBJ-6.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בצורת לגרנז' של השארית, $e^x = T_n(x)+\frac{e^{c}}{(n+1)!}x^{n+1}$. האם הנקודה $c$ תלויה ב-$x$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. לכל $x$ המשפט נותן $c$ משלה (בין $0$ ל-$x$), ובדרך כלל אי אפשר לחשב אותה.
+      - text: לא
+        feedback: >-
+          אם $c$ הייתה אחת לכל $x$, אז $e^x$ הייתה פולינום ממעלה $n+1$.
+        misconception: MC-remainder-c-fixed
+    reasons:
+      - text: 'אילו $c$ הייתה קבועה, $e^x = T_n(x) + K x^{n+1}$ עם $K$ קבוע, ו-$e^x$ הייתה פולינום; אבל הנגזרת ה-$(n+2)$ שלה $e^x\ne0$'
+        correct: true
+        feedback: >-
+          בדיוק. ולכן בהערכות לא מחשבים את $f^{(n+1)}(c)$ אלא חוסמים את $|f^{(n+1)}|$ על כל הקטע.
+      - text: '$c$ היא תמיד האמצע $\frac{x}{2}$'
+        feedback: >-
+          המשפט לא אומר איפה $c$, רק שהיא בין $0$ ל-$x$. וגם אילו $c = \frac x2$, היא הייתה תלויה ב-$x$.
+        misconception: MC-mvt-c-midpoint
+
+  - id: Q-6.5-proof
+    type: rank
+    objectives: [OBJ-6.5-1]
+    level: exam
+    prompt: >-
+      הוכחת צורת לגרנז' של השארית. $f$ גזירה $n+1$ פעמים בקטע שבין $a$ ל-$x$, ו-$x\ne a$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: defK
+        label: 'מגדירים את המספר $K$ על ידי $f(x) = T_n(x)+K(x-a)^{n+1}$; צריך להראות ש-$K = \frac{f^{(n+1)}(c)}{(n+1)!}$ עבור $c$ כלשהי.'
+      - id: defg
+        label: 'מגדירים $g(t) = f(x) - \sum_{k=0}^{n}\frac{f^{(k)}(t)}{k!}(x-t)^k - K(x-t)^{n+1}$ עבור $t$ בין $a$ ל-$x$.'
+      - id: ends
+        label: '$g(x) = f(x)-f(x) = 0$, ו-$g(a) = 0$ לפי הבחירה של $K$.'
+      - id: rolle
+        label: 'לפי רול יש $c$ ממש בין $a$ ל-$x$ עם $g''(c) = 0$.'
+      - id: solve
+        label: 'הסכום מתקפל (טלסקופי): $g''(t) = -\frac{f^{(n+1)}(t)}{n!}(x-t)^n + K(n+1)(x-t)^n$. ב-$t=c$ זה אפס ו-$x-c\ne0$, ולכן $K = \frac{f^{(n+1)}(c)}{(n+1)!}$.'
+    order: [defK, defg, ends, rolle, solve]
+    correctFeedback: >-
+      נכון. הרעיון הוא להפוך את $a$ למשתנה $t$: הפונקציה $g$ מתאפסת בשני הקצוות, ורול מוציא ממנה את הנקודה
+      $c$. במקרה $n=0$ זה בדיוק משפט לגרנז' (שיעור 5.6).
+    wrongFeedback: >-
+      קודם מגדירים את מה שרוצים לחשב ($K$), אחר כך פונקציית עזר שמתאפסת בשני הקצוות, ורק אז רול וחישוב
+      הנגזרת.
+
+  - id: Q-6.5-peano
+    type: mc
+    objectives: [OBJ-6.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      שארית פאנו אומרת $f(x)-T_n(x) = o\left((x-a)^n\right)$. מה נותנת צורת לגרנז' שפאנו לא נותנת?
+    choices:
+      - text: 'חסם מספרי על השגיאה בנקודה $x$ נתונה, אם יודעים לחסום את $|f^{(n+1)}|$ בקטע שבין $a$ ל-$x$'
+        correct: true
+        feedback: >-
+          נכון. את זה משלמים בהנחה חזקה יותר: $n+1$ נגזרות בכל הקטע, ולא $n$ נגזרות בנקודה $a$.
+      - text: 'את השגיאה המדויקת, כי מציבים בה את $c$'
+        feedback: >-
+          את $c$ לא יודעים; ידוע רק שהיא בין $a$ ל-$x$. לכן צורת לגרנז' נותנת חסם, לא ערך מדויק.
+        misconception: MC-remainder-c-at-center
+      - text: 'שום דבר חדש: גם מ-$o\left((x-a)^n\right)$ אפשר לחשב את השגיאה ב-$x=a+1$'
+        feedback: >-
+          $o\left((x-a)^n\right)$ מתאר רק את ההתנהגות כש-$x\to a$, ואינו אומר דבר על נקודה מסוימת: הוא לא
+          נותן אף מספר.
+        misconception: MC-peano-global
+
+  - id: Q-6.5-sin-bound
+    type: numeric
+    objectives: [OBJ-6.5-2]
+    level: basic
+    prompt: >-
+      פולינום טיילור מסדר $2$ של $\sin x$ סביב $0$ הוא $x$ (המקדם של $x^2$ אפס). בעזרת צורת לגרנז' של $R_2$
+      ו-$|\sin'''(t)| = |\cos t| \le 1$, מהו החסם שמתקבל על $|\sin(0.1)-0.1|$?
+    answer: 0.000166667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{0.1^3}{3!} = \frac{1}{6000}\approx 1.67\cdot10^{-4}$. השגיאה האמיתית $1.6658\cdot10^{-4}$ קטנה
+      ממנו, כמו שצריך.
+    wrongFeedback: >-
+      $|R_2(x)| = \frac{|\sin'''(c)|}{3!}|x|^3$. חסמו את הנגזרת ב-$1$ והציבו $x=0.1$.
+    commonWrong:
+      - value: 0.001
+        feedback: >-
+          זה $0.1^3$ בלי החלוקה ב-$3!$.
+        misconception: MC-taylor-forget-factorial
+      - value: 0.005
+        feedback: >-
+          $\frac{0.1^2}{2}$ הוא החסם מ-$R_1$, עם הנגזרת השנייה. הוא נכון, אבל חלש יותר; השאלה שואלת על $R_2$,
+          שבו הנגזרת השלישית והחזקה השלישית.
+        misconception: MC-remainder-wrong-order
+
+  - id: Q-6.5-e-degree
+    type: numeric
+    objectives: [OBJ-6.5-2]
+    level: mid
+    prompt: >-
+      מקרבים את $e = e^1$ על ידי $T_n(1) = \sum_{k=0}^{n}\frac{1}{k!}$. לפי צורת לגרנז' עם החסם $e^c<3$
+      (עבור $0<c<1$), מהו ה-$n$ **הקטן ביותר** שמבטיח שגיאה קטנה מ-$10^{-4}$?
+    answer: 7
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $|R_n(1)| = \frac{e^c}{(n+1)!} < \frac{3}{(n+1)!}$, וצריך $(n+1)! > 3\cdot10^4$. $7! = 5040$ קטן
+      מדי, $8! = 40320$ מספיק, ולכן $n+1 = 8$, $n=7$. (השגיאה האמיתית ב-$n=7$ היא כ-$2.8\cdot10^{-5}$.)
+    wrongFeedback: >-
+      כתבו את החסם $\frac{3}{(n+1)!}$ ודרשו שיהיה קטן מ-$10^{-4}$. שימו לב שהשאלה על $n$, לא על $n+1$.
+    commonWrong:
+      - value: 8
+        feedback: >-
+          $8$ הוא $n+1$, או התוצאה של חסם עם $n!$ במקום $(n+1)!$. השארית אחרי $T_n$ היא עם $(n+1)!$, ולכן
+          $n=7$ כבר מספיק.
+        misconception: MC-remainder-wrong-order
+      - value: 6
+        feedback: >-
+          $\frac{3}{10^{-4}} = 30000$, לא $3000$. עם $n=6$ החסם $\frac{3}{7!}\approx 6\cdot10^{-4}$, גדול
+          מ-$10^{-4}$.
+
+  - id: Q-6.5-ln-degree
+    type: numeric
+    objectives: [OBJ-6.5-2]
+    level: exam
+    prompt: >-
+      מקרבים את $\ln 1.5$ על ידי פולינום טיילור $T_n(0.5)$ של $f(x)=\ln(1+x)$ סביב $0$. ידוע ש-$f^{(n+1)}(t) = \frac{(-1)^{n}n!}{(1+t)^{n+1}}$.
+      מהו ה-$n$ הקטן ביותר שעבורו החסם של לגרנז' **מבטיח** שגיאה קטנה מ-$10^{-3}$?
+    answer: 7
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $|R_n(0.5)| = \frac{n!}{(1+c)^{n+1}(n+1)!}\cdot0.5^{n+1} \le \frac{0.5^{n+1}}{n+1}$, כי $c>0$. עם
+      $n=6$ החסם $\frac{0.5^7}{7}\approx1.12\cdot10^{-3}$, ועם $n=7$ הוא $\frac{0.5^8}{8}\approx4.9\cdot10^{-4}$.
+      (השגיאה האמיתית ב-$n=6$ היא כבר $7.8\cdot10^{-4}$: חסם מבטיח, אבל אינו תמיד הדוק.)
+    wrongFeedback: >-
+      הציבו את הנגזרת בצורת לגרנז', צמצמו את $\frac{n!}{(n+1)!}$, וחסמו את $\frac{1}{(1+c)^{n+1}}$ ב-$1$.
+    commonWrong:
+      - value: 4
+        feedback: >-
+          $4$ מתקבל מהחסם $\frac{0.5^{n+1}}{(n+1)!}$, כלומר אם שוכחים את $n!$ שבנגזרת. כאן הנגזרות גדלות כמו
+          עצרת, והן מבטלות כמעט את כל העצרת שבמכנה.
+      - value: 8
+        feedback: >-
+          $8$ מתקבל מ-$\frac{0.5^{n}}{n}$, כלומר מסדר השארית הלא נכון. השארית אחרי $T_n$ היא עם $0.5^{n+1}$
+          ו-$(n+1)!$.
+        misconception: MC-remainder-wrong-order
+
+  - id: Q-6.5-cos-ineq
+    type: mc
+    objectives: [OBJ-6.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      איזה טיעון מוכיח ש-$\cos x \ge 1-\frac{x^2}{2}$ **לכל** $x\in\mathbb{R}$?
+    choices:
+      - text: 'לגרנז'' עם $n=1$: $\cos x = 1 - \frac{\cos c}{2}x^2$, ו-$\cos c\le 1$'
+        correct: true
+        feedback: >-
+          נכון. $T_1(x) = 1$ (כי $\cos'(0) = 0$), ו-$R_1 = \frac{-\cos c}{2}x^2 \ge -\frac{x^2}{2}$ בלי לדעת
+          דבר על $c$.
+      - text: 'לגרנז'' עם $n=3$: $\cos x = 1-\frac{x^2}{2}+\frac{\cos c}{24}x^4$, והשארית אי-שלילית כי $x^4\ge0$'
+        feedback: >-
+          הסימן של $\cos c$ לא ידוע: עבור $x=4$, למשל, $c$ יכולה להיות בין $\frac\pi2$ ל-$4$, ושם הקוסינוס
+          שלילי. בסדר הזה הטיעון לא עובד לכל $x$.
+        misconception: MC-remainder-sign-assumed
+      - text: 'פאנו: $\cos x = 1-\frac{x^2}{2}+o(x^2)$, והשארית זניחה'
+        feedback: >-
+          $o(x^2)$ מתאר רק את ההתנהגות ליד $0$, ואינו נותן סימן ואינו אומר דבר על $x$ רחוק.
+        misconception: MC-peano-global
+
+  - id: Q-6.5-x4
+    type: mc
+    objectives: [OBJ-6.5-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ גזירה ארבע פעמים ברציפות ליד $a$, ו-$f'(a)=f''(a)=f'''(a)=0$, $f^{(4)}(a)<0$. מה אפשר לומר על $a$?
+    choices:
+      - text: '$a$ נקודת מקסימום מקומי'
+        correct: true
+        feedback: >-
+          נכון. הנגזרת הראשונה שאינה אפס היא מסדר זוגי, $4$, ושלילית: $f(x)-f(a) = \frac{f^{(4)}(c)}{4!}(x-a)^4 \le 0$
+          ליד $a$.
+      - text: '$a$ נקודת פיתול, כי $f''''(a) = 0$'
+        feedback: >-
+          $f''(a)=0$ לא מספיק לפיתול: $-x^4$ מקיימת אותו, ו-$0$ שם מקסימום. ממשיכים לנגזרת הראשונה שאינה אפס.
+        misconception: MC-inflection-where-second-zero
+      - text: 'אי אפשר לדעת, כי מבחן הנגזרת השנייה לא מכריע'
+        feedback: >-
+          מבחן הנגזרת השנייה לא מכריע, אבל הנגזרות הגבוהות כן: זה בדיוק מה שהפיתוח של טיילור נותן.
+        misconception: MC-second-test-inconclusive-final
+
+  - id: Q-6.5-sinx
+    type: mc
+    objectives: [OBJ-6.5-3]
+    level: mid
+    prompt: >-
+      $f(x) = \sin x - x$. מה נכון לגבי הנקודה $0$?
+    choices:
+      - text: '$0$ אינה נקודת קיצון: $f''(0)=f''''(0)=0$ ו-$f''''''(0) = -1$, נגזרת מסדר אי-זוגי'
+        correct: true
+        feedback: >-
+          נכון. $f(x) = -\frac{x^3}{6}+o(x^3)$ מחליפה סימן ב-$0$. ואכן $f'(x) = \cos x - 1 \le 0$: $f$ יורדת.
+      - text: '$0$ נקודת מקסימום מקומי, כי הנגזרת הראשונה שאינה אפס שלילית'
+        feedback: >-
+          הנגזרת הראשונה שאינה אפס היא מסדר $3$, אי-זוגי, ולכן $x^3$ מחליף סימן: $f(0.1)<0<f(-0.1)$.
+        misconception: MC-odd-order-extremum
+      - text: 'אי אפשר לדעת, כי $f''''(0) = 0$'
+        feedback: >-
+          ממשיכים לנגזרת השלישית. היא שונה מאפס, ולכן הסיווג מוכרע: אין קיצון.
+        misconception: MC-second-test-inconclusive-final
+
+  - id: Q-6.5-parity
+    type: twotier
+    objectives: [OBJ-6.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ גזירה $n$ פעמים ברציפות ליד $a$, $f'(a)=\dots=f^{(n-1)}(a)=0$ ו-$f^{(n)}(a)>0$. לפי לגרנז',
+      $f(x)-f(a) = \frac{f^{(n)}(c)}{n!}(x-a)^n$. אם $n$ זוגי, האם $a$ נקודת מינימום מקומי?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. ואם $n$ אי-זוגי, אין קיצון.
+      - text: לא בהכרח
+        feedback: >-
+          כל הגורמים בביטוי אי-שליליים ליד $a$, ולכן $f(x)\ge f(a)$.
+        misconception: MC-second-test-inconclusive-final
+    reasons:
+      - text: 'מרציפות $f^{(n)}(c)>0$ כש-$c$ קרובה ל-$a$, ו-$(x-a)^n\ge0$ משני הצדדים כש-$n$ זוגי'
+        correct: true
+        feedback: >-
+          בדיוק. כש-$n$ אי-זוגי, $(x-a)^n$ שלילי משמאל וחיובי מימין, ו-$f(x)-f(a)$ מחליף סימן.
+      - text: 'כי $f^{(n)}(a)>0$, וזה תמיד נותן מינימום'
+        feedback: >-
+          הסימן לבדו לא מספיק: $x^3$ מקיימת $f'''(0) = 6>0$, ו-$0$ אינה קיצון. הזוגיות של $n$ היא שמכריעה.
+        misconception: MC-odd-order-extremum
+
+  - id: Q-6.5-cosh
+    type: mc
+    objectives: [OBJ-6.5-3]
+    level: exam
+    prompt: >-
+      $f(x) = e^x+e^{-x}-x^2$. מה נכון לגבי הנקודה $0$?
+    choices:
+      - text: '$0$ נקודת מינימום מקומי'
+        correct: true
+        feedback: >-
+          נכון. $f'(0) = 0$, $f''(0) = e^0+e^0-2 = 0$, $f'''(0) = e^0-e^0 = 0$, $f^{(4)}(0) = 2>0$, וסדר $4$ זוגי.
+          בפיתוח: $f(x) = 2+\frac{x^4}{12}+o(x^4)$.
+      - text: '$0$ נקודת פיתול, כי $f''''(0)=0$'
+        feedback: >-
+          הנגזרת השנייה מתאפסת, אבל הראשונה שאינה אפס היא מסדר $4$, זוגי. $f''(x) = e^x+e^{-x}-2\ge0$ לכל $x$,
+          ולכן אין החלפת קמירות ב-$0$.
+        misconception: MC-inflection-where-second-zero
+      - text: '$0$ אינה נקודת קיצון, כי $f''''''(0)=0$'
+        feedback: >-
+          $f'''(0)=0$ פשוט אומר שממשיכים לנגזרת הרביעית. רק נגזרת ראשונה שאינה אפס מסדר אי-זוגי שוללת קיצון.
+        misconception: MC-odd-order-extremum

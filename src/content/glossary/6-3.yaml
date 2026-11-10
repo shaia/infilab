@@ -1,0 +1,10 @@
+# Terms first defined in lesson 6.3.
+- id: lhopital-rule
+  term: כלל לופיטל
+  en: L'Hôpital's rule
+  definition: >-
+    אם $f,g$ גזירות בסביבה מנוקבת של $a$, $g'\ne0$ שם, שתיהן שואפות לאפס (או $|g|\to\infty$), והגבול
+    $\lim_{x\to a}\frac{f'(x)}{g'(x)} = L$ קיים, אז גם $\lim_{x\to a}\frac{f(x)}{g(x)} = L$. נכון גם
+    לגבולות חד-צדדיים, באינסוף, ועם $L=\pm\infty$.
+  reject: [לופיטאל, לופיתל, ל'הופיטל, להופיטל]
+  lesson: '6.3'

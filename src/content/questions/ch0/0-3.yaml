@@ -1,0 +1,307 @@
+# Lesson 0.3 — quantifiers and negation.
+# Objectives (src/course.ts):
+#   OBJ-0.3-1  translate a Hebrew mathematical sentence into a statement with "for all" and "there exists", and back
+#   OBJ-0.3-2  negate a statement with several nested quantifiers, mechanically and correctly
+#   OBJ-0.3-3  explain, with an example, why the order of quantifiers changes the meaning
+chapter: 0
+questions:
+  - id: Q-0.3-translate-root
+    type: mc
+    objectives: [OBJ-0.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איך כותבים בכמתים את המשפט "לכל מספר ממשי חיובי יש שורש ריבועי ממשי"?
+    choices:
+      - text: '$\forall x>0\ \exists y\in\mathbb{R}:\ y^2=x$'
+        correct: true
+        feedback: >-
+          נכון. "לכל מספר חיובי" הוא $\forall x>0$, ו"יש שורש" הוא $\exists y$ שבא אחריו: השורש $y$ תלוי ב-$x$.
+      - text: '$\exists y\in\mathbb{R}\ \forall x>0:\ y^2=x$'
+        feedback: >-
+          כאן אותו $y$ צריך להיות שורש של **כל** מספר חיובי בבת אחת, כלומר $y^2=1$ וגם $y^2=4$. המשפט בעברית
+          אומר שלכל מספר יש שורש משלו.
+        misconception: MC-quantifier-swap
+      - text: '$\forall x>0\ \forall y\in\mathbb{R}:\ y^2=x$'
+        feedback: >-
+          "יש שורש" הוא "קיים", לא "לכל". הטענה הזו אומרת שכל מספר ממשי הוא שורש של כל מספר חיובי, למשל ש-$5^2=1$.
+        misconception: MC-quantifier-mistranslated
+      - text: '$\exists x>0\ \exists y\in\mathbb{R}:\ y^2=x$'
+        feedback: >-
+          זה אומר רק שלמספר חיובי **אחד לפחות** יש שורש (למשל $x=4$, $y=2$). המשפט מדבר על **כל** מספר חיובי.
+        misconception: MC-quantifier-mistranslated
+
+  - id: Q-0.3-hidden-quantifier
+    type: mc
+    objectives: [OBJ-0.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      איך כותבים בכמתים את המשפט "ריבוע של מספר שלם אי-זוגי הוא אי-זוגי"? (כאן $\mathbb{Z}$ הוא קבוצת המספרים
+      השלמים.)
+    choices:
+      - text: 'לכל $n\in\mathbb{Z}$: אם $n$ אי-זוגי אז $n^2$ אי-זוגי'
+        correct: true
+        feedback: >-
+          נכון. אין במשפט כמת גלוי, אבל הוא טוען משהו על **כל** מספר אי-זוגי: יש בו "לכל" סמוי. ו"לכל" מחובר
+          לתנאי "אי-זוגי" בגרירה.
+      - text: 'קיים $n\in\mathbb{Z}$ כך ש-$n$ אי-זוגי ו-$n^2$ אי-זוגי'
+        feedback: >-
+          זה נכון ($n=1$), אבל זה הרבה פחות ממה שהמשפט אומר: המשפט הוא על כל מספר אי-זוגי, לא על אחד.
+        misconception: MC-quantifier-mistranslated
+      - text: 'לכל $n\in\mathbb{Z}$: $n$ אי-זוגי וגם $n^2$ אי-זוגי'
+        feedback: >-
+          זה טוען שכל מספר שלם אי-זוגי, וזה שקר ($n=2$). עם "לכל" התנאי ("אם $n$ אי-זוגי") בא בגרירה, לא ב"וגם".
+        misconception: MC-restricted-quantifier-connective
+
+  - id: Q-0.3-read-bounded
+    type: mc
+    objectives: [OBJ-0.3-1]
+    level: basic
+    prompt: >-
+      מה אומרת במילים הטענה $\exists M\in\mathbb{R}\ \forall n\in\mathbb{N}:\ \frac1n\le M$?
+    choices:
+      - text: יש מספר ממשי אחד שגדול או שווה לכל המספרים $\frac1n$
+        correct: true
+        feedback: >-
+          נכון. $M$ נבחר קודם, ואותו $M$ צריך להתאים לכל $n$. הטענה נכונה, למשל עם $M=1$.
+      - text: לכל $n$ טבעי יש מספר $M$ שגדול או שווה ל-$\frac1n$
+        feedback: >-
+          כאן הסדר הפוך: $M$ נבחר אחרי $n$ ויכול להיות שונה לכל $n$ (למשל $M=\frac1n$). זו טענה חלשה בהרבה,
+          שנכונה לכל סדרת מספרים שהיא.
+        misconception: MC-quantifier-swap
+      - text: יש מספר ממשי $M$ שכל המספרים $\frac1n$ שווים לו
+        feedback: >-
+          הסימן הוא $\le$, לא שוויון: $M$ רק צריך להיות גדול או שווה לכל $\frac1n$, לא שווה להם.
+        misconception: MC-quantifier-mistranslated
+
+  - id: Q-0.3-negate-everyone
+    type: mc
+    objectives: [OBJ-0.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהי השלילה של "כל הסטודנטים בכיתה עברו את המבחן"?
+    choices:
+      - text: יש סטודנט בכיתה שלא עבר את המבחן
+        correct: true
+        feedback: >-
+          נכון. "לכל" הופך ל"קיים", והתנאי נשלל. כדי שהטענה "כולם עברו" תהיה שקרית מספיק סטודנט אחד שנכשל.
+      - text: אף סטודנט בכיתה לא עבר את המבחן
+        feedback: >-
+          זו טענה חזקה בהרבה מהשלילה: כאן שללו רק את התנאי והשאירו "לכל" (כולם נכשלו). אם חצי מהכיתה עברה, גם
+          "כולם עברו" וגם "אף אחד לא עבר" שקריות.
+        misconception: MC-negation-partial
+      - text: יש סטודנט בכיתה שעבר את המבחן
+        feedback: >-
+          כאן הפכו את הכמת אבל שכחו לשלול את התנאי. אם כולם עברו, גם הטענה הזו נכונה, ולכן היא לא יכולה להיות
+          השלילה.
+        misconception: MC-negation-partial
+
+  - id: Q-0.3-negate-domain
+    type: mc
+    objectives: [OBJ-0.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מהי השלילה של הטענה $\forall x>0\ \exists n\in\mathbb{N}:\ \frac1n<x$?
+    choices:
+      - text: '$\exists x>0\ \forall n\in\mathbb{N}:\ \frac1n\ge x$'
+        correct: true
+        feedback: >-
+          נכון. כל כמת מתהפך, התחומים $x>0$ ו-$n\in\mathbb{N}$ נשארים, ו-$<$ הופך ל-$\ge$. (הטענה המקורית
+          נכונה, ולכן השלילה שקרית.)
+      - text: '$\exists x\le 0\ \forall n\in\mathbb{N}:\ \frac1n\ge x$'
+        feedback: >-
+          את התחום $x>0$ לא שוללים: הטענה מדברת על מספרים חיוביים, ומפריכים אותה בעזרת מספר חיובי. השלילה
+          הזו, אגב, נכונה ($x=0$), אבל הטענה המקורית לא נשללת בכך.
+        misconception: MC-negation-domain
+      - text: '$\exists x>0\ \forall n\in\mathbb{N}:\ \frac1n>x$'
+        feedback: >-
+          השלילה של $\frac1n<x$ היא $\frac1n\ge x$: גם שוויון שולל אי-שוויון חזק.
+        misconception: MC-negation-strict-inequality
+      - text: '$\forall x>0\ \forall n\in\mathbb{N}:\ \frac1n\ge x$'
+        feedback: >-
+          את הכמת הראשון שכחו להפוך. שלילה הופכת **כל** כמת: "לכל" ל"קיים" ו"קיים" ל"לכל".
+        misconception: MC-negation-partial
+
+  - id: Q-0.3-negation-true
+    type: twotier
+    objectives: [OBJ-0.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מי נכונה: הטענה $\forall n\in\mathbb{N}\ \exists m\in\mathbb{N}:\ m>n^2$, או השלילה שלה?
+    choices:
+      - text: הטענה
+        correct: true
+        feedback: נכון. לכל $n$ אפשר לבחור $m$ שתלוי בו.
+      - text: השלילה
+        feedback: >-
+          השלילה היא $\exists n\ \forall m:\ m\le n^2$, כלומר שיש ריבוע שגדול מכל המספרים הטבעיים. זה שקר:
+          לכל $n$, המספר $n^2+1$ גדול מ-$n^2$.
+        misconception: MC-quantifier-swap
+    reasons:
+      - text: 'לכל $n$ אפשר לקחת $m=n^2+1$'
+        correct: true
+        feedback: >-
+          בדיוק. כך מוכיחים "לכל... קיים": מקבלים $n$ כללי ונותנים נוסחה ל-$m$ שמתאים לו.
+      - text: אין מספר טבעי שגדול מכל הריבועים $n^2$
+        feedback: >-
+          זה נכון, אבל זה מפריך טענה אחרת, $\exists m\ \forall n:\ m>n^2$, שבה $m$ אחד צריך להתאים לכל $n$.
+          בטענה שלנו $m$ בא אחרי $n$ ויכול להיות תלוי בו.
+        misconception: MC-quantifier-swap
+      - text: 'השלילה היא $\forall n\ \exists m:\ m\le n^2$, והיא נכונה עם $m=1$'
+        feedback: >-
+          זו לא השלילה: הכמתים נשארו כמו שהיו, ונשלל רק התנאי. השלילה הנכונה הופכת גם את הכמתים:
+          $\exists n\ \forall m:\ m\le n^2$.
+        misconception: MC-negation-partial
+
+  - id: Q-0.3-negate-nested
+    type: mc
+    objectives: [OBJ-0.3-2]
+    level: exam
+    prompt: >-
+      תהי $f:\mathbb{R}\to\mathbb{R}$ פונקציה, כלומר כלל שמתאים לכל מספר ממשי $x$ מספר ממשי $f(x)$.
+      ($\varepsilon$ ו-$\delta$ הן האותיות היווניות אפסילון ודלתא, וכאן הן פשוט שמות של משתנים.) מהי השלילה של
+      הטענה
+      $$\forall \varepsilon>0\ \exists \delta>0\ \forall x\in\mathbb{R}:\ |x|<\delta \Rightarrow |f(x)|<\varepsilon\ ?$$
+    choices:
+      - text: '$\exists \varepsilon>0\ \forall \delta>0\ \exists x\in\mathbb{R}:\ |x|<\delta \land |f(x)|\ge\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. שלושת הכמתים מתהפכים, התחומים נשארים, והשלילה של הגרירה $P\Rightarrow Q$ היא $P\land\neg Q$: יש
+          $x$ קרוב לאפס כרצוננו שבו $|f(x)|$ אינו קטן.
+      - text: '$\exists \varepsilon>0\ \forall \delta>0\ \exists x\in\mathbb{R}:\ |x|<\delta \Rightarrow |f(x)|\ge\varepsilon$'
+        feedback: >-
+          השלילה של גרירה אינה גרירה. כאן כל $x$ עם $|x|\ge\delta$ מקיים את הגרירה בלי שום מידע על $f$, ולכן
+          הטענה הזו נכונה לכל פונקציה: לכל $\delta>0$ בוחרים $x=\delta$, שבו ההנחה $|x|<\delta$ שקרית. היא
+          נכונה גם לפונקציה $f=0$, שמקיימת את הטענה המקורית, ולכן אינה יכולה להיות השלילה שלה.
+        misconception: MC-implication-negation
+      - text: '$\exists \varepsilon>0\ \forall \delta>0\ \exists x\in\mathbb{R}:\ |x|\ge\delta \land |f(x)|\ge\varepsilon$'
+        feedback: >-
+          שללו גם את ההנחה $|x|<\delta$. בשלילה של $P\Rightarrow Q$ ההנחה $P$ נשארת כמו שהיא, ורק המסקנה נשללת.
+        misconception: MC-implication-negation
+      - text: '$\exists \varepsilon>0\ \forall \delta>0\ \exists x\in\mathbb{R}:\ |x|<\delta \land |f(x)|>\varepsilon$'
+        feedback: >-
+          השלילה של $|f(x)|<\varepsilon$ היא $|f(x)|\ge\varepsilon$, כולל השוויון.
+        misconception: MC-negation-strict-inequality
+
+  - id: Q-0.3-order-matters
+    type: multi
+    objectives: [OBJ-0.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהטענות הבאות נכונות? סמנו את כולן.
+    choices:
+      - text: '$\forall x\in\mathbb{R}\ \exists y\in\mathbb{R}:\ x+y=0$'
+        correct: true
+        feedback: נכון. לכל $x$ בוחרים $y=-x$, ו-$y$ תלוי ב-$x$.
+      - text: '$\exists y\in\mathbb{R}\ \forall x\in\mathbb{R}:\ x+y=0$'
+        feedback: >-
+          כאן אותו $y$ צריך להתאים לכל $x$. עבור $x=0$ חייב להיות $y=0$, ואז עבור $x=1$ מקבלים $1+0\ne 0$.
+        misconception: MC-quantifier-swap
+      - text: '$\exists x\in\mathbb{N}\ \forall y\in\mathbb{N}:\ x\le y$'
+        correct: true
+        feedback: נכון. $x=1$ קטן או שווה לכל מספר טבעי.
+      - text: '$\exists y\in\mathbb{N}\ \forall x\in\mathbb{N}:\ x\le y$'
+        feedback: >-
+          זה אומר שיש מספר טבעי גדול ביותר. אין כזה: לכל $y$, המספר $x=y+1$ גדול ממנו. לכל $x$ יש $y\ge x$ (למשל
+          $y=x$), אבל לא $y$ אחד לכולם.
+        misconception: MC-quantifier-swap
+
+  - id: Q-0.3-mothers
+    type: twotier
+    objectives: [OBJ-0.3-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם המשפטים "לכל אדם קיימת אישה שהיא אמו" ו"קיימת אישה שהיא אמו של כל אדם" אומרים אותו דבר?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. הראשון נכון, השני שקרי.
+      - text: כן
+        feedback: >-
+          המילים אותן מילים, אבל הסדר של "לכל" ו"קיימת" הפוך, וזה משנה את המשמעות.
+        misconception: MC-quantifier-swap
+    reasons:
+      - text: בראשון האישה נבחרת אחרי האדם ותלויה בו; בשני אישה אחת צריכה להיות אמא של כולם
+        correct: true
+        feedback: >-
+          בדיוק. "לכל $x$ קיים $y$" מרשה ל-$y$ להשתנות עם $x$; "קיים $y$ לכל $x$" דורש $y$ אחד קבוע.
+      - text: יש בשני המשפטים אותן מילים, ולכן אותה משמעות
+        feedback: >-
+          בכמתים הסדר הוא חלק מהמשמעות. גם $\forall x\ \exists y:\ y>x$ נכונה, ו-$\exists y\ \forall x:\ y>x$
+          שקרית.
+        misconception: MC-quantifier-swap
+      - text: הסדר משנה רק בנוסחאות, לא במשפטים בעברית
+        feedback: >-
+          המשפט בעברית הוא אותה טענה כמו הנוסחה, ולכן הסדר משנה גם בו. כאן רואים את זה בלי שום נוסחה.
+        misconception: MC-quantifier-swap
+
+  - id: Q-0.3-bounded-function
+    type: mc
+    objectives: [OBJ-0.3-3, OBJ-0.3-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      תהי $f:\mathbb{R}\to\mathbb{R}$ פונקציה, כלומר כלל שמתאים לכל מספר ממשי $x$ מספר ממשי $f(x)$. נתונות
+      שתי טענות:
+
+      (I) $\forall x\in\mathbb{R}\ \exists M\in\mathbb{R}:\ f(x)<M$
+
+      (II) $\exists M\in\mathbb{R}\ \forall x\in\mathbb{R}:\ f(x)<M$
+
+      איזה משפט נכון?
+    choices:
+      - text: (I) נכונה לכל פונקציה, ו-(II) אומרת שיש מספר אחד שגדול מכל ערכי $f$
+        correct: true
+        feedback: >-
+          נכון. ב-(I) $M$ נבחר אחרי $x$, ו-$M=f(x)+1$ תמיד עובד. ב-(II) אותו $M$ חוסם את כל הערכים, וזה נכשל,
+          למשל, עבור $f(x)=x$.
+      - text: שתי הטענות שקולות
+        feedback: >-
+          (I) נכונה גם עבור $f(x)=x$ (קחו $M=x+1$), ו-(II) לא: לכל $M$ יש $x=M$ עם $f(x)=M$, שאינו קטן מ-$M$.
+          הכמתים זהים, אבל בסדר אחר.
+        misconception: MC-quantifier-swap
+      - text: (I) אומרת שיש מספר אחד שגדול מכל ערכי $f$, ו-(II) נכונה לכל פונקציה
+        feedback: >-
+          הפוך. דווקא ב-(II) $M$ אחד צריך לחסום את כל ערכי $f$; ב-(I) $M$ תלוי ב-$x$ ולכן לא חוסם דבר.
+        misconception: MC-quantifier-swap
+      - text: (II) גוררת את (I), ולכן גם (I) גוררת את (II)
+        feedback: >-
+          הכיוון הראשון נכון: $M$ אחד לכל ה-$x$ מתאים בפרט לכל $x$. אבל מגרירה לא נובעת ההפוכה לה; $f(x)=x$
+          מקיימת את (I) ולא את (II).
+        misconception: MC-converse-equivalent
+
+  - id: Q-0.3-roles
+    type: mc
+    objectives: [OBJ-0.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בקבוצה של אנשים נסמן ב-$R(x,y)$ את הטענה "$y$ היא האמא של $x$", כאשר $x$ הוא אדם ו-$y$ היא אישה מהקבוצה.
+      נניח שלכל אדם בקבוצה יש אמא בקבוצה, ושיש בקבוצה אישה בלי ילדים. מה נכון לגבי הטענות
+      (I) $\forall x\ \exists y:\ R(x,y)$ ו-(II) $\forall y\ \exists x:\ R(x,y)$?
+    choices:
+      - text: (I) נכונה ו-(II) שקרית
+        correct: true
+        feedback: >-
+          נכון. (I) אומרת שלכל אדם יש אמא. (II) אומרת שכל אישה היא אמא של מישהו, והאישה בלי הילדים מפריכה אותה.
+          בשתיהן "לכל" בא לפני "קיים", אבל המשתנים החליפו תפקידים.
+      - text: שתיהן נכונות, כי בשתיהן "לכל" בא לפני "קיים"
+        feedback: >-
+          סדר הכמתים זהה, אבל ב-(I) "לכל" הולך עם האדם וב-(II) עם האישה. (II) דורשת שלכל אישה יהיה ילד, והאישה בלי
+          הילדים היא דוגמה נגדית.
+        misconception: MC-quantifier-roles-swapped
+      - text: (I) שקרית, כי אין אישה אחת שהיא אמא של כולם
+        feedback: >-
+          "אין אישה אחת שהיא אמא של כולם" מפריך את $\exists y\ \forall x:\ R(x,y)$, לא את (I). ב-(I) האמא נבחרת אחרי
+          האדם, ויכולה להיות שונה לכל אדם.
+        misconception: MC-quantifier-swap
+      - text: שתיהן שקריות
+        feedback: >-
+          (I) נכונה לפי הנתון: לכל אדם יש אמא בקבוצה. רק (II) נופלת, בגלל האישה בלי הילדים.
+        misconception: MC-quantifier-roles-swapped

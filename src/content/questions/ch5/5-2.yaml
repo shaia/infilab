@@ -1,0 +1,306 @@
+# Lesson 5.2 — the rules of differentiation.
+# Objectives (src/course.ts):
+#   OBJ-5.2-1  prove the sum, product and quotient rules
+#   OBJ-5.2-2  differentiate polynomials and rational functions; one-sided derivatives of piecewise functions
+#   OBJ-5.2-3  decide whether a piecewise function is differentiable at the seam; find parameters that make it so
+chapter: 5
+questions:
+  - id: Q-5.2-product-naive
+    type: mc
+    objectives: [OBJ-5.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      הפונקציות $f$ ו-$g$ גזירות בנקודה $x$. מהי $(fg)'(x)$?
+    choices:
+      - text: >-
+          $f'(x)g(x)+f(x)g'(x)$
+        correct: true
+        feedback: >-
+          נכון. בדיקה מהירה עם $f(x)=g(x)=x$: $(x\cdot x)' = (x^2)' = 2x$, וגם $1\cdot x + x\cdot 1 = 2x$.
+      - text: >-
+          $f'(x)g'(x)$
+        feedback: >-
+          עם $f(x)=g(x)=x$ זה נותן $1\cdot1=1$, אבל $(x^2)'=2x$. נגזרת של מכפלה אינה מכפלת הנגזרות: כש-$x$ זז,
+          שני הגורמים משתנים, וכל אחד מהם משתנה כשהשני מוכפל בו.
+        misconception: MC-product-rule-naive
+      - text: >-
+          $f'(x)g(x)+f(x)g'(x)+f'(x)g'(x)$
+        feedback: >-
+          עם $f(x)=g(x)=x$ זה נותן $2x+1$, ולא $2x$. בפיתוח של מנת ההפרשים מופיע אמנם האיבר
+          $\frac{(f(x+h)-f(x))(g(x+h)-g(x))}{h}$, אבל הוא שואף ל-$f'(x)\cdot0=0$.
+        misconception: MC-product-rule-naive
+
+  - id: Q-5.2-product-proof
+    type: rank
+    objectives: [OBJ-5.2-1]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה של כלל המכפלה: אם $f$ ו-$g$ גזירות ב-$x$, אז $(fg)'(x)=f'(x)g(x)+f(x)g'(x)$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: a
+        label: >-
+          כותבים את מנת ההפרשים של המכפלה: $\frac{f(x+h)g(x+h)-f(x)g(x)}{h}$.
+      - id: b
+        label: >-
+          מוסיפים ומחסירים $f(x)g(x+h)$ במונה, ומקבלים
+          $\frac{f(x+h)-f(x)}{h}\,g(x+h)+f(x)\,\frac{g(x+h)-g(x)}{h}$.
+      - id: c
+        label: >-
+          $g$ גזירה ב-$x$, ולכן רציפה שם (שיעור 5.1), ולכן $g(x+h)\to g(x)$ כש-$h\to0$.
+      - id: d
+        label: >-
+          לפי חשבון הגבולות, הביטוי שואף ל-$f'(x)g(x)+f(x)g'(x)$.
+    order: [a, b, c, d]
+    correctFeedback: >-
+      נכון. שימו לב לשלב ג: הרציפות של $g$ אינה הנחה נוספת, היא נובעת מהגזירות. בלעדיה אי אפשר היה להחליף את
+      $g(x+h)$ ב-$g(x)$ בגבול.
+    wrongFeedback: >-
+      מתחילים ממנת ההפרשים, מפרקים אותה בעזרת "הוספה והחסרה" לשני מחוברים שכל אחד מהם מכיל מנת הפרשים של
+      פונקציה אחת, ורק אז מחשבים את הגבול.
+
+  - id: Q-5.2-sums
+    type: multi
+    objectives: [OBJ-5.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הפונקציות $f$ ו-$g$ מוגדרות בסביבה של $x_0$. סמנו את כל הטענות הנכונות.
+    choices:
+      - text: >-
+          אם $f$ גזירה ב-$x_0$ ו-$g$ אינה גזירה בה, אז $f+g$ אינה גזירה ב-$x_0$
+        correct: true
+        feedback: >-
+          נכון. אילו $f+g$ הייתה גזירה, גם $g=(f+g)-f$ הייתה גזירה, לפי כלל ההפרש. זו הוכחה בדרך השלילה.
+      - text: >-
+          אם $f$ ו-$g$ גזירות ב-$x_0$, אז $3f-2g$ גזירה ב-$x_0$
+        correct: true
+        feedback: >-
+          נכון, לפי כלל הסכום וכלל הכפל בקבוע, והנגזרת היא $3f'(x_0)-2g'(x_0)$.
+      - text: >-
+          אם $f+g$ גזירה ב-$x_0$, אז $f$ ו-$g$ גזירות ב-$x_0$
+        feedback: >-
+          לא: $f(x)=|x|$ ו-$g(x)=-|x|$ אינן גזירות ב-0, וסכומן הוא פונקציית האפס, שגזירה בכל מקום.
+        misconception: MC-nondiff-sum-product
+      - text: >-
+          אם $f$ ו-$g$ אינן גזירות ב-$x_0$, אז $fg$ אינה גזירה ב-$x_0$
+        feedback: >-
+          לא: $|x|\cdot|x| = x^2$, גזירה ב-0, אף ש-$|x|$ אינה גזירה שם.
+        misconception: MC-nondiff-sum-product
+      - text: >-
+          אם $f$ גזירה ב-$x_0$ ו-$g$ אינה גזירה בה, אז $fg$ אינה גזירה ב-$x_0$
+        feedback: >-
+          לא: עם $f(x)=x$ ו-$g(x)=|x|$ מקבלים $x|x|$, ומנת ההפרשים שלה ב-0 היא $\frac{h|h|}{h}=|h|\to0$. במכפלה
+          אין טיעון כמו בסכום, כי אי אפשר לחלק ב-$f$ כש-$f(x_0)=0$.
+        misconception: MC-nondiff-sum-product
+
+  - id: Q-5.2-quotient-hyp
+    type: mc
+    objectives: [OBJ-5.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ ו-$g$ גזירות ב-$x_0$ ו-$g(x_0)\neq0$. ההגדרה של הנגזרת של $\frac fg$ ב-$x_0$ דורשת ש-$\frac fg$ תהיה
+      מוגדרת בסביבה של $x_0$, כלומר ש-$g(x)\neq0$ ליד $x_0$. מה מבטיח זאת?
+    choices:
+      - text: >-
+          $g$ גזירה ולכן רציפה ב-$x_0$, ופונקציה רציפה ששונה מאפס בנקודה שונה מאפס בסביבה שלה
+        correct: true
+        feedback: >-
+          נכון. עם $\varepsilon=|g(x_0)|$ בהגדרת הרציפות מקבלים $\delta$ כך ש-$|g(x)-g(x_0)|<|g(x_0)|$, ולכן
+          $g(x)\neq0$, לכל $|x-x_0|<\delta$. זה המקום שבו ההוכחה משתמשת שוב בכך שגזירה גוררת רציפה.
+      - text: >-
+          $g(x_0)\neq0$ מבטיח ש-$g(x)\neq0$ לכל $x$
+        feedback: >-
+          לא: $g(x)=x-1$ שונה מאפס ב-0 ומתאפסת ב-1. מה שנכון הוא רק "בסביבה של $x_0$", וגם זה בזכות רציפות.
+        misconception: MC-nonzero-at-point-nonzero-nearby
+      - text: >-
+          כל פונקציה ששונה מאפס בנקודה שונה מאפס גם בסביבה שלה, ולכן אין צורך בהנחה נוספת
+        feedback: >-
+          לא בלי רציפות: הפונקציה ששווה ל-1 ב-0 ול-0 בכל נקודה אחרת שונה מאפס ב-0, ומתאפסת בכל סביבה של 0.
+        misconception: MC-nonzero-at-point-nonzero-nearby
+
+  - id: Q-5.2-rational
+    type: numeric
+    objectives: [OBJ-5.2-2]
+    level: basic
+    prompt: >-
+      חשבו את $f'(2)$ עבור $f(x)=\frac{x^2+1}{x-1}$.
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי כלל המנה
+      $$f'(x)=\frac{2x(x-1)-(x^2+1)\cdot1}{(x-1)^2},$$
+      ובנקודה 2 זה $\frac{4-5}{1}$, כלומר מינוס 1.
+    wrongFeedback: >-
+      כלל המנה: $\left(\frac{u}{v}\right)' = \frac{u'v-uv'}{v^2}$. כאן $u=x^2+1$ ו-$v=x-1$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          זה $\frac{uv'-u'v}{v^2}$: הסדר במונה הפוך, והסימן התהפך. הנגזרת של המונה באה ראשונה.
+        misconception: MC-quotient-rule-order
+      - value: 4
+        feedback: >-
+          זה $\frac{u'}{v'} = \frac{2x}{1}$ בנקודה 2. נגזרת של מנה אינה מנת הנגזרות: עם $u=v=x$ המנה קבועה ונגזרתה
+          0, ואילו $\frac{u'}{v'}=1$.
+        misconception: MC-quotient-rule-naive
+
+  - id: Q-5.2-poly
+    type: numeric
+    objectives: [OBJ-5.2-2]
+    level: basic
+    prompt: >-
+      חשבו את $p'(2)$ עבור $p(x)=(x^2+1)(x^3-2x)$.
+    answer: 66
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי כלל המכפלה $p'(x)=2x(x^3-2x)+(x^2+1)(3x^2-2)$, ובנקודה 2 זה $4\cdot4+5\cdot10=66$. בדיקה: אחרי
+      פתיחת סוגריים $p(x)=x^5-x^3-2x$, ו-$p'(2)=80-12-2=66$.
+    wrongFeedback: >-
+      גזרו לפי כלל המכפלה, או פתחו סוגריים וגזרו איבר-איבר. שתי הדרכים צריכות לתת אותו מספר.
+    commonWrong:
+      - value: 40
+        feedback: >-
+          זה $(2x)(3x^2-2)$ בנקודה 2, מכפלת הנגזרות. נגזרת של מכפלה אינה מכפלת הנגזרות.
+        misconception: MC-product-rule-naive
+
+  - id: Q-5.2-onesided
+    type: numeric
+    objectives: [OBJ-5.2-2]
+    level: mid
+    prompt: >-
+      חשבו את הנגזרת משמאל $f'_-(1)$ של $f(x)=|x^2-1|$.
+    answer: -2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. כש-$x$ קצת קטן מ-1 (ו-$x>-1$) מתקיים $x^2-1<0$, ולכן $f(x)=1-x^2$ שם. מנת ההפרשים עם $h<0$ קטן היא
+      $\frac{1-(1+h)^2}{h}=-2-h$, ששואפת למינוס 2. מימין מקבלים 2, ולכן $f$ אינה גזירה ב-1.
+    wrongFeedback: >-
+      קבעו את הסימן של $x^2-1$ משמאל ל-1, כתבו את $f$ שם בלי ערך מוחלט, וחשבו את הגבול של מנת ההפרשים כש-$h\to0^-$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          2 היא הנגזרת **מימין**, שם $f(x)=x^2-1$. משמאל ל-1 הביטוי שבתוך הערך המוחלט שלילי, ו-$f(x)=1-x^2$.
+      - value: 0
+        feedback: >-
+          0 הוא $f(1)$, ערך הפונקציה. הנגזרת משמאל היא גבול של מנת ההפרשים, לא ערך.
+
+  - id: Q-5.2-which
+    type: multi
+    objectives: [OBJ-5.2-2, OBJ-5.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהפונקציות הבאות גזירות בנקודה 0? סמנו את כולן.
+    choices:
+      - text: '$x|x|$'
+        correct: true
+        feedback: >-
+          נכון. מנת ההפרשים היא $\frac{h|h|}{h}=|h|\to0$, ולכן הנגזרת ב-0 היא 0. בשני הצדדים הנגזרות החד-צדדיות
+          של $\pm x^2$ ב-0 הן 0.
+      - text: '$|x|^3$'
+        correct: true
+        feedback: >-
+          נכון. $\frac{|h|^3}{h}$ חסומה בערך מוחלט על ידי $h^2\to0$, ולכן הנגזרת ב-0 היא 0.
+      - text: '$x\,|x-1|$'
+        correct: true
+        feedback: >-
+          נכון. ליד 0 מתקיים $x-1<0$, ולכן הפונקציה שווה שם ל-$x(1-x)$, פולינום. הפינה של $|x-1|$ נמצאת ב-1,
+          לא ב-0.
+      - text: '$x+|x|$'
+        feedback: >-
+          לא. $x$ גזירה ו-$|x|$ אינה גזירה ב-0, ולכן הסכום אינו גזיר שם: הנגזרת מימין 2 והנגזרת משמאל 0.
+        misconception: MC-nondiff-sum-product
+      - text: '$|\sin x|$'
+        feedback: >-
+          לא. $\sin$ גזירה, אבל ב-0 היא מתאפסת ושיפועה 1, ולכן לערך המוחלט יש שם פינה: הנגזרת מימין 1
+          והנגזרת משמאל מינוס 1 (לפי $\frac{\sin h}{h}\to1$).
+        misconception: MC-abs-of-differentiable
+
+  - id: Q-5.2-seam-trap
+    type: twotier
+    objectives: [OBJ-5.2-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      תהי $f(x)=x^2$ כש-$x<1$, ו-$f(x)=2x$ כש-$x\ge1$. הנגזרת של $x^2$ ב-1 היא 2, וגם הנגזרת של $2x$ היא 2. האם
+      $f$ גזירה ב-1?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. לפני שמשווים שיפועים בודקים שהחלקים נפגשים: כאן $\lim_{x\to1^-}f(x)=1$ אבל $f(1)=2$.
+      - text: >-
+          כן, ו-$f'(1)=2$
+        feedback: >-
+          הנגזרות של שני הביטויים ב-1 שוות, אבל $f$ קופצת ב-1 מ-1 ל-2. משמאל מנת ההפרשים היא
+          $\frac{(1+h)^2-2}{h}$, והיא שואפת לאינסוף כש-$h\to0^-$.
+        misconception: MC-seam-piece-derivatives
+    reasons:
+      - text: $f$ אינה רציפה ב-1, ופונקציה גזירה בנקודה רציפה בה
+        correct: true
+        feedback: >-
+          בדיוק. זה הקונטרפוזיטיב של "גזירה גוררת רציפה" (שיעור 5.1). הנגזרת מימין אכן קיימת ושווה ל-2, אבל
+          הנגזרת משמאל לא קיימת.
+      - text: הנגזרות החד-צדדיות ב-1 שוות זו לזו
+        feedback: >-
+          הנגזרת משמאל של $f$ אינה הנגזרת של $x^2$ ב-1: מנת ההפרשים שלה מחסירה את $f(1)=2$, לא את $1^2$. היא
+          שואפת לאינסוף.
+        misconception: MC-seam-piece-derivatives
+      - text: כל אחד מהחלקים הוא פולינום, ופולינומים גזירים
+        feedback: >-
+          כל חלק גזיר בתוך הקטע שלו. בנקודת התפר צריך לבדוק קודם רציפות, ורק אז את שתי הנגזרות החד-צדדיות.
+        misconception: MC-seam-piece-derivatives
+
+  - id: Q-5.2-params
+    type: numeric
+    objectives: [OBJ-5.2-3]
+    level: mid
+    prompt: >-
+      תהי $f(x)=x^2$ כש-$x\le2$, ו-$f(x)=ax+b$ כש-$x>2$. ידוע ש-$f$ גזירה ב-2. מהו $b$?
+    answer: -4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. גזירות ב-2 דורשת רציפות, $2a+b=4$, ושוויון הנגזרות החד-צדדיות, $a=2\cdot2=4$. לכן $b=4-8$, כלומר
+      מינוס 4, והישר $4x-4$ הוא המשיק ל-$x^2$ ב-2.
+    wrongFeedback: >-
+      כתבו שני תנאים: רציפות ב-2 (הערך של $ax+b$ ב-2 שווה ל-$2^2$) ושוויון הנגזרות החד-צדדיות.
+    commonWrong:
+      - value: 4
+        feedback: >-
+          4 הוא $a$, השיפוע. מצאו את $b$ מתנאי הרציפות $2a+b=4$.
+      - value: 12
+        feedback: >-
+          זה $4+2a$: טעות סימן בהעברת אגפים. מ-$2a+b=4$ נובע $b=4-2a$.
+    hints:
+      - בדקו קודם רציפות ב-2, ורק אחר כך השוו את הנגזרות החד-צדדיות.
+    explanation: >-
+      הישר שמחליף את $x^2$ מימין ל-2 כך שהפונקציה נשארת גזירה הוא בדיוק המשיק ב-2: אותה נקודה ואותו שיפוע.
+
+  - id: Q-5.2-param-exam
+    type: numeric
+    objectives: [OBJ-5.2-2, OBJ-5.2-3]
+    level: exam
+    prompt: >-
+      תהי $f(x)=x^3+ax$ כש-$x\le1$, ו-$f(x)=\frac{b}{x}$ כש-$x>1$. מצאו את $a$ שעבורו (יחד עם $b$ מתאים) $f$
+      גזירה ב-1.
+    answer: -2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. רציפות ב-1: $1+a=b$. הנגזרת משמאל היא $3+a$. מימין, אחרי שהרציפות מובטחת, מנת ההפרשים היא
+      $\frac{1}{h}\left(\frac{b}{1+h}-b\right)=-\frac{b}{1+h}$, ששואפת ל-$(-b)$. לכן $3+a=-b=-(1+a)$, כלומר
+      $a=-2$ ו-$b=-1$.
+    wrongFeedback: >-
+      שני תנאים: רציפות ב-1 ושוויון של הנגזרת משמאל, $3+a$, לנגזרת מימין, שהיא הנגזרת של $\frac bx$ ב-1.
+    commonWrong:
+      - value: -1
+        feedback: >-
+          מינוס 1 הוא $b$. מהמשוואות $1+a=b$ ו-$3+a=-b$ מקבלים $a=-2$.
+      - value: -3
+        feedback: >-
+          זה מתקבל מ-$3+a=0$: כאילו הנגזרת מימין היא 0. הנגזרת של $\frac bx$ היא $\frac{-b}{x^2}$, וב-1 היא
+          $(-b)$, לא 0.
+    hints:
+      - >-
+        לפי כלל המנה, הנגזרת של $\frac bx$ היא $\frac{-b}{x^2}$.

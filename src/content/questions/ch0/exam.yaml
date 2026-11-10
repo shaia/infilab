@@ -1,0 +1,300 @@
+# Chapter 0 — exam questions in the style of an 80131 final (original questions, not taken from a real exam).
+# Each is worth 25 points: an induction proof; a proof by contradiction and an "if and only if";
+# an inequality with absolute values that leads to a choice of delta.
+chapter: 0
+questions:
+  - id: Q-0-exam-1
+    type: exam
+    title: אינדוקציה וחסם לסכום
+    prompt: >-
+      לכל $n$ טבעי נסמן $S_n=1+\frac14+\frac19+\dots+\frac{1}{n^2}=\sum_{k=1}^{n}\frac{1}{k^2}$.
+    parts:
+      - label: א
+        type: open
+        points: 15
+        objectives: [OBJ-0.5-1, OBJ-0.5-2]
+        prompt: >-
+          הוכיחו באינדוקציה שלכל $n$ טבעי מתקיים $S_n\le 2-\frac1n$.
+        solution:
+          - kind: goal
+            text: 'להוכיח $S_n\le 2-\frac1n$ לכל $n\in\mathbb{N}$.'
+          - kind: idea
+            text: >-
+              אינדוקציה על $n$. בצעד מוסיפים לשני האגפים את $\frac{1}{(n+1)^2}$, ונשאר להשוות אותו להפרש בין
+              החסמים, $\frac1n-\frac{1}{n+1}$.
+          - kind: step
+            text: 'בסיס: $S_1=1$ ו-$2-\frac11=1$, ולכן $S_1\le 2-\frac11$.'
+          - kind: step
+            text: 'הנחת האינדוקציה: נניח ש-$S_n\le 2-\frac1n$ עבור $n$ טבעי מסוים.'
+          - kind: computation
+            text: >-
+              $S_{n+1}=S_n+\frac{1}{(n+1)^2}\le 2-\frac1n+\frac{1}{(n+1)^2}$, לפי הנחת האינדוקציה.
+          - kind: step
+            text: >-
+              לכן די להראות ש-$2-\frac1n+\frac{1}{(n+1)^2}\le 2-\frac{1}{n+1}$, כלומר
+              $\frac{1}{(n+1)^2}\le\frac1n-\frac{1}{n+1}=\frac{1}{n(n+1)}$.
+          - kind: check
+            text: >-
+              זה נכון: $n(n+1)<(n+1)^2$, ושני הצדדים חיוביים, ולכן $\frac{1}{(n+1)^2}<\frac{1}{n(n+1)}$.
+          - kind: result
+            text: >-
+              קיבלנו $S_{n+1}\le 2-\frac{1}{n+1}$, הטענה עבור $n+1$. לפי עקרון האינדוקציה $S_n\le 2-\frac1n$ לכל
+              $n$ טבעי.
+        rubric:
+          - text: 'בדקתם את הבסיס $n=1$ (כאן מתקיים שוויון).'
+          - text: ניסחתם את הנחת האינדוקציה עבור $n$ מסוים, ולא "לכל $n$".
+          - text: 'בצעד השתמשתם בהנחה והגעתם לאי-שוויון $\frac{1}{(n+1)^2}\le\frac{1}{n(n+1)}$ (או שקול לו).'
+            weight: 2
+          - text: הצדקתם את אי-השוויון הזה, ולא רק כתבתם שהוא "ברור".
+          - text: 'כתבתם את המסקנה עבור $n+1$ ואת המסקנה לכל $n$.'
+      - label: ב
+        type: mc
+        points: 5
+        standalone: false
+        objectives: [OBJ-0.5-3]
+        qualitative: true
+        prompt: >-
+          הטענה $S_n<2$ חלשה מהטענה של סעיף א. למה קשה להוכיח אותה **ישירות** באינדוקציה?
+        choices:
+          - text: 'מההנחה $S_n<2$ נובע רק $S_{n+1}<2+\frac{1}{(n+1)^2}$, ולכן הצעד לא נסגר; לטענה החזקה של סעיף א יש מרווח $\frac1n$ שמספיק לאיבר הבא'
+            correct: true
+            feedback: >-
+              נכון. הנחת האינדוקציה $S_n<2$ לא אומרת כמה מקום נשאר עד $2$. החסם $2-\frac1n$ שומר מרווח, והמרווח
+              הזה מתכווץ בדיוק בקצב שמאפשר להוסיף את $\frac{1}{(n+1)^2}$.
+          - text: 'היא דווקא קלה: $\frac{1}{(n+1)^2}$ קטן מאוד, ולכן $S_n+\frac{1}{(n+1)^2}<2$'
+            feedback: >-
+              "קטן מאוד" אינו הצדקה. אם $S_n$ היה $1.9999$, הוספה של $\frac{1}{(n+1)^2}$ עלולה לעבור את $2$; מההנחה
+              $S_n<2$ לבדה אי אפשר לשלול את זה.
+            misconception: MC-step-justification-vague
+          - text: הבסיס $n=1$ נכשל עבור הטענה $S_n<2$
+            feedback: >-
+              $S_1=1<2$, והבסיס תקין. הקושי הוא בצעד.
+            misconception: MC-induction-skip-base
+      - label: ג
+        type: numeric
+        points: 5
+        standalone: false
+        objectives: [OBJ-0.7-3]
+        prompt: >-
+          מהו החסם מלמעלה על $S_{100}=1+\frac14+\dots+\frac{1}{100^2}$ שנובע מסעיף א?
+        answer: 1.99
+        tolerance: 0.0001
+        correctFeedback: >-
+          נכון. $S_{100}\le 2-\frac{1}{100}=1.99$. (הערך האמיתי הוא בערך $1.635$.)
+        wrongFeedback: >-
+          הציבו $n=100$ בחסם של סעיף א.
+        commonWrong:
+          - value: 2
+            feedback: >-
+              $2$ הוא חסם נכון, אבל סעיף א נותן חסם טוב יותר: $2-\frac{1}{100}$.
+          - value: 1.9999
+            feedback: >-
+              הצבתם $\frac{1}{n^2}$ במקום $\frac1n$. החסם הוא $2-\frac1n$, ולכן $2-\frac{1}{100}$.
+
+  - id: Q-0-exam-2
+    type: exam
+    title: הוכחה בדרך השלילה ו"אם ורק אם"
+    prompt: >-
+      בשאלה זו כל המספרים שלמים. מספר $n$ נקרא זוגי אם $n=2k$, ואי-זוגי אם $n=2k+1$, עבור $k$ שלם כלשהו. מותר
+      להשתמש בכך שכל שלם הוא זוגי או אי-זוגי, ולא שניהם.
+    parts:
+      - label: א
+        type: open
+        points: 10
+        objectives: [OBJ-0.4-1]
+        prompt: >-
+          הוכיחו בדרך השלילה שאין שלמים $a$ ו-$b$ כך ש-$a^2-4b=2$.
+        solution:
+          - kind: goal
+            text: 'להוכיח שלא קיימים שלמים $a,b$ עם $a^2-4b=2$.'
+          - kind: idea
+            text: >-
+              מהשוויון $a^2$ זוגי, ולכן $a$ זוגי; ואז אגף שמאל מתחלק ב-$4$, ו-$2$ לא.
+          - kind: step
+            text: 'נניח בשלילה שקיימים שלמים $a,b$ עם $a^2-4b=2$.'
+          - kind: step
+            text: 'אז $a^2=4b+2=2(2b+1)$, כלומר $a^2$ זוגי.'
+          - kind: theorem
+            text: >-
+              אם $a$ אי-זוגי, $a=2k+1$, אז $a^2=4k^2+4k+1=2(2k^2+2k)+1$ אי-זוגי. בקונטרפוזיטיב: אם $a^2$ זוגי אז $a$
+              זוגי.
+          - kind: computation
+            text: 'לכן $a=2k$ עבור $k$ שלם, ו-$4k^2-4b=2$, כלומר $2k^2-2b=1$.'
+          - kind: check
+            text: 'אגף שמאל, $2(k^2-b)$, זוגי, ואגף ימין, $1$, אי-זוגי: סתירה.'
+          - kind: result
+            text: 'ההנחה שגויה, ולכן אין שלמים $a,b$ עם $a^2-4b=2$.'
+        rubric:
+          - text: 'הנחתם את השלילה הנכונה: קיימים שלמים $a,b$ עם $a^2-4b=2$.'
+          - text: 'הוכחתם (ולא רק טענתם) ש-$a^2$ זוגי גורר $a$ זוגי.'
+          - text: 'הצבתם $a=2k$ והגעתם לשוויון בין מספר זוגי למספר אי-זוגי.'
+          - text: ניסחתם במפורש את הסתירה ואת המסקנה.
+      - label: ב
+        type: open
+        points: 10
+        objectives: [OBJ-0.4-3, OBJ-0.4-1]
+        prompt: >-
+          הוכיחו: $n$ אי-זוגי אם ורק אם $n^2+2n$ אי-זוגי.
+        solution:
+          - kind: goal
+            text: >-
+              שני כיוונים: ($\Rightarrow$) אם $n$ אי-זוגי אז $n^2+2n$ אי-זוגי; ($\Leftarrow$) אם $n^2+2n$ אי-זוגי אז
+              $n$ אי-זוגי.
+          - kind: idea
+            text: >-
+              את ($\Rightarrow$) מוכיחים ישירות. את ($\Leftarrow$) מוכיחים דרך הקונטרפוזיטיב: אם $n$ זוגי אז $n^2+2n$
+              זוגי.
+          - kind: computation
+            text: >-
+              ($\Rightarrow$) נכתוב $n=2k+1$. אז $n^2+2n=4k^2+4k+1+4k+2=2(2k^2+4k+1)+1$, ולכן $n^2+2n$ אי-זוגי.
+          - kind: computation
+            text: >-
+              ($\Leftarrow$) נניח ש-$n$ אינו אי-זוגי, כלומר $n=2k$. אז $n^2+2n=4k^2+4k=2(2k^2+2k)$ זוגי, ולכן אינו
+              אי-זוגי.
+          - kind: step
+            text: >-
+              זה הקונטרפוזיטיב של ($\Leftarrow$), ששקול לו.
+          - kind: result
+            text: 'שני הכיוונים הוכחו, ולכן $n$ אי-זוגי אם ורק אם $n^2+2n$ אי-זוגי.'
+        rubric:
+          - text: כתבתם במפורש את שני הכיוונים שצריך להוכיח.
+          - text: 'הוכחתם את ($\Rightarrow$) בחישוב עם $n=2k+1$.'
+          - text: 'הוכחתם את ($\Leftarrow$), ישירות או דרך הקונטרפוזיטיב עם $n=2k$, ואמרתם למה זה מספיק.'
+          - text: לא הוכחתם את אותו כיוון פעמיים בניסוחים שונים.
+      - label: ג
+        type: mc
+        points: 5
+        objectives: [OBJ-0.4-1, OBJ-0.3-2]
+        prompt: >-
+          בהוכחה בדרך השלילה של הטענה "אין שלמים $a$ ו-$b$ כך ש-$a^2-4b=2$", מה מניחים בשורה הראשונה?
+        choices:
+          - text: 'קיימים שלמים $a$ ו-$b$ כך ש-$a^2-4b=2$'
+            correct: true
+            feedback: >-
+              נכון. הטענה היא "לכל $a,b$ שלמים, $a^2-4b\ne 2$", והשלילה שלה היא "קיימים $a,b$ עם $a^2-4b=2$".
+          - text: 'לכל שלמים $a$ ו-$b$, $a^2-4b\ne 2$'
+            feedback: >-
+              זו הטענה עצמה. בהוכחה בדרך השלילה מניחים את שלילתה ומגיעים לסתירה.
+            misconception: MC-contradiction-wrong-assumption
+          - text: 'קיימים שלמים $a$ ו-$b$ כך ש-$a^2-4b\ne 2$'
+            feedback: >-
+              כאן הפכו את הכמת אבל לא שללו את התנאי. הטענה הזו נכונה ($a=b=0$), ולכן אי אפשר להגיע ממנה לסתירה.
+            misconception: MC-negation-partial
+          - text: 'לכל שלמים $a$ ו-$b$, $a^2-4b=2$'
+            feedback: >-
+              כאן שללו את התנאי אבל השאירו "לכל". השלילה של "לכל" היא "קיים": מספיק זוג אחד.
+            misconception: MC-negation-partial
+
+  - id: Q-0-exam-3
+    type: exam
+    title: ערך מוחלט ואי-שוויון המשולש
+    prompt: >-
+      בשאלה זו $x$ מספר ממשי.
+    parts:
+      - label: א
+        type: mc
+        points: 6
+        objectives: [OBJ-0.7-1]
+        prompt: >-
+          מהי קבוצת הפתרונות של $|x-1|+|x+1|\le 4$?
+        choices:
+          - text: '$[-2,2]$'
+            correct: true
+            feedback: >-
+              נכון. עבור $x\ge 1$: $2x\le 4$, כלומר $x\le 2$. עבור $-1\le x<1$: הסכום הוא $2\le 4$, תמיד. עבור
+              $x<-1$: $-2x\le 4$, כלומר $x\ge -2$. ביחד $[-2,2]$.
+          - text: '$[-1,1]$'
+            feedback: >-
+              זה רק הקטע האמצעי, שבו הסכום שווה ל-$2$. גם $x=2$ מקיים: $1+3=4\le 4$.
+            misconception: MC-abs-one-side
+          - text: '$(-\infty,2]$'
+            feedback: >-
+              זה מקרה אחד בלבד. $x=-5$ נותן $6+4=10>4$. צריך לפתור בכל אחד משלושת הקטעים.
+            misconception: MC-abs-one-side
+      - label: ב
+        type: open
+        points: 10
+        objectives: [OBJ-0.7-2]
+        prompt: >-
+          הוכיחו: אם $|x-1|<1$ אז $|x^2-1|\le 3|x-1|$.
+        solution:
+          - kind: given
+            text: '$|x-1|<1$.'
+          - kind: goal
+            text: '$|x^2-1|\le 3|x-1|$.'
+          - kind: idea
+            text: >-
+              לפרק $x^2-1=(x-1)(x+1)$, ולחסום את $|x+1|$ באי-שוויון המשולש, אחרי שכותבים אותו בעזרת $x-1$.
+          - kind: computation
+            text: '$|x^2-1|=|(x-1)(x+1)|=|x-1|\cdot|x+1|$.'
+          - kind: theorem
+            text: >-
+              לפי אי-שוויון המשולש: $|x+1|=|(x-1)+2|\le|x-1|+2<1+2=3$.
+          - kind: step
+            text: >-
+              $|x-1|\ge 0$, ולכן מותר לכפול בו את $|x+1|<3$ (כשהוא $0$ שני האגפים $0$):
+              $|x-1|\cdot|x+1|\le 3|x-1|$.
+          - kind: result
+            text: 'לכן $|x^2-1|\le 3|x-1|$ לכל $x$ עם $|x-1|<1$.'
+        rubric:
+          - text: 'פירקתם $|x^2-1|=|x-1|\cdot|x+1|$.'
+          - text: 'חסמתם $|x+1|<3$ בעזרת אי-שוויון המשולש וההנחה $|x-1|<1$.'
+            weight: 2
+          - text: 'הצדקתם את הכפל באי-השוויון: $|x-1|$ אי-שלילי.'
+          - text: כתבתם את המסקנה המלאה.
+      - label: ג
+        type: open
+        points: 6
+        standalone: false
+        objectives: [OBJ-0.7-3, OBJ-0.3-1]
+        prompt: >-
+          יהי $\varepsilon>0$, ונבחר $\delta=\min\left(1,\frac{\varepsilon}{3}\right)$. הוכיחו שלכל $x$ עם
+          $|x-1|<\delta$ מתקיים $|x^2-1|<\varepsilon$.
+        solution:
+          - kind: given
+            text: '$\varepsilon>0$, $\delta=\min\left(1,\frac{\varepsilon}{3}\right)$, ו-$|x-1|<\delta$.'
+          - kind: goal
+            text: '$|x^2-1|<\varepsilon$.'
+          - kind: idea
+            text: >-
+              $\delta\le 1$ מאפשר להשתמש בסעיף ב, ו-$\delta\le\frac{\varepsilon}{3}$ הופך את $3|x-1|$ לקטן מ-$\varepsilon$.
+          - kind: step
+            text: '$|x-1|<\delta\le 1$, ולכן לפי סעיף ב $|x^2-1|\le 3|x-1|$.'
+          - kind: computation
+            text: '$3|x-1|<3\delta\le 3\cdot\frac{\varepsilon}{3}=\varepsilon$.'
+          - kind: result
+            text: 'לכן $|x^2-1|<\varepsilon$ לכל $x$ עם $|x-1|<\delta$.'
+        rubric:
+          - text: 'השתמשתם ב-$\delta\le 1$ כדי שתנאי סעיף ב יתקיים.'
+          - text: 'השתמשתם ב-$\delta\le\frac{\varepsilon}{3}$ כדי לקבל $3|x-1|<\varepsilon$.'
+          - text: 'שמרתם על אי-השוויון החזק עד הסוף ($<\varepsilon$, לא רק $\le$).'
+      - label: ד
+        type: twotier
+        points: 3
+        objectives: [OBJ-0.7-3, OBJ-0.4-2]
+        qualitative: true
+        prompt: >-
+          האם הבחירה $\delta=\frac{\varepsilon}{3}$ לבדה, בלי המינימום עם $1$, מבטיחה לכל $\varepsilon>0$ שמ-$|x-1|<\delta$
+          נובע $|x^2-1|<\varepsilon$?
+        choices:
+          - text: לא
+            correct: true
+            feedback: נכון. כש-$\varepsilon$ גדול, $\delta=\frac\varepsilon3$ גדול, והחסם $|x+1|<3$ כבר לא נכון.
+          - text: כן
+            feedback: >-
+              קחו $\varepsilon=30$, כלומר $\delta=10$, ו-$x=10$: $|x-1|=9<10$, אבל $|x^2-1|=99\ge 30$.
+            misconception: MC-step-justification-vague
+        reasons:
+          - text: 'עבור $\varepsilon=30$ ו-$x=10$: $|x-1|=9<10=\delta$, אבל $|x^2-1|=99$'
+            correct: true
+            feedback: >-
+              בדיוק. בלי $\delta\le 1$ אי אפשר להשתמש בחסם $|x+1|<3$, ובאמת $|x+1|$ יכול להיות גדול.
+          - text: 'תמיד $|x^2-1|\le 3|x-1|$, ולכן $3|x-1|<3\delta=\varepsilon$'
+            feedback: >-
+              $|x^2-1|\le 3|x-1|$ הוכח רק כש-$|x-1|<1$. עבור $x=10$: $99>27$. משתמשים במשפט רק כשההנחות שלו מתקיימות.
+            misconception: MC-step-justification-vague
+          - text: 'בדקנו עם $\varepsilon=0.3$ ו-$x=1.05$, וזה עובד'
+            feedback: >-
+              עם $\varepsilon$ קטן אכן $\delta\le 1$ והבחירה עובדת. השאלה היא על **כל** $\varepsilon>0$, ודוגמה אחת
+              שעובדת לא מוכיחה זאת; $\varepsilon=30$ מפריך.
+            misconception: MC-examples-are-proof

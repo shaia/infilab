@@ -1,0 +1,323 @@
+# Lesson 2.9 — subsequences and the Bolzano–Weierstrass theorem.
+# Objectives (src/course.ts):
+#   OBJ-2.9-1  define a subsequence; every subsequence of a convergent sequence tends to the same limit
+#   OBJ-2.9-2  define a partial limit and find the partial limits of given sequences
+#   OBJ-2.9-3  state and prove Bolzano–Weierstrass, and use it
+# A partial limit here is a real number (the limit of a convergent subsequence); ±∞ are not counted.
+chapter: 2
+questions:
+  - id: Q-2.9-def
+    type: multi
+    objectives: [OBJ-2.9-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      נתונה סדרה $a_1,a_2,a_3,\dots$. אילו מהבאות הן תת-סדרות שלה? סמנו את כולן.
+    choices:
+      - text: '$a_2,\ a_4,\ a_6,\ a_8,\ \dots$'
+        correct: true
+        feedback: 'נכון: $n_k=2k$, אינדקסים עולים ממש.'
+      - text: '$a_1,\ a_4,\ a_9,\ a_{16},\ \dots$'
+        correct: true
+        feedback: 'נכון: $n_k=k^2$, עולים ממש. מותר לדלג על כמה איברים שרוצים.'
+      - text: '$a_5,\ a_6,\ a_7,\ a_8,\ \dots$'
+        correct: true
+        feedback: 'נכון: $n_k=k+4$. כל זנב של סדרה הוא תת-סדרה שלה.'
+      - text: '$a_1,\ a_1,\ a_2,\ a_2,\ a_3,\ a_3,\ \dots$'
+        feedback: >-
+          כאן אותו אינדקס מופיע פעמיים ($n_1=n_2=1$). בתת-סדרה האינדקסים עולים **ממש**, ולכן אין חזרות על מקום.
+        misconception: MC-subsequence-indices-not-increasing
+      - text: '$a_2,\ a_1,\ a_4,\ a_3,\ a_6,\ a_5,\ \dots$'
+        feedback: >-
+          כאן האינדקסים קופצים אחורה ($n_1=2>n_2=1$). תת-סדרה שומרת על הסדר של הסדרה המקורית.
+        misconception: MC-subsequence-indices-not-increasing
+
+  - id: Q-2.9-converse
+    type: twotier
+    objectives: [OBJ-2.9-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$a_{2n}\to 4$. האם מזה נובע ש-$a_n\to4$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. האיברים האי-זוגיים יכולים לעשות כל דבר: $a_n=4$ ל-$n$ זוגי ו-$a_n=0$ ל-$n$ אי-זוגי.
+      - text: כן
+        feedback: >-
+          תת-סדרה אחת אינה מספרת על כל הסדרה. בדוגמה $0,4,0,4,\dots$ מתקיים $a_{2n}=4$, ובכל
+          זאת הסדרה מתבדרת.
+        misconception: MC-convergent-subsequence-implies-convergent
+    reasons:
+      - text: 'המשפט הוא בכיוון ההפוך: אם $a_n\to L$ אז כל תת-סדרה שואפת ל-$L$; תת-סדרה מתכנסת אחת לא מספיקה'
+        correct: true
+        feedback: >-
+          בדיוק. דווקא הכיוון הנכון שימושי להוכחת התבדרות: שתי תת-סדרות עם גבולות שונים מוכיחות שאין גבול.
+      - text: 'תת-סדרה היא "חלק" מהסדרה, ולכן יש לה אותו גבול כמו לסדרה'
+        feedback: >-
+          זה נכון רק כשלסדרה **יש** גבול. כאן אין: לסדרה $0,4,0,4,\dots$ יש שני גבולות חלקיים, 0 ו-4.
+        misconception: MC-convergent-subsequence-implies-convergent
+      - text: 'חצי מהאיברים קרובים ל-4, וזה מספיק'
+        feedback: >-
+          ההגדרה של גבול דורשת שמ-$N$ והלאה **כל** האיברים יהיו קרובים ל-4, לא חצי מהם.
+        misconception: MC-limit-infinitely-often
+
+  - id: Q-2.9-diverge
+    type: mc
+    objectives: [OBJ-2.9-1]
+    level: mid
+    prompt: >-
+      איזה טיעון מוכיח שהסדרה $a_n=(-1)^n\frac{n}{n+1}$ מתבדרת?
+    choices:
+      - text: '$a_{2n}\to1$ ו-$a_{2n-1}\to-1$. אילו $a_n\to L$, שתי תתי-הסדרות היו שואפות ל-$L$, ואז $1=L=-1$'
+        correct: true
+        feedback: >-
+          נכון. זה הכלי הנוח ביותר להתבדרות: שתי תת-סדרות עם גבולות שונים. $\frac{2n}{2n+1}\to1$ ו-$-\frac{2n-1}{2n}\to-1$.
+      - text: 'הסדרה אינה מונוטונית, ולכן אינה מתכנסת'
+        feedback: >-
+          סדרה מתכנסת לא חייבת להיות מונוטונית: $\frac{(-1)^n}{n}$ קופצת בין חיובי לשלילי ושואפת ל-0.
+        misconception: MC-convergent-implies-monotone
+      - text: '$a_{2n}\to1$, ולכן כל הסדרה שואפת ל-1; אבל $a_1=-\frac12$, סתירה'
+        feedback: >-
+          שני צעדים שגויים: תת-סדרה מתכנסת לא קובעת את גבול הסדרה, ואיבר בודד, כמו $a_1$, לא משפיע על גבול בכלל.
+        misconception: MC-convergent-subsequence-implies-convergent
+
+  - id: Q-2.9-cover
+    type: twotier
+    objectives: [OBJ-2.9-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      נכון או לא נכון: אם $a_{2n}\to L$ וגם $a_{3n}\to L$, אז $a_n\to L$.
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. האינדקסים $1,5,7,11,13,\dots$ אינם כפולה של 2 ולא של 3, ולכן שתי תתי-הסדרות לא אומרות עליהם דבר.
+      - text: נכון
+        feedback: >-
+          שתי תת-סדרות עם אותו גבול מספיקות רק כשהן מכסות את כל האינדקסים מנקודה מסוימת, כמו $a_{2n}$ ו-$a_{2n-1}$.
+        misconception: MC-some-subsequences-cover
+    reasons:
+      - text: 'נגדיר $a_n=0$ כש-$n$ מתחלק ב-2 או ב-3, ו-$a_n=1$ אחרת. אז $a_{2n}=a_{3n}=0$, אבל $a_n=1$ לאינסוף $n$'
+        correct: true
+        feedback: >-
+          בדיוק: $a_{6m+1}=1$ לכל $m$, ולכן ל-$a_n$ יש שני גבולות חלקיים, 0 ו-1, והיא מתבדרת.
+      - text: 'שתי תת-סדרות שונות עם אותו גבול תמיד מוכיחות התכנסות'
+        feedback: >-
+          זה נכון רק אם יחד הן מכילות כל אינדקס מ-$N$ מסוים. עם $a_{2n}$ ו-$a_{2n-1}$ זה מתקיים, עם $a_{2n}$
+          ו-$a_{3n}$ לא.
+        misconception: MC-some-subsequences-cover
+      - text: '$a_{6n}$ היא תת-סדרה של שתיהן, ולכן הכל מתלכד ל-$L$'
+        feedback: >-
+          $a_{6n}$ אכן שואפת ל-$L$, אבל זו עוד תת-סדרה אחת, והיא לא מכסה את האינדקסים $6n+1$ ו-$6n+5$.
+        misconception: MC-some-subsequences-cover
+
+  - id: Q-2.9-find
+    type: multi
+    objectives: [OBJ-2.9-2]
+    level: basic
+    prompt: >-
+      אילו מהמספרים הבאים הם גבולות חלקיים של $a_n=(-1)^n+\frac1n$? סמנו את כולם.
+    choices:
+      - text: '$1$'
+        correct: true
+        feedback: 'נכון: $a_{2n}=1+\frac{1}{2n}\to1$.'
+      - text: '$-1$'
+        correct: true
+        feedback: 'נכון: $a_{2n-1}=-1+\frac{1}{2n-1}\to-1$.'
+      - text: '$0$'
+        feedback: >-
+          $a_1=-1+1=0$ הוא איבר של הסדרה, אבל רק איבר אחד. כל האיברים מ-$n=3$ והלאה רחוקים מ-0 יותר מ-$\frac12$, ולכן
+          אין תת-סדרה ששואפת ל-0.
+        misconception: MC-partial-limit-is-term
+      - text: '$\frac32$'
+        feedback: >-
+          $a_2=\frac32$ הוא האיבר הגדול ביותר, אבל ערך שמתקבל פעם אחת אינו גבול חלקי: האיברים הזוגיים שאחריו יורדים
+          לעבר 1.
+        misconception: MC-partial-limit-is-term
+
+  - id: Q-2.9-count
+    type: numeric
+    objectives: [OBJ-2.9-2]
+    level: mid
+    prompt: >-
+      כמה גבולות חלקיים יש לסדרה $a_n=\sin\frac{n\pi}{3}$?
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. הסדרה מחזורית עם מחזור 6, וערכיה $\frac{\sqrt3}{2},\ \frac{\sqrt3}{2},\ 0,\ -\frac{\sqrt3}{2},\ -\frac{\sqrt3}{2},\ 0$.
+      כל אחד משלושת הערכים מתקבל אינסוף פעמים, ולכן הוא גבול חלקי; ותת-סדרה מתכנסת חייבת להתייצב על אחד
+      מהם.
+    wrongFeedback: >-
+      חשבו את ששת האיברים הראשונים: הסדרה חוזרת על עצמה. גבול חלקי נקבע לפי הערכים, לא לפי המקומות.
+    commonWrong:
+      - value: 6
+        feedback: >-
+          יש שש שאריות של $n$ בחלוקה ב-6, אבל רק שלושה ערכים שונים: $\sin\frac\pi3=\sin\frac{2\pi}{3}$. גבול חלקי הוא
+          מספר, ושתי תת-סדרות יכולות להתכנס לאותו מספר.
+      - value: 2
+        feedback: >-
+          שכחתם את 0: $a_{3m}=\sin(m\pi)=0$ לכל $m$, ולכן 0 גבול חלקי.
+
+  - id: Q-2.9-unique
+    type: twotier
+    objectives: [OBJ-2.9-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נכון או לא נכון: סדרה שיש לה בדיוק גבול חלקי אחד מתכנסת.
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. בלי חסימות הטענה נופלת. עם חסימות היא נכונה (זו מסקנה ממשפט בולצאנו-ויירשטראס).
+      - text: נכון
+        feedback: >-
+          ראו את הדוגמה הנגדית בנימוק הנכון: תת-סדרה שבורחת לאינסוף לא תורמת גבול חלקי, ובכל זאת מונעת התכנסות.
+        misconception: MC-unique-partial-limit-converges
+    reasons:
+      - text: 'הסדרה $a_n=n$ ל-$n$ אי-זוגי ו-$a_n=0$ ל-$n$ זוגי: הגבול החלקי היחיד שלה 0, והיא לא חסומה ולכן מתבדרת'
+        correct: true
+        feedback: >-
+          בדיוק. תת-סדרה מתכנסת חסומה, ולכן יש בה רק מספר סופי של איברים אי-זוגיים; מנקודה מסוימת היא כולה אפסים.
+      - text: 'אם כל תת-הסדרות המתכנסות שואפות לאותו $L$, גם הסדרה שואפת ל-$L$'
+        feedback: >-
+          רק כשהסדרה חסומה. אחרת יכולה להיות תת-סדרה שלא מתכנסת בכלל, כמו האיברים האי-זוגיים בדוגמה.
+        misconception: MC-unique-partial-limit-converges
+      - text: 'אם $L$ גבול חלקי, יש תת-סדרה ששואפת ל-$L$, ולכן הסדרה שואפת ל-$L$'
+        feedback: >-
+          תת-סדרה מתכנסת אחת אינה קובעת את גבול הסדרה: $(-1)^n$ ותת-הסדרה $a_{2n}=1$.
+        misconception: MC-convergent-subsequence-implies-convergent
+
+  - id: Q-2.9-sets
+    type: multi
+    objectives: [OBJ-2.9-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      אילו מהקבוצות הבאות יכולות להיות **בדיוק** קבוצת הגבולות החלקיים של סדרה כלשהי? סמנו את כולן.
+    choices:
+      - text: '$\{0,1\}$'
+        correct: true
+        feedback: 'נכון: $0,1,0,1,\dots$'
+      - text: '$\mathbb{N}$'
+        correct: true
+        feedback: >-
+          נכון: $1;\ 1,2;\ 1,2,3;\ 1,2,3,4;\dots$ מכילה כל טבעי אינסוף פעמים. תת-סדרה מתכנסת של שלמים מתייצבת מנקודה
+          מסוימת על ערך אחד, ולכן אין גבולות חלקיים אחרים.
+      - text: '$\left\{\frac1k : k\in\mathbb{N}\right\}\cup\{0\}$'
+        correct: true
+        feedback: >-
+          נכון: $1;\ 1,\frac12;\ 1,\frac12,\frac13;\dots$ מכילה כל $\frac1k$ אינסוף פעמים, והאיברים החדשים בכל קטע,
+          $\frac1k$, שואפים ל-0.
+      - text: '$\left\{\frac1k : k\in\mathbb{N}\right\}$'
+        feedback: >-
+          אם כל $\frac1k$ גבול חלקי, בוחרים לכל $k$ איבר $a_{n_k}$ עם $\left|a_{n_k}-\frac1k\right|<\frac1k$ ו-$n_k>n_{k-1}$.
+          אז $0<a_{n_k}<\frac2k$, כלומר $a_{n_k}\to0$, ולכן גם 0 גבול חלקי.
+        misconception: MC-partial-limits-not-closed
+      - text: '$[0,1]$'
+        correct: true
+        feedback: >-
+          נכון: כתבו ברצף את $0,\frac1m,\frac2m,\dots,1$ עבור $m=1,2,3,\dots$. לכל $x\in[0,1]$ יש בכל קטע איבר במרחק
+          לכל היותר $\frac1m$ ממנו, ובוחרים אחד מכל קטע. כל האיברים ב-$[0,1]$, ולכן אין גבולות חלקיים מחוץ לקטע.
+
+  - id: Q-2.9-bw
+    type: mc
+    objectives: [OBJ-2.9-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה אומר משפט בולצאנו-ויירשטראס?
+    choices:
+      - text: לכל סדרה חסומה יש תת-סדרה מתכנסת
+        correct: true
+        feedback: >-
+          נכון. במילים אחרות, לכל סדרה חסומה יש לפחות גבול חלקי אחד.
+      - text: לכל סדרה יש תת-סדרה מתכנסת
+        feedback: >-
+          בלי חסימות זה לא נכון: לסדרה $a_n=n$ כל תת-סדרה מקיימת $a_{n_k}=n_k\ge k$, ולכן שואפת לאינסוף.
+        misconception: MC-BW-without-bounded
+      - text: כל סדרה חסומה מתכנסת
+        feedback: >-
+          $(-1)^n$ חסומה ואינה מתכנסת. המשפט מבטיח רק **תת-סדרה** מתכנסת, כאן $a_{2n}=1$.
+        misconception: MC-bounded-implies-convergent
+
+  - id: Q-2.9-bisect
+    type: rank
+    objectives: [OBJ-2.9-3]
+    level: mid
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      ההוכחה של משפט בולצאנו-ויירשטראס בשיטת החציה התפרקה לשלבים. סדרו אותם. (לשני השלבים הרביעי והחמישי אין
+      סדר מחייב.)
+    items:
+      - id: start
+        label: 'נניח $|a_n|\le M$ לכל $n$, ונסמן $I_0=[-M,M]$: כל איברי הסדרה בתוכו.'
+      - id: halve
+        label: 'נחצה את $I_k$ לשני חצאים סגורים. באחד מהם לפחות יש $a_n$ לאינסוף אינדקסים $n$; הוא $I_{k+1}$.'
+      - id: pick
+        label: 'נבחר $n_1<n_2<n_3<\dots$ כך ש-$a_{n_k}\in I_k$: זה אפשרי, כי ב-$I_k$ יש אינסוף אינדקסים לבחור מהם.'
+      - id: limit
+        label: 'הקצוות השמאליים של $I_k$ עולים וחסומים, ולכן מתכנסים לגבול $L$; אורך $I_k$ הוא $\frac{2M}{2^k}$, ו-$L\in I_k$ לכל $k$.'
+      - id: end
+        label: 'לכן $|a_{n_k}-L|\le\frac{2M}{2^k}\to0$, כלומר $a_{n_k}\to L$.'
+    order: [start, halve, [pick, limit], end]
+    correctFeedback: >-
+      נכון. שימו לב איפה נכנסת אקסיומת השלמות: הקצוות העולים מתכנסים בזכות המשפט על סדרה מונוטונית וחסומה. ובחירת
+      האינדקסים צריכה "אינסוף" ולא רק "לפחות אחד", כדי שתמיד יהיה $n_k$ גדול מ-$n_{k-1}$.
+    wrongFeedback: >-
+      הקטעים נבנים לפני שבוחרים מהם איברים או מוצאים את $L$, והמסקנה משתמשת גם בבחירה וגם ב-$L$.
+
+  - id: Q-2.9-closed
+    type: twotier
+    objectives: [OBJ-2.9-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      כל איברי הסדרה $a_n$ נמצאים בקטע הפתוח $(0,1)$. לפי בולצאנו-ויירשטראס יש לה תת-סדרה מתכנסת $a_{n_k}\to L$. האם
+      בהכרח $L\in(0,1)$?
+    choices:
+      - text: 'לא; בהכרח רק $L\in[0,1]$'
+        correct: true
+        feedback: >-
+          נכון. $a_n=\frac{1}{n+1}$: כל איבריה ב-$(0,1)$, וכל תת-סדרה שלה שואפת ל-0.
+      - text: 'כן, $L\in(0,1)$'
+        feedback: >-
+          $0<a_{n_k}<1$ לכל $k$ נותן בגבול רק $0\le L\le1$. בדוגמה $a_n=\frac{1}{n+1}$ הגבול הוא 0, מחוץ לקטע הפתוח.
+        misconception: MC-limit-keeps-strict
+    reasons:
+      - text: 'גבולות שומרים על אי-שוויון חלש: $0<a_{n_k}<1$ נותן $0\le L\le1$, ו-$\frac1{n+1}\to0$ מראה ש-0 אפשרי'
+        correct: true
+        feedback: >-
+          בדיוק. בקטע **סגור** $[a,b]$ הגבול נשאר בתוך הקטע, וזה מה שהופך את הקטע הסגור לטבעי במשפט הזה (וגם
+          בפרק 4, במשפט ויירשטראס לפונקציות).
+      - text: 'הגבול של תת-סדרה הוא אחד מאיברי הסדרה, ולכן הוא ב-$(0,1)$'
+        feedback: >-
+          גבול חלקי אינו חייב להיות ערך של איבר: 0 אינו איבר של $\frac{1}{n+1}$, ובכל זאת הוא הגבול שלה.
+        misconception: MC-partial-limit-is-term
+
+  - id: Q-2.9-where
+    type: mc
+    objectives: [OBJ-2.9-3]
+    level: exam
+    prompt: >-
+      רוצים להוכיח: אם $a_n$ **חסומה** וכל תת-סדרה מתכנסת שלה שואפת ל-$L$, אז $a_n\to L$. ההוכחה מתחילה: "נניח
+      שלא. אז יש $\varepsilon>0$ ותת-סדרה $a_{n_k}$ עם $|a_{n_k}-L|\ge\varepsilon$ לכל $k$." מה הצעד הבא, ואיפה
+      נכנסת החסימות?
+    choices:
+      - text: 'גם $a_{n_k}$ חסומה, ולפי בולצאנו-ויירשטראס יש לה תת-סדרה מתכנסת; גבולה $L''$ מקיים $|L''-L|\ge\varepsilon$, בסתירה להנחה'
+        correct: true
+        feedback: >-
+          נכון. תת-סדרה של $a_{n_k}$ היא גם תת-סדרה של $a_n$, ולכן לפי ההנחה גבולה $L$. אבל כל איבריה במרחק
+          $\varepsilon$ לפחות מ-$L$, ולכן גם גבולה (אי-שוויון חלש עובר לגבול): סתירה.
+      - text: 'החסימות לא נחוצה: הטענה נכונה לכל סדרה'
+        feedback: >-
+          בלי חסימות: $a_n=n$ ל-$n$ אי-זוגי ו-0 ל-$n$ זוגי. כל תת-סדרה מתכנסת שלה שואפת ל-0, והיא מתבדרת. בהוכחה
+          התת-סדרה $a_{n_k}$ יכולה לברוח לאינסוף ולא להכיל תת-סדרה מתכנסת.
+        misconception: MC-unique-partial-limit-converges
+      - text: 'סדרה חסומה מתכנסת, ולכן $a_{n_k}$ מתכנסת, ולגבולה יש מרחק $\varepsilon$ לפחות מ-$L$'
+        feedback: >-
+          סדרה חסומה אינה בהכרח מתכנסת ($(-1)^n$). מה שמובטח הוא תת-סדרה מתכנסת, וזה בדיוק בולצאנו-ויירשטראס.
+        misconception: MC-bounded-implies-convergent

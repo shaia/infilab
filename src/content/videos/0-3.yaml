@@ -1,0 +1,25 @@
+- id: v-0-3-prove-forall-exists
+  youtubeId: QIwz6eyrcuI
+  title: 'ארז שיינר מציג - כמתים: הוכחת טענות "לכל" ו"קיים"'
+  channel: Erez Sheiner
+  lang: he
+  captions: []
+  start: 0
+  minutes: 4
+  why: >-
+    לפי פרקי הסרטון: איך מוכיחים טענת "לכל" (0:00) וטענת "קיים" (1:03), ואחר כך דוגמה עם שני הכמתים: משוואה ריבועית
+    ללא פתרון (1:17), שבה בוחרים מספר בעזרת הדיסקרימיננטה (2:27). שימו לב שהמספר שנבחר תלוי במה שנבחר לפניו: זו
+    בדיוק האסטרטגיה של המוכיחים באיור 0.3א.
+  verified: 2026-11-09
+- id: v-0-3-negate-nested
+  youtubeId: jLVKV5LJjaw
+  title: Negating Logical Statements with Multiple Quantifiers
+  channel: Dr. Trefor Bazett
+  lang: en
+  captions: [en]
+  start: 0
+  minutes: 9
+  why: >-
+    לפי תיאור הסרטון: שלילה של טענה עם כמה כמתים, בכלל של השיעור: כל "לכל" הופך ל"קיים" ולהפך, והתנאי שבסוף נשלל.
+    הוא מתרגם משפט במילים לטענה עם כמתים, שולל אותה בסימנים ומתרגם את השלילה בחזרה למילים. עשו כל צעד לפניו.
+  verified: 2026-11-09

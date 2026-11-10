@@ -1,0 +1,7 @@
+---
+/** Lesson-0.2 figure: <Spread figure={TruthTable} figureProps={{…}}>. */
+import TruthTable, { type TruthTableProps } from './TruthTable';
+type Props = TruthTableProps;
+---
+
+<TruthTable client:visible {...Astro.props} />

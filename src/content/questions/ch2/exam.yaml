@@ -1,0 +1,370 @@
+# Chapter 2 exam questions — original, in the style of an 80131 final (not taken from a real exam).
+# Each is worth 25 points in lettered parts, with at least one open part graded against a model solution and a rubric.
+chapter: 2
+questions:
+  - id: Q-2-exam-1
+    type: exam
+    title: סדרה רקורסיבית
+    prompt: >-
+      נתונה הסדרה $a_1=1$, $a_{n+1}=\sqrt{3+2a_n}$ לכל $n\in\mathbb{N}$.
+    parts:
+      - label: א
+        points: 9
+        type: open
+        objectives: [OBJ-2.7-2, OBJ-2.1-2]
+        prompt: >-
+          הוכיחו באינדוקציה ש-$0<a_n<3$ לכל $n$, והסיקו שהסדרה עולה ממש.
+        solution:
+          - kind: given
+            text: '$a_1=1$ ו-$a_{n+1}=\sqrt{3+2a_n}$.'
+          - kind: goal
+            text: '$0<a_n<3$ לכל $n$, ו-$a_{n+1}>a_n$ לכל $n$.'
+          - kind: idea
+            text: >-
+              קודם החסם, באינדוקציה. אחר כך משווים את הריבועים $a_{n+1}^2$ ו-$a_n^2$, כי $a_{n+1}^2$ נתון בלי שורש,
+              והחסם קובע את סימן ההפרש.
+          - kind: step
+            text: 'בסיס: $0<a_1=1<3$.'
+          - kind: step
+            text: >-
+              צעד: נניח $0<a_n<3$. אז $3<3+2a_n<9$, ולכן $\sqrt3<a_{n+1}<3$; בפרט $0<a_{n+1}<3$. לפי עקרון
+              האינדוקציה $0<a_n<3$ לכל $n$.
+          - kind: computation
+            text: '$a_{n+1}^2-a_n^2=3+2a_n-a_n^2=(3-a_n)(1+a_n)$.'
+          - kind: step
+            text: >-
+              כי $0<a_n<3$, שני הגורמים חיוביים, ולכן $a_{n+1}^2>a_n^2$. שני המספרים חיוביים, ולכן
+              $a_{n+1}>a_n$.
+          - kind: result
+            text: 'לכל $n$: $0<a_n<3$ ו-$a_{n+1}>a_n$. הסדרה עולה ממש וחסומה מלעיל על ידי 3.'
+        rubric:
+          - text: 'בסיס האינדוקציה, וצעד שמשתמש בהנחה $0<a_n<3$ כדי להראות $0<a_{n+1}<3$'
+            weight: 3
+          - text: 'הפירוק $a_{n+1}^2-a_n^2=(3-a_n)(1+a_n)$, או טיעון שקול לסימן ההפרש'
+            weight: 2
+          - text: 'הסימן של שני הגורמים נקבע מהחסם, והמעבר מהריבועים לאיברים מוצדק בחיוביות'
+            weight: 3
+          - text: 'המסקנה נכונה לכל $n$ (לא נבדקה רק על האיברים הראשונים)'
+            weight: 1
+
+      - label: ב
+        points: 4
+        type: mc
+        standalone: false
+        objectives: [OBJ-2.7-1]
+        prompt: >-
+          מה נובע מסעיף א, ולמה?
+        choices:
+          - text: 'הסדרה מתכנסת, לגבול $L=\sup\{a_n\}\le3$, כי היא עולה וחסומה מלעיל'
+            correct: true
+            feedback: >-
+              נכון: משפט ההתכנסות המונוטונית. עדיין לא ידוע ש-$L=3$; זה מה שסעיף ג מחשב.
+          - text: 'הסדרה מתכנסת ל-3, כי 3 חוסם אותה מלעיל'
+            feedback: >-
+              3 הוא חסם אחד, והגבול הוא החסם הקטן ביותר. כאן אמנם יתברר ש-$L=3$, אבל זה דורש חישוב, לא רק את החסם.
+            misconception: MC-monotone-limit-any-bound
+          - text: 'הסדרה מתכנסת, כי כל סדרה חסומה מתכנסת'
+            feedback: >-
+              המסקנה נכונה והנימוק לא: $(-1)^n$ חסומה ומתבדרת. מה שמבטיח התכנסות כאן הוא העלייה יחד עם החסם.
+            misconception: MC-bounded-implies-convergent
+
+      - label: ג
+        points: 6
+        type: numeric
+        standalone: false
+        objectives: [OBJ-2.7-2]
+        prompt: >-
+          מצאו את $\lim_{n\to\infty}a_n$.
+        answer: 3
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. מעבר לגבול ב-$a_{n+1}^2=3+2a_n$ נותן $L^2=3+2L$, כלומר $(L-3)(L+1)=0$. כי $a_n\ge1$ לכל $n$,
+          $L\ge1$, ולכן $L=3$.
+        wrongFeedback: >-
+          הסדרה מתכנסת (סעיף ב), ולכן מותר להעביר את הרקורסיה לגבול. פתרו את המשוואה ובחרו את הפתרון שמתאים לסימן
+          האיברים.
+        commonWrong:
+          - value: -1
+            feedback: >-
+              $-1$ פותר את $L^2=3+2L$, אבל כל האיברים חיוביים, ולכן הגבול אינו שלילי.
+            misconception: MC-fixed-point-root-choice
+
+      - label: ד
+        points: 6
+        type: twotier
+        objectives: [OBJ-2.7-2]
+        qualitative: true
+        prompt: >-
+          עכשיו $a_1=5$, עם אותו כלל $a_{n+1}=\sqrt{3+2a_n}$. האם הסדרה מתכנסת?
+        choices:
+          - text: 'כן, ל-3'
+            correct: true
+            feedback: >-
+              נכון: $5,\ \sqrt{13}\approx3.61,\ 3.20,\ 3.06,\dots$ יורדת לעבר 3 מלמעלה.
+          - text: 'לא, כי ההוכחה של סעיף א נכשלת כש-$a_1>3$'
+            feedback: >-
+              נכשלת **ההוכחה ההיא**, לא ההתכנסות. עם $a_1>3$ מוכיחים את התמונה ההפוכה: חסם מלרע וירידה.
+            misconception: MC-recursion-ignores-start
+        reasons:
+          - text: 'באינדוקציה $a_n>3$ (כי $a_n>3$ גורר $a_{n+1}>\sqrt9$), ו-$(3-a_n)(1+a_n)<0$ נותן ירידה; יורדת וחסומה מלרע, והגבול $L\ge3$ הוא 3'
+            correct: true
+            feedback: >-
+              בדיוק. אותה משוואה $L^2=3+2L$, ואותה בחירה: הפעם $L\ge3$, ולכן שוב $L=3$.
+          - text: 'אותה הוכחה כמו בסעיף א: הסדרה עולה וחסומה על ידי 3'
+            feedback: >-
+              $a_2=\sqrt{13}<5=a_1$, כך שהסדרה אינה עולה, ו-$a_1=5$ אינו מתחת ל-3. האיבר הראשון קובע איזה חסם ואיזו
+              מונוטוניות מוכיחים.
+            misconception: MC-recursion-ignores-start
+          - text: 'המשוואה $L^2=3+2L$ נותנת $L=3$, ולכן הסדרה מתכנסת ל-3'
+            feedback: >-
+              המשוואה רק מצמצמת את המועמדים, ורק אחרי שהוכח שיש גבול. כאן צריך קודם ירידה וחסם מלרע.
+            misconception: MC-fixed-point-before-convergence
+
+  - id: Q-2-exam-2
+    type: exam
+    title: גבול מההגדרה וחשבון גבולות
+    prompt: >-
+      נתונה הסדרה $a_n=\frac{3n-1}{n+2}$.
+    parts:
+      - label: א
+        points: 8
+        type: open
+        objectives: [OBJ-2.3-1, OBJ-2.2-1]
+        prompt: >-
+          הוכיחו **מההגדרה** ש-$a_n\to3$.
+        solution:
+          - kind: goal
+            text: 'לכל $\varepsilon>0$ קיים $N$ כך שלכל $n>N$ מתקיים $|a_n-3|<\varepsilon$.'
+          - kind: computation
+            text: '$a_n-3=\frac{3n-1-3(n+2)}{n+2}=\frac{-7}{n+2}$, ולכן $|a_n-3|=\frac{7}{n+2}$.'
+          - kind: idea
+            text: >-
+              מספיק לחסום את המרחק מלמעלה בביטוי פשוט ששואף לאפס: $\frac{7}{n+2}<\frac7n$. לא צריך את ה-$N$ הקטן ביותר.
+          - kind: step
+            text: 'יהי $\varepsilon>0$. נבחר $N=\left\lceil\frac{7}{\varepsilon}\right\rceil$ (קיים לפי תכונת ארכימדס).'
+          - kind: check
+            text: 'לכל $n>N$: $|a_n-3|=\frac{7}{n+2}<\frac7n<\frac7N\le\varepsilon$.'
+          - kind: result
+            text: 'לכל $\varepsilon>0$ מצאנו $N$ מתאים, ולכן $a_n\to3$.'
+        rubric:
+          - text: 'ניסוח נכון של מה שצריך להוכיח, עם הכמתים בסדר הנכון'
+            weight: 1
+          - text: 'חישוב מדויק של $|a_n-3|=\frac{7}{n+2}$'
+            weight: 2
+          - text: 'חסימה מלמעלה בביטוי ששואף לאפס, ובחירה מפורשת של $N$ שתלוי ב-$\varepsilon$'
+            weight: 3
+          - text: 'בדיקה שלכל $n>N$ מתקבל אי-שוויון חזק $|a_n-3|<\varepsilon$'
+            weight: 2
+
+      - label: ב
+        points: 4
+        type: numeric
+        objectives: [OBJ-2.2-3]
+        prompt: >-
+          מהו ה-$N$ **הקטן ביותר** כך ש-$|a_n-3|<0.01$ לכל $n>N$?
+        answer: 698
+        tolerance: 0.0005
+        correctFeedback: >-
+          נכון. $\frac{7}{n+2}<0.01\iff n+2>700\iff n>698$. ב-$n=698$ מתקבל בדיוק $\frac{7}{700}=0.01$, שאינו קטן
+          ממש, ולכן $N=698$ הוא הקטן ביותר.
+        wrongFeedback: >-
+          השתמשו במרחק המדויק $\frac{7}{n+2}$, לא בהערכה, ובדקו את המקרה של שוויון.
+        commonWrong:
+          - value: 699
+            feedback: >-
+              699 הוא האיבר הראשון בתוך הרצועה. ההגדרה אומרת "לכל $n>N$", ולכן $N=698$ כבר מבטיח $n\ge699$.
+            misconception: MC-N-is-first-index
+          - value: 700
+            feedback: >-
+              $N=700$ מתקבל מההערכה $\frac7n<0.01$. הוא מתאים, וזה מספיק להוכחה, אבל הוא לא הקטן ביותר: המרחק המדויק
+              הוא $\frac{7}{n+2}$.
+
+      - label: ג
+        points: 6
+        type: numeric
+        objectives: [OBJ-2.4-2, OBJ-2.6-2]
+        prompt: >-
+          חשבו את $\lim_{n\to\infty}n\,(a_n-3)$.
+        answer: -7
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $n(a_n-3)=\frac{-7n}{n+2}=\frac{-7}{1+\frac2n}\to-7$. זו הצורה $\infty\cdot0$, ולכן חישבנו במפורש.
+        wrongFeedback: >-
+          $n\to\infty$ ו-$a_n-3\to0$: צורה לא מוגדרת. השתמשו בנוסחה המדויקת ל-$a_n-3$ מסעיף א.
+        commonWrong:
+          - value: 0
+            feedback: >-
+              גורם ששואף לאפס לא מאפס מכפלה כשהגורם השני לא חסום. כאן $a_n-3$ קטן כמו $\frac7n$, ו-$n$ מבטל זאת בדיוק.
+            misconception: MC-null-times-anything
+          - value: 7
+            feedback: >-
+              בדקו את הסימן: $a_n<3$ לכל $n$, כי $a_n-3=\frac{-7}{n+2}$.
+
+      - label: ד
+        points: 7
+        type: open
+        objectives: [OBJ-2.4-1, OBJ-2.3-2]
+        prompt: >-
+          תהי $x_n$ סדרה כלשהי עם $x_n\to3$. הוכיחו **מההגדרה**, בלי כלל המכפלה, ש-$x_n^2\to9$.
+        solution:
+          - kind: goal
+            text: 'לכל $\varepsilon>0$ קיים $N$ כך שלכל $n>N$ מתקיים $|x_n^2-9|<\varepsilon$.'
+          - kind: idea
+            text: >-
+              $|x_n^2-9|=|x_n-3|\cdot|x_n+3|$. את הגורם הראשון ההגדרה עושה קטן, ואת השני צריך רק לחסום, על זנב
+              של הסדרה.
+          - kind: step
+            text: >-
+              מההגדרה עם $\varepsilon=1$: יש $N_1$ כך ש-$|x_n-3|<1$ לכל $n>N_1$. אז $2<x_n<4$, ולכן
+              $|x_n+3|<7$ לכל $n>N_1$.
+          - kind: step
+            text: >-
+              יהי $\varepsilon>0$. מההגדרה עם $\frac{\varepsilon}{7}$: יש $N_2$ כך ש-$|x_n-3|<\frac\varepsilon7$ לכל
+              $n>N_2$. נבחר $N=\max(N_1,N_2)$.
+          - kind: check
+            text: 'לכל $n>N$: $|x_n^2-9|=|x_n-3|\cdot|x_n+3|<\frac{\varepsilon}{7}\cdot7=\varepsilon$.'
+          - kind: result
+            text: '$x_n^2\to9$.'
+        rubric:
+          - text: 'הפירוק $|x_n^2-9|=|x_n-3|\cdot|x_n+3|$'
+            weight: 1
+          - text: 'חסם ל-$|x_n+3|$ שמתקבל מההתכנסות, על זנב של הסדרה (לא "מקסימום של כל האיברים")'
+            weight: 3
+          - text: 'בחירת $N=\max(N_1,N_2)$ ושימוש בהגדרה עם $\frac{\varepsilon}{7}$ (או קבוע מתאים אחר)'
+            weight: 2
+          - text: 'בדיקה מסכמת שלכל $n>N$ מתקבל $|x_n^2-9|<\varepsilon$'
+            weight: 1
+
+  - id: Q-2-exam-3
+    type: exam
+    title: סדרות קושי ובולצאנו-ויירשטראס
+    prompt: >-
+      הסדרה $a_n$ מקיימת לכל $n\in\mathbb{N}$:
+      $$|a_{n+2}-a_{n+1}|\le\frac12\,|a_{n+1}-a_n|.$$
+    parts:
+      - label: א
+        points: 9
+        type: open
+        objectives: [OBJ-2.10-3, OBJ-2.10-2]
+        prompt: >-
+          הוכיחו ש-$a_n$ סדרת קושי, והסיקו שהיא מתכנסת.
+        solution:
+          - kind: given
+            text: 'נסמן $d=|a_2-a_1|$. הנתון: כל הפרש עוקב קטן לפחות פי 2 מקודמו.'
+          - kind: idea
+            text: >-
+              ההפרשים העוקבים קטנים כמו סדרה הנדסית, ולכן גם סכום של כמה מהם, מכל אורך, קטן. את $a_m-a_n$ כותבים כסכום
+              טלסקופי של הפרשים עוקבים.
+          - kind: step
+            text: 'באינדוקציה על $k$: $|a_{k+1}-a_k|\le\frac{d}{2^{k-1}}$ לכל $k\ge1$.'
+          - kind: computation
+            text: >-
+              לכל $m>n$, לפי אי-שוויון המשולש:
+              $$|a_m-a_n|\le\sum_{k=n}^{m-1}|a_{k+1}-a_k|\le d\sum_{k=n}^{m-1}\frac{1}{2^{k-1}}<\frac{d}{2^{n-1}}\left(1+\frac12+\frac14+\dots\right)=\frac{4d}{2^n}.$$
+          - kind: step
+            text: >-
+              יהי $\varepsilon>0$. כי $\frac{4d}{2^N}\to0$, יש $N$ כך ש-$\frac{4d}{2^N}<\varepsilon$ (אם $d=0$ הסדרה
+              קבועה).
+          - kind: check
+            text: 'לכל $m>n>N$: $|a_m-a_n|<\frac{4d}{2^n}<\frac{4d}{2^N}<\varepsilon$. לכן $a_n$ סדרת קושי.'
+          - kind: theorem
+            text: 'בממשיים כל סדרת קושי מתכנסת.'
+          - kind: result
+            text: '$a_n$ סדרת קושי, ולכן מתכנסת.'
+        rubric:
+          - text: 'חסם להפרשים העוקבים, $|a_{k+1}-a_k|\le\frac{d}{2^{k-1}}$, בנימוק (אינדוקציה)'
+            weight: 2
+          - text: 'כתיבת $a_m-a_n$ כסכום טלסקופי ושימוש באי-שוויון המשולש לכל $m>n$, לא רק לעוקבים'
+            weight: 3
+          - text: 'חסם שאינו תלוי ב-$m$ ושואף לאפס (סכום הנדסי)'
+            weight: 2
+          - text: 'בחירת $N$ לפי $\varepsilon$ והמסקנה דרך המשפט "קושי גורר התכנסות"'
+            weight: 2
+
+      - label: ב
+        points: 5
+        type: twotier
+        objectives: [OBJ-2.10-1]
+        qualitative: true
+        prompt: >-
+          האם היה מספיק להניח רק ש-$a_{n+1}-a_n\to0$ כדי להסיק שהסדרה מתכנסת?
+        choices:
+          - text: לא
+            correct: true
+            feedback: >-
+              נכון. הנתון של סעיף א חזק יותר: הוא קובע **קצב** ירידה הנדסי של ההפרשים.
+          - text: כן
+            feedback: >-
+              הפרשים עוקבים ששואפים לאפס יכולים להצטבר לסכום שגדל בלי הגבלה. ראו את הדוגמה בנימוק הנכון.
+            misconception: MC-cauchy-consecutive-terms
+        reasons:
+          - text: '$a_n=\sqrt n$ מקיימת $a_{n+1}-a_n\to0$ ושואפת לאינסוף'
+            correct: true
+            feedback: >-
+              בדיוק. בסעיף א החסם על $|a_m-a_n|$ לא היה תלוי ב-$m$, וזה מה שחסר כאן.
+          - text: 'הנתון של סעיף א הוא בעצם רק ש-$a_{n+1}-a_n\to0$'
+            feedback: >-
+              הנתון אומר יותר: כל הפרש קטן פי 2 לפחות מקודמו, ולכן סכום כל ההפרשים מ-$n$ והלאה קטן. בלי זה, אין חסם על
+              $|a_m-a_n|$ שאינו תלוי ב-$m$.
+            misconception: MC-cauchy-consecutive-terms
+
+      - label: ג
+        points: 5
+        type: numeric
+        standalone: false
+        objectives: [OBJ-2.7-2, OBJ-2.10-3]
+        prompt: >-
+          הסדרה $a_1=0$, $a_2=1$, $a_{n+2}=\frac{a_n+a_{n+1}}{2}$ מקיימת את הנתון (בשוויון), ולכן מתכנסת לפי סעיף
+          א. מצאו את גבולה. (רמז: משוואת הנקודה הקבועה לא תעזור כאן. בדקו מה קורה ל-$a_{n+1}+\frac{a_n}{2}$.)
+        answer: 0.6666667
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $\frac23$. הביטוי $a_{n+1}+\frac{a_n}{2}$ קבוע: $a_{n+2}+\frac{a_{n+1}}{2}=\frac{a_n+a_{n+1}}{2}+\frac{a_{n+1}}{2}=a_{n+1}+\frac{a_n}{2}$,
+          והוא שווה ל-$a_2+\frac{a_1}{2}=1$. מעבר לגבול: $L+\frac L2=1$, כלומר $L=\frac23$.
+        wrongFeedback: >-
+          המשוואה $L=\frac{L+L}{2}$ מתקיימת לכל $L$, ולכן לא קובעת דבר. מצאו ביטוי שנשמר מצעד לצעד, והעבירו אותו
+          לגבול.
+        commonWrong:
+          - value: 0.5
+            feedback: >-
+              $\frac12$ הוא הממוצע של שני האיברים הראשונים, אבל $a_3=\frac12$ הוא רק האיבר השלישי: $a_4=\frac34$,
+              $a_5=\frac58$, והאיברים קופצים סביב $\frac23$.
+        explanation: >-
+          לקח כללי: כשהרקורסיה תלויה בשני איברים קודמים, משוואת הנקודה הקבועה עלולה להיות ריקה מתוכן. מחפשים גודל
+          שנשמר (אינווריאנט).
+
+      - label: ד
+        points: 6
+        type: open
+        objectives: [OBJ-2.9-3, OBJ-2.9-1]
+        prompt: >-
+          שאלה נפרדת: תהי $b_n$ סדרה **חסומה** כך שכל תת-סדרה מתכנסת שלה שואפת ל-0. הוכיחו ש-$b_n\to0$.
+        solution:
+          - kind: goal
+            text: '$b_n\to0$.'
+          - kind: idea
+            text: >-
+              בדרך השלילה: אם $b_n$ אינה שואפת ל-0, יש תת-סדרה שנשארת רחוקה מ-0. בולצאנו-ויירשטראס מוציא ממנה תת-סדרה
+              מתכנסת, שגבולה רחוק מ-0, בסתירה להנחה.
+          - kind: step
+            text: >-
+              נניח ש-$b_n$ אינה שואפת ל-0. לפי שלילת ההגדרה יש $\varepsilon>0$ כך שלכל $N$ יש $n>N$ עם
+              $|b_n|\ge\varepsilon$. כך בוחרים, אחד אחרי השני, $n_1<n_2<n_3<\dots$ עם $|b_{n_k}|\ge\varepsilon$ לכל $k$.
+          - kind: theorem
+            text: >-
+              $b_{n_k}$ חסומה, כי $b_n$ חסומה. לפי בולצאנו-ויירשטראס יש לה תת-סדרה מתכנסת $b_{n_{k_j}}\to L$.
+          - kind: step
+            text: >-
+              $b_{n_{k_j}}$ היא גם תת-סדרה של $b_n$, ולכן לפי ההנחה $L=0$. מצד שני $|b_{n_{k_j}}|\ge\varepsilon$ לכל $j$,
+              ואי-שוויון חלש עובר לגבול: $|L|\ge\varepsilon>0$. סתירה.
+          - kind: result
+            text: '$b_n\to0$.'
+        rubric:
+          - text: 'שלילה נכונה של "שואפת ל-0" ובניית תת-סדרה עם אינדקסים עולים ממש שנשארת במרחק $\varepsilon$ לפחות'
+            weight: 2
+          - text: 'הפעלת בולצאנו-ויירשטראס, עם ציון מפורש שתת-הסדרה חסומה'
+            weight: 2
+          - text: 'הנימוק שתת-סדרה של תת-סדרה היא תת-סדרה של $b_n$, ולכן גבולה 0'
+            weight: 1
+          - text: 'הסתירה דרך שמירת אי-שוויון חלש בגבול ($|L|\ge\varepsilon$)'
+            weight: 1

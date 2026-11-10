@@ -1,0 +1,331 @@
+# Lesson 2.2 — the definition of a limit. The reference bank: every chapter bank copies its shape.
+# Objectives (src/course.ts):
+#   OBJ-2.2-1  state the ε-N definition and explain each quantifier with a band around the limit
+#   OBJ-2.2-2  negate the definition: what "aₙ does not tend to L" means
+#   OBJ-2.2-3  find a suitable N for a given ε for simple sequences
+chapter: 2
+questions:
+  - id: Q-2.2-order
+    type: mc
+    objectives: [OBJ-2.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזה מהניסוחים הבאים הוא ההגדרה של $\lim_{n\to\infty} a_n = L$?
+    choices:
+      - text: '$\forall \varepsilon>0\ \exists N\in\mathbb{N}\ \forall n>N:\ |a_n-L|<\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. קודם בוחרים את $\varepsilon$, כלומר את הרצועה, ורק אחריו מבטיחים $N$ שמתאים לו: מ-$N$ והלאה כל
+          האיברים בתוך הרצועה.
+      - text: '$\exists N\in\mathbb{N}\ \forall \varepsilon>0\ \forall n>N:\ |a_n-L|<\varepsilon$'
+        feedback: >-
+          כאן אותו $N$ צריך להתאים לכל $\varepsilon$ בבת אחת. אז לכל $n>N$ המרחק $|a_n-L|$ קטן מכל מספר
+          חיובי, כלומר הוא אפס: הסדרה קבועה ושווה ל-$L$ מ-$N$ והלאה. זו טענה חזקה בהרבה מהתכנסות.
+        misconception: MC-limit-quantifier-order
+      - text: '$\forall \varepsilon>0\ \forall n\in\mathbb{N}:\ |a_n-L|<\varepsilon$'
+        feedback: >-
+          זה דורש שכל האיברים, כבר מהראשון, יהיו קרובים ל-$L$ כרצוננו, ולכן כולם שווים ל-$L$. בהגדרת
+          הגבול מותר למספר סופי של איברים בהתחלה להיות רחוקים: בשביל זה יש $N$.
+        misconception: MC-limit-all-terms
+      - text: '$\forall \varepsilon>0\ \exists n\in\mathbb{N}:\ |a_n-L|<\varepsilon$'
+        feedback: >-
+          זה אומר רק שלכל רצועה יש איבר אחד לפחות בתוכה. הסדרה $(-1)^n$ מקיימת את זה עם $L=1$, ובכל זאת אינה
+          מתכנסת. ההגדרה דורשת שמ-$N$ והלאה **כל** האיברים יהיו בתוך הרצועה.
+        misconception: MC-limit-infinitely-often
+    explanation: >-
+      סדר הכמתים הוא כל ההגדרה: "לכל $\varepsilon$ קיים $N$" אומר ש-$N$ רשאי להיות תלוי ב-$\varepsilon$.
+      רצועה צרה יותר מחייבת בדרך כלל $N$ גדול יותר.
+
+  - id: Q-2.2-band
+    type: twotier
+    objectives: [OBJ-2.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סדרה $a_n$ מקיימת: מחוץ לרצועה $(0.9,\ 1.1)$ יש רק 1000 איברים, ומחוץ לרצועה $(0.99,\ 1.01)$ יש
+      רק מיליון איברים. האם מזה אפשר להסיק ש-$a_n \to 1$?
+    choices:
+      - text: לא, אי אפשר להסיק
+        correct: true
+        feedback: >-
+          נכון. ההגדרה דורשת את התכונה **לכל** $\varepsilon>0$, ושתי רצועות הן רק שני ערכים של $\varepsilon$.
+      - text: כן, אפשר להסיק
+        feedback: >-
+          שתי רצועות אינן כל הרצועות. ייתכן, למשל, שאינסוף איברים נמצאים במרחק $0.005$ בדיוק מ-1: אז ברצועה
+          עם $\varepsilon = 0.001$ סביב 1 אף אחד מהם לא נמצא, והסדרה לא שואפת ל-1.
+        misconception: MC-limit-few-epsilons
+    reasons:
+      - text: ההגדרה צריכה להתקיים לכל $\varepsilon$ חיובי, ושתי רצועות לא מבטיחות את הרצועות הצרות יותר
+        correct: true
+        feedback: >-
+          בדיוק. המידע על $\varepsilon=0.1$ ועל $\varepsilon=0.01$ לא אומר דבר על $\varepsilon=0.001$.
+      - text: ככל שהרצועה צרה יותר יש מחוצה לה יותר איברים, ולכן הסדרה מתבדרת
+        feedback: >-
+          גם זה לא נובע. בסדרה $1+\frac{1}{n}$, שכן מתכנסת ל-1, מחוץ לרצועה צרה יותר יש יותר איברים: זה טבעי,
+          כי $N$ תלוי ב-$\varepsilon$. מה שחשוב הוא שמחוץ לכל רצועה יש מספר **סופי** של איברים.
+        misconception: MC-limit-N-independent
+      - text: מספר האיברים מחוץ לרצועה סופי, וזה בדיוק מה שההגדרה דורשת
+        feedback: >-
+          ההגדרה אכן דורשת מספר סופי של איברים מחוץ לרצועה, אבל לכל רצועה. כאן נבדקו רק שתיים.
+        misconception: MC-limit-few-epsilons
+
+  - id: Q-2.2-tail
+    type: multi
+    objectives: [OBJ-2.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$a_n \to 5$. אילו מהשינויים הבאים **אינם** משנים את הגבול? סמנו את כולם.
+    choices:
+      - text: מחליפים את מאה האיברים הראשונים ב-$0$
+        correct: true
+        feedback: >-
+          נכון. מספר סופי של איברים לא משפיע: אם קודם התאים $N$, אחרי השינוי מתאים $\max(N,100)$.
+      - text: 'מוחקים את $a_1$ ומזיזים את כל השאר מקום אחד שמאלה: $b_n = a_{n+1}$'
+        correct: true
+        feedback: >-
+          נכון. אם $|a_n-5|<\varepsilon$ לכל $n>N$, אז $|b_n-5| = |a_{n+1}-5|<\varepsilon$ לכל $n>N$.
+      - text: מחליפים כל איבר עשירי ב-$0$
+        feedback: >-
+          זה משנה. אינסוף איברים שווים ל-$0$, ולכן ברצועה עם $\varepsilon = 1$ סביב $5$ לא נמצאים כל האיברים מ-$N$
+          והלאה, לאף $N$. הסדרה החדשה כבר לא מתכנסת.
+        misconception: MC-limit-infinitely-often
+      - text: מוסיפים לכל איבר $\frac{1}{n}$
+        correct: true
+        feedback: >-
+          נכון, הגבול נשאר $5$: $|a_n+\frac1n-5| \le |a_n-5|+\frac1n$ (אי-שוויון המשולש, משיעור 0.7). לכל $\varepsilon$ בוחרים $N$ שמ-$N$ והלאה כל מחובר קטן מ-$\frac\varepsilon2$, והסכום קטן מ-$\varepsilon$ מ-$N$ גדול
+          מספיק. (כלל הסכום, שיוכח בשיעור 2.4, אומר את זה בקיצור.)
+
+  - id: Q-2.2-neg
+    type: mc
+    objectives: [OBJ-2.2-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה פירוש הטענה "$a_n$ **אינה** שואפת ל-$L$"?
+    choices:
+      - text: '$\exists \varepsilon>0\ \forall N\in\mathbb{N}\ \exists n>N:\ |a_n-L|\ge\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. השלילה הופכת כל "לכל" ל"קיים" ולהפך, ושוללת את התנאי שבסוף: יש רצועה אחת שבכל זנב של
+          הסדרה יש איבר מחוצה לה.
+      - text: '$\forall \varepsilon>0\ \forall N\in\mathbb{N}\ \exists n>N:\ |a_n-L|\ge\varepsilon$'
+        feedback: >-
+          את הכמת הראשון שכחו להפוך. הטענה הזו אומרת שאיברים יוצאים מ**כל** רצועה, גם מהרצועה עם $\varepsilon$ של מיליון.
+          הסדרה $a_n=1+\frac{(-1)^n}{2}$ לא שואפת ל-1, אבל כל איבריה, $\frac12$ ו-$\frac32$, בתוך הרצועה עם $\varepsilon = 1$ סביב 1.
+        misconception: MC-negation-partial
+      - text: '$\exists \varepsilon>0\ \exists N\in\mathbb{N}\ \forall n>N:\ |a_n-L|\ge\varepsilon$'
+        feedback: >-
+          זו טענה חזקה מדי: כל האיברים מ-$N$ והלאה מחוץ לרצועה. הסדרה $\frac{1+(-1)^n}{2}$ (שמתחלפת בין 0 ל-1)
+          לא שואפת ל-0, ובכל זאת אינסוף מאיבריה שווים ל-0.
+        misconception: MC-negation-partial
+      - text: '$\forall \varepsilon>0\ \exists N\in\mathbb{N}\ \forall n>N:\ |a_n-L|>\varepsilon$'
+        feedback: >-
+          כאן שללו רק את אי-השוויון שבסוף והשאירו את הכמתים. שלילה של טענה עם כמתים הופכת את כל הכמתים. וגם אי-השוויון נשלל לא נכון: השלילה של $<$ היא $\ge$, לא $>$.
+        misconception: MC-negation-partial
+
+  - id: Q-2.2-alt
+    type: twotier
+    objectives: [OBJ-2.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם הסדרה $a_n = (-1)^n$ שואפת ל-$1$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. האיברים האי-זוגיים כולם שווים ל-$-1$, ומרחקם מ-$1$ הוא $2$.
+      - text: כן
+        feedback: >-
+          חצי מהאיברים שווים ל-1, אבל ההגדרה דורשת שמ-$N$ והלאה **כל** האיברים יהיו קרובים ל-1, לא רק חלק מהם.
+        misconception: MC-limit-infinitely-often
+    reasons:
+      - text: 'עם $\varepsilon=1$: לכל $N$ יש $n>N$ אי-זוגי, ו-$|a_n-1| = 2 \ge 1$'
+        correct: true
+        feedback: >-
+          זו בדיוק השלילה של ההגדרה: מצאנו $\varepsilon$ אחד, ולכל $N$ איבר אחריו מחוץ לרצועה.
+      - text: 'יש אינסוף $n$ עם $a_n = 1$'
+        feedback: >-
+          זה נכון אבל לא מוכיח דבר בשום כיוון: הוא מתאים גם לסדרה שכן שואפת ל-1, למשל הקבועה 1.
+        misconception: MC-limit-infinitely-often
+      - text: 'לכל $\varepsilon$ יש $n$ עם $|a_n-1|<\varepsilon$'
+        feedback: >-
+          זה נכון (קחו $n$ זוגי), אבל זו לא שלילת ההגדרה וגם לא ההגדרה עצמה. בשביל "אינה שואפת" צריך
+          $\varepsilon$ אחד שאיברים יוצאים ממנו בכל זנב.
+        misconception: MC-limit-infinitely-often
+
+  - id: Q-2.2-negcount
+    type: mc
+    objectives: [OBJ-2.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      איזה משפט במילים שקול ל"$a_n$ אינה שואפת ל-$L$"?
+    choices:
+      - text: יש רצועה סביב $L$ שמחוץ לה נמצאים אינסוף איברים של הסדרה (אינסוף מקומות $n$)
+        correct: true
+        feedback: >-
+          נכון. "לכל $N$ יש $n>N$ מחוץ לרצועה" אומר שאחרי כל מקום בסדרה יש עוד איבר בחוץ: יש אינסוף כאלה.
+      - text: מחוץ לכל רצועה סביב $L$ נמצאים אינסוף איברים
+        feedback: >-
+          חזק מדי: מספיקה רצועה אחת. ראו את $1+\frac{(-1)^n}{2}$, שכל איבריה ברצועה עם $\varepsilon = 1$ סביב 1.
+        misconception: MC-negation-partial
+      - text: רוב האיברים רחוקים מ-$L$
+        feedback: >-
+          "רוב" אינו מושג מוגדר כאן. הסדרה ששווה ל-0 בכל מקום פרט לאיברים $n=2^k$ ששווים ל-1, לא שואפת ל-0,
+          אף ש"רוב" האיברים שווים ל-0.
+        misconception: MC-limit-infinitely-often
+      - text: יש איבר אחד לפחות שרחוק מ-$L$
+        feedback: >-
+          איבר אחד, או מאה, לא משנים גבול. גם $\frac1n$, ששואפת ל-0, מתחילה ב-$1$, שרחוק מ-0.
+        misconception: MC-limit-all-terms
+
+  - id: Q-2.2-N1
+    type: numeric
+    objectives: [OBJ-2.2-3]
+    level: basic
+    prompt: >-
+      עבור $a_n=\frac{1}{n}$, $L=0$ ו-$\varepsilon = 0.01$: מהו ה-$N$ **הקטן ביותר** כך שלכל $n>N$ מתקיים
+      $|a_n-0|<\varepsilon$?
+    answer: 100
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac1n<0.01 \iff n>100$, ולכן $N=100$ מתאים ו-$N=99$ לא (בשביל $n=100$ מקבלים
+      $\frac{1}{100}$, שאינו קטן ממש מ-$0.01$).
+    wrongFeedback: >-
+      פתרו את אי-השוויון $\frac1n<0.01$ עבור $n$, ושימו לב שההגדרה היא "לכל $n>N$", עם אי-שוויון ממש.
+    commonWrong:
+      - value: 101
+        feedback: >-
+          $101$ הוא האיבר הראשון שנכנס לרצועה, אבל ההגדרה מתחילה "לכל $n>N$": אם $N=100$ אז $n$ מתחיל ב-$101$,
+          ולכן $N=100$ כבר מספיק.
+        misconception: MC-N-is-first-index
+      - value: 99
+        feedback: >-
+          עם $N=99$ האיבר $n=100$ נכלל, ו-$\frac1{100}$ אינו קטן **ממש** מ-$0.01$.
+
+  - id: Q-2.2-N2
+    type: numeric
+    objectives: [OBJ-2.2-3]
+    level: mid
+    prompt: >-
+      עבור $a_n=\frac{2n+1}{n}$ ו-$L=2$: מהו ה-$N$ הקטן ביותר שמתאים ל-$\varepsilon = 0.003$, כלומר
+      $|a_n-2|<0.003$ לכל $n>N$? ($N$ הוא מספר טבעי.)
+    answer: 333
+    tolerance: 0.0001
+    correctFeedback: >-
+      נכון. $|a_n-2| = \frac1n$, ו-$\frac1n<0.003 \iff n>\frac{1}{0.003} = 333.\overline{3}$, כלומר $n\ge 334$.
+      לכן $N=333$.
+    wrongFeedback: >-
+      קודם פשטו: $a_n - 2 = \frac{2n+1}{n}-2 = \frac1n$. אחר כך פתרו $\frac1n<0.003$.
+    commonWrong:
+      - value: 333.3333
+        feedback: >-
+          זה $\frac{1}{0.003}$, הגבול של $n$, לא $N$. $N$ הוא מספר טבעי: האיברים בפנים בדיוק כש-$n \ge 334$, ולכן $N = 333$.
+        misconception: MC-N-is-first-index
+      - value: 334
+        feedback: >-
+          $334$ הוא האיבר הראשון בתוך הרצועה. ההגדרה אומרת "לכל $n>N$", ולכן $N=333$ כבר מבטיח $n\ge334$.
+        misconception: MC-N-is-first-index
+      - value: 166
+        feedback: >-
+          $166$ מתקבל מ-$\frac{1}{2n}<0.003$, כלומר מפישוט שגוי של $a_n-2$ ל-$\frac{1}{2n}$. פשטו מחדש:
+          $\frac{2n+1}{n} = 2+\frac1n$.
+
+  - id: Q-2.2-Nformula
+    type: mc
+    objectives: [OBJ-2.2-3]
+    level: mid
+    prompt: >-
+      בהוכחה ש-$\frac{1}{\sqrt n}\to 0$, איזו בחירה של $N$ (כפונקציה של $\varepsilon$) עובדת?
+    choices:
+      - text: '$N = \left\lceil \frac{1}{\varepsilon^2} \right\rceil$'
+        correct: true
+        feedback: >-
+          נכון. לכל $n>N\ge \frac1{\varepsilon^2}$ מתקיים $\sqrt n > \frac1\varepsilon$, כלומר
+          $\frac{1}{\sqrt n} < \varepsilon$.
+      - text: '$N = \left\lceil \frac{1}{\varepsilon} \right\rceil$'
+        feedback: >-
+          עם $\varepsilon=0.1$ זה נותן $N=10$, אבל $\frac{1}{\sqrt{11}} \approx 0.30 > 0.1$. צריך
+          $\sqrt n > \frac1\varepsilon$, כלומר $n > \frac{1}{\varepsilon^2}$.
+        misconception: MC-n-inequality-wrong-power
+      - text: '$N = 1000$'
+        feedback: >-
+          מספר קבוע לא יכול לעבוד לכל $\varepsilon$: עם $\varepsilon = 0.001$ צריך $n > 10^6$. כאן $N$ חייב
+          להיות תלוי ב-$\varepsilon$.
+        misconception: MC-limit-N-independent
+      - text: '$N = \left\lceil \sqrt{\varepsilon} \right\rceil$'
+        feedback: >-
+          ככל ש-$\varepsilon$ קטן, ה-$N$ הזה קטן (הוא $1$ לכל $\varepsilon \le 1$). רצועה צרה יותר צריכה $N$
+          גדול יותר, לא קטן יותר.
+        misconception: MC-limit-N-independent
+    hints:
+      - כתבו את התנאי $\frac{1}{\sqrt n}<\varepsilon$ ובודדו את $n$.
+
+  - id: Q-2.2-Nany
+    type: twotier
+    objectives: [OBJ-2.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחה ש-$a_n \to L$ מישהו מצא שה-$N$ הקטן ביותר שמתאים ל-$\varepsilon$ הוא $N_0$, אבל בהוכחה שלו כתב
+      $N = 10 N_0$. האם ההוכחה עדיין נכונה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: 'נכון. ההגדרה מבקשת $N$ אחד שמתאים, לא את הקטן ביותר.'
+      - text: לא
+        feedback: >-
+          ההגדרה אומרת "קיים $N$". אין דרישה למצוא את ה-$N$ הקטן ביותר, ובהוכחות כמעט אף פעם לא מוצאים אותו.
+        misconception: MC-N-must-be-minimal
+    reasons:
+      - text: 'אם $N_0$ מתאים, גם כל מספר גדול ממנו מתאים: $n > 10N_0$ גורר $n > N_0$'
+        correct: true
+        feedback: >-
+          בדיוק. לכן מותר להעריך בגסות: מספיק למצוא $N$ כלשהו שמ-$N$ והלאה התנאי מתקיים.
+      - text: ההגדרה דורשת את ה-$N$ הקטן ביותר
+        feedback: 'לא. בהגדרה כתוב "$\exists N$", כלומר קיים $N$ מתאים כלשהו.'
+        misconception: MC-N-must-be-minimal
+      - text: 'כש-$N$ גדול יותר, הרצועה $(L-\varepsilon, L+\varepsilon)$ צרה יותר'
+        feedback: >-
+          הרצועה נקבעת רק על ידי $\varepsilon$. הגדלת $N$ רק משמיטה עוד איברים מההתחלה.
+        misconception: MC-limit-quantifier-order
+
+  - id: Q-2.2-escape
+    type: twotier
+    objectives: [OBJ-2.2-2, OBJ-2.2-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      הסדרה מוגדרת כך: $a_n = \frac1n$ כש-$n$ זוגי, ו-$a_n = 1$ כש-$n$ אי-זוגי. האם $a_n \to 0$? בחרו
+      תשובה ונימוק שמוכיח אותה לפי ההגדרה או לפי השלילה שלה.
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. כל האיברים האי-זוגיים שווים ל-1, ולכן יש רצועה סביב 0 שמחוץ לה אינסוף איברים.
+      - text: כן
+        feedback: >-
+          האיברים הזוגיים אכן שואפים ל-0, אבל ההגדרה דורשת שמ-$N$ והלאה **כל** האיברים יהיו קרובים ל-0,
+          והאי-זוגיים כולם שווים ל-1.
+        misconception: MC-limit-infinitely-often
+    reasons:
+      - text: 'נבחר $\varepsilon = \frac12$. לכל $N$, האיבר $n = 2N+1$ אי-זוגי, גדול מ-$N$, ו-$|a_n - 0| = 1 \ge \frac12$'
+        correct: true
+        feedback: >-
+          זו בדיוק השלילה: $\varepsilon$ אחד, ולכל $N$ איבר אחריו מחוץ לרצועה. כל $\varepsilon \le 1$ היה עובד
+          כאן.
+      - text: 'נבחר $\varepsilon = 2$. לכל $N$ יש $n > N$ אי-זוגי עם $|a_n| = 1$'
+        feedback: >-
+          עם $\varepsilon = 2$ האיבר 1 נמצא **בתוך** הרצועה, כי $1 < 2$. כאן אף איבר לא בחוץ: כל איברי הסדרה
+          נמצאים בקטע $(-2, 2)$. כדי שהשלילה תעבוד צריך $\varepsilon \le 1$.
+        misconception: MC-negation-partial
+      - text: 'לכל $\varepsilon>0$ יש $n$ זוגי עם $|a_n| < \varepsilon$'
+        feedback: >-
+          זה נכון, אבל לא מוכיח דבר: גם סדרה ששואפת ל-0 מקיימת את זה, וגם סדרה שלא. קיום של איברים קרובים
+          אינו ההגדרה ואינו השלילה שלה.
+        misconception: MC-limit-infinitely-often
+      - text: 'לא קיים $N$ כך ש-$a_N = 0$'
+        feedback: >-
+          גם ל-$\frac1n$ אף איבר אינו שווה ל-0, והיא שואפת ל-0. גבול אינו ערך שהסדרה מגיעה אליו.
+        misconception: MC-limit-all-terms

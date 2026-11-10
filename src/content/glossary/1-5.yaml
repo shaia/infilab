@@ -1,0 +1,15 @@
+# Terms first defined in lesson 1.5.
+- id: completeness-axiom
+  term: אקסיומת השלמות
+  en: completeness axiom
+  definition: >-
+    לכל קבוצה לא ריקה של ממשיים שחסומה מלעיל יש סופרמום ב-$\mathbb{R}$. זו האקסיומה שמבדילה את $\mathbb{R}$
+    מ-$\mathbb{Q}$; ממנה נובעים קיום האינפימום, תכונת ארכימדס וקיום השורשים.
+  lesson: '1.5'
+- id: sum-of-sets
+  term: סכום קבוצות
+  en: sum of sets
+  symbol: 'A+B'
+  definition: >-
+    הקבוצה $A+B=\{a+b : a\in A,\ b\in B\}$. באופן דומה $cA=\{ca : a\in A\}$ ו-$A-B=\{a-b : a\in A,\ b\in B\}$.
+  lesson: '1.5'

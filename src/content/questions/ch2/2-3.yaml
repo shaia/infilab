@@ -1,0 +1,390 @@
+# Lesson 2.3 — proving a limit from the definition, and first properties.
+# Objectives (src/course.ts):
+#   OBJ-2.3-1  prove from the definition that a sequence tends to a limit, with an upper estimate of |aₙ − L|
+#   OBJ-2.3-2  prove that the limit is unique and that every convergent sequence is bounded
+#   OBJ-2.3-3  prove from the definition that a sequence diverges, e.g. (−1)ⁿ
+# Arithmetic of limits is lesson 2.4: proofs here go through the definition only.
+chapter: 2
+questions:
+  - id: Q-2.3-estimate
+    type: mc
+    objectives: [OBJ-2.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בהוכחה ש-$a_n = \frac{3n+1}{n+2}\to 3$ מחשבים $|a_n-3| = \frac{5}{n+2}$. איזה מהצעדים הבאים מוביל להוכחה?
+    choices:
+      - text: '$\frac{5}{n+2}<\frac{5}{n}$, ולכן מספיק לבחור $N\ge\frac{5}{\varepsilon}$'
+        correct: true
+        feedback: >-
+          נכון. הגדלנו את הביטוי לביטוי פשוט יותר ששואף לאפס. אם $n>N\ge\frac5\varepsilon$, אז
+          $|a_n-3|<\frac5n<\frac5N\le\varepsilon$.
+      - text: '$\frac{5}{n+2}>\frac{5}{2n}$ לכל $n>2$, ולכן מספיק לבחור $N\ge\frac{5}{2\varepsilon}$'
+        feedback: >-
+          זו הערכה **מלמטה**. מ-$\frac{5}{2n}<\varepsilon$ לא נובע ש-$|a_n-3|<\varepsilon$, כי $|a_n-3|$ גדול
+          יותר. כדי להוכיח שמשהו קטן מ-$\varepsilon$ חוסמים אותו מלמעלה.
+        misconception: MC-estimate-from-below
+      - text: '$\frac{5}{n+2}\le\frac{5}{3}$ לכל $n$, ולכן $|a_n-3|$ חסום'
+        feedback: >-
+          ההערכה נכונה אבל לא מועילה: $\frac53$ לא קטן מ-$\varepsilon$ כש-$\varepsilon<\frac53$. החסם צריך
+          להיות ביטוי ששואף לאפס כש-$n$ גדל.
+        misconception: MC-estimate-not-small
+      - text: '$\frac{5}{n+2}<\frac{1}{n}$, ולכן מספיק לבחור $N\ge\frac{1}{\varepsilon}$'
+        feedback: >-
+          אי-השוויון הזה שקרי: $\frac{5}{n+2}<\frac1n \iff 5n<n+2 \iff n<\frac12$, וזה לא קורה לאף $n$ טבעי.
+          כל צעד בהערכה צריך להיות נכון.
+        misconception: MC-estimate-wrong-direction
+
+  - id: Q-2.3-steps
+    type: rank
+    objectives: [OBJ-2.3-1]
+    level: mid
+    prompt: >-
+      זו ההוכחה ש-$a_n = \frac{2n-1}{n+3}\to 2$, כפי שכותבים אותה בסוף (אחרי טיוטה שבה מצאו את $N$).
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: eps
+        label: 'יהי $\varepsilon>0$.'
+      - id: chooseN
+        label: 'נבחר $N\in\mathbb{N}$ כך ש-$N\ge\frac{7}{\varepsilon}$.'
+      - id: n
+        label: 'יהי $n>N$.'
+      - id: compute
+        label: '$|a_n-2| = \left|\frac{2n-1-2n-6}{n+3}\right| = \frac{7}{n+3}$.'
+      - id: estimate
+        label: '$\frac{7}{n+3}<\frac7n<\frac7N\le\varepsilon$.'
+      - id: conclude
+        label: 'הראינו שלכל $n>N$ מתקיים $|a_n-2|<\varepsilon$. כיוון ש-$\varepsilon$ היה כלשהו, $a_n\to 2$.'
+    order: [eps, chooseN, n, compute, estimate, conclude]
+    correctFeedback: >-
+      נכון. סדר השורות הוא סדר הכמתים בהגדרה: לכל $\varepsilon$ (יהי $\varepsilon$), קיים $N$ (נבחר $N$),
+      לכל $n>N$ (יהי $n>N$), ואז מוכיחים את אי-השוויון.
+    wrongFeedback: >-
+      קראו את ההגדרה משמאל לימין: $\forall\varepsilon\ \exists N\ \forall n>N$. כל כמת הופך לשורה אחת בהוכחה,
+      באותו סדר, ורק אחריהן בא החישוב.
+
+  - id: Q-2.3-denominator
+    type: mc
+    objectives: [OBJ-2.3-1]
+    level: exam
+    prompt: >-
+      $a_n = \frac{n+1}{n^2-5}$ לכל $n\ge 3$ (שם המכנה חיובי). איזו שרשרת הערכות נכונה ומוכיחה ש-$a_n\to 0$?
+    choices:
+      - text: 'לכל $n\ge4$: $n^2-5\ge\frac{n^2}{2}$ ו-$n+1\le 2n$, ולכן $0<a_n\le\frac{4}{n}$; נבחר $N\ge\max(4,\frac4\varepsilon)$'
+        correct: true
+        feedback: >-
+          נכון. $n^2-5\ge\frac{n^2}{2} \iff n^2\ge10$, וזה נכון לכל $n\ge4$. מקטינים את המכנה רק לביטוי שהוא
+          עדיין **קטן** ממנו, ואז השבר גדל: $a_n\le\frac{2n}{n^2/2} = \frac4n$. ה-$N$ דורש גם $N\ge4$ כדי שההערכה
+          תחול.
+      - text: 'לכל $n\ge3$: $a_n\le\frac{n+1}{n^2}\le\frac{2n}{n^2} = \frac2n$; נבחר $N\ge\frac2\varepsilon$'
+        feedback: >-
+          הצעד הראשון שגוי: $n^2-5<n^2$, ולכן $\frac{n+1}{n^2-5}>\frac{n+1}{n^2}$. הגדלת המכנה **מקטינה** את
+          השבר. לדוגמה $a_3 = \frac44 = 1$, ואילו $\frac23<1$.
+        misconception: MC-estimate-wrong-direction
+      - text: 'לכל $n\ge3$: $n^2-5\ge 4$, ולכן $a_n\le\frac{n+1}{4}$; נבחר $N\ge\frac4\varepsilon$'
+        feedback: >-
+          ההערכה $a_n\le\frac{n+1}{4}$ נכונה, אבל החסם גדל עם $n$ ולא שואף לאפס, ולכן הוא לא יכול להיות
+          קטן מ-$\varepsilon$.
+        misconception: MC-estimate-not-small
+      - text: 'למספרים גדולים $a_n\approx\frac{n}{n^2} = \frac1n$, ולכן $N\ge\frac1\varepsilon$ מתאים'
+        feedback: >-
+          "בערך" אינו אי-שוויון. עם $\varepsilon = \frac{1}{10}$ ו-$N=10$, $a_{11} = \frac{12}{116}\approx0.103$,
+          שאינו קטן מ-$\frac1{10}$. הוכחה מההגדרה צריכה חסם מלמעלה מדויק.
+        misconception: MC-estimate-by-approximation
+    hints:
+      - כדי להגדיל שבר חיובי מגדילים את המונה או **מקטינים** את המכנה, אבל רק לביטוי שנשאר חיובי.
+
+  - id: Q-2.3-why-estimate
+    type: twotier
+    objectives: [OBJ-2.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחות מההגדרה לא פותרים בדרך כלל את $|a_n-L|<\varepsilon$ במדויק, אלא חוסמים את $|a_n-L|$ מלמעלה בביטוי
+      פשוט יותר (כמו $\frac{C}{n}$) ובוחרים $N$ לפיו. האם זה מותר?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. ההוכחה נשארת מלאה ומדויקת, גם אם ה-$N$ שמתקבל גדול מהנדרש.
+      - text: לא, ההוכחה נעשית מקורבת
+        feedback: >-
+          אין כאן שום קירוב: כל צעד הוא אי-שוויון נכון. ה-$N$ פשוט יוצא גדול מה-$N$ הקטן ביותר, וזה מותר.
+        misconception: MC-N-must-be-minimal
+    reasons:
+      - text: 'אם $|a_n-L|\le b_n$ ו-$b_n<\varepsilon$ לכל $n>N$, אז גם $|a_n-L|<\varepsilon$ לכל $n>N$; וההגדרה מבקשת $N$ כלשהו'
+        correct: true
+        feedback: >-
+          בדיוק. ה-$N$ שמתאים לחסם מתאים גם לסדרה, וההגדרה אומרת "קיים $N$", לא "ה-$N$ הקטן ביותר".
+      - text: 'החסם צריך להיות קרוב ל-$|a_n-L|$, אחרת ה-$N$ שגוי'
+        feedback: >-
+          גם חסם גס עובד, כל עוד הוא שואף לאפס. ה-$N$ שמתקבל ממנו אולי גדול, אבל כל $N$ גדול יותר מ-$N$ שעובד גם
+          עובד.
+        misconception: MC-N-must-be-minimal
+      - text: 'מספיק שהחסם יהיה קטן, גם אם הוא חוסם מלמטה'
+        feedback: >-
+          חסם מלמטה לא אומר דבר על כמה $|a_n-L|$ גדול. רק חסם מלמעלה מעביר את "$<\varepsilon$" אל $|a_n-L|$.
+        misconception: MC-estimate-from-below
+
+  - id: Q-2.3-unique-eps
+    type: multi
+    objectives: [OBJ-2.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחת יחידות הגבול מניחים ש-$a_n\to L_1$ וגם $a_n\to L_2$ עם $L_1\ne L_2$, ובוחרים $\varepsilon$ כדי להגיע
+      לסתירה. אילו בחירות של $\varepsilon$ עובדות **לכל** $L_1\ne L_2$? סמנו את כולן.
+    choices:
+      - text: '$\varepsilon = \frac{|L_1-L_2|}{2}$'
+        correct: true
+        feedback: >-
+          נכון. הרצועות ברוחב $\varepsilon$ סביב $L_1$ וסביב $L_2$ זרות, ומ-$\max(N_1,N_2)$ והלאה $a_n$ צריך להיות
+          בשתיהן.
+      - text: '$\varepsilon = \frac{|L_1-L_2|}{3}$'
+        correct: true
+        feedback: >-
+          נכון. כל $\varepsilon\le\frac{|L_1-L_2|}{2}$ עובד: $|L_1-L_2|\le|L_1-a_n|+|a_n-L_2|<2\varepsilon\le|L_1-L_2|$,
+          סתירה.
+      - text: '$\varepsilon = |L_1-L_2|$'
+        feedback: >-
+          הרצועות רחבות מדי וחופפות: עם $L_1 = 0$, $L_2 = 1$ ו-$\varepsilon = 1$, האיבר $a_n = \frac12$ נמצא בשתיהן,
+          ואין סתירה.
+        misconception: MC-epsilon-too-wide
+      - text: '$\varepsilon = 1$'
+        feedback: >-
+          זה עובד רק כש-$|L_1-L_2|\ge2$. אם $L_1 = 0$ ו-$L_2 = \frac12$, הרצועות ברוחב 1 חופפות. $\varepsilon$
+          חייב להיות תלוי במרחק בין הגבולות.
+        misconception: MC-epsilon-too-wide
+    explanation: >-
+      בהוכחה בשלילה בוחרים $\varepsilon$ לפי מה שרוצים לסתור: כאן, רצועות זרות סביב שני הגבולות. רצועה רחבה
+      מדי לא מפרידה ביניהם.
+
+  - id: Q-2.3-unique-rank
+    type: rank
+    objectives: [OBJ-2.3-2]
+    level: exam
+    prompt: >-
+      הוכחה שלסדרה יש לכל היותר גבול אחד.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: assume
+        label: 'נניח בשלילה ש-$a_n\to L_1$ וגם $a_n\to L_2$, ו-$L_1\ne L_2$.'
+      - id: eps
+        label: 'ניקח $\varepsilon = \frac{|L_1-L_2|}{2}$, שהוא חיובי.'
+      - id: twoN
+        label: 'יש $N_1$ כך ש-$|a_n-L_1|<\varepsilon$ לכל $n>N_1$, ו-$N_2$ כך ש-$|a_n-L_2|<\varepsilon$ לכל $n>N_2$.'
+      - id: pick
+        label: 'ניקח $n>\max(N_1,N_2)$; לו שני אי-השוויונות מתקיימים.'
+      - id: triangle
+        label: 'לפי אי-שוויון המשולש $|L_1-L_2|\le|L_1-a_n|+|a_n-L_2|<2\varepsilon = |L_1-L_2|$.'
+      - id: contra
+        label: 'קיבלנו $|L_1-L_2|<|L_1-L_2|$, סתירה. לכן $L_1 = L_2$.'
+    order: [assume, eps, twoN, pick, triangle, contra]
+    correctFeedback: >-
+      נכון. שימו לב ל-$\max(N_1,N_2)$: צריך $n$ אחד שבו **שתי** ההבטחות תקפות, ולכן לוקחים אותו אחרי שני
+      ה-$N$-ים.
+    wrongFeedback: >-
+      ה-$N_1$ וה-$N_2$ קיימים רק אחרי שבחרנו $\varepsilon$, ואת $n$ אפשר לבחור רק אחרי שיש $N_1$ ו-$N_2$.
+
+  - id: Q-2.3-bounded-converse
+    type: twotier
+    objectives: [OBJ-2.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      כל סדרה מתכנסת חסומה. האם גם כל סדרה חסומה מתכנסת?
+    choices:
+      - text: לא
+        correct: true
+        feedback: 'נכון. $(-1)^n$ חסומה ($|a_n| = 1$) ואינה מתכנסת.'
+      - text: כן
+        feedback: >-
+          זה הכיוון ההפוך של המשפט, והוא לא נובע ממנו. $(-1)^n$ חסומה ב-1 ומתבדרת.
+        misconception: MC-bounded-implies-convergent
+    reasons:
+      - text: '$(-1)^n$ חסומה, ומתחלפת בין $-1$ ל-$1$ בלי להתקרב למספר אחד'
+        correct: true
+        feedback: >-
+          בדיוק. דוגמה נגדית אחת מפריכה טענה כללית. חסימות היא תנאי **הכרחי** להתכנסות, לא תנאי מספיק.
+      - text: 'סדרה חסומה לא יכולה לברוח, ולכן היא מתקרבת למספר כלשהו'
+        feedback: >-
+          חסימות מונעת בריחה, אבל לא מונעת תנודה. $(-1)^n$ לא בורחת ולא מתקרבת לשום מספר.
+        misconception: MC-bounded-implies-convergent
+      - text: 'הכיוון ההפוך של משפט נכון תמיד נכון'
+        feedback: >-
+          ההפוכה של גרירה אינה שקולה לה. השקולה היא הקונטרפוזיטיב: סדרה שאינה חסומה אינה מתכנסת.
+        misconception: MC-bounded-implies-convergent
+
+  - id: Q-2.3-bounded-proof
+    type: mc
+    objectives: [OBJ-2.3-2]
+    level: mid
+    prompt: >-
+      בהוכחה שסדרה מתכנסת $a_n\to L$ חסומה בוחרים $\varepsilon = 1$ ומקבלים $N$ כך ש-$|a_n|<|L|+1$ לכל $n>N$.
+      איזה $M$ חוסם את **כל** האיברים?
+    choices:
+      - text: '$M = \max\{|a_1|, |a_2|, \dots, |a_N|,\ |L|+1\}$'
+        correct: true
+        feedback: >-
+          נכון. האיברים שאחרי $N$ חסומים ב-$|L|+1$, ולמספר הסופי של האיברים הראשונים יש מקסימום. המקסימום של
+          קבוצה סופית תמיד קיים.
+      - text: '$M = |L|+1$'
+        feedback: >-
+          זה חוסם רק את הזנב. האיברים $a_1,\dots,a_N$ יכולים להיות גדולים: הסדרה ששווה ל-100 ב-$n=1$ ול-$\frac1n$
+          בשאר המקומות שואפת ל-0, ו-$|a_1| = 100>1$.
+        misconception: MC-limit-all-terms
+      - text: '$M = \max_{n\in\mathbb{N}}|a_n|$'
+        feedback: >-
+          לקבוצה אינסופית של ערכים אולי אין מקסימום: לסדרה $1-\frac1n$ אין איבר גדול ביותר. ואם מניחים שקיים
+          מקסימום, כבר הנחנו שהסדרה חסומה.
+        misconception: MC-sequence-max-exists
+      - text: '$M = |L|$'
+        feedback: >-
+          איברים יכולים להיות רחוקים מאפס יותר מהגבול: $1+\frac1n\to1$ וכל איבריה גדולים מ-1.
+        misconception: MC-terms-bounded-by-limit
+
+  - id: Q-2.3-unbounded-diverges
+    type: twotier
+    objectives: [OBJ-2.3-2]
+    level: mid
+    prompt: >-
+      האם הסדרה $a_n = \frac{n^2}{n+1}$ מתכנסת?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $a_n\ge\frac{n^2}{2n} = \frac n2$, ולכן לכל $M$ יש $n$ (למשל $n>2M$) עם $a_n>M$: הסדרה אינה
+          חסומה.
+      - text: כן
+        feedback: >-
+          $a_n\ge\frac n2$, ולכן הסדרה אינה חסומה. סדרה מתכנסת חסומה, ולכן זו אינה מתכנסת.
+        misconception: MC-bounded-implies-convergent
+    reasons:
+      - text: 'היא אינה חסומה, וכל סדרה מתכנסת חסומה (ובקונטרפוזיטיב: סדרה שאינה חסומה אינה מתכנסת)'
+        correct: true
+        feedback: >-
+          בדיוק. זה השימוש הנפוץ במשפט: כדי להראות שסדרה מתבדרת, מספיק להראות שהיא אינה חסומה.
+      - text: 'היא עולה, וסדרה עולה אינה חסומה ולכן אינה מתכנסת'
+        feedback: >-
+          היא אכן עולה, אבל עלייה אינה גוררת אי-חסימות: $\frac{n}{n+1}$ עולה ומתכנסת ל-1. כאן צריך את החסם
+          $a_n\ge\frac n2$.
+        misconception: MC-increasing-means-unbounded
+      - text: 'סדרות מתכנסות הן בדיוק הסדרות החסומות, וזו אינה חסומה'
+        feedback: >-
+          המסקנה נכונה, אבל "בדיוק" שגוי: יש סדרות חסומות שאינן מתכנסות, כמו $(-1)^n$. משתמשים רק בכיוון
+          "כל סדרה מתכנסת חסומה".
+        misconception: MC-bounded-implies-convergent
+
+  - id: Q-2.3-diverge-def
+    type: mc
+    objectives: [OBJ-2.3-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה צריך להוכיח כדי להראות שהסדרה $a_n$ **מתבדרת**, כלומר אין לה גבול?
+    choices:
+      - text: '$\forall L\in\mathbb{R}\ \exists\varepsilon>0\ \forall N\in\mathbb{N}\ \exists n>N:\ |a_n-L|\ge\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. "מתבדרת" פירושו שאף מספר $L$ אינו גבול שלה, ולכל $L$ כותבים את השלילה של ההגדרה (שיעור 2.2).
+          ה-$\varepsilon$ רשאי להיות תלוי ב-$L$.
+      - text: '$\exists L\in\mathbb{R}\ \exists\varepsilon>0\ \forall N\in\mathbb{N}\ \exists n>N:\ |a_n-L|\ge\varepsilon$'
+        feedback: >-
+          זה מראה רק ש-$L$ **אחד** אינו הגבול. $\frac1n$ אינה שואפת ל-5, ובכל זאת מתכנסת (ל-0).
+        misconception: MC-diverge-one-L
+      - text: '$\forall L\in\mathbb{R}\ \forall\varepsilon>0\ \forall N\in\mathbb{N}\ \exists n>N:\ |a_n-L|\ge\varepsilon$'
+        feedback: >-
+          את הכמת של $\varepsilon$ שכחו להפוך. הטענה דורשת איברים מחוץ לכל רצועה, גם ברוחב מיליון, ו-$(-1)^n$
+          המתבדרת אינה מקיימת אותה: כל איבריה ברצועה ברוחב 2 סביב 0.
+        misconception: MC-negation-partial
+      - text: '$\forall L\in\mathbb{R}\ \exists\varepsilon>0\ \exists N\in\mathbb{N}\ \forall n>N:\ |a_n-L|\ge\varepsilon$'
+        feedback: >-
+          חזק מדי: זה דורש שזנב שלם יהיה מחוץ לרצועה. $(-1)^n$ מתבדרת, אבל עם $L = 1$ חצי מאיבריה שווים ל-1, בכל
+          זנב.
+        misconception: MC-negation-partial
+
+  - id: Q-2.3-alt-eps
+    type: multi
+    objectives: [OBJ-2.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מוכיחים ש-$a_n = (-1)^n$ מתבדרת: מניחים בשלילה ש-$a_n\to L$, בוחרים $\varepsilon$, ומגיעים לסתירה מכך ששני
+      איברים עוקבים $1$ ו-$-1$ נמצאים ברצועה סביב $L$. אילו בחירות של $\varepsilon$ נותנות סתירה **לכל** $L$?
+      סמנו את כולן.
+    choices:
+      - text: '$\varepsilon = 1$'
+        correct: true
+        feedback: >-
+          נכון. אם $|1-L|<1$ ו-$|-1-L|<1$, אז $2 = |1-(-1)|\le|1-L|+|L+1|<2$, סתירה.
+      - text: '$\varepsilon = \frac12$'
+        correct: true
+        feedback: >-
+          נכון. אותו טיעון נותן $2<2\cdot\frac12 = 1$. כל $\varepsilon\le1$ עובד.
+      - text: '$\varepsilon = 2$'
+        feedback: >-
+          עם $L = 0$ שני הערכים $\pm1$ נמצאים ברצועה $(-2, 2)$, ואין סתירה. הרצועה רחבה מדי ומכילה את שני
+          הערכים יחד.
+        misconception: MC-epsilon-too-wide
+      - text: '$\varepsilon = \frac1n$'
+        feedback: >-
+          $\varepsilon$ נבחר לפני $N$ ולפני $n$, ולכן אינו יכול להיות תלוי ב-$n$. בהגדרה (ובשלילתה)
+          $\varepsilon$ הוא מספר קבוע.
+        misconception: MC-epsilon-depends-on-n
+
+  - id: Q-2.3-alt-rank
+    type: rank
+    objectives: [OBJ-2.3-3]
+    level: exam
+    prompt: >-
+      הוכחה מההגדרה שהסדרה $a_n = (-1)^n$ מתבדרת.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: assume
+        label: 'נניח בשלילה שקיים $L$ כך ש-$a_n\to L$.'
+      - id: eps
+        label: 'ניקח $\varepsilon = 1$, ויהי $N$ כך ש-$|a_n-L|<1$ לכל $n>N$.'
+      - id: pick
+        label: 'ניקח $n>N$ זוגי. אז גם $n+1>N$, ו-$a_n = 1$, $a_{n+1} = -1$.'
+      - id: both
+        label: 'לכן $|1-L|<1$ וגם $|-1-L|<1$.'
+      - id: triangle
+        label: 'לפי אי-שוויון המשולש $2 = |1-(-1)|\le|1-L|+|L-(-1)|<1+1 = 2$.'
+      - id: contra
+        label: 'קיבלנו $2<2$, סתירה. לכן לסדרה אין גבול: היא מתבדרת.'
+    order: [assume, eps, pick, both, triangle, contra]
+    correctFeedback: >-
+      נכון. ההנחה בשלילה היא על $L$ כלשהו, ולכן הסתירה מראה שאף $L$ אינו גבול. ה-$\varepsilon$ הקבוע 1 עבד כאן
+      לכל $L$ בבת אחת.
+    wrongFeedback: >-
+      התחילו מההנחה בשלילה. $N$ קיים רק אחרי שבחרנו $\varepsilon$, ואת $n$ בוחרים אחרי $N$.
+
+  - id: Q-2.3-not-zero
+    type: twotier
+    objectives: [OBJ-2.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סטודנט הוכיח ש-$a_n$ אינה שואפת ל-0, וגם שאינה שואפת ל-1, וכתב: "לכן $a_n$ מתבדרת". האם המסקנה נובעת?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. אולי $a_n$ שואפת למספר אחר. למשל $a_n = 2+\frac1n$ אינה שואפת ל-0 ולא ל-1, ושואפת ל-2.
+      - text: כן
+        feedback: >-
+          שני ערכים שנפסלו אינם כל הממשיים. $a_n = 2+\frac1n$ אינה שואפת ל-0 ולא ל-1, ובכל זאת מתכנסת.
+        misconception: MC-diverge-one-L
+    reasons:
+      - text: 'מתבדרת פירושו שאף $L\in\mathbb{R}$ אינו גבול, ולכן ההוכחה צריכה לטפל ב-$L$ כלשהו'
+        correct: true
+        feedback: >-
+          בדיוק. בהוכחה של $(-1)^n$ מתחילים מ"נניח ש-$a_n\to L$" עם $L$ כללי, ולכן היא פוסלת את כולם בבת אחת.
+      - text: 'בגלל יחידות הגבול, מספיק לפסול שני ערכים'
+        feedback: >-
+          יחידות הגבול אומרת שיש לכל היותר גבול **אחד**, לא שהוא אחד משני ערכים מסוימים. היא לא עוזרת לפסול
+          את שאר המספרים.
+        misconception: MC-diverge-one-L
+      - text: 'אם סדרה אינה שואפת ל-0, היא מתבדרת'
+        feedback: >-
+          הסדרה הקבועה 1 אינה שואפת ל-0 ומתכנסת. "אינה שואפת ל-$L$" אינו "מתבדרת".
+        misconception: MC-diverge-one-L

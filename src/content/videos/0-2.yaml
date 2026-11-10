@@ -1,0 +1,28 @@
+# Videos of lesson 0.2 (statements, connectives and implication). Both are segments of one lecture, verified by
+# oEmbed on 2026-11-09 (200, title and channel as below); length 27:00 and the chapter list from the watch page.
+- id: v-0-2-truth-tables
+  youtubeId: 1Zo7vEsnFgA
+  title: ארז שיינר מציג - לוגיקה מתמטית - טבלאות אמת, קשרים לוגיים ושקילות פסוקים
+  channel: Erez Sheiner
+  lang: he
+  captions: [he]
+  start: 0
+  end: 783
+  minutes: 13
+  why: >-
+    לפי פרקי הסרטון: הקשר "או" וטבלת האמת שלו (0:00), "וגם" (3:21), קשר הגרירה והאמת הריקה (4:16), ודוגמת
+    הקלפים לבדיקת גרירה (7:20). השוו את פתרון הקלפים שלו לפתרון שבחלק על גרירה, ושימו לב באיזו שורה של הטבלה
+    נמצא כל קלף שצריך להפוך.
+  verified: 2026-11-09
+- id: v-0-2-contrapositive
+  youtubeId: 1Zo7vEsnFgA
+  title: ארז שיינר מציג - לוגיקה מתמטית - טבלאות אמת, קשרים לוגיים ושקילות פסוקים
+  channel: Erez Sheiner
+  lang: he
+  captions: [he]
+  start: 1401
+  minutes: 4
+  why: >-
+    לפי פרקי הסרטון: ביטוי גרירה באמצעות שלילה ו"או" (23:21), וגרירה ושקילות ל"היפוך השלילה" (25:27), שהוא
+    הקונטרפוזיטיב. השוו להוכחות שבשיעור, שבהן מראים ששני פסוקים שקר באותה שורה בדיוק.
+  verified: 2026-11-09

@@ -1,0 +1,17 @@
+# Terms first defined in lesson 6.2.
+- id: uniform-continuity
+  term: רציפות במידה שווה
+  en: uniform continuity
+  definition: >-
+    $f$ רציפה במידה שווה בקבוצה $D$ אם לכל $\varepsilon>0$ קיים $\delta>0$ כך שלכל $x,y\in D$ עם
+    $|x-y|<\delta$ מתקיים $|f(x)-f(y)|<\varepsilon$. ההבדל מרציפות בכל נקודה: אותו $\delta$ מתאים לכל
+    הנקודות.
+  reject: [רציפה במידה אחידה, רציפות אחידה, רציפה בשווה]
+  lesson: '6.2'
+- id: cantor-uniform-continuity
+  term: משפט קנטור
+  en: Heine–Cantor theorem
+  definition: >-
+    פונקציה רציפה בקטע סגור וחסום $[a,b]$ רציפה בו במידה שווה. ההוכחה בדרך השלילה, בעזרת משפט
+    בולצאנו-ויירשטראס.
+  lesson: '6.2'

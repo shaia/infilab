@@ -1,0 +1,29 @@
+# Terms first defined in lesson 2.2.
+- id: limit-of-sequence
+  term: גבול של סדרה
+  en: limit of a sequence
+  symbol: '\lim_{n\to\infty} a_n = L'
+  definition: >-
+    $L$ הוא הגבול של $a_n$ אם לכל $\varepsilon>0$ קיים $N$ כך שלכל $n>N$ מתקיים $|a_n-L|<\varepsilon$.
+    כותבים גם $a_n \to L$.
+  lesson: '2.2'
+- id: convergent-sequence
+  term: סדרה מתכנסת
+  en: convergent sequence
+  definition: סדרה שיש לה גבול סופי. סדרה שאין לה גבול סופי נקראת סדרה מתבדרת.
+  reject: [סידרה מתכנסת]
+  lesson: '2.2'
+- id: epsilon-band
+  term: רצועת אפסילון
+  en: epsilon-neighbourhood
+  symbol: '(L-\varepsilon,\ L+\varepsilon)'
+  definition: >-
+    הקטע הפתוח $(L-\varepsilon, L+\varepsilon)$, כל המספרים שמרחקם מ-$L$ קטן מ-$\varepsilon$. בהגדרת הגבול,
+    מ-$N$ והלאה כל איברי הסדרה בתוך הרצועה.
+  lesson: '2.2'
+- id: tail
+  term: זנב של סדרה
+  en: tail of a sequence
+  definition: >-
+    האיברים מאינדקס מסוים והלאה, $a_{N+1}, a_{N+2}, \dots$. הגבול של סדרה תלוי רק בזנבות שלה.
+  lesson: '2.2'

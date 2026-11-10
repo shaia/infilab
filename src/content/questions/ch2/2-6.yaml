@@ -1,0 +1,351 @@
+# Lesson 2.6 — infinite limits.
+# Objectives (src/course.ts):
+#   OBJ-2.6-1  define aₙ → ∞ / −∞ precisely and prove it for given sequences
+#   OBJ-2.6-2  state the extended arithmetic of limits and recognise the indeterminate forms
+#   OBJ-2.6-3  tell apart an unbounded sequence, a sequence tending to ∞, and a merely divergent one
+chapter: 2
+questions:
+  - id: Q-2.6-def
+    type: mc
+    objectives: [OBJ-2.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזה מהניסוחים הבאים הוא ההגדרה של $\lim_{n\to\infty} a_n = \infty$?
+    choices:
+      - text: '$\forall M\in\mathbb{R}\ \exists N\in\mathbb{N}\ \forall n>N:\ a_n>M$'
+        correct: true
+        feedback: >-
+          נכון. בוחרים סף $M$, כמה גבוה שרוצים, ומ-$N$ מסוים והלאה **כל** האיברים מעליו. $N$ תלוי ב-$M$.
+      - text: '$\forall M\in\mathbb{R}\ \exists n\in\mathbb{N}:\ a_n>M$'
+        feedback: >-
+          זו ההגדרה של "לא חסומה מלעיל": לכל סף יש איבר **אחד** מעליו. הסדרה ששווה ל-$n$ במקומות הזוגיים ול-$0$
+          באי-זוגיים מקיימת את זה, ובכל זאת אינסוף מאיבריה שווים ל-$0$.
+        misconception: MC-unbounded-implies-infinity
+      - text: '$\exists N\in\mathbb{N}\ \forall M\in\mathbb{R}\ \forall n>N:\ a_n>M$'
+        feedback: >-
+          כאן $N$ נבחר לפני $M$, ולכן האיבר $a_{N+1}$ צריך להיות גדול מכל מספר ממשי. אין מספר כזה, כך שאף סדרה
+          לא מקיימת את הניסוח הזה.
+        misconception: MC-limit-quantifier-order
+      - text: '$\forall n\in\mathbb{N}:\ a_{n+1}>a_n$'
+        feedback: >-
+          זו ההגדרה של סדרה עולה ממש, לא של שאיפה לאינסוף. $1-\frac1n$ עולה ממש וכל איבריה קטנים מ-1.
+        misconception: MC-increasing-means-unbounded
+    explanation: >-
+      ההגדרה בנויה כמו הגדרת הגבול: במקום רצועה סביב $L$ יש "חצי ישר" $(M,\infty)$, ומ-$N$ והלאה כל האיברים בתוכו.
+
+  - id: Q-2.6-N
+    type: numeric
+    objectives: [OBJ-2.6-1]
+    level: basic
+    prompt: >-
+      עבור $a_n=\sqrt n$ ו-$M=100$: מהו ה-$N$ **הקטן ביותר** כך שלכל $n>N$ מתקיים $a_n>M$?
+    answer: 10000
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sqrt n>100 \iff n>10000$. עם $N=10000$ כל $n>N$ מקיים את התנאי, ועם $N=9999$ האיבר $n=10000$ נותן
+      $\sqrt{10000}=100$, שאינו גדול ממש מ-100.
+    wrongFeedback: >-
+      פתרו את אי-השוויון $\sqrt n>100$ עבור $n$ (שני הצדדים חיוביים, אז מותר להעלות בריבוע), וזכרו שההגדרה
+      מתחילה "לכל $n>N$".
+    commonWrong:
+      - value: 10001
+        feedback: >-
+          $10001$ הוא האיבר הראשון מעל הסף. ההגדרה אומרת "לכל $n>N$", ולכן $N=10000$ כבר מבטיח $n\ge10001$.
+        misconception: MC-N-is-first-index
+      - value: 100
+        feedback: >-
+          שכחתם להעלות בריבוע: $\sqrt{101}\approx 10$, רחוק מאוד מ-100. התנאי $\sqrt n>100$ שקול ל-$n>100^2$.
+    explanation: >-
+      באופן כללי $N=\lceil M^2\rceil$ מתאים לכל $M>0$, וזו כל ההוכחה ש-$\sqrt n\to\infty$.
+
+  - id: Q-2.6-proof
+    type: rank
+    objectives: [OBJ-2.6-1]
+    level: mid
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      ההוכחה ש-$n^2-5n \to \infty$ התפרקה לשלבים. סדרו אותם. (לשני השלבים הראשונים אין סדר מחייב.)
+    items:
+      - id: m
+        label: 'יהי $M>0$.'
+      - id: est
+        label: 'לכל $n\ge 10$ מתקיים $n-5\ge 5$, ולכן $n^2-5n=n(n-5)\ge 5n$.'
+      - id: choose
+        label: 'נבחר $N=\max\left(10,\ \left\lceil \frac{M}{5}\right\rceil\right)$.'
+      - id: chain
+        label: 'לכל $n>N$: $n^2-5n \ge 5n > 5N \ge M$.'
+      - id: end
+        label: 'מצאנו לכל $M$ מספר $N$ מתאים, ולכן $n^2-5n\to\infty$.'
+    order: [[m, est], choose, chain, end]
+    correctFeedback: >-
+      נכון. ההערכה מלמטה ($n^2-5n\ge 5n$) לא תלויה ב-$M$, ולכן אפשר לכתוב אותה לפני או אחרי "יהי $M$". את $N$
+      בוחרים רק אחרי שיודעים מה צריך: גם $n\ge10$ בשביל ההערכה, וגם $5n>M$.
+    wrongFeedback: >-
+      $N$ נבחר לפי $M$ ולפי ההערכה, ולכן הבחירה באה אחרי שתיהן. השרשרת $n^2-5n>M$ משתמשת בבחירה, והמסקנה באה
+      בסוף.
+    hints:
+      - שאלו את עצמכם באיזה שלב משתמשים בכל שלב אחר.
+
+  - id: Q-2.6-reciprocal
+    type: twotier
+    objectives: [OBJ-2.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$b_n\to 0$ ו-$b_n\ne 0$ לכל $n$. האם בהכרח $\frac{1}{b_n}\to\infty$?
+    choices:
+      - text: לא בהכרח
+        correct: true
+        feedback: >-
+          נכון. עבור $b_n=\frac{(-1)^n}{n}$ מתקבל $\frac1{b_n}=(-1)^n n$, שקופצת בין מספרים חיוביים גדולים
+          לשליליים גדולים.
+      - text: כן, תמיד
+        feedback: >-
+          "אחד חלקי אפס הוא אינסוף" אינו כלל. הסימן קובע: עבור $b_n=-\frac1n$ ההופכית היא $-n\to-\infty$.
+        misconception: MC-reciprocal-of-null-is-infinity
+    reasons:
+      - text: 'הסימן של $b_n$ יכול להתחלף; אם $b_n>0$ מ-$N$ מסוים והלאה, אז כן $\frac1{b_n}\to\infty$'
+        correct: true
+        feedback: >-
+          בדיוק. כש-$b_n>0$: לכל $M>0$ בוחרים $\varepsilon=\frac1M$, ומ-$N$ מסוים $0<b_n<\frac1M$, כלומר
+          $\frac1{b_n}>M$.
+      - text: '$\frac1{b_n}$ אינה חסומה, וסדרה שאינה חסומה שואפת לאינסוף'
+        feedback: >-
+          $\frac1{b_n}$ אכן אינה חסומה, אבל זה לא מספיק: $(-1)^n n$ אינה חסומה ואינה שואפת לאינסוף.
+        misconception: MC-unbounded-implies-infinity
+      - text: 'כש-$b_n$ קטן, $\frac1{b_n}$ גדול, ולכן ההופכית שואפת לאינסוף'
+        feedback: >-
+          "קטן" כאן פירושו קטן בערך מוחלט. מה שנכון תמיד הוא $\left|\frac1{b_n}\right|\to\infty$; הסימן עצמו
+          יכול להתחלף.
+        misconception: MC-reciprocal-of-null-is-infinity
+
+  - id: Q-2.6-ext
+    type: multi
+    objectives: [OBJ-2.6-2]
+    level: basic
+    prompt: >-
+      ידוע ש-$a_n\to\infty$ ו-$b_n\to 3$. אילו מהטענות הבאות נכונות **תמיד**? סמנו את כולן.
+    choices:
+      - text: '$a_n+b_n\to\infty$'
+        correct: true
+        feedback: >-
+          נכון: $\infty+c=\infty$. מ-$N$ מסוים $b_n>2$, ולכן $a_n+b_n>a_n+2$, שעובר כל סף.
+      - text: '$a_n b_n\to\infty$'
+        correct: true
+        feedback: >-
+          נכון, כי הגבול של $b_n$ **חיובי**: מ-$N$ מסוים $b_n>1$, ואז $a_nb_n>a_n$ כשגם $a_n>0$. אם הגבול היה
+          שלילי, המכפלה הייתה שואפת למינוס אינסוף.
+      - text: '$\frac{b_n}{a_n}\to 0$'
+        correct: true
+        feedback: >-
+          נכון: מספר חלקי אינסוף שואף לאפס. $|b_n|<4$ מ-$N$ מסוים, ו-$\frac{1}{a_n}\to 0$.
+      - text: '$a_n(b_n-3)\to\infty$'
+        feedback: >-
+          כאן $b_n-3\to 0$, וזו הצורה $\infty\cdot 0$, שאינה מוגדרת. עם $a_n=n$ ו-$b_n=3+\frac1{n^2}$ המכפלה היא
+          $\frac1n\to 0$.
+        misconception: MC-indeterminate-form-value
+
+  - id: Q-2.6-forms
+    type: multi
+    objectives: [OBJ-2.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהצורות הבאות הן **צורות לא מוגדרות**, כלומר הצורה לבדה לא קובעת את הגבול? סמנו את כולן.
+    choices:
+      - text: '$\infty-\infty$'
+        correct: true
+        feedback: >-
+          נכון. $(n+c)-n\to c$ לכל $c$, $n^2-n\to\infty$, ו-$\left(n+(-1)^n\right)-n$ לא מתכנסת בכלל.
+      - text: '$0\cdot\infty$'
+        correct: true
+        feedback: >-
+          נכון. $\frac1n\cdot n\to1$, $\frac1{n^2}\cdot n\to0$ ו-$\frac1n\cdot n^2\to\infty$.
+      - text: '$\frac{\infty}{\infty}$'
+        correct: true
+        feedback: >-
+          נכון. $\frac{2n}{n}\to2$, $\frac{n}{n^2}\to0$ ו-$\frac{n^2}{n}\to\infty$.
+      - text: '$\infty+\infty$'
+        feedback: >-
+          זו צורה מוגדרת: אם $a_n,b_n\to\infty$ אז מ-$N$ מסוים $a_n>\frac M2$ וגם $b_n>\frac M2$, ולכן
+          $a_n+b_n>M$. הסכום תמיד שואף לאינסוף.
+        misconception: MC-indeterminate-form-value
+      - text: '$\infty\cdot\infty$'
+        feedback: >-
+          זו צורה מוגדרת: מ-$N$ מסוים $a_n>1$, ואז $a_nb_n>b_n\to\infty$. המכפלה תמיד שואפת לאינסוף.
+        misconception: MC-indeterminate-form-value
+    explanation: >-
+      כדי להראות שצורה לא מוגדרת מספיקות שתי דוגמאות עם תוצאות שונות. כדי להראות שהיא מוגדרת צריך הוכחה
+      כללית, כמו בכללי הגבול.
+
+  - id: Q-2.6-conj
+    type: numeric
+    objectives: [OBJ-2.6-2]
+    level: mid
+    prompt: >-
+      חשבו את $\lim_{n\to\infty}\left(\sqrt{n^2+n}-n\right)$.
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. זו הצורה $\infty-\infty$, ולכן כופלים בצמוד:
+      $\sqrt{n^2+n}-n=\frac{n}{\sqrt{n^2+n}+n}=\frac{1}{\sqrt{1+\frac1n}+1}\to\frac12$.
+    wrongFeedback: >-
+      שני המחוברים שואפים לאינסוף, וזו צורה לא מוגדרת. כפלו וחלקו ב-$\sqrt{n^2+n}+n$ (כפל בצמוד, שיעור 2.4).
+    commonWrong:
+      - value: 0
+        feedback: >-
+          "אינסוף פחות אינסוף הוא אפס" אינו כלל. ההפרש כאן מתייצב סביב $\frac12$: למשל ב-$n=100$ הוא בערך
+          $0.4988$.
+        misconception: MC-root-difference-zero
+      - value: 1
+        feedback: >-
+          אחרי הכפל בצמוד המכנה הוא $\sqrt{n^2+n}+n$, שני מחוברים שכל אחד מהם בערך $n$. נראה ששכחתם את ה-$n$ השני
+          וקיבלתם $\frac{n}{\sqrt{n^2+n}}\to1$.
+
+  - id: Q-2.6-ratio
+    type: twotier
+    objectives: [OBJ-2.6-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      נכון או לא נכון: אם $a_n\to\infty$ ו-$b_n\to\infty$, אז לסדרה $\frac{a_n}{b_n}$ יש גבול, סופי או אינסופי.
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. $\frac{\infty}{\infty}$ היא צורה לא מוגדרת, והמנה יכולה גם לא לשאוף לשום דבר.
+      - text: נכון
+        feedback: >-
+          הצורה $\frac\infty\infty$ לא קובעת דבר, אפילו לא שיש גבול. ראו את הדוגמה הנגדית בנימוק הנכון.
+        misconception: MC-indeterminate-form-value
+    reasons:
+      - text: 'עבור $a_n=n\left(2+(-1)^n\right)$ ו-$b_n=n$ שתיהן שואפות לאינסוף, והמנה $2+(-1)^n$ מתחלפת בין 1 ל-3'
+        correct: true
+        feedback: >-
+          בדיוק. $a_n\ge n$, ולכן $a_n\to\infty$; המנה מקבלת אינסוף פעמים את הערך 1 ואינסוף פעמים את הערך 3, ולכן
+          אינה מתכנסת ואינה שואפת לאינסוף.
+      - text: 'המנה שואפת תמיד ל-1, כי מונה ומכנה "שווים" באינסוף'
+        feedback: >-
+          אינסוף אינו מספר, ו-$\frac\infty\infty$ אינו 1: $\frac{n^2}{n}\to\infty$ ו-$\frac{n}{n^2}\to0$.
+        misconception: MC-indeterminate-form-value
+      - text: 'אחת מהן גדלה מהר יותר, ולכן המנה שואפת ל-0, לקבוע או לאינסוף'
+        feedback: >-
+          לא תמיד יש "מנצחת": בדוגמה הנגדית המונה פעם פי 1 מהמכנה ופעם פי 3 ממנו, לסירוגין, עד אינסוף.
+        misconception: MC-indeterminate-form-value
+
+  - id: Q-2.6-classify
+    type: mc
+    objectives: [OBJ-2.6-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה נכון לגבי הסדרה $a_n=(-1)^n\, n$?
+    choices:
+      - text: היא לא חסומה, ואינה שואפת לאינסוף ולא למינוס אינסוף
+        correct: true
+        feedback: >-
+          נכון. האיברים הזוגיים עוברים כל סף, ולכן אינה חסומה מלעיל; אבל אינסוף מאיבריה שליליים, ולכן אין $N$ שממנו
+          כולם מעל $M=0$. היא מתבדרת "סתם".
+      - text: היא שואפת לאינסוף, כי $|a_n|=n\to\infty$
+        feedback: >-
+          $|a_n|\to\infty$ לא אומר ש-$a_n\to\infty$: האיברים האי-זוגיים $-1,-3,-5,\dots$ כולם שליליים. אי-חסימות
+          אינה שאיפה לאינסוף.
+        misconception: MC-unbounded-implies-infinity
+      - text: היא מתבדרת, ולכן שואפת לאינסוף או למינוס אינסוף
+        feedback: >-
+          יש עוד אפשרות: לא לשאוף לשום דבר. כדי לשאוף לאינסוף צריך שכל האיברים מ-$N$ והלאה יהיו גדולים, וכאן חצי
+          מהם שליליים.
+        misconception: MC-divergent-means-infinity
+
+  - id: Q-2.6-npow
+    type: twotier
+    objectives: [OBJ-2.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הסדרה $a_n=n^{(-1)^n}$ מתחילה ב-$1,\ 2,\ \frac13,\ 4,\ \frac15,\ 6,\ \dots$. האם $a_n\to\infty$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. היא לא חסומה מלעיל (האיברים הזוגיים הם $n$), אבל האיברים האי-זוגיים הם $\frac1n\le 1$.
+      - text: כן
+        feedback: >-
+          האיברים הזוגיים אכן עוברים כל סף, אבל אינסוף איברים אי-זוגיים קטנים מ-1. שאיפה לאינסוף דורשת שמ-$N$
+          והלאה **כל** האיברים יהיו מעל הסף.
+        misconception: MC-unbounded-implies-infinity
+    reasons:
+      - text: 'עם $M=1$: לכל $N$ יש $n>N$ אי-זוגי, ועבורו $a_n=\frac1n<1$'
+        correct: true
+        feedback: >-
+          בדיוק, זו שלילת ההגדרה: קיים $M$ כך שלכל $N$ יש $n>N$ עם $a_n\le M$.
+      - text: 'הסדרה אינה מונוטונית, ולכן אינה יכולה לשאוף לאינסוף'
+        feedback: >-
+          המסקנה נכונה כאן, אבל הנימוק לא. $n+2(-1)^n$ אינה מונוטונית ובכל זאת שואפת לאינסוף, כי היא גדולה
+          מ-$n-2$.
+        misconception: MC-infinity-requires-monotone
+      - text: 'האיברים הזוגיים שואפים לאינסוף, וזה מה שקובע'
+        feedback: >-
+          זה מספיק רק כדי שהסדרה לא תהיה חסומה. ההגדרה של שאיפה לאינסוף מדברת על כל האיברים מ-$N$ והלאה.
+        misconception: MC-unbounded-implies-infinity
+
+  - id: Q-2.6-implications
+    type: multi
+    objectives: [OBJ-2.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהגרירות הבאות נכונות לכל סדרה? סמנו את כולן.
+    choices:
+      - text: 'אם $a_n\to\infty$ אז $a_n$ אינה חסומה מלעיל'
+        correct: true
+        feedback: >-
+          נכון. לכל $M$ יש $N$ כך ש-$a_{N+1}>M$, ולכן אין חסם מלעיל.
+      - text: 'אם $a_n\to\infty$ אז $a_n$ חסומה מלרע'
+        correct: true
+        feedback: >-
+          נכון. עם $M=0$ יש $N$ שממנו $a_n>0$, ולפניו יש רק מספר סופי של איברים. לכן
+          $\min(a_1,\dots,a_N,0)$ הוא חסם מלרע.
+      - text: 'אם $a_n$ אינה חסומה מלעיל אז $a_n\to\infty$'
+        feedback: >-
+          הסדרה $1,\ 0,\ 3,\ 0,\ 5,\ 0,\dots$ (האיבר ה-$n$ הוא $n$ כש-$n$ אי-זוגי ו-$0$ כשהוא זוגי) אינה חסומה,
+          ואינסוף מאיבריה שווים ל-0.
+        misconception: MC-unbounded-implies-infinity
+      - text: 'אם $a_n$ מתבדרת אז $a_n\to\infty$ או $a_n\to-\infty$'
+        feedback: >-
+          $(-1)^n$ מתבדרת וחסומה, ולכן אינה שואפת לאף אחד מהם.
+        misconception: MC-divergent-means-infinity
+      - text: 'אם $a_n$ עולה ממש אז $a_n\to\infty$'
+        feedback: >-
+          $1-\frac1n$ עולה ממש ושואפת ל-1. סדרה עולה שואפת לאינסוף רק כשהיא לא חסומה מלעיל.
+        misconception: MC-increasing-means-unbounded
+
+  - id: Q-2.6-monotone-unbounded
+    type: twotier
+    objectives: [OBJ-2.6-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      נכון או לא נכון: סדרה עולה שאינה חסומה מלעיל שואפת לאינסוף.
+    choices:
+      - text: נכון
+        correct: true
+        feedback: נכון. כאן שתי ההנחות יחד מספיקות, אף שאף אחת מהן לא מספיקה לבדה.
+      - text: לא נכון
+        feedback: >-
+          זו טענה נכונה. כל אחת מההנחות לבדה לא מספיקה, אבל יחד הן כן: ראו את הנימוק הנכון.
+        misconception: MC-unbounded-implies-infinity
+    reasons:
+      - text: 'לכל $M$ יש $N$ עם $a_N>M$ (אי-חסימות), ולכל $n>N$ מתקיים $a_n\ge a_N>M$ (עלייה)'
+        correct: true
+        feedback: >-
+          בדיוק. אי-החסימות נותנת איבר אחד מעל הסף, והמונוטוניות דואגת שכל האיברים שאחריו יישארו מעליו.
+      - text: 'כל סדרה שאינה חסומה מלעיל שואפת לאינסוף'
+        feedback: >-
+          זה לא נכון: $1,\ 0,\ 3,\ 0,\ 5,\ 0,\dots$ אינה חסומה ואינה שואפת לאינסוף. כאן העלייה היא שמצילה את הטענה.
+        misconception: MC-unbounded-implies-infinity
+      - text: 'כל סדרה עולה שואפת לאינסוף'
+        feedback: >-
+          זה לא נכון: $1-\frac1n$ עולה ושואפת ל-1. כאן אי-החסימות היא שמצילה את הטענה.
+        misconception: MC-increasing-means-unbounded

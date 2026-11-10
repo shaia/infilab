@@ -1,0 +1,314 @@
+# Chapter 4 (continuity): exam questions in the style of an 80131 final (original questions, not from a real exam).
+# Each is worth 25 points: an intermediate-value existence proof, a Weierstrass argument on the whole line,
+# and a parameter / discontinuity-classification question.
+chapter: 4
+questions:
+  - id: Q-4-exam-1
+    type: exam
+    title: מיתר אופקי באורך חצי
+    prompt: >-
+      $f:[0,1]\to\mathbb{R}$ רציפה, ו-$f(0)=f(1)$. בשאלה זו נוכיח שיש $c\in[0,\frac12]$ כך ש-$f(c)=f(c+\frac12)$,
+      כלומר לגרף של $f$ יש מיתר אופקי באורך $\frac12$.
+    parts:
+      - label: א
+        type: mc
+        points: 6
+        objectives: [OBJ-4.3-2]
+        level: mid
+        prompt: >-
+          באיזו פונקציית עזר כדאי להשתמש?
+        choices:
+          - text: '$g(x)=f(x+\frac12)-f(x)$ על $[0,\frac12]$'
+            correct: true
+            feedback: >-
+              נכון. השורשים של $g$ הם בדיוק הנקודות המבוקשות, והיא מוגדרת: כש-$x\in[0,\frac12]$, גם
+              $x+\frac12\in[\frac12,1]$ בתחום של $f$.
+          - text: '$g(x)=f(x+\frac12)-f(x)$ על $[0,1]$'
+            feedback: >-
+              עבור $x>\frac12$ הנקודה $x+\frac12$ גדולה מ-1, מחוץ לתחום של $f$, ולכן $g$ אינה מוגדרת שם. התחום
+              של הרכבה נקבע גם לפי הפונקציה הפנימית.
+            misconception: MC-composition-domain-one-function
+          - text: '$g(x)=f(x)-x$ על $[0,1]$'
+            feedback: >-
+              זו פונקציית העזר של משפט נקודת השבת. כאן מחפשים שוויון בין שני ערכים של $f$, לא בין $f(x)$ ל-$x$.
+          - text: '$g(x)=f(x)-f(0)$ על $[0,1]$'
+            feedback: >-
+              השורשים שלה הם הנקודות שבהן $f$ חוזרת לערך $f(0)$, למשל 0 ו-1 עצמן. זה לא אומר דבר על מיתר
+              באורך $\frac12$.
+      - label: ב
+        type: open
+        points: 14
+        objectives: [OBJ-4.3-2, OBJ-4.1-2]
+        level: exam
+        prompt: >-
+          הוכיחו שיש $c\in[0,\frac12]$ כך ש-$f(c)=f(c+\frac12)$.
+        solution:
+          - kind: given
+            text: '$f$ רציפה ב-$[0,1]$ ו-$f(0)=f(1)$.'
+          - kind: goal
+            text: 'למצוא $c\in[0,\frac12]$ עם $f(c)=f(c+\frac12)$.'
+          - kind: idea
+            text: >-
+              נגדיר $g(x)=f(x+\frac12)-f(x)$ על $[0,\frac12]$; שורש של $g$ הוא בדיוק מה שמחפשים. נראה שהערכים של
+              $g$ בקצוות מתבטלים זה עם זה.
+          - kind: step
+            text: >-
+              $g$ רציפה: $x\mapsto x+\frac12$ רציפה וממפה את $[0,\frac12]$ לתוך $[\frac12,1]\subseteq[0,1]$, ולכן
+              $f(x+\frac12)$ רציפה כהרכבה; $g$ היא הפרש של שתי רציפות.
+          - kind: computation
+            text: >-
+              $g(0)+g(\frac12)=\big(f(\frac12)-f(0)\big)+\big(f(1)-f(\frac12)\big)=f(1)-f(0)=0$.
+          - kind: step
+            text: >-
+              אם $g(0)=0$, אז $c=0$ מתאים. אחרת $g(\frac12)=-g(0)$, ולכן ל-$g(0)$ ול-$g(\frac12)$ סימנים הפוכים.
+          - kind: theorem
+            text: >-
+              משפט ערך הביניים: $g$ רציפה בקטע הסגור $[0,\frac12]$ ומחליפה סימן בקצוותיו, ולכן יש $c\in(0,\frac12)$
+              עם $g(c)=0$.
+          - kind: result
+            text: 'יש $c\in[0,\frac12]$ עם $f(c)=f(c+\frac12)$.'
+        rubric:
+          - text: 'מגדירים את $g$ על התחום הנכון $[0,\frac12]$ ומנמקים למה היא רציפה'
+          - text: 'מחשבים $g(0)+g(\frac12)=f(1)-f(0)=0$'
+          - text: 'מטפלים בנפרד במקרה $g(0)=0$'
+          - text: 'מפעילים את משפט ערך הביניים ומציינים את הנחותיו: רציפות בקטע סגור וסימנים הפוכים בקצוות'
+      - label: ג
+        type: twotier
+        points: 5
+        objectives: [OBJ-4.3-3]
+        level: mid
+        qualitative: true
+        prompt: >-
+          האם הטענה נשארת נכונה אם מוותרים על הרציפות של $f$ (ומשאירים רק $f(0)=f(1)$)?
+        choices:
+          - text: לא
+            correct: true
+            feedback: נכון. בלי רציפות פונקציה יכולה לקפוץ בדיוק כך שאין מיתר כזה.
+          - text: כן
+            feedback: >-
+              בהוכחה השתמשנו ברציפות כדי להפעיל את משפט ערך הביניים. בלעדיה יש דוגמה נגדית (ראו את הנימוק
+              הנכון).
+            misconception: MC-ivt-no-continuity-needed
+        reasons:
+          - text: '$f=0$ ב-$[0,\frac12)$ וב-1, ו-$f=1$ ב-$[\frac12,1)$: $f(0)=f(1)=0$, ו-$f(c)\ne f(c+\frac12)$ לכל $c\in[0,\frac12]$'
+            correct: true
+            feedback: >-
+              בדיוק. ל-$c<\frac12$: $f(c)=0$ ו-$f(c+\frac12)=1$. ל-$c=\frac12$: $f(\frac12)=1$ ו-$f(1)=0$.
+          - text: ההוכחה לא השתמשה ברציפות
+            feedback: >-
+              היא השתמשה בה פעמיים: כדי לדעת ש-$g$ רציפה, וכדי להפעיל את משפט ערך הביניים על $g$.
+            misconception: MC-ivt-no-continuity-needed
+          - text: השוויון $f(0)=f(1)$ מספיק לבדו
+            feedback: >-
+              השוויון נותן רק ש-$g(0)$ ו-$g(\frac12)$ בסימנים הפוכים. בלי רציפות של $g$ אין מזה שורש.
+            misconception: MC-ivt-no-continuity-needed
+
+  - id: Q-4-exam-2
+    type: exam
+    title: מקסימום או מינימום על כל הישר
+    prompt: >-
+      $f:\mathbb{R}\to\mathbb{R}$ רציפה, ו-$\lim_{x\to\infty}f(x)=\lim_{x\to-\infty}f(x)=0$.
+    parts:
+      - label: א
+        type: open
+        points: 12
+        objectives: [OBJ-4.4-1, OBJ-4.4-2, OBJ-3.6-2]
+        level: exam
+        prompt: >-
+          הוכיחו ש-$f$ מקבלת ב-$\mathbb{R}$ מקסימום או מינימום (לפחות אחד מהם).
+        solution:
+          - kind: given
+            text: '$f$ רציפה ב-$\mathbb{R}$ ושואפת ל-0 כש-$x\to\pm\infty$.'
+          - kind: goal
+            text: 'למצוא $x_1$ כך ש-$f(x_1)\ge f(x)$ לכל $x$, או $x_1$ כך ש-$f(x_1)\le f(x)$ לכל $x$.'
+          - kind: idea
+            text: >-
+              מחוץ לקטע גדול מספיק $f$ קרובה ל-0. אם $f$ מקבלת ערך חיובי כלשהו, המקסימום על הקטע (ויירשטראס)
+              גדול מכל הערכים שבחוץ.
+          - kind: step
+            text: >-
+              אם $f\equiv0$, כל נקודה היא נקודת מקסימום. אחרת יש $x_0$ עם $f(x_0)\ne0$; נניח $f(x_0)>0$ (אם
+              $f(x_0)<0$, מפעילים את אותו נימוק על $-f$ ומקבלים מינימום של $f$).
+          - kind: definition
+            text: >-
+              מהגדרת הגבול באינסוף עם $\varepsilon=f(x_0)$: יש $R$ כך ש-$|f(x)|<f(x_0)$ לכל $|x|>R$. אפשר לבחור
+              $R\ge|x_0|$, ואז $x_0\in[-R,R]$.
+          - kind: theorem
+            text: >-
+              משפט ויירשטראס: $f$ רציפה בקטע הסגור $[-R,R]$, ולכן יש $x_1\in[-R,R]$ עם $f(x_1)\ge f(x)$ לכל
+              $x\in[-R,R]$.
+          - kind: step
+            text: >-
+              בפרט $f(x_1)\ge f(x_0)$. ולכל $|x|>R$: $f(x)\le|f(x)|<f(x_0)\le f(x_1)$.
+          - kind: result
+            text: '$f(x_1)\ge f(x)$ לכל $x\in\mathbb{R}$: $f$ מקבלת מקסימום (ובמקרה $f(x_0)<0$, מינימום).'
+        rubric:
+          - text: 'מטפלים במקרה $f\equiv 0$ ומחלקים למקרים לפי הסימן של ערך שונה מאפס'
+          - text: 'בוחרים $R$ מהגדרת הגבול באינסוף, עם $\varepsilon=|f(x_0)|$, כך ש-$x_0\in[-R,R]$'
+          - text: 'מפעילים את משפט ויירשטראס על הקטע הסגור $[-R,R]$'
+          - text: 'משווים לערכים מחוץ ל-$[-R,R]$ ומסיקים שהמקסימום על הקטע הוא מקסימום על כל הישר'
+      - label: ב
+        type: mc
+        points: 6
+        objectives: [OBJ-4.4-2]
+        level: mid
+        qualitative: true
+        prompt: >-
+          איזו מהטענות הבאות נכונה לכל פונקציה $f$ כזו?
+        choices:
+          - text: '$f$ מקבלת לפחות אחד מהשניים, מקסימום או מינימום, אבל לא בהכרח את שניהם'
+            correct: true
+            feedback: >-
+              נכון. $\frac{1}{1+x^2}$ מקבלת מקסימום 1 ואין לה מינימום (האינפימום 0 אינו מתקבל). $\frac{x}{1+x^2}$
+              מקבלת את שניהם.
+          - text: '$f$ תמיד מקבלת גם מקסימום וגם מינימום'
+            feedback: >-
+              $\frac{1}{1+x^2}$ חיובית בכל מקום ושואפת ל-0, ולכן האינפימום 0 אינו מתקבל: אין לה מינימום.
+            misconception: MC-bounded-attains-bounds
+          - text: '$f$ יכולה לא לקבל אף אחד מהם, כי $\mathbb{R}$ אינו קטע סגור'
+            feedback: >-
+              סעיף א מראה שזה בלתי אפשרי. כשהנחה של ויירשטראס חסרה, אפשר לפעמים לצמצם לקטע סגור ולהשתמש בו.
+            misconception: MC-theorem-hypotheses-necessary
+          - text: '$f$ מקבלת מקסימום, ואף פעם לא מינימום'
+            feedback: >-
+              $-\frac{1}{1+x^2}$ מקבלת מינימום ואין לה מקסימום, ו-$\frac{x}{1+x^2}$ מקבלת את שניהם.
+      - label: ג
+        type: open
+        points: 7
+        objectives: [OBJ-4.4-3, OBJ-0.7-3]
+        level: exam
+        prompt: >-
+          עבור $f(x)=\frac{x}{1+x^2}$ מצאו את התמונה $f(\mathbb{R})$, והוכיחו.
+        solution:
+          - kind: goal
+            text: 'להראות ש-$f(\mathbb{R})=[-\frac12,\frac12]$.'
+          - kind: idea
+            text: 'חסם מאי-שוויון הממוצעים, ערכי קצה שמתקבלים, וערך הביניים בשביל כל מה שביניהם.'
+          - kind: computation
+            text: >-
+              מאי-שוויון הממוצעים $1+x^2\ge 2|x|$, ולכן $|f(x)|=\frac{|x|}{1+x^2}\le\frac12$ לכל $x$. כלומר
+              $f(\mathbb{R})\subseteq[-\frac12,\frac12]$.
+          - kind: computation
+            text: '$f(1)=\frac12$ ו-$f(-1)=-\frac12$.'
+          - kind: theorem
+            text: >-
+              $f$ רציפה (פונקציה רציונלית שהמכנה שלה חיובי), ולפי ערך הביניים על $[-1,1]$ היא מקבלת כל ערך בין
+              $-\frac12$ ל-$\frac12$. לכן $[-\frac12,\frac12]\subseteq f(\mathbb{R})$.
+          - kind: result
+            text: '$f(\mathbb{R})=[-\frac12,\frac12]$: המקסימום $\frac12$ (ב-1) והמינימום $-\frac12$ (ב-$-1$).'
+        rubric:
+          - text: 'מוכיחים $|f(x)|\le\frac12$ לכל $x$, למשל מ-$1+x^2\ge2|x|$'
+          - text: 'מראים שהערכים $\pm\frac12$ מתקבלים'
+          - text: 'מפעילים את משפט ערך הביניים כדי לקבל את כל הערכים שביניהם'
+          - text: 'מסיקים את שתי ההכלות ומגיעים ל-$f(\mathbb{R})=[-\frac12,\frac12]$'
+
+  - id: Q-4-exam-3
+    type: exam
+    title: פרמטרים ומיון נקודות אי-רציפות
+    prompt: >-
+      יהיו $a,b$ ממשיים, ו-
+      $$f(x)=\begin{cases} \dfrac{\sin ax}{x} & x<0\\[4pt] b & x=0\\[4pt] \dfrac{\sqrt{1+x}-1}{x} & x>0 \end{cases}$$
+    parts:
+      - label: א
+        type: numeric
+        points: 7
+        objectives: [OBJ-4.2-2]
+        level: mid
+        prompt: >-
+          חשבו את $\lim_{x\to0^+}f(x)$.
+        answer: 0.5
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. כפל בצמוד: $\frac{\sqrt{1+x}-1}{x}=\frac{(1+x)-1}{x(\sqrt{1+x}+1)}=\frac{1}{\sqrt{1+x}+1}\to\frac12$,
+          מהרציפות של השורש (שיעור 4.5).
+        wrongFeedback: >-
+          הכפילו מונה ומכנה בצמוד $\sqrt{1+x}+1$, צמצמו את $x$ והציבו.
+        commonWrong:
+          - value: 0
+            feedback: >-
+              הצבה נותנת $\frac00$, צורה לא מוגדרת, לא אפס. צריך קודם לפשט.
+            misconception: MC-indeterminate-form-value
+          - value: 2
+            feedback: >-
+              המנה התהפכה: אחרי הכפל בצמוד מקבלים $\frac{1}{\sqrt{1+x}+1}$, לא $\sqrt{1+x}+1$.
+      - label: ב
+        type: numeric
+        points: 5
+        objectives: [OBJ-4.2-2]
+        level: mid
+        standalone: false
+        prompt: >-
+          לאיזה ערך של $a$ הגבול $\lim_{x\to0}f(x)$ קיים? (ואז $f$ רציפה ב-0 בדיוק כש-$b$ שווה לגבול הזה.)
+        answer: 0.5
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $\frac{\sin ax}{x}\to a$ כש-$x\to0^-$ (לכל $a\ne0$: $a\cdot\frac{\sin ax}{ax}$; ול-$a=0$ הפונקציה
+          אפס). הגבול הדו-צדדי קיים כשהגבול משמאל שווה לגבול מימין, $\frac12$, כלומר $a=\frac12$; ורציפות
+          דורשת גם $b=\frac12$.
+        wrongFeedback: >-
+          חשבו את הגבול משמאל, $\lim_{x\to0^-}\frac{\sin ax}{x}$, והשוו אותו לגבול מימין מסעיף א.
+        commonWrong:
+          - value: 1
+            feedback: >-
+              $\frac{\sin ax}{x}\to a$, לא 1: המכנה הוא $x$ ולא $ax$. אז $a=1$ נותן גבול משמאל 1, שונה מ-$\frac12$.
+            misconception: MC-sin-kx-over-x-is-one
+          - value: 2
+            feedback: >-
+              זה ההופכי של $\frac12$. הגבול משמאל הוא $a$ עצמו, ולכן צריך $a=\frac12$.
+      - label: ג
+        type: mc
+        points: 5
+        objectives: [OBJ-4.2-1]
+        level: mid
+        standalone: false
+        qualitative: true
+        prompt: >-
+          עבור $a=2$ ו-$b=2$: איזה סוג אי-רציפות יש ל-$f$ ב-0?
+        choices:
+          - text: קפיצה
+            correct: true
+            feedback: >-
+              נכון. הגבול משמאל $2$, הגבול מימין $\frac12$: שניהם קיימים ושונים.
+          - text: סליקה
+            feedback: >-
+              בסליקה שני הגבולות החד-צדדיים שווים. כאן $2\ne\frac12$, ושום ערך של $b$ לא יתקן את הרציפות.
+            misconception: MC-jump-vs-removable
+          - text: מסוג שני
+            feedback: >-
+              בסוג שני לפחות אחד הגבולות החד-צדדיים אינו קיים. כאן שניהם קיימים: 2 משמאל ו-$\frac12$ מימין.
+          - text: אין אי-רציפות, כי $b$ שווה לגבול משמאל
+            feedback: >-
+              זה נותן רק רציפות **משמאל**. רציפות דורשת שגם הגבול מימין, $\frac12$, יהיה שווה ל-$f(0)=2$.
+      - label: ד
+        type: open
+        points: 8
+        objectives: [OBJ-4.2-1, OBJ-3.4-2]
+        level: exam
+        prompt: >-
+          (ללא קשר לסעיפים הקודמים.) תהי $k(x)=\sin\frac1x$ לכל $x\ne0$, ו-$k(0)=c$. הוכיחו שלכל $c$ ממשי, 0 היא
+          נקודת אי-רציפות מסוג שני של $k$.
+        solution:
+          - kind: definition
+            text: >-
+              אי-רציפות מסוג שני: לפחות אחד מהגבולות החד-צדדיים בנקודה אינו קיים (כמספר ממשי).
+          - kind: goal
+            text: 'להראות ש-$\lim_{x\to0^+}k(x)$ אינו קיים.'
+          - kind: idea
+            text: 'לפי היינה, מספיקות שתי סדרות חיוביות ששואפות ל-0 שעליהן ל-$k$ יש גבולות שונים.'
+          - kind: computation
+            text: >-
+              $x_n=\frac{1}{2\pi n}\to0^+$ ו-$k(x_n)=\sin(2\pi n)=0$; $y_n=\frac{1}{\frac\pi2+2\pi n}\to0^+$
+              ו-$k(y_n)=\sin(\frac\pi2+2\pi n)=1$.
+          - kind: theorem
+            text: >-
+              אילו $\lim_{x\to0^+}k(x)=L$, לפי היינה (לגבול חד-צדדי) היה $k(x_n)\to L$ וגם $k(y_n)\to L$, כלומר
+              $L=0$ וגם $L=1$: סתירה.
+          - kind: step
+            text: 'הגבול מימין אינו קיים, והנימוק לא השתמש בערך $k(0)=c$.'
+          - kind: result
+            text: 'לכל $c$, ב-0 יש ל-$k$ אי-רציפות מסוג שני.'
+        rubric:
+          - text: 'מנסחים מה פירוש אי-רציפות מסוג שני'
+          - text: 'מציגים שתי סדרות חיוביות ששואפות ל-0, עם ערכי $k$ שונים (0 ו-1)'
+          - text: 'מסיקים נכון מהגדרת היינה שהגבול מימין אינו קיים'
+          - text: 'מציינים שהמסקנה אינה תלויה ב-$c$'

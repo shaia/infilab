@@ -1,0 +1,345 @@
+# Lesson 1.6 — the Archimedean property and density.
+# Objectives (src/course.ts):
+#   OBJ-1.6-1  prove the Archimedean property from completeness and use it (e.g. inf 1/n = 0)
+#   OBJ-1.6-2  prove that between any two reals there is a rational and an irrational
+#   OBJ-1.6-3  define the integer part (floor) and use it in proofs
+chapter: 1
+questions:
+  - id: Q-1.6-archimedes-forms
+    type: mc
+    objectives: [OBJ-1.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      כדי להוכיח ש-$\inf\left\{\frac1n : n\in\mathbb{N}\right\}=0$ צריך להראות ש-$0$ חסם מלרע, ושאף $b>0$
+      אינו חסם מלרע. איזו טענה נותנת בדיוק את החלק השני?
+    choices:
+      - text: 'לכל $\varepsilon>0$ קיים $n\in\mathbb{N}$ עם $\frac1n<\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. זו תכונת ארכימדס בצורה של "$n>\frac1\varepsilon$": לכל $b=\varepsilon>0$ יש איבר של הקבוצה
+          שקטן ממנו, ולכן $b$ אינו חסם מלרע.
+      - text: 'קיים $n\in\mathbb{N}$ כך ש-$\frac1n<\varepsilon$ לכל $\varepsilon>0$'
+        feedback: >-
+          כאן אותו $n$ צריך להתאים לכל $\varepsilon$, ואז $\frac1n$ קטן מכל מספר חיובי, כלומר $\frac1n\le0$.
+          אין $n$ כזה. בתכונת ארכימדס $n$ נבחר **אחרי** $\varepsilon$ ותלוי בו.
+        misconception: MC-quantifier-swap
+      - text: 'לכל $n\in\mathbb{N}$ מתקיים $\frac1n>0$'
+        feedback: >-
+          זה החלק הראשון, ש-$0$ חסם מלרע. הוא לא שולל חסם מלרע גדול יותר, למשל $b=0.001$; בשביל זה צריך
+          איברים קטנים מכל $b>0$.
+        misconception: MC-sup-proof-one-side
+      - text: 'ברור ש-$\frac1n$ נעשה קטן; זה נובע מאקסיומות הסדר ואינו צריך הוכחה'
+        feedback: >-
+          יש שדות סדורים שבהם $\mathbb{N}$ חסומה, ושם $\frac1n$ לא יורד אל מתחת לכל מספר חיובי. לכן תכונת
+          ארכימדס צריכה את אקסיומת השלמות, ואינה נובעת מהסדר לבדו.
+        misconception: MC-archimedes-from-order
+
+  - id: Q-1.6-archimedes-proof
+    type: rank
+    objectives: [OBJ-1.6-1]
+    level: mid
+    prompt: הוכיחו מאקסיומת השלמות ש-$\mathbb{N}$ אינה חסומה מלעיל.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: 'נניח בשלילה ש-$\mathbb{N}$ חסומה מלעיל'
+      - id: s2
+        label: '$\mathbb{N}$ לא ריקה וחסומה מלעיל, ולכן לפי אקסיומת השלמות קיים $s=\sup\mathbb{N}$'
+      - id: s3
+        label: '$s-1<s$ אינו חסם מלעיל, ולכן יש $n\in\mathbb{N}$ עם $n>s-1$'
+      - id: s4
+        label: 'אז $n+1>s$, ו-$n+1\in\mathbb{N}$ כי $\mathbb{N}$ אינדוקטיבית'
+      - id: s5
+        label: 'זו סתירה לכך ש-$s$ חסם מלעיל של $\mathbb{N}$; לכן לכל $x$ ממשי יש $n\in\mathbb{N}$ עם $n>x$'
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. הרעיון: הסופרמום הוא החסם הקטן ביותר, ולכן מתחתיו, במרחק $1$, יש טבעי; ואחריו בא טבעי שעוקף אותו.
+    wrongFeedback: >-
+      הוכחה בשלילה: מניחים ש-$\mathbb{N}$ חסומה, משתמשים בשלמות כדי לקבל סופרמום, ומוצאים טבעי מעליו.
+
+  - id: Q-1.6-ratio-sup
+    type: numeric
+    objectives: [OBJ-1.6-1]
+    level: basic
+    prompt: >-
+      $A=\left\{\frac{n}{n+1} : n\in\mathbb{N}\right\}$. מהו $\sup A$?
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac{n}{n+1}=1-\frac1{n+1}<1$, ולכל $\varepsilon>0$ תכונת ארכימדס נותנת $n$ עם
+      $\frac1{n+1}<\varepsilon$. הסופרמום $1$ אינו בקבוצה, ולכן אין ל-$A$ מקסימום.
+    wrongFeedback: >-
+      כתבו $\frac{n}{n+1}=1-\frac1{n+1}$. מאיזה מספר כל האיברים קטנים, וכמה קרוב אליו אפשר להגיע?
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          $\frac12$ הוא האיבר הראשון, וגם הקטן ביותר: $\min A=\inf A=\frac12$. הסדרה עולה, והסופרמום נמצא
+          בקצה השני.
+        misconception: MC-extremum-from-first-terms
+
+  - id: Q-1.6-alternating-sup
+    type: numeric
+    objectives: [OBJ-1.6-1]
+    level: mid
+    prompt: >-
+      $A=\left\{(-1)^n+\frac1n : n\in\mathbb{N}\right\}$. מהו $\sup A$?
+    answer: 1.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. עבור $n$ זוגי האיברים הם $1+\frac1n\le1+\frac12$, ועבור $n$ אי-זוגי הם $-1+\frac1n\le0$. לכן
+      $\sup A=\max A=\frac32$, שמתקבל ב-$n=2$.
+    wrongFeedback: >-
+      הפרידו לזוגיים ולאי-זוגיים. כתבו את ארבעת האיברים הראשונים: $0,\ \frac32,\ -\frac23,\ \frac54$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          $2=1+\frac11$, אבל $n=1$ אי-זוגי: האיבר הראשון הוא $(-1)^1+1=0$. הנוסחה $1+\frac1n$ חלה רק על $n$
+          זוגי, והקטן שבהם הוא $n=2$.
+      - value: 1
+        feedback: >-
+          $1$ הוא המספר שהאיברים הזוגיים מתקרבים אליו מלמעלה, אבל כולם **גדולים** ממנו. הסופרמום הוא החסם
+          מלעיל הקטן ביותר, והוא $\frac32$, איבר של הקבוצה.
+        misconception: MC-sup-never-in-set
+
+  - id: Q-1.6-alternating-inf
+    type: mc
+    objectives: [OBJ-1.6-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $A=\left\{(-1)^n+\frac1n : n\in\mathbb{N}\right\}$. מה נכון לגבי האינפימום?
+    choices:
+      - text: '$\inf A=-1$, ול-$A$ אין מינימום'
+        correct: true
+        feedback: >-
+          נכון. כל איבר גדול מ-$-1$ (גם $-1+\frac1n>-1$). לכל $\varepsilon>0$, תכונת ארכימדס נותנת $n$ אי-זוגי
+          עם $\frac1n<\varepsilon$, והאיבר $-1+\frac1n<-1+\varepsilon$. האינפימום אינו מתקבל.
+      - text: '$\inf A=\min A=-1$'
+        feedback: >-
+          אין $n$ עם $(-1)^n+\frac1n=-1$, כי $\frac1n>0$. האינפימום $-1$ קיים, אבל אינו איבר של $A$.
+        misconception: MC-sup-is-max
+      - text: '$\inf A=-\frac23$, שמתקבל ב-$n=3$'
+        feedback: >-
+          $-\frac23$ הוא הקטן מבין ארבעת האיברים הראשונים, אבל $n=5$ נותן $-\frac45<-\frac23$. מאיברים
+          ראשונים אי אפשר לקבוע אינפימום.
+        misconception: MC-extremum-from-first-terms
+      - text: '$\inf A=0$, שמתקבל ב-$n=1$'
+        feedback: >-
+          $0$ הוא האיבר הראשון, אבל כבר $n=3$ נותן $-\frac23<0$.
+        misconception: MC-extremum-from-first-terms
+
+  - id: Q-1.6-many-between
+    type: multi
+    objectives: [OBJ-1.6-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה נכון לגבי הקטע $(0,\ 0.001)$? סמנו את כל הטענות הנכונות.
+    choices:
+      - text: יש בו אינסוף מספרים רציונליים
+        correct: true
+        feedback: >-
+          נכון. בין כל שני ממשיים יש רציונלי; מפעילים את זה שוב ושוב בקטעים קטנים יותר ומקבלים אינסוף.
+      - text: יש בו אינסוף מספרים אי-רציונליים
+        correct: true
+        feedback: >-
+          נכון. גם האי-רציונליים צפופים: למשל $\frac{\sqrt2}{2000n}$ לכל $n\in\mathbb{N}$.
+      - text: יש בו רק מספר סופי של אי-רציונליים, כי הם נדירים יותר מהרציונליים
+        feedback: >-
+          ההפך הוא הנכון: $\frac{\sqrt2}{2000n}$ הם אינסוף אי-רציונליים בקטע. כל קטע, קצר ככל שיהיה, מכיל
+          אינסוף משני הסוגים.
+        misconception: MC-irrationals-not-dense
+      - text: יש בו רציונלי קטן ביותר
+        feedback: >-
+          אם $q$ רציונלי בקטע, גם $\frac q2$ רציונלי בקטע וקטן ממנו. אין "רציונלי ראשון" אחרי $0$.
+        misconception: MC-next-rational
+
+  - id: Q-1.6-no-next-rational
+    type: twotier
+    objectives: [OBJ-1.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם יש מספר רציונלי חיובי קטן ביותר?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. לקבוצת הרציונליים החיוביים יש אינפימום, $0$, אבל אין מינימום.
+      - text: כן
+        feedback: >-
+          לכל רציונלי חיובי $q$, גם $\frac q2$ רציונלי, חיובי וקטן ממנו. לכן אף רציונלי חיובי אינו הקטן ביותר.
+        misconception: MC-next-rational
+    reasons:
+      - text: 'אם $q>0$ רציונלי, אז $\frac q2$ רציונלי ו-$0<\frac q2<q$'
+        correct: true
+        feedback: >-
+          בדיוק. בניגוד ל-$\mathbb{N}$, שבה אחרי כל מספר בא "הבא בתור", ב-$\mathbb{Q}$ אין עוקב.
+      - text: 'כמו בטבעיים: יש רציונלי ראשון, ואחריו הבא בתור'
+        feedback: >-
+          בטבעיים יש עוקב כי ההפרש בין שני טבעיים הוא לפחות 1. בין שני רציונליים שונים יש תמיד רציונלי נוסף,
+          למשל הממוצע שלהם, ולכן אין "הבא בתור".
+        misconception: MC-next-rational
+      - text: '$0$ הוא הרציונלי החיובי הקטן ביותר'
+        feedback: >-
+          $0$ אינו חיובי. הוא האינפימום של הרציונליים החיוביים, ואינו שייך לקבוצה; לכן אין לה מינימום.
+        misconception: MC-sup-is-max
+
+  - id: Q-1.6-irrational-between
+    type: mc
+    objectives: [OBJ-1.6-2]
+    level: mid
+    prompt: >-
+      $a<b$ ממשיים כלשהם. איזו בנייה נותנת **תמיד** מספר אי-רציונלי בקטע $(a,b)$? (מותר להשתמש בצפיפות
+      הרציונליים ובכך ש-$\sqrt2$ אי-רציונלי.)
+    choices:
+      - text: 'בוחרים רציונלי $q$ בקטע $(a-\sqrt2,\ b-\sqrt2)$, ולוקחים $q+\sqrt2$'
+        correct: true
+        feedback: >-
+          נכון. $a-\sqrt2<q<b-\sqrt2$ גורר $a<q+\sqrt2<b$, ו-$q+\sqrt2$ אי-רציונלי כסכום של רציונלי
+          ואי-רציונלי (שיעור 1.3).
+      - text: 'לוקחים את הממוצע $\frac{a+b}2$'
+        feedback: >-
+          כש-$a=0$ ו-$b=1$ הממוצע הוא $\frac12$, רציונלי. בנייה צריכה לעבוד לכל $a<b$, לא רק לאלה שעולים
+          בדמיון.
+        misconception: MC-density-construction-special-case
+      - text: 'לוקחים $a+\frac{b-a}{\sqrt2}$'
+        feedback: >-
+          כש-$a,b$ רציונליים זה אכן אי-רציונלי, אבל $a,b$ ממשיים כלשהם: עם $a=0$ ו-$b=\sqrt2$ מקבלים
+          $\frac{\sqrt2}{\sqrt2}=1$, רציונלי.
+        misconception: MC-density-construction-special-case
+
+  - id: Q-1.6-density-proof
+    type: rank
+    objectives: [OBJ-1.6-2, OBJ-1.6-3]
+    level: exam
+    prompt: הוכיחו שבין כל שני ממשיים $a<b$ יש מספר רציונלי.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: 'לפי תכונת ארכימדס יש $n\in\mathbb{N}$ עם $n>\frac{1}{b-a}$, כלומר $\frac1n<b-a$'
+      - id: s2
+        label: 'נגדיר $m=\lfloor na\rfloor+1$; אז $m$ שלם ו-$m-1\le na<m$'
+      - id: s3
+        label: 'מ-$na<m$ נובע $a<\frac mn$'
+      - id: s4
+        label: 'מ-$m-1\le na$ נובע $\frac mn\le a+\frac1n<a+(b-a)=b$'
+      - id: s5
+        label: 'לכן $\frac mn$ רציונלי ונמצא בקטע $(a,b)$'
+    order: [s1, s2, [s3, s4], s5]
+    correctFeedback: >-
+      נכון. הרעיון: צעדים בגודל $\frac1n$ קטנים מאורך הקטע, ולכן אחד מהם חייב לנחות בתוכו; $\lfloor\cdot\rfloor$
+      מוצא את הצעד הראשון אחרי $a$.
+    wrongFeedback: >-
+      קודם בוחרים את גודל הצעד $\frac1n$ (ארכימדס), אחר כך את הצעד הראשון שעובר את $a$ (ערך שלם), ובסוף
+      בודקים שהוא לא עבר את $b$.
+
+  - id: Q-1.6-floor-negative
+    type: numeric
+    objectives: [OBJ-1.6-3]
+    level: basic
+    prompt: >-
+      $\lfloor x\rfloor$ הוא השלם היחיד $m$ שמקיים $m\le x<m+1$. מהו $\lfloor-2.5\rfloor$?
+    answer: -3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $-3\le-2.5<-2$. הערך השלם הוא השלם הגדול ביותר שאינו עולה על $x$, ולכן במספרים שליליים הוא
+      "מתרחק" מאפס.
+    wrongFeedback: >-
+      חפשו שלם $m$ עם $m\le-2.5<m+1$. שימו לב: $-2>-2.5$.
+    commonWrong:
+      - value: -2
+        feedback: >-
+          $-2>-2.5$, ולכן $-2$ אינו מקיים $m\le x$. מחיקת הספרות אחרי הנקודה נותנת את הערך השלם רק במספרים
+          אי-שליליים.
+        misconception: MC-floor-truncates-negatives
+
+  - id: Q-1.6-floor-additive
+    type: twotier
+    objectives: [OBJ-1.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם לכל $x,y$ ממשיים $\lfloor x+y\rfloor=\lfloor x\rfloor+\lfloor y\rfloor$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. השוויון נכון רק כשמוסיפים שלם.
+      - text: כן
+        feedback: >-
+          $x=y=\frac12$: $\lfloor1\rfloor=1$, אבל $\lfloor\frac12\rfloor+\lfloor\frac12\rfloor=0$.
+        misconception: MC-floor-additive
+    reasons:
+      - text: >-
+          $x=y=\frac12$ היא דוגמה נגדית; בטוח רק $\lfloor x\rfloor+\lfloor y\rfloor\le\lfloor x+y\rfloor\le\lfloor x\rfloor+\lfloor y\rfloor+1$
+        correct: true
+        feedback: >-
+          בדיוק. החלקים השבריים יכולים להצטבר לשלם נוסף. כש-$y=n$ שלם, $\lfloor x+n\rfloor=\lfloor x\rfloor+n$.
+      - text: 'הערך השלם הוא פעולה על מספרים, ולכן הוא מתחלק על סכום'
+        feedback: >-
+          רוב הפעולות אינן מתחלקות על סכום ($\sqrt{}$, ערך מוחלט, ריבוע). צריך לבדוק, ו-$x=y=\frac12$ מפריך.
+        misconception: MC-floor-additive
+      - text: 'השוויון נכשל רק במספרים שליליים'
+        feedback: >-
+          הדוגמה הנגדית $x=y=\frac12$ חיובית. הבעיה אינה בסימן אלא בחלקים השבריים שמצטברים.
+        misconception: MC-floor-truncates-negatives
+
+  - id: Q-1.6-floor-facts
+    type: multi
+    objectives: [OBJ-1.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהטענות נכונות לכל $x,y$ ממשיים? סמנו את כולן.
+    choices:
+      - text: '$x-1<\lfloor x\rfloor\le x$'
+        correct: true
+        feedback: >-
+          נכון. זו ההגדרה $\lfloor x\rfloor\le x<\lfloor x\rfloor+1$, כשמעבירים את ה-$1$ לצד השני.
+      - text: '$\lfloor x\rfloor+\lfloor y\rfloor\le\lfloor x+y\rfloor$'
+        correct: true
+        feedback: >-
+          נכון. $\lfloor x\rfloor+\lfloor y\rfloor$ שלם וקטן או שווה ל-$x+y$, ו-$\lfloor x+y\rfloor$ הוא השלם
+          הגדול ביותר כזה.
+      - text: '$\lfloor x+y\rfloor\le\lfloor x\rfloor+\lfloor y\rfloor+1$'
+        correct: true
+        feedback: >-
+          נכון. $x+y<\lfloor x\rfloor+\lfloor y\rfloor+2$, ולכן השלם $\lfloor x+y\rfloor$ קטן ממש
+          מ-$\lfloor x\rfloor+\lfloor y\rfloor+2$.
+      - text: '$\lfloor -x\rfloor=-\lfloor x\rfloor$'
+        feedback: >-
+          $x=\frac12$: $\lfloor-\frac12\rfloor=-1$, אבל $-\lfloor\frac12\rfloor=0$. השוויון נכון רק ל-$x$ שלם;
+          אחרת $\lfloor-x\rfloor=-\lfloor x\rfloor-1$.
+        misconception: MC-floor-truncates-negatives
+      - text: '$\lfloor xy\rfloor=\lfloor x\rfloor\lfloor y\rfloor$'
+        feedback: >-
+          $x=y=\frac32$: $\lfloor\frac94\rfloor=2$, אבל $1\cdot1=1$.
+        misconception: MC-floor-additive
+
+  - id: Q-1.6-floor-hermite
+    type: rank
+    objectives: [OBJ-1.6-3]
+    level: exam
+    prompt: >-
+      הוכיחו שלכל $x$ ממשי $\lfloor x\rfloor+\left\lfloor x+\frac12\right\rfloor=\lfloor 2x\rfloor$. מותר
+      להשתמש בכך ש-$\lfloor k+u\rfloor=k$ לכל $k$ שלם ו-$0\le u<1$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: 'נסמן $m=\lfloor x\rfloor$ ו-$t=x-m$; אז $m$ שלם ו-$0\le t<1$'
+      - id: s2
+        label: >-
+          אם $0\le t<\frac12$: $x+\frac12=m+\left(t+\frac12\right)$ עם $0\le t+\frac12<1$, ולכן $\lfloor x+\frac12\rfloor=m$;
+          ו-$2x=2m+2t$ עם $0\le2t<1$, ולכן $\lfloor 2x\rfloor=2m$
+      - id: s3
+        label: >-
+          אם $\frac12\le t<1$: $x+\frac12=(m+1)+\left(t-\frac12\right)$ עם $0\le t-\frac12<1$, ולכן $\lfloor x+\frac12\rfloor=m+1$;
+          ו-$2x=(2m+1)+(2t-1)$ עם $0\le2t-1<1$, ולכן $\lfloor 2x\rfloor=2m+1$
+      - id: s4
+        label: 'בשני המקרים שני האגפים שווים: $m+m=2m$, ו-$m+(m+1)=2m+1$'
+    order: [s1, [s2, s3], s4]
+    correctFeedback: >-
+      נכון. השיטה הכללית: כותבים $x=m+t$ עם $m$ שלם ו-$t\in[0,1)$, ומפצלים לפי הנקודות שבהן אחד הביטויים
+      "קופץ".
+    wrongFeedback: >-
+      קודם מפרקים את $x$ לחלק שלם ולחלק שברי; אחר כך מפצלים למקרים לפי החלק השברי; ובסוף משווים.

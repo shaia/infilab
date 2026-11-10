@@ -1,0 +1,385 @@
+# Chapter 5 — exam questions in the style of an 80131 final (original questions, not from a real exam).
+# Each is worth 25 points: a mean-value-theorem inequality, a full function analysis, a Rolle/Darboux theory question.
+chapter: 5
+questions:
+  - id: Q-5-exam-1
+    type: exam
+    title: משפט הערך הממוצע ואי-שוויונות
+    prompt: >-
+      בשאלה זו $a,b$ הם מספרים ממשיים עם $0<a<b$.
+    parts:
+      - label: א
+        points: 10
+        type: open
+        objectives: [OBJ-5.6-2, OBJ-5.6-1]
+        prompt: >-
+          הוכיחו:
+          $$\frac{b-a}{b}<\ln\frac{b}{a}<\frac{b-a}{a}.$$
+        solution:
+          - kind: given
+            text: '$0<a<b$.'
+          - kind: goal
+            text: 'להוכיח $\frac{b-a}{b}<\ln b-\ln a<\frac{b-a}{a}$.'
+          - kind: idea
+            text: >-
+              $\ln\frac ba=\ln b-\ln a$ הוא הפרש של ערכי $\ln$ בקצות הקטע $[a,b]$, ומשפט לגרנז' הופך הפרש כזה לנגזרת כפול אורך
+              הקטע.
+          - kind: theorem
+            text: >-
+              $\ln$ רציפה ב-$[a,b]$ וגזירה ב-$(a,b)$, עם $(\ln x)'=\frac1x$. לפי משפט לגרנז' קיימת $c\in(a,b)$ כך ש-
+              $\ln b-\ln a=\frac{1}{c}(b-a)$.
+          - kind: step
+            text: >-
+              מ-$0<a<c<b$ נובע $\frac1b<\frac1c<\frac1a$ (ההופכי יורד ממש בחיוביים).
+          - kind: step
+            text: >-
+              כופלים את שרשרת אי-השוויונות ב-$b-a>0$, והכיוונים נשמרים:
+              $\frac{b-a}{b}<\frac{b-a}{c}<\frac{b-a}{a}$.
+          - kind: result
+            text: >-
+              $\frac{b-a}{b}<\ln\frac{b}{a}<\frac{b-a}{a}$, עם אי-שוויונות ממש כי $c$ נמצאת **בתוך** הקטע.
+        rubric:
+          - text: 'מפעילים את משפט לגרנז'' על $\ln$ בקטע $[a,b]$ ובודקים את ההנחות (רציפות בסגור, גזירות בפתוח).'
+            weight: 3
+          - text: 'כותבים את המסקנה $\ln b-\ln a=\frac{b-a}{c}$ עם $c\in(a,b)$, בלי להניח איפה $c$.'
+            weight: 3
+          - text: 'מסיקים מ-$a<c<b$ את החסמים על $\frac1c$ בכיוון הנכון, וכופלים במספר חיובי.'
+            weight: 3
+          - text: 'מסבירים למה אי-השוויונות ממש.'
+            weight: 1
+
+      - label: ב
+        points: 5
+        type: numeric
+        standalone: false
+        objectives: [OBJ-5.6-2, OBJ-2.5-1]
+        prompt: >-
+          הציבו בסעיף א $a=n$, $b=n+1$, והשתמשו בכלל הסנדוויץ' כדי לחשב את $\lim_{n\to\infty}n\ln\left(1+\frac1n\right)$.
+        answer: 1
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $\frac{1}{n+1}<\ln\frac{n+1}{n}<\frac1n$, וכפל ב-$n$ נותן $\frac{n}{n+1}<n\ln\left(1+\frac1n\right)<1$. שני
+          החסמים שואפים ל-$1$.
+        wrongFeedback: >-
+          $\ln\frac{n+1}{n}=\ln\left(1+\frac1n\right)$. כתבו את אי-השוויון של סעיף א, כפלו ב-$n$, וחשבו את הגבולות של שני החסמים.
+        commonWrong:
+          - value: 0
+            feedback: >-
+              $\ln\left(1+\frac1n\right)\to0$, אבל הוא מוכפל ב-$n\to\infty$: זו צורה לא מוגדרת $0\cdot\infty$, ואין לה ערך
+              מראש. החסמים מסעיף א מכריעים אותה.
+            misconception: MC-indeterminate-form-value
+          - value: 2.718281828
+            feedback: >-
+              $e$ הוא הגבול של $\left(1+\frac1n\right)^n$. כאן מחשבים את הלוגריתם שלו, $n\ln\left(1+\frac1n\right)$, ששואף ל-$\ln e=1$.
+
+      - label: ג
+        points: 4
+        type: twotier
+        objectives: [OBJ-5.6-1]
+        qualitative: true
+        prompt: >-
+          סטודנט כתב: "לפי לגרנז' $\ln b-\ln a=\frac{b-a}{c}$, וכאן $c=\frac{a+b}{2}$, ולכן $\ln\frac ba=\frac{2(b-a)}{a+b}$."
+          האם הטענה $\ln\frac ba=\frac{2(b-a)}{a+b}$ נכונה לכל $0<a<b$?
+        choices:
+          - text: לא
+            correct: true
+            feedback: >-
+              נכון. עם $a=1$, $b=e$: צד שמאל $1$, וצד ימין $\frac{2(e-1)}{e+1}\approx0.924$.
+          - text: כן
+            feedback: >-
+              בדקו עם $a=1$, $b=e$: $\ln e=1$, אבל $\frac{2(e-1)}{e+1}\approx0.924$.
+            misconception: MC-mvt-c-midpoint
+        reasons:
+          - text: 'משפט לגרנז'' אומר רק ש-$c$ בתוך $(a,b)$, לא איפה; ובדוגמה $a=1$, $b=e$ הנקודה היא $c=e-1\approx1.72$, לא האמצע $\approx1.86$'
+            correct: true
+            feedback: >-
+              בדיוק. מ-$\ln e-\ln1=\frac{e-1}{c}$ מקבלים $c=e-1$.
+          - text: 'האמצע נמצא בקטע $(a,b)$, ולכן הוא נקודה מתאימה'
+            feedback: >-
+              המשפט אומר שקיימת נקודה מתאימה בקטע, לא שכל נקודה בקטע מתאימה.
+            misconception: MC-mvt-for-all-c
+          - text: 'ההצבה $c=\frac{a+b}{2}$ נכונה כי $\ln$ קעורה'
+            feedback: >-
+              הקעירות של $\ln$ לא אומרת איפה נמצאת הנקודה של לגרנז'. בדוגמה $a=1$, $b=e$ היא $e-1$, לא האמצע.
+            misconception: MC-mvt-c-midpoint
+
+      - label: ד
+        points: 6
+        type: open
+        objectives: [OBJ-5.6-3]
+        prompt: >-
+          הוכיחו ש-$|\ln x-\ln y|\le|x-y|$ לכל $x,y\ge1$, ושבקטע $(0,1]$ הפונקציה $\ln$ אינה מקיימת תנאי ליפשיץ (אין
+          $M$ כך ש-$|\ln x-\ln y|\le M|x-y|$ לכל $x,y\in(0,1]$).
+        solution:
+          - kind: idea
+            text: 'נגזרת חסומה נותנת תנאי ליפשיץ; כש-$x\to0^+$ הנגזרת $\frac1x$ אינה חסומה, ונחפש זוגות שמראים זאת.'
+          - kind: theorem
+            text: >-
+              ל-$1\le y<x$: לפי לגרנז' $\ln x-\ln y=\frac{x-y}{c}$ עם $c\in(y,x)$, ולכן $c>1$ ו-$|\ln x-\ln y|<|x-y|$.
+              כש-$x=y$ יש שוויון, והמקרה $x<y$ סימטרי.
+          - kind: step
+            text: >-
+              נניח בשלילה שקיים $M$ כזה ב-$(0,1]$. ניקח $y=1$ ו-$x=e^{-n}$, $n\in\mathbb{N}$: אז $|\ln x-\ln y|=n$
+              ו-$|x-y|=1-e^{-n}<1$.
+          - kind: step
+            text: 'לכן $n\le M(1-e^{-n})<M$ לכל $n\in\mathbb{N}$, בסתירה לתכונת ארכימדס.'
+          - kind: result
+            text: >-
+              $\ln$ מקיימת ב-$[1,\infty)$ תנאי ליפשיץ עם הקבוע $1$, ואינה מקיימת תנאי ליפשיץ ב-$(0,1]$.
+        rubric:
+          - text: 'מפעילים את לגרנז'' ומשתמשים ב-$c\ge1$ כדי לחסום את $\frac1c$ ב-$1$.'
+            weight: 2
+          - text: 'מנסחים נכון את השלילה של תנאי ליפשיץ: לכל $M$ יש זוג $x,y$ שמפר אותו.'
+            weight: 2
+          - text: 'מראים זוג (או סדרת זוגות) שבו היחס $\frac{|\ln x-\ln y|}{|x-y|}$ אינו חסום, ומסיקים סתירה.'
+            weight: 2
+
+  - id: Q-5-exam-2
+    type: exam
+    title: חקירה מלאה של פונקציה רציונלית
+    prompt: >-
+      נתונה הפונקציה $f(x)=\frac{x^2-3}{x-2}$, שתחום ההגדרה שלה הוא $x\neq2$.
+    parts:
+      - label: א
+        points: 5
+        type: multi
+        objectives: [OBJ-5.10-1]
+        prompt: >-
+          אילו מהישרים הבאים הם אסימפטוטות של הגרף של $f$? סמנו את כולם.
+        choices:
+          - text: '$x=2$'
+            correct: true
+            feedback: >-
+              נכון. המונה ב-$2$ שווה ל-$1\neq0$, ולכן $f\to-\infty$ כש-$x\to2^-$ ו-$f\to+\infty$ כש-$x\to2^+$.
+          - text: '$y=x+2$'
+            correct: true
+            feedback: >-
+              נכון, בשני הכיוונים. בחילוק: $x^2-3=(x-2)(x+2)+1$, ולכן $f(x)=x+2+\frac{1}{x-2}$ ו-$f(x)-(x+2)\to0$.
+          - text: '$y=x$'
+            feedback: >-
+              $m=1$ נכון, אבל $b=\lim\bigl(f(x)-x\bigr)=\lim\frac{2x-3}{x-2}=2$. $b$ נקבע מגבול, לא מ"מה ש-$f$ בערך".
+            misconception: MC-slant-intercept-skipped
+
+      - label: ב
+        points: 8
+        type: open
+        objectives: [OBJ-5.7-1, OBJ-5.8-1, OBJ-5.10-2]
+        prompt: >-
+          מצאו את קטעי העלייה והירידה של $f$ ואת נקודות הקיצון המקומי שלה, עם הערכים בהן. נמקו.
+        solution:
+          - kind: computation
+            text: >-
+              $f(x)=x+2+\frac{1}{x-2}$, ולכן $f'(x)=1-\frac{1}{(x-2)^2}=\frac{(x-2)^2-1}{(x-2)^2}=\frac{(x-1)(x-3)}{(x-2)^2}$.
+          - kind: step
+            text: >-
+              המכנה חיובי בכל התחום, ולכן הסימן של $f'$ הוא הסימן של $(x-1)(x-3)$: חיובי ב-$(-\infty,1)$ וב-$(3,\infty)$,
+              שלילי ב-$(1,2)$ וב-$(2,3)$.
+          - kind: theorem
+            text: >-
+              בכל קטע שבו $f'>0$ הפונקציה עולה ממש, ובכל קטע שבו $f'<0$ היא יורדת ממש (לגרנז'). לכן $f$ עולה ממש
+              ב-$(-\infty,1]$ וב-$[3,\infty)$, ויורדת ממש ב-$[1,2)$ וב-$(2,3]$.
+          - kind: check
+            text: >-
+              אי אפשר לאחד את $[1,2)$ ו-$(2,3]$ לקטע ירידה אחד: $2$ אינו בתחום, ואכן $f(1)=2<6=f(3)$.
+          - kind: step
+            text: >-
+              מבחן הנגזרת הראשונה: ב-$x=1$ הסימן של $f'$ עובר מ-$+$ ל-$-$, וב-$x=3$ מ-$-$ ל-$+$.
+          - kind: result
+            text: >-
+              מקסימום מקומי ב-$x=1$ עם $f(1)=2$, ומינימום מקומי ב-$x=3$ עם $f(3)=6$. עלייה ב-$(-\infty,1]$ וב-$[3,\infty)$,
+              ירידה ב-$[1,2)$ וב-$(2,3]$.
+        rubric:
+          - text: 'מחשבים את $f''$ נכון ומפרקים את המונה לגורמים.'
+            weight: 2
+          - text: 'קובעים את הסימן של $f''$ בכל קטע, בלי לשכוח ש-$2$ אינו בתחום.'
+            weight: 2
+          - text: 'מציינים את קטעי המונוטוניות בנפרד משני צדי $x=2$, ולא כאיחוד.'
+            weight: 2
+          - text: 'מסווגים את $1$ ואת $3$ בנימוק (מבחן הנגזרת הראשונה או השנייה) ומחשבים $f(1)=2$, $f(3)=6$.'
+            weight: 2
+
+      - label: ג
+        points: 4
+        type: mc
+        objectives: [OBJ-5.9-2]
+        prompt: >-
+          $g$ **קמורה** בקטע $I$ אם $g\bigl(tx+(1-t)y\bigr)\le t\,g(x)+(1-t)\,g(y)$ לכל $x,y\in I$ ו-$t\in[0,1]$, ו**קעורה**
+          אם $-g$ קמורה. נתון $f''(x)=\frac{2}{(x-2)^3}$. מה נכון?
+        choices:
+          - text: '$f$ קעורה ב-$(-\infty,2)$, קמורה ב-$(2,\infty)$, ואין לה נקודת פיתול'
+            correct: true
+            feedback: >-
+              נכון. $f''<0$ משמאל ל-$2$ ו-$f''>0$ מימין. כיוון הקמירות משתנה ב-$2$, אבל $2$ אינו בתחום, ולכן אינו נקודת פיתול.
+          - text: '$f$ קעורה ב-$(-\infty,2)$, קמורה ב-$(2,\infty)$, ו-$x=2$ נקודת פיתול'
+            feedback: >-
+              נקודת פיתול היא נקודה **בתחום**, שבה $f$ רציפה. ב-$2$ יש אסימפטוטה אנכית, לא נקודה על הגרף.
+            misconception: MC-inflection-outside-domain
+          - text: '$f$ קמורה ב-$(-\infty,2)$ וקעורה ב-$(2,\infty)$'
+            feedback: >-
+              הפוך: $f''<0$ ל-$x<2$, כלומר שם $f$ קעורה. נגזרת שנייה חיובית נותנת קמירות.
+            misconception: MC-convex-concave-swapped
+          - text: '$f$ קמורה בכל התחום, כי יש לה מינימום מקומי'
+            feedback: >-
+              מינימום מקומי אינו קמירות: ב-$(-\infty,2)$ הנגזרת השנייה שלילית ו-$f$ קעורה, אף שב-$(2,\infty)$ יש מינימום.
+            misconception: MC-convex-means-increasing
+
+      - label: ד
+        points: 8
+        type: open
+        standalone: false
+        objectives: [OBJ-5.10-3, OBJ-5.10-2, OBJ-4.3-2]
+        prompt: >-
+          היעזרו בסעיפים הקודמים וקבעו, לכל מספר ממשי $k$, כמה פתרונות יש למשוואה $f(x)=k$. נמקו.
+        solution:
+          - kind: idea
+            text: >-
+              מחלקים את התחום לארבעה קטעי מונוטוניות ממש. בכל אחד מהם $f$ רציפה ומונוטונית ממש, ולכן כל ערך בתמונה של
+              הקטע מתקבל בו פעם אחת בדיוק (ערך הביניים לקיום, מונוטוניות ממש ליחידות).
+          - kind: computation
+            text: >-
+              גבולות בקצוות: $f(x)\to-\infty$ כש-$x\to-\infty$ (כי $f(x)=x+2+\frac{1}{x-2}$), $f\to-\infty$ כש-$x\to2^-$,
+              $f\to+\infty$ כש-$x\to2^+$, ו-$f\to+\infty$ כש-$x\to\infty$.
+          - kind: step
+            text: >-
+              ב-$(-\infty,1]$: $f$ עולה ממש מ-$-\infty$ עד $2$, והתמונה $(-\infty,2]$. ב-$[1,2)$: יורדת ממש מ-$2$ ל-$-\infty$,
+              והתמונה $(-\infty,2]$.
+          - kind: step
+            text: >-
+              ב-$(2,3]$: יורדת ממש מ-$+\infty$ עד $6$, והתמונה $[6,\infty)$. ב-$[3,\infty)$: עולה ממש מ-$6$ ל-$\infty$,
+              והתמונה $[6,\infty)$.
+          - kind: check
+            text: 'הנקודות $x=1$ ו-$x=3$ שייכות לשני קטעים סמוכים, ולכן $k=2$ ו-$k=6$ נספרים פעם אחת ולא פעמיים.'
+          - kind: result
+            text: >-
+              ל-$k<2$: שני פתרונות. ל-$k=2$: פתרון אחד ($x=1$). ל-$2<k<6$: אין פתרון. ל-$k=6$: פתרון אחד ($x=3$). ל-$k>6$:
+              שני פתרונות.
+        rubric:
+          - text: 'מחשבים את הגבולות של $f$ בארבעת קצות התחום.'
+            weight: 2
+          - text: 'מוצאים את התמונה של כל קטע מונוטוניות ומנמקים קיום (רציפות וערך הביניים) ויחידות (מונוטוניות ממש).'
+            weight: 3
+          - text: 'מטפלים נכון במקרי הקצה $k=2$ ו-$k=6$ ובתחום $2<k<6$ שבו אין פתרון.'
+            weight: 3
+
+  - id: Q-5-exam-3
+    type: exam
+    title: רול, דרבו ונקודות שבת
+    prompt: >-
+      $f$ גזירה ב-$\mathbb{R}$, ו-$f'(x)\neq1$ לכל $x\in\mathbb{R}$.
+    parts:
+      - label: א
+        points: 9
+        type: open
+        objectives: [OBJ-5.5-2]
+        prompt: >-
+          הוכיחו שלמשוואה $f(x)=x$ יש לכל היותר פתרון אחד.
+        solution:
+          - kind: given
+            text: '$f$ גזירה ב-$\mathbb{R}$ ו-$f''(x)\neq1$ לכל $x$.'
+          - kind: idea
+            text: 'פתרון של $f(x)=x$ הוא שורש של $g(x)=f(x)-x$. בין שני שורשים של $g$, רול נותן שורש של $g''$.'
+          - kind: step
+            text: >-
+              נניח בשלילה ש-$a<b$ שני פתרונות. אז $g(a)=g(b)=0$, ו-$g$ רציפה ב-$[a,b]$ וגזירה ב-$(a,b)$ (הפרש של פונקציות גזירות).
+          - kind: theorem
+            text: 'לפי משפט רול קיימת $c\in(a,b)$ עם $g''(c)=0$.'
+          - kind: computation
+            text: '$g''(c)=f''(c)-1=0$, כלומר $f''(c)=1$.'
+          - kind: result
+            text: 'סתירה להנחה $f''(x)\neq1$ לכל $x$. לכן יש לכל היותר פתרון אחד.'
+        rubric:
+          - text: 'מגדירים פונקציית עזר $g(x)=f(x)-x$ ומתרגמים את הפתרונות לשורשים שלה.'
+            weight: 2
+          - text: 'בודקים את שלוש ההנחות של רול על $g$ בקטע שבין שני הפתרונות.'
+            weight: 3
+          - text: 'מחשבים $g''(c)=f''(c)-1$ ומגיעים לסתירה.'
+            weight: 3
+          - text: 'מנסחים את ההוכחה בשלילה בצורה מלאה.'
+            weight: 1
+
+      - label: ב
+        points: 8
+        type: open
+        objectives: [OBJ-5.7-2, OBJ-5.7-1]
+        prompt: >-
+          נניח בנוסף ש-$f'(0)<1$. הוכיחו ש-$f'(x)<1$ לכל $x$, והסיקו ש-$g(x)=f(x)-x$ יורדת ממש ב-$\mathbb{R}$.
+        solution:
+          - kind: idea
+            text: 'אם $f''$ הייתה גדולה מ-$1$ במקום כלשהו, היא הייתה עוברת דרך $1$ בדרך, ודרבו מבטיח את זה גם בלי רציפות של $f''$.'
+          - kind: step
+            text: 'נניח בשלילה שקיים $x_1$ עם $f''(x_1)\ge1$. מההנחה $f''(x_1)\neq1$, ולכן $f''(x_1)>1$; ובפרט $x_1\neq0$.'
+          - kind: theorem
+            text: >-
+              $f$ גזירה בקטע הסגור שבין $0$ ל-$x_1$, ו-$1$ נמצא ממש בין $f'(0)$ ל-$f'(x_1)$. לפי משפט דרבו יש $c$ בין $0$
+              ל-$x_1$ עם $f'(c)=1$.
+          - kind: step
+            text: 'זו סתירה להנחה, ולכן $f''(x)<1$ לכל $x$.'
+          - kind: step
+            text: >-
+              $g'(x)=f'(x)-1<0$ לכל $x$, ולכן לפי לגרנז' לכל $x<y$: $g(y)-g(x)=g'(c)(y-x)<0$.
+          - kind: result
+            text: '$f''<1$ בכל $\mathbb{R}$, ו-$g(x)=f(x)-x$ יורדת ממש ב-$\mathbb{R}$.'
+        rubric:
+          - text: 'מנסחים את ההנחה בשלילה נכון ($f''(x_1)>1$ לאיזה $x_1$).'
+            weight: 2
+          - text: 'מפעילים את משפט דרבו (לא את ערך הביניים, שדורש רציפות של $f''$) ומקבלים $f''(c)=1$.'
+            weight: 3
+          - text: 'מסיקים מ-$g''<0$ ש-$g$ יורדת ממש, בנימוק (לגרנז'' או הקשר בין סימן הנגזרת למונוטוניות).'
+            weight: 3
+
+      - label: ג
+        points: 4
+        type: twotier
+        objectives: [OBJ-5.7-3]
+        qualitative: true
+        prompt: >-
+          האם קיימת $h$ גזירה ב-$\mathbb{R}$ עם $h'(x)=0$ לכל $x<0$ ו-$h'(x)=2$ לכל $x>0$? (פונקציה כזו הייתה מקיימת $h'\neq1$
+          בכל $x\neq0$.)
+        choices:
+          - text: לא
+            correct: true
+            feedback: נכון. לנגזרת אין קפיצות.
+          - text: 'כן, $h(x)=x+|x|$'
+            feedback: >-
+              $x+|x|$ אינה גזירה ב-$0$: הנגזרת השמאלית שם $0$ והימנית $2$. היא מקיימת את הדרישה רק ב-$x\neq0$.
+            misconception: MC-abs-derivative-sign
+        reasons:
+          - text: 'לפי דרבו $h''$ הייתה מקבלת בקטע $(-1,1)$ גם את $\frac12$ וגם את $\frac32$, אבל שני הערכים האלה יכולים להתקבל רק ב-$0$, ושם יש ל-$h''$ ערך אחד'
+            correct: true
+            feedback: >-
+              בדיוק. באופן כללי: ל-$h'$ היו גבולות חד-צדדיים שונים ב-$0$, כלומר קפיצה, ולנגזרת אין קפיצות.
+          - text: 'אפשר להגדיר $h''(0)=1$ ולגשר בין הערכים'
+            feedback: >-
+              את $h'(0)$ לא מגדירים; היא נקבעת מ-$h$. וגם עם $h'(0)=1$, הערכים שבין $0$ ל-$1$ ובין $1$ ל-$2$ לא מתקבלים, בסתירה לדרבו.
+            misconception: MC-derivative-jump-possible
+          - text: 'כן, כי לנגזרת מותר להיות לא רציפה'
+            feedback: >-
+              נכון שנגזרת יכולה להיות לא רציפה, אבל רק באי-רציפות שבה הגבולות החד-צדדיים לא קיימים. קפיצה אסורה.
+            misconception: MC-derivative-jump-possible
+
+      - label: ד
+        points: 4
+        type: mc
+        objectives: [OBJ-5.5-3]
+        prompt: >-
+          הראו שבסעיף א אי אפשר לוותר על הגזירות בנקודה אחת: איזו פונקציה $f$, רציפה ב-$\mathbb{R}$ וגזירה בכל $x\neq0$ עם
+          $f'(x)\neq1$ שם, מקיימת $f(x)=x$ בשתי נקודות לפחות?
+        choices:
+          - text: '$f(x)=x+|x|-1$'
+            correct: true
+            feedback: >-
+              נכון. $f'(x)=0$ ל-$x<0$ ו-$f'(x)=2$ ל-$x>0$, ו-$f(x)=x$ בדיוק כש-$|x|=1$: שני פתרונות, $x=\pm1$. הכשל ברול הוא
+              בנקודה $0$, שבה $f$ אינה גזירה.
+          - text: '$f(x)=|x|$'
+            feedback: >-
+              $f(x)=x$ לכל $x\ge0$, אבל גם $f'(x)=1$ לכל $x>0$: היא לא מקיימת את ההנחה $f'\neq1$, ולכן אינה דוגמה נגדית מתאימה.
+            misconception: MC-counterexample-wrong-shape
+          - text: '$f(x)=x^2$'
+            feedback: >-
+              אמנם $f(x)=x$ ב-$0$ וב-$1$, אבל $f'(\frac12)=1$: ההנחה $f'\neq1$ לא מתקיימת. דוגמה נגדית צריכה לקיים את כל ההנחות
+              (פרט לזו שמוותרים עליה).
+            misconception: MC-counterexample-wrong-shape
+          - text: '$f(x)=2x$'
+            feedback: >-
+              $f$ גזירה בכל מקום עם $f'=2$, והפתרון היחיד של $2x=x$ הוא $0$. היא מקיימת את הטענה, ולכן לא מפריכה דבר.
+            misconception: MC-counterexample-wrong-shape

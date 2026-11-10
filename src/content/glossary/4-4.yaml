@@ -1,0 +1,9 @@
+# Terms first defined in lesson 4.4 (Weierstrass's theorems).
+- id: weierstrass-theorems
+  term: משפטי ויירשטראס
+  en: Weierstrass extreme value theorems
+  definition: >-
+    פונקציה רציפה בקטע סגור $[a,b]$ חסומה בו (המשפט הראשון), ומקבלת בו מקסימום ומינימום (המשפט השני). יחד עם
+    משפט ערך הביניים: $f([a,b])=[m,M]$, כש-$m$ ו-$M$ המינימום והמקסימום.
+  reject: [וירשטראס]
+  lesson: '4.4'

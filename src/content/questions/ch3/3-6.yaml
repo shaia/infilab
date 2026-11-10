@@ -1,0 +1,345 @@
+# Lesson 3.6 — one-sided limits, limits at ±∞, infinite limits, and monotone functions.
+# Objectives (src/course.ts):
+#   OBJ-3.6-1  define one-sided limits; prove the limit exists iff both one-sided limits exist and are equal
+#   OBJ-3.6-2  define limits at infinity and infinite limits, and compute them
+#   OBJ-3.6-3  prove that a monotone function has one-sided limits at every point
+chapter: 3
+questions:
+  - id: Q-3.6-floor
+    type: numeric
+    objectives: [OBJ-3.6-1]
+    level: basic
+    prompt: >-
+      חשבו את $\displaystyle\lim_{x\to2^-}\lfloor x\rfloor+\lim_{x\to2^+}\lfloor x\rfloor$.
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. עבור $1\le x<2$ מתקיים $\lfloor x\rfloor=1$, ולכן הגבול משמאל 1; עבור $2\le x<3$ הערך 2, ולכן הגבול
+      מימין 2. הסכום 3. (ולכן ל-$\lfloor x\rfloor$ אין גבול ב-2.)
+    wrongFeedback: >-
+      חשבו כל צד לחוד: אילו ערכים מקבלת $\lfloor x\rfloor$ כש-$x$ קצת פחות מ-2, ואילו כש-$x$ קצת יותר מ-2?
+    commonWrong:
+      - value: 4
+        feedback: >-
+          הצבתם $\lfloor2\rfloor=2$ בשני הגבולות. הגבול משמאל לא מסתכל על 2 עצמו, אלא על $x<2$ קרובים, ושם הערך 1.
+        misconception: MC-function-limit-is-value
+      - value: 2
+        feedback: >-
+          הגבול משמאל הוא 1 והגבול מימין 2. ייתכן שחשבתם שמימין הערך עדיין 1: אבל לכל $2\le x<3$ מתקיים
+          $\lfloor x\rfloor=2$.
+
+  - id: Q-3.6-iff
+    type: twotier
+    objectives: [OBJ-3.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      ידוע ש-$\lim_{x\to a^-}f(x)=3$, $\lim_{x\to a^+}f(x)=3$ ו-$f(a)=5$. האם $\lim_{x\to a}f(x)$ קיים?
+    choices:
+      - text: 'כן, והוא 3'
+        correct: true
+        feedback: נכון. שני הגבולות החד-צדדיים קיימים ושווים.
+      - text: 'לא, כי $f(a)\neq3$'
+        feedback: >-
+          הערך $f(a)$ לא משתתף בשום גבול, לא חד-צדדי ולא דו-צדדי. הוא קובע רק אם $f$ רציפה ב-$a$ (שיעור 4.1).
+        misconception: MC-function-limit-is-value
+    reasons:
+      - text: 'הגבול קיים אם ורק אם שני הגבולות החד-צדדיים קיימים ושווים, והערך בנקודה לא משנה'
+        correct: true
+        feedback: >-
+          בדיוק. בהוכחה לוקחים $\delta=\min(\delta_1,\delta_2)$ מהשניים, וכל $x$ עם $0<|x-a|<\delta$ נמצא באחד הצדדים.
+      - text: 'הגבול חייב להיות שווה ל-$f(a)$'
+        feedback: >-
+          זו רציפות, לא גבול. ל-$f$ יש גבול 3 ב-$a$, והיא אינה רציפה שם.
+        misconception: MC-function-limit-is-value
+      - text: 'מספיק שאחד הגבולות החד-צדדיים יהיה 3'
+        feedback: >-
+          כאן שניהם 3, ולכן התשובה כן, אבל צד אחד לא מספיק. אילו הגבול משמאל היה 4, לא היה גבול.
+        misconception: MC-one-side-enough
+
+  - id: Q-3.6-one-side
+    type: mc
+    objectives: [OBJ-3.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע רק ש-$\lim_{x\to0^+}f(x)=2$ ($f$ מוגדרת משני צדי 0). מה אפשר לומר על $\lim_{x\to0}f(x)$?
+    choices:
+      - text: 'לא ניתן לדעת: צריך גם את הגבול משמאל'
+        correct: true
+        feedback: >-
+          נכון. אם הגבול משמאל קיים ושווה ל-2, הגבול קיים ושווה ל-2; אחרת הוא לא קיים. שתי האפשרויות מתיישבות עם
+          הנתון.
+      - text: 'הגבול קיים ושווה ל-2'
+        feedback: >-
+          $f(x)=2$ כש-$x>0$ ו-$f(x)=x^2$ כש-$x<0$: מימין הגבול 2, משמאל 0, ואין גבול ב-0. מצד אחד אי אפשר לקבוע.
+        misconception: MC-one-side-enough
+      - text: 'הגבול אינו קיים, כי ידוע רק צד אחד'
+        feedback: >-
+          חוסר מידע אינו הוכחה שהגבול לא קיים. הפונקציה הקבועה 2 מקיימת את הנתון, ולה יש גבול ב-0.
+        misconception: MC-one-side-enough
+
+  - id: Q-3.6-sides-proof
+    type: rank
+    objectives: [OBJ-3.6-1]
+    level: exam
+    prompt: >-
+      הוכיחו: אם $\lim_{x\to a^-}f(x)=L$ ו-$\lim_{x\to a^+}f(x)=L$, אז $\lim_{x\to a}f(x)=L$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: eps
+        label: 'יהי $\varepsilon>0$.'
+      - id: right
+        label: 'מהגבול מימין: קיים $\delta_1>0$ כך ש-$a<x<a+\delta_1$ גורר $|f(x)-L|<\varepsilon$; ומהגבול משמאל: קיים $\delta_2>0$ כך ש-$a-\delta_2<x<a$ גורר $|f(x)-L|<\varepsilon$.'
+      - id: min
+        label: 'נבחר $\delta=\min(\delta_1,\delta_2)>0$, ויהי $x$ עם $0<|x-a|<\delta$.'
+      - id: cases
+        label: 'אם $x>a$ אז $a<x<a+\delta_1$, ואם $x<a$ אז $a-\delta_2<x<a$; בשני המקרים $|f(x)-L|<\varepsilon$.'
+      - id: done
+        label: 'זה מתקיים לכל $\varepsilon>0$, ולכן $\lim_{x\to a}f(x)=L$.'
+    order: [eps, right, min, cases, done]
+    correctFeedback: >-
+      נכון. המינימום של שתי הדלתות מתאים לשני הצדדים יחד, והתנאי $0<|x-a|$ מבטיח ש-$x$ נמצא בדיוק באחד מהם.
+    wrongFeedback: >-
+      $\varepsilon$ נתון ראשון; ממנו כל צד נותן דלתא משלו; את שתיהן מאחדים בדלתא אחת, ורק אז בוחרים $x$.
+
+  - id: Q-3.6-rational-infinity
+    type: numeric
+    objectives: [OBJ-3.6-2]
+    level: basic
+    prompt: >-
+      חשבו את $\displaystyle\lim_{x\to\infty}\frac{3x^2+1}{2x^2-x}$.
+    answer: 1.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. מחלקים מונה ומכנה ב-$x^2$: $\frac{3+\frac{1}{x^2}}{2-\frac1x}\to\frac{3}{2}$, כי $\frac1x\to0$ כש-$x\to\infty$.
+    wrongFeedback: >-
+      חלקו מונה ומכנה בחזקה הגבוהה ביותר של $x$, והשתמשו ב-$\frac1x\to0$ כש-$x\to\infty$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          "אינסוף חלקי אינסוף" אינו 1: הצורה לא קובעת את הגבול. היחס בין המקדמים המובילים, $\frac32$, הוא מה
+          שקובע כאן.
+        misconception: MC-indeterminate-form-value
+      - value: 3
+        feedback: >-
+          לקחתם רק את המונה המוביל. גם במכנה יש $x^2$, עם מקדם 2: הגבול הוא $\frac32$.
+
+  - id: Q-3.6-sqrt
+    type: numeric
+    objectives: [OBJ-3.6-2]
+    level: mid
+    prompt: >-
+      חשבו את $\displaystyle\lim_{x\to-\infty}\left(\sqrt{x^2+x}+x\right)$.
+    answer: -0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. כפל בצמוד: $\sqrt{x^2+x}+x=\frac{x}{\sqrt{x^2+x}-x}$. כש-$x<0$: $\sqrt{x^2+x}=|x|\sqrt{1+\frac1x}=-x\sqrt{1+\frac1x}$,
+      ולכן הביטוי $\frac{x}{-x\left(\sqrt{1+\frac1x}+1\right)}=\frac{-1}{\sqrt{1+\frac1x}+1}\to-\frac12$.
+    wrongFeedback: >-
+      כפלו וחלקו בצמוד $\sqrt{x^2+x}-x$. כשמוציאים את $x$ מהשורש, זכרו ש-$\sqrt{x^2}=|x|$, ו-$x$ כאן שלילי.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          זה הגבול של $\sqrt{x^2+x}-x$ ב-$+\infty$. ב-$-\infty$: $\sqrt{x^2}=|x|=-x$, ולכן הסימן מתהפך.
+        misconception: MC-sqrt-square-is-x
+      - value: 0
+        feedback: >-
+          $\sqrt{x^2+x}\to\infty$ ו-$x\to-\infty$, אבל "אינסוף פחות אינסוף" אינו 0. צריך לפשט, למשל בכפל בצמוד.
+        misconception: MC-indeterminate-form-value
+
+  - id: Q-3.6-one-over-x
+    type: twotier
+    objectives: [OBJ-3.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם $\displaystyle\lim_{x\to0}\frac1x=\infty$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. מימין הגבול $\infty$ ומשמאל $-\infty$.
+      - text: כן
+        feedback: >-
+          משמאל ל-0, $\frac1x$ שלילי: ב-$x=-0.001$ הערך $-1000$. לכן אין $\delta$ כך ש-$\frac1x>M$ לכל
+          $0<|x|<\delta$.
+        misconception: MC-reciprocal-of-null-is-infinity
+    reasons:
+      - text: '$\lim_{x\to0^+}\frac1x=\infty$ ו-$\lim_{x\to0^-}\frac1x=-\infty$'
+        correct: true
+        feedback: >-
+          בדיוק. מה שנכון בשני הצדדים הוא $\left|\frac1x\right|\to\infty$, ובהתאם $\frac{1}{x^2}\to\infty$ ב-0.
+      - text: 'אחד חלקי אפס הוא אינסוף'
+        feedback: >-
+          אפס אין לו הופכי, ו"אינסוף" אינו מספר. מכנה ששואף ל-0 נותן ערך מוחלט גדול, אבל הסימן תלוי בצד.
+        misconception: MC-reciprocal-of-null-is-infinity
+      - text: '$\frac1x$ לא חסומה ליד 0'
+        feedback: >-
+          זה נכון, אבל לא חסומה זה לא "שואפת לאינסוף": "שואפת לאינסוף" דורש ש**כל** הערכים ליד 0 יהיו גדולים, וכאן
+          משמאל הם שליליים.
+        misconception: MC-unbounded-implies-infinity
+
+  - id: Q-3.6-def-infinite
+    type: mc
+    objectives: [OBJ-3.6-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהי ההגדרה של $\lim_{x\to a}f(x)=\infty$?
+    choices:
+      - text: '$\forall M\in\mathbb{R}\ \exists\delta>0\ \forall x:\ 0<|x-a|<\delta\Rightarrow f(x)>M$'
+        correct: true
+        feedback: >-
+          נכון. ה"רצועה" סביב $L$ מוחלפת בחצי-ישר $(M,\infty)$: לכל גובה $M$, קרוב מספיק ל-$a$ כל הערכים מעליו.
+      - text: '$\forall M\in\mathbb{R}\ \forall\delta>0\ \exists x:\ 0<|x-a|<\delta\ \land\ f(x)>M$'
+        feedback: >-
+          זה אומר רק ש-$f$ לא חסומה מלעיל ליד $a$. הפונקציה $\frac1x\sin\frac1x$ מקיימת את זה ב-0, אבל מתאפסת בכל
+          $x=\frac{1}{k\pi}$, ולכן לא שואפת לאינסוף.
+        misconception: MC-unbounded-implies-infinity
+      - text: '$\forall\varepsilon>0\ \exists\delta>0\ \forall x:\ 0<|x-a|<\delta\Rightarrow|f(x)-\infty|<\varepsilon$'
+        feedback: >-
+          אינסוף אינו מספר ממשי, ולכן $f(x)-\infty$ חסר משמעות. ההגדרה של גבול אינסופי היא נפרדת, עם $M$ במקום
+          $\varepsilon$.
+        misconception: MC-infinite-limit-as-number
+
+  - id: Q-3.6-unbounded
+    type: twotier
+    objectives: [OBJ-3.6-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f(x)=x\sin x$. לכל $M$ יש $x>M$ עם $f(x)>M$, כלומר $f$ אינה חסומה מלעיל על אף קרן $[M,\infty)$. האם
+      $\lim_{x\to\infty}f(x)=\infty$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. הפונקציה חוזרת לאפס שוב ושוב.
+      - text: כן
+        feedback: >-
+          "שואפת לאינסוף" דורש שמ-$K$ מסוים והלאה **כל** הערכים יהיו גדולים מ-$M$. אבל $f(n\pi)=0$ לכל $n$.
+        misconception: MC-unbounded-implies-infinity
+    reasons:
+      - text: '$x_n=n\pi\to\infty$ נותנת $f(x_n)=0$, ולפי היינה (באינסוף) זה סותר גבול $\infty$'
+        correct: true
+        feedback: >-
+          בדיוק. ובסדרה $y_n=\frac{\pi}{2}+2n\pi$ מקבלים $f(y_n)=y_n\to\infty$: שתי סדרות עם התנהגות שונה, ולכן אין
+          ל-$f$ גבול באינסוף, לא סופי ולא אינסופי.
+      - text: 'הפונקציה לא חסומה, ולכן שואפת לאינסוף'
+        feedback: >-
+          לא חסומה פירושו שיש ערכים גדולים **לפעמים**. שאיפה לאינסוף דורשת שהם יהיו גדולים **תמיד** מנקודה מסוימת.
+        misconception: MC-unbounded-implies-infinity
+      - text: 'הסדרה $f\left(\frac{\pi}{2}+2n\pi\right)$ שואפת לאינסוף, ולכן גם $f$'
+        feedback: >-
+          סדרה אחת לא קובעת גבול של פונקציה. הסדרה $n\pi$ נותנת אפסים.
+        misconception: MC-heine-some-sequences
+
+  - id: Q-3.6-integers
+    type: twotier
+    objectives: [OBJ-3.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f:\mathbb{R}\to\mathbb{R}$ מקיימת $\lim_{n\to\infty}f(n)=0$ (על הטבעיים). האם בהכרח $\lim_{x\to\infty}f(x)=0$?
+    choices:
+      - text: לא בהכרח
+        correct: true
+        feedback: נכון. הסדרה $f(n)$ רואה רק את השלמים.
+      - text: כן
+        feedback: >-
+          $f(x)=\sin(\pi x)$ מתאפסת בכל שלם, אבל ב-$x=2n+\frac12$ היא שווה ל-1. אין לה גבול באינסוף.
+        misconception: MC-integer-points-limit-at-infinity
+    reasons:
+      - text: 'עבור $f(x)=\sin(\pi x)$: $f(n)=0$, אבל $f\left(2n+\frac12\right)=1$'
+        correct: true
+        feedback: >-
+          בדיוק. לפי היינה באינסוף, $\lim_{x\to\infty}f=L$ אם ורק אם $f(x_n)\to L$ לכל סדרה $x_n\to\infty$, ו-$n$ היא
+          רק אחת מהן.
+      - text: 'גבול באינסוף של פונקציה מוגדר בעזרת הסדרה $f(n)$'
+        feedback: >-
+          ההגדרה היא: לכל $\varepsilon>0$ קיים $K$ כך ש-$x>K$ גורר $|f(x)-L|<\varepsilon$, לכל $x$ ממשי, לא רק לשלמים.
+        misconception: MC-integer-points-limit-at-infinity
+      - text: 'אם יש אינסוף נקודות שבהן $f$ קרובה ל-0, הגבול 0'
+        feedback: >-
+          אינסוף נקודות אינן כל הנקודות מ-$K$ והלאה. זו אותה טעות כמו בסדרות: $(-1)^n$ שווה ל-1 אינסוף פעמים.
+        misconception: MC-limit-infinitely-often
+
+  - id: Q-3.6-monotone
+    type: twotier
+    objectives: [OBJ-3.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f:\mathbb{R}\to\mathbb{R}$ עולה (לא בהכרח ממש). האם בהכרח קיים $\lim_{x\to a}f(x)$ בכל נקודה $a$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. מובטחים רק הגבולות החד-צדדיים.
+      - text: כן
+        feedback: >-
+          $\lfloor x\rfloor$ עולה, וב-1 הגבול משמאל 0 והגבול מימין 1: אין גבול. מונוטוניות מונעת תנודות, לא קפיצות.
+        misconception: MC-monotone-two-sided-limit
+    reasons:
+      - text: 'ל-$\lfloor x\rfloor$ יש ב-1 גבול משמאל 0 וגבול מימין 1; מובטח רק ששני הגבולות החד-צדדיים קיימים'
+        correct: true
+        feedback: >-
+          בדיוק. ומתקיים תמיד $\lim_{x\to a^-}f\le f(a)\le\lim_{x\to a^+}f$, כך שהגבול קיים בדיוק כשאין קפיצה.
+      - text: 'פונקציה מונוטונית לא יכולה לקפוץ'
+        feedback: >-
+          היא לא יכולה להתנודד (כמו $\sin\frac1x$), אבל לקפוץ היא יכולה, כמו $\lfloor x\rfloor$ בכל שלם.
+        misconception: MC-monotone-two-sided-limit
+      - text: 'הגבול בכל נקודה שווה ל-$f(a)$'
+        feedback: >-
+          הערך בנקודה לא קובע את הגבול. ב-$\lfloor x\rfloor$ ב-1: $f(1)=1$, אבל משמאל הערכים 0.
+        misconception: MC-function-limit-is-value
+
+  - id: Q-3.6-monotone-sup
+    type: multi
+    objectives: [OBJ-3.6-3]
+    level: mid
+    prompt: >-
+      $f:\mathbb{R}\to\mathbb{R}$ עולה, ונסמן $L^-=\lim_{x\to a^-}f(x)$ ו-$L^+=\lim_{x\to a^+}f(x)$. אילו מהטענות
+      הבאות נכונות תמיד? סמנו את כולן.
+    choices:
+      - text: '$L^-=\sup\{f(x):x<a\}$'
+        correct: true
+        feedback: >-
+          נכון. הקבוצה חסומה מלעיל ב-$f(a)$, ולכן יש לה סופרמום, וכש-$x$ עולה אל $a$ הערכים עולים אליו.
+      - text: '$L^-\le f(a)\le L^+$'
+        correct: true
+        feedback: >-
+          נכון. $f(a)$ חסם מלעיל של $\{f(x):x<a\}$ ולכן גדול מהסופרמום, וחסם מלרע של $\{f(x):x>a\}$ ולכן קטן
+          מהאינפימום.
+      - text: '$L^-=f(a)$'
+        feedback: >-
+          לא תמיד: עבור $\lfloor x\rfloor$ ב-$a=1$, $L^-=0$ ו-$f(1)=1$. הגבול משמאל לא תלוי בערך בנקודה.
+        misconception: MC-function-limit-is-value
+      - text: '$L^+=\sup\{f(x):x>a\}$'
+        feedback: >-
+          מימין הגבול הוא ה**אינפימום**: כש-$x$ יורד אל $a$, ערכי פונקציה עולה יורדים. עבור $f(x)=x$ ו-$a=0$
+          הקבוצה $\{x:x>0\}$ אינה חסומה מלעיל, ואילו $L^+=0=\inf\{x:x>0\}$.
+        misconception: MC-monotone-sided-sup-inf-swap
+
+  - id: Q-3.6-monotone-proof
+    type: rank
+    objectives: [OBJ-3.6-3]
+    level: exam
+    prompt: >-
+      $f:\mathbb{R}\to\mathbb{R}$ עולה. הוכיחו ש-$\lim_{x\to a^-}f(x)=s$, כאשר $s=\sup\{f(x):x<a\}$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: exists
+        label: 'הקבוצה $\{f(x):x<a\}$ אינה ריקה וחסומה מלעיל ב-$f(a)$, ולכן לפי אקסיומת השלמות יש לה סופרמום $s$.'
+      - id: eps
+        label: 'יהי $\varepsilon>0$. לפי האפיון של הסופרמום יש $x_0<a$ עם $f(x_0)>s-\varepsilon$.'
+      - id: delta
+        label: 'נבחר $\delta=a-x_0>0$.'
+      - id: bounds
+        label: 'לכל $x$ עם $a-\delta<x<a$: $x>x_0$, ולכן $f(x)\ge f(x_0)>s-\varepsilon$; וגם $f(x)\le s$, כי $s$ חסם מלעיל.'
+      - id: done
+        label: 'לכן $|f(x)-s|<\varepsilon$ לכל $a-\delta<x<a$, כלומר $\lim_{x\to a^-}f(x)=s$.'
+    order: [exists, eps, delta, bounds, done]
+    correctFeedback: >-
+      נכון. זו אותה הוכחה כמו "סדרה עולה וחסומה מתכנסת לסופרמום" (שיעור 2.7): הסופרמום נותן נקודה אחת קרובה,
+      והמונוטוניות מעבירה את הקרבה לכל הנקודות שאחריה.
+    wrongFeedback: >-
+      קודם צריך לדעת ש-$s$ קיים. אחר כך: $\varepsilon$, נקודה אחת שהסופרמום נותן, דלתא ממנה, והמונוטוניות.

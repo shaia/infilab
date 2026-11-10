@@ -1,0 +1,346 @@
+# Lesson 3.5 — limit arithmetic for functions, the squeeze rule, sin x / x, and the limit of a composition.
+# Objectives (src/course.ts):
+#   OBJ-3.5-1  use limit arithmetic and the squeeze rule for functions, and prove them with Heine
+#   OBJ-3.5-2  prove that sin x / x → 1 at 0 and compute trigonometric limits with it
+#   OBJ-3.5-3  compute the limit of a composition and know the condition it needs
+# Continuity is defined only in lesson 4.1: the composition rule is stated here in limit terms
+# (g(x) ≠ b in a punctured neighbourhood of a, or f(b) = L).
+chapter: 3
+questions:
+  - id: Q-3.5-rational
+    type: numeric
+    objectives: [OBJ-3.5-1]
+    level: basic
+    prompt: >-
+      חשבו את $\displaystyle\lim_{x\to2}\frac{x^2-4}{x^2-3x+2}$.
+    answer: 4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac{x^2-4}{x^2-3x+2}=\frac{(x-2)(x+2)}{(x-2)(x-1)}=\frac{x+2}{x-1}$ לכל $x\neq1,2$. הגבול לא תלוי
+      בערך ב-2, ולפי כלל המנה (המכנה שואף ל-$1\neq0$) הוא $\frac{4}{1}=4$.
+    wrongFeedback: >-
+      הצבה ישירה נותנת "אפס חלקי אפס", שאינו מספר. פרקו את המונה ואת המכנה לגורמים וצמצמו את הגורם המשותף.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          "אפס חלקי אפס" אינו 1. הצורה הזו לא קובעת את הגבול; צריך לצמצם את הגורם $(x-2)$ ואז להשתמש בכלל המנה.
+        misconception: MC-indeterminate-form-value
+      - value: 0
+        feedback: >-
+          המונה שואף ל-0, אבל גם המכנה. מנה של שני ביטויים ששואפים ל-0 יכולה לשאוף לכל דבר; כאן, אחרי צמצום, ל-4.
+        misconception: MC-indeterminate-form-value
+
+  - id: Q-3.5-squeeze
+    type: mc
+    objectives: [OBJ-3.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $D$ היא פונקציית דיריכלה. איזה נימוק מוכיח נכון ש-$\lim_{x\to0}x^2D(x)=0$?
+    choices:
+      - text: '$0\le x^2D(x)\le x^2$ לכל $x$, ו-$x^2\to0$; לפי כלל הסנדוויץ'' הגבול 0'
+        correct: true
+        feedback: >-
+          נכון. שני החסמים, $0$ ו-$x^2$, שואפים לאותו גבול 0, וזה מה שהסנדוויץ' דורש.
+      - text: '$\lim_{x\to0}x^2D(x)=\lim_{x\to0}x^2\cdot\lim_{x\to0}D(x)=0$'
+        feedback: >-
+          ל-$D$ אין גבול ב-0 (שיעור 3.4), ולכן כלל המכפלה לא חל. התוצאה נכונה, אבל הנימוק פסול.
+        misconception: MC-limit-rules-on-divergent
+      - text: '$0\le x^2D(x)\le1$ ליד 0, ולכן לפי כלל הסנדוויץ'' הגבול 0'
+        feedback: >-
+          החסמים $0$ ו-$1$ שואפים לגבולות שונים, ולכן הסנדוויץ' לא אומר דבר. גם $D$ עצמה מקיימת $0\le D\le1$, ואין
+          לה גבול.
+        misconception: MC-squeeze-unequal-limits
+
+  - id: Q-3.5-product-bounded
+    type: twotier
+    objectives: [OBJ-3.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סטודנט כתב: $\lim_{x\to0}x\sin\frac1x=\lim_{x\to0}x\cdot\lim_{x\to0}\sin\frac1x=0\cdot\lim_{x\to0}\sin\frac1x=0$. מה
+      דעתכם?
+    choices:
+      - text: 'התוצאה נכונה, אבל הנימוק פסול'
+        correct: true
+        feedback: >-
+          נכון. הגבול באמת 0, אבל כלל המכפלה דורש ששני הגבולות יהיו קיימים, ול-$\sin\frac1x$ אין גבול ב-0.
+      - text: 'התוצאה והנימוק נכונים'
+        feedback: >-
+          הביטוי $\lim_{x\to0}\sin\frac1x$ לא קיים (שיעור 3.4), ולכן אי אפשר לכפול אותו ב-0. אילו הכלל היה עובד גם
+          כך, הוא "היה מוכיח" גם ש-$x\cdot\frac{1}{x}\to0$, כי $x\to0$.
+        misconception: MC-limit-rules-on-divergent
+      - text: 'התוצאה שגויה: אין גבול, כי ל-$\sin\frac1x$ אין גבול ב-0'
+        feedback: >-
+          הגבול כן קיים: $\left|x\sin\frac1x\right|\le|x|$. גורם חסום כפול גורם ששואף ל-0 שואף ל-0, גם כשלגורם החסום
+          אין גבול.
+        misconception: MC-bounded-factor-blocks-limit
+    reasons:
+      - text: 'כלל המכפלה מניח ששני הגבולות קיימים; ההוכחה הנכונה היא $0\le\left|x\sin\frac1x\right|\le|x|$ וסנדוויץ'''
+        correct: true
+        feedback: >-
+          בדיוק. כשאחד הגורמים חסום ולא מתכנס, מחליפים את כלל המכפלה ב"שואף לאפס כפול חסום שואף לאפס".
+      - text: 'אפס כפול כל דבר הוא אפס'
+        feedback: >-
+          זה נכון למספרים, אבל $\lim\sin\frac1x$ אינו מספר: הוא לא קיים. וגם "אפס כפול חסום" נכון רק כשהגורם השני
+          חסום; $x\cdot\frac1x=1$ לא שואף ל-0.
+        misconception: MC-limit-rules-on-divergent
+      - text: 'כשאחד הגורמים מתנודד בלי גבול, גם למכפלה אין גבול'
+        feedback: >-
+          לא כשהגורם השני שואף ל-0. התנודות של $\sin\frac1x$ נלחצות בין $-|x|$ ל-$|x|$, ושני החסמים שואפים ל-0.
+        misconception: MC-bounded-factor-blocks-limit
+
+  - id: Q-3.5-sum-converse
+    type: twotier
+    objectives: [OBJ-3.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם הטענה נכונה: "אם $\lim_{x\to a}\left(f(x)+g(x)\right)$ קיים, אז גם $\lim_{x\to a}f(x)$ וגם $\lim_{x\to a}g(x)$
+      קיימים"?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. כלל הסכום עובד רק בכיוון אחד.
+      - text: כן
+        feedback: >-
+          עם $f(x)=\sin\frac1x$ ו-$g(x)=-\sin\frac1x$ הסכום הוא 0 לכל $x\neq0$, ולכן יש לו גבול ב-0, ולאף אחת מהן אין.
+        misconception: MC-sum-converges-parts-converge
+    reasons:
+      - text: '$f=\sin\frac1x$ ו-$g=-\sin\frac1x$: $f+g\equiv0$, ולאף אחת מהן אין גבול ב-0'
+        correct: true
+        feedback: >-
+          בדיוק. מה שכן נכון: אם ל-$f+g$ **ול-$g$** יש גבול, אז גם ל-$f=(f+g)-g$ יש.
+      - text: 'כלל הסכום אומר ש-$\lim(f+g)=\lim f+\lim g$, ולכן שני הגבולות מופיעים באגף ימין'
+        feedback: >-
+          הכלל אומר: **אם** $\lim f$ ו-$\lim g$ קיימים, אז $\lim(f+g)$ קיים ושווה לסכומם. הוא לא אומר דבר במקרה
+          ש-$\lim(f+g)$ קיים ואחד האחרים לא.
+        misconception: MC-sum-converges-parts-converge
+      - text: 'אם ל-$f$ אין גבול, הוספת $g$ לא יכולה לתקן את זה'
+        feedback: >-
+          זה נכון רק כשל-$g$ **יש** גבול. כש-$g$ עצמה מתבדרת, היא יכולה לבטל בדיוק את התנודות של $f$.
+        misconception: MC-sum-converges-parts-converge
+
+  - id: Q-3.5-heine-proof
+    type: rank
+    objectives: [OBJ-3.5-1]
+    level: exam
+    prompt: >-
+      הוכיחו בעזרת הגדרת היינה: אם $\lim_{x\to a}f(x)=L$ ו-$\lim_{x\to a}g(x)=M$, אז $\lim_{x\to a}f(x)g(x)=LM$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: seq
+        label: 'תהי $x_n\to a$ סדרה כלשהי עם $x_n\neq a$ לכל $n$.'
+      - id: heine1
+        label: 'לפי היינה (הכיוון מגבול של פונקציה לגבול של סדרות): $f(x_n)\to L$ ו-$g(x_n)\to M$.'
+      - id: seqrule
+        label: 'לפי כלל המכפלה לסדרות (שיעור 2.4): $f(x_n)g(x_n)\to LM$.'
+      - id: heine2
+        label: 'הסדרה הייתה כלשהי, ולכן לפי היינה (הכיוון ההפוך): $\lim_{x\to a}f(x)g(x)=LM$.'
+    order: [seq, heine1, seqrule, heine2]
+    correctFeedback: >-
+      נכון. שקילות ההגדרות משמשת פעמיים: פעם כדי לעבור מפונקציות לסדרות, ופעם כדי לחזור. כך כל משפט על גבולות של
+      סדרות עובר לפונקציות, כולל הסנדוויץ'.
+    wrongFeedback: >-
+      ההוכחה מתחילה מסדרה כלשהי, עוברת לעולם הסדרות, משתמשת שם במשפט שכבר הוכח, וחוזרת.
+
+  - id: Q-3.5-sin3x
+    type: numeric
+    objectives: [OBJ-3.5-2]
+    level: basic
+    prompt: >-
+      חשבו את $\displaystyle\lim_{x\to0}\frac{\sin 3x}{x}$.
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac{\sin3x}{x}=3\cdot\frac{\sin 3x}{3x}$, ו-$\frac{\sin u}{u}\to1$ כש-$u=3x\to0$ (ו-$u\neq0$ כש-$x\neq0$).
+    wrongFeedback: >-
+      כדי להשתמש ב-$\frac{\sin u}{u}\to1$ צריך במכנה בדיוק את מה שבתוך הסינוס. כפלו וחלקו ב-3.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $\frac{\sin u}{u}\to1$ דורש במכנה את אותו $u$ שבתוך הסינוס. כאן בתוך הסינוס $3x$ ובמכנה $x$, וחסר גורם 3.
+        misconception: MC-sin-kx-over-x-is-one
+      - value: 0.3333333333333333
+        feedback: >-
+          הפכתם את המנה: $\frac{\sin3x}{x}=3\cdot\frac{\sin3x}{3x}$, לא $\frac13\cdot\frac{\sin3x}{3x}$. בדקו
+          במספר קטן: עבור $x=0.01$ הערך בערך $2.9996$.
+
+  - id: Q-3.5-sin-ratio
+    type: numeric
+    objectives: [OBJ-3.5-2]
+    level: mid
+    prompt: >-
+      חשבו את $\displaystyle\lim_{x\to0}\frac{\sin 3x}{\sin 5x}$.
+    answer: 0.6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac35$. כותבים $\frac{\sin3x}{\sin5x}=\frac35\cdot\frac{\sin3x}{3x}\cdot\frac{5x}{\sin5x}$: הגורם
+      האמצעי שואף ל-1, והאחרון ל-$\frac{1}{1}=1$ לפי כלל המנה.
+    wrongFeedback: >-
+      חלקו מונה ומכנה ב-$x$, או הכניסו את $3x$ ואת $5x$ כך שכל סינוס יקבל "מכנה משלו".
+    commonWrong:
+      - value: 1
+        feedback: >-
+          מונה ומכנה שואפים שניהם ל-0, אבל בקצבים שונים: $\sin3x\approx3x$ ו-$\sin5x\approx5x$. היחס שואף ל-$\frac35$,
+          לא ל-1.
+        misconception: MC-sin-kx-over-x-is-one
+      - value: 1.6666666666666667
+        feedback: >-
+          הפכתם את היחס. במונה $\sin3x\approx3x$ ובמכנה $\sin5x\approx5x$, ולכן הגבול $\frac35$.
+
+  - id: Q-3.5-one-minus-cos
+    type: numeric
+    objectives: [OBJ-3.5-2]
+    level: mid
+    prompt: >-
+      חשבו את $\displaystyle\lim_{x\to0}\frac{1-\cos x}{x^2}$.
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $1-\cos x=2\sin^2\frac{x}{2}$, ולכן $\frac{1-\cos x}{x^2}=\frac12\left(\frac{\sin(x/2)}{x/2}\right)^2\to\frac12\cdot1^2$.
+    wrongFeedback: >-
+      השתמשו בזהות $1-\cos x=2\sin^2\frac x2$, וכתבו את התוצאה בעזרת $\frac{\sin(x/2)}{x/2}$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          גם המונה וגם המכנה שואפים ל-0, והצורה "אפס חלקי אפס" לא קובעת את הגבול. צריך לחשב: $1-\cos x$ קטן בערך
+          כמו $\frac{x^2}{2}$, באותו סדר גודל כמו המכנה.
+        misconception: MC-indeterminate-form-value
+      - value: 0.25
+        feedback: >-
+          איבדתם את הגורם 2 שבזהות: $1-\cos x=2\sin^2\frac x2$, ו-$\frac{2\sin^2(x/2)}{x^2}=\frac{2}{4}\left(\frac{\sin(x/2)}{x/2}\right)^2$.
+      - value: 2
+        feedback: >-
+          הפכתם את היחס. $\frac{\sin^2(x/2)}{x^2}=\frac14\left(\frac{\sin(x/2)}{x/2}\right)^2$, ובסך הכל מקבלים $\frac24=\frac12$.
+
+  - id: Q-3.5-at-pi
+    type: twotier
+    objectives: [OBJ-3.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מהו $\displaystyle\lim_{x\to\pi}\frac{\sin x}{x}$?
+    choices:
+      - text: '$0$'
+        correct: true
+        feedback: נכון. המונה שואף ל-$\sin\pi=0$ והמכנה ל-$\pi$.
+      - text: '$1$'
+        feedback: >-
+          $\frac{\sin x}{x}\to1$ הוא גבול **ב-0**. ב-$\pi$ אין שום צורה לא מוגדרת: המכנה שואף ל-$\pi\neq0$.
+        misconception: MC-sinx-over-x-everywhere
+    reasons:
+      - text: '$\sin x\to\sin\pi=0$ (כי $|\sin x-\sin\pi|\le|x-\pi|$) ו-$x\to\pi\neq0$, ולכן לפי כלל המנה הגבול $\frac0\pi=0$'
+        correct: true
+        feedback: >-
+          בדיוק. האי-שוויון $|\sin x-\sin y|\le|x-y|$ משיעור 3.2 נותן $\lim_{x\to a}\sin x=\sin a$ בכל נקודה, עם
+          $\delta=\varepsilon$.
+      - text: '$\frac{\sin x}{x}\to1$ הוא כלל כללי'
+        feedback: >-
+          הכלל הוא $\frac{\sin u}{u}\to1$ כש-$u\to0$. כאן $x\to\pi$, ואז $\frac{\sin x}{x}$ קרוב ל-$\frac{0}{\pi}$.
+        misconception: MC-sinx-over-x-everywhere
+      - text: 'ליד הנקודה $\sin x\approx x$, ולכן המנה קרובה ל-1'
+        feedback: >-
+          הקירוב $\sin x\approx x$ נכון רק ליד 0. ליד $\pi$ דווקא $\sin x\approx0$, בעוד $x\approx3.14$.
+        misconception: MC-sinx-over-x-everywhere
+
+  - id: Q-3.5-sinx-proof
+    type: rank
+    objectives: [OBJ-3.5-2]
+    level: exam
+    prompt: >-
+      הוכיחו ש-$\displaystyle\lim_{x\to0}\frac{\sin x}{x}=1$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: areas
+        label: 'עבור $0<x<\frac{\pi}{2}$, השוואת שטחים במעגל היחידה (משולש, גזרה, משולש חוסם) נותנת $\sin x<x<\tan x$.'
+      - id: divide
+        label: 'מחלקים ב-$\sin x>0$: $1<\frac{x}{\sin x}<\frac{1}{\cos x}$, ולכן $\cos x<\frac{\sin x}{x}<1$.'
+      - id: even
+        label: '$\cos x$ ו-$\frac{\sin x}{x}$ זוגיות, ולכן אותו אי-שוויון נכון גם עבור $-\frac{\pi}{2}<x<0$.'
+      - id: cos
+        label: 'החסם התחתון שקיבלנו שואף ל-1: $0\le1-\cos x=2\sin^2\frac{x}{2}\le\frac{x^2}{2}$, ולכן $\cos x\to1$.'
+      - id: squeeze
+        label: 'לפי כלל הסנדוויץ'', $\frac{\sin x}{x}\to1$.'
+    order: [areas, divide, even, cos, squeeze]
+    correctFeedback: >-
+      נכון. שימו לב: אי-השוויון $|\sin t|\le|t|$ משיעור 3.2 משמש פעמיים, פעם בצעד הראשון ופעם כדי להראות ש-$\cos x\to1$.
+    wrongFeedback: >-
+      קודם אי-שוויון גאומטרי בין שלושה ביטויים, אחר כך מסדרים אותו כך ש-$\frac{\sin x}{x}$ באמצע, מרחיבים לשני
+      הצדדים של 0, ובסוף סנדוויץ'. מה צריך לדעת על החסם התחתון לפני הסנדוויץ'?
+
+  - id: Q-3.5-composition-condition
+    type: twotier
+    objectives: [OBJ-3.5-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      ידוע ש-$\lim_{x\to a}g(x)=b$ ו-$\lim_{y\to b}f(y)=L$. האם תמיד $\lim_{x\to a}f(g(x))=L$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. צריך תנאי נוסף.
+      - text: כן
+        feedback: >-
+          ההצבה $y=g(x)$ נכשלת כש-$g(x)=b$ בנקודות קרובות ל-$a$, כי אז $f(g(x))=f(b)$, והגבול של $f$ ב-$b$ לא אומר
+          דבר על הערך $f(b)$.
+        misconception: MC-composition-limit-no-condition
+    reasons:
+      - text: >-
+          $g\equiv0$ ו-$f(y)=1$ כש-$y\neq0$, $f(0)=0$: אז $\lim_{y\to0}f(y)=1$, אבל $f(g(x))=f(0)=0$ לכל $x$
+        correct: true
+        feedback: >-
+          בדיוק. התנאי שמציל את הטענה: $g(x)\neq b$ לכל $x$ בסביבה מנוקבת של $a$, **או** ש-$f$ מוגדרת ב-$b$
+          ו-$f(b)=L$. כאן שני התנאים נכשלים.
+      - text: 'מציבים $y=g(x)$; כש-$x\to a$ גם $y\to b$, ולכן $f(y)\to L$'
+        feedback: >-
+          ההגדרה של $\lim_{y\to b}f(y)$ מדברת רק על $y$ עם $0<|y-b|$. כשהערך $y=g(x)$ שווה ל-$b$, היא לא אומרת על
+          $f(y)$ דבר.
+        misconception: MC-composition-limit-no-condition
+      - text: 'הגבול של הרכבה הוא תמיד $f(b)$'
+        feedback: >-
+          $f$ אולי בכלל לא מוגדרת ב-$b$. ואם $g(x)\neq b$ ליד $a$, הגבול הוא $L$, ולא קשור לערך $f(b)$.
+        misconception: MC-function-limit-is-value
+
+  - id: Q-3.5-composition-compute
+    type: numeric
+    objectives: [OBJ-3.5-3, OBJ-3.5-2]
+    level: mid
+    prompt: >-
+      חשבו את $\displaystyle\lim_{x\to0}\frac{\sin(x^2)}{x}$.
+    answer: 0
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac{\sin(x^2)}{x}=x\cdot\frac{\sin(x^2)}{x^2}$. הגורם השני שואף ל-1 לפי גבול של הרכבה: $u=x^2\to0$,
+      ו-$x^2\neq0$ כש-$x\neq0$, כך שהתנאי מתקיים. לכן הגבול $0\cdot1=0$.
+    wrongFeedback: >-
+      כתבו את הביטוי כמכפלה של $x$ בביטוי מהצורה $\frac{\sin u}{u}$, ובדקו את התנאי של גבול ההרכבה.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $\frac{\sin u}{u}\to1$ דורש במכנה בדיוק את $u=x^2$. כאן במכנה רק $x$: $\frac{\sin(x^2)}{x}=x\cdot\frac{\sin(x^2)}{x^2}$,
+          ונשאר גורם $x\to0$.
+        misconception: MC-sin-kx-over-x-is-one
+
+  - id: Q-3.5-composition-which
+    type: mc
+    objectives: [OBJ-3.5-3]
+    level: mid
+    prompt: >-
+      $\lim_{x\to a}g(x)=b$ ו-$\lim_{y\to b}f(y)=L$. איזה מהתנאים הבאים מבטיח ש-$\lim_{x\to a}f(g(x))=L$?
+    choices:
+      - text: 'קיים $\delta>0$ כך ש-$g(x)\neq b$ לכל $x$ עם $0<|x-a|<\delta$'
+        correct: true
+        feedback: >-
+          נכון. אז לכל $x$ קרוב מספיק ל-$a$ הערך $y=g(x)$ קרוב ל-$b$ **ושונה** ממנו, ובדיוק עליו מדברת ההנחה על $f$.
+          (גם $f(b)=L$ מספיק, אבל הוא לא בין האפשרויות.)
+      - text: 'יש לפחות נקודה אחת $x$ קרובה ל-$a$ שבה $g(x)\neq b$'
+        feedback: >-
+          נקודה אחת לא מספיקה. עם $g(x)=x\cdot D(x)$ ו-$b=0$, הערך $g(x)\neq0$ ברציונליים, אבל $g(x)=0$ בכל
+          האי-רציונליים, ושם $f(g(x))=f(0)$.
+        misconception: MC-composition-limit-no-condition
+      - text: '$f$ מוגדרת ב-$b$'
+        feedback: >-
+          לא מספיק ש-$f(b)$ קיים; צריך ש-$f(b)=L$. בדוגמה $g\equiv0$, $f(y)=1$ כש-$y\neq0$ ו-$f(0)=0$, הפונקציה
+          מוגדרת ב-0 וההרכבה שואפת ל-0, לא ל-1.
+        misconception: MC-composition-limit-no-condition

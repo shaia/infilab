@@ -1,0 +1,305 @@
+# Lesson 5.9 — convexity and inflection points.
+# Objectives (src/course.ts):
+#   OBJ-5.9-1  define convex and concave without derivatives, and read the definition geometrically
+#   OBJ-5.9-2  prove that a nonnegative second derivative gives convexity; find inflection points
+#   OBJ-5.9-3  prove inequalities by convexity, such as Jensen's inequality for two points
+# Textbooks disagree on the Hebrew words, so every question states the definition it uses.
+chapter: 5
+questions:
+  - id: Q-5.9-chord
+    type: mc
+    objectives: [OBJ-5.9-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      נאמר ש-$f$ **קמורה** בקטע $I$ אם לכל $x,y\in I$ ולכל $t\in[0,1]$:
+      $$f\bigl(tx+(1-t)y\bigr)\le t\,f(x)+(1-t)\,f(y).$$
+      מה המשמעות הגאומטרית של ההגדרה?
+    choices:
+      - text: >-
+          לכל שתי נקודות על הגרף, הקטע (המיתר) שמחבר אותן נמצא מעל הגרף או עליו, בין שתי הנקודות
+        correct: true
+        feedback: >-
+          נכון. כש-$t$ רץ מ-$1$ ל-$0$, הנקודה $tx+(1-t)y$ עוברת מ-$x$ ל-$y$; אגף שמאל הוא גובה הגרף שם, ואגף ימין
+          הוא גובה המיתר באותה נקודה.
+      - text: 'הגרף נמצא מעל כל מיתר או עליו'
+        feedback: >-
+          זו ההגדרה של פונקציה **קעורה** (אי-השוויון הפוך). לדוגמה $x^2$ קמורה, והמיתר בין $(-1,1)$ ל-$(1,1)$
+          נמצא מעל הגרף, לא מתחתיו.
+        misconception: MC-convex-concave-swapped
+      - text: 'הפונקציה עולה'
+        feedback: >-
+          קמירות ומונוטוניות הן תכונות שונות: $e^{-x}$ קמורה ויורדת, ו-$\sqrt x$ עולה ואינה קמורה.
+        misconception: MC-convex-means-increasing
+      - text: 'הגרף יורד ואחר כך עולה, בצורת "U"'
+        feedback: >-
+          $e^x$ קמורה ועולה בכל הישר, ו-$f(x)=x$ קמורה (בשוויון) בלי שום "U". ההגדרה מדברת על מיתרים, לא על עלייה וירידה.
+        misconception: MC-convex-means-increasing
+
+  - id: Q-5.9-abs
+    type: twotier
+    objectives: [OBJ-5.9-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      לפי ההגדרה: $f$ קמורה ב-$I$ אם $f\bigl(tx+(1-t)y\bigr)\le t\,f(x)+(1-t)\,f(y)$ לכל $x,y\in I$ ולכל $t\in[0,1]$.
+      האם $f(x)=|x|$ קמורה ב-$\mathbb{R}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. ההגדרה לא מזכירה נגזרות, ולכן גם פונקציה עם פינה יכולה להיות קמורה.
+      - text: לא
+        feedback: >-
+          בדקו את ההגדרה ישירות: היא מתקיימת לכל $x,y,t$. אין בה דרישה לגזירות.
+        misconception: MC-convex-needs-derivative
+    reasons:
+      - text: 'לפי אי-שוויון המשולש: $|tx+(1-t)y|\le t|x|+(1-t)|y|$, כי $t,1-t\ge0$'
+        correct: true
+        feedback: >-
+          בדיוק. זו ההגדרה מילה במילה עבור $f(x)=|x|$.
+      - text: '$|x|$ אינה גזירה ב-$0$, וקמירות דורשת נגזרת שנייה'
+        feedback: >-
+          קמירות מוגדרת בלי נגזרות. $f''\ge0$ הוא תנאי **מספיק** לקמירות של פונקציה גזירה פעמיים, לא חלק מההגדרה.
+        misconception: MC-convex-needs-derivative
+      - text: 'בכל אחד מהחצאים $|x|$ ישרה, וישר אינו קמור'
+        feedback: >-
+          ישר מקיים את ההגדרה בשוויון, ולכן הוא קמור (וגם קעור). הגדרה עם $\le$ מתירה שוויון.
+        misconception: MC-linear-not-convex
+
+  - id: Q-5.9-gap
+    type: numeric
+    objectives: [OBJ-5.9-1]
+    level: mid
+    prompt: >-
+      עבור $f(x)=x^2$, $x=0$, $y=4$ ו-$t=\frac14$, חשבו את ההפרש
+      $$t\,f(x)+(1-t)\,f(y)-f\bigl(tx+(1-t)y\bigr).$$
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $tx+(1-t)y=3$ ו-$f(3)=9$, ואילו $t\,f(0)+(1-t)\,f(4)=\frac34\cdot16=12$. ההפרש $3\ge0$, כצפוי לפונקציה
+      קמורה. (באופן כללי ההפרש עבור $x^2$ הוא $t(1-t)(x-y)^2$.)
+    wrongFeedback: >-
+      חשבו קודם את הנקודה $tx+(1-t)y$, ואחר כך את שני הצדדים. המשקל $t$ שייך ל-$x$ והמשקל $1-t$ ל-$y$.
+    commonWrong:
+      - value: -3
+        feedback: 'החסרתם בסדר ההפוך: אגף ימין של ההגדרה (המיתר) פחות אגף שמאל (הגרף).'
+      - value: 11
+        feedback: >-
+          $11$ מתקבל כשנותנים את המשקל $t$ ל-$y$ בנקודה ($t\cdot4=1$) אבל ל-$x$ בצד ימין. אותו משקל צריך ללוות אותה נקודה
+          בשני הצדדים.
+        misconception: MC-jensen-misapplied
+
+  - id: Q-5.9-closure
+    type: multi
+    objectives: [OBJ-5.9-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ **קמורה** ב-$\mathbb{R}$ אם $f\bigl(tx+(1-t)y\bigr)\le t\,f(x)+(1-t)\,f(y)$ לכל $x,y$ ולכל $t\in[0,1]$.
+      אילו מהטענות נכונות? סמנו את כולן.
+    choices:
+      - text: 'סכום של שתי פונקציות קמורות קמור'
+        correct: true
+        feedback: 'נכון: מחברים את שני אי-השוויונות.'
+      - text: 'מכפלה של שתי פונקציות קמורות קמורה'
+        feedback: >-
+          לא. $x$ ו-$x^2$ קמורות, אבל $x^3$ אינה קמורה ב-$\mathbb{R}$: עם $x=-2$, $y=0$, $t=\frac12$ מקבלים
+          $f(-1)=-1$, ואילו $\frac{f(-2)+f(0)}{2}=-4$.
+        misconception: MC-convex-closed-under-product
+      - text: '$\max\{f,g\}$ של שתי פונקציות קמורות קמור'
+        correct: true
+        feedback: >-
+          נכון: $f(tx+(1-t)y)\le t f(x)+(1-t)f(y)\le t\max\{f,g\}(x)+(1-t)\max\{f,g\}(y)$, ואותו דבר עבור $g$.
+      - text: 'הרכבה $f\circ g$ של שתי פונקציות קמורות קמורה'
+        feedback: >-
+          לא. $f(u)=e^{-u}$ ו-$g(x)=x^2$ קמורות, אבל $e^{-x^2}$ אינה קמורה: בנקודות $x=-1$, $y=1$ עם $t=\frac12$
+          מקבלים $e^{0}=1>e^{-1}=\frac{e^{-1}+e^{-1}}{2}$. ההרכבה קמורה כשבנוסף $f$ עולה.
+        misconception: MC-convex-closed-under-product
+      - text: 'פונקציה קמורה ב-$\mathbb{R}$ שחסומה מלעיל היא קבועה'
+        correct: true
+        feedback: >-
+          נכון. אם $f(a)<f(b)$ עם $a<b$, אז לכל $x>b$, כשכותבים $b=ta+(1-t)x$, ההגדרה נותנת
+          $f(x)\ge\frac{f(b)-t f(a)}{1-t}$, וזה שואף לאינסוף כש-$x\to\infty$. מקרה $f(a)>f(b)$ דומה, משמאל.
+
+  - id: Q-5.9-where-convex
+    type: mc
+    objectives: [OBJ-5.9-2]
+    level: basic
+    prompt: >-
+      באיזה קטע $f(x)=x^3-6x^2+5$ קמורה (במובן $f(tx+(1-t)y)\le t f(x)+(1-t)f(y)$)?
+    choices:
+      - text: '$[2,\infty)$'
+        correct: true
+        feedback: >-
+          נכון. $f''(x)=6x-12\ge0$ בדיוק כש-$x\ge2$, ונגזרת שנייה אי-שלילית גוררת קמירות.
+      - text: '$(-\infty,2]$'
+        feedback: >-
+          שם $f''\le0$, ולכן $f$ **קעורה** שם. נגזרת שנייה חיובית היא קמורה.
+        misconception: MC-convex-concave-swapped
+      - text: '$[0,4]$'
+        feedback: >-
+          זה הקטע שבו $f'(x)=3x(x-4)\le0$, כלומר שבו $f$ יורדת. קמירות נקבעת לפי הסימן של $f''$, לא של $f'$.
+        misconception: MC-convexity-from-f-prime-sign
+      - text: '$[4,\infty)$'
+        feedback: >-
+          שם $f'\ge0$ ו-$f$ עולה. אבל קמירות היא תכונה של $f''$: $f$ קמורה כבר מ-$2$.
+        misconception: MC-convex-means-increasing
+
+  - id: Q-5.9-x4
+    type: twotier
+    objectives: [OBJ-5.9-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      **נקודת פיתול** של $f$ היא נקודה $x_0$ שבה $f$ רציפה, ובסביבה קטנה שלה $f$ קמורה מצד אחד וקעורה מהצד השני.
+      עבור $f(x)=x^4$ מתקיים $f''(0)=0$. האם $0$ נקודת פיתול של $f$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $f$ קמורה בכל הישר, משני צדי $0$, ול-$0$ יש בכלל מינימום.
+      - text: כן
+        feedback: >-
+          $f''(0)=0$ אינו מספיק: צריך שינוי של כיוון הקמירות. כאן $f''(x)=12x^2\ge0$ משני הצדדים.
+        misconception: MC-inflection-where-second-zero
+    reasons:
+      - text: '$f''''(x)=12x^2\ge0$ לכל $x$, ולכן $f$ קמורה גם משמאל ל-$0$ וגם מימין לו'
+        correct: true
+        feedback: >-
+          בדיוק. $f''(x_0)=0$ הוא תנאי הכרחי לנקודת פיתול של פונקציה גזירה פעמיים, לא מספיק.
+      - text: '$f''''(0)=0$, ובנקודה כזו תמיד יש פיתול'
+        feedback: >-
+          $x^4$ היא דוגמה נגדית. בודקים אם $f''$ **מחליפה סימן** ב-$x_0$.
+        misconception: MC-inflection-where-second-zero
+      - text: '$f''''$ יורדת משמאל ל-$0$ ועולה מימין לו, ולכן משהו משתנה ב-$0$'
+        feedback: >-
+          מה שקובע הוא הסימן של $f''$, לא המונוטוניות שלה: $12x^2$ אי-שלילית משני הצדדים, ולכן $f$ קמורה משני הצדדים.
+        misconception: MC-inflection-where-second-zero
+
+  - id: Q-5.9-inflection
+    type: numeric
+    objectives: [OBJ-5.9-2]
+    level: mid
+    prompt: >-
+      מצאו את נקודת הפיתול של $f(x)=x\,e^{-x}$ (הנקודה שבה $f$ עוברת מקעורה לקמורה).
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f'(x)=(1-x)e^{-x}$ ו-$f''(x)=(x-2)e^{-x}$, שלילית ל-$x<2$ וחיובית ל-$x>2$. לכן $x=2$ נקודת פיתול.
+    wrongFeedback: >-
+      גזרו פעמיים בעזרת כלל המכפלה, וקבעו היכן $f''$ מחליפה סימן.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          ב-$x=1$ מתאפסת $f'$: זו נקודת המקסימום. נקודת פיתול היא מקום שבו $f''$ מחליפה סימן.
+        misconception: MC-inflection-confused-with-extremum
+
+  - id: Q-5.9-proof
+    type: rank
+    objectives: [OBJ-5.9-2]
+    level: exam
+    prompt: >-
+      הוכחה ש-$f''\ge0$ בקטע $I$ גוררת ש-$f$ קמורה ב-$I$, כלומר $f\bigl(tx+(1-t)y\bigr)\le t\,f(x)+(1-t)\,f(y)$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: setup
+        label: 'יהיו $x<y$ ב-$I$, $0<t<1$ ו-$z=tx+(1-t)y$. אז $x<z<y$, $z-x=(1-t)(y-x)$ ו-$y-z=t(y-x)$.'
+      - id: lagrange
+        label: 'לפי לגרנז'' ב-$[x,z]$ וב-$[z,y]$: $\frac{f(z)-f(x)}{z-x}=f''(c_1)$ ו-$\frac{f(y)-f(z)}{y-z}=f''(c_2)$, עם $c_1<z<c_2$.'
+      - id: mono
+        label: 'מ-$f''''\ge0$ נובע ש-$f''$ עולה (במובן החלש), ולכן $f''(c_1)\le f''(c_2)$.'
+      - id: subst
+        label: 'מציבים את האורכים וכופלים ב-$t(1-t)(y-x)>0$: $t\bigl(f(z)-f(x)\bigr)\le(1-t)\bigl(f(y)-f(z)\bigr)$.'
+      - id: end
+        label: 'מעבירים אגפים: $f(z)\le t\,f(x)+(1-t)\,f(y)$. (המקרים $t=0,1$ טריוויאליים.)'
+    order: [setup, lagrange, mono, subst, end]
+    correctFeedback: >-
+      נכון. הרעיון: שיפוע המיתר השמאלי קטן משיפוע המיתר הימני, כי לגרנז' הופך כל שיפוע לערך של $f'$, ו-$f'$ עולה.
+    wrongFeedback: >-
+      קודם מגדירים את הנקודה $z$, אחר כך לגרנז' נותן שני שיפועים, המונוטוניות של $f'$ משווה ביניהם, ורק אז
+      האלגברה.
+
+  - id: Q-5.9-amgm
+    type: mc
+    objectives: [OBJ-5.9-3]
+    level: mid
+    prompt: >-
+      $f$ קמורה ב-$I$ אם $f\bigl(tx+(1-t)y\bigr)\le t\,f(x)+(1-t)\,f(y)$. הפונקציה $-\ln x$ קמורה ב-$(0,\infty)$, כי
+      $(-\ln x)''=\frac{1}{x^2}>0$. איזה אי-שוויון מתקבל כשמציבים בהגדרה $t=\frac12$ ונקודות $a,b>0$?
+    choices:
+      - text: '$\sqrt{ab}\le\frac{a+b}{2}$'
+        correct: true
+        feedback: >-
+          נכון. $-\ln\frac{a+b}{2}\le\frac{-\ln a-\ln b}{2}=-\ln\sqrt{ab}$, ולכן $\ln\frac{a+b}{2}\ge\ln\sqrt{ab}$,
+          ו-$\ln$ עולה ממש. זה אי-שוויון הממוצעים (שיעור 0.7) כמקרה פרטי של ינסן.
+      - text: '$\frac{a+b}{2}\le\sqrt{ab}$'
+        feedback: >-
+          הכיוון התהפך. כשכופלים את אי-השוויון ב-$-1$ כדי לעבור מ-$-\ln$ ל-$\ln$, הכיוון מתהפך. בדקו עם $a=1$, $b=9$:
+          $\sqrt9=3\le5$.
+        misconception: MC-convex-concave-swapped
+      - text: '$\ln(a+b)\le\ln a+\ln b$'
+        feedback: >-
+          זה לא מה שההגדרה נותנת: עם $t=\frac12$ מופיעים **ממוצעים**, $\frac{a+b}{2}$ ו-$\frac{\ln a+\ln b}{2}$, לא סכומים.
+          (ואי-השוויון הזה בכלל לא נכון ל-$a=b=1$.)
+        misconception: MC-jensen-misapplied
+      - text: '$\ln\frac{a+b}{2}\le\frac{\ln a+\ln b}{2}$'
+        feedback: >-
+          זה אי-השוויון של פונקציה **קמורה** עבור $\ln$, אבל $\ln$ קעורה. עם $a=1$, $b=e^2$: $\ln\frac{1+e^2}{2}\approx1.43>1$.
+        misconception: MC-convex-concave-swapped
+
+  - id: Q-5.9-sin
+    type: twotier
+    objectives: [OBJ-5.9-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ **קעורה** ב-$I$ אם $-f$ קמורה בו, כלומר $f\bigl(tx+(1-t)y\bigr)\ge t\,f(x)+(1-t)\,f(y)$ לכל $x,y\in I$ ולכל
+      $t\in[0,1]$. האם לכל $x,y\in[0,\pi]$ מתקיים $\sin\frac{x+y}{2}\ge\frac{\sin x+\sin y}{2}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. זה ינסן לשתי נקודות עבור הפונקציה הקעורה $\sin$ בקטע $[0,\pi]$.
+      - text: לא
+        feedback: >-
+          בקטע $[0,\pi]$ זה נכון. (מחוץ לו זה יכול להיכשל: עם $x=\pi+1$, $y=\pi+3$ צד שמאל $-\sin2\approx-0.91$ וצד ימין
+          $\approx-0.49$.)
+        misconception: MC-convex-concave-swapped
+    reasons:
+      - text: '$(\sin x)''''=-\sin x\le0$ ב-$[0,\pi]$, ולכן $\sin$ קעורה שם; מציבים $t=\frac12$ בהגדרה'
+        correct: true
+        feedback: >-
+          בדיוק: $-\sin$ מקיימת $(-\sin)''=\sin\ge0$ ב-$[0,\pi]$, ולכן קמורה, ואי-השוויון של $\sin$ הוא ההגדרה של קעורה.
+      - text: '$\sin$ קמורה ב-$[0,\pi]$, כי הגרף שלה שם נמצא מעל המיתרים'
+        feedback: >-
+          גרף שנמצא מעל המיתרים הוא של פונקציה **קעורה**, לפי ההגדרה. ההחלפה בין המילים היא בדיוק הטעות שההגדרה
+          המפורשת נועדה למנוע.
+        misconception: MC-convex-concave-swapped
+      - text: '$\sin$ עולה ב-$[0,\frac\pi2]$'
+        feedback: >-
+          מונוטוניות לא נותנת אי-שוויון ממוצעים, וחוץ מזה $\sin$ יורדת ב-$[\frac\pi2,\pi]$. מה שקובע הוא הסימן של $\sin''$.
+        misconception: MC-convex-means-increasing
+
+  - id: Q-5.9-bound
+    type: numeric
+    objectives: [OBJ-5.9-3]
+    level: mid
+    prompt: >-
+      $f$ קמורה ב-$[0,4]$, כלומר $f\bigl(tx+(1-t)y\bigr)\le t\,f(x)+(1-t)\,f(y)$ לכל $x,y\in[0,4]$ ו-$t\in[0,1]$. ידוע
+      ש-$f(0)=1$ ו-$f(4)=9$. מהו הערך הגדול ביותר האפשרי של $f(1)$?
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $1=\frac34\cdot0+\frac14\cdot4$, ולכן $f(1)\le\frac34\cdot1+\frac14\cdot9=3$. הפונקציה הקמורה $f(x)=1+2x$
+      מגיעה לחסם, ולכן הוא הטוב ביותר.
+    wrongFeedback: >-
+      כתבו את $1$ בצורה $t\cdot0+(1-t)\cdot4$, מצאו את $t$, והציבו בהגדרה.
+    commonWrong:
+      - value: 7
+        feedback: >-
+          $7=\frac14\cdot1+\frac34\cdot9$: המשקלים התחלפו. הנקודה $1$ קרובה ל-$0$, ולכן המשקל הגדול ($\frac34$) שייך ל-$f(0)$.
+        misconception: MC-jensen-misapplied
+      - value: 5
+        feedback: >-
+          $5=\frac{1+9}{2}$ הוא גובה המיתר באמצע, ב-$x=2$. ב-$x=1$ המשקלים הם $\frac34$ ו-$\frac14$, לא חצי וחצי.
+        misconception: MC-jensen-misapplied

@@ -1,0 +1,376 @@
+# Lesson 5.7 — monotonicity and Darboux's theorem.
+# Objectives (src/course.ts):
+#   OBJ-5.7-1  the sign of the derivative and monotonicity; proving inequalities by monotonicity
+#   OBJ-5.7-2  state and prove Darboux's theorem: a derivative has the intermediate value property
+#   OBJ-5.7-3  deduce from Darboux that a derivative has no jump discontinuities
+chapter: 5
+questions:
+  - id: Q-5.7-cubic
+    type: twotier
+    objectives: [OBJ-5.7-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ גזירה ועולה ממש ב-$\mathbb{R}$. האם בהכרח $f'(x)>0$ לכל $x$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. הכיוון "$f'>0$ גורר עולה ממש" נכון, אבל ההפוך לא.
+      - text: כן
+        feedback: >-
+          $f(x)=x^3$ עולה ממש ב-$\mathbb{R}$, ובכל זאת $f'(0)=0$.
+        misconception: MC-strict-increase-positive-derivative
+    reasons:
+      - text: '$x^3$ עולה ממש, ו-$f''(0)=0$'
+        correct: true
+        feedback: >-
+          בדיוק. מה שכן נכון לפונקציה עולה הוא $f'\ge0$: כל מנות ההפרשים אי-שליליות, וגבולות שומרים על
+          אי-שוויון חלש.
+      - text: 'עולה ממש פירושו שיפוע חיובי בכל נקודה'
+        feedback: >-
+          עולה ממש היא תכונה של זוגות נקודות: $x<y\Rightarrow f(x)<f(y)$. היא לא מחייבת שיפוע חיובי בכל נקודה,
+          כפי ש-$x^3$ מראה ב-$0$.
+        misconception: MC-strict-increase-positive-derivative
+      - text: 'פונקציה עולה יכולה לקבל נגזרת שלילית בנקודות בודדות'
+        feedback: >-
+          זה לא נכון: אם $f$ עולה אז $\frac{f(x+h)-f(x)}{h}\ge0$ לכל $h\neq0$, ולכן $f'(x)\ge0$ בכל נקודה. הנגזרת
+          יכולה להתאפס, לא להיות שלילית.
+        misconception: MC-increasing-negative-derivative-point
+
+  - id: Q-5.7-sign-multi
+    type: multi
+    objectives: [OBJ-5.7-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ גזירה בקטע $I$. אילו מהטענות נכונות? סמנו את כולן.
+    choices:
+      - text: '$f''\ge0$ בכל $I$ אם ורק אם $f$ עולה (במובן החלש) ב-$I$'
+        correct: true
+        feedback: >-
+          נכון. כיוון אחד מלגרנז': $f(y)-f(x)=f'(c)(y-x)\ge0$. הכיוון השני: מנות ההפרשים של פונקציה עולה
+          אי-שליליות, ולכן גם הגבול שלהן.
+      - text: 'אם $f''>0$ בכל $I$, אז $f$ עולה ממש ב-$I$'
+        correct: true
+        feedback: >-
+          נכון: לכל $x<y$ ב-$I$ יש $c$ ביניהן עם $f(y)-f(x)=f'(c)(y-x)>0$.
+      - text: 'אם $f$ עולה ממש ב-$I$, אז $f''>0$ בכל $I$'
+        feedback: >-
+          לא: $x^3$ עולה ממש ו-$f'(0)=0$.
+        misconception: MC-strict-increase-positive-derivative
+      - text: 'אם $f''(x_0)>0$ בנקודה פנימית $x_0$, אז $f$ עולה בסביבה כלשהי של $x_0$'
+        feedback: >-
+          לא. $f(x)=x+2x^2\sin\frac1x$ (עם $f(0)=0$) מקיימת $f'(0)=1$, אבל
+          $f'(x)=1+4x\sin\frac1x-2\cos\frac1x$ שווה ל-$-1$ בנקודות $x=\frac{1}{2\pi k}$, שמתקרבות ל-$0$. בכל סביבה
+          של $0$ יש קטע שבו $f$ יורדת.
+        misconception: MC-positive-derivative-at-point-increasing
+      - text: 'אם $g$ גזירה ב-$(0,1)\cup(1,2)$ ו-$g''>0$ שם, אז $g$ עולה בכל האיחוד'
+        feedback: >-
+          לא. $g(x)=-\frac{1}{x-1}$ מקיימת $g'(x)=\frac{1}{(x-1)^2}>0$, אבל $g(0.5)=2>-2=g(1.5)$. האיחוד אינו קטע.
+        misconception: MC-derivative-theorems-on-union
+
+  - id: Q-5.7-decreasing
+    type: numeric
+    objectives: [OBJ-5.7-1]
+    level: basic
+    prompt: >-
+      $f(x)=x^3-12x$ יורדת בקטע סגור אחד $[a,b]$ ועולה מחוצה לו. מהו האורך $b-a$?
+    answer: 4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f'(x)=3x^2-12=3(x-2)(x+2)$, שלילית ב-$(-2,2)$ וחיובית מחוץ ל-$[-2,2]$. לכן $f$ יורדת ב-$[-2,2]$, באורך $4$.
+    wrongFeedback: >-
+      גזרו, פרקו את $f'$ לגורמים וקבעו את הסימן שלה בכל קטע.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          זה האורך של $[0,2]$ בלבד. $f'(x)=3(x^2-4)$ שלילית גם ב-$(-2,0)$: לא שכחתם את השורש השלילי?
+
+  - id: Q-5.7-ineq-proof
+    type: rank
+    objectives: [OBJ-5.7-1]
+    level: mid
+    prompt: >-
+      הוכחה ש-$\ln(1+x)>x-\frac{x^2}{2}$ לכל $x>0$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: def
+        label: 'מגדירים $g(x)=\ln(1+x)-x+\frac{x^2}{2}$ בקטע $[0,\infty)$.'
+      - id: der
+        label: 'גוזרים: $g''(x)=\frac{1}{1+x}-1+x=\frac{x^2}{1+x}$.'
+      - id: sign
+        label: 'לכל $x>0$ מתקיים $g''(x)>0$.'
+      - id: mono
+        label: '$g$ רציפה ב-$[0,\infty)$ ו-$g''>0$ ב-$(0,\infty)$, ולכן $g$ עולה ממש ב-$[0,\infty)$.'
+      - id: end
+        label: 'לכן לכל $x>0$: $g(x)>g(0)=0$, וזה אי-השוויון המבוקש.'
+    order: [def, der, sign, mono, end]
+    correctFeedback: >-
+      נכון. זו התבנית של כל הוכחת אי-שוויון במונוטוניות: מעבירים הכול לאגף אחד, בודקים את נקודת ההתחלה
+      ($g(0)=0$) ומראים שהפונקציה עולה ממנה.
+    wrongFeedback: >-
+      קודם צריך פונקציה, אחר כך את הנגזרת שלה ואת הסימן שלה. רק אז מסיקים מונוטוניות, ובסוף משווים ל-$g(0)$.
+
+  - id: Q-5.7-ineq-start
+    type: twotier
+    objectives: [OBJ-5.7-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f,g$ גזירות ב-$\mathbb{R}$ ו-$f'(x)>g'(x)$ לכל $x>0$. האם מזה נובע ש-$f(x)>g(x)$ לכל $x>0$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. השוואת נגזרות אומרת ש-$f-g$ עולה, לא שהיא חיובית.
+      - text: כן
+        feedback: >-
+          $f(x)=x$ ו-$g(x)=1$: $f'=1>0=g'$, אבל $f(\frac12)=\frac12<1=g(\frac12)$.
+        misconception: MC-derivative-inequality-without-start
+    reasons:
+      - text: 'צריך גם נקודת התחלה: אם בנוסף $f(0)\ge g(0)$, אז $h=f-g$ עולה ממש ב-$[0,\infty)$ ו-$h(x)>h(0)\ge0$'
+        correct: true
+        feedback: >-
+          בדיוק. בלי $h(0)\ge0$ הפונקציה $h$ יכולה לעלות ועדיין להיות שלילית בהתחלה.
+      - text: '$h=f-g$ מקיימת $h''>0$, ופונקציה עם נגזרת חיובית חיובית'
+        feedback: >-
+          נגזרת חיובית אומרת שהפונקציה עולה, לא שהיא חיובית: $h(x)=x-1$ מקיימת $h'=1>0$ ו-$h(0)=-1$.
+        misconception: MC-derivative-inequality-without-start
+      - text: 'צריך גם $f''''(x)>g''''(x)$'
+        feedback: >-
+          הנגזרת השנייה לא תעזור: $f(x)=x^2+x$ ו-$g(x)=1$ מקיימות $f'>g'$ ו-$f''>g''$ לכל $x>0$, ובכל זאת
+          $f(\frac12)=\frac34<1$. מה שחסר הוא השוואה בנקודת ההתחלה.
+        misconception: MC-derivative-inequality-without-start
+
+  - id: Q-5.7-darboux-statement
+    type: mc
+    objectives: [OBJ-5.7-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ גזירה בקטע $[a,b]$ (בקצוות: נגזרות חד-צדדיות). מה אומר משפט דרבו?
+    choices:
+      - text: 'לכל $y$ שנמצא ממש בין $f''(a)$ ל-$f''(b)$ קיימת $c\in(a,b)$ כך ש-$f''(c)=y$'
+        correct: true
+        feedback: >-
+          נכון. לנגזרת יש תכונת ערך הביניים, **בלי** שמניחים שהיא רציפה.
+      - text: 'אם $f''$ רציפה ב-$[a,b]$, היא מקבלת כל ערך שבין $f''(a)$ ל-$f''(b)$'
+        feedback: >-
+          זה נכון, אבל זה משפט ערך הביניים (שיעור 4.3) שמופעל על $f'$. החידוש של דרבו הוא שאין צורך ברציפות של $f'$.
+        misconception: MC-darboux-needs-continuity
+      - text: '$f''$ רציפה ב-$[a,b]$'
+        feedback: >-
+          לא כל נגזרת רציפה: הנגזרת של $x^2\sin\frac1x$ (עם $0$ ב-$0$) אינה רציפה ב-$0$. דרבו אומר משהו חלש
+          יותר מרציפות: תכונת ערך הביניים.
+        misconception: MC-derivative-always-continuous
+      - text: 'קיימת $c\in(a,b)$ כך ש-$f''(c)=\frac{f''(a)+f''(b)}{2}$, ורק הערך הזה מובטח'
+        feedback: >-
+          הממוצע הוא רק אחד הערכים שבין $f'(a)$ ל-$f'(b)$. המשפט מבטיח את **כולם**.
+        misconception: MC-mvt-c-midpoint
+
+  - id: Q-5.7-darboux-proof
+    type: rank
+    objectives: [OBJ-5.7-2]
+    level: exam
+    prompt: >-
+      הוכחת משפט דרבו במקרה $f'(a)<y<f'(b)$, כאשר $f$ גזירה ב-$[a,b]$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: def
+        label: 'מגדירים $g(x)=f(x)-yx$. היא גזירה ב-$[a,b]$, עם $g''(a)=f''(a)-y<0$ ו-$g''(b)=f''(b)-y>0$.'
+      - id: weier
+        label: '$g$ רציפה בקטע הסגור $[a,b]$, ולכן לפי ויירשטראס היא מקבלת מינימום בנקודה $c\in[a,b]$.'
+      - id: nota
+        label: 'מ-$g''(a)<0$: מנת ההפרשים שלילית ליד $a$, ולכן יש $x>a$ עם $g(x)<g(a)$. המינימום אינו ב-$a$.'
+      - id: notb
+        label: 'מ-$g''(b)>0$: יש $x<b$ עם $g(x)<g(b)$. המינימום אינו ב-$b$.'
+      - id: fermat
+        label: '$c$ נקודת מינימום פנימית, ולפי פרמה $g''(c)=0$, כלומר $f''(c)=y$.'
+    order: [def, weier, [nota, notb], fermat]
+    correctFeedback: >-
+      נכון. ההוכחה לא משתמשת ברציפות של $f'$ בשום מקום: רק ברציפות של $g$ (ויירשטראס) ובנגזרת של $g$ בשלוש
+      נקודות.
+    wrongFeedback: >-
+      קודם בונים את $g$, אחר כך מבטיחים שיש לה מינימום (ויירשטראס), אחר כך מוציאים את הקצוות, ורק אז פרמה.
+    hints:
+      - 'פרמה חל רק בנקודה פנימית: מה צריך לדעת על המינימום לפני שמפעילים אותו?'
+
+  - id: Q-5.7-darboux-apply
+    type: twotier
+    objectives: [OBJ-5.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ גזירה ב-$\mathbb{R}$, $f'(0)=-1$ ו-$f'(1)=2$. האם בהכרח קיימת $c\in(0,1)$ עם $f'(c)=0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. $0$ נמצא בין $-1$ ל-$2$, ולפי דרבו $f'$ מקבלת אותו ב-$(0,1)$.
+      - text: לא
+        feedback: >-
+          נגזרת לא יכולה לדלג מעל ערכים: לפי משפט דרבו היא מקבלת כל ערך שבין $f'(0)$ ל-$f'(1)$, גם כשאינה רציפה.
+        misconception: MC-derivative-jump-possible
+    reasons:
+      - text: 'לפי משפט דרבו, לנגזרת יש תכונת ערך הביניים'
+        correct: true
+        feedback: בדיוק, ולא צריך לדעת דבר על רציפות של $f'$.
+      - text: '$f''$ רציפה, ולכן לפי משפט ערך הביניים היא מקבלת את $0$'
+        feedback: >-
+          לא נתון ש-$f'$ רציפה, ונגזרת אינה רציפה בהכרח. המסקנה נכונה, אבל מהסיבה של דרבו.
+        misconception: MC-derivative-always-continuous
+      - text: 'לפי משפט רול'
+        feedback: >-
+          רול דורש $f(0)=f(1)$, ועל הערכים של $f$ לא נתון דבר. כאן הנתונים הם על $f'$, וזה המקום של דרבו.
+        misconception: MC-darboux-confused-with-rolle
+
+  - id: Q-5.7-nonzero
+    type: twotier
+    objectives: [OBJ-5.7-2, OBJ-5.7-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ גזירה בקטע $I$ ו-$f'(x)\neq0$ לכל $x\in I$. האם $f$ בהכרח מונוטונית ממש ב-$I$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. הנגזרת לא יכולה להחליף סימן בלי לעבור באפס, ולכן $f'>0$ בכל $I$ או $f'<0$ בכל $I$.
+      - text: לא
+        feedback: >-
+          כדי ש-$f$ לא תהיה מונוטונית, $f'$ צריכה לקבל ערך חיובי וערך שלילי, ואז לפי דרבו גם את $0$ ביניהם.
+        misconception: MC-derivative-jump-possible
+    reasons:
+      - text: 'אם $f''(x_1)<0<f''(x_2)$, לפי דרבו $f''$ מתאפסת בין $x_1$ ל-$x_2$; לכן $f''$ שומרת על סימן'
+        correct: true
+        feedback: >-
+          בדיוק. ואחר כך לגרנז' (או הקשר בין סימן הנגזרת למונוטוניות) נותן עלייה ממש או ירידה ממש.
+      - text: '$f''$ רציפה ואינה מתאפסת, ולכן לפי ערך הביניים היא שומרת על סימן'
+        feedback: >-
+          לא נתון ש-$f'$ רציפה. הטיעון נכון רק עם דרבו במקום ערך הביניים.
+        misconception: MC-derivative-always-continuous
+      - text: '$f''$ יכולה לקפוץ מ-$-1$ ל-$1$ בלי לעבור ב-$0$'
+        feedback: >-
+          נגזרת לא יכולה לקפוץ: זו בדיוק המסקנה של דרבו. ($|x|$ "קופצת" מ-$-1$ ל-$1$, אבל היא לא גזירה ב-$0$.)
+        misconception: MC-derivative-jump-possible
+
+  - id: Q-5.7-sign-function
+    type: twotier
+    objectives: [OBJ-5.7-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם קיימת פונקציה $f$ גזירה ב-$\mathbb{R}$ כך ש-$f'(x)=\operatorname{sign}(x)$ לכל $x$? (כאן
+      $\operatorname{sign}(x)=1$ ל-$x>0$, $-1$ ל-$x<0$, ו-$0$ ב-$x=0$.)
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. לנגזרת אין נקודות קפיצה.
+      - text: 'כן, $f(x)=|x|$'
+        feedback: >-
+          $|x|$ אינה גזירה ב-$0$: הנגזרות החד-צדדיות שם הן $-1$ ו-$1$. היא מקיימת $f'=\operatorname{sign}$ רק ב-$x\neq0$.
+        misconception: MC-abs-derivative-sign
+    reasons:
+      - text: '$f''(-1)=-1$ ו-$f''(1)=1$, ולפי דרבו $f''$ הייתה מקבלת גם את $\frac12$; אבל $\operatorname{sign}$ לא מקבלת אותו'
+        correct: true
+        feedback: >-
+          בדיוק. אותו טיעון מראה שאף פונקציה עם קפיצה אינה נגזרת.
+      - text: '$\operatorname{sign}$ אינה רציפה, וכל נגזרת רציפה'
+        feedback: >-
+          לא כל נגזרת רציפה (הנגזרת של $x^2\sin\frac1x$ אינה רציפה ב-$0$). הסיבה כאן מדויקת יותר: לנגזרת יש
+          תכונת ערך הביניים, ול-$\operatorname{sign}$ אין.
+        misconception: MC-derivative-always-continuous
+      - text: '$|x|$ מקיימת את זה, אם מגדירים את הנגזרת שלה ב-$0$ להיות $0$'
+        feedback: >-
+          את הנגזרת לא מגדירים: היא גבול של מנות הפרשים, וב-$0$ לגבול הזה של $|x|$ אין ערך.
+        misconception: MC-abs-derivative-sign
+
+  - id: Q-5.7-glue
+    type: mc
+    objectives: [OBJ-5.7-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ גזירה ב-$\mathbb{R}$, $f'(x)=3$ לכל $x<1$, ו-$f'(x)=a$ לכל $x>1$, כאשר $a$ קבוע. מה ידוע על $a$?
+    choices:
+      - text: '$a=3$ בהכרח'
+        correct: true
+        feedback: >-
+          נכון. אם $a\neq3$, ל-$f'$ הייתה קפיצה ב-$1$ (הגבולות החד-צדדיים $3$ ו-$a$), וזה בלתי אפשרי לנגזרת.
+      - text: '$a$ יכול להיות כל מספר'
+        feedback: >-
+          אז $f'$ הייתה מקבלת רק את $3$, את $a$ ואת $f'(1)$, ולא את הערכים שביניהם: סתירה לדרבו. אם מדביקים שני
+          ישרים בשיפועים שונים, מתקבלת פינה, ושם הפונקציה לא גזירה.
+        misconception: MC-derivative-jump-possible
+      - text: '$a$ יכול להיות כל מספר, ובלבד ש-$f''(1)$ בין $3$ ל-$a$'
+        feedback: >-
+          גם אז $f'$ מדלגת על כל הערכים שבין $3$ ל-$a$ פרט ל-$f'(1)$. דרבו דורש את כולם.
+        misconception: MC-derivative-jump-possible
+      - text: '$a>0$, כי $f$ עולה'
+        feedback: >-
+          המידע לא נוגע ל-$a$ דרך המונוטוניות אלא דרך דרבו, והוא חזק יותר: $a$ חייב להיות $3$.
+        misconception: MC-derivative-jump-possible
+
+  - id: Q-5.7-which-derivative
+    type: multi
+    objectives: [OBJ-5.7-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהפונקציות הבאות הן נגזרת של פונקציה גזירה כלשהי ב-$\mathbb{R}$? סמנו את כולן.
+    choices:
+      - text: '$\lfloor x\rfloor$ (הערך השלם)'
+        feedback: >-
+          לא: יש לה קפיצות בכל מספר שלם. בין $\lfloor0\rfloor=0$ ל-$\lfloor1\rfloor=1$ היא לא מקבלת את $\frac12$.
+        misconception: MC-derivative-jump-possible
+      - text: '$h(x)=2x\sin\frac1x-\cos\frac1x$ ל-$x\neq0$, ו-$h(0)=0$'
+        correct: true
+        feedback: >-
+          כן: זו הנגזרת של $x^2\sin\frac1x$ (עם $0$ ב-$0$). היא אינה רציפה ב-$0$, אבל אי-הרציפות היא מהסוג השני
+          (תנודות), לא קפיצה.
+      - text: 'הפונקציה ששווה ל-$1$ ל-$x\ge0$ ול-$0$ ל-$x<0$'
+        feedback: >-
+          לא: קפיצה ב-$0$. היא לא מקבלת את $\frac12$.
+        misconception: MC-derivative-jump-possible
+      - text: '$\cos x$'
+        correct: true
+        feedback: 'כן: $(\sin x)''=\cos x$.'
+      - text: 'פונקציית דיריכלה ($1$ ברציונליים, $0$ באי-רציונליים)'
+        feedback: >-
+          לא, אף שאין לה קפיצות: היא מקבלת רק את $0$ ואת $1$, ולכן אין לה תכונת ערך הביניים. דרבו פוסל יותר
+          מקפיצות.
+        misconception: MC-darboux-only-excludes-jumps
+
+  - id: Q-5.7-onesided
+    type: twotier
+    objectives: [OBJ-5.7-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ גזירה ב-$\mathbb{R}$, ושני הגבולות החד-צדדיים $\lim_{x\to0^-}f'(x)$ ו-$\lim_{x\to0^+}f'(x)$ קיימים
+      וסופיים. האם $f'$ בהכרח רציפה ב-$0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. אם שני הגבולות החד-צדדיים קיימים, אי-רציפות יכולה להיות רק סליקה או קפיצה, ושתיהן בלתי אפשריות
+          לנגזרת.
+      - text: לא
+        feedback: >-
+          הדוגמה המוכרת לנגזרת לא רציפה, זו של $x^2\sin\frac1x$, היא בדיוק מקרה שבו הגבולות החד-צדדיים של
+          $f'$ **אינם** קיימים. כשהם קיימים, הם שווים ל-$f'(0)$.
+        misconception: MC-derivative-jump-possible
+    reasons:
+      - text: 'לפי לגרנז'' $\frac{f(h)-f(0)}{h}=f''(c_h)$ עם $c_h$ בין $0$ ל-$h$; כש-$h\to0^+$ צד שמאל שואף ל-$f''(0)$ וצד ימין לגבול הימני'
+        correct: true
+        feedback: >-
+          בדיוק. לכן הגבול הימני שווה ל-$f'(0)$, ובאותו אופן גם השמאלי: שלושתם שווים, וזו רציפות.
+      - text: 'כל נגזרת רציפה'
+        feedback: >-
+          לא. הנגזרת של $x^2\sin\frac1x$ אינה רציפה ב-$0$. הטענה כאן נכונה רק בגלל ההנחה שהגבולות החד-צדדיים קיימים.
+        misconception: MC-derivative-always-continuous
+      - text: 'הגבולות החד-צדדיים של $f''$ קיימים, ולכן הם שווים זה לזה'
+        feedback: >-
+          זה מה שצריך להוכיח, לא נימוק: לפונקציה כללית עם שני גבולות חד-צדדיים (כמו $\lfloor x\rfloor$ ב-$0$) הם
+          שונים. מה שמכריח אותם להיות שווים הוא ש-$f'$ היא נגזרת.
+        misconception: MC-derivative-jump-possible

@@ -1,0 +1,110 @@
+# Misconceptions first detected in lesson 0.6 (sets and functions).
+- id: MC-set-difference-rules
+  title: מטפלים בהפרש קבוצות כאילו היה סימטרי או קיבוצי
+  belief: >-
+    $A\setminus B=B\setminus A$, או $A\setminus(B\setminus C)=(A\setminus B)\setminus C$, כמו באיחוד.
+  truth: >-
+    הפרש אינו סימטרי ואינו קיבוצי. עבור $A=\{1,2,3,4\}$ ו-$B=\{3,4,5\}$: $A\setminus B=\{1,2\}$ אבל
+    $B\setminus A=\{5\}$. עבור $A=B=C=\{1\}$: $A\setminus(B\setminus C)=\{1\}$ אבל $(A\setminus B)\setminus C$ ריקה.
+  remedy: { lesson: '0.6', anchor: set-operations, label: 'פעולות על קבוצות' }
+
+- id: MC-complement-de-morgan
+  title: חושבים שהמשלים של חיתוך הוא חיתוך המשלימים
+  belief: >-
+    $(A\cap B)^c=A^c\cap B^c$, ו-$(A\cup B)^c=A^c\cup B^c$.
+  truth: >-
+    לפי כללי דה-מורגן המשלים מחליף חיתוך באיחוד: $(A\cap B)^c=A^c\cup B^c$ ו-$(A\cup B)^c=A^c\cap B^c$. זה
+    אותו כלל כמו בשלילה: "לא (וגם)" הוא "(לא) או (לא)".
+  remedy: { lesson: '0.6', anchor: de-morgan, label: 'משלים וכללי דה-מורגן' }
+
+- id: MC-set-equality-one-inclusion
+  title: מוכיחים שוויון קבוצות בהכלה אחת
+  belief: >-
+    אם כל איבר של $A$ נמצא ב-$B$, אז $A=B$.
+  truth: >-
+    זה מראה רק $A\subseteq B$. שוויון דורש גם $B\subseteq A$: $\{1\}\subseteq\{1,2\}$, והקבוצות שונות. שוויון
+    קבוצות מוכיחים בהכלה דו-כיוונית.
+  remedy: { lesson: '0.6', anchor: double-inclusion, label: 'שוויון קבוצות בהכלה דו-כיוונית' }
+
+- id: MC-domain-codomain-image
+  title: מבלבלים בין תחום, טווח ותמונה
+  belief: >-
+    הטווח של $f:\mathbb{R}\to\mathbb{R}$, $f(x)=x^2$, הוא $[0,\infty)$; או: הטווח הוא תמיד הקבוצה שהפונקציה
+    מקבלת.
+  truth: >-
+    התחום הוא מאיפה הפונקציה יוצאת, הטווח הוא לאן היא מוגדרת לשלוח (חלק מההגדרה של הפונקציה), והתמונה היא
+    מה שהיא מקבלת בפועל. עבור $x^2$ מ-$\mathbb{R}$ אל $\mathbb{R}$ הטווח $\mathbb{R}$ והתמונה $[0,\infty)$.
+  remedy: { lesson: '0.6', anchor: domain-codomain-image, label: 'תחום, טווח ותמונה' }
+
+- id: MC-injective-reversed
+  title: הופכים את כיוון הגרירה בהגדרת חד-חד-ערכית
+  belief: >-
+    $f$ חד-חד-ערכית אם $x_1=x_2$ גורר $f(x_1)=f(x_2)$.
+  truth: >-
+    זה נכון לכל פונקציה (נקודה אחת הולכת לערך אחד). חד-חד-ערכית היא הכיוון ההפוך: $f(x_1)=f(x_2)$ גורר
+    $x_1=x_2$, או בשקילות, $x_1\ne x_2$ גורר $f(x_1)\ne f(x_2)$.
+  remedy: { lesson: '0.6', anchor: injective, label: 'פונקציה חד-חד-ערכית' }
+
+- id: MC-injective-onto-confused
+  title: מבלבלים בין חד-חד-ערכית לבין על
+  belief: >-
+    פונקציה שהיא על היא גם חד-חד-ערכית, או ש"חד-חד-ערכית" פירושה שכל ערך בטווח מתקבל.
+  truth: >-
+    אלה שתי תכונות נפרדות. חד-חד-ערכית: אין שתי נקודות עם אותו ערך. על: כל איבר של הטווח מתקבל. $x^2$ מ-$\mathbb{R}$
+    אל $[0,\infty)$ היא על ולא חד-חד-ערכית; $2n$ מ-$\mathbb{N}$ אל $\mathbb{N}$ היא חד-חד-ערכית ולא על.
+  remedy: { lesson: '0.6', anchor: injective-onto, label: 'חד-חד-ערכית ועל' }
+
+- id: MC-formula-is-function
+  title: חושבים שהפונקציה היא הנוסחה בלבד
+  belief: >-
+    אם שתי פונקציות נתונות באותה נוסחה, יש להן אותן תכונות; התחום והטווח לא משנים אם היא חד-חד-ערכית, על או
+    הפיכה.
+  truth: >-
+    פונקציה היא תחום, טווח וכלל. $x^2$ בתחום $\mathbb{R}$ אינה חד-חד-ערכית, ובתחום $[0,\infty)$ היא כן; אל $\mathbb{R}$
+    היא אינה על, ואל $[0,\infty)$ היא כן. כל שאלה על תכונה של פונקציה מתחילה בשאלה: מאיפה ולאן?
+  remedy: { lesson: '0.6', anchor: formula-not-function, label: 'פונקציה: תחום, טווח וכלל' }
+
+- id: MC-inverse-without-onto
+  title: חושבים שמספיק שפונקציה תהיה חד-חד-ערכית כדי שתהיה לה הפוכה
+  belief: >-
+    לכל פונקציה חד-חד-ערכית $f:A\to B$ יש פונקציה הפוכה $f^{-1}:B\to A$.
+  truth: >-
+    $f^{-1}$ צריכה להיות מוגדרת על **כל** $B$, ולכן $f$ צריכה להיות גם על. $f:\mathbb{N}\to\mathbb{N}$,
+    $f(n)=2n$, חד-חד-ערכית, אבל ל-$3$ אין מקור. פונקציה חד-חד-ערכית הפיכה רק מהתמונה שלה.
+  remedy: { lesson: '0.6', anchor: inverse-theorem, label: 'מתי יש פונקציה הפוכה' }
+
+- id: MC-composition-order-swapped
+  title: מחליפים את סדר ההרכבה
+  belief: >-
+    $(f\circ g)(x)$ פירושו להפעיל קודם את $f$ ואחר כך את $g$, או שהסדר לא משנה.
+  truth: >-
+    $(f\circ g)(x)=f(g(x))$: קודם $g$, ואת התוצאה מציבים ב-$f$. בדרך כלל $f\circ g\neq g\circ f$: עם
+    $f(x)=x+1$ ו-$g(x)=x^2$ מקבלים $f(g(2))=5$ אבל $g(f(2))=9$.
+  remedy: { lesson: '0.6', anchor: composition, label: 'הרכבה של פונקציות' }
+
+- id: MC-inverse-is-reciprocal
+  title: מבלבלים בין הפונקציה ההפוכה לבין אחד חלקי הפונקציה
+  belief: >-
+    הסימון $f^{-1}(x)$ פירושו $\frac{1}{f(x)}$.
+  truth: >-
+    $f^{-1}$ היא הפונקציה שמבטלת את $f$: $f^{-1}(f(x))=x$. עבור $f(x)=2x+3$ ההפוכה היא $\frac{x-3}{2}$,
+    ואילו $\frac{1}{2x+3}$ היא פונקציה אחרת לגמרי (למשל, ב-$x=3$ היא נותנת $\frac19$ ולא $0$).
+  remedy: { lesson: '0.6', anchor: not-reciprocal, label: 'פונקציה הפוכה' }
+
+- id: MC-inverse-without-injective
+  title: הופכים פונקציה שאינה חד-חד-ערכית
+  belief: >-
+    לכל פונקציה יש הפוכה; ההפוכה של $x^2$ היא $\sqrt{x}$.
+  truth: >-
+    פונקציה הפוכה קיימת רק לפונקציה חד-חד-ערכית. $x^2$ בתחום $\mathbb{R}$ אינה כזו ($(-1)^2=1^2$), ואכן
+    $\sqrt{x^2}=|x|$, לא $x$. אחרי צמצום התחום ל-$[0,\infty)$ ההפוכה היא $\sqrt{x}$.
+  remedy: { lesson: '0.6', anchor: restrict, label: 'מתי קיימת פונקציה הפוכה' }
+
+- id: MC-self-injective-onto
+  title: חושבים שפונקציה חד-חד-ערכית מקבוצה לעצמה היא תמיד גם על
+  belief: >-
+    אם $f:A\to A$ חד-חד-ערכית, אז היא גם על: אם כל איבר עובר למקום משלו ואף אחד לא יצא, כל המקומות נשארים תפוסים.
+  truth: >-
+    זה נכון כש-$A$ סופית, ונכשל כש-$A$ אינסופית. $f:\mathbb{N}\to\mathbb{N}$, $f(n)=2n$, חד-חד-ערכית
+    ($2n=2m$ גורר $n=m$), אבל אינה על: למספר $3$ אין מקור, כי $2n$ תמיד זוגי.
+  remedy: { lesson: '0.6', anchor: hotel-back, label: 'בחזרה למלון: חד-חד-ערכית ולא על' }

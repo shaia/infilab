@@ -1,0 +1,22 @@
+# Terms first defined in lesson 5.2.
+- id: product-rule
+  term: כלל המכפלה
+  en: product rule
+  symbol: '(fg)''=f''g+fg'''
+  definition: >-
+    אם $f$ ו-$g$ גזירות ב-$x$, אז גם $fg$ גזירה שם, ו-$(fg)'(x)=f'(x)g(x)+f(x)g'(x)$.
+  lesson: '5.2'
+- id: quotient-rule
+  term: כלל המנה
+  en: quotient rule
+  symbol: '\left(\frac fg\right)''=\frac{f''g-fg''}{g^2}'
+  definition: >-
+    אם $f$ ו-$g$ גזירות ב-$x$ ו-$g(x)\neq0$, אז גם $\frac fg$ גזירה שם, ו-$\left(\frac fg\right)'(x)=\frac{f'(x)g(x)-f(x)g'(x)}{g(x)^2}$.
+  lesson: '5.2'
+- id: piecewise-seam
+  term: נקודת תפר
+  en: seam point (of a piecewise function)
+  definition: >-
+    נקודה שבה פונקציה מוגדרת למקוטעין עוברת מביטוי אחד לאחר. כדי לבדוק גזירות בנקודת תפר בודקים קודם רציפות,
+    ואחר כך שהנגזרות החד-צדדיות קיימות ושוות.
+  lesson: '5.2'

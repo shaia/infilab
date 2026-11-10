@@ -1,0 +1,15 @@
+# Terms first defined in lesson 2.4.
+- id: limit-arithmetic
+  term: חשבון גבולות
+  en: algebra of limits
+  definition: >-
+    הכללים: אם $a_n\to a$ ו-$b_n\to b$, אז $a_n\pm b_n\to a\pm b$, $a_nb_n\to ab$, ואם גם $b\ne0$ (ו-$b_n\ne0$)
+    אז $\frac{a_n}{b_n}\to\frac ab$. כל כלל מניח ששני הגבולות קיימים.
+  lesson: '2.4'
+- id: conjugate
+  term: כפל בצמוד
+  en: multiplying by the conjugate
+  definition: >-
+    הצמוד של $\sqrt x-\sqrt y$ הוא $\sqrt x+\sqrt y$. כופלים ומחלקים בו כדי להפוך הפרש של שורשים למנה:
+    $\sqrt x-\sqrt y = \frac{x-y}{\sqrt x+\sqrt y}$.
+  lesson: '2.4'

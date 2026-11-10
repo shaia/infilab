@@ -1,0 +1,310 @@
+# Lesson 3.4 — Heine's (sequential) definition and its equivalence with Cauchy's.
+# Objectives (src/course.ts):
+#   OBJ-3.4-1  state Heine's definition and prove it equivalent to Cauchy's
+#   OBJ-3.4-2  prove that a limit does not exist with two sequences whose images have different limits
+#   OBJ-3.4-3  choose the definition that suits the question: existence or non-existence
+# Heine: lim_{x→a} f(x) = L iff for every sequence x_n → a with x_n ≠ a (in the domain), f(x_n) → L.
+# D is Dirichlet's function (1 on the rationals, 0 on the irrationals), as in lesson 3.2.
+chapter: 3
+questions:
+  - id: Q-3.4-def
+    type: mc
+    objectives: [OBJ-3.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ מוגדרת בסביבה מנוקבת של $a$. איזה מהניסוחים הבאים הוא הגדרת היינה ל-$\lim_{x\to a}f(x)=L$?
+    choices:
+      - text: 'לכל סדרה $x_n\to a$ עם $x_n\neq a$ לכל $n$, מתקיים $f(x_n)\to L$'
+        correct: true
+        feedback: >-
+          נכון. "לכל סדרה" מחליף את "לכל $\varepsilon$", והדרישה $x_n\neq a$ מחליפה את התנאי $0<|x-a|$ של קושי.
+      - text: 'קיימת סדרה $x_n\to a$ עם $x_n\neq a$, כך ש-$f(x_n)\to L$'
+        feedback: >-
+          סדרה אחת לא מספיקה. עבור $\sin\frac{\pi}{x}$ ב-0 הסדרה $x_n=\frac1n$ נותנת $\sin(n\pi)=0\to0$, ובכל זאת
+          אין גבול: הסדרה $\frac{2}{4n+1}$ נותנת 1.
+        misconception: MC-heine-some-sequences
+      - text: 'לכל סדרה $x_n\to a$ מתקיים $f(x_n)\to L$'
+        feedback: >-
+          בלי $x_n\neq a$ גם הסדרה הקבועה $x_n=a$ נכללת, ואז ההגדרה דורשת $f(a)=L$. לפונקציה ששווה ל-0 כש-$x\neq0$
+          ול-1 ב-0 יש גבול 0 ב-0, וההגדרה הזו הייתה פוסלת אותו.
+        misconception: MC-heine-allows-xn-equal-a
+      - text: 'לכל סדרה $x_n$ עם $f(x_n)\to L$, מתקיים $x_n\to a$'
+        feedback: >-
+          הכיוון הפוך. עבור $f\equiv L$ קבועה, כל סדרה מקיימת $f(x_n)\to L$, גם $x_n=n$, ובכל זאת $\lim_{x\to a}f=L$
+          בכל נקודה $a$.
+        misconception: MC-limit-implication-reversed
+
+  - id: Q-3.4-one-sequence
+    type: twotier
+    objectives: [OBJ-3.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$f\left(\frac1n\right)\to0$. האם מזה נובע ש-$\lim_{x\to0}f(x)=0$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. סדרה אחת לא מספיקה.
+      - text: כן
+        feedback: >-
+          הגדרת היינה דורשת זאת לכל סדרה ששואפת ל-0. $f(x)=\sin\frac{\pi}{x}$ מקיימת $f(\frac1n)=\sin(n\pi)=0$, ואין
+          לה גבול ב-0.
+        misconception: MC-heine-some-sequences
+    reasons:
+      - text: 'עבור $f(x)=\sin\frac{\pi}{x}$: $f(\frac1n)=0$, אבל $f\left(\frac{2}{4n+1}\right)=\sin\left(2n\pi+\frac{\pi}{2}\right)=1$'
+        correct: true
+        feedback: >-
+          בדיוק. שתי הסדרות שואפות ל-0, ואיבריהן שונים מ-0, אבל ערכי $f$ שואפים ל-0 ול-1. לכן אין גבול.
+      - text: 'הסדרה $\frac1n$ מתקרבת ל-0 רק מימין, ולכן היא נותנת רק את הגבול מימין'
+        feedback: >-
+          גם זה נכון כהערה, אבל הבעיה עמוקה יותר: גם כל הסדרות מימין לא מתנהגות כמו $\frac1n$. בדוגמה
+          $\sin\frac{\pi}{x}$ הסדרה $\frac{2}{4n+1}$ היא גם מימין, ונותנת 1.
+        misconception: MC-heine-some-sequences
+      - text: 'אם התנאי מתקיים לסדרה טבעית כמו $\frac1n$, הוא מתקיים לכל סדרה'
+        feedback: >-
+          $\frac1n$ אינה מייצגת את כל הסדרות. פונקציה יכולה "להתנהג יפה" בדיוק בנקודות $\frac1n$ ולהשתולל ביניהן.
+        misconception: MC-heine-some-sequences
+
+  - id: Q-3.4-xn-ne-a
+    type: mc
+    objectives: [OBJ-3.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=0$ לכל $x\neq0$ ו-$f(0)=1$. נניח שמוחקים מהגדרת היינה את הדרישה $x_n\neq a$. מה קורה ב-$a=0$?
+    choices:
+      - text: 'ההגדרה החדשה תגיד שאין ל-$f$ גבול ב-0, אף שלפי קושי הגבול 0'
+        correct: true
+        feedback: >-
+          נכון. הסדרה הקבועה $x_n=0$ שואפת ל-0, ו-$f(x_n)=1$. לכן "לכל סדרה $f(x_n)\to0$" נכשל, וגם "לכל סדרה
+          $f(x_n)\to1$" נכשל ($x_n=\frac1n$ נותנת 0). ההגדרות כבר לא היו שקולות.
+      - text: 'שום דבר לא משתנה: סדרה ששואפת ל-0 ממילא אינה שווה ל-0'
+        feedback: >-
+          סדרה יכולה לשאוף ל-0 ולהיות שווה ל-0, למשל הקבועה $x_n=0$, או $0,\frac12,0,\frac14,\dots$. עליהן
+          $f(x_n)$ שווה ל-1 לפחות לפעמים, ולכן אינה שואפת ל-0.
+        misconception: MC-heine-allows-xn-equal-a
+      - text: 'ההגדרה החדשה תיתן את הגבול $f(0)=1$'
+        feedback: >-
+          הסדרה $x_n=\frac1n$ נותנת $f(x_n)=0\to0$, ולא 1. ההגדרה בלי $x_n\neq a$ לא נותנת גבול בכלל כאן, וכשהיא
+          כן נותנת גבול הוא חייב להיות $f(a)$.
+        misconception: MC-function-limit-is-value
+
+  - id: Q-3.4-equiv-proof
+    type: rank
+    objectives: [OBJ-3.4-1]
+    level: exam
+    prompt: >-
+      הוכיחו: אם $\lim_{x\to a}f(x)=L$ לפי הגדרת קושי, אז $f(x_n)\to L$ לכל סדרה $x_n\to a$ עם $x_n\neq a$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: seq
+        label: 'תהי $x_n\to a$ עם $x_n\neq a$ לכל $n$, ויהי $\varepsilon>0$.'
+      - id: cauchy
+        label: 'לפי הגדרת קושי קיים $\delta>0$ כך ש-$0<|x-a|<\delta$ גורר $|f(x)-L|<\varepsilon$.'
+      - id: N
+        label: 'כי $x_n\to a$, עבור הרוחב $\delta$ קיים $N$ כך שלכל $n>N$ מתקיים $|x_n-a|<\delta$.'
+      - id: apply
+        label: 'לכל $n>N$: $0<|x_n-a|<\delta$ (החיוביות כי $x_n\neq a$), ולכן $|f(x_n)-L|<\varepsilon$.'
+      - id: done
+        label: 'זה הוכיח ש-$f(x_n)\to L$, והסדרה הייתה כלשהי.'
+    order: [seq, cauchy, N, apply, done]
+    correctFeedback: >-
+      נכון. שימו לב שה-$\delta$ של הפונקציה משמש כ"אפסילון" של הסדרה $x_n$. בכיוון השני (היינה גורר קושי) מוכיחים
+      בשלילה: מניחים שקושי נכשל, ובונים מ-$\delta=\frac1n$ סדרה רעה.
+    wrongFeedback: >-
+      מתחילים מהסדרה ומה-$\varepsilon$ שצריך לטפל בו. ממנו קושי נותן $\delta$, וה-$\delta$ הזה משמש את ההתכנסות
+      של $x_n$.
+
+  - id: Q-3.4-converse
+    type: mc
+    objectives: [OBJ-3.4-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      בכיוון "היינה גורר קושי" מוכיחים בשלילה: מניחים שלכל סדרה $x_n\to a$ עם $x_n\neq a$ מתקיים $f(x_n)\to L$,
+      אבל קושי נכשל, כלומר קיים $\varepsilon>0$ שלכל $\delta>0$ יש $x$ עם $0<|x-a|<\delta$ ו-$|f(x)-L|\ge\varepsilon$.
+      מה הצעד הבא?
+    choices:
+      - text: 'להציב $\delta=\frac1n$ לכל $n$, ולקבל $x_n$ עם $0<|x_n-a|<\frac1n$ ו-$|f(x_n)-L|\ge\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. אז $x_n\to a$ (סנדוויץ'), $x_n\neq a$, ו-$f(x_n)$ לא שואפת ל-$L$ כי כל איבריה רחוקים ממנו לפחות
+          $\varepsilon$. זה סותר את ההנחה.
+      - text: 'לקחת את הסדרה $x_n=a+\frac1n$ ולהראות ש-$f(x_n)$ לא שואפת ל-$L$'
+        feedback: >-
+          מההנחה ש"קושי נכשל" לא נובע דבר על הסדרה המסוימת $a+\frac1n$: הנקודות הרעות יכולות להיות במקומות אחרים
+          (למשל משמאל ל-$a$). צריך לבנות את הסדרה מהנקודות הרעות עצמן.
+        misconception: MC-heine-some-sequences
+      - text: 'להפעיל את ההנחה על הסדרה הקבועה $x_n=a$'
+        feedback: >-
+          הסדרה הקבועה $a$ אינה מותרת: היינה מדבר רק על סדרות עם $x_n\neq a$. ובכל מקרה הערך $f(a)$ לא קשור לגבול.
+        misconception: MC-heine-allows-xn-equal-a
+
+  - id: Q-3.4-sin-recip
+    type: multi
+    objectives: [OBJ-3.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      רוצים להוכיח של-$f(x)=\sin\frac1x$ אין גבול ב-0. אילו מהבחירות הבאות מוכיחות זאת? סמנו את כולן.
+    choices:
+      - text: '$x_n=\frac{1}{n\pi}$ ו-$y_n=\frac{1}{\frac{\pi}{2}+2n\pi}$'
+        correct: true
+        feedback: >-
+          נכון. שתיהן שואפות ל-0 ושונות מ-0, ו-$f(x_n)=\sin(n\pi)=0$ ואילו $f(y_n)=1$. אילו היה גבול $L$, לפי היינה
+          היה $L=0$ וגם $L=1$.
+      - text: 'הסדרה האחת $x_n=\frac{2}{n\pi}$'
+        correct: true
+        feedback: >-
+          נכון. $f(x_n)=\sin\frac{n\pi}{2}$ היא $1,0,-1,0,1,\dots$, ואין לה גבול. אילו ל-$f$ היה גבול ב-0, לפי היינה
+          $f(x_n)$ הייתה מתכנסת. סדרה אחת בלי גבול מספיקה.
+      - text: '$x_n=\frac{1}{n\pi}$ ו-$y_n=\frac{1}{2n\pi}$'
+        feedback: >-
+          בשתיהן $f=0$, כך שהן נותנות אותו גבול. זה לא מוכיח שאין גבול (וגם לא שיש). כדי להפריך צריך שתי סדרות
+          עם גבולות **שונים** של ערכי $f$, או סדרה אחת שערכי $f$ עליה מתבדרים.
+        misconception: MC-heine-some-sequences
+      - text: '$x_n=\frac{1}{n\pi}$ ו-$y_n=1+\frac{1}{n}$'
+        feedback: >-
+          $y_n$ שואפת ל-1, לא ל-0, ולכן היא לא אומרת דבר על הגבול ב-0. שתי הסדרות צריכות לשאוף לנקודה שבודקים.
+        misconception: MC-heine-sequence-not-to-a
+
+  - id: Q-3.4-dirichlet
+    type: twotier
+    objectives: [OBJ-3.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $D$ היא פונקציית דיריכלה. באילו נקודות $a$ קיים $\lim_{x\to a}D(x)$?
+    choices:
+      - text: באף נקודה
+        correct: true
+        feedback: נכון. בכל סביבה של כל נקודה יש גם רציונליים וגם אי-רציונליים.
+      - text: 'רק באי-רציונליים, והגבול שם 0'
+        feedback: >-
+          ב-$a$ אי-רציונלי $D(a)=0$, אבל הגבול לא נקבע מהערך בנקודה. יש רציונליים $q_n\to a$ (צפיפות, שיעור 1.6),
+          ועליהם $D(q_n)=1$.
+        misconception: MC-function-limit-is-value
+    reasons:
+      - text: 'לכל $a$ יש רציונליים $q_n\to a$ ואי-רציונליים $r_n\to a$, שונים מ-$a$; $D(q_n)=1$ ו-$D(r_n)=0$'
+        correct: true
+        feedback: >-
+          בדיוק. הסדרות קיימות מהצפיפות: בכל קטע $(a,a+\frac1n)$ יש רציונלי ויש אי-רציונלי. שני גבולות שונים,
+          ולכן לפי היינה אין גבול.
+      - text: 'הגבול ב-$a$ הוא $D(a)$, ולכן הוא 1 ברציונליים ו-0 באי-רציונליים'
+        feedback: >-
+          הגבול לא מסתכל על $a$ עצמה. בכל סביבה מנוקבת של $a$ יש ערכים 0 וערכים 1, ולכן אין $L$ שכל הערכים קרובים
+          אליו.
+        misconception: MC-function-limit-is-value
+      - text: 'סדרת רציונליים $q_n\to a$ נותנת $D(q_n)\to1$, ולכן הגבול 1'
+        feedback: >-
+          סדרה אחת לא קובעת גבול. אותה נקודה $a$ היא גם גבול של סדרת אי-רציונליים, ועליה $D=0$.
+        misconception: MC-heine-some-sequences
+
+  - id: Q-3.4-limit-of-image
+    type: numeric
+    objectives: [OBJ-3.4-2]
+    level: basic
+    prompt: >-
+      $f(x)=\sin\frac1x$ ו-$y_n=\frac{1}{\frac{3\pi}{2}+2n\pi}$. מהו $\lim_{n\to\infty}f(y_n)$?
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f(y_n)=\sin\left(\frac{3\pi}{2}+2n\pi\right)=\sin\frac{3\pi}{2}=-1$ לכל $n$. יחד עם $x_n=\frac{1}{n\pi}$,
+      שנותנת 0, זו עוד הוכחה שאין ל-$f$ גבול ב-0.
+    wrongFeedback: >-
+      הציבו: $\frac{1}{y_n}=\frac{3\pi}{2}+2n\pi$, והסינוס מחזורי עם מחזור $2\pi$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $\sin\frac{3\pi}{2}$ הוא $-1$, לא 1: הזווית $\frac{3\pi}{2}$ מצביעה על הנקודה $(0,-1)$ במעגל היחידה.
+      - value: 0
+        feedback: >-
+          $y_n\to0$, אבל השאלה היא על $f(y_n)$, לא על $y_n$. הציבו את $y_n$ ב-$f$.
+
+  - id: Q-3.4-which-tool
+    type: multi
+    objectives: [OBJ-3.4-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      לאילו משימות הגדרת היינה נוחה במיוחד? סמנו את כולן.
+    choices:
+      - text: 'להוכיח שגבול **אינו** קיים, בעזרת שתי סדרות עם גבולות שונים של ערכי הפונקציה'
+        correct: true
+        feedback: >-
+          נכון. שתי סדרות מפורשות קלות למציאה, ואילו שלילת קושי דורשת $\varepsilon$ רע ונקודה רעה לכל $\delta$.
+      - text: 'להעביר משפטים מסדרות לפונקציות, כמו חשבון הגבולות וכלל הסנדוויץ'''
+        correct: true
+        feedback: >-
+          נכון. בשיעור 3.5 כך מוכיחים את חשבון הגבולות לפונקציות: לוקחים סדרה כלשהי ומפעילים את המשפט לסדרות.
+      - text: 'להוכיח שגבול קיים, על ידי בדיקה של הסדרה $x_n=a+\frac1n$'
+        feedback: >-
+          סדרה אחת לא מוכיחה קיום. להוכחת קיום לפי היינה צריך לטפל בסדרה **כלשהי**, ובדרך כלל קל יותר לעבוד
+          ישירות עם $\varepsilon$ ו-$\delta$.
+        misconception: MC-heine-some-sequences
+
+  - id: Q-3.4-xsin-tool
+    type: multi
+    objectives: [OBJ-3.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהטיעונים הבאים מוכיחים נכון ש-$\lim_{x\to0}x\sin\frac1x=0$? סמנו את כולם.
+    choices:
+      - text: 'לפי קושי: לכל $\varepsilon>0$ בוחרים $\delta=\varepsilon$, כי $\left|x\sin\frac1x\right|\le|x|<\delta$'
+        correct: true
+        feedback: >-
+          נכון, ובשורה אחת. החסם $\left|\sin\frac1x\right|\le1$ מעלים את החלק המתנודד.
+      - text: 'לפי היינה: לכל $x_n\to0$ עם $x_n\neq0$ מתקיים $0\le\left|x_n\sin\frac{1}{x_n}\right|\le|x_n|$, ולפי סנדוויץ'' לסדרות הביטוי שואף ל-0'
+        correct: true
+        feedback: >-
+          נכון. הטיעון עובד לסדרה כלשהי, ולכן לכל הסדרות. (מ-$|b_n|\to0$ נובע $b_n\to0$.)
+      - text: 'לפי היינה: $x_n=\frac{1}{n\pi}$ נותנת $\frac{1}{n\pi}\sin(n\pi)=0$ לכל $n$, ולכן הגבול 0'
+        feedback: >-
+          סדרה אחת לא מוכיחה קיום. כאן התוצאה נכונה, אבל אותו טיעון "היה מוכיח" גם ש-$\sin\frac1x\to0$, וזה שקר.
+        misconception: MC-heine-some-sequences
+      - text: 'אין גבול, כי ל-$\sin\frac1x$ אין גבול ב-0'
+        feedback: >-
+          הגורם $x$ "מועך" את התנודות: $\left|x\sin\frac1x\right|\le|x|$. גורם חסום כפול גורם ששואף ל-0 שואף ל-0,
+          גם כשלגורם החסום אין גבול.
+        misconception: MC-bounded-factor-blocks-limit
+
+  - id: Q-3.4-xD
+    type: twotier
+    objectives: [OBJ-3.4-2, OBJ-3.4-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f(x)=x\cdot D(x)$, כלומר $f(x)=x$ כש-$x$ רציונלי ו-$f(x)=0$ כש-$x$ אי-רציונלי. באילו נקודות $a$ קיים
+      $\lim_{x\to a}f(x)$?
+    choices:
+      - text: 'רק ב-$a=0$'
+        correct: true
+        feedback: >-
+          נכון. ב-0 שני ה"ענפים", $x$ ו-0, נפגשים; בכל נקודה אחרת הם רחוקים זה מזה.
+      - text: 'באף נקודה, כמו פונקציית דיריכלה'
+        feedback: >-
+          הכפל ב-$x$ משנה את המצב ליד 0: $|f(x)|\le|x|$ לכל $x$, ולכן $f(x)\to0$ כש-$x\to0$, עם $\delta=\varepsilon$.
+        misconception: MC-bounded-factor-blocks-limit
+      - text: 'בכל נקודה'
+        feedback: >-
+          ב-$a=1$ סדרת רציונליים $q_n\to1$ נותנת $f(q_n)=q_n\to1$, וסדרת אי-רציונליים $r_n\to1$ נותנת $f(r_n)=0$.
+          שני גבולות שונים: אין גבול ב-1.
+        misconception: MC-heine-some-sequences
+    reasons:
+      - text: >-
+          ב-0 קושי עם $\delta=\varepsilon$ עובד, כי $|f(x)|\le|x|$; ב-$a\neq0$ רציונליים $q_n\to a$ נותנים
+          $f(q_n)\to a$ ואי-רציונליים $r_n\to a$ נותנים 0
+        correct: true
+        feedback: >-
+          בדיוק, וזו גם הבחירה הנכונה של הגדרה לכל חלק: קושי לקיום, היינה עם שתי סדרות לאי-קיום. (אותו רעיון
+          בדיוק יופיע בשיעור 4.2, ברציפות של פונקציית רימן.)
+      - text: 'ב-0 הגבול קיים כי $f(0)=0$'
+        feedback: >-
+          הערך בנקודה לא קובע את הגבול; גם ל-$D$ יש ערך ב-0, ואין לה שם גבול. מה שעובד ב-0 הוא החסם $|f(x)|\le|x|$.
+        misconception: MC-function-limit-is-value
+      - text: 'לכל $a$, סדרת רציונליים $q_n\to a$ נותנת $f(q_n)=q_n\to a$, ולכן הגבול בכל נקודה הוא $a$'
+        feedback: >-
+          סדרה אחת, או סוג אחד של סדרות, לא קובע גבול. סדרת אי-רציונליים לאותה נקודה נותנת 0, ו-$0\neq a$ כש-$a\neq0$.
+        misconception: MC-heine-some-sequences

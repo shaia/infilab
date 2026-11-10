@@ -1,0 +1,7 @@
+---
+/** Lesson-0.6 figure: <Spread figure={ArrowDiagram} figureProps={{…}}>. */
+import ArrowDiagram, { type ArrowDiagramProps } from './ArrowDiagram';
+type Props = ArrowDiagramProps;
+---
+
+<ArrowDiagram client:visible {...Astro.props} />

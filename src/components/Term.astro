@@ -1,0 +1,21 @@
+---
+/** A glossary term: one spelling course-wide, with its definition on hover or focus. */
+import { getEntry } from 'astro:content';
+import { tex } from '~/lib/tex';
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+const entry = await getEntry('glossary', id);
+if (!entry) throw new Error(`<Term id="${id}">: no such entry in src/content/glossary.yaml`);
+const g = entry.data;
+// definitions carry TeX (lint renders it with the same strictness), so the card renders it too
+const defHtml = tex(g.definition, `glossary ${id}.definition`);
+---
+
+<span class="term" tabindex="0"
+  ><slot /><span class="term-card" role="tooltip"
+    ><b>{g.term}</b> <span class="term-en ltr">{g.en}</span>
+    <span class="term-def" set:html={defHtml} /></span
+  ></span
+>

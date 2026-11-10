@@ -1,0 +1,51 @@
+---
+/**
+ * Lesson-0.1 figure: <Spread figure={ProofReader} figureProps={{ presets: [...], tasks: [...] }}>.
+ * Renders every preset text and every feedback string with KaTeX at build time (a TeX error fails the build) and
+ * hands the HTML to the island, so the island ships no KaTeX.
+ */
+import { tex } from '~/lib/tex';
+import {
+  JUSTIFICATIONS,
+  PRESETS,
+  ROLES,
+  blockFeedback,
+  lineFeedback,
+  linesOf,
+  type Justification,
+  type Role,
+} from '~/math/proofs';
+import ProofReader, { type ProofReaderProps, type RenderedPreset } from './ProofReader';
+
+type Props = Omit<ProofReaderProps, 'rendered'>;
+const props = Astro.props;
+const ids = [...new Set([...(props.presets ?? []), ...(props.preset ? [props.preset] : [])])];
+for (const id of ids) if (!(id in PRESETS)) throw new Error(`ProofReader: unknown preset "${id}" (src/math/proofs.ts)`);
+
+const rendered: Record<string, RenderedPreset> = {};
+for (const id of ids) {
+  const p = PRESETS[id];
+  const where = `ProofReader ${id}`;
+  const blocks: RenderedPreset['blocks'] = {};
+  for (const b of p.blocks) {
+    const feedback = {} as Record<Role, { ok: boolean; html: string }>;
+    for (const r of ROLES) {
+      const f = blockFeedback(b, r);
+      feedback[r] = { ok: f.ok, html: tex(f.text, where) };
+    }
+    blocks[b.id] = { html: b.text ? tex(b.text, where) : '', feedback };
+  }
+  const lines: RenderedPreset['lines'] = {};
+  for (const l of linesOf(p)) {
+    const feedback = {} as Record<Justification, { ok: boolean; html: string }>;
+    for (const j of JUSTIFICATIONS) {
+      const f = lineFeedback(l, j);
+      feedback[j] = { ok: f.ok, html: tex(f.text, where) };
+    }
+    lines[l.n] = { html: tex(l.text, where), feedback };
+  }
+  rendered[id] = { name: p.name, blocks, lines };
+}
+---
+
+<ProofReader client:visible {...props} rendered={rendered} />

@@ -1,0 +1,35 @@
+# Terms first defined in lesson 5.5.
+- id: local-extremum
+  term: נקודת קיצון מקומי
+  en: local extremum
+  definition: >-
+    $x_0$ היא נקודת מקסימום מקומי של $f$ אם יש $\delta>0$ כך ש-$f(x)\le f(x_0)$ לכל $x$ בתחום עם
+    $|x-x_0|<\delta$; נקודת מינימום מקומי מוגדרת עם $f(x)\ge f(x_0)$. נקודת קיצון מקומי היא אחת משתיהן.
+  reject: [נקודת קצון]
+  lesson: '5.5'
+- id: interior-point
+  term: נקודה פנימית
+  en: interior point
+  definition: >-
+    $x_0$ היא נקודה פנימית של קבוצה $A$ אם יש $\delta>0$ כך שכל הקטע $(x_0-\delta,x_0+\delta)$ מוכל ב-$A$. קצוות
+    של קטע סגור אינם נקודות פנימיות שלו.
+  lesson: '5.5'
+- id: fermat-theorem
+  term: משפט פרמה
+  en: Fermat's theorem (interior extremum)
+  definition: >-
+    אם $x_0$ היא נקודת קיצון מקומי פנימית של $f$ ו-$f$ גזירה ב-$x_0$, אז $f'(x_0)=0$. ההפך אינו נכון: $x^3$ ב-0.
+  lesson: '5.5'
+- id: critical-point
+  term: נקודה קריטית
+  en: critical point
+  definition: >-
+    נקודה שבה $f'(x_0)=0$. לפי משפט פרמה, נקודת קיצון פנימית היא נקודה קריטית או נקודה שבה $f$ אינה גזירה.
+  lesson: '5.5'
+- id: rolle-theorem
+  term: משפט רול
+  en: Rolle's theorem
+  definition: >-
+    אם $f$ רציפה ב-$[a,b]$, גזירה ב-$(a,b)$ ו-$f(a)=f(b)$, אז קיימת $c\in(a,b)$ כך ש-$f'(c)=0$.
+  reject: [משפט רולה]
+  lesson: '5.5'

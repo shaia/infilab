@@ -1,0 +1,318 @@
+# Chapter 3 exam questions — original, in the style of an 80131 final (not taken from a real exam).
+# Each is worth 25 points in lettered parts, with at least one open part graded against a model solution and a rubric.
+chapter: 3
+questions:
+  - id: Q-3-exam-1
+    type: exam
+    title: גבול מהגדרת קושי
+    prompt: >-
+      נתונה הפונקציה $f(x)=\frac1x$, המוגדרת לכל $x\neq0$.
+    parts:
+      - label: א
+        points: 12
+        type: open
+        objectives: [OBJ-3.3-2, OBJ-3.3-1]
+        prompt: >-
+          הוכיחו מהגדרת קושי (אפסילון-דלתא) ש-$\lim_{x\to2}\frac1x=\frac12$.
+        solution:
+          - kind: given
+            text: '$f(x)=\frac1x$ מוגדרת בסביבה מנוקבת של 2.'
+          - kind: goal
+            text: 'לכל $\varepsilon>0$ קיים $\delta>0$ כך שלכל $x$ עם $0<|x-2|<\delta$ מתקיים $\left|\frac1x-\frac12\right|<\varepsilon$.'
+          - kind: idea
+            text: >-
+              מביאים למכנה משותף ומקבלים את $|x-2|$ כפול גורם $\frac{1}{2|x|}$. הגורם הזה גדל ליד 0, ולכן מרחיקים
+              את $x$ מ-0 בעזרת $\delta\le1$, ומקבלים חסם קבוע.
+          - kind: computation
+            text: '$\left|\frac1x-\frac12\right|=\frac{|2-x|}{2|x|}=\frac{|x-2|}{2|x|}$.'
+          - kind: step
+            text: >-
+              אם $|x-2|<1$ אז $1<x<3$, ובפרט $|x|>1$, ולכן $\frac{1}{2|x|}<\frac12$ ו-$\left|\frac1x-\frac12\right|<\frac{|x-2|}{2}$.
+          - kind: step
+            text: >-
+              יהי $\varepsilon>0$, ונבחר $\delta=\min(1,2\varepsilon)>0$. לכל $x$ עם $0<|x-2|<\delta$: כי $\delta\le1$
+              החסם מהצעד הקודם חל, ולכן $\left|\frac1x-\frac12\right|<\frac{|x-2|}{2}<\frac{\delta}{2}\le\varepsilon$.
+          - kind: result
+            text: 'לכל $\varepsilon>0$ מצאנו $\delta$ מתאים, ולכן לפי הגדרת קושי $\lim_{x\to2}\frac1x=\frac12$.'
+        rubric:
+          - text: 'הביטוי $\left|\frac1x-\frac12\right|$ נכתב כ-$\frac{|x-2|}{2|x|}$'
+            weight: 2
+          - text: 'חסם מקומי מוצדק על $\frac{1}{|x|}$ (למשל: $|x-2|<1$ גורר $|x|>1$)'
+            weight: 3
+          - text: '$\delta$ נבחר כפונקציה של $\varepsilon$ בלבד (לא של $x$), חיובי, ומבטיח גם את החסם המקומי'
+            weight: 3
+          - text: 'שרשרת אי-שוויונות שמראה $\left|\frac1x-\frac12\right|<\varepsilon$ לכל $x$ עם $0<|x-2|<\delta$'
+            weight: 2
+          - text: 'סדר הכמתים נכון: $\varepsilon$ נתון, $\delta$ נבחר, ורק אז $x$ כלשהו'
+            weight: 1
+
+      - label: ב
+        points: 6
+        type: numeric
+        objectives: [OBJ-3.3-2]
+        prompt: >-
+          עבור $\varepsilon=0.1$: מהו ה-$\delta$ **הגדול ביותר** כך שלכל $x$ עם $0<|x-2|<\delta$ מתקיים
+          $\left|\frac1x-\frac12\right|<0.1$?
+        answer: 0.3333333333333333
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $\delta=\frac13$. התנאי הוא $0.4<\frac1x<0.6$, כלומר $\frac53<x<\frac52$. המרחק מ-2 לקצה השמאלי
+          $\frac13$ ולימני $\frac12$, ו-$\delta$ צריך להתאים לשני הצדדים.
+        wrongFeedback: >-
+          פתרו את $\left|\frac1x-\frac12\right|<0.1$ כקטע של $x$ סביב 2, ומדדו את המרחק מ-2 לכל קצה.
+        commonWrong:
+          - value: 0.5
+            feedback: >-
+              זה המרחק לקצה הימני $\frac52$. אבל משמאל הקצה הוא $\frac53$, במרחק $\frac13$ בלבד: עם $\delta=0.5$ הנקודה
+              $x=1.6$ נכללת, ו-$\frac{1}{1.6}-\frac12=0.125>0.1$.
+          - value: 0.2
+            feedback: >-
+              זה ה-$\delta$ מסעיף א, $\min(1,2\varepsilon)$. הוא מתאים, ובהוכחה הוא מספיק, אבל הוא לא הגדול ביותר.
+
+      - label: ג
+        points: 7
+        type: twotier
+        objectives: [OBJ-3.3-3]
+        qualitative: true
+        prompt: >-
+          מגדירים $g(x)=\frac1x$ לכל $x\neq0$, $x\neq2$, ו-$g(2)=5$. האם $\lim_{x\to2}g(x)=\frac12$?
+        choices:
+          - text: כן
+            correct: true
+            feedback: נכון. ההוכחה מסעיף א עובדת מילה במילה עבור $g$.
+          - text: 'לא, הגבול הוא 5'
+            feedback: >-
+              5 הוא הערך $g(2)$, והגבול לא מסתכל עליו. ליד 2, ובלי 2 עצמו, $g$ ו-$f$ שוות.
+            misconception: MC-function-limit-is-value
+          - text: 'לא, כי $g$ אינה מוגדרת בנוסחה אחת'
+            feedback: >-
+              הגבול תלוי רק בערכים ב-$0<|x-2|<\delta$, ושם $g(x)=\frac1x$. הערך של $g$ ב-2 עצמה לא משנה.
+            misconception: MC-limit-needs-f-at-a
+        reasons:
+          - text: 'ההגדרה בודקת רק $x$ עם $0<|x-2|<\delta$, ושם $g(x)=f(x)$'
+            correct: true
+            feedback: >-
+              בדיוק. שתי פונקציות ששוות בסביבה מנוקבת של נקודה הן בעלות אותו גבול בה, אם הוא קיים.
+          - text: 'הגבול בנקודה הוא תמיד הערך בה'
+            feedback: >-
+              זה נכון רק לפונקציות רציפות (שיעור 4.1); $g$ אינה רציפה ב-2, ובכל זאת יש לה שם גבול.
+            misconception: MC-function-limit-is-value
+          - text: 'אפשר להתעלם מנקודה אחת, כי "רוב" הנקודות מתנהגות יפה'
+            feedback: >-
+              זה לא עניין של רוב. הנקודה $a$ מוצאת מההגדרה במפורש, בתנאי $0<|x-a|$. (שינוי של אינסוף נקודות קרובות ל-2
+              כן יכול לשנות את הגבול.)
+            misconception: MC-function-limit-is-value
+
+  - id: Q-3-exam-2
+    type: exam
+    title: קיום ואי-קיום של גבול באפס
+    prompt: >-
+      נתונות הפונקציות $f(x)=\sin\frac1x$ ו-$g(x)=x\sin\frac1x$, המוגדרות לכל $x\neq0$.
+    parts:
+      - label: א
+        points: 10
+        type: open
+        objectives: [OBJ-3.4-2]
+        prompt: >-
+          הוכיחו של-$f$ אין גבול ב-0.
+        solution:
+          - kind: given
+            text: '$f(x)=\sin\frac1x$ מוגדרת לכל $x\neq0$.'
+          - kind: goal
+            text: 'לא קיים $L$ כך ש-$\lim_{x\to0}f(x)=L$.'
+          - kind: idea
+            text: >-
+              לפי היינה, אם הגבול קיים אז $f(x_n)\to L$ לכל סדרה $x_n\to0$ עם $x_n\neq0$. מספיק למצוא שתי סדרות כאלה
+              שעליהן ערכי $f$ שואפים לגבולות שונים.
+          - kind: step
+            text: >-
+              נגדיר $x_n=\frac{1}{2n\pi}$ ו-$y_n=\frac{1}{\frac{\pi}{2}+2n\pi}$. שתיהן חיוביות, ולכן שונות מ-0, ו-$0<y_n<x_n\le\frac1n$,
+              כך שלפי סנדוויץ' שתיהן שואפות ל-0.
+          - kind: computation
+            text: '$f(x_n)=\sin(2n\pi)=0$ ו-$f(y_n)=\sin\left(\frac{\pi}{2}+2n\pi\right)=1$ לכל $n$.'
+          - kind: step
+            text: >-
+              נניח בשלילה ש-$\lim_{x\to0}f(x)=L$. לפי הכיוון "קושי גורר היינה" $f(x_n)\to L$ וגם $f(y_n)\to L$. אבל
+              $f(x_n)\to0$ ו-$f(y_n)\to1$, ולפי יחידות הגבול של סדרה $L=0$ וגם $L=1$: סתירה.
+          - kind: result
+            text: 'ל-$\sin\frac1x$ אין גבול ב-0.'
+        rubric:
+          - text: 'שתי סדרות ששואפות ל-0 ואיבריהן שונים מ-0, עם הצדקה'
+            weight: 2
+          - text: 'חישוב נכון של ערכי $f$ על שתי הסדרות, עם גבולות שונים'
+            weight: 2
+          - text: 'שימוש מפורש בכיוון הנכון: אם הגבול קיים, הוא מתקבל על **כל** סדרה כזו'
+            weight: 3
+          - text: 'הסתירה נובעת מיחידות הגבול (או ניסוח שקול)'
+            weight: 1
+
+      - label: ב
+        points: 8
+        type: open
+        objectives: [OBJ-3.3-2, OBJ-3.4-3]
+        prompt: >-
+          הוכיחו ש-$\lim_{x\to0}g(x)=0$.
+        solution:
+          - kind: goal
+            text: 'לכל $\varepsilon>0$ קיים $\delta>0$ כך ש-$0<|x|<\delta$ גורר $\left|x\sin\frac1x\right|<\varepsilon$.'
+          - kind: idea
+            text: >-
+              כאן מוכיחים **קיום**, ולכן הגדרת קושי נוחה: הגורם המתנודד חסום ב-1, ונשאר רק $|x|$.
+          - kind: computation
+            text: 'לכל $x\neq0$: $\left|x\sin\frac1x\right|=|x|\cdot\left|\sin\frac1x\right|\le|x|$.'
+          - kind: step
+            text: 'יהי $\varepsilon>0$, ונבחר $\delta=\varepsilon$. אם $0<|x|<\delta$ אז $\left|g(x)-0\right|\le|x|<\varepsilon$.'
+          - kind: result
+            text: '$\lim_{x\to0}x\sin\frac1x=0$.'
+        rubric:
+          - text: 'החסם $\left|x\sin\frac1x\right|\le|x|$ מנומק ב-$\left|\sin t\right|\le1$'
+            weight: 2
+          - text: 'בחירת $\delta$ מפורשת (למשל $\delta=\varepsilon$) והשלמת ההגדרה, או טיעון סנדוויץ'' שלם לכל סדרה'
+            weight: 3
+          - text: 'אין שימוש בכלל המכפלה עם $\lim\sin\frac1x$, שאינו קיים'
+            weight: 1
+
+      - label: ג
+        points: 7
+        type: twotier
+        standalone: false
+        objectives: [OBJ-3.5-1]
+        qualitative: true
+        prompt: >-
+          האם קיים הגבול $\lim_{x\to0}\left(f(x)+g(x)\right)$, כלומר הגבול של $(1+x)\sin\frac1x$ ב-0?
+        choices:
+          - text: לא
+            correct: true
+            feedback: נכון, ואפשר להסיק את זה מסעיפים א ו-ב בלי חישוב חדש.
+          - text: 'כן, והוא 0'
+            feedback: >-
+              $g\to0$, אבל $f$ מתבדרת. הוספה של פונקציה מתכנסת לא יכולה ליצור גבול: אילו ל-$f+g$ היה גבול, גם ל-$f$
+              היה.
+            misconception: MC-adding-limit-fixes-divergence
+        reasons:
+          - text: 'אילו ל-$f+g$ היה גבול, אז לפי כלל ההפרש ובעזרת ב גם ל-$f=(f+g)-g$ היה גבול, בסתירה ל-א'
+            correct: true
+            feedback: >-
+              בדיוק. זו דרך שימושית להוכיח אי-קיום: מחסירים פונקציה עם גבול ידוע ומגיעים לפונקציה שכבר ידוע שאין
+              לה גבול.
+          - text: 'סכום של פונקציה בלי גבול ופונקציה עם גבול יכול להתכנס, ולכן צריך לחשב ישירות'
+            feedback: >-
+              לא יכול: אם ל-$g$ ול-$f+g$ יש גבול, אז גם ל-$f$. רק סכום של **שתי** פונקציות בלי גבול יכול להתכנס.
+            misconception: MC-adding-limit-fixes-divergence
+          - text: 'לפי כלל הסכום הגבול הוא $\lim f+\lim g$, ו-$\lim f$ לא קיים, ולכן הגבול לא קיים'
+            feedback: >-
+              המסקנה נכונה, אבל כלל הסכום מניח ששני הגבולות קיימים, ולכן הוא לא אומר כלום כש-$\lim f$ לא קיים.
+              צריך את הטיעון ההפוך, דרך כלל ההפרש.
+            misconception: MC-limit-rules-on-divergent
+
+  - id: Q-3-exam-3
+    type: exam
+    title: חישוב גבולות
+    prompt: >-
+      חשבו את הגבולות הבאים. בסעיף ד יש להוכיח את התשובה.
+    parts:
+      - label: א
+        points: 5
+        type: numeric
+        objectives: [OBJ-3.5-2]
+        prompt: >-
+          $\displaystyle\lim_{x\to0}\frac{\sin5x}{\sin2x}$
+        answer: 2.5
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $\frac{\sin5x}{\sin2x}=\frac52\cdot\frac{\sin5x}{5x}\cdot\frac{2x}{\sin2x}\to\frac52\cdot1\cdot1$.
+        wrongFeedback: >-
+          תנו לכל סינוס את "המכנה שלו": כפלו וחלקו ב-$5x$ וב-$2x$.
+        commonWrong:
+          - value: 1
+            feedback: >-
+              המונה והמכנה שואפים שניהם ל-0, אבל $\sin5x\approx5x$ ו-$\sin2x\approx2x$: היחס $\frac52$, לא 1.
+            misconception: MC-sin-kx-over-x-is-one
+          - value: 0.4
+            feedback: 'הפכתם את היחס: במונה $\sin5x\approx5x$ ובמכנה $\sin2x\approx2x$.'
+
+      - label: ב
+        points: 5
+        type: numeric
+        objectives: [OBJ-3.5-2]
+        prompt: >-
+          $\displaystyle\lim_{x\to0}\frac{1-\cos2x}{x^2}$
+        answer: 2
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $1-\cos2x=2\sin^2x$, ולכן $\frac{1-\cos2x}{x^2}=2\left(\frac{\sin x}{x}\right)^2\to2$.
+        wrongFeedback: >-
+          השתמשו בזהות $1-\cos2x=2\sin^2x$, או ב-$\frac{1-\cos u}{u^2}\to\frac12$ עם $u=2x$ (ושימו לב מה יש במכנה).
+        commonWrong:
+          - value: 0.5
+            feedback: >-
+              $\frac{1-\cos u}{u^2}\to\frac12$ דורש במכנה את $u^2=(2x)^2=4x^2$. כאן במכנה $x^2$, ולכן הגבול
+              $4\cdot\frac12=2$.
+            misconception: MC-sin-kx-over-x-is-one
+          - value: 0
+            feedback: >-
+              המונה שואף ל-0, אבל גם המכנה: "אפס חלקי אפס" לא קובע את הגבול. פשטו בעזרת הזהות.
+            misconception: MC-indeterminate-form-value
+          - value: 1
+            feedback: >-
+              הזהות היא $1-\cos2x=2\sin^2x$, עם גורם 2.
+
+      - label: ג
+        points: 5
+        type: numeric
+        objectives: [OBJ-3.6-2]
+        prompt: >-
+          $\displaystyle\lim_{x\to\infty}\left(\sqrt{x^2+3x}-x\right)$
+        answer: 1.5
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $\sqrt{x^2+3x}-x=\frac{3x}{\sqrt{x^2+3x}+x}=\frac{3}{\sqrt{1+\frac3x}+1}\to\frac32$ (כאן $x>0$, ולכן
+          $\sqrt{x^2}=x$).
+        wrongFeedback: >-
+          כפלו וחלקו בצמוד $\sqrt{x^2+3x}+x$, ואז חלקו מונה ומכנה ב-$x$.
+        commonWrong:
+          - value: 0
+            feedback: >-
+              "אינסוף פחות אינסוף" אינו 0. אחרי כפל בצמוד מקבלים $\frac{3x}{\sqrt{x^2+3x}+x}$, ושם רואים את הגבול.
+            misconception: MC-indeterminate-form-value
+          - value: 3
+            feedback: >-
+              במכנה שאחרי הכפל בצמוד יש **שני** מחוברים, $\sqrt{x^2+3x}$ ו-$x$, וכל אחד מהם בערך $x$. המכנה בערך $2x$.
+
+      - label: ד
+        points: 10
+        type: open
+        objectives: [OBJ-3.5-1, OBJ-3.4-2, OBJ-3.5-2]
+        prompt: >-
+          קבעו אם קיים $\displaystyle\lim_{x\to0}\frac{x^2\sin\frac1x}{1-\cos x}$, והוכיחו.
+        solution:
+          - kind: given
+            text: >-
+              $h(x)=\frac{x^2\sin\frac1x}{1-\cos x}$, מוגדרת כש-$0<|x|<2\pi$ (שם $\cos x\neq1$), כלומר בסביבה מנוקבת של 0.
+          - kind: goal
+            text: 'להכריע אם $\lim_{x\to0}h(x)$ קיים.'
+          - kind: idea
+            text: >-
+              $\frac{x^2}{1-\cos x}\to2$, ולכן $h$ מתנהגת כמו $2\sin\frac1x$, שאין לה גבול. משערים שאין גבול, ומוכיחים
+              בשלילה: אילו היה, היינו מקבלים גבול ל-$\sin\frac1x$.
+          - kind: theorem
+            text: '$\lim_{x\to0}\frac{1-\cos x}{x^2}=\frac12$ (שיעור 3.5), ו-$\sin\frac1x$ אין לה גבול ב-0 (שיעור 3.4).'
+          - kind: step
+            text: >-
+              נניח בשלילה ש-$\lim_{x\to0}h(x)=L$. לכל $0<|x|<2\pi$ מתקיים $\sin\frac1x=h(x)\cdot\frac{1-\cos x}{x^2}$, ולכן
+              לפי כלל המכפלה (שני הגבולות קיימים) $\sin\frac1x\to\frac{L}{2}$. זו סתירה.
+          - kind: check
+            text: >-
+              בדיקה בסדרות: ב-$x_n=\frac{1}{2n\pi}$ מקבלים $h(x_n)=0$, וב-$y_n=\frac{1}{\frac{\pi}{2}+2n\pi}$ מקבלים
+              $h(y_n)=\frac{y_n^2}{1-\cos y_n}\to2$. שני גבולות שונים, ושוב לפי היינה אין גבול.
+          - kind: result
+            text: 'הגבול אינו קיים.'
+        rubric:
+          - text: 'הגבול $\frac{x^2}{1-\cos x}\to2$ (או $\frac{1-\cos x}{x^2}\to\frac12$) מוצדק, ולא רק נטען'
+            weight: 2
+          - text: 'טיעון אי-קיום שלם: בשלילה דרך כלל המכפלה, או שתי סדרות ששואפות ל-0 עם גבולות שונים של $h$'
+            weight: 4
+          - text: 'כלל המכפלה מופעל רק על גבולות שקיימים (לא על $\lim\sin\frac1x$)'
+            weight: 2
+          - text: 'מסקנה מפורשת: הגבול אינו קיים'
+            weight: 1

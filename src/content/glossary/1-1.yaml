@@ -1,0 +1,36 @@
+# Terms first defined in lesson 1.1.
+- id: field
+  term: שדה
+  en: field
+  symbol: '(F,+,\cdot)'
+  definition: >-
+    קבוצה עם שתי פעולות, חיבור וכפל, שמקיימות את אקסיומות השדה: חילופיות וקיבוציות של שתי הפעולות, איבר
+    ניטרלי לחיבור ($0$) ולכפל ($1$, עם $1\neq0$), נגדי לכל איבר, הופכי לכל איבר שונה מאפס, וחוק הפילוג.
+  lesson: '1.1'
+- id: field-axioms
+  term: אקסיומות השדה
+  en: field axioms
+  definition: >-
+    רשימת התכונות של החיבור והכפל שמניחים בלי הוכחה. כל תכונה אחרת של פעולות החשבון היא משפט שמוכיחים מהן.
+  lesson: '1.1'
+- id: additive-inverse
+  term: נגדי
+  en: additive inverse
+  symbol: '-a'
+  definition: >-
+    האיבר $-a$ שמקיים $a+(-a)=0$. לכל איבר בשדה יש נגדי, והוא יחיד.
+  lesson: '1.1'
+- id: multiplicative-inverse
+  term: הופכי
+  en: multiplicative inverse
+  symbol: 'a^{-1}'
+  definition: >-
+    האיבר $a^{-1}$ שמקיים $a\cdot a^{-1}=1$. בשדה יש הופכי לכל $a\neq0$, והוא יחיד; לאפס אין הופכי.
+  lesson: '1.1'
+- id: distributive-law
+  term: חוק הפילוג
+  en: distributive law
+  symbol: 'a(b+c)=ab+ac'
+  definition: >-
+    האקסיומה $a(b+c)=ab+ac$, היחידה שמקשרת בין החיבור לכפל. ממנה נובע, למשל, ש-$a\cdot0=0$.
+  lesson: '1.1'

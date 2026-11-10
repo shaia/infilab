@@ -1,0 +1,397 @@
+# Lesson 4.1 — continuity at a point.
+# Objectives (src/course.ts):
+#   OBJ-4.1-1  state continuity at a point in three equivalent ways (limit, ε-δ, sequences) and move between them
+#   OBJ-4.1-2  prove continuity of a sum, product, quotient and composition of continuous functions
+#   OBJ-4.1-3  prove that polynomials, rational and trigonometric functions are continuous on their domain
+chapter: 4
+questions:
+  - id: Q-4.1-def
+    type: mc
+    objectives: [OBJ-4.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      תהי $f$ מוגדרת בקטע פתוח $I$ שמכיל את $x_0$. איזה מהניסוחים הבאים הוא ההגדרה של "$f$ רציפה
+      בנקודה $x_0$" בשפת אפסילון-דלתא? (בכל הניסוחים $x$ רץ על $I$.)
+    choices:
+      - text: '$\forall \varepsilon>0\ \exists \delta>0\ \forall x:\ |x-x_0|<\delta \Rightarrow |f(x)-f(x_0)|<\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. קודם בוחרים כמה קרוב לערך $f(x_0)$ רוצים להיות, ורק אז מבטיחים סביבה של $x_0$ שכל הערכים בה
+          קרובים כך. בניגוד להגדרת הגבול, אין כאן $0<|x-x_0|$ ובמקום $L$ מופיע הערך $f(x_0)$ עצמו.
+      - text: '$\exists \delta>0\ \forall \varepsilon>0\ \forall x:\ |x-x_0|<\delta \Rightarrow |f(x)-f(x_0)|<\varepsilon$'
+        feedback: >-
+          כאן אותו $\delta$ צריך להתאים לכל $\varepsilon$, ולכן $|f(x)-f(x_0)|$ קטן מכל מספר חיובי, כלומר
+          $f(x)=f(x_0)$ בכל הסביבה. זו הגדרה של פונקציה קבועה ליד $x_0$, לא של רציפות: $f(x)=x$ רציפה ואינה
+          מקיימת אותה.
+        misconception: MC-cont-delta-before-epsilon
+      - text: '$\forall \varepsilon>0\ \exists \delta>0\ \forall x:\ |f(x)-f(x_0)|<\varepsilon \Rightarrow |x-x_0|<\delta$'
+        feedback: >-
+          הגרירה הפוכה. הפונקציה הקבועה $f(x)=0$ על $I=\mathbb{R}$ רציפה, אבל אצלה $|f(x)-f(x_0)|=0<\varepsilon$ לכל
+          $x$, והניסוח הזה היה דורש שכל $x$ יהיה במרחק פחות מ-$\delta$ מ-$x_0$.
+        misconception: MC-cont-implication-reversed
+      - text: '$\exists L\ \forall \varepsilon>0\ \exists \delta>0\ \forall x:\ 0<|x-x_0|<\delta \Rightarrow |f(x)-L|<\varepsilon$'
+        feedback: >-
+          זו ההגדרה של "לגבול של $f$ ב-$x_0$ יש ערך", בלי שום קשר לערך $f(x_0)$. הפונקציה ששווה ל-0 לכל
+          $x\ne0$ ול-1 ב-0 מקיימת אותה ב-$x_0=0$ (עם $L=0$), ואינה רציפה שם.
+        misconception: MC-cont-limit-exists-enough
+    explanation: >-
+      שלוש הגדרות שקולות לרציפות של $f$ ב-$x_0$: הגבול קיים ושווה לערך, $\lim_{x\to x_0} f(x)=f(x_0)$; הניסוח
+      עם אפסילון ודלתא; ותנאי היינה, שלכל סדרה $x_n\to x_0$ מתקיים $f(x_n)\to f(x_0)$.
+
+  - id: Q-4.1-heine
+    type: mc
+    objectives: [OBJ-4.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      תהי $f$ מוגדרת בקטע פתוח $I$ שמכיל את $x_0$. איזה תנאי שקול לכך ש-$f$ רציפה ב-$x_0$ (הגדרת היינה)?
+    choices:
+      - text: לכל סדרה $(x_n)$ של נקודות ב-$I$ עם $x_n\to x_0$ מתקיים $f(x_n)\to f(x_0)$
+        correct: true
+        feedback: >-
+          נכון. זו הגדרת היינה לרציפות. היא נוחה במיוחד כדי להוכיח **אי**-רציפות: מספיקה סדרה אחת $x_n\to x_0$
+          שערכי $f$ עליה אינם שואפים ל-$f(x_0)$.
+      - text: קיימת סדרה $x_n\to x_0$ עם $x_n\ne x_0$ כך ש-$f(x_n)\to f(x_0)$
+        feedback: >-
+          סדרה אחת לא מספיקה. לפונקציית דיריכלה $D$ (אחד ברציונליים, אפס באי-רציונליים) והסדרה $x_n=\frac1n$
+          מתקיים $D(x_n)=1=D(0)$, אבל $D$ אינה רציפה ב-0: על הסדרה $\frac{\sqrt2}{n}$ הערכים הם 0.
+        misconception: MC-heine-one-sequence
+      - text: לכל סדרה $x_n\to x_0$ עם $x_n\ne x_0$ הסדרה $f(x_n)$ מתכנסת
+        feedback: >-
+          זה מבטיח רק שלגבול של $f$ ב-$x_0$ יש ערך, לא שהוא שווה ל-$f(x_0)$. הפונקציה ששווה ל-0 לכל $x\ne0$
+          ול-1 ב-0 מקיימת את התנאי ב-0, ואינה רציפה שם.
+        misconception: MC-cont-limit-exists-enough
+      - text: לכל סדרה $(x_n)$ ב-$I$ עם $f(x_n)\to f(x_0)$ מתקיים $x_n\to x_0$
+        feedback: >-
+          הגרירה הפוכה. עבור הפונקציה הקבועה $f\equiv 0$ כל סדרה מקיימת $f(x_n)\to f(x_0)$, גם $x_n=x_0+1$,
+          ובכל זאת $f$ רציפה.
+        misconception: MC-cont-implication-reversed
+
+  - id: Q-4.1-delta
+    type: numeric
+    objectives: [OBJ-4.1-1]
+    level: mid
+    prompt: >-
+      עבור $f(x)=x^2$, $x_0=3$ ו-$\varepsilon=0.07$: מהו ה-$\delta$ **הגדול ביותר** כך שלכל $x$ עם
+      $|x-3|<\delta$ מתקיים $|x^2-9|<0.07$? כתבו את התשובה בארבע ספרות משמעותיות.
+    answer: 0.011644
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון. $|x^2-9|<0.07 \iff \sqrt{8.93}<x<\sqrt{9.07}$. המרחק מ-3 לקצה הימני הוא $\sqrt{9.07}-3\approx 0.011644$,
+      ולקצה השמאלי $3-\sqrt{8.93}\approx 0.011689$. הסביבה הסימטרית צריכה להיכנס לשני הצדדים, ולכן $\delta$
+      הוא הקטן מבין השניים.
+    wrongFeedback: >-
+      פתרו את $8.93<x^2<9.07$ עבור $x$ חיובי, חשבו את המרחק מ-3 לכל אחד מהקצוות, ושימו לב שהקטע
+      $(3-\delta,\ 3+\delta)$ צריך להיות כולו בתוך הקטע שמצאתם.
+    commonWrong:
+      - value: 0.011689
+        feedback: >-
+          זה המרחק לקצה השמאלי. עם $\delta$ הזה הנקודה $x=3.0117$ נמצאת בסביבה, אבל $x^2\approx 9.0703>9.07$.
+          צריך את הקטן מבין שני המרחקים.
+      - value: 0.011667
+        feedback: >-
+          זה $\frac{0.07}{6}$: הערכה לפי $|x^2-9| = |x-3|\,|x+3| \approx 6|x-3|$. אבל ליד $x=3+\delta$ הגורם
+          $|x+3|$ גדול מ-6, ולכן $\delta$ הזה גדול מעט מדי. ההערכה טובה להוכחה (עם מקדם בטחון), לא לשאלה על ה-$\delta$
+          הגדול ביותר.
+      - value: 0.07
+        feedback: >-
+          $\delta=\varepsilon$ מתאים לפונקציות כמו $x$ או $\sin x$, שמרחק הערכים אצלן לא גדל יותר ממרחק הנקודות. כאן
+          $|x^2-9|$ גדול בערך פי 6 מ-$|x-3|$.
+    hints:
+      - '$|x^2-9|<0.07$ פירושו $8.93<x^2<9.07$.'
+
+  - id: Q-4.1-value
+    type: twotier
+    objectives: [OBJ-4.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $$f(x)=\begin{cases} \dfrac{x^2-1}{x-1} & x\ne 1\\[4pt] 3 & x=1 \end{cases}$$
+      האם $f$ רציפה בנקודה $x_0=1$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. הגבול של $f$ ב-1 הוא 2, והערך הוא 3.
+      - text: כן
+        feedback: >-
+          לגבול ב-1 אכן יש ערך, אבל רציפות דורשת יותר: שהגבול יהיה **שווה** לערך בנקודה. כאן
+          $\lim_{x\to1}f(x)=2\ne 3=f(1)$.
+        misconception: MC-cont-limit-exists-enough
+    reasons:
+      - text: 'לכל $x\ne1$ מתקיים $f(x)=x+1$, ולכן $\lim_{x\to 1} f(x)=2$, שאינו שווה ל-$f(1)=3$'
+        correct: true
+        feedback: >-
+          בדיוק. אילו היו מגדירים $f(1)=2$, הפונקציה הייתה רציפה ב-1. בשיעור 4.2 נקודה כזו תיקרא אי-רציפות
+          סליקה.
+      - text: הביטוי $\frac{x^2-1}{x-1}$ אינו מוגדר ב-$x=1$
+        feedback: >-
+          הביטוי אינו מוגדר ב-1, אבל הפונקציה כן: $f(1)=3$. מה שקובע הוא אם הגבול שווה לערך, לא איך כתובה
+          הנוסחה. עם $f(1)=2$ אותה נוסחה הייתה נותנת פונקציה רציפה.
+        misconception: MC-cont-judged-by-formula
+      - text: 'הגבול ב-1 קיים, ולכן $f$ רציפה שם'
+        feedback: >-
+          קיום הגבול הוא רק חצי מהדרישה. רציפות היא $\lim_{x\to x_0}f(x)=f(x_0)$.
+        misconception: MC-cont-limit-exists-enough
+
+  - id: Q-4.1-heine-proof
+    type: rank
+    objectives: [OBJ-4.1-1]
+    level: exam
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      הטענה: אם לכל סדרה $x_n\to x_0$ (בתחום של $f$) מתקיים $f(x_n)\to f(x_0)$, אז $f$ רציפה ב-$x_0$ במובן
+      אפסילון-דלתא. סדרו את שלבי ההוכחה.
+    items:
+      - id: s1
+        label: נניח בשלילה ש-$f$ אינה רציפה ב-$x_0$ במובן אפסילון-דלתא.
+      - id: s2
+        label: 'אז קיים $\varepsilon_0>0$ כך שלכל $\delta>0$ יש $x$ עם $|x-x_0|<\delta$ ו-$|f(x)-f(x_0)|\ge\varepsilon_0$.'
+      - id: s3
+        label: 'לכל $n\in\mathbb{N}$ בוחרים $\delta=\frac1n$, ומקבלים נקודה $x_n$ עם $|x_n-x_0|<\frac1n$ ו-$|f(x_n)-f(x_0)|\ge\varepsilon_0$.'
+      - id: s4
+        label: 'מכלל הסנדוויץ'' $x_n\to x_0$.'
+      - id: s5
+        label: 'אבל כל איברי $f(x_n)$ רחוקים מ-$f(x_0)$ לפחות $\varepsilon_0$, ולכן $f(x_n)$ אינה שואפת ל-$f(x_0)$: סתירה להנחה.'
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. השלילה של אפסילון-דלתא נותנת "לכל $\delta$ יש נקודה רעה"; בחירת $\delta=\frac1n$ הופכת את הנקודות
+      הרעות לסדרה ששואפת ל-$x_0$, ותנאי היינה נכשל עליה.
+    wrongFeedback: >-
+      התחילו מהשלילה של ההגדרה (מה קיים ומה לכל), ורק אחר כך בנו ממנה סדרה. הסתירה באה בסוף, כשבודקים את
+      $f(x_n)$.
+
+  - id: Q-4.1-additive
+    type: twotier
+    objectives: [OBJ-4.1-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      הפונקציה $f:\mathbb{R}\to\mathbb{R}$ מקיימת $f(x+y)=f(x)+f(y)$ לכל $x,y$, והיא רציפה בנקודה $0$. האם
+      $f$ רציפה בכל נקודה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. המשוואה מעבירה את הרציפות מ-0 לכל נקודה אחרת.
+      - text: לא בהכרח, ידוע רק שהיא רציפה ב-0
+        feedback: >-
+          לפונקציה כללית רציפות בנקודה אחת אכן לא אומרת דבר על נקודות אחרות. אבל כאן יש משוואה שקושרת את
+          הערכים ליד $x_0$ לערכים ליד 0: $f(x_0+h)-f(x_0)=f(h)$.
+    reasons:
+      - text: 'מ-$x=y=0$ מקבלים $f(0)=0$, ולכן $f(x_0+h)-f(x_0)=f(h)\to f(0)=0$ כש-$h\to 0$'
+        correct: true
+        feedback: >-
+          בדיוק. זו הגדרת הרציפות בצורת גבול: $\lim_{h\to0} f(x_0+h)=f(x_0)$. רציפות ב-0 היא כל מה שהשתמשנו בו.
+      - text: פונקציה שרציפה בנקודה אחת רציפה בכל נקודה
+        feedback: >-
+          לא נכון באופן כללי: $x\cdot D(x)$, כש-$D$ פונקציית דיריכלה, רציפה רק ב-0 (שיעור 4.2). כאן הרציפות
+          מתפשטת בגלל המשוואה, לא מעצמה.
+        misconception: MC-cont-at-point-spreads
+      - text: 'מהמשוואה נובע $f(x)=cx$ לכל $x$ ממשי, וזו פונקציה רציפה'
+        feedback: >-
+          מהמשוואה לבדה נובע $f(x)=cx$ רק לכל $x$ **רציונלי**. כדי להעביר את זה לאי-רציונליים צריך רציפות בכל
+          נקודה, וזו בדיוק הטענה שצריך להוכיח: הנימוק מעגלי.
+
+  - id: Q-4.1-sum
+    type: twotier
+    objectives: [OBJ-4.1-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ רציפה בנקודה $x_0$ ו-$g$ **אינה** רציפה בה. האם ייתכן ש-$f+g$ רציפה ב-$x_0$?
+    choices:
+      - text: לא, זה לא ייתכן
+        correct: true
+        feedback: נכון. $f+g$ אינה רציפה ב-$x_0$, לכל בחירה של $f$ ו-$g$ כאלה.
+      - text: כן, תלוי בפונקציות
+        feedback: >-
+          אם $f+g$ הייתה רציפה, אז $g=(f+g)-f$ הייתה הפרש של שתי פונקציות רציפות, ולכן רציפה, בסתירה להנחה.
+        misconception: MC-cont-plus-discont-may-be-cont
+    reasons:
+      - text: 'אילו $f+g$ הייתה רציפה, גם $g=(f+g)-f$ הייתה רציפה, כהפרש של רציפות'
+        correct: true
+        feedback: >-
+          בדיוק: הוכחה בדרך השלילה בעזרת כלל ההפרש. שימו לב שהטענה המקבילה למכפלה שגויה: $0\cdot g$ רציפה
+          תמיד.
+      - text: אפשר לבחור $f=-g$, ואז הסכום הוא אפס
+        feedback: >-
+          אז $f=-g$ אינה רציפה ב-$x_0$, בניגוד להנחה ש-$f$ רציפה. בשביל לבטל את אי-הרציפות של $g$ צריך פונקציה
+          שגם היא אינה רציפה.
+        misconception: MC-cont-plus-discont-may-be-cont
+      - text: סכום של פונקציות רציפות רציף
+        feedback: >-
+          זה נכון, אבל לא חל כאן: $g$ אינה רציפה. הנימוק צריך לעבור דרך $g=(f+g)-f$.
+
+  - id: Q-4.1-two-discont
+    type: twotier
+    objectives: [OBJ-4.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ ו-$g$ שתיהן **אינן** רציפות בנקודה $0$. האם $f+g$ בהכרח אינה רציפה ב-0?
+    choices:
+      - text: לא בהכרח, $f+g$ יכולה להיות רציפה
+        correct: true
+        feedback: נכון. שתי אי-רציפויות יכולות לבטל זו את זו.
+      - text: כן, $f+g$ בהכרח אינה רציפה
+        feedback: >-
+          דוגמה נגדית: $f(x)=1$ ל-$x\ge0$ ו-$f(x)=-1$ ל-$x<0$, ו-$g=-f$. שתיהן קופצות ב-0, וסכומן הוא
+          הפונקציה הקבועה 0.
+        misconception: MC-two-discont-sum-discont
+    reasons:
+      - text: 'עם $f$ שקופצת ב-0 ו-$g=-f$ הסכום הוא אפס, וגם $f\cdot f\equiv 1$ רציפה'
+        correct: true
+        feedback: >-
+          בדיוק. כללי החשבון אומרים מה קורה כששתי הפונקציות רציפות, ולא אומרים דבר כששתיהן אינן רציפות.
+      - text: הקפיצות של $f$ ושל $g$ מצטברות
+        feedback: >-
+          הקפיצות יכולות להיות בכיוונים הפוכים ולהתבטל, כמו אצל $f$ ו-$-f$.
+        misconception: MC-two-discont-sum-discont
+      - text: סכום של רציפות רציף, ולכן סכום של לא-רציפות אינו רציף
+        feedback: >-
+          זו השלילה של שני הצדדים של גרירה, והיא אינה שקולה לגרירה (שיעור 0.2). מ"$A$ גורר $B$" לא נובע
+          "לא $A$ גורר לא $B$".
+        misconception: MC-two-discont-sum-discont
+
+  - id: Q-4.1-comp
+    type: twotier
+    objectives: [OBJ-4.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(y)=1$ לכל $y\ne 0$ ו-$f(0)=0$, כך ש-$f$ אינה רציפה ב-0 בלבד. $g(x)=x^2+1$. האם $f\circ g$ רציפה
+      בכל $\mathbb{R}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. למעשה $f(g(x))=1$ לכל $x$.
+      - text: לא
+        feedback: >-
+          $g(x)\ge 1$, כלומר $g$ אף פעם לא מגיעה לנקודה היחידה שבה $f$ אינה רציפה. לכן $f(g(x))=1$ לכל $x$.
+        misconception: MC-composition-inherits-discont
+    reasons:
+      - text: '$g$ רציפה ב-$x_0$ ו-$f$ רציפה ב-$g(x_0)\ge 1$, ולכן ההרכבה רציפה ב-$x_0$, לכל $x_0$'
+        correct: true
+        feedback: >-
+          בדיוק. משפט ההרכבה דורש רציפות של $f$ רק בנקודה $g(x_0)$, לא בכל מקום.
+      - text: הרכבה עם פונקציה שאינה רציפה אינה רציפה
+        feedback: >-
+          מה שחשוב הוא רציפות של $f$ בנקודות שבהן $g$ נמצאת. $f$ קופצת רק ב-0, ו-$g$ לא מגיעה לשם.
+        misconception: MC-composition-inherits-discont
+      - text: '$g$ רציפה, וזה מספיק כדי שההרכבה תהיה רציפה'
+        feedback: >-
+          לא מספיק. עם $g(x)=x^2$, שגם היא רציפה, $f(g(x))$ שווה ל-1 לכל $x\ne 0$ ול-0 ב-0, ואינה רציפה ב-0.
+        misconception: MC-composition-one-continuous-enough
+
+  - id: Q-4.1-comp-proof
+    type: rank
+    objectives: [OBJ-4.1-2]
+    level: exam
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      המשפט: אם $g$ רציפה ב-$x_0$ ו-$f$ רציפה ב-$y_0=g(x_0)$, אז $f\circ g$ רציפה ב-$x_0$. סדרו את שלבי
+      ההוכחה.
+    items:
+      - id: s1
+        label: יהי $\varepsilon>0$.
+      - id: s2
+        label: 'מהרציפות של $f$ ב-$y_0$: קיים $\eta>0$ כך שלכל $y$ עם $|y-y_0|<\eta$ מתקיים $|f(y)-f(y_0)|<\varepsilon$.'
+      - id: s3
+        label: 'מהרציפות של $g$ ב-$x_0$, עם $\eta$ בתפקיד האפסילון: קיים $\delta>0$ כך שלכל $x$ עם $|x-x_0|<\delta$ מתקיים $|g(x)-y_0|<\eta$.'
+      - id: s4
+        label: 'לכן לכל $x$ עם $|x-x_0|<\delta$ הנקודה $y=g(x)$ מקיימת $|y-y_0|<\eta$, ולכן $|f(g(x))-f(g(x_0))|<\varepsilon$.'
+    order: [s1, s2, s3, s4]
+    correctFeedback: >-
+      נכון. מתחילים מהפונקציה החיצונית: היא קובעת כמה קרוב ל-$y_0$ צריך להיות ($\eta$), ואז הפנימית קובעת את
+      $\delta$. בשונה מכלל הגבול של הרכבה (שיעור 3.5), אין צורך בתנאי $g(x)\ne y_0$: הערך $f(y_0)$ עצמו הוא
+      הגבול.
+    wrongFeedback: >-
+      אי אפשר לבחור את $\delta$ של $g$ לפני שיודעים כמה קרוב ל-$y_0$ צריך להגיע. איזו פונקציה קובעת את זה?
+
+  - id: Q-4.1-recip
+    type: twotier
+    objectives: [OBJ-4.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם הפונקציה $f(x)=\frac1x$, המוגדרת על $\mathbb{R}\setminus\{0\}$, היא פונקציה רציפה (כלומר רציפה בכל
+      נקודה של תחום ההגדרה שלה)?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. היא רציפה בכל נקודה שבה היא מוגדרת.
+      - text: לא, היא אינה רציפה ב-0
+        feedback: >-
+          0 אינו בתחום ההגדרה, ולכן השאלה אם $f$ רציפה ב-0 אינה עולה בכלל. רציפות היא תכונה של נקודות בתחום.
+        misconception: MC-cont-means-whole-line
+    reasons:
+      - text: 'לכל $x_0\ne 0$, $f$ היא מנה של שתי פונקציות רציפות (1 ו-$x$) עם מכנה ששונה מאפס ב-$x_0$'
+        correct: true
+        feedback: >-
+          בדיוק: כלל המנה, נקודה אחר נקודה. אותו נימוק מראה שכל פונקציה רציונלית רציפה בתחום הגדרתה.
+      - text: את הגרף אי אפשר לצייר בלי להרים את העיפרון
+        feedback: >-
+          "בלי להרים את העיפרון" הוא תיאור של פונקציה רציפה על **קטע**. התחום של $\frac1x$ הוא איחוד של שני
+          קטעים, ועל כל אחד מהם הגרף אכן מצויר ברצף.
+        misconception: MC-cont-means-whole-line
+      - text: לגבול ב-0 אין ערך, ולכן יש שם אי-רציפות
+        feedback: >-
+          זה נכון שהגבול ב-0 אינו קיים, אבל 0 אינו נקודה של התחום. אי-רציפות היא נקודה בתחום שבה $f$ אינה
+          רציפה.
+        misconception: MC-cont-means-whole-line
+
+  - id: Q-4.1-domain
+    type: multi
+    objectives: [OBJ-4.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהפונקציות הבאות רציפות בכל נקודה של תחום ההגדרה שלהן? סמנו את כולן.
+    choices:
+      - text: '$\tan x$'
+        correct: true
+        feedback: >-
+          נכון. $\tan x=\frac{\sin x}{\cos x}$, מנה של רציפות, ותחום ההגדרה הוא בדיוק הנקודות שבהן $\cos x\ne 0$.
+      - text: '$\dfrac{x^2-4}{x-2}$'
+        correct: true
+        feedback: >-
+          נכון. פונקציה רציונלית, ו-2 אינו בתחום. (בשיעור 4.2: אפשר להגדיר אותה ב-2 כך שתהיה רציפה גם שם.)
+      - text: '$\dfrac{1}{\sin x}$'
+        correct: true
+        feedback: >-
+          נכון. מנה של רציפות; הנקודות $k\pi$, שבהן המכנה מתאפס, אינן בתחום.
+      - text: '$\lfloor x\rfloor$, הערך השלם'
+        feedback: >-
+          הערך השלם מוגדר בכל $\mathbb{R}$ וקופץ בכל מספר שלם: $\lfloor 1\rfloor=1$, אבל $\lfloor x\rfloor=0$
+          לכל $x\in(0,1)$. הנקודות האלה בתחום, ולכן אלה אי-רציפויות אמיתיות.
+        misconception: MC-piecewise-pieces-continuous
+      - text: '$f(x)=x^2$ עבור $x\le1$, ו-$f(x)=2x$ עבור $x>1$'
+        feedback: >-
+          כל חלק רציף, אבל בתפר: $f(1)=1$ ואילו $\lim_{x\to1^+}f(x)=2$. פונקציה מוגדרת למקוטעין צריכה בדיקה
+          נפרדת בכל נקודת תפר.
+        misconception: MC-piecewise-pieces-continuous
+
+  - id: Q-4.1-sin
+    type: mc
+    objectives: [OBJ-4.1-3]
+    level: mid
+    prompt: >-
+      בהוכחה ש-$\sin$ רציפה ב-$x_0$ כותבים
+      $$|\sin x-\sin x_0| = 2\left|\cos\tfrac{x+x_0}{2}\right|\,\left|\sin\tfrac{x-x_0}{2}\right| \le 2\left|\sin\tfrac{x-x_0}{2}\right| \le |x-x_0|,$$
+      ולכן $\delta=\varepsilon$ מתאים. מה מצדיק את אי-השוויון האחרון?
+    choices:
+      - text: '$|\sin t|\le|t|$ לכל $t$ ממשי'
+        correct: true
+        feedback: >-
+          נכון. עם $t=\frac{x-x_0}{2}$ מקבלים $2|\sin t|\le 2|t|=|x-x_0|$. זה אי-השוויון $\sin t<t$ לכל $t>0$
+          משיעור 3.2, יחד עם האי-זוגיות של $\sin$.
+      - text: '$|\sin t|\le 1$ לכל $t$'
+        feedback: >-
+          זה נותן רק $2|\sin t|\le 2$, חסם שלא קטן כש-$x$ מתקרב ל-$x_0$. לרציפות צריך חסם ששואף ל-0.
+      - text: '$\sin$ עולה, ולכן $\sin t\le t$'
+        feedback: >-
+          $\sin$ אינה עולה בכל הישר (היא יורדת ב-$[\frac\pi2,\frac{3\pi}2]$), ומונוטוניות לבדה גם לא משווה את
+          $\sin t$ ל-$t$.
+      - text: '$\left|\cos\tfrac{x+x_0}{2}\right|\le 1$'
+        feedback: >-
+          זה מה שמצדיק את אי-השוויון הראשון, לא את האחרון. באחרון צריך להשוות את $\sin$ של מספר למספר עצמו.

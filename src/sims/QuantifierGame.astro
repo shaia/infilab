@@ -1,0 +1,7 @@
+---
+/** Lesson-0.3 figure: <Spread figure={QuantifierGame} figureProps={{…}}>. */
+import QuantifierGame, { type QuantifierGameProps } from './QuantifierGame';
+type Props = QuantifierGameProps;
+---
+
+<QuantifierGame client:visible {...Astro.props} />

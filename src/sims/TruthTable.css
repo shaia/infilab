@@ -1,0 +1,217 @@
+/* Lesson 0.2's truth table (TruthTable.tsx). Colours from tokens.css only; right / wrong and same / different are
+   also told by a shape (✓ ✗, = ≠, ● ○), never by colour alone. */
+
+.tt {
+  min-width: 0;
+}
+.tt-stage {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border-radius: var(--radius-sm);
+  background: radial-gradient(90% 80% at 50% 40%, var(--paper) 0%, var(--paper-2) 100%);
+  box-shadow: inset 0 0 0 1px var(--rule);
+  padding: 46px 10px 12px;
+}
+
+/* the table scrolls inside its frame if many columns are shown on a phone; the page never scrolls sideways */
+.tt-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.tt-table {
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-family: var(--font-ui);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.tt-table th,
+.tt-table td {
+  padding: 6px 8px;
+  text-align: center;
+  border-bottom: 1px solid var(--rule);
+  min-width: 2.4em;
+}
+.tt-table thead th {
+  vertical-align: bottom;
+  font-weight: 600;
+  border-bottom: 2px solid var(--ink-3);
+  white-space: nowrap;
+}
+.tt-table .sep {
+  border-right: 2px solid var(--ink-3);
+}
+.tt-table .formula {
+  display: block;
+  font-size: 0.95rem;
+}
+.tt-table .gloss {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--ink-2);
+  white-space: normal;
+  max-width: 7.5em;
+  margin: 0 auto;
+}
+.tt-table td.v {
+  font-weight: 600;
+  font-size: 1rem;
+}
+.tt-table td.v.f {
+  color: var(--ink-2);
+}
+
+/* the compared columns: a thick underline in the header, and the = / ≠ column */
+.tt-table th.cmp {
+  box-shadow: inset 0 -4px 0 var(--accent);
+}
+.tt-table .cmpcol {
+  color: var(--ink-2);
+  font-weight: 400;
+}
+.tt-table td.cmpcell {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.tt-table td.cmpcell.ne {
+  color: var(--bad);
+  background: var(--bad-soft);
+}
+.tt-table td.cmpcell.eq {
+  color: var(--ok);
+}
+
+/* a marked row */
+.tt-table tr.picked td {
+  background: var(--accent-soft);
+}
+.tt-table .pick {
+  min-width: 44px;
+  min-height: 34px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-2);
+  font-family: var(--font-ui);
+  cursor: pointer;
+}
+.tt-table .pick[aria-pressed='true'] {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+/* a cell the student fills */
+.tt-table td.fillcell {
+  position: relative;
+  white-space: nowrap;
+}
+.tt-table .guess {
+  min-width: 40px;
+  min-height: 34px;
+  border: 1px dashed var(--ink-3);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.tt-table td.fillcell .mark {
+  display: inline-block;
+  width: 1.1em;
+  margin-left: 3px;
+  font-weight: 700;
+}
+.tt-table td.fillcell.ok .mark {
+  color: var(--ok);
+}
+.tt-table td.fillcell.ok .guess {
+  border-style: solid;
+  border-color: var(--ok);
+}
+.tt-table td.fillcell.bad .mark {
+  color: var(--bad);
+}
+.tt-table td.fillcell.bad .guess {
+  border-style: solid;
+  border-color: var(--bad);
+  background: var(--bad-soft);
+}
+
+.tt .check-btn {
+  font-weight: 600;
+  color: var(--ink);
+  border-color: var(--ink-3);
+}
+.tt .check-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.tt-compare label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-2);
+}
+.tt-compare select {
+  min-height: 34px;
+  max-width: 11em;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+}
+.tt .score {
+  display: inline;
+}
+
+/* a formula inside Hebrew text: one LTR piece that never wraps (see `rich` in TruthTable.tsx) */
+.tt-f {
+  direction: ltr;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+}
+
+/* a phone: every chosen column stays visible. Narrow cells, a smaller header, and a header formula may break
+   between its parts (the table is LTR math space, so a break there cannot reorder anything) */
+@media (max-width: 560px) {
+  .tt-stage {
+    padding: 44px 4px 8px;
+  }
+  .tt-table th,
+  .tt-table td {
+    padding: 4px 3px;
+    min-width: 1.6em;
+  }
+  .tt-table thead th {
+    white-space: normal;
+    font-size: 0.8rem;
+  }
+  .tt-table .formula {
+    font-size: 0.8rem;
+    max-width: 4.6em;
+    margin: 0 auto;
+  }
+  .tt-table .gloss {
+    font-size: 0.62rem;
+    max-width: 5em;
+  }
+  .tt-table .pick {
+    min-width: 34px;
+    padding: 0 2px;
+  }
+  .tt-table .guess {
+    min-width: 32px;
+  }
+  .tt-table td.v,
+  .tt-table .guess {
+    font-size: 0.9rem;
+  }
+}

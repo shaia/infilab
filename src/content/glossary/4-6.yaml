@@ -1,0 +1,26 @@
+# Terms first defined in lesson 4.6 (the exponential and the logarithm).
+- id: exponential-function
+  term: פונקציית המעריך
+  en: exponential function
+  symbol: 'e^x=\exp(x)'
+  definition: >-
+    $e^x$ לכל $x$ ממשי, עם $e$ משיעור 2.7. מוגדרת עם סופרמום של חזקות רציונליות (או כגבול
+    $\left(1+\frac xn\right)^n$), עולה ממש, רציפה, מקיימת $e^{x+y}=e^xe^y$, והתמונה שלה $(0,\infty)$. באופן כללי
+    $a^x$ לכל בסיס $a>0$.
+  lesson: '4.6'
+- id: natural-logarithm
+  term: הלוגריתם הטבעי
+  en: natural logarithm
+  symbol: '\ln x'
+  definition: >-
+    הפונקציה ההפוכה של $e^x$: לכל $y>0$, $\ln y$ הוא המספר היחיד $x$ עם $e^x=y$. מוגדרת ב-$(0,\infty)$, עולה
+    ממש, רציפה, ומקיימת $\ln(xy)=\ln x+\ln y$.
+  lesson: '4.6'
+- id: one-to-infinity-form
+  term: הצורה אחד בחזקת אינסוף
+  en: one to the power infinity form
+  symbol: '1^\infty'
+  definition: >-
+    גבול של $a_n^{b_n}$ כש-$a_n\to1$ ו-$b_n\to\infty$. זו צורה לא מוגדרת: $\left(1+\frac an\right)^n\to e^a$,
+    ו-$\left(1+\frac1n\right)^{n^2}\to\infty$. כותבים $a_n^{b_n}=e^{b_n\ln a_n}$ ומחשבים את גבול המעריך.
+  lesson: '4.6'

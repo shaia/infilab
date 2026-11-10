@@ -1,0 +1,400 @@
+# Chapter 2 review — sequences and their limits (lessons 2.1–2.10), easy to hard.
+# Every lesson is touched; most questions combine two or more lessons. Each hint names the lesson to go back to.
+chapter: 2
+questions:
+  - id: Q-2-review-01
+    type: multi
+    objectives: [OBJ-2.1-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אילו מהסדרות הבאות **חסומות**? סמנו את כולן.
+    choices:
+      - text: '$\sin n$'
+        correct: true
+        feedback: 'נכון: $|\sin n|\le1$ לכל $n$.'
+      - text: '$\frac{n}{n+1}$'
+        correct: true
+        feedback: >-
+          נכון: $0<\frac{n}{n+1}<1$. היא עולה ממש, ובכל זאת חסומה: עלייה לא גוררת אי-חסימות.
+      - text: '$-n$'
+        feedback: >-
+          $-n$ חסומה מלעיל (על ידי $-1$) אבל לא מלרע. "חסומה" פירושו חסומה משני הצדדים: $|a_n|\le M$.
+        misconception: MC-bounded-means-above
+      - text: '$\sqrt n$'
+        feedback: >-
+          האיברים הראשונים קטנים ($\sqrt{100}=10$), אבל לכל $M$ יש $n>M^2$ עם $\sqrt n>M$. השרטוט של ההתחלה מטעה.
+        misconception: MC-plot-proves
+    hints:
+      - 'חזרו לשיעור 2.1: ההגדרה של סדרה חסומה, $\exists M\ \forall n:\ |a_n|\le M$.'
+
+  - id: Q-2-review-02
+    type: numeric
+    objectives: [OBJ-2.2-3]
+    level: basic
+    prompt: >-
+      עבור $a_n=\frac{3}{n^2+1}$, $L=0$ ו-$\varepsilon=0.01$: מהו ה-$N$ **הקטן ביותר** כך שלכל $n>N$ מתקיים
+      $|a_n|<\varepsilon$?
+    answer: 17
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac{3}{n^2+1}<0.01\iff n^2+1>300\iff n^2>299$. כי $17^2=289$ ו-$18^2=324$, התנאי מתקיים בדיוק
+      ל-$n\ge18$, ולכן $N=17$.
+    wrongFeedback: >-
+      בודדו את $n^2$ מאי-השוויון, ובדקו אילו טבעיים מקיימים אותו. זכרו שההגדרה מתחילה "לכל $n>N$".
+    commonWrong:
+      - value: 18
+        feedback: >-
+          18 הוא האיבר הראשון בתוך הרצועה. ההגדרה אומרת "לכל $n>N$", ולכן $N=17$ כבר מבטיח $n\ge18$.
+        misconception: MC-N-is-first-index
+      - value: 299
+        feedback: >-
+          299 הוא החסם ל-$n^2$, לא ל-$n$. התנאי הוא $n^2>299$, כלומר $n>\sqrt{299}\approx17.3$.
+    hints:
+      - 'חזרו לשיעור 2.2: מציאת $N$ לאפסילון נתון.'
+
+  - id: Q-2-review-03
+    type: twotier
+    objectives: [OBJ-2.3-2, OBJ-2.9-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      ידוע שכל סדרה מתכנסת חסומה. האם כל סדרה חסומה מתכנסת?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $(-1)^n$ חסומה ומתבדרת. מה שכן מובטח לסדרה חסומה הוא **תת-סדרה** מתכנסת.
+      - text: כן
+        feedback: >-
+          זה הכיוון ההפוך של המשפט, והוא לא נכון: $(-1)^n$ חסומה על ידי 1 ואין לה גבול.
+        misconception: MC-bounded-implies-convergent
+    reasons:
+      - text: '$(-1)^n$ חסומה ומתבדרת; לפי בולצאנו-ויירשטראס מובטחת רק תת-סדרה מתכנסת, כאן $a_{2n}=1$'
+        correct: true
+        feedback: >-
+          בדיוק. בולצאנו-ויירשטראס הוא "התחליף" הנכון לכיוון ההפוך שלא מתקיים.
+      - text: 'אם "מתכנסת גוררת חסומה", אז גם "חסומה גוררת מתכנסת"'
+        feedback: >-
+          גרירה ההפוכה לטענה אינה שקולה לה. כאן ההפוכה פשוט שקרית: $(-1)^n$.
+        misconception: MC-bounded-implies-convergent
+      - text: 'לסדרה חסומה יש תת-סדרה מתכנסת, ולכן היא מתכנסת לגבול של תת-הסדרה'
+        feedback: >-
+          תת-סדרה מתכנסת אחת לא קובעת את גבול הסדרה: ל-$(-1)^n$ יש תת-סדרה ששואפת ל-1 ותת-סדרה ששואפת ל-$-1$.
+        misconception: MC-convergent-subsequence-implies-convergent
+    hints:
+      - 'חזרו לשיעור 2.3: סדרה מתכנסת חסומה, ולשיעור 2.9: מה מובטח לסדרה חסומה.'
+
+  - id: Q-2-review-04
+    type: numeric
+    objectives: [OBJ-2.4-2, OBJ-2.6-2]
+    level: basic
+    prompt: >-
+      חשבו את $\lim_{n\to\infty}\frac{3n^2-n}{2n^2+5}$.
+    answer: 1.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. מחלקים מונה ומכנה ב-$n^2$: $\frac{3-\frac1n}{2+\frac{5}{n^2}}\to\frac32$.
+    wrongFeedback: >-
+      מונה ומכנה שואפים לאינסוף, וזו צורה לא מוגדרת. חלקו את שניהם בחזקה הגבוהה ביותר של $n$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          "אינסוף חלקי אינסוף הוא 1" אינו כלל: $\frac\infty\infty$ היא צורה לא מוגדרת, והגבול נקבע ביחס בין
+          המקדמים המובילים.
+        misconception: MC-indeterminate-form-value
+      - value: -0.2
+        feedback: >-
+          $-\frac15$ הוא היחס בין המקדמים של החזקות הנמוכות. כש-$n$ גדול, החזקות הגבוהות שולטות: $3n^2$ ו-$2n^2$.
+        misconception: MC-rational-wrong-terms
+    hints:
+      - 'חזרו לשיעור 2.4: גבולות של מנות של פולינומים, ולשיעור 2.6: הצורה אינסוף חלקי אינסוף.'
+
+  - id: Q-2-review-05
+    type: mc
+    objectives: [OBJ-2.5-3, OBJ-2.4-3]
+    level: mid
+    prompt: >-
+      מהו $\lim_{n\to\infty}\frac{\sin n}{n}$, ולמה?
+    choices:
+      - text: '0, כי $\frac1n\to0$ ו-$\sin n$ חסומה'
+        correct: true
+        feedback: >-
+          נכון: סדרה אפסה כפול סדרה חסומה היא סדרה אפסה. במפורש: $\left|\frac{\sin n}{n}\right|\le\frac1n$.
+      - text: 'אין גבול, כי ל-$\sin n$ אין גבול'
+        feedback: >-
+          גורם בלי גבול לא מונע התכנסות של המכפלה, אם הוא חסום והגורם השני שואף לאפס.
+        misconception: MC-bounded-factor-blocks-limit
+      - text: 'לפי כלל המנה: $\frac{\lim\sin n}{\lim n}$'
+        feedback: >-
+          כלל המנה דורש ששני הגבולות קיימים וסופיים. כאן לאף אחד מהם אין גבול סופי, ולכן הכלל לא חל.
+        misconception: MC-limit-rules-on-divergent
+    hints:
+      - 'חזרו לשיעור 2.5: סדרה אפסה כפול סדרה חסומה, ולשיעור 2.4: מתי חשבון הגבולות לא חל.'
+
+  - id: Q-2-review-06
+    type: multi
+    objectives: [OBJ-2.7-1, OBJ-2.5-2]
+    level: mid
+    prompt: >-
+      הסדרה $a_n$ עולה, ו-$a_n<1$ לכל $n$. אילו מהטענות הבאות נכונות בהכרח? סמנו את כולן.
+    choices:
+      - text: הסדרה מתכנסת
+        correct: true
+        feedback: 'נכון: היא עולה וחסומה מלעיל, ולכן מתכנסת לסופרמום שלה.'
+      - text: '$\lim a_n\le1$'
+        correct: true
+        feedback: 'נכון: גבולות שומרים על אי-שוויון חלש, ו-$a_n<1$ גורר בפרט $a_n\le1$.'
+      - text: '$\lim a_n<1$'
+        feedback: >-
+          אי-שוויון חזק לא נשמר בגבול: $1-\frac1n<1$ לכל $n$, והגבול שווה ל-1.
+        misconception: MC-limit-keeps-strict
+      - text: '$\lim a_n=1$'
+        feedback: >-
+          1 הוא חסם, לא בהכרח החסם הקטן ביותר: $\frac12-\frac1n$ עולה, קטנה מ-1, וגבולה $\frac12$.
+        misconception: MC-monotone-limit-any-bound
+    hints:
+      - 'חזרו לשיעור 2.7: לאן מתכנסת סדרה עולה וחסומה, ולשיעור 2.5: אילו אי-שוויונות עוברים לגבול.'
+
+  - id: Q-2-review-07
+    type: multi
+    objectives: [OBJ-2.6-3, OBJ-2.9-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הסדרה $a_n=n^{(-1)^n}$ היא $1,\ 2,\ \frac13,\ 4,\ \frac15,\ 6,\ \dots$. אילו מהטענות הבאות נכונות? סמנו את כולן.
+    choices:
+      - text: היא אינה חסומה מלעיל
+        correct: true
+        feedback: 'נכון: $a_{2n}=2n$.'
+      - text: 'יש לה בדיוק גבול חלקי אחד, 0'
+        correct: true
+        feedback: >-
+          נכון. $a_{2n-1}=\frac{1}{2n-1}\to0$. תת-סדרה מתכנסת חסומה, ולכן יש בה רק מספר סופי של איברים זוגיים, ומנקודה
+          מסוימת היא תת-סדרה של האי-זוגיים, ששואפים ל-0.
+      - text: '$a_n\to\infty$'
+        feedback: >-
+          אינסוף איברים (האי-זוגיים) קטנים מ-1, ולכן אין $N$ שממנו כל האיברים מעל 1. אי-חסימות אינה שאיפה לאינסוף.
+        misconception: MC-unbounded-implies-infinity
+      - text: '$a_n\to0$, כי 0 הוא הגבול החלקי היחיד'
+        feedback: >-
+          גבול חלקי יחיד גורר התכנסות רק לסדרה חסומה. כאן האיברים הזוגיים בורחים לאינסוף, ולכן הסדרה מתבדרת.
+        misconception: MC-unique-partial-limit-converges
+    hints:
+      - 'חזרו לשיעור 2.6: לא חסומה לעומת שואפת לאינסוף, ולשיעור 2.9: גבולות חלקיים וחסימות.'
+
+  - id: Q-2-review-08
+    type: numeric
+    objectives: [OBJ-2.7-2, OBJ-2.1-2]
+    level: mid
+    prompt: >-
+      הסדרה מוגדרת ברקורסיה: $a_1=1$, $a_{n+1}=\frac{a_n}{2}+1$. הראו באינדוקציה ש-$a_n<2$ ושהסדרה עולה, ומצאו
+      את גבולה.
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. אם $a_n<2$ אז $a_{n+1}<\frac22+1=2$; ו-$a_{n+1}-a_n=1-\frac{a_n}{2}>0$. עולה וחסומה, ולכן מתכנסת, והגבול
+      מקיים $L=\frac L2+1$, כלומר $L=2$.
+    wrongFeedback: >-
+      קודם התכנסות (עולה וחסומה מלעיל), ואז העבירו את הרקורסיה לגבול.
+    commonWrong:
+      - value: 1.5
+        feedback: >-
+          זה $a_2$. הסדרה ממשיכה לעלות: $a_3=1.75$, $a_4=1.875$.
+    explanation: >-
+      כאן אפשר גם לכתוב נוסחה מפורשת ולהוכיח אותה באינדוקציה: $a_n=2-\frac{1}{2^{n-1}}$, ומזה $a_n\to2$ מיד.
+    hints:
+      - 'חזרו לשיעור 2.7: המתכון לסדרה רקורסיבית, ולשיעור 2.1: הוכחה של חסימות ומונוטוניות.'
+
+  - id: Q-2-review-09
+    type: twotier
+    objectives: [OBJ-2.6-1, OBJ-2.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $a_n\to1$, $b_n\to0$, ו-$b_n\ne0$ לכל $n$. האם בהכרח $\frac{a_n}{b_n}\to\infty$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. עם $a_n=1$ ו-$b_n=\frac{(-1)^n}{n}$ המנה היא $(-1)^n n$: לא חסומה, ולא שואפת לאינסוף או למינוס אינסוף.
+      - text: כן
+        feedback: >-
+          הסימן של $b_n$ יכול להתחלף. רק $\left|\frac{a_n}{b_n}\right|\to\infty$ נובע בוודאות.
+        misconception: MC-reciprocal-of-null-is-infinity
+    reasons:
+      - text: 'אם $b_n$ מחליפה סימן, גם המנה מחליפה סימן; רק כש-$b_n>0$ מנקודה מסוימת המנה שואפת לאינסוף'
+        correct: true
+        feedback: >-
+          בדיוק. ואם $b_n<0$ מנקודה מסוימת, המנה שואפת למינוס אינסוף.
+      - text: 'לפי כלל המנה הגבול הוא $\frac10=\infty$'
+        feedback: >-
+          כלל המנה דורש גבול מכנה שונה מאפס. כשהמכנה שואף לאפס, הכלל לא חל ו-$\frac10$ אינו מספר.
+        misconception: MC-quotient-rule-no-hypothesis
+      - text: 'מנה של משהו קרוב ל-1 במשהו קרוב ל-0 היא גדולה, ולכן שואפת לאינסוף'
+        feedback: >-
+          "גדולה" בערך מוחלט בלבד. שאיפה לאינסוף דורשת שהאיברים יהיו גדולים וחיוביים מנקודה מסוימת.
+        misconception: MC-reciprocal-of-null-is-infinity
+    hints:
+      - 'חזרו לשיעור 2.4: מכנה ששואף לאפס, ולשיעור 2.6: ההגדרה של שאיפה לאינסוף.'
+
+  - id: Q-2-review-10
+    type: numeric
+    objectives: [OBJ-2.8-1, OBJ-2.5-1]
+    level: mid
+    prompt: >-
+      חשבו את $\lim_{n\to\infty}\sqrt[n]{5^n+n^5}$.
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לכל $n\ge5$ מתקיים $n^5\le5^n$, ולכן $5^n\le5^n+n^5\le2\cdot5^n$, ומכאן
+      $5\le\sqrt[n]{5^n+n^5}\le\sqrt[n]2\cdot5\to5$. לפי הסנדוויץ' הגבול 5.
+    wrongFeedback: >-
+      מצאו את המחובר שגדל מהר יותר, וחסמו את הסכום בינו לבין כפולה שלו.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          השורש ה-$n$-י מוחץ ל-1 רק מה שלא גדל מעריכית. כאן $\sqrt[n]{5^n+n^5}\ge\sqrt[n]{5^n}=5$.
+        misconception: MC-nth-root-always-one
+      - value: 6
+        feedback: >-
+          $6=5+1$ מתקבל מפיצול השורש לשני מחוברים, $\sqrt[n]{5^n}+\sqrt[n]{n^5}$. שורש של סכום אינו סכום השורשים.
+    hints:
+      - 'חזרו לשיעור 2.8: השורש ה-$n$-י והשוואת קצבי גדילה, ולשיעור 2.5: כלל הסנדוויץ''.'
+
+  - id: Q-2-review-11
+    type: twotier
+    objectives: [OBJ-2.10-1, OBJ-2.6-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נכון או לא נכון: אם $a_{n+1}-a_n\to0$, הסדרה $a_n$ מתכנסת.
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. $a_n=\sqrt n$: $\sqrt{n+1}-\sqrt n=\frac{1}{\sqrt{n+1}+\sqrt n}\to0$, אבל $\sqrt n\to\infty$.
+      - text: נכון
+        feedback: >-
+          הפרשים קטנים בין עוקבים יכולים להצטבר לסכום גדול. זה לא תנאי קושי.
+        misconception: MC-cauchy-consecutive-terms
+    reasons:
+      - text: 'תנאי קושי דורש $|a_m-a_n|$ קטן לכל $m,n>N$; ב-$\sqrt n$ הזוג $m=4n$ נותן $\sqrt n$, שאינו קטן'
+        correct: true
+        feedback: >-
+          בדיוק. ההפרש בין $a_{4n}$ ל-$a_n$ הוא סכום של $3n$ הפרשים קטנים, וסכומם גדל בלי הגבלה.
+      - text: 'ההפרש $a_m-a_n$ הוא סכום של הפרשים עוקבים, וכל אחד מהם שואף לאפס, ולכן גם הסכום'
+        feedback: >-
+          סכום של מחוברים ששואפים לאפס לא שואף לאפס כשמספר המחוברים גדל: ב-$\sqrt n$ יש $3n$ מחוברים בין $n$ ל-$4n$.
+        misconception: MC-sum-of-null-terms
+    hints:
+      - 'חזרו לשיעור 2.10: תנאי קושי לעומת הפרשים עוקבים, ולשיעור 2.6: למה $\sqrt n\to\infty$.'
+
+  - id: Q-2-review-12
+    type: multi
+    objectives: [OBJ-2.3-3, OBJ-2.9-1, OBJ-2.10-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      אילו מהטיעונים הבאים מוכיחים שהסדרה $a_n=(-1)^n\left(1+\frac1n\right)$ מתבדרת? סמנו את כל הטיעונים הנכונים
+      והשלמים.
+    choices:
+      - text: '$a_{2n}\to1$ ו-$a_{2n-1}\to-1$: שתי תת-סדרות עם גבולות שונים'
+        correct: true
+        feedback: >-
+          נכון. אילו $a_n\to L$, כל תת-סדרה הייתה שואפת ל-$L$, ואז $1=L=-1$.
+      - text: 'לכל $n$: $|a_{n+1}-a_n|>2$, ולכן הסדרה אינה סדרת קושי'
+        correct: true
+        feedback: >-
+          נכון. לאיברים עוקבים יש סימנים מנוגדים וערך מוחלט גדול מ-1, ולכן המרחק ביניהם גדול מ-2. עם $\varepsilon=2$
+          אין $N$ מתאים, וסדרה שאינה קושי מתבדרת.
+      - text: 'לכל $L$: עם $\varepsilon=1$ יש אינסוף איברים במרחק לפחות 1 מ-$L$ (אם $L\le0$ הזוגיים, ואם $L>0$ האי-זוגיים)'
+        correct: true
+        feedback: >-
+          נכון, זו ההוכחה מההגדרה: הזוגיים גדולים מ-1 והאי-זוגיים קטנים מ-$-1$, ולכן אף $L$ אינו גבול.
+      - text: 'הסדרה אינה מונוטונית'
+        feedback: >-
+          סדרה מתכנסת לא חייבת להיות מונוטונית: $\frac{(-1)^n}{n}$ מתחלפת בסימן ושואפת ל-0.
+        misconception: MC-convergent-implies-monotone
+      - text: 'עם $L=0$ ו-$\varepsilon=\frac12$: כל האיברים מחוץ לרצועה, ולכן אין גבול'
+        feedback: >-
+          זה מוכיח רק שהגבול אינו 0. כדי להוכיח התבדרות צריך לפסול **כל** $L$.
+        misconception: MC-diverge-one-L
+    hints:
+      - 'חזרו לשיעור 2.3: הוכחת התבדרות מההגדרה, לשיעור 2.9: שתי תת-סדרות, ולשיעור 2.10: שלילת תנאי קושי.'
+
+  - id: Q-2-review-13
+    type: rank
+    objectives: [OBJ-2.8-2, OBJ-2.8-1, OBJ-2.5-1]
+    level: exam
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      ההוכחה של מבחן המנה ($a_n>0$ ו-$\frac{a_{n+1}}{a_n}\to q<1$ גוררים $a_n\to0$) התפרקה לשלבים. סדרו אותם.
+    items:
+      - id: r
+        label: 'נבחר $r$ עם $q<r<1$. לפי הגדרת הגבול עם $\varepsilon=r-q$, יש $N$ כך ש-$\frac{a_{n+1}}{a_n}<r$ לכל $n>N$.'
+      - id: ind
+        label: 'באינדוקציה על $n$: $a_n\le a_{N+1}\,r^{\,n-N-1}$ לכל $n>N$.'
+      - id: c
+        label: 'כלומר $0<a_n\le C\,r^n$ לכל $n>N$, עם הקבוע $C=a_{N+1}\,r^{-N-1}$.'
+      - id: sq
+        label: 'כי $0<r<1$, מתקיים $r^n\to0$, ולפי כלל הסנדוויץ'' $a_n\to0$.'
+    order: [r, ind, c, sq]
+    correctFeedback: >-
+      נכון. הצעד החשוב הוא הראשון: לא $q$ עצמו, אלא $r$ קבוע בין $q$ ל-1. זו גם הסיבה שהמבחן נכשל כש-$q=1$: אין
+      מקום ל-$r$.
+    wrongFeedback: >-
+      קודם צריך את $r$ ואת $N$, אחר כך האינדוקציה משתמשת בהם, ובסוף הסנדוויץ' עם $r^n$ (שיעור 2.8).
+    hints:
+      - 'חזרו לשיעור 2.8: מבחן המנה ו-$q^n$, ולשיעור 2.5: כלל הסנדוויץ''.'
+
+  - id: Q-2-review-14
+    type: rank
+    objectives: [OBJ-2.10-2, OBJ-2.9-3]
+    level: exam
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      ההוכחה שכל סדרת קושי ממשית מתכנסת התפרקה לשלבים. סדרו אותם.
+    items:
+      - id: bdd
+        label: 'עם $\varepsilon=1$ בתנאי קושי מקבלים שהסדרה חסומה.'
+      - id: bw
+        label: 'לפי בולצאנו-ויירשטראס יש לה תת-סדרה מתכנסת $a_{n_k}\to L$.'
+      - id: eps
+        label: 'כדי להראות ש-$a_n\to L$, יהי $\varepsilon>0$. מתנאי קושי יש $N$ כך ש-$|a_m-a_n|<\frac\varepsilon2$ לכל $m,n>N$.'
+      - id: k
+        label: 'נבחר $k$ אחד עם $n_k>N$ ו-$|a_{n_k}-L|<\frac\varepsilon2$.'
+      - id: tri
+        label: 'לכל $n>N$: $|a_n-L|\le|a_n-a_{n_k}|+|a_{n_k}-L|<\varepsilon$.'
+    order: [bdd, bw, eps, k, tri]
+    correctFeedback: >-
+      נכון. בולצאנו-ויירשטראס מביא את המועמד $L$ (ודרכו אקסיומת השלמות), ותנאי קושי מושך אחריו את כל הסדרה.
+    wrongFeedback: >-
+      קודם חסימות, כדי שאפשר יהיה להפעיל את בולצאנו-ויירשטראס ולקבל את $L$. רק אחרי שיש $L$ אפשר להתחיל "יהי
+      $\varepsilon$" של ההתכנסות אליו.
+    hints:
+      - 'חזרו לשיעור 2.10: מתכנסת אם ורק אם קושי, ולשיעור 2.9: משפט בולצאנו-ויירשטראס.'
+
+  - id: Q-2-review-15
+    type: mc
+    objectives: [OBJ-2.7-3, OBJ-2.6-1, OBJ-2.8-1]
+    level: exam
+    prompt: >-
+      מהו $\lim_{n\to\infty}\left(1+\frac1n\right)^{n^2}$?
+    choices:
+      - text: '$\infty$'
+        correct: true
+        feedback: >-
+          נכון. $\left(1+\frac1n\right)^{n^2}=\left[\left(1+\frac1n\right)^n\right]^n\ge2^n$, כי
+          $\left(1+\frac1n\right)^n\ge2$ (הסדרה עולה ו-$b_1=2$). ו-$2^n\to\infty$.
+      - text: '$e$'
+        feedback: >-
+          $\left(1+\frac1n\right)^n\to e$, אבל כאן המעריך הוא $n^2$, גדול פי $n$. החזקה היא בערך $e^n$, לא $e$.
+        misconception: MC-one-power-infinity-is-one
+      - text: '$1$'
+        feedback: >-
+          הבסיס שואף ל-1, אבל המעריך גדל מהר מאוד. "אחד בחזקת אינסוף" אינו 1: כל האיברים כאן גדולים או שווים
+          ל-$2^n$.
+        misconception: MC-one-power-infinity-is-one
+    hints:
+      - 'חזרו לשיעור 2.7: הסדרה $\left(1+\frac1n\right)^n$ עולה, ולשיעור 2.6: חסימה מלמטה בסדרה ששואפת לאינסוף.'

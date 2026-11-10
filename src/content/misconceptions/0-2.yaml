@@ -1,0 +1,69 @@
+# Misconceptions first detected in lesson 0.2 (statements, connectives and implication).
+- id: MC-false-premise-implication
+  title: חושבים שגרירה עם הנחה שקרית היא שקרית או חסרת משמעות
+  belief: >-
+    "אם $P$ אז $Q$" שקרית כש-$P$ שקרי, או שאין לה ערך אמת כשאין קשר בין $P$ ל-$Q$.
+  truth: >-
+    $P\Rightarrow Q$ שקרית רק בשורה אחת של טבלת האמת: $P$ אמת ו-$Q$ שקר. כש-$P$ שקרי הגרירה אמת, כי היא
+    מבטיחה משהו רק כש-$P$ מתקיים. כך "לכל $x$, אם $x>2$ אז $x^2>4$" נכונה גם עבור $x=0$.
+  remedy: { lesson: '0.2', anchor: implication, label: 'טבלת האמת של גרירה' }
+
+- id: MC-or-exclusive
+  title: קוראים את "או" כ"בדיוק אחד מהשניים"
+  belief: >-
+    "$P$ או $Q$" שקרי כששניהם אמת.
+  truth: >-
+    במתמטיקה "או" כוללני: $P\lor Q$ אמת כשלפחות אחד מהם אמת, כולל כששניהם אמת. "בדיוק אחד" אומרים במפורש.
+  remedy: { lesson: '0.2', anchor: connectives, label: 'הקשרים "וגם" ו"או"' }
+
+- id: MC-or-as-and
+  title: קוראים את "או" כ"וגם"
+  belief: >-
+    "$x>0$ או $x<5$" מתקיים רק כששני התנאים מתקיימים, כלומר ב-$(0,5)$.
+  truth: >-
+    "או" דורש תנאי אחד לפחות. קבוצת הפתרונות של "או" היא **איחוד** קבוצות הפתרונות, ושל "וגם" היא **החיתוך**.
+  remedy: { lesson: '0.2', anchor: connectives, label: 'הקשרים "וגם" ו"או"' }
+
+- id: MC-converse-equivalent
+  title: חושבים שטענה והטענה ההפוכה לה שקולות
+  belief: >-
+    אם "אם $P$ אז $Q$" נכונה, גם "אם $Q$ אז $P$" נכונה (או: ההפוכה של טענה נכונה תמיד שקרית).
+  truth: >-
+    אין קשר קבוע בין ערכי האמת. "אם $n$ מתחלק ב-6 אז $n$ מתחלק ב-3" נכונה, וההפוכה לה לא ($n=3$). "אם $n$ זוגי
+    אז $n+1$ אי-זוגי" נכונה, וגם ההפוכה לה נכונה. כל כיוון מוכיחים בנפרד.
+  remedy: { lesson: '0.2', anchor: converse-contrapositive, label: 'טענה, ההפוכה, הנגדית והקונטרפוזיטיב' }
+
+- id: MC-inverse-equivalent
+  title: חושבים שהטענה הנגדית שקולה לטענה המקורית
+  belief: >-
+    אם "אם $P$ אז $Q$" נכונה, גם "אם לא $P$ אז לא $Q$" נכונה.
+  truth: >-
+    הנגדית $\neg P\Rightarrow\neg Q$ שקולה להפוכה, לא לטענה. "אם $x>2$ אז $x^2>4$" נכונה, אבל $x=-3$ מקיים
+    $x\le 2$ ו-$x^2=9>4$. הטענה השקולה לטענה המקורית היא הקונטרפוזיטיב, $\neg Q\Rightarrow\neg P$.
+  remedy: { lesson: '0.2', anchor: converse-contrapositive, label: 'טענה, ההפוכה, הנגדית והקונטרפוזיטיב' }
+
+- id: MC-implication-negation
+  title: שוללים גרירה וכותבים שוב גרירה
+  belief: >-
+    השלילה של "אם $P$ אז $Q$" היא "אם $P$ אז לא $Q$", או "אם לא $P$ אז לא $Q$".
+  truth: >-
+    הגרירה שקרית בדיוק כש-$P$ אמת ו-$Q$ שקר, ולכן $\neg(P\Rightarrow Q)$ היא $P\land\neg Q$: "וגם", לא גרירה.
+  remedy: { lesson: '0.2', anchor: negation-of-implication, label: 'השלילה של גרירה' }
+
+- id: MC-necessary-sufficient-swap
+  title: מחליפים בין תנאי הכרחי לתנאי מספיק
+  belief: >-
+    "$P$ תנאי הכרחי ל-$Q$" פירושו $P\Rightarrow Q$.
+  truth: >-
+    "$P$ מספיק ל-$Q$" פירושו $P\Rightarrow Q$: מספיק לדעת $P$ כדי לדעת $Q$. "$P$ הכרחי ל-$Q$" פירושו
+    $Q\Rightarrow P$: בלי $P$ אין $Q$. למשל, להיות זוגי הכרחי כדי להתחלק ב-4, ולא מספיק לכך.
+  remedy: { lesson: '0.2', anchor: necessary-sufficient, label: 'תנאי הכרחי ותנאי מספיק' }
+
+- id: MC-implication-as-iff
+  title: קוראים את "אם P אז Q" כ"P אם ורק אם Q"
+  belief: >-
+    "אם ירד גשם אסיע אתכם" מבטיח גם שבלי גשם לא תהיה הסעה, ולכן הוא מופר כש-$P$ שקר ו-$Q$ אמת.
+  truth: >-
+    $P\Rightarrow Q$ אומרת רק מה קורה כש-$P$ מתקיים. בשורה "$P$ שקר, $Q$ אמת" היא אמת. מי שרוצה לומר גם
+    "ורק אז" אומר "אם ורק אם", $P\iff Q$, שהיא טענה חזקה יותר: $(P\Rightarrow Q)\land(Q\Rightarrow P)$.
+  remedy: { lesson: '0.2', anchor: implication, label: 'טבלת האמת של גרירה' }

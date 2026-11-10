@@ -1,0 +1,75 @@
+# Misconceptions first detected in lesson 3.2 (the elementary functions and the pathological ones).
+- id: MC-arcsin-sin-cancel
+  title: חושבים שארקסינוס מבטל את הסינוס לכל x
+  belief: >-
+    $\arcsin(\sin x)=x$ לכל $x$, כמו ש-$\sin(\arcsin y)=y$.
+  truth: >-
+    $\arcsin$ היא ההפוכה של $\sin$ **המצומצמת** לקטע $[-\frac{\pi}{2},\frac{\pi}{2}]$, ולכן ערכיה תמיד בקטע הזה.
+    $\arcsin(\sin x)=x$ רק כש-$x$ בקטע; למשל $\arcsin(\sin\frac{5\pi}{6})=\arcsin\frac12=\frac{\pi}{6}$.
+  remedy: { lesson: '3.2', label: 'הפונקציות הטריגונומטריות ההפוכות' }
+
+- id: MC-period-scaling-direction
+  title: מכפילים את המחזור במקום לחלק אותו
+  belief: >-
+    המחזור של $\sin(3x)$ הוא $6\pi$, או שהוא נשאר $2\pi$.
+  truth: >-
+    $\sin(3(x+T))=\sin(3x+3T)$, וזה שווה ל-$\sin(3x)$ לכל $x$ כש-$3T=2\pi$. לכן המחזור הוא $\frac{2\pi}{3}$:
+    כפל של $x$ ב-3 מכווץ את הגרף אופקית פי 3, והמחזור קטן פי 3.
+  remedy: { lesson: '3.2', label: 'מחזור של הפונקציות הטריגונומטריות' }
+
+- id: MC-poly-exactly-n-roots
+  title: חושבים שלפולינום ממעלה n יש בדיוק n שורשים ממשיים
+  belief: >-
+    לפולינום ממעלה $n$ יש $n$ שורשים ממשיים.
+  truth: >-
+    לפולינום ממעלה $n\ge1$ יש **לכל היותר** $n$ שורשים ממשיים: כל שורש $a$ מוציא גורם $(x-a)$ ומוריד את
+    המעלה ב-1. ל-$x^2+1$ אין שורש ממשי, ול-$x^3+x=x(x^2+1)$ יש שורש ממשי אחד.
+  remedy: { lesson: '3.2', label: 'פולינומים ושורשיהם' }
+
+- id: MC-sinx-le-x-everywhere
+  title: משמיטים את הערך המוחלט באי-השוויון של הסינוס
+  belief: >-
+    $\sin x\le x$ לכל $x$ ממשי, ובאופן דומה $x\sin\frac1x\le x$.
+  truth: >-
+    $\sin x<x$ נכון רק עבור $x>0$. עבור $x<0$ אי-השוויון מתהפך: $\sin(-1)\approx-0.84$ גדול מ-$(-1)$. הצורה
+    שנכונה לכל $x$ היא $|\sin x|\le|x|$.
+  remedy: { lesson: '3.2', label: 'אי-השוויון בין סינוס x לבין x' }
+
+- id: MC-sin-additive
+  title: מתייחסים לסינוס כאילו הוא לינארי
+  belief: >-
+    $\sin x-\sin y=\sin(x-y)$, או $\sin(2x)=2\sin x$.
+  truth: >-
+    $\sin$ אינה לינארית. עם $x=\frac{\pi}{2}$ ו-$y=-\frac{\pi}{2}$ מקבלים $\sin x-\sin y=2$ אבל $\sin(x-y)=\sin\pi=0$.
+    הזהויות הנכונות הן נוסחאות הסכום וההפרש, למשל
+    $\sin x-\sin y=2\cos\frac{x+y}{2}\sin\frac{x-y}{2}$ ו-$\sin 2x=2\sin x\cos x$.
+  remedy: { lesson: '3.2', label: 'זהויות טריגונומטריות' }
+
+- id: MC-subtract-inequalities
+  title: מחסירים אי-שוויונות זה מזה
+  belief: >-
+    אם $a<b$ ו-$c<d$, אז $a-c<b-d$.
+  truth: >-
+    אי-שוויונות באותו כיוון מותר **לחבר**, לא לחסר. עם $a=0$, $b=1$, $c=0$, $d=5$ מקבלים $a-c=0$, וזה לא
+    קטן מ-$b-d=-4$. כדי להעריך הפרש משתמשים בזהות או באי-שוויון המשולש.
+  remedy: { lesson: '3.2', label: 'זהויות טריגונומטריות והערכת הפרשים' }
+
+- id: MC-thomae-unreduced-fraction
+  title: מחשבים את פונקציית רימן משבר שאינו מצומצם
+  belief: >-
+    ערך פונקציית רימן ב-$\frac{6}{8}$ הוא $\frac18$.
+  truth: >-
+    ההגדרה משתמשת בהצגה **המצומצמת** $\frac{p}{q}$ עם $q>0$ ו-$\gcd(p,q)=1$: $\frac68=\frac34$, ולכן הערך
+    $\frac14$. אחרת לאותו מספר היו כמה ערכים, וזו לא הייתה פונקציה.
+  remedy: { lesson: '3.2', label: 'פונקציית רימן' }
+
+- id: MC-sin-recip-few-oscillations
+  title: חושבים שסינוס של אחד חלקי x מתנודד רק מספר סופי של פעמים ליד אפס
+  belief: >-
+    קרוב מספיק ל-0 הפונקציה $\sin\frac1x$ נרגעת: יש $\delta>0$ שבו אין לה אפסים, או שאינה מגיעה ל-1, בקטע
+    $(0,\delta)$.
+  truth: >-
+    כש-$x$ עובר בקטע $(0,\delta)$, הביטוי $\frac1x$ עובר על כל הקטע $(\frac1\delta,\infty)$, שמכיל אינסוף
+    מחזורים של $\sin$. לכן בכל $(0,\delta)$ יש אינסוף נקודות $x=\frac{1}{k\pi}$ שבהן הערך 0, ואינסוף נקודות
+    $x=\frac{1}{\frac{\pi}{2}+2k\pi}$ שבהן הערך 1.
+  remedy: { lesson: '3.2', label: 'סינוס של אחד חלקי x' }

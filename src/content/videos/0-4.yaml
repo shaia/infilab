@@ -1,0 +1,28 @@
+# Videos for lesson 0.4 (direct proof, proof by contradiction, counterexample).
+# Both ids verified by oEmbed (HTTP 200, title and channel as below) on 2026-11-09; durations, chapters and
+# captions read from the watch page the same day.
+- id: v-0-4-contradiction
+  youtubeId: gBRM6vEdbj4
+  title: הוכחה בדרך השלילה - הכנה לתואר במדעי המחשב והנדסה
+  channel: מתמטיקה מדוברת - עם אסף מנור
+  lang: he
+  captions: [he]
+  start: 0
+  minutes: 10
+  why: >-
+    לפי תיאור הסרטון: הוכחה בדרך השלילה כהכנה לשנה א', ולמה היא משמשת גם מחוץ למתמטיקה, בכל ויכוח שצריך לשכנע
+    בו. בזמן הצפייה שימו לב לשורה הראשונה של כל הוכחה: מה בדיוק מניחים, ואיפה מופיעה הסתירה.
+  verified: 2026-11-09
+- id: v-0-4-primes
+  youtubeId: mmEGtrwOX64
+  title: קודקוד מתמטי - הוכחה בשלילה - אינסוף ראשוניים
+  channel: Yael Algom Kfir
+  lang: he
+  captions: []
+  start: 0
+  minutes: 17
+  why: >-
+    לפי פרקי הסרטון: מספרים ראשוניים ופריקים (1:46), ניסוח המשפט והתכונה שההוכחה נשענת עליה (3:52), ההוכחה
+    שיש אינסוף ראשוניים (5:21), ובסוף מספרי פרמה (12:05). השוו את ההוכחה לדוגמה 6, ואת מספרי פרמה לטענה
+    שבדקתם באיור 0.4א.
+  verified: 2026-11-09

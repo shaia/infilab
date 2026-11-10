@@ -1,0 +1,331 @@
+# Lesson 6.3 — L'Hôpital's rule.
+# Objectives (src/course.ts):
+#   OBJ-6.3-1  state and prove L'Hôpital's rule for 0/0, using Cauchy's mean value theorem
+#   OBJ-6.3-2  use it for ∞/∞ and for other forms after rewriting
+#   OBJ-6.3-3  recognise when the rule does not apply or does not help
+chapter: 6
+questions:
+  - id: Q-6.3-statement
+    type: mc
+    objectives: [OBJ-6.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f(x),g(x)\to0$ כש-$x\to a$, וכל שאר ההנחות של כלל לופיטל מתקיימות. בגבול של איזה ביטוי הכלל מחליף את
+      הגבול של $\frac{f(x)}{g(x)}$?
+    choices:
+      - text: '$\frac{f''(x)}{g''(x)}$'
+        correct: true
+        feedback: >-
+          נכון. גוזרים את המונה ואת המכנה כל אחד בנפרד, ומחשבים את הגבול של המנה שלהן.
+      - text: '$\left(\frac{f}{g}\right)''(x) = \frac{f''(x)g(x)-f(x)g''(x)}{g(x)^2}$'
+        feedback: >-
+          זו הנגזרת של המנה, ביטוי אחר לגמרי. עם $f(x)=x$, $g(x)=2x$: $\frac fg = \frac12$, ואילו
+          $\left(\frac fg\right)' = 0$.
+        misconception: MC-lhopital-quotient-rule
+      - text: '$\frac{f''(a)}{g''(a)}$'
+        feedback: >-
+          הכלל מדבר על הגבול של מנת הנגזרות, לא על ערכן ב-$a$, שאולי בכלל אינו מוגדר.
+        misconception: MC-lhopital-needs-value-at-point
+
+  - id: Q-6.3-hyps
+    type: multi
+    objectives: [OBJ-6.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      רוצים להסיק $\lim_{x\to a}\frac{f(x)}{g(x)} = L$ מכלל לופיטל במקרה של אפס חלקי אפס. אילו מהבאים הם
+      הנחות של הכלל? סמנו את כולם.
+    choices:
+      - text: '$\lim_{x\to a} f(x) = \lim_{x\to a} g(x) = 0$'
+        correct: true
+        feedback: >-
+          נכון. זו הצורה אפס חלקי אפס. בלעדיה הכלל נותן תשובות שגויות.
+      - text: '$f$ ו-$g$ גזירות בסביבה מנוקבת של $a$'
+        correct: true
+        feedback: >-
+          נכון. צריך נגזרות כדי לכתוב את $\frac{f'}{g'}$, ואת משפט קושי מפעילים על קטעים שקצה אחד שלהם $a$.
+      - text: '$g''(x)\ne0$ לכל $x$ בסביבה מנוקבת של $a$'
+        correct: true
+        feedback: >-
+          נכון. בלי זה מנת הנגזרות אינה מוגדרת, ובהוכחה זה גם מבטיח (דרך רול) ש-$g(x)\ne0$ ליד $a$.
+      - text: '$\lim_{x\to a}\frac{f''(x)}{g''(x)} = L$ קיים (סופי או אינסופי)'
+        correct: true
+        feedback: >-
+          נכון. זו ההנחה המרכזית: הכלל מעביר את הגבול ממנת הנגזרות למנת הפונקציות.
+      - text: '$f(a)=g(a)=0$, ו-$f,g$ גזירות ב-$a$'
+        feedback: >-
+          הכלל עוסק בגבול, ולכן הערכים ב-$a$ לא משנים דבר. בהוכחה מגדירים מחדש $f(a)=g(a)=0$, וזה מותר
+          בדיוק משום שהגבול לא תלוי בהם.
+        misconception: MC-lhopital-needs-value-at-point
+      - text: '$f''$ ו-$g''$ רציפות ב-$a$'
+        feedback: >-
+          לא נדרש. ההוכחה משתמשת רק בגבול של $\frac{f'}{g'}$, לא ברציפות של הנגזרות ולא בערכים שלהן ב-$a$.
+        misconception: MC-lhopital-needs-value-at-point
+      - text: '$\lim_{x\to a}\frac{f(x)}{g(x)}$ קיים'
+        feedback: >-
+          זו המסקנה, לא הנחה. הכלל מוכיח שגבול המנה קיים.
+        misconception: MC-lhopital-circular
+
+  - id: Q-6.3-proof
+    type: rank
+    objectives: [OBJ-6.3-1]
+    level: exam
+    prompt: >-
+      הוכחת כלל לופיטל לגבול חד-צדדי מימין: $f,g$ גזירות ב-$(a,a+r)$, $g'\ne0$ שם,
+      $f(x),g(x)\to0$ ו-$\frac{f'(x)}{g'(x)}\to L$ כש-$x\to a^+$. צריך להראות ש-$\frac{f(x)}{g(x)}\to L$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: extend
+        label: 'מגדירים $f(a)=g(a)=0$. כעת $f,g$ רציפות בכל קטע $[a,x]$ עם $a<x<a+r$, וגזירות בפנים שלו.'
+      - id: rolle
+        label: '$g(x)\ne0$ לכל $x\in(a,a+r)$: אחרת, לפי רול ב-$[a,x]$, הייתה נקודה שבה $g''=0$.'
+      - id: cauchy
+        label: 'לפי משפט קושי ב-$[a,x]$ יש $c_x\in(a,x)$ עם $\frac{f(x)}{g(x)} = \frac{f(x)-f(a)}{g(x)-g(a)} = \frac{f''(c_x)}{g''(c_x)}$.'
+      - id: eps
+        label: 'יהי $\varepsilon>0$. מההנחה יש $\eta>0$ כך ש-$\left|\frac{f''(t)}{g''(t)}-L\right|<\varepsilon$ לכל $t\in(a,a+\eta)$.'
+      - id: conclude
+        label: 'לכל $x\in(a,a+\eta)$ מתקיים $c_x\in(a,x)\subset(a,a+\eta)$, ולכן $\left|\frac{f(x)}{g(x)}-L\right|<\varepsilon$.'
+    order: [extend, rolle, cauchy, eps, conclude]
+    correctFeedback: >-
+      נכון. כל הנחה נכנסת פעם אחת: הגבולות $0$ מאפשרים להגדיר את $f(a),g(a)$ ברציפות, $g'\ne0$ נותן
+      $g(x)\ne0$ ואת משפט קושי, וגבול מנת הנגזרות נותן את ה-$\eta$.
+    wrongFeedback: >-
+      קודם מכינים את הקטע $[a,x]$ לשימוש במשפט קושי (רציפות בקצה, מכנה שאינו אפס), אחר כך מפעילים אותו,
+      ורק בסוף משתמשים בהגדרת הגבול.
+
+  - id: Q-6.3-cx
+    type: mc
+    objectives: [OBJ-6.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחת כלל לופיטל מקבלים $\frac{f(x)}{g(x)} = \frac{f'(c_x)}{g'(c_x)}$ עם $c_x\in(a,x)$. למה מזה נובע
+      ש-$\frac{f(x)}{g(x)}\to L$ כש-$x\to a^+$?
+    choices:
+      - text: 'כי לכל $\varepsilon$ יש $\eta$ כך שמנת הנגזרות קרובה ל-$L$ בכל $(a,a+\eta)$, ו-$c_x$ נמצאת שם לכל $x<a+\eta$'
+        correct: true
+        feedback: >-
+          נכון. לא צריך לדעת על $c_x$ דבר מלבד $a<c_x<x$: ההגדרה של גבול מנת הנגזרות שולטת בכל נקודה בקטע.
+      - text: 'כי $c_x$ היא האמצע $\frac{a+x}{2}$, ולכן $c_x\to a$'
+        feedback: >-
+          משפט קושי לא אומר איפה $c_x$, רק שהיא בקטע. והמיקום המדויק לא נחוץ: מספיק $a<c_x<x$.
+        misconception: MC-mvt-c-midpoint
+      - text: 'כי $f''$ ו-$g''$ רציפות ב-$a$, ולכן $\frac{f''(c_x)}{g''(c_x)}\to\frac{f''(a)}{g''(a)}$'
+        feedback: >-
+          הנגזרות לא חייבות להיות מוגדרות ב-$a$, ובוודאי לא רציפות שם. ההוכחה משתמשת רק בגבול של מנת הנגזרות.
+        misconception: MC-lhopital-needs-value-at-point
+
+  - id: Q-6.3-cos
+    type: numeric
+    objectives: [OBJ-6.3-1]
+    level: basic
+    prompt: >-
+      חשבו את $\lim_{x\to0}\frac{1-\cos x}{x^2}$.
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac12$. אפס חלקי אפס; אחרי גזירה $\frac{\sin x}{2x}$, שוב אפס חלקי אפס, ואחרי גזירה נוספת
+      $\frac{\cos x}{2}\to\frac12$. (או בלי לופיטל: $\frac{\sin x}{2x}\to\frac12$ מהגבול של שיעור 3.5.)
+    wrongFeedback: >-
+      בדקו שהצורה אפס חלקי אפס, גזרו את המונה ואת המכנה בנפרד, ובדקו שוב את הצורה לפני כל הפעלה נוספת.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          הנגזרת של $x^2$ היא $2x$, לא $x$. אחרי ההפעלה הראשונה המנה היא $\frac{\sin x}{2x}$.
+      - value: -0.5
+        feedback: >-
+          הנגזרת של $1-\cos x$ היא $+\sin x$: הנגזרת של $\cos x$ היא $-\sin x$, ויש מינוס לפניה.
+
+  - id: Q-6.3-logexp
+    type: numeric
+    objectives: [OBJ-6.3-2]
+    level: basic
+    prompt: >-
+      חשבו את $\lim_{x\to\infty}\frac{\ln\left(1+e^{2x}\right)}{x}$.
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. אינסוף חלקי אינסוף, ומנת הנגזרות היא $\frac{2e^{2x}}{1+e^{2x}} = \frac{2}{e^{-2x}+1}\to 2$.
+    wrongFeedback: >-
+      גזרו את $\ln\left(1+e^{2x}\right)$ בכלל השרשרת (פעמיים), ואחרי זה חלקו מונה ומכנה ב-$e^{2x}$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          הנגזרת של $e^{2x}$ היא $2e^{2x}$: שכחתם את הגורם $2$ של השרשרת הפנימית.
+      - value: 0
+        feedback: >-
+          הנגזרת של $\ln(1+u)$ היא $\frac{u'}{1+u}$, לא $\frac{1}{1+u}$. בלי $u' = 2e^{2x}$ במונה מקבלים אפס.
+
+  - id: Q-6.3-xlnx
+    type: mc
+    objectives: [OBJ-6.3-2, OBJ-6.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      רוצים לחשב את $\lim_{x\to0^+} x\ln x$, צורה של אפס כפול אינסוף. איזו דרך מגיעה לתשובה בהפעלה אחת של כלל
+      לופיטל?
+    choices:
+      - text: 'כותבים $\frac{\ln x}{1/x}$, אינסוף חלקי אינסוף; מנת הנגזרות $\frac{1/x}{-1/x^2} = -x\to 0$'
+        correct: true
+        feedback: >-
+          נכון, הגבול $0$. בהעברה למנה כדאי להשאיר במונה את הגורם שהנגזרת שלו פשוטה יותר, כאן $\ln x$.
+      - text: 'כותבים $\frac{x}{1/\ln x}$, אפס חלקי אפס, ומפעילים את הכלל'
+        feedback: >-
+          הצורה נכונה, אבל מנת הנגזרות היא $\frac{1}{-1/(x\ln^2 x)} = -x\ln^2 x$, גבול קשה יותר מהמקורי. העברה
+          חוקית יכולה לא לעזור.
+        misconception: MC-lhopital-always-helps
+      - text: 'גוזרים כל גורם: $(x)''\cdot(\ln x)'' = \frac1x\to\infty$'
+        feedback: >-
+          הכלל חל על מנה של שתי פונקציות ששתיהן שואפות לאפס או לאינסוף, לא על מכפלה. קודם מעבירים למנה.
+        misconception: MC-lhopital-no-indeterminate
+      - text: 'אין צורך לחשב: אפס כפול אינסוף הוא אפס'
+        feedback: >-
+          התשובה כאן אכן $0$, אבל אפס כפול אינסוף היא צורה לא מוגדרת: $x\cdot\frac{1}{x} = 1$, ו-$x\cdot\frac{1}{x^2}\to\infty$.
+        misconception: MC-indeterminate-form-value
+
+  - id: Q-6.3-one-inf
+    type: numeric
+    objectives: [OBJ-6.3-2]
+    level: mid
+    prompt: >-
+      חשבו את $\lim_{x\to0}\left(1+2x\right)^{1/x}$ (עד שלוש ספרות אחרי הנקודה).
+    answer: 7.389056
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $e^2\approx 7.389$. כותבים $\left(1+2x\right)^{1/x} = e^{\ln(1+2x)/x}$. המעריך הוא אפס חלקי אפס,
+      ולפי לופיטל $\frac{2/(1+2x)}{1}\to 2$. האקספוננט רציף, ולכן הגבול $e^2$.
+    wrongFeedback: >-
+      זו צורה של אחד בחזקת אינסוף. כתבו את הביטוי כ-$e$ בחזקת לוגריתם, חשבו את הגבול של המעריך, ורק אז
+      הפעילו את האקספוננט.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          אחד בחזקת אינסוף היא צורה לא מוגדרת. הבסיס שואף ל-$1$, אבל המעריך גדל מהר מספיק כדי לשנות את התוצאה.
+        misconception: MC-one-power-infinity-is-one
+      - value: 2
+        feedback: >-
+          $2$ הוא הגבול של המעריך $\frac{\ln(1+2x)}{x}$. הגבול המבוקש הוא $e^2$.
+      - value: 2.718282
+        feedback: >-
+          זה $e$, הגבול של $(1+x)^{1/x}$. הנגזרת של $\ln(1+2x)$ היא $\frac{2}{1+2x}$: שכחתם את ה-$2$.
+
+  - id: Q-6.3-inf-minus
+    type: numeric
+    objectives: [OBJ-6.3-2]
+    level: exam
+    prompt: >-
+      חשבו את $\lim_{x\to0^+}\left(\frac1x-\frac{1}{e^x-1}\right)$.
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac12$. במכנה משותף: $\frac{e^x-1-x}{x(e^x-1)}$, אפס חלקי אפס. אחרי הפעלה אחת:
+      $\frac{e^x-1}{e^x-1+xe^x}$, שוב אפס חלקי אפס. אחרי הפעלה שנייה: $\frac{e^x}{2e^x+xe^x}\to\frac12$.
+      לפני כל הפעלה בודקים את הצורה ואת $g'\ne0$ ליד $0$.
+    wrongFeedback: >-
+      אינסוף פחות אינסוף אינה צורה שהכלל חל עליה. העבירו למכנה משותף, ובדקו שהתקבל אפס חלקי אפס.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          אינסוף פחות אינסוף אינו אפס: שני המחוברים גדלים, וההפרש ביניהם יכול לשאוף לכל דבר.
+        misconception: MC-indeterminate-form-value
+      - value: 1
+        feedback: >-
+          בגזירה השנייה, הנגזרת של $xe^x$ היא $e^x+xe^x$ (כלל המכפלה). אם גוזרים אותה ל-$xe^x$ בלבד מקבלים
+          $\frac{e^x}{e^x+xe^x}\to 1$.
+
+  - id: Q-6.3-sequence
+    type: mc
+    objectives: [OBJ-6.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      איך מחשבים נכון את $\lim_{n\to\infty}\frac{\ln n}{n}$ בעזרת כלל לופיטל?
+    choices:
+      - text: 'מחשבים $\lim_{x\to\infty}\frac{\ln x}{x} = \lim_{x\to\infty}\frac{1/x}{1} = 0$, ולפי היינה גם הסדרה שואפת ל-$0$'
+        correct: true
+        feedback: >-
+          נכון. אם $f(x)\to L$ כש-$x\to\infty$, אז $f(n)\to L$ לכל סדרה $n\to\infty$, ובפרט לטבעיים.
+      - text: 'גוזרים לפי $n$: $\frac{(\ln n)''}{(n)''} = \frac1n \to 0$'
+        feedback: >-
+          התשובה נכונה, אבל לסדרה אין נגזרת לפי $n$: היא מוגדרת רק על הטבעיים. החישוב הזה נכון רק דרך
+          הפונקציה $\frac{\ln x}{x}$ והיינה.
+        misconception: MC-lhopital-differentiate-sequence
+      - text: 'הגבול $1$, כי מונה ומכנה שואפים שניהם לאינסוף'
+        feedback: >-
+          אינסוף חלקי אינסוף היא צורה לא מוגדרת, לא $1$. כאן הלוגריתם גדל הרבה יותר לאט מ-$n$.
+        misconception: MC-indeterminate-form-value
+
+  - id: Q-6.3-converse
+    type: twotier
+    objectives: [OBJ-6.3-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      סטודנט חישב את $\lim_{x\to\infty}\frac{x+\sin x}{x}$ כך: "אינסוף חלקי אינסוף; מנת הנגזרות $1+\cos x$
+      אינה מתכנסת, ולכן הגבול אינו קיים". האם המסקנה נכונה?
+    choices:
+      - text: לא, הגבול קיים ושווה ל-$1$
+        correct: true
+        feedback: >-
+          נכון. $\frac{x+\sin x}{x} = 1+\frac{\sin x}{x}$, ו-$\left|\frac{\sin x}{x}\right|\le\frac1x\to0$.
+      - text: כן, הגבול אינו קיים
+        feedback: >-
+          $1+\frac{\sin x}{x}\to1$: אפס כפול חסומה (שיעור 2.5, כאן לפונקציות). הכלל לא הוכיח שהגבול לא קיים.
+        misconception: MC-lhopital-converse
+    reasons:
+      - text: 'הכלל אומר "אם גבול מנת הנגזרות קיים אז..."; כשהוא לא קיים, הכלל לא אומר דבר'
+        correct: true
+        feedback: >-
+          בדיוק. ההנחה "גבול מנת הנגזרות קיים" לא מתקיימת, ולכן הכלל לא חל, בשום כיוון. מחשבים בדרך אחרת.
+      - text: 'הסטודנט היה צריך לגזור פעם נוספת'
+        feedback: >-
+          מנת הנגזרות $\frac{1+\cos x}{1}$ אינה צורה לא מוגדרת, ולכן אין מה לגזור שוב; וגזירה נוספת נותנת
+          $-\sin x$, שגם הוא לא מתכנס.
+        misconception: MC-lhopital-always-helps
+      - text: 'הכלל לא חל כי הצורה אינה אינסוף חלקי אינסוף'
+        feedback: >-
+          הצורה כן אינסוף חלקי אינסוף: $x+\sin x\ge x-1\to\infty$. מה שנכשל הוא ההנחה על גבול מנת הנגזרות.
+        misconception: MC-lhopital-no-indeterminate
+
+  - id: Q-6.3-not-indet
+    type: numeric
+    objectives: [OBJ-6.3-3]
+    level: basic
+    prompt: >-
+      חשבו את $\lim_{x\to1}\frac{x^2+1}{x+1}$.
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. המנה רציפה ב-$1$ (המכנה $2\ne0$), ולכן מציבים: $\frac{2}{2} = 1$.
+    wrongFeedback: >-
+      לפני כל שימוש בכלל לופיטל בודקים את הצורה. כאן המונה והמכנה שואפים ל-$2$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          $2 = \lim\frac{2x}{1}$ היא מנת הנגזרות, אבל הכלל לא חל: הצורה אינה אפס חלקי אפס ולא אינסוף חלקי
+          אינסוף.
+        misconception: MC-lhopital-no-indeterminate
+
+  - id: Q-6.3-cycle
+    type: mc
+    objectives: [OBJ-6.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מפעילים את כלל לופיטל על $\lim_{x\to\infty}\frac{\sqrt{x^2+1}}{x}$ ומקבלים $\frac{x/\sqrt{x^2+1}}{1} = \frac{x}{\sqrt{x^2+1}}$.
+      הפעלה נוספת מחזירה $\frac{\sqrt{x^2+1}}{x}$. מה נכון?
+    choices:
+      - text: 'הכלל לא עוזר כאן; מחלקים ב-$x$ ומקבלים $\sqrt{1+\frac{1}{x^2}}\to1$'
+        correct: true
+        feedback: >-
+          נכון. ההפעלות מחזירות זו את זו, ולכן חוזרים לכלים של שיעור 2.4: חלוקה בחזקה המובילה (כאן
+          $\sqrt{x^2} = x$ כי $x>0$).
+      - text: 'הגבול אינו קיים, כי כלל לופיטל לא מסתיים'
+        feedback: >-
+          כשהכלל לא עוזר, הוא פשוט לא אומר דבר על הגבול. הגבול כאן קיים ושווה ל-$1$.
+        misconception: MC-lhopital-converse
+      - text: 'ממשיכים להפעיל את הכלל; אחרי מספיק הפעלות מגיעים לתשובה'
+        feedback: >-
+          המנה חוזרת על עצמה כל שתי הפעלות, ולכן שום מספר של הפעלות לא יסיים.
+        misconception: MC-lhopital-always-helps

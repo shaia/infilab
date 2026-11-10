@@ -1,0 +1,48 @@
+# Terms first defined in lesson 5.1.
+- id: difference-quotient
+  term: מנת ההפרשים
+  en: difference quotient
+  symbol: '\frac{f(x_0+h)-f(x_0)}{h}'
+  definition: >-
+    הביטוי $\frac{f(x_0+h)-f(x_0)}{h}$ עבור $h\neq0$: השיפוע של המיתר בין הנקודות $(x_0, f(x_0))$ ו-$(x_0+h, f(x_0+h))$
+    על הגרף.
+  lesson: '5.1'
+- id: derivative
+  term: נגזרת
+  en: derivative
+  symbol: 'f''(x_0)'
+  definition: >-
+    הנגזרת של $f$ בנקודה $x_0$ היא הגבול $f'(x_0)=\lim_{h\to0}\frac{f(x_0+h)-f(x_0)}{h}$, כשהוא קיים וסופי.
+    הפונקציה $x\mapsto f'(x)$, המוגדרת בכל נקודה שבה $f$ גזירה, נקראת פונקציית הנגזרת.
+  reject: [נגזרה]
+  lesson: '5.1'
+- id: differentiable
+  term: גזירה
+  en: differentiable
+  definition: >-
+    $f$ גזירה בנקודה $x_0$ אם הנגזרת $f'(x_0)$ קיימת (גבול סופי של מנת ההפרשים). $f$ גזירה בקטע פתוח אם היא
+    גזירה בכל נקודה שלו.
+  lesson: '5.1'
+- id: one-sided-derivative
+  term: נגזרת חד-צדדית
+  en: one-sided derivative
+  symbol: 'f''_+(x_0),\ f''_-(x_0)'
+  definition: >-
+    הנגזרת מימין היא $f'_+(x_0)=\lim_{h\to0^+}\frac{f(x_0+h)-f(x_0)}{h}$, והנגזרת משמאל $f'_-(x_0)$ היא אותו גבול
+    כש-$h\to0^-$. $f$ גזירה ב-$x_0$ אם ורק אם שתיהן קיימות, סופיות ושוות.
+  lesson: '5.1'
+- id: tangent-line
+  term: משיק
+  en: tangent line
+  symbol: 'y=f(x_0)+f''(x_0)(x-x_0)'
+  definition: >-
+    המשיק לגרף של פונקציה גזירה בנקודה $x_0$ הוא הישר שעובר בנקודה $(x_0, f(x_0))$ ושיפועו $f'(x_0)$: הגבול של
+    המיתרים מ-$x_0$ ל-$x_0+h$ כש-$h\to0$.
+  lesson: '5.1'
+- id: rate-of-change
+  term: קצב שינוי
+  en: rate of change
+  definition: >-
+    $f'(x_0)$ הוא קצב השינוי הרגעי של $f$ ב-$x_0$: כש-$x$ זז ב-$h$ קטן, $f$ זזה בערך ב-$f'(x_0)\,h$, ושגיאת
+    הקירוב, חלקי $h$, שואפת ל-0.
+  lesson: '5.1'

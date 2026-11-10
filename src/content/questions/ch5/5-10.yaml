@@ -1,0 +1,319 @@
+# Lesson 5.10 — analysing a function.
+# Objectives (src/course.ts):
+#   OBJ-5.10-1  vertical, horizontal and slant asymptotes
+#   OBJ-5.10-2  a full analysis, and a sketch that agrees with all of it
+#   OBJ-5.10-3  the number of solutions of an equation, by analysing a function
+chapter: 5
+questions:
+  - id: Q-5.10-slant
+    type: numeric
+    objectives: [OBJ-5.10-1]
+    level: basic
+    prompt: >-
+      לגרף של $f(x)=\frac{2x^2+3x-1}{x-1}$ יש אסימפטוטה משופעת $y=mx+b$ כש-$x\to\pm\infty$. מצאו את $b$.
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $m=\lim\frac{f(x)}{x}=2$, ו-$b=\lim\bigl(f(x)-2x\bigr)=\lim\frac{5x-1}{x-1}=5$. (בחילוק פולינומים:
+      $2x^2+3x-1=(x-1)(2x+5)+4$.)
+    wrongFeedback: >-
+      קודם $m=\lim_{x\to\infty}\frac{f(x)}{x}$, ואחר כך $b=\lim_{x\to\infty}\bigl(f(x)-mx\bigr)$: כנסו את $f(x)-2x$
+      למנה אחת.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          $3$ הוא המקדם של $x$ במונה. $b$ אינו נקרא מהמקדמים: הוא הגבול של $f(x)-mx$, שבו גם המכנה משתתף.
+        misconception: MC-slant-intercept-skipped
+      - value: 2
+        feedback: '$2$ הוא השיפוע $m$. השאלה מבקשת את $b$.'
+
+  - id: Q-5.10-vertical
+    type: multi
+    objectives: [OBJ-5.10-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אילו מהישרים הבאים הם אסימפטוטות של הגרף של $f(x)=\frac{x^2-1}{x^2-x}$? סמנו את כולם.
+    choices:
+      - text: '$x=0$'
+        correct: true
+        feedback: >-
+          נכון. $f(x)=\frac{(x-1)(x+1)}{x(x-1)}=\frac{x+1}{x}$ ל-$x\neq0,1$, ו-$\frac{x+1}{x}\to\pm\infty$ כש-$x\to0^\pm$.
+      - text: '$x=1$'
+        feedback: >-
+          המכנה מתאפס ב-$1$, אבל גם המונה: $\lim_{x\to1}f(x)=\lim_{x\to1}\frac{x+1}{x}=2$, סופי. זו נקודת אי-רציפות סליקה, לא
+          אסימפטוטה.
+        misconception: MC-vertical-asymptote-every-denominator-zero
+      - text: '$y=1$'
+        correct: true
+        feedback: 'נכון: $\frac{x+1}{x}=1+\frac1x\to1$ כש-$x\to\pm\infty$.'
+
+  - id: Q-5.10-cross
+    type: twotier
+    objectives: [OBJ-5.10-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם גרף של פונקציה יכול לחתוך את האסימפטוטה האופקית שלו?
+    choices:
+      - text: כן, אפילו אינסוף פעמים
+        correct: true
+        feedback: >-
+          נכון. אסימפטוטה מתארת את ההתנהגות כש-$x\to\infty$, לא איסור לגעת.
+      - text: לא
+        feedback: >-
+          $f(x)=\frac{\sin x}{x}$ שואפת ל-$0$ כש-$x\to\infty$, ומתאפסת בכל $x=k\pi$: היא חותכת את $y=0$ אינסוף פעמים.
+        misconception: MC-asymptote-never-crossed
+    reasons:
+      - text: '$y=L$ אסימפטוטה אופקית פירושו רק $\lim_{x\to\infty}f(x)=L$, וזה מתיר $f(x)=L$ לאינסוף $x$'
+        correct: true
+        feedback: >-
+          בדיוק. גם $\frac{\sin x}{x}$ וגם הפונקציה הקבועה $L$ מקיימות את ההגדרה.
+      - text: 'אסימפטוטה היא ישר שהגרף מתקרב אליו ואף פעם לא מגיע אליו'
+        feedback: >-
+          זה ציור מבית הספר, לא ההגדרה. ההגדרה היא גבול, ו-$\frac{\sin x}{x}$ מראה שהגרף יכול להגיע לישר שוב ושוב.
+        misconception: MC-asymptote-never-crossed
+      - text: 'הגרף יכול לחתוך את האסימפטוטה, אבל רק מספר סופי של פעמים'
+        feedback: >-
+          אין הגבלה כזו: $\frac{\sin x}{x}$ חותכת את $y=0$ בכל $x=k\pi$, $k\in\mathbb{N}$.
+        misconception: MC-asymptote-never-crossed
+
+  - id: Q-5.10-sqrt
+    type: mc
+    objectives: [OBJ-5.10-1]
+    level: exam
+    prompt: >-
+      מהן האסימפטוטות המשופעות של $f(x)=\sqrt{x^2+4x}$ (בתחום $x\le-4$ או $x\ge0$)?
+    choices:
+      - text: '$y=x+2$ כש-$x\to\infty$, ו-$y=-x-2$ כש-$x\to-\infty$'
+        correct: true
+        feedback: >-
+          נכון. ב-$+\infty$: $m=1$ ו-$b=\lim\bigl(\sqrt{x^2+4x}-x\bigr)=\lim\frac{4x}{\sqrt{x^2+4x}+x}=2$. ב-$-\infty$:
+          $\frac{f(x)}{x}\to-1$, ו-$b=\lim\bigl(\sqrt{x^2+4x}+x\bigr)=\lim\frac{4x}{\sqrt{x^2+4x}-x}=-2$, כי שם
+          $\sqrt{x^2+4x}=|x|\sqrt{1+\frac4x}$ ו-$|x|=-x$.
+      - text: '$y=x+2$ בשני הכיוונים'
+        feedback: >-
+          $f\ge0$ תמיד, ולכן כש-$x\to-\infty$ הגרף לא יכול להתקרב לישר $y=x+2$, ששואף ל-$-\infty$. בכל כיוון מחשבים
+          $m$ ו-$b$ בנפרד.
+        misconception: MC-same-asymptote-both-sides
+      - text: '$y=x$ כש-$x\to\infty$, ו-$y=-x$ כש-$x\to-\infty$'
+        feedback: >-
+          השיפועים נכונים, אבל $b$ אינו $0$: $\sqrt{x^2+4x}-x=\frac{4x}{\sqrt{x^2+4x}+x}\to2$. "בערך $|x|$" לא מספיק כדי לקבוע את $b$.
+        misconception: MC-slant-intercept-skipped
+      - text: '$y=x+2$ כש-$x\to\infty$, ו-$y=-x+2$ כש-$x\to-\infty$'
+        feedback: >-
+          ב-$-\infty$ הסימן של $b$ התהפך. שם $\sqrt{x^2}=|x|=-x$, ולכן $\sqrt{x^2+4x}-x$ אינו הביטוי הנכון; מחשבים
+          $\lim\bigl(f(x)+x\bigr)$ ומקבלים $-2$.
+        misconception: MC-sqrt-square-is-x
+    hints:
+      - 'כפלו בצמוד, וזכרו ש-$\sqrt{x^2}=|x|$.'
+
+  - id: Q-5.10-min-above-max
+    type: twotier
+    objectives: [OBJ-5.10-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בחקירה של $f(x)=\frac{x^2}{x-1}$ התקבל מקסימום מקומי שערכו $0$ ומינימום מקומי שערכו $4$. האם יש כאן טעות?
+    choices:
+      - text: לא, זה אפשרי
+        correct: true
+        feedback: >-
+          נכון. $f'(x)=\frac{x(x-2)}{(x-1)^2}$, ולכן מקסימום מקומי ב-$0$ ($f(0)=0$) ומינימום מקומי ב-$2$ ($f(2)=4$).
+      - text: כן, מינימום לא יכול להיות גדול ממקסימום
+        feedback: >-
+          המקסימום והמינימום כאן **מקומיים**, וכל אחד נמצא על ענף אחר של הגרף, משני צדי האסימפטוטה $x=1$.
+        misconception: MC-local-min-below-local-max
+    reasons:
+      - text: 'הם על שני ענפים שונים: משמאל ל-$1$ הענף מגיע עד $0$ ויורד ל-$-\infty$, ומימין הוא יורד מ-$+\infty$ עד $4$'
+        correct: true
+        feedback: >-
+          בדיוק. ערך מקומי משווה רק לנקודות קרובות. בין שני הענפים מפרידה האסימפטוטה האנכית, ושם אין שום השוואה.
+      - text: 'בין מקסימום למינימום הפונקציה יורדת, ולכן ערך המינימום קטן יותר'
+        feedback: >-
+          זה נכון רק כשהפונקציה רציפה בכל הקטע שבין שתי הנקודות. כאן היא לא מוגדרת ב-$1$, שנמצא ביניהן.
+        misconception: MC-local-min-below-local-max
+      - text: 'בדקו שוב: $f(2)$ שווה $-4$'
+        feedback: '$f(2)=\frac{4}{2-1}=4$. החישוב נכון.'
+        misconception: MC-local-min-below-local-max
+
+  - id: Q-5.10-local-max
+    type: numeric
+    objectives: [OBJ-5.10-2]
+    level: mid
+    prompt: >-
+      בחקירת $f(x)=x^2e^{-x}$: מהו ערך המקסימום המקומי של $f$?
+    answer: 0.5413411329
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f'(x)=x(2-x)e^{-x}$: שלילית ל-$x<0$, חיובית ב-$(0,2)$ ושלילית ל-$x>2$. לכן מינימום מקומי ב-$0$ (הערך $0$, וזה
+      גם המינימום המוחלט) ומקסימום מקומי ב-$2$: $f(2)=\frac{4}{e^2}\approx0.541$. הוא לא מוחלט, כי $f\to\infty$ כש-$x\to-\infty$.
+    wrongFeedback: >-
+      גזרו בכלל המכפלה, הוציאו $e^{-x}$ כגורם משותף, ובדקו את הסימן של $f'$.
+    commonWrong:
+      - value: 2
+        feedback: '$2$ היא נקודת המקסימום. הערך הוא $f(2)=4e^{-2}$.'
+        misconception: MC-extremum-point-for-value
+      - value: 0
+        feedback: >-
+          $0$ הוא ערך המינימום המקומי, ב-$x=0$: שם $f'$ עוברת משלילית לחיובית.
+        misconception: MC-first-test-reversed
+
+  - id: Q-5.10-inflections
+    type: numeric
+    objectives: [OBJ-5.10-2]
+    level: mid
+    prompt: >-
+      לפונקציה $f(x)=\frac{x}{x^2+1}$ מתקיים $f''(x)=\frac{2x(x^2-3)}{(x^2+1)^3}$. כמה נקודות פיתול יש לה?
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f''$ מחליפה סימן ב-$x=-\sqrt3$, ב-$0$ וב-$\sqrt3$ (שלושה שורשים פשוטים של המונה, והמכנה חיובי). לכן שלוש
+      נקודות פיתול.
+    wrongFeedback: >-
+      מצאו את השורשים של המונה $2x(x^2-3)$, ובדקו בכל אחד אם $f''$ מחליפה בו סימן.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          לא רק $0$: גם $x^2-3=0$ נותן שתי נקודות שבהן $f''$ מחליפה סימן.
+      - value: 2
+        feedback: >-
+          שכחתם את הגורם $x$ במונה: גם ב-$0$ הסימן של $f''$ מתחלף, מחיובי (ל-$x$ שלילי קרוב ל-$0$) לשלילי.
+
+  - id: Q-5.10-impossible
+    type: twotier
+    objectives: [OBJ-5.10-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      סטודנט סיכם חקירה כך: $f$ גזירה פעמיים ב-$\mathbb{R}$, $f'(x)>0$ ו-$f''(x)>0$ לכל $x$, ו-$\lim_{x\to\infty}f(x)=0$.
+      האם קיימת פונקציה כזו?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. פונקציה עולה וקמורה גדלה לפחות כמו ישר, ולכן לא יכולה להתקרב ל-$0$.
+      - text: 'כן, למשל $f(x)=-e^{-x}$'
+        feedback: >-
+          $f'(x)=e^{-x}>0$ ו-$f\to0$, אבל $f''(x)=-e^{-x}<0$: היא עולה ו**קעורה**.
+        misconception: MC-convex-concave-swapped
+    reasons:
+      - text: 'לכל $x>0$, לפי לגרנז'' $f(x)-f(0)=f''(c)x$ עם $c\in(0,x)$, ו-$f''(c)>f''(0)$ כי $f''$ עולה; לכן $f(x)>f(0)+f''(0)x\to\infty$'
+        correct: true
+        feedback: >-
+          בדיוק. $f''>0$ אומר ש-$f'$ עולה, ולכן $f'(c)\ge f'(0)>0$: הגרף נמצא מעל ישר בשיפוע חיובי.
+      - text: 'פונקציה עולה יכולה להתייצב ולהתקרב לאסימפטוטה אופקית'
+        feedback: >-
+          עולה לבד כן ($-e^{-x}$), אבל כדי להתייצב השיפוע צריך לרדת לאפס, ואילו כאן $f'$ עולה. שני התנאים יחד סותרים זה את זה.
+        misconception: MC-convex-increasing-may-level-off
+      - text: '$f$ עולה ו-$f\to0$, ולכן $f<0$; ופונקציה שלילית לא יכולה להיות קמורה'
+        feedback: >-
+          פונקציה שלילית יכולה להיות קמורה: $f(x)=x^2-1$ ב-$(-1,1)$, או $-\frac{1}{1+x^2}$ סביב $0$. הסתירה באה מהשילוב של עלייה
+          וקמירות, לא מהסימן.
+        misconception: MC-convex-means-increasing
+
+  - id: Q-5.10-cubic-roots
+    type: numeric
+    objectives: [OBJ-5.10-3]
+    level: basic
+    prompt: >-
+      כמה פתרונות ממשיים יש למשוואה $x^3-3x+1=0$?
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f(x)=x^3-3x+1$, $f'(x)=3(x-1)(x+1)$. מקסימום מקומי $f(-1)=3>0$ ומינימום מקומי $f(1)=-1<0$. $f$ עולה ממש
+      ב-$(-\infty,-1]$ מ-$-\infty$ עד $3$, יורדת ממש ב-$[-1,1]$ מ-$3$ עד $-1$, ועולה ממש ב-$[1,\infty)$ מ-$-1$ עד $\infty$.
+      בכל קטע יש בדיוק שורש אחד (ערך הביניים לקיום, מונוטוניות ממש ליחידות).
+    wrongFeedback: >-
+      מצאו את קטעי המונוטוניות של $f(x)=x^3-3x+1$ ואת ערכי $f$ בקצותיהם, וספרו בכמה קטעים $f$ עוברת דרך $0$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          לפולינום ממעלה שלישית יש **לפחות** שורש אחד, לא בדיוק אחד. כאן המקסימום המקומי חיובי והמינימום המקומי שלילי,
+          ולכן הגרף חוצה את ציר $x$ שלוש פעמים.
+        misconception: MC-ivt-unique-root
+      - value: 2
+        feedback: >-
+          $2$ הוא מספר נקודות הקיצון. מספר השורשים נקבע לפי הסימן של $f$ בקצות קטעי המונוטוניות.
+
+  - id: Q-5.10-threshold
+    type: numeric
+    objectives: [OBJ-5.10-3]
+    level: mid
+    prompt: >-
+      לאיזה ערך חיובי של $a$ יש למשוואה $e^x=ax$ פתרון **אחד בדיוק**?
+    answer: 2.718281828
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $a=e$. ל-$x\neq0$ המשוואה שקולה ל-$a=h(x)=\frac{e^x}{x}$, ו-$x=0$ אינו פתרון. ב-$(0,\infty)$:
+      $h'(x)=\frac{(x-1)e^x}{x^2}$, ולכן $h$ יורדת מ-$\infty$ עד $h(1)=e$ ואחר כך עולה ל-$\infty$. הערך $e$ מתקבל פעם אחת
+      בלבד: הישר $y=ex$ משיק ל-$e^x$ ב-$x=1$.
+    wrongFeedback: >-
+      הפרידו את הפרמטר: $a=\frac{e^x}{x}$. חקרו את $h(x)=\frac{e^x}{x}$ ובדקו כמה פעמים כל ערך מתקבל.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $y=x+1$ משיק ל-$e^x$ ב-$0$, אבל הישר $y=ax$ עובר בראשית. הישר $y=x$ נמצא כולו מתחת ל-$e^x$, ואין נקודת חיתוך.
+      - value: 0.3678794412
+        feedback: >-
+          $\frac1e$ הוא המקסימום של $\frac{x}{e^x}$, כלומר של $\frac1a$. הפכתם את הפרמטר: אם $\frac1a=\frac1e$ אז $a=e$.
+
+  - id: Q-5.10-classify
+    type: mc
+    objectives: [OBJ-5.10-3]
+    level: exam
+    prompt: >-
+      כמה פתרונות יש למשוואה $e^x=ax$, כתלות בפרמטר הממשי $a$?
+    choices:
+      - text: 'ל-$a<0$ פתרון אחד; ל-$0\le a<e$ אין פתרון; ל-$a=e$ פתרון אחד; ל-$a>e$ שני פתרונות'
+        correct: true
+        feedback: >-
+          נכון. $h(x)=\frac{e^x}{x}$: ב-$(-\infty,0)$ היא שלילית ויורדת ממש ($h'=\frac{(x-1)e^x}{x^2}<0$) מ-$0$ ל-$-\infty$,
+          ולכן כל $a<0$ מתקבל בדיוק פעם אחת; ב-$(0,\infty)$ התמונה היא $[e,\infty)$, עם $e$ פעם אחת וכל ערך גדול יותר פעמיים.
+          ב-$a=0$ המשוואה $e^x=0$ בלי פתרון.
+      - text: 'ל-$a<e$ אין פתרון; ל-$a=e$ פתרון אחד; ל-$a>e$ שני פתרונות'
+        feedback: >-
+          שכחתם את הענף $x<0$. עם $a=-1$: $g(x)=e^x+x$ עולה ממש מ-$-\infty$ ל-$\infty$, ולכן יש לה שורש אחד (בערך $-0.567$).
+        misconception: MC-solutions-forget-negative-branch
+      - text: 'ל-$a<0$ פתרון אחד; ל-$0\le a<e$ אין פתרון; ל-$a\ge e$ שני פתרונות'
+        feedback: >-
+          ב-$a=e$ הישר $y=ex$ משיק לגרף ב-$x=1$ ולא חותך אותו שוב: $h$ מקבלת את הערך $e$ רק במינימום שלה. זה פתרון **אחד**.
+        misconception: MC-tangent-case-two-solutions
+      - text: 'ל-$a>0$ פתרון אחד ול-$a\le0$ אין פתרון'
+        feedback: >-
+          עם $a=1$: $e^x>x$ לכל $x$, ואין פתרון. ועם $a=-1$ יש פתרון שלילי. חקירה של $h(x)=\frac{e^x}{x}$ בשני הענפים
+          נותנת את התמונה המלאה.
+        misconception: MC-solutions-forget-negative-branch
+    hints:
+      - 'הפרידו את הפרמטר: $a=\frac{e^x}{x}$ ל-$x\neq0$, וחקרו את הפונקציה הזו בכל אחד משני הקטעים של תחומה.'
+
+  - id: Q-5.10-continuity
+    type: twotier
+    objectives: [OBJ-5.10-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ עולה ממש ב-$[0,1]$, $f(0)<0$ ו-$f(1)>0$. לא נתון ש-$f$ רציפה. האם למשוואה $f(x)=0$ יש בהכרח פתרון יחיד ב-$[0,1]$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. מונוטוניות ממש נותנת **לכל היותר** פתרון אחד; לקיום צריך רציפות.
+      - text: כן
+        feedback: >-
+          $f(x)=x-1$ ב-$[0,\frac12)$ ו-$f(x)=x$ ב-$[\frac12,1]$ עולה ממש, $f(0)=-1$ ו-$f(1)=1$, ואין לה שורש: היא קופצת
+          מעל $0$ בנקודה $\frac12$.
+        misconception: MC-ivt-no-continuity-needed
+    reasons:
+      - text: 'מונוטוניות ממש מבטיחה יחידות, אבל קיום דורש את משפט ערך הביניים, ולכן רציפות'
+        correct: true
+        feedback: >-
+          בדיוק. בספירת פתרונות בעזרת חקירה, כל קטע מונוטוניות תורם פתרון אחד לכל היותר, ורציפות (שנובעת מגזירות) מבטיחה אותו.
+      - text: 'פונקציה שעוברת מערך שלילי לחיובי חייבת לעבור דרך $0$'
+        feedback: >-
+          רק אם היא רציפה. הפונקציה הקופצת שלמעלה עוברת מ-$-\frac12$ (משמאל ל-$\frac12$) ישר ל-$\frac12$.
+        misconception: MC-ivt-no-continuity-needed
+      - text: 'פונקציה עולה ממש רציפה בהכרח'
+        feedback: >-
+          לא: הפונקציה שלמעלה עולה ממש וקופצת ב-$\frac12$. פונקציה מונוטונית רציפה בדיוק כשהתמונה שלה קטע (שיעור 4.5).
+        misconception: MC-monotone-is-continuous

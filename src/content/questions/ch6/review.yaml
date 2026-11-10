@@ -1,0 +1,381 @@
+# Chapter 6 — review questions over the whole chapter, easy to hard. Each names the lesson to go back to.
+chapter: 6
+questions:
+  - id: Q-6-review-01
+    type: numeric
+    objectives: [OBJ-6.1-1]
+    level: basic
+    prompt: >-
+      חשבו את $\liminf_{n\to\infty} a_n$ עבור $a_n = (-1)^n-\frac1n$.
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. האיברים הזוגיים $1-\frac1n\to1$ והאי-זוגיים $-1-\frac1n\to-1$, ולכן הגבולות החלקיים $\pm1$, והקטן
+      שבהם $-1$.
+    wrongFeedback: >-
+      פצלו לאיברים זוגיים ואי-זוגיים, וקחו את הקטן מבין הגבולות החלקיים.
+    commonWrong:
+      - value: -2
+        feedback: >-
+          $-2 = a_1$ הוא האינפימום של כל האיברים. הגבול התחתון תלוי רק בזנבות, ואיבר בודד בהתחלה לא משנה אותו.
+        misconception: MC-limsup-is-sup
+      - value: 1
+        feedback: >-
+          $1$ הוא הגבול **העליון**. השאלה שואלת על התחתון.
+    hints:
+      - 'חזרו לשיעור 6.1: הגבול התחתון הוא הגבול החלקי הקטן ביותר.'
+
+  - id: Q-6-review-02
+    type: mc
+    objectives: [OBJ-6.2-2, OBJ-6.2-3]
+    level: basic
+    qualitative: true
+    prompt: >-
+      איזו מהפונקציות הבאות רציפה במידה שווה בקטע $(0,1)$?
+    choices:
+      - text: '$x\sin\frac1x$'
+        correct: true
+        feedback: >-
+          נכון. $\left|x\sin\frac1x\right|\le x\to0$, ולכן אפשר להגדיר אותה $0$ ב-$0$ ו-$\sin 1$ ב-$1$ ולקבל
+          פונקציה רציפה ב-$[0,1]$. לפי קנטור היא רציפה שם במידה שווה, ובפרט ב-$(0,1)$.
+      - text: '$\frac1x$'
+        feedback: >-
+          $\frac1n$ ו-$\frac1{n+1}$ קרובות כרצוננו, וההפרש בערכים $1$. היא רציפה בקטע חסום, וזה לא מספיק.
+        misconception: MC-continuous-implies-uc
+      - text: '$\sin\frac1x$'
+        feedback: >-
+          ליד $0$ היא מתנודדת בין $-1$ ל-$1$ בקטעים קצרים יותר ויותר, ואין לה גבול ב-$0$: אי אפשר להאריך אותה
+          ברציפות.
+        misconception: MC-continuous-implies-uc
+      - text: '$\frac{1}{1-x}$'
+        feedback: >-
+          כמו $\frac1x$, רק בקצה השני: היא לא חסומה ליד $1$, ונקודות קרובות ליד $1$ נותנות ערכים רחוקים.
+        misconception: MC-continuous-implies-uc
+    hints:
+      - 'חזרו לשיעור 6.2: מתי פונקציה רציפה בקטע פתוח מתארכת לפונקציה רציפה בקטע הסגור.'
+
+  - id: Q-6-review-03
+    type: numeric
+    objectives: [OBJ-6.3-1, OBJ-6.4-3]
+    level: basic
+    prompt: >-
+      חשבו את $\lim_{x\to0}\frac{e^x-1-x}{x^2}$, בכלל לופיטל או בטיילור.
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac12$. בטיילור: $e^x = 1+x+\frac{x^2}{2}+o(x^2)$, והמונה $\frac{x^2}{2}+o(x^2)$. בלופיטל:
+      $\frac{e^x-1}{2x}$, ושוב: $\frac{e^x}{2}\to\frac12$. שתי הדרכים חייבות לתת אותה תשובה.
+    wrongFeedback: >-
+      פתחו את $e^x$ עד $x^2$, או הפעילו את לופיטל פעמיים ובדקו את הצורה לפני כל הפעלה.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          המקדם של $x^2$ בפיתוח של $e^x$ הוא $\frac{1}{2!}$, לא $1$.
+        misconception: MC-taylor-forget-factorial
+      - value: 0
+        feedback: >-
+          פיתוח עד סדר $1$, $e^x = 1+x+o(x)$, נותן במונה רק $o(x)$, ומחלוקה ב-$x^2$ לא נשאר מידע.
+        misconception: MC-taylor-order-too-low
+    hints:
+      - 'חזרו לשיעור 6.4: חישוב גבולות בעזרת טיילור. (או לשיעור 6.3: לופיטל פעמיים.)'
+
+  - id: Q-6-review-04
+    type: mc
+    objectives: [OBJ-6.4-1, OBJ-5.3-3]
+    level: basic
+    prompt: >-
+      מהו פולינום טיילור מסדר $3$ של $\ln x$ סביב $a=1$?
+    choices:
+      - text: '$(x-1)-\frac{(x-1)^2}{2}+\frac{(x-1)^3}{3}$'
+        correct: true
+        feedback: >-
+          נכון. $\ln 1 = 0$, $(\ln)'(1) = 1$, $(\ln)''(1) = -1$, $(\ln)'''(1) = 2$, ולכן המקדמים $1$, $-\frac12$,
+          $\frac26 = \frac13$. זה הפיתוח של $\ln(1+u)$ עם $u = x-1$.
+      - text: '$x-\frac{x^2}{2}+\frac{x^3}{3}$'
+        feedback: >-
+          זה פיתוח סביב $0$, ושם $\ln x$ אינה מוגדרת. סביב $1$ כותבים בחזקות של $x-1$.
+        misconception: MC-taylor-center-zero
+      - text: '$(x-1)-(x-1)^2+2(x-1)^3$'
+        feedback: >-
+          אלה הנגזרות ב-$1$ בלי החלוקה ב-$k!$: $\frac{-1}{2!} = -\frac12$ ו-$\frac{2}{3!} = \frac13$.
+        misconception: MC-taylor-forget-factorial
+      - text: '$1+(x-1)-\frac{(x-1)^2}{2}+\frac{(x-1)^3}{3}$'
+        feedback: >-
+          האיבר החופשי הוא $\ln 1 = 0$.
+        misconception: MC-taylor-pattern-guess
+    hints:
+      - 'חזרו לשיעור 6.4: פולינום טיילור סביב נקודה כלשהי.'
+
+  - id: Q-6-review-05
+    type: twotier
+    objectives: [OBJ-6.3-3, OBJ-3.5-2, OBJ-5.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      "הוכחה" ש-$\lim_{x\to0}\frac{\sin x}{x} = 1$: זו צורה של אפס חלקי אפס, ולפי כלל לופיטל
+      $\lim_{x\to0}\frac{\cos x}{1} = 1$. האם זו הוכחה תקפה בקורס?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. החישוב נכון, אבל כהוכחה הוא מעגלי.
+      - text: כן
+        feedback: >-
+          כל ההנחות של הכלל מתקיימות, אבל כדי לדעת ש-$(\sin x)' = \cos x$ השתמשנו כבר בגבול שרוצים להוכיח.
+        misconception: MC-lhopital-circular
+    reasons:
+      - text: 'הנגזרת של סינוס ב-$0$ היא בהגדרה $\lim_{h\to0}\frac{\sin h}{h}$, ולכן הכלל מניח את מה שמוכיחים'
+        correct: true
+        feedback: >-
+          בדיוק. ההוכחה התקפה היא הגאומטרית של שיעור 3.5, עם $\sin x < x < \tan x$ וסנדוויץ'.
+      - text: 'הכלל לא חל, כי הצורה אינה אפס חלקי אפס'
+        feedback: >-
+          הצורה כן אפס חלקי אפס: $\sin x\to0$ ו-$x\to0$. הבעיה אינה בהנחות אלא במעגליות.
+        misconception: MC-lhopital-no-indeterminate
+      - text: 'הכלל לא חל, כי $\frac{\cos x}{1}$ לא מוגדרת ב-$0$'
+        feedback: >-
+          היא מוגדרת ורציפה ב-$0$. ובכל מקרה הכלל צריך רק את הגבול של מנת הנגזרות, לא ערך בנקודה.
+        misconception: MC-lhopital-needs-value-at-point
+    hints:
+      - 'חזרו לשיעור 6.3: ההנחות של כלל לופיטל, ומה צריך לדעת כבר כדי לגזור.'
+
+  - id: Q-6-review-06
+    type: numeric
+    objectives: [OBJ-6.1-1, OBJ-2.7-3, OBJ-4.6-3]
+    level: mid
+    prompt: >-
+      חשבו את $\limsup_{n\to\infty}\left(1+\frac{(-1)^n}{n}\right)^n$ (עד שלוש ספרות אחרי הנקודה).
+    answer: 2.718282
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $e$. לאיברים הזוגיים $\left(1+\frac1n\right)^n\to e$, ולאי-זוגיים $\left(1-\frac1n\right)^n\to\frac1e$.
+      הגבולות החלקיים $e$ ו-$\frac1e$, והגדול שבהם $e$.
+    wrongFeedback: >-
+      פצלו לזוגיים ולאי-זוגיים. כל תת-סדרה היא צורה של אחד בחזקת אינסוף, שאת הגבול שלה מכירים מפרקים 2 ו-4.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          אחד בחזקת אינסוף אינו אחד: $\left(1+\frac1n\right)^n\to e$.
+        misconception: MC-one-power-infinity-is-one
+      - value: 0.367879
+        feedback: >-
+          $\frac1e$ הוא הגבול של האיברים האי-זוגיים, כלומר הגבול **התחתון**.
+    hints:
+      - 'חזרו לשיעור 6.1: הגבול העליון הוא הגבול החלקי הגדול ביותר; ולשיעור 2.7: המספר e.'
+
+  - id: Q-6-review-07
+    type: twotier
+    objectives: [OBJ-6.2-3, OBJ-6.3-2]
+    level: mid
+    prompt: >-
+      האם $f(x) = x\ln x$ רציפה במידה שווה בקטע $(0,1]$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. אף שהנגזרת $\ln x+1$ אינה חסומה ליד $0$.
+      - text: לא, כי $\ln x$ אינה מוגדרת ב-$0$ והקטע אינו סגור
+        feedback: >-
+          זה אומר רק שמשפט קנטור לא חל ישירות. הגבול של $x\ln x$ ב-$0$ קיים, ולכן אפשר לסגור את הקטע.
+        misconception: MC-cantor-converse
+    reasons:
+      - text: 'לפי לופיטל $\lim_{x\to0^+}\frac{\ln x}{1/x} = \lim_{x\to0^+}(-x) = 0$; מגדירים $f(0)=0$, מקבלים פונקציה רציפה ב-$[0,1]$, ומשתמשים בקנטור'
+        correct: true
+        feedback: >-
+          בדיוק: לופיטל נותן את הגבול בקצה, והגבול מאפשר להאריך לקטע סגור.
+      - text: 'הנגזרת $\ln x+1$ אינה חסומה, ולכן $f$ אינה ליפשיץ ואינה רציפה במידה שווה'
+        feedback: >-
+          "אינה ליפשיץ" נכון, אבל רציפות במידה שווה אינה דורשת ליפשיץ: גם $\sqrt x$ אינה ליפשיץ ב-$[0,1]$
+          ורציפה בו במידה שווה.
+        misconception: MC-uc-implies-lipschitz
+    hints:
+      - 'חזרו לשיעור 6.2: הארכה לקטע סגור ומשפט קנטור; ולשיעור 6.3: אפס כפול אינסוף.'
+
+  - id: Q-6-review-08
+    type: twotier
+    objectives: [OBJ-6.2-2, OBJ-5.6-3]
+    level: mid
+    prompt: >-
+      האם $\arctan x$ רציפה במידה שווה על כל הישר $\mathbb{R}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון, אף שהתחום אינו חסום.
+      - text: לא, כי $\mathbb{R}$ אינו קטע סגור וחסום
+        feedback: >-
+          זה אומר רק שקנטור לא חל. יש דרכים אחרות להוכיח רציפות במידה שווה.
+        misconception: MC-cantor-converse
+    reasons:
+      - text: '$|(\arctan)''(x)| = \frac{1}{1+x^2}\le1$, ולפי לגרנז'' $|\arctan x-\arctan y|\le|x-y|$; ליפשיץ גורר רציפות במידה שווה'
+        correct: true
+        feedback: >-
+          בדיוק. $\delta = \varepsilon$ מתאים לכל הנקודות.
+      - text: 'לפי קנטור היא רציפה במידה שווה בכל קטע $[-n,n]$, ולכן על כל $\mathbb{R}$'
+        feedback: >-
+          זה לא נובע: $x^2$ רציפה במידה שווה בכל $[-n,n]$, ואינה רציפה במידה שווה על $\mathbb{R}$. ה-$\delta$
+          של $[-n,n]$ יכול לקטון כש-$n$ גדל.
+        misconception: MC-uc-is-pointwise
+    hints:
+      - 'חזרו לשיעור 6.2: ליפשיץ גורר רציפות במידה שווה; ולשיעור 5.6: נגזרת חסומה גוררת ליפשיץ.'
+
+  - id: Q-6-review-09
+    type: numeric
+    objectives: [OBJ-6.4-1, OBJ-6.5-2]
+    level: mid
+    prompt: >-
+      מקרבים $\sqrt{1.1}\approx 1.05$ בעזרת $T_1(x) = 1+\frac x2$ של $f(x) = \sqrt{1+x}$ סביב $0$. מהו החסם
+      שצורת לגרנז' של $R_1$ נותנת על השגיאה, כשחוסמים את $|f''(t)|$ על $[0,\,0.1]$ בערכו ב-$t=0$?
+    answer: 0.00125
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac{1}{800}$. $f''(t) = -\frac14(1+t)^{-3/2}$, ולכן $|f''(t)|\le\frac14$ ב-$[0,0.1]$, ו-$|R_1(0.1)|\le\frac{1/4}{2!}\cdot0.1^2 = 0.00125$.
+      השגיאה האמיתית: $1.05-\sqrt{1.1}\approx 0.00119$.
+    wrongFeedback: >-
+      $|R_1(x)| = \frac{|f''(c)|}{2!}x^2$. גזרו פעמיים, חסמו את הנגזרת על הקטע (היא הגדולה ביותר ב-$t=0$) והציבו.
+    commonWrong:
+      - value: 0.0025
+        feedback: >-
+          שכחתם לחלק ב-$2!$.
+        misconception: MC-taylor-forget-factorial
+      - value: 0.05
+        feedback: >-
+          $0.05 = \frac{0.1}{2}$ הוא האיבר האחרון של $T_1$, לא השארית. השארית מסדר $2$: $0.1^2$.
+        misconception: MC-remainder-wrong-order
+    hints:
+      - 'חזרו לשיעור 6.5: צורת לגרנז'' של השארית וחסימת הנגזרת על הקטע.'
+
+  - id: Q-6-review-10
+    type: mc
+    objectives: [OBJ-6.4-2, OBJ-6.5-3]
+    level: mid
+    prompt: >-
+      $f(x) = x\sin x - x^2$. מהו $f^{(4)}(0)$, ומה הנקודה $0$?
+    choices:
+      - text: '$f^{(4)}(0) = -4$, ו-$0$ נקודת מקסימום מקומי'
+        correct: true
+        feedback: >-
+          נכון. $x\sin x = x^2-\frac{x^4}{6}+o(x^4)$, ולכן $f(x) = -\frac{x^4}{6}+o(x^4)$. לפי היחידות זה פיתוח
+          טיילור, ולכן $f'(0)=f''(0)=f'''(0)=0$ ו-$\frac{f^{(4)}(0)}{4!} = -\frac16$. סדר זוגי וסימן שלילי: מקסימום.
+      - text: '$f^{(4)}(0) = -\frac16$, ו-$0$ נקודת מקסימום מקומי'
+        feedback: >-
+          $-\frac16$ הוא המקדם של $x^4$. הנגזרת היא המקדם כפול $4! = 24$.
+        misconception: MC-taylor-forget-factorial
+      - text: '$0$ נקודת פיתול, כי $f''''(0)=0$'
+        feedback: >-
+          הנגזרת השנייה מתאפסת, אבל הראשונה שאינה אפס היא מסדר $4$, זוגי. וגם $f(x)\le f(0)$ ליד $0$.
+        misconception: MC-inflection-where-second-zero
+      - text: '$0$ אינה נקודת קיצון, כי $f''''''(0) = 0$'
+        feedback: >-
+          $f'''(0)=0$ רק אומר שממשיכים. אי-קיצון נובע מנגזרת ראשונה שאינה אפס מסדר **אי-זוגי**.
+        misconception: MC-odd-order-extremum
+    hints:
+      - 'חזרו לשיעור 6.4: יחידות פולינום טיילור; ולשיעור 6.5: סיווג קיצון בנגזרות גבוהות.'
+
+  - id: Q-6-review-11
+    type: numeric
+    objectives: [OBJ-6.4-3, OBJ-6.3-1]
+    level: exam
+    prompt: >-
+      חשבו את $\lim_{x\to0}\frac{e^x\sin x - x - x^2}{x^3}$.
+    answer: 0.3333333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac13$. $e^x\sin x = \left(1+x+\frac{x^2}{2}+o(x^2)\right)\left(x-\frac{x^3}{6}+o(x^3)\right) = x+x^2+\left(\frac12-\frac16\right)x^3+o(x^3)$.
+      בלופיטל זה דורש שלוש הפעלות, עם בדיקת הצורה בכל אחת.
+    wrongFeedback: >-
+      כפלו את שני הפיתוחים ואספו את כל האיברים עד $x^3$. יש שתי דרכים לקבל $x^3$ במכפלה.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          פיתחתם את $\sin x$ רק עד $x$. האיבר $-\frac{x^3}{6}$ של סינוס תורם למכפלה $-\frac{x^3}{6}$.
+        misconception: MC-taylor-order-too-low
+      - value: -0.1666666667
+        feedback: >-
+          חסר האיבר $\frac{x^2}{2}\cdot x$ של המכפלה: המקדם של $x^3$ הוא $\frac12-\frac16$.
+    hints:
+      - 'חזרו לשיעור 6.4: פיתוח של מכפלה, עד הסדר של המכנה.'
+
+  - id: Q-6-review-12
+    type: twotier
+    objectives: [OBJ-6.1-3, OBJ-2.9-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      בשיעור 6.1 הוכחנו שלסדרה חסומה הגבול העליון הוא גבול חלקי, בעזרת הגדרת הסופרמום ומשפט ההתכנסות של
+      סדרה מונוטונית. האם מזה נובע משפט בולצאנו-ויירשטראס?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. זו הוכחה שנייה של בולצאנו-ויירשטראס, שגם מראה איזה גבול חלקי מקבלים: הגדול ביותר.
+      - text: לא, כי לסדרה חסומה שמתבדרת אין גבול עליון
+        feedback: >-
+          לכל סדרה חסומה יש גבול עליון ממשי: סדרת הסופרמומים של הזנבות יורדת וחסומה.
+        misconception: MC-limsup-may-not-exist
+    reasons:
+      - text: 'הגבול העליון של סדרה חסומה הוא מספר ממשי ויש תת-סדרה ששואפת אליו: זו בדיוק התת-סדרה המתכנסת שהמשפט מבטיח'
+        correct: true
+        feedback: >-
+          בדיוק. וההוכחה לא מעגלית: היא השתמשה בשלמות (דרך המשפט על סדרות מונוטוניות), לא בבולצאנו-ויירשטראס.
+      - text: 'כל סדרה חסומה שואפת לגבול העליון שלה'
+        feedback: >-
+          לא: $(-1)^n$ חסומה ואינה מתכנסת. רק תת-סדרה שואפת לגבול העליון.
+        misconception: MC-limit-infinitely-often
+      - text: 'הגבול העליון שווה לסופרמום של הסדרה, ולכן יש איבר ששווה לו'
+        feedback: >-
+          הגבול העליון אינו הסופרמום: ב-$\frac1n$ הסופרמום $1$ והגבול העליון $0$.
+        misconception: MC-limsup-is-sup
+    hints:
+      - 'חזרו לשיעור 6.1: הגבול העליון כגבול חלקי; ולשיעור 2.9: בולצאנו-ויירשטראס.'
+
+  - id: Q-6-review-13
+    type: mc
+    objectives: [OBJ-6.2-3, OBJ-5.1-3, OBJ-5.6-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ גזירה בכל נקודה של $[0,1]$ (בקצוות חד-צדדית). מה תמיד נכון?
+    choices:
+      - text: '$f$ רציפה במידה שווה ב-$[0,1]$, אבל לא בהכרח מקיימת תנאי ליפשיץ'
+        correct: true
+        feedback: >-
+          נכון. גזירה גוררת רציפה (שיעור 5.1), וקנטור נותן רציפות במידה שווה. אבל $f(x) = x^2\sin\frac{1}{x^2}$,
+          $f(0)=0$, גזירה בכל $[0,1]$, והנגזרת $2x\sin\frac{1}{x^2}-\frac{2}{x}\cos\frac{1}{x^2}$ אינה חסומה
+          ליד $0$; לכן מנות ההפרשים אינן חסומות, ואין קבוע ליפשיץ.
+      - text: '$f$ מקיימת תנאי ליפשיץ, כי היא גזירה בקטע סגור'
+        feedback: >-
+          ליפשיץ נובע מנגזרת **חסומה**, וגזירות לא מבטיחה זאת: $x^2\sin\frac1{x^2}$ היא דוגמה נגדית.
+        misconception: MC-continuous-implies-lipschitz
+      - text: '$f$ לא בהכרח רציפה במידה שווה, כי הנגזרת יכולה להיות לא חסומה'
+        feedback: >-
+          רציפות במידה שווה לא דורשת נגזרת חסומה: $f$ רציפה בקטע סגור, וזה מספיק לפי קנטור.
+        misconception: MC-uc-implies-lipschitz
+    hints:
+      - 'חזרו לשיעור 6.2: משפט קנטור, וההבדל בין רציפות במידה שווה לליפשיץ.'
+
+  - id: Q-6-review-14
+    type: numeric
+    objectives: [OBJ-6.1-1, OBJ-6.3-2]
+    level: exam
+    prompt: >-
+      $a_n = n\left(2^{1/n}-1\right)$ ל-$n$ זוגי, ו-$a_n = n\left(3^{1/n}-1\right)$ ל-$n$ אי-זוגי. חשבו את
+      $\limsup a_n$ (עד שלוש ספרות אחרי הנקודה).
+    answer: 1.098612
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\ln 3$. לכל $b>0$: $\lim_{x\to\infty}x\left(b^{1/x}-1\right) = \lim_{t\to0^+}\frac{b^t-1}{t}$, אפס חלקי
+      אפס, ולפי לופיטל $\frac{b^t\ln b}{1}\to\ln b$. לפי היינה התת-סדרות שואפות ל-$\ln2$ ול-$\ln3$, וכל איבר
+      שייך לאחת מהן. הגדול מהגבולות החלקיים $\ln3\approx1.0986$.
+    wrongFeedback: >-
+      חשבו לכל תת-סדרה את הגבול בעזרת פונקציה של $x$ (הציבו $t = \frac1x$ ולופיטל), ואז קחו את הגדול.
+    commonWrong:
+      - value: 0.693147
+        feedback: >-
+          $\ln 2$ הוא הגבול של האיברים הזוגיים, הגבול התחתון.
+      - value: 0
+        feedback: >-
+          $b^{1/n}-1\to0$ ו-$n\to\infty$: אינסוף כפול אפס היא צורה לא מוגדרת, לא אפס.
+        misconception: MC-indeterminate-form-value
+    hints:
+      - 'חזרו לשיעור 6.3: אפס כפול אינסוף ולופיטל לסדרות דרך פונקציה; ולשיעור 6.1: הגבול העליון.'

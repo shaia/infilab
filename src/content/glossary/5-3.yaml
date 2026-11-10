@@ -1,0 +1,16 @@
+# Terms first defined in lesson 5.3.
+- id: chain-rule
+  term: כלל השרשרת
+  en: chain rule
+  symbol: '(f\circ g)''(x)=f''(g(x))\,g''(x)'
+  definition: >-
+    אם $g$ גזירה ב-$x$ ו-$f$ גזירה ב-$g(x)$, אז $f\circ g$ גזירה ב-$x$, ו-$(f\circ g)'(x)=f'(g(x))\,g'(x)$.
+  reject: [חוק השרשרת]
+  lesson: '5.3'
+- id: inverse-derivative
+  term: נגזרת של פונקציה הפוכה
+  en: derivative of an inverse function
+  symbol: '(f^{-1})''(y_0)=\frac{1}{f''(x_0)}'
+  definition: >-
+    אם $f$ רציפה ומונוטונית ממש בקטע, גזירה ב-$x_0$ ו-$f'(x_0)\neq0$, אז $f^{-1}$ גזירה ב-$y_0=f(x_0)$, ו-$(f^{-1})'(y_0)=\frac{1}{f'(x_0)}$.
+  lesson: '5.3'

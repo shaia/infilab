@@ -1,0 +1,416 @@
+# Chapter 5 — review questions over the whole chapter (lessons 5.1–5.10), easy to hard.
+# Several combine lessons, and some reach back to chapter 4 (continuity, the intermediate value theorem).
+chapter: 5
+questions:
+  - id: Q-5-review-01
+    type: numeric
+    objectives: [OBJ-5.1-2]
+    level: basic
+    prompt: >-
+      כתבו את משוואת המשיק לגרף של $f(x)=x^3$ בנקודה $x_0=1$ בצורה $y=mx+n$. מהו $n$?
+    answer: -2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f(1)=1$ ו-$f'(1)=3$, ולכן המשיק $y=f(1)+f'(1)(x-1)=1+3(x-1)=3x-2$.
+    wrongFeedback: >-
+      משוואת המשיק היא $y=f(x_0)+f'(x_0)(x-x_0)$. הציבו $x_0=1$ ופתחו סוגריים.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          זה מתקבל מ-$y=f(x_0)+f'(x_0)\,x=1+3x$. הישר הזה לא עובר בנקודה $(1,1)$: צריך $x-x_0$, לא $x$.
+        misconception: MC-tangent-line-formula
+      - value: -3
+        feedback: >-
+          זה מתקבל מ-$y=f'(x_0)(x-x_0)=3x-3$, בלי $f(x_0)$. בדקו: ב-$x=1$ הישר הזה נותן $0$, ולא $f(1)=1$.
+        misconception: MC-tangent-line-formula
+    hints:
+      - 'חזרו לשיעור 5.1: הנגזרת כשיפוע המשיק ומשוואת המשיק.'
+
+  - id: Q-5-review-02
+    type: twotier
+    objectives: [OBJ-5.1-3, OBJ-4.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ רציפה בנקודה $x_0$. האם $f$ בהכרח גזירה ב-$x_0$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. גזירות גוררת רציפות, אבל לא להפך.
+      - text: כן
+        feedback: >-
+          $|x|$ רציפה ב-$0$, אבל מנות ההפרשים $\frac{|h|}{h}$ שוות ל-$1$ מימין ול-$-1$ משמאל, ואין להן גבול.
+        misconception: MC-continuous-implies-differentiable
+    reasons:
+      - text: '$|x|$ רציפה ב-$0$ ואינה גזירה שם'
+        correct: true
+        feedback: >-
+          בדיוק. רציפות אומרת ש-$f(x_0+h)-f(x_0)\to0$; גזירות דורשת יותר: שהמנה $\frac{f(x_0+h)-f(x_0)}{h}$ תתכנס.
+      - text: 'רציפות פירושה שאין בגרף "שבירות", ולכן יש משיק'
+        feedback: >-
+          לגרף של $|x|$ אין קפיצה, אבל יש לו פינה ב-$0$, ושם אין משיק. רציפות שוללת קפיצות, לא פינות.
+        misconception: MC-continuous-implies-differentiable
+      - text: '$x^2\sin\frac1x$ (עם $0$ ב-$0$) רציפה ב-$0$ ואינה גזירה שם'
+        feedback: >-
+          היא דווקא גזירה ב-$0$: $\frac{h^2\sin(1/h)}{h}=h\sin\frac1h\to0$, כי $h\to0$ ו-$\sin\frac1h$ חסומה. הגורם המתנודד לא מונע גבול.
+        misconception: MC-bounded-factor-blocks-limit
+    hints:
+      - 'חזרו לשיעור 5.1: גזירה בנקודה גוררת רציפה בה, ולא להפך.'
+
+  - id: Q-5-review-03
+    type: numeric
+    objectives: [OBJ-5.2-1, OBJ-5.3-1]
+    level: basic
+    prompt: >-
+      חשבו $f'(1)$ עבור $f(x)=x\,(x^2+1)^3$.
+    answer: 32
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי כלל המכפלה וכלל השרשרת: $f'(x)=(x^2+1)^3+x\cdot3(x^2+1)^2\cdot2x$, ולכן $f'(1)=8+1\cdot3\cdot4\cdot2=32$.
+    wrongFeedback: >-
+      זו מכפלה של $x$ ושל $(x^2+1)^3$; את הגורם השני גוזרים בכלל השרשרת, עם הנגזרת הפנימית $2x$.
+    commonWrong:
+      - value: 24
+        feedback: >-
+          $24$ הוא רק המחובר $x\cdot\bigl((x^2+1)^3\bigr)'$ ב-$x=1$. כלל המכפלה הוא $(uv)'=u'v+uv'$: חסר המחובר $u'v=(x^2+1)^3=8$.
+        misconception: MC-product-rule-naive
+      - value: 20
+        feedback: >-
+          $20=8+12$ מתקבל כששוכחים את הנגזרת הפנימית: $\bigl((x^2+1)^3\bigr)'=3(x^2+1)^2\cdot2x$, לא $3(x^2+1)^2$.
+        misconception: MC-chain-forget-inner
+    hints:
+      - 'חזרו לשיעור 5.2 (כלל המכפלה) ולשיעור 5.3 (כלל השרשרת).'
+
+  - id: Q-5-review-04
+    type: numeric
+    objectives: [OBJ-5.3-2]
+    level: basic
+    prompt: >-
+      $f(x)=x^3+x$ עולה ממש ב-$\mathbb{R}$, ולכן יש לה פונקציה הפוכה $f^{-1}$. חשבו את $(f^{-1})'(2)$.
+    answer: 0.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f(1)=2$, ולכן $(f^{-1})'(2)=\frac{1}{f'(1)}=\frac{1}{3+1}=\frac14$.
+    wrongFeedback: >-
+      מצאו קודם את $x_0$ שבו $f(x_0)=2$. הנגזרת של ההפוכה ב-$f(x_0)$ היא $\frac{1}{f'(x_0)}$.
+    commonWrong:
+      - value: 0.0769230769
+        feedback: >-
+          $\frac{1}{13}=\frac{1}{f'(2)}$: גזרתם את $f$ בנקודה $2$, שהיא נקודה של **ההפוכה**. צריך $f'(1)$, כי $f(1)=2$.
+        misconception: MC-inverse-deriv-wrong-point
+      - value: 4
+        feedback: '$4=f''(1)$. הנגזרת של ההפוכה היא ההופכי שלו, $\frac14$.'
+        misconception: MC-inverse-deriv-no-reciprocal
+      - value: 13
+        feedback: >-
+          $13=f'(2)$: גם הנקודה לא נכונה וגם חסר ההופכי.
+        misconception: MC-inverse-deriv-wrong-point
+    hints:
+      - 'חזרו לשיעור 5.3: הנגזרת של פונקציה הפוכה.'
+
+  - id: Q-5-review-05
+    type: numeric
+    objectives: [OBJ-5.4-3, OBJ-5.4-1]
+    level: mid
+    prompt: >-
+      חשבו את $g^{(10)}(0)$, הנגזרת העשירית ב-$0$ של $g(x)=x^2e^x$.
+    answer: 90
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי לייבניץ $g^{(10)}=\sum_{k=0}^{10}\binom{10}{k}(x^2)^{(k)}(e^x)^{(10-k)}$. רק $k\le2$ נותנים מחוברים
+      שאינם אפס, וב-$x=0$ נשאר רק $k=2$: $\binom{10}{2}\cdot2\cdot e^0=45\cdot2=90$.
+    wrongFeedback: >-
+      השתמשו בנוסחת לייבניץ: הנגזרות של $x^2$ מתאפסות מהשלישית והלאה, וב-$x=0$ גם $x^2$ ו-$2x$ מתאפסים.
+    commonWrong:
+      - value: 45
+        feedback: >-
+          $45=\binom{10}{2}$. חסר הגורם $(x^2)''=2$.
+      - value: 2
+        feedback: >-
+          $2=(x^2)''$ בלי המקדם הבינומי $\binom{10}{2}$. בנוסחת לייבניץ כל מחובר מוכפל ב-$\binom{n}{k}$.
+        misconception: MC-leibniz-no-binomial
+    hints:
+      - 'חזרו לשיעור 5.4: נוסחת לייבניץ לנגזרת ה-n-ית של מכפלה.'
+
+  - id: Q-5-review-06
+    type: numeric
+    objectives: [OBJ-5.2-3, OBJ-5.1-3]
+    level: mid
+    prompt: >-
+      $f(x)=x^2$ ל-$x\le1$, ו-$f(x)=ax+b$ ל-$x>1$. מצאו את $b$ שעבורו (יחד עם $a$ מתאים) $f$ גזירה ב-$x=1$.
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. גזירות גוררת רציפות, ולכן $a+b=1$. הנגזרת השמאלית ב-$1$ היא $2$ והימנית $a$, ולכן $a=2$ ו-$b=-1$.
+    wrongFeedback: >-
+      שני תנאים: רציפות ב-$1$ (הגבול מימין שווה ל-$f(1)=1$) ושוויון הנגזרות החד-צדדיות. משני התנאים מוצאים את $a$ ואת $b$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          השוואת נגזרות החלקים נותנת רק $a=2$. בלי תנאי הרציפות $a+b=1$ אין דבר שקובע את $b$, ובלי רציפות אין גזירות.
+        misconception: MC-seam-piece-derivatives
+      - value: 1
+        feedback: >-
+          תנאי הרציפות הוא $a\cdot1+b=1$, לא $b=1$. עם $a=2$ מקבלים $b=-1$.
+    hints:
+      - 'חזרו לשיעור 5.2: גזירות בנקודת התפר, ולשיעור 5.1: גזירה גוררת רציפה.'
+
+  - id: Q-5-review-07
+    type: twotier
+    objectives: [OBJ-5.4-2, OBJ-5.7-2, OBJ-5.7-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=x^2\sin\frac1x$ ל-$x\neq0$ ו-$f(0)=0$ גזירה בכל $\mathbb{R}$, ו-$f'$ אינה רציפה ב-$0$. האם זה סותר את משפט דרבו?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. דרבו לא טוען שנגזרת רציפה, אלא שיש לה תכונת ערך הביניים, ושאין לה קפיצות.
+      - text: כן
+        feedback: >-
+          דרבו מבטיח תכונת ערך הביניים, לא רציפות. הנגזרת $2x\sin\frac1x-\cos\frac1x$ מקבלת כל ערך בין $-1$ ל-$1$ בכל
+          סביבה של $0$, ולכן אין סתירה.
+        misconception: MC-ivt-property-implies-continuous
+    reasons:
+      - text: 'אי-הרציפות של $f''$ ב-$0$ היא מהסוג השני: לגבולות החד-צדדיים אין קיום, ואין קפיצה'
+        correct: true
+        feedback: >-
+          בדיוק. דרבו פוסל קפיצות (וגם אי-רציפות סליקה); אי-רציפות שבה הגבולות החד-צדדיים לא קיימים מותרת.
+      - text: 'דרבו אומר שלנגזרת יש תכונת ערך הביניים, ולכן היא רציפה'
+        feedback: >-
+          תכונת ערך הביניים אינה גוררת רציפות: $f'$ כאן היא בדיוק דוגמה לפונקציה עם התכונה שאינה רציפה.
+        misconception: MC-ivt-property-implies-continuous
+      - text: 'בעצם $f''$ רציפה ב-$0$, כי $f''(0)=0$'
+        feedback: >-
+          $f'(0)=0$ נכון, אבל $\lim_{x\to0}f'(x)$ לא קיים: המחובר $\cos\frac1x$ מתנודד בין $-1$ ל-$1$.
+        misconception: MC-derivative-always-continuous
+    hints:
+      - 'חזרו לשיעור 5.4 (גזירה ולא גזירה ברציפות) ולשיעור 5.7 (משפט דרבו).'
+
+  - id: Q-5-review-08
+    type: twotier
+    objectives: [OBJ-5.5-2, OBJ-4.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם למשוואה $x^5+x-1=0$ יש בדיוק פתרון ממשי אחד?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. יש לפחות אחד ולכל היותר אחד.
+      - text: לא, ייתכנו עד חמישה
+        feedback: >-
+          לפולינום ממעלה $5$ יש **לכל היותר** חמישה שורשים. כאן $f'(x)=5x^4+1>0$, ולפי רול אין שני שורשים.
+        misconception: MC-poly-exactly-n-roots
+    reasons:
+      - text: 'קיום: $f(0)=-1<0<1=f(1)$ וערך הביניים. יחידות: שני שורשים היו נותנים לפי רול $c$ עם $f''(c)=0$, אבל $f''(x)=5x^4+1>0$'
+        correct: true
+        feedback: >-
+          בדיוק. זו התבנית לכל שאלת "בדיוק פתרון אחד": ערך הביניים לקיום, ורול (או מונוטוניות ממש) ליחידות.
+      - text: 'לפולינום ממעלה אי-זוגית יש תמיד בדיוק שורש ממשי אחד'
+        feedback: >-
+          לפחות אחד, לא בדיוק אחד: ל-$x^3-3x+1$ יש שלושה. היחידות כאן נובעת מ-$f'>0$.
+        misconception: MC-ivt-unique-root
+      - text: '$f''>0$, ולכן $f$ עולה בלי הגבלה ובהכרח חוצה את $0$'
+        feedback: >-
+          נגזרת חיובית לא מבטיחה שהפונקציה לא חסומה ($\arctan x$), ולא מבטיחה שורש. לקיום צריך שני ערכים בסימנים שונים
+          ורציפות.
+        misconception: MC-increasing-means-unbounded
+    hints:
+      - 'חזרו לשיעור 5.5 (רול וחסימת מספר השורשים) ולשיעור 4.3 (ערך הביניים).'
+
+  - id: Q-5-review-09
+    type: mc
+    objectives: [OBJ-5.5-1, OBJ-5.5-3, OBJ-5.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=1-|x|$ ב-$[-1,1]$: $f(-1)=f(1)=0$, ול-$f$ יש מקסימום ב-$0$. אבל אין נקודה שבה $f'=0$. מה נכון?
+    choices:
+      - text: 'אין סתירה: גם פרמה וגם רול דורשים גזירות בנקודות הפנימיות, ו-$f$ אינה גזירה ב-$0$'
+        correct: true
+        feedback: >-
+          נכון. זו בדיוק הדוגמה שמראה שהנחת הגזירות במשפט רול הכרחית.
+      - text: '$f''(0)=0$, כי $0$ נקודת מקסימום'
+        feedback: >-
+          ב-$0$ הנגזרות החד-צדדיות הן $1$ ו-$-1$, ולכן $f'(0)$ לא קיימת. פרמה חל רק על פונקציה **גזירה** בנקודת הקיצון.
+        misconception: MC-abs-derivative-sign
+      - text: 'לפי רול חייבת להיות $c$ עם $f''(c)=0$; לכן החישוב של $f''$ שגוי'
+        feedback: >-
+          רול לא חל כאן כי $f$ אינה גזירה ב-$0$. החישוב נכון: $f'=1$ ב-$(-1,0)$ ו-$f'=-1$ ב-$(0,1)$.
+        misconception: MC-mvt-no-differentiability
+      - text: 'יש סתירה למשפט רול, ולכן הוא דורש הנחה נוספת: שהפונקציה חלקה'
+        feedback: >-
+          אין סתירה, כי ההנחה "גזירה ב-$(a,b)$" כבר חלק מהמשפט, והיא לא מתקיימת כאן. כשהנחה נכשלת, המשפט פשוט לא אומר דבר.
+        misconception: MC-mvt-no-differentiability
+    hints:
+      - 'חזרו לשיעור 5.5: משפט פרמה, משפט רול, ולמה כל הנחה הכרחית.'
+
+  - id: Q-5-review-10
+    type: twotier
+    objectives: [OBJ-5.6-2, OBJ-5.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם לכל $x>0$ מתקיים $\arctan x>\frac{x}{1+x^2}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. זה אי-שוויון של לגרנז' עבור $\arctan$ בקטע $[0,x]$.
+      - text: לא
+        feedback: >-
+          בדקו ב-$x=1$: $\arctan1=\frac\pi4\approx0.785>\frac12$. וההוכחה הכללית היא לגרנז'.
+        misconception: MC-mvt-bound-direction
+    reasons:
+      - text: '$\arctan x=\frac{x}{1+c^2}$ עם $0<c<x$, ו-$1+c^2<1+x^2$'
+        correct: true
+        feedback: >-
+          בדיוק. $(\arctan t)'=\frac{1}{1+t^2}$ יורדת ב-$[0,\infty)$, ולכן הערך הקטן ביותר שלה בקטע $[0,x]$ הוא בקצה $x$.
+      - text: '$\arctan x=\frac{x}{1+(x/2)^2}$, וזה גדול מ-$\frac{x}{1+x^2}$'
+        feedback: >-
+          המשפט לא אומר ש-$c$ הוא אמצע הקטע. מותר להשתמש רק ב-$0<c<x$, וזה מספיק.
+        misconception: MC-mvt-c-midpoint
+      - text: '$(\arctan t)''\le1$, ולכן $\arctan x\le x$'
+        feedback: >-
+          זה נכון, אבל זה חסם **עליון**. כדי לחסום מלמטה צריך את הערך הקטן ביותר של הנגזרת בקטע, ב-$t=x$.
+        misconception: MC-mvt-bound-direction
+    hints:
+      - 'חזרו לשיעור 5.6: אי-שוויונות בעזרת משפט לגרנז''.'
+
+  - id: Q-5-review-11
+    type: numeric
+    objectives: [OBJ-5.8-2, OBJ-5.7-1, OBJ-5.3-3]
+    level: mid
+    prompt: >-
+      מצאו את המינימום המוחלט של $f(x)=x-2\ln x$ בקטע $(0,\infty)$.
+    answer: 0.6137056389
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f'(x)=1-\frac2x$: שלילית ב-$(0,2)$ וחיובית ב-$(2,\infty)$. לכן $f$ יורדת ממש ב-$(0,2]$ ועולה ממש ב-$[2,\infty)$,
+      והמינימום המוחלט $f(2)=2-2\ln2\approx0.614$.
+    wrongFeedback: >-
+      בקטע פתוח קובעים את קטעי המונוטוניות לפי הסימן של $f'$, ומהם מסיקים שהנקודה הקריטית היא מינימום של כל הקטע.
+    commonWrong:
+      - value: 2
+        feedback: '$2$ היא נקודת המינימום. ערך המינימום הוא $f(2)=2-2\ln2$.'
+        misconception: MC-extremum-point-for-value
+    hints:
+      - 'חזרו לשיעור 5.7 (סימן הנגזרת ומונוטוניות) ולשיעור 5.8 (קיצון מוחלט בקטע פתוח).'
+
+  - id: Q-5-review-12
+    type: mc
+    objectives: [OBJ-5.9-3, OBJ-5.9-2, OBJ-5.3-3]
+    level: exam
+    prompt: >-
+      $g$ **קמורה** ב-$I$ אם $g\bigl(tx+(1-t)y\bigr)\le t\,g(x)+(1-t)\,g(y)$ לכל $x,y\in I$ ולכל $t\in[0,1]$. נתון
+      $g(x)=x\ln x$ ב-$(0,\infty)$. איזה אי-שוויון נכון לכל $a,b>0$?
+    choices:
+      - text: '$\frac{a+b}{2}\ln\frac{a+b}{2}\le\frac{a\ln a+b\ln b}{2}$'
+        correct: true
+        feedback: >-
+          נכון. $g'(x)=\ln x+1$ ו-$g''(x)=\frac1x>0$, ולכן $g$ קמורה; מציבים $t=\frac12$ בהגדרה.
+      - text: '$\frac{a+b}{2}\ln\frac{a+b}{2}\ge\frac{a\ln a+b\ln b}{2}$'
+        feedback: >-
+          זה אי-השוויון של פונקציה קעורה. $g''=\frac1x>0$, כלומר $g$ קמורה. בדקו עם $a=1$, $b=3$: צד שמאל $2\ln2\approx1.39$,
+          צד ימין $\frac{3\ln3}{2}\approx1.65$.
+        misconception: MC-convex-concave-swapped
+      - text: '$(a+b)\ln(a+b)\le a\ln a+b\ln b$'
+        feedback: >-
+          בהגדרה עם $t=\frac12$ מופיעים ממוצעים, לא סכומים. עם $a=b=1$ צד שמאל $2\ln2>0$ וצד ימין $0$: אי-השוויון שגוי.
+        misconception: MC-jensen-misapplied
+      - text: '$\ln\frac{a+b}{2}\le\frac{\ln a+\ln b}{2}$'
+        feedback: >-
+          זה הפוך מאי-שוויון הממוצעים, ולא נובע מהקמירות של $x\ln x$: $\ln$ קעורה, ולכן מתקיים $\ge$.
+        misconception: MC-convex-concave-swapped
+    hints:
+      - 'חזרו לשיעור 5.9: נגזרת שנייה וקמירות, ואי-שוויון ינסן לשתי נקודות.'
+
+  - id: Q-5-review-13
+    type: numeric
+    objectives: [OBJ-5.10-3, OBJ-5.8-1, OBJ-4.3-2]
+    level: exam
+    prompt: >-
+      כמה פתרונות ממשיים יש למשוואה $\ln x=x-2$?
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $g(x)=x-2-\ln x$ ב-$(0,\infty)$: $g'(x)=1-\frac1x$, ולכן $g$ יורדת ממש ב-$(0,1]$ ועולה ממש ב-$[1,\infty)$, עם
+      מינימום $g(1)=-1<0$. כש-$x\to0^+$ וכש-$x\to\infty$, $g\to\infty$. בכל אחד משני הקטעים יש שורש אחד בדיוק (ערך הביניים
+      ומונוטוניות ממש): $x\approx0.159$ ו-$x\approx3.146$.
+    wrongFeedback: >-
+      העבירו הכול לאגף אחד, $g(x)=x-2-\ln x$, מצאו את קטעי המונוטוניות ואת ערך המינימום, ובדקו את הגבולות בקצות התחום.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          קל למצוא את השורש שליד $3$, אבל יש עוד אחד ב-$(0,1)$: כש-$x\to0^+$, $-\ln x\to\infty$, ולכן $g$ חיובית שם.
+          בודקים כל קטע מונוטוניות בנפרד.
+        misconception: MC-solutions-forget-negative-branch
+      - value: 0
+        feedback: >-
+          $\ln x\le x-1$ לא שולל פתרון של $\ln x=x-2$: המינימום של $x-2-\ln x$ הוא $-1<0$, ולכן הגרף חוצה את $0$.
+    hints:
+      - 'חזרו לשיעור 5.10: מספר הפתרונות של משוואה בעזרת חקירה, ולשיעור 4.3: משפט ערך הביניים.'
+
+  - id: Q-5-review-14
+    type: twotier
+    objectives: [OBJ-5.10-1, OBJ-5.6-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ גזירה ב-$(0,\infty)$ ו-$\lim_{x\to\infty}f'(x)=1$. האם בהכרח יש לגרף של $f$ אסימפטוטה משופעת $y=x+b$ כש-$x\to\infty$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $f(x)=x+\ln x$ מקיימת $f'(x)=1+\frac1x\to1$, אבל $f(x)-x=\ln x\to\infty$: אין $b$.
+      - text: כן
+        feedback: >-
+          $f(x)=x+\ln x$ היא דוגמה נגדית: השיפוע שואף ל-$1$, אבל הגרף מתרחק מכל ישר $y=x+b$.
+        misconception: MC-asymptote-from-derivative-limit
+    reasons:
+      - text: 'מהנתון נובע $\frac{f(x)}{x}\to1$, אבל הגבול $\lim\bigl(f(x)-x\bigr)$ יכול לא להתקיים, כמו ב-$x+\ln x$'
+        correct: true
+        feedback: >-
+          בדיוק. השיפוע מתייצב, ובכל זאת הגרף יכול "לזחול" למעלה בלי סוף. אסימפטוטה צריכה את שני הגבולות, של $m$ ושל $b$.
+      - text: 'אם השיפוע של הגרף שואף ל-$1$, הגרף מתקרב לישר בשיפוע $1$'
+        feedback: >-
+          שיפוע ששואף ל-$1$ לא מבטיח ש-$f(x)-x$ מתכנס: ההפרש בין השיפוע ל-$1$ יכול להיות קטן מדי מכדי לשנות את $m$, וגדול
+          מספיק כדי ש-$f(x)-x$ יגדל בלי הגבלה.
+        misconception: MC-asymptote-from-derivative-limit
+      - text: 'לפי לגרנז'' $f(x)-f(1)=f''(c)(x-1)$ ו-$f''(c)\to1$, ולכן $f(x)-x$ מתכנס'
+        feedback: >-
+          $f(x)-x=f(1)+\bigl(f'(c)-1\bigr)(x-1)-1$, וזו מכפלה של גורם ששואף ל-$0$ בגורם ששואף לאינסוף: צורה לא מוגדרת. ב-$x+\ln x$ היא שואפת לאינסוף.
+        misconception: MC-asymptote-from-derivative-limit
+    hints:
+      - 'חזרו לשיעור 5.10: איך מוצאים אסימפטוטה משופעת, $m$ ואחר כך $b$.'
+
+  - id: Q-5-review-15
+    type: mc
+    objectives: [OBJ-5.6-1, OBJ-5.7-2]
+    level: exam
+    prompt: >-
+      $f$ גזירה ב-$[0,2]$, $f(0)=0$, $f(1)=2$ ו-$f(2)=2$. איזה טיעון מוכיח שקיימת $c\in(0,2)$ עם $f'(c)=\frac32$?
+    choices:
+      - text: >-
+          לגרנז' ב-$[0,1]$ נותן $c_1$ עם $f'(c_1)=2$, ולגרנז' ב-$[1,2]$ נותן $c_2$ עם $f'(c_2)=0$; לפי דרבו $f'$ מקבלת את $\frac32$
+          בין $c_1$ ל-$c_2$
+        correct: true
+        feedback: >-
+          נכון. $\frac32$ נמצא בין $0$ ל-$2$, ודרבו לא דורש ש-$f'$ תהיה רציפה.
+      - text: >-
+          לגרנז' ב-$[0,2]$ נותן $c$ עם $f'(c)=1$; $f'$ רציפה, ולכן לפי ערך הביניים היא מקבלת גם את $\frac32$
+        feedback: >-
+          לא נתון ש-$f'$ רציפה, ונגזרת אינה בהכרח רציפה. וגם הערך $1$ לבדו לא נותן את $\frac32$: צריך ערך מעל $\frac32$ וערך מתחתיו.
+        misconception: MC-derivative-always-continuous
+      - text: 'רול ב-$[1,2]$'
+        feedback: >-
+          רול ב-$[1,2]$ (כי $f(1)=f(2)$) נותן רק נקודה שבה $f'=0$. כדי לקבל ערך אחר של $f'$ צריך את דרבו.
+        misconception: MC-darboux-confused-with-rolle
+      - text: >-
+          לגרנז' ב-$[0,1]$ וב-$[1,2]$ נותן $f'(c_1)=2$ ו-$f'(c_2)=0$, ולכן באמצע, ב-$\frac{c_1+c_2}{2}$, הנגזרת היא הממוצע $1$
+        feedback: >-
+          אין שום סיבה שהנגזרת בנקודת האמצע תהיה הממוצע של הערכים. מה שידוע הוא רק שהיא מקבלת כל ערך ביניים, במקום כלשהו.
+        misconception: MC-mvt-c-midpoint
+    hints:
+      - 'חזרו לשיעור 5.6 (משפט לגרנז'') ולשיעור 5.7 (משפט דרבו).'

@@ -1,0 +1,296 @@
+# Lesson 1.3 — naturals, integers and rationals.
+# Objectives (src/course.ts):
+#   OBJ-1.3-1  define ℕ as the smallest inductive set and link it to the principle of induction
+#   OBJ-1.3-2  prove that √2 is not rational, and generalise the proof
+#   OBJ-1.3-3  prove closure and non-closure: sums and products of rationals, rational plus irrational
+# √2 appears here as "the positive number whose square is 2"; its existence is proved in lesson 1.7.
+chapter: 1
+questions:
+  - id: Q-1.3-smallest-inductive
+    type: mc
+    objectives: [OBJ-1.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      קבוצה $S\subseteq\mathbb{R}$ נקראת אינדוקטיבית אם $1\in S$, ולכל $x\in S$ גם $x+1\in S$. איזו מהטענות
+      הבאות נכונה?
+    choices:
+      - text: '$\mathbb{N}$ הוא החיתוך של כל הקבוצות האינדוקטיביות, ולכן הוא מוכל בכל אחת מהן'
+        correct: true
+        feedback: >-
+          נכון. זו ההגדרה: $\mathbb{N}$ היא הקבוצה האינדוקטיבית הקטנה ביותר. היא אינדוקטיבית בעצמה, ומוכלת
+          בכל קבוצה אינדוקטיבית אחרת.
+      - text: '$\mathbb{N}$ היא הקבוצה האינדוקטיבית היחידה'
+        feedback: >-
+          יש עוד הרבה קבוצות אינדוקטיביות: $\mathbb{R}$, $\mathbb{Z}$, הקרן $[1,\infty)$. כולן מכילות את
+          $\mathbb{N}$; $\mathbb{N}$ היא הקטנה שבהן.
+        misconception: MC-inductive-set-is-N
+      - text: 'כל קבוצה אינדוקטיבית מוכלת ב-$\mathbb{N}$'
+        feedback: >-
+          ההכלה הפוכה: $\mathbb{N}$ מוכלת בכל קבוצה אינדוקטיבית. $[1,\infty)$ אינדוקטיבית ואינה מוכלת
+          ב-$\mathbb{N}$, כי $\frac32\in[1,\infty)$.
+        misconception: MC-inductive-set-is-N
+      - text: '$\mathbb{N}$ היא הקבוצה האינדוקטיבית הגדולה ביותר'
+        feedback: >-
+          $\mathbb{R}$ אינדוקטיבית וגדולה מ-$\mathbb{N}$. $\mathbb{N}$ היא הקבוצה האינדוקטיבית ה**קטנה**
+          ביותר: היא מכילה רק את מה שכל קבוצה אינדוקטיבית חייבת להכיל.
+        misconception: MC-inductive-set-is-N
+
+  - id: Q-1.3-induction-theorem
+    type: twotier
+    objectives: [OBJ-1.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      עקרון האינדוקציה: אם $S\subseteq\mathbb{N}$, $1\in S$, ולכל $n\in S$ גם $n+1\in S$, אז $S=\mathbb{N}$.
+      כשמגדירים את $\mathbb{N}$ כקבוצה האינדוקטיבית הקטנה ביותר, מה מעמדו של העיקרון?
+    choices:
+      - text: הוא משפט שנובע מההגדרה של $\mathbb{N}$
+        correct: true
+        feedback: נכון. אין צורך להניח אותו; הוכחתו היא שורה אחת.
+      - text: הוא אקסיומה נוספת שצריך להניח
+        feedback: >-
+          ההגדרה של $\mathbb{N}$ כבר אומרת את כל מה שצריך: העיקרון נובע ממנה בשורה אחת, ולכן הוא משפט.
+        misconception: MC-field-fact-taken-as-axiom
+    reasons:
+      - text: '$S$ היא קבוצה אינדוקטיבית, ולכן $\mathbb{N}\subseteq S$; יחד עם $S\subseteq\mathbb{N}$ מקבלים $S=\mathbb{N}$'
+        correct: true
+        feedback: >-
+          בדיוק. התנאים "$1\in S$" ו"$n\in S\Rightarrow n+1\in S$" אומרים ש-$S$ אינדוקטיבית, ו-$\mathbb{N}$
+          מוכלת בכל קבוצה אינדוקטיבית.
+      - text: 'כל קבוצה אינדוקטיבית שווה ל-$\mathbb{N}$, ו-$S$ אינדוקטיבית'
+        feedback: >-
+          לא כל קבוצה אינדוקטיבית שווה ל-$\mathbb{N}$: גם $\mathbb{R}$ אינדוקטיבית. מה שמכריע כאן הוא ש-$S$
+          גם מוכלת ב-$\mathbb{N}$, וגם מכילה אותה.
+        misconception: MC-inductive-set-is-N
+      - text: האינדוקציה היא אחת מאקסיומות הממשיים, ולכן אין מה להוכיח
+        feedback: >-
+          אקסיומות הממשיים הן אקסיומות השדה, הסדר והשלמות. אינדוקציה אינה ביניהן: היא נובעת מהגדרת
+          $\mathbb{N}$.
+        misconception: MC-field-fact-taken-as-axiom
+
+  - id: Q-1.3-no-natural-between
+    type: mc
+    objectives: [OBJ-1.3-1]
+    level: exam
+    prompt: >-
+      רוצים להוכיח מההגדרה של $\mathbb{N}$ שאין מספר טבעי בקטע $(1,2)$. איזו קבוצה כדאי להראות שהיא
+      אינדוקטיבית?
+    choices:
+      - text: '$S=\{1\}\cup[2,\infty)$'
+        correct: true
+        feedback: >-
+          נכון. $1\in S$; אם $x=1$ אז $x+1=2\in S$, ואם $x\ge2$ אז $x+1\ge3$ ולכן $x+1\in S$. מכאן
+          $\mathbb{N}\subseteq S$, ו-$S$ זרה ל-$(1,2)$.
+      - text: '$S=[1,\infty)$'
+        feedback: >-
+          $S$ אכן אינדוקטיבית, ולכן $\mathbb{N}\subseteq[1,\infty)$: כל טבעי גדול או שווה ל-1. אבל $S$ מכילה
+          את $(1,2)$, ולכן ההכלה לא אומרת דבר על הקטע. קבוצה אינדוקטיבית מוכיחה רק מה **שלא** נמצא בה.
+        misconception: MC-inductive-set-is-N
+      - text: '$S=\mathbb{N}$'
+        feedback: >-
+          ש-$\mathbb{N}$ אינדוקטיבית ידוע, ו-$\mathbb{N}\subseteq\mathbb{N}$ לא מלמד כלום. הרעיון הוא לבנות
+          קבוצה אינדוקטיבית **בלי** הקטע $(1,2)$, וממנה להסיק ש-$\mathbb{N}$ זרה לקטע.
+        misconception: MC-inductive-set-is-N
+    hints:
+      - 'אם $S$ אינדוקטיבית אז $\mathbb{N}\subseteq S$. איזה מידע על $\mathbb{N}$ נותנת הכלה כזו?'
+
+  - id: Q-1.3-sqrt2-proof
+    type: rank
+    objectives: [OBJ-1.3-2]
+    level: mid
+    prompt: הוכיחו שאין מספר רציונלי שריבועו $2$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: 'נניח בשלילה ש-$\left(\frac pq\right)^2=2$, עם $p,q$ שלמים, $q\neq0$, והשבר מצומצם'
+      - id: s2
+        label: 'אז $p^2=2q^2$, ולכן $p^2$ זוגי'
+      - id: s3
+        label: 'ריבוע של אי-זוגי הוא אי-זוגי, ולכן $p$ זוגי: $p=2k$'
+      - id: s4
+        label: 'מציבים: $4k^2=2q^2$, כלומר $q^2=2k^2$, ולכן גם $q$ זוגי'
+      - id: s5
+        label: '$p$ ו-$q$ שניהם זוגיים, בסתירה לכך שהשבר מצומצם'
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. אותו טיעון ש"$p^2$ זוגי גורר $p$ זוגי" משמש פעמיים: פעם ל-$p$ ופעם ל-$q$.
+    wrongFeedback: >-
+      הוכחה בשלילה מתחילה בהנחה, ונגמרת בסתירה להנחה. ביניהן: קודם מסיקים ש-$p$ זוגי, ורק אחרי ההצבה
+      $p=2k$ מסיקים ש-$q$ זוגי.
+
+  - id: Q-1.3-sqrt4-fails
+    type: mc
+    objectives: [OBJ-1.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מנסים להעתיק את ההוכחה ל-$4$: נניח $\left(\frac pq\right)^2=4$ עם שבר מצומצם, כלומר $p^2=4q^2$. איפה
+      ההוכחה נשברת? (הרי $2^2=4$.)
+    choices:
+      - text: 'מקבלים ש-$p$ זוגי, אבל אחרי $p=2k$ נשאר $k^2=q^2$, ומזה לא נובע ש-$q$ זוגי'
+        correct: true
+        feedback: >-
+          נכון. ב-2 המקדם שנשאר היה $q^2=2k^2$, וממנו נבעה זוגיות של $q$. ב-4 הגורם $2$ "נבלע" כולו ב-$p$,
+          ואין סתירה: $p=2$, $q=1$.
+      - text: >-
+          היא לא נשברת, ולכן גם ההוכחה ל-2 שגויה
+        feedback: >-
+          ההוכחה ל-2 נכונה, ובדיוק בגלל זה כדאי למצוא איפה ההעתקה נכשלת: אחרי $p=2k$ מקבלים $k^2=q^2$, ולא
+          $q^2=2k^2$.
+        misconception: MC-sqrt-irrational-proof-any-n
+      - text: 'בשלב "$p^2$ זוגי ולכן $p$ זוגי"'
+        feedback: >-
+          השלב הזה תקף: $p^2=4q^2$ זוגי, וריבוע של אי-זוגי אינו זוגי. ההוכחה נשברת שלב אחד אחר כך, כשמנסים
+          להסיק ש-$q$ זוגי.
+        misconception: MC-sqrt-irrational-proof-any-n
+
+  - id: Q-1.3-which-irrational
+    type: multi
+    objectives: [OBJ-1.3-2]
+    level: basic
+    prompt: >-
+      לאילו מהמספרים הבאים **אין** שורש ריבועי רציונלי (אין $x\in\mathbb{Q}$ עם $x^2$ שווה למספר)? סמנו
+      את כולם.
+    choices:
+      - text: '$3$'
+        correct: true
+        feedback: נכון. זו הכללה של ההוכחה ל-2, עם שאריות בחלוקה ב-3 במקום זוגיות.
+      - text: '$8$'
+        correct: true
+        feedback: >-
+          נכון. אילו $x^2=8$ עם $x$ רציונלי, אז $\left(\frac x2\right)^2=2$, ו-$\frac x2$ רציונלי. זה בלתי
+          אפשרי.
+      - text: '$12$'
+        correct: true
+        feedback: >-
+          נכון. אילו $x^2=12$, אז $\left(\frac x2\right)^2=3$, וזה בלתי אפשרי לפי הסעיף הראשון.
+      - text: '$9$'
+        feedback: >-
+          $3^2=9$. ההוכחה ל-2 עובדת רק למספרים שאינם ריבועים של רציונליים, ו-9 הוא ריבוע.
+        misconception: MC-sqrt-irrational-proof-any-n
+      - text: '$\frac94$'
+        feedback: >-
+          $\left(\frac32\right)^2=\frac94$. מספר שאינו שלם יכול בהחלט להיות ריבוע של רציונלי.
+        misconception: MC-sqrt-irrational-proof-any-n
+
+  - id: Q-1.3-sqrt3-parity
+    type: twotier
+    objectives: [OBJ-1.3-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      רוצים להוכיח שאין רציונלי שריבועו $3$: נניח $p^2=3q^2$ עם $\frac pq$ מצומצם. האם טיעון של זוגיות
+      בלבד (זוגי ואי-זוגי) מספיק כדי להגיע לסתירה?
+    choices:
+      - text: 'לא; צריך לעבוד עם שאריות בחלוקה ב-3'
+        correct: true
+        feedback: נכון. הזוגיות משאירה מקרה פתוח, שרק החלוקה ב-3 סוגרת.
+      - text: 'כן, בדיוק כמו בהוכחה ל-2'
+        feedback: >-
+          אם $p$ ו-$q$ שניהם אי-זוגיים, אז $p^2$ ו-$3q^2$ שניהם אי-זוגיים, והזוגיות לא נותנת שום סתירה.
+        misconception: MC-sqrt-irrational-proof-any-n
+    reasons:
+      - text: >-
+          המקרה "$p$ ו-$q$ אי-זוגיים" לא סותר זוגיות; לעומת זאת, אם $3\nmid p$ אז $p^2$ נותן שארית 1 בחלוקה
+          ב-3, ולכן $3\mid p$, ואז $q^2=3k^2$ ו-$3\mid q$
+        correct: true
+        feedback: >-
+          בדיוק. $(3k\pm1)^2=3(3k^2\pm2k)+1$, ולכן ריבוע שמתחלק ב-3 בא ממספר שמתחלק ב-3. זה התפקיד שהזוגיות
+          מילאה בהוכחה ל-2.
+      - text: '$p^2=3q^2$ אי-זוגי, ולכן $p$ אי-זוגי, וזו כבר סתירה'
+        feedback: >-
+          $p^2=3q^2$ אי-זוגי רק כש-$q$ אי-זוגי, ו"$p$ אי-זוגי" אינו סותר שום דבר: שבר של שני אי-זוגיים יכול
+          להיות מצומצם.
+        misconception: MC-sqrt-irrational-proof-any-n
+      - text: 'אם $p$ זוגי אז גם $q$ זוגי, ולכן תמיד מקבלים ששניהם זוגיים'
+        feedback: >-
+          החלק הראשון נכון ($p=2k$ נותן $4k^2=3q^2$, ולכן $q$ זוגי), אבל "תמיד" לא: נשאר המקרה ש-$p$
+          אי-זוגי, ואז גם $q$ אי-זוגי בלי סתירה.
+        misconception: MC-sqrt-irrational-proof-any-n
+
+  - id: Q-1.3-rational-plus-irrational
+    type: twotier
+    objectives: [OBJ-1.3-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $r$ רציונלי ו-$x$ אי-רציונלי. מה אפשר לומר על $r+x$?
+    choices:
+      - text: הוא תמיד אי-רציונלי
+        correct: true
+        feedback: נכון. ההוכחה היא בשלילה, בעזרת הסגירות של $\mathbb{Q}$ לחיסור.
+      - text: הוא יכול להיות רציונלי או אי-רציונלי, תלוי במספרים
+        feedback: >-
+          אילו $r+x=s$ רציונלי, היה יוצא $x=s-r$, הפרש של רציונליים, כלומר רציונלי. לכן $r+x$ אינו יכול
+          להיות רציונלי.
+        misconception: MC-irrational-closure-confused
+    reasons:
+      - text: 'אילו $r+x=s\in\mathbb{Q}$, אז $x=s-r\in\mathbb{Q}$, בסתירה לנתון'
+        correct: true
+        feedback: >-
+          בדיוק. מה שמשמש כאן הוא ש-$\mathbb{Q}$ סגורה לחיסור: $\frac ab-\frac cd=\frac{ad-bc}{bd}$.
+      - text: '$\sqrt2+(-\sqrt2)=0$, ולכן הסכום יכול לצאת רציונלי'
+        feedback: >-
+          זה סכום של **שני** אי-רציונליים. השאלה עוסקת ברציונלי ועוד אי-רציונלי, ושם הסכום תמיד אי-רציונלי.
+        misconception: MC-irrational-closure-confused
+      - text: 'האי-רציונליים סגורים לחיבור, ולכן כל סכום שיש בו אי-רציונלי הוא אי-רציונלי'
+        feedback: >-
+          האי-רציונליים **אינם** סגורים לחיבור: $\sqrt2+(-\sqrt2)=0$. המסקנה כאן נכונה, אבל מסיבה אחרת: הסגירות
+          של הרציונליים.
+        misconception: MC-irrational-closure-confused
+
+  - id: Q-1.3-closure
+    type: multi
+    objectives: [OBJ-1.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $x$ ו-$y$ אי-רציונליים, ו-$r\neq0$ רציונלי. אילו מהבאים בהכרח אי-רציונליים? סמנו את כולם.
+    choices:
+      - text: '$r\cdot x$'
+        correct: true
+        feedback: >-
+          נכון. אילו $rx=s\in\mathbb{Q}$, אז $x=\frac sr\in\mathbb{Q}$; כאן משתמשים ב-$r\neq0$.
+      - text: '$x-r$'
+        correct: true
+        feedback: >-
+          נכון. $x-r=x+(-r)$, ו-$-r$ רציונלי: זה סכום של אי-רציונלי ורציונלי.
+      - text: '$x+y$'
+        feedback: >-
+          $\sqrt2+(-\sqrt2)=0$. סכום של שני אי-רציונליים יכול לצאת רציונלי.
+        misconception: MC-irrational-closure-confused
+      - text: '$x\cdot y$'
+        feedback: >-
+          $\sqrt2\cdot\sqrt2=2$. גם מכפלה של אי-רציונליים יכולה לצאת רציונלית.
+        misconception: MC-irrational-closure-confused
+      - text: '$q\cdot x$, לכל $q$ רציונלי (גם $q=0$)'
+        feedback: >-
+          $0\cdot x=0$ רציונלי. ההוכחה ש-$qx$ אי-רציונלי מחלקת ב-$q$, ולכן היא עובדת רק ל-$q\neq0$.
+        misconception: MC-rational-times-irrational-zero
+
+  - id: Q-1.3-sqrt2-plus-sqrt3
+    type: rank
+    objectives: [OBJ-1.3-3]
+    level: exam
+    prompt: >-
+      הוכיחו ש-$\sqrt2+\sqrt3$ אי-רציונלי. מותר להשתמש בכך ש-$\sqrt2$ אי-רציונלי.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: 'נניח בשלילה ש-$r=\sqrt2+\sqrt3$ רציונלי; שימו לב ש-$r>0$'
+      - id: s2
+        label: 'אז $r-\sqrt2=\sqrt3$, ובהעלאה בריבוע: $r^2-2r\sqrt2+2=3$'
+      - id: s3
+        label: 'מבודדים את $\sqrt2$ (מותר לחלק ב-$2r$, כי $r\neq0$): $\sqrt2=\frac{r^2-1}{2r}$'
+      - id: s4
+        label: 'אגף ימין רציונלי, כי $\mathbb{Q}$ סגורה לחיבור, לכפל ולחילוק במספר שונה מאפס'
+      - id: s5
+        label: 'זו סתירה לכך ש-$\sqrt2$ אי-רציונלי, ולכן $\sqrt2+\sqrt3$ אי-רציונלי'
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. הרעיון: מבודדים שורש אחד, מעלים בריבוע כדי להיפטר מהשני, ומקבלים את $\sqrt2$ כביטוי רציונלי
+      ב-$r$.
+    wrongFeedback: >-
+      הוכחה בשלילה: מתחילים בהנחה ש-$r$ רציונלי, ומגיעים לכך ש-$\sqrt2$ רציונלי. בדרך צריך להיפטר מ-$\sqrt3$,
+      ולשם כך מעבירים אותו לבד באגף אחד ומעלים בריבוע.

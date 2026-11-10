@@ -1,0 +1,293 @@
+# Lesson 1.2 — the order axioms.
+# Objectives (src/course.ts):
+#   OBJ-1.2-1  list the order axioms and prove basic properties from them (a nonzero square is positive)
+#   OBJ-1.2-2  manipulate inequalities, justifying each step by an axiom or a proved claim
+#   OBJ-1.2-3  define the absolute value from the order and prove its properties
+# The order axioms as the questions name them: trichotomy (exactly one of a<b, a=b, b<a), transitivity,
+# addition (a<b ⇒ a+c<b+c) and multiplication (a<b and 0<c ⇒ ac<bc).
+chapter: 1
+questions:
+  - id: Q-1.2-one-positive
+    type: mc
+    objectives: [OBJ-1.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      למה בכל שדה סדור מתקיים $1>0$?
+    choices:
+      - text: 'כי $1=1\cdot1$ ו-$1\neq0$, וריבוע של איבר שונה מאפס הוא חיובי'
+        correct: true
+        feedback: >-
+          נכון. $1>0$ אינה אקסיומה: היא נובעת מהמשפט "$a\neq0 \Rightarrow a^2>0$" ומהאקסיומה $1\neq0$.
+      - text: זו אחת מאקסיומות הסדר
+        feedback: >-
+          אקסיומות הסדר הן הטריכוטומיה, הטרנזיטיביות, ושתי אקסיומות שמקשרות את הסדר לחיבור ולכפל. $1>0$ אינה
+          ביניהן; מוכיחים אותה מהן.
+        misconception: MC-field-fact-taken-as-axiom
+      - text: כי $1$ מספר טבעי, וכל המספרים הטבעיים חיוביים
+        feedback: >-
+          זה מעגלי: את החיוביות של הטבעיים מוכיחים באינדוקציה, והבסיס שלה הוא בדיוק $1>0$. צריך להוכיח את
+          $1>0$ קודם, מהאקסיומות.
+        misconception: MC-field-fact-taken-as-axiom
+
+  - id: Q-1.2-square-positive
+    type: rank
+    objectives: [OBJ-1.2-1]
+    level: mid
+    prompt: הוכיחו מאקסיומות הסדר שאם $a\neq0$ אז $a^2>0$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: 'לפי הטריכוטומיה, כש-$a\neq0$ מתקיים $a>0$ או $a<0$; בודקים כל מקרה'
+      - id: s2
+        label: 'אם $a>0$: לפי אקסיומת הכפל עם $c=a>0$, מ-$0<a$ נובע $0\cdot a<a\cdot a$, כלומר $0<a^2$'
+      - id: s3
+        label: 'אם $a<0$: מוסיפים $-a$ לשני האגפים (אקסיומת החיבור) ומקבלים $0<-a$'
+      - id: s4
+        label: 'לפי המקרה הראשון, עבור המספר החיובי $-a$, מתקיים $(-a)(-a)>0$'
+      - id: s5
+        label: 'בשיעור 1.1 הוכחנו $(-a)(-a)=a\cdot a$, ולכן גם במקרה הזה $a^2>0$'
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. המקרה השלילי מוחזר אל החיובי: $-a$ חיובי, וריבועו שווה ל-$a^2$.
+    wrongFeedback: >-
+      ההוכחה מתחילה בפיצול למקרים לפי הטריכוטומיה. את המקרה $a<0$ פותרים בעזרת המקרה $a>0$, ולכן הוא בא
+      שני.
+
+  - id: Q-1.2-z5-no-order
+    type: mc
+    objectives: [OBJ-1.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      על $\mathbb{Z}_5$ (חשבון מודולו 5) אי אפשר להגדיר סדר שמקיים את אקסיומות הסדר. מה הנימוק?
+    choices:
+      - text: >-
+          בכל שדה סדור $1>0$, ומאקסיומת החיבור $0<1<1+1<\dots<1+1+1+1+1$; אבל ב-$\mathbb{Z}_5$ הסכום האחרון
+          שווה ל-$0$, ומקבלים $0<0$
+        correct: true
+        feedback: >-
+          נכון. בשדה סדור סכום של אחדים תמיד חיובי, ולכן אף סכום כזה אינו $0$. ב-$\mathbb{Z}_5$ חמישה אחדים
+          נותנים $0$.
+      - text: 'אפשר בכלל להגדיר סדר: $0<1<2<3<4$'
+        feedback: >-
+          הדירוג הזה לא מקיים את אקסיומת החיבור: מ-$1<4$ היא נותנת $1+1<4+1$, כלומר $2<0$, בסתירה ל-$0<2$.
+          סדר על שדה אינו סתם דירוג של האיברים: הוא חייב להתאים לחיבור ולכפל.
+        misconception: MC-order-just-a-ranking
+      - text: 'כי ב-$\mathbb{Z}_5$ אין מספרים שליליים'
+        feedback: >-
+          לכל איבר ב-$\mathbb{Z}_5$ יש נגדי, למשל $-1=4$. "שלילי" פירושו "קטן מאפס", וזה תלוי בסדר, לא בסימן
+          מינוס. הבעיה היא שאין סדר שמתאים לפעולות.
+        misconception: MC-order-minus-x-negative
+
+  - id: Q-1.2-complex-no-order
+    type: twotier
+    objectives: [OBJ-1.2-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם אפשר להגדיר על המספרים המרוכבים $\mathbb{C}$ סדר שמקיים את כל אקסיומות הסדר?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. כל סדר כזה היה מחייב $-1>0$.
+      - text: כן
+        feedback: >-
+          כל דירוג שתבחרו ייכשל באקסיומת הכפל. למשל, בדירוג "קודם לפי החלק הממשי, אחר כך לפי המדומה" מתקיים
+          $0<i$, אבל $i\cdot i=-1<0$.
+        misconception: MC-every-field-ordered
+    reasons:
+      - text: '$i\neq0$, ולכן $i^2=-1>0$; אבל גם $1=1^2>0$, ומחיבור מקבלים $0=1+(-1)>0$'
+        correct: true
+        feedback: >-
+          בדיוק. המשפט "ריבוע של איבר שונה מאפס חיובי" נכון בכל שדה סדור, ו-$\mathbb{C}$ מכיל איבר שריבועו
+          $-1$.
+      - text: 'הדירוג "קודם לפי החלק הממשי, אחר כך לפי המדומה" מקיים את כל האקסיומות'
+        feedback: >-
+          הוא מקיים טריכוטומיה, טרנזיטיביות ואת אקסיומת החיבור, אבל לא את אקסיומת הכפל: $0<i$, ובכל זאת
+          $i\cdot i=-1<0$.
+        misconception: MC-every-field-ordered
+      - text: אי אפשר, כי מספרים מרוכבים אינם יושבים על ישר, ולכן אין דרך לדרג אותם
+        feedback: >-
+          דירוג של $\mathbb{C}$ דווקא קיים (למשל הדירוג הלקסיקוגרפי). מה שאין הוא דירוג שמתאים לחיבור ולכפל,
+          וזה מה שצריך להוכיח, בעזרת $i^2=-1$.
+        misconception: MC-order-just-a-ranking
+
+  - id: Q-1.2-multiply-negative
+    type: mc
+    objectives: [OBJ-1.2-2]
+    level: basic
+    prompt: >-
+      נתון $a<b$ ו-$c<0$. מה נובע מאקסיומות הסדר?
+    choices:
+      - text: '$ac>bc$'
+        correct: true
+        feedback: >-
+          נכון. $-c>0$, ולכן $a(-c)<b(-c)$, כלומר $-ac<-bc$. מוסיפים $ac+bc$ לשני האגפים ומקבלים $bc<ac$.
+      - text: '$ac<bc$'
+        feedback: >-
+          אקסיומת הכפל שומרת על הכיוון רק בכפל ב**חיובי**. למשל $1<2$ ו-$c=-1$ נותנים $-1>-2$.
+        misconception: MC-order-flip-negative-factor
+      - text: אי אפשר לדעת בלי לדעת את הסימנים של $a$ ושל $b$
+        feedback: >-
+          את הסימנים של $a$ ושל $b$ צריך לדעת כשכופלים **שני** אי-שוויונות זה בזה. כאן כופלים אי-שוויון אחד
+          במספר שסימנו ידוע, וזה מספיק.
+        misconception: MC-order-multiply-unsigned
+
+  - id: Q-1.2-combine
+    type: multi
+    objectives: [OBJ-1.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נתון $a<b$ ו-$c<d$. אילו מהטענות הבאות נובעות לכל $a,b,c,d$ ממשיים? סמנו את כולן.
+    choices:
+      - text: '$a+c<b+d$'
+        correct: true
+        feedback: >-
+          נכון. מאקסיומת החיבור פעמיים: $a+c<b+c$ ו-$b+c<b+d$, ומהטרנזיטיביות $a+c<b+d$.
+      - text: '$a-d<b-c$'
+        correct: true
+        feedback: >-
+          נכון. מ-$c<d$ נובע $-d<-c$, ואז מחברים את $a<b$ עם $-d<-c$ כמו בסעיף הקודם.
+      - text: '$a-c<b-d$'
+        feedback: >-
+          אי-שוויונות באותו כיוון מותר לחבר, אבל לא לחסר. דוגמה נגדית: $a=0$, $b=1$, $c=0$, $d=5$ נותנים
+          $0<-4$.
+        misconception: MC-order-subtract-inequalities
+      - text: '$ac<bd$'
+        feedback: >-
+          כפל של אי-שוויונות דורש סימנים. דוגמה נגדית: $a=c=-2$, $b=d=-1$ נותנים $ac=4$ ו-$bd=1$.
+        misconception: MC-order-multiply-unsigned
+
+  - id: Q-1.2-reciprocal
+    type: twotier
+    objectives: [OBJ-1.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      טענה: לכל $a,b\neq0$, אם $a<b$ אז $\frac1a>\frac1b$. האם הטענה נכונה?
+    choices:
+      - text: לא נכונה
+        correct: true
+        feedback: נכון. היא נכונה רק כש-$a$ ו-$b$ באותו סימן.
+      - text: נכונה
+        feedback: >-
+          $a=-1$ ו-$b=1$ מקיימים $a<b$, אבל $\frac1a=-1<1=\frac1b$.
+        misconception: MC-order-reciprocal-flip
+    reasons:
+      - text: >-
+          $a=-1$, $b=1$ היא דוגמה נגדית; ובאופן כללי $\frac1a-\frac1b=\frac{b-a}{ab}$, וזה חיובי רק כש-$ab>0$
+        correct: true
+        feedback: >-
+          בדיוק. $b-a>0$ תמיד, ולכן הסימן של ההפרש הוא הסימן של $ab$.
+      - text: מעבר להופכי תמיד הופך את כיוון אי-השוויון
+        feedback: >-
+          ההיפוך הופך כיוון רק כששני המספרים באותו סימן. בין שלילי לחיובי ההופכיים שומרים על הסימנים, ולכן
+          שלילי נשאר קטן מחיובי.
+        misconception: MC-order-reciprocal-flip
+      - text: אסור לכפול אי-שוויון ב-$\frac{1}{ab}$ כשלא יודעים מראש את הסימן של $ab$
+        feedback: >-
+          מותר לכפול בכל מספר שונה מאפס, ובלבד שמתחשבים בסימנו: כשהוא שלילי הכיוון מתהפך. כך בדיוק רואים
+          שהטענה נכונה כש-$ab>0$ ונכשלת כש-$ab<0$.
+        misconception: MC-order-flip-negative-factor
+
+  - id: Q-1.2-amgm
+    type: rank
+    objectives: [OBJ-1.2-2]
+    level: exam
+    prompt: >-
+      הוכיחו שלכל $a,b>0$ מתקיים $\frac ab+\frac ba\ge 2$, והצדיקו כל מעבר.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: '$(a-b)^2\ge0$, כי ריבוע של כל איבר אינו שלילי'
+      - id: s2
+        label: 'פותחים סוגריים (חוק הפילוג): $a^2-2ab+b^2\ge0$'
+      - id: s3
+        label: 'מוסיפים $2ab$ לשני האגפים (אקסיומת החיבור): $a^2+b^2\ge 2ab$'
+      - id: s4
+        label: >-
+          $ab>0$ כמכפלה של חיוביים, ולכן גם $\frac{1}{ab}>0$; כופלים בו (אקסיומת הכפל, הכיוון נשמר) ומקבלים
+          $\frac ab+\frac ba\ge2$
+    order: [s1, s2, s3, s4]
+    correctFeedback: >-
+      נכון. ההוכחה מתחילה במשהו שבטוח נכון, ריבוע אינו שלילי, ומגיעה אל המטרה בצעדים שכל אחד מהם מוצדק.
+    wrongFeedback: >-
+      התחילו מאי-שוויון שאין צורך להוכיח: ריבוע אינו שלילי. החלוקה ב-$ab$ באה אחרונה, ורק אחרי שבדקתם את
+      סימנו.
+    hints:
+      - 'הכפילו את המטרה ב-$ab$ ובדקו לאיזה אי-שוויון היא שקולה; את ההוכחה כותבים בכיוון ההפוך.'
+
+  - id: Q-1.2-abs-cases
+    type: mc
+    objectives: [OBJ-1.2-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      הערך המוחלט מוגדר כך: $|x|=x$ כש-$x\ge0$, ו-$|x|=-x$ כש-$x<0$. מתי מתקיים $|x|=-x$?
+    choices:
+      - text: 'בדיוק כש-$x\le0$'
+        correct: true
+        feedback: >-
+          נכון. ל-$x<0$ זו ההגדרה, ול-$x=0$ גם $-0=0=|0|$. למשל $|-3|=-(-3)=3$.
+      - text: 'אף פעם: ערך מוחלט אינו שלילי, ו-$-x$ הוא שלילי'
+        feedback: >-
+          $-x$ אינו בהכרח שלילי: הוא הנגדי של $x$. כש-$x=-3$, המספר $-x$ הוא $3$, חיובי.
+        misconception: MC-order-minus-x-negative
+      - text: 'רק כש-$x=0$'
+        feedback: >-
+          גם כש-$x=-3$: $-x=3=|x|$. הסימן מינוס לפני $x$ אינו אומר ש-$-x$ שלילי.
+        misconception: MC-order-minus-x-negative
+
+  - id: Q-1.2-abs-sum
+    type: twotier
+    objectives: [OBJ-1.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם לכל $a,b$ ממשיים מתקיים $|a+b|=|a|+|b|$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. תמיד $|a+b|\le|a|+|b|$, אבל שוויון יש רק בחלק מהמקרים.
+      - text: כן
+        feedback: >-
+          $a=1$, $b=-1$: $|a+b|=0$, ואילו $|a|+|b|=2$.
+        misconception: MC-order-abs-additive
+    reasons:
+      - text: '$a=1$, $b=-1$ היא דוגמה נגדית; שוויון מתקיים בדיוק כש-$ab\ge0$'
+        correct: true
+        feedback: >-
+          בדיוק. כששני המספרים באותו סימן הערכים המוחלטים מתחברים; בסימנים מנוגדים הם מבטלים זה את זה בחלקם.
+      - text: הערך המוחלט פשוט מוחק את סימני המינוס, ולכן הוא מתחלק על סכום
+        feedback: >-
+          "מוחק את המינוס" נכון רק למספר יחיד. בסכום, $1+(-1)$, הסימנים פועלים לפני שלוקחים ערך מוחלט.
+        misconception: MC-order-abs-additive
+      - text: 'השוויון נכשל רק כששני המספרים שליליים'
+        feedback: >-
+          דווקא כששניהם שליליים יש שוויון: $|-1+(-2)|=3=|-1|+|-2|$. השוויון נכשל כשהסימנים **מנוגדים**.
+        misconception: MC-order-abs-additive
+
+  - id: Q-1.2-triangle
+    type: rank
+    objectives: [OBJ-1.2-3]
+    level: exam
+    prompt: >-
+      הוכיחו מההגדרה של הערך המוחלט ומאקסיומות הסדר ש-$|a+b|\le|a|+|b|$. מותר להשתמש בטענה: לכל $c\ge0$,
+      $|x|\le c$ אם ורק אם $-c\le x\le c$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: 'אם $a\ge0$ אז $|a|=a\ge0\ge-|a|$; אם $a<0$ אז $a=-|a|<0<|a|$. בשני המקרים $-|a|\le a\le|a|$'
+      - id: s2
+        label: 'באותו אופן $-|b|\le b\le|b|$'
+      - id: s3
+        label: 'מחברים את שני אי-השוויונות (אקסיומת החיבור, פעמיים): $-(|a|+|b|)\le a+b\le|a|+|b|$'
+      - id: s4
+        label: 'לפי הטענה, עם $x=a+b$ ו-$c=|a|+|b|\ge0$, מקבלים $|a+b|\le|a|+|b|$'
+    order: [[s1, s2], s3, s4]
+    correctFeedback: >-
+      נכון. הרעיון: כל מספר כלוא בין מינוס הערך המוחלט שלו לבין הערך המוחלט שלו, וחסמים כאלה מותר לחבר.
+    wrongFeedback: >-
+      קודם כולאים כל מספר בנפרד בין $-|a|$ ל-$|a|$; רק אחר כך מחברים, ובסוף מתרגמים חזרה לערך מוחלט.

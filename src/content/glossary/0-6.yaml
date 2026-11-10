@@ -1,0 +1,150 @@
+# Terms first defined in lesson 0.6 (sets and functions).
+- id: set
+  term: קבוצה
+  en: set
+  definition: >-
+    אוסף של עצמים, שנקראים איברי הקבוצה. קבוצה נקבעת רק לפי האיברים שלה: אין בה סדר ואין בה חזרות.
+  lesson: '0.6'
+- id: set-element
+  term: איבר של קבוצה
+  en: element
+  symbol: 'x\in A'
+  definition: >-
+    $x\in A$ פירושו ש-$x$ שייך לקבוצה $A$; $x\notin A$ פירושו שאינו שייך.
+  lesson: '0.6'
+- id: subset
+  term: תת-קבוצה
+  en: subset
+  symbol: 'A\subseteq B'
+  definition: >-
+    $A\subseteq B$ ($A$ מוכלת ב-$B$) אם כל איבר של $A$ הוא איבר של $B$. שתי קבוצות שוות אם $A\subseteq B$ וגם
+    $B\subseteq A$ (הכלה דו-כיוונית).
+  reject: [תת קבוצה]
+  lesson: '0.6'
+- id: set-union
+  term: איחוד
+  en: union
+  symbol: 'A\cup B'
+  definition: >-
+    $A\cup B$ היא קבוצת כל ה-$x$ ש-$x\in A$ **או** $x\in B$.
+  lesson: '0.6'
+- id: set-intersection
+  term: חיתוך
+  en: intersection
+  symbol: 'A\cap B'
+  definition: >-
+    $A\cap B$ היא קבוצת כל ה-$x$ ש-$x\in A$ **וגם** $x\in B$.
+  lesson: '0.6'
+- id: set-difference
+  term: הפרש קבוצות
+  en: set difference
+  symbol: 'A\setminus B'
+  definition: >-
+    $A\setminus B$ היא קבוצת כל ה-$x$ ש-$x\in A$ ו-$x\notin B$. בדרך כלל $A\setminus B\ne B\setminus A$.
+  lesson: '0.6'
+- id: set-complement
+  term: משלים
+  en: complement
+  symbol: 'A^c'
+  definition: >-
+    המשלים של $A$ ביחס לקבוצה גדולה $U$ (אצלנו בדרך כלל $U=\mathbb{R}$) הוא $A^c=U\setminus A$.
+  lesson: '0.6'
+- id: function
+  term: פונקציה
+  en: function
+  symbol: 'f:A\to B'
+  definition: >-
+    כלל שמתאים לכל איבר $x$ של קבוצה $A$ איבר אחד ויחיד $f(x)$ של קבוצה $B$. פונקציה נקבעת על ידי התחום,
+    הטווח והכלל יחד, לא על ידי הנוסחה לבדה.
+  lesson: '0.6'
+- id: function-domain
+  term: תחום
+  en: domain
+  definition: >-
+    הקבוצה $A$ ב-$f:A\to B$: הקבוצה שעל איבריה הפונקציה מוגדרת.
+  lesson: '0.6'
+- id: function-codomain
+  term: טווח
+  en: codomain
+  definition: >-
+    הקבוצה $B$ ב-$f:A\to B$: הקבוצה שאליה הפונקציה שולחת. לא כל איבר של הטווח חייב להתקבל.
+  lesson: '0.6'
+- id: function-image
+  term: תמונה
+  en: image (range)
+  symbol: 'f(A)'
+  definition: >-
+    קבוצת הערכים שהפונקציה מקבלת בפועל, $f(A)=\{f(x):\ x\in A\}$. היא מוכלת בטווח, ושווה לו בדיוק כש-$f$ על.
+  lesson: '0.6'
+- id: injective-function
+  term: חד-חד-ערכית
+  en: injective (one-to-one)
+  definition: >-
+    $f$ חד-חד-ערכית אם לכל $x_1,x_2$ בתחום, $f(x_1)=f(x_2)$ גורר $x_1=x_2$: נקודות שונות הולכות לערכים שונים.
+  reject: [חד חד ערכית]
+  lesson: '0.6'
+- id: surjective-function
+  term: על
+  en: surjective (onto)
+  definition: >-
+    $f:A\to B$ היא על אם לכל $y\in B$ קיים $x\in A$ כך ש-$f(x)=y$, כלומר התמונה שווה לטווח.
+  lesson: '0.6'
+- id: bijective-function
+  term: חד-חד-ערכית ועל
+  en: bijective (bijection)
+  definition: >-
+    פונקציה שהיא גם חד-חד-ערכית וגם על. בדיוק לפונקציות כאלה יש פונקציה הפוכה.
+  lesson: '0.6'
+- id: function-composition
+  term: הרכבה
+  en: composition
+  symbol: 'g\circ f'
+  definition: >-
+    $(g\circ f)(x)=g(f(x))$: קודם מפעילים את $f$, ואת התוצאה מציבים ב-$g$. מוגדרת כשהתמונה של $f$ מוכלת בתחום
+    של $g$.
+  lesson: '0.6'
+- id: inverse-function
+  term: פונקציה הפוכה
+  en: inverse function
+  symbol: 'f^{-1}'
+  definition: >-
+    עבור $f:A\to B$ חד-חד-ערכית ועל, $f^{-1}:B\to A$ שולחת כל $y$ ל-$x$ היחיד שמקיים $f(x)=y$. אז
+    $f^{-1}(f(x))=x$ ו-$f(f^{-1}(y))=y$. היא אינה $\frac{1}{f}$.
+  lesson: '0.6'
+- id: empty-set
+  term: הקבוצה הריקה
+  en: empty set
+  symbol: '\emptyset'
+  definition: >-
+    הקבוצה שאין בה אף איבר, $\emptyset$. היא תת-קבוצה של כל קבוצה.
+  lesson: '0.6'
+- id: de-morgan-sets
+  term: כללי דה-מורגן לקבוצות
+  en: De Morgan's laws (sets)
+  symbol: '(A\cup B)^c=A^c\cap B^c'
+  definition: >-
+    המשלים מחליף איחוד בחיתוך ולהפך: $(A\cup B)^c=A^c\cap B^c$ ו-$(A\cap B)^c=A^c\cup B^c$. אלה כללי
+    השלילה של "או" ושל "וגם", כשהם נאמרים על שייכות לקבוצה.
+  lesson: '0.6'
+- id: preimage
+  term: מקור
+  en: preimage
+  definition: >-
+    עבור $f:A\to B$ ו-$y\in B$, איבר $x\in A$ שמקיים $f(x)=y$ נקרא מקור של $y$. לאיבר של הטווח יכולים להיות
+    כמה מקורות, או אף לא אחד. $f$ על אם לכל $y$ יש מקור, וחד-חד-ערכית אם לכל $y$ יש לכל היותר מקור אחד.
+  lesson: '0.6'
+- id: identity-function
+  term: פונקציית הזהות
+  en: identity function
+  symbol: '\mathrm{id}_A'
+  definition: >-
+    הפונקציה $\mathrm{id}_A:A\to A$ ששולחת כל איבר לעצמו: $\mathrm{id}_A(x)=x$.
+  lesson: '0.6'
+- id: function-restriction
+  term: צמצום של פונקציה
+  en: restriction
+  definition: >-
+    הצמצום של $f:A\to B$ לתת-קבוצה $S\subseteq A$ הוא הפונקציה $S\to B$ שנותנת לכל $x\in S$ את אותו ערך $f(x)$:
+    משנים רק את התחום. לצמצום יכולות להיות תכונות שאין ל-$f$: $x^2$ מ-$\mathbb{R}$ אל $\mathbb{R}$ אינה
+    חד-חד-ערכית, וצמצומה ל-$[0,\infty)$ כן. כשמקטינים גם את הטווח (למשל אל התמונה), אומרים זאת בנפרד.
+  lesson: '0.6'

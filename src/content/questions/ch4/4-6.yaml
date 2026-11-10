@@ -1,0 +1,348 @@
+# Lesson 4.6 — the exponential and the logarithm.
+# Objectives (src/course.ts):
+#   OBJ-4.6-1  define the exponential function and prove its properties: power laws, monotonicity, continuity
+#   OBJ-4.6-2  define the logarithm as the inverse function and deduce its properties
+#   OBJ-4.6-3  compute limits with powers and logarithms, including forms like one to the power infinity
+# The definition used here (as in lesson 1.7): for a > 1 and real x, a^x = sup{ a^r : r rational, r ≤ x };
+# for 0 < a < 1, a^x = (1/a)^(-x); exp(x) = e^x with e from lesson 2.7. No derivatives (chapter 5).
+chapter: 4
+questions:
+  - id: Q-4.6-def-sup
+    type: mc
+    objectives: [OBJ-4.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      עבור $a>1$ ו-$x$ ממשי מגדירים $a^x=\sup\{a^r:\ r\in\mathbb{Q},\ r\le x\}$. למה הסופרמום הזה קיים?
+    choices:
+      - text: 'הקבוצה אינה ריקה, ולכל רציונלי $q>x$ המספר $a^q$ חסם מלעיל שלה, כי חזקות רציונליות של $a>1$ עולות'
+        correct: true
+        feedback: >-
+          נכון. אקסיומת השלמות נותנת סופרמום לכל קבוצה לא ריקה וחסומה מלעיל. המונוטוניות של $a^r$ ברציונליים
+          (שיעור 1.7) היא שנותנת את החסם.
+      - text: 'כי $a^r\le a^x$ לכל $r\le x$'
+        feedback: >-
+          זה מעגלי: $a^x$ הוא בדיוק מה שמגדירים כאן, ואי אפשר להשתמש בו כחסם לפני שהוא קיים. צריך חסם שכבר
+          ידוע, כמו $a^q$ עם $q$ רציונלי גדול מ-$x$.
+      - text: לכל קבוצה של מספרים חיוביים יש סופרמום
+        feedback: >-
+          לא נכון: ל-$\mathbb{N}$ אין סופרמום (ממשי). צריך גם שהקבוצה תהיה חסומה מלעיל.
+      - text: הקבוצה סופית, ולכן יש לה מקסימום
+        feedback: >-
+          יש אינסוף רציונליים $r\le x$, ולכן הקבוצה אינסופית. אם $x$ אי-רציונלי, אין לה גם מקסימום.
+
+  - id: Q-4.6-monotone
+    type: twotier
+    objectives: [OBJ-4.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $0<a<1$. האם הפונקציה $x\mapsto a^x$ יורדת ממש ב-$\mathbb{R}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. למשל $(\frac12)^x$ יורדת מ-$\infty$ ל-0.
+      - text: לא, היא עולה
+        feedback: >-
+          פונקציה מעריכית עולה רק כשהבסיס גדול מ-1. $(\frac12)^1=\frac12<1=(\frac12)^0$.
+        misconception: MC-exp-always-increasing
+    reasons:
+      - text: '$a^x=(\frac1a)^{-x}$ עם $\frac1a>1$: $x\mapsto -x$ יורדת, ו-$(\frac1a)^y$ עולה, וההרכבה יורדת'
+        correct: true
+        feedback: >-
+          בדיוק. מקרה $0<a<1$ מוחזר למקרה $a>1$, ואז כל התכונות עוברות (עם היפוך הכיוון).
+      - text: כל פונקציה מעריכית עולה
+        feedback: >-
+          רק כשהבסיס גדול מ-1. בבסיס 1 היא קבועה, ובבסיס בין 0 ל-1 היא יורדת.
+        misconception: MC-exp-always-increasing
+      - text: '$a^x<1$ לכל $x$'
+        feedback: >-
+          לא נכון: $(\frac12)^{-1}=2$. וגם אילו זה היה נכון, פונקציה קטנה מ-1 אינה בהכרח יורדת.
+
+  - id: Q-4.6-cont-proof
+    type: rank
+    objectives: [OBJ-4.6-1]
+    level: exam
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      הטענה: עבור $a>1$ הפונקציה $a^x$ רציפה בכל $\mathbb{R}$. נתון שהיא עולה ממש ושמקיימת $a^{x+y}=a^xa^y$.
+      סדרו את שלבי ההוכחה.
+    items:
+      - id: s1
+        label: 'רציפות ב-0: יהי $\varepsilon>0$. מכיוון ש-$a^{1/n}\to1$ ו-$a^{-1/n}\to1$ (שיעור 2.8), יש $n$ עם $1-\varepsilon<a^{-1/n}$ ו-$a^{1/n}<1+\varepsilon$.'
+      - id: s2
+        label: 'נבחר $\delta=\frac1n$. לכל $|x|<\delta$, מהמונוטוניות $a^{-1/n}<a^x<a^{1/n}$, ולכן $|a^x-1|<\varepsilon$.'
+      - id: s3
+        label: 'בנקודה כללית $x_0$ כותבים $a^x-a^{x_0}=a^{x_0}\left(a^{x-x_0}-1\right)$.'
+      - id: s4
+        label: 'כש-$x\to x_0$, $x-x_0\to 0$, ולכן מהרציפות ב-0 $a^{x-x_0}\to1$, כלומר $a^x\to a^{x_0}$.'
+    order: [s1, s2, s3, s4]
+    correctFeedback: >-
+      נכון. המונוטוניות "לוכדת" את $a^x$ בין שתי חזקות ידועות ליד 0, וחוק החזקות מעביר את הרציפות מ-0 לכל
+      נקודה.
+    wrongFeedback: >-
+      ההוכחה בנויה בשני שלבים: קודם רציפות ב-0 (אפסילון ואחריו דלתא), ורק אחר כך מעבר לנקודה כללית בעזרת חוק
+      החזקות.
+
+  - id: Q-4.6-image
+    type: mc
+    objectives: [OBJ-4.6-1]
+    level: mid
+    prompt: >-
+      למה כל מספר $y>0$ הוא $e^x$ עבור $x$ ממשי כלשהו, כלומר למה התמונה של $e^x$ היא כל $(0,\infty)$?
+    choices:
+      - text: '$e^n\to\infty$ ו-$e^{-n}\to0$, ולכן יש $n$ עם $e^{-n}<y<e^n$; $e^x$ רציפה ב-$[-n,n]$, ולפי ערך הביניים מקבלת את $y$'
+        correct: true
+        feedback: >-
+          נכון. זה מה שמאפשר להגדיר את $\ln y$ לכל $y>0$: יש $x$ (יחיד, כי $e^x$ עולה ממש) עם $e^x=y$.
+      - text: '$e^x$ עולה ממש, ולכן היא על $(0,\infty)$'
+        feedback: >-
+          פונקציה עולה ממש אינה בהכרח על: $\arctan$ עולה ממש והתמונה שלה רק $(-\frac\pi2,\frac\pi2)$. צריך גם
+          רציפות וגם לדעת לאן הערכים מגיעים בקצוות.
+      - text: '$e^x>0$ לכל $x$'
+        feedback: >-
+          זה מראה רק שהתמונה **מוכלת** ב-$(0,\infty)$. השאלה היא על הכיוון השני: שכל $y>0$ מתקבל.
+      - text: '$\ln y$ מוגדר לכל $y>0$, ו-$e^{\ln y}=y$'
+        feedback: >-
+          זה מעגלי: את $\ln$ מגדירים כהפוכה של $e^x$, וזה אפשרי רק אחרי שיודעים שכל $y>0$ מתקבל.
+
+  - id: Q-4.6-ln-cont
+    type: mc
+    objectives: [OBJ-4.6-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      למה $\ln$ רציפה ב-$(0,\infty)$?
+    choices:
+      - text: 'היא ההפוכה של $e^x$, שרציפה ועולה ממש על הקטע $\mathbb{R}$'
+        correct: true
+        feedback: >-
+          נכון. זה משפט ההפוכה משיעור 4.5: על קטע, ההפוכה של פונקציה רציפה ועולה ממש רציפה.
+      - text: ההפוכה של כל פונקציה רציפה וחד-חד-ערכית רציפה
+        feedback: >-
+          לא על כל תחום (שיעור 4.5). מה שמציל כאן הוא שהתחום של $e^x$ הוא **קטע**, $\mathbb{R}$.
+        misconception: MC-inverse-always-continuous
+      - text: 'כי $\ln(xy)=\ln x+\ln y$'
+        feedback: >-
+          המשוואה לבדה לא נותנת רציפות. בעזרתה אפשר להעביר רציפות מהנקודה 1 לכל נקודה, אבל את הרציפות ב-1 עדיין
+          צריך להוכיח.
+      - text: '$\ln$ היא פונקציה אלמנטרית, וכל הפונקציות האלמנטריות רציפות'
+        feedback: >-
+          זו לא הוכחה: "אלמנטרית" היא רשימה של פונקציות, ואת הרציפות של כל אחת מהן צריך להוכיח. עבור $\ln$
+          ההוכחה היא משפט ההפוכה.
+
+  - id: Q-4.6-ln-prop
+    type: multi
+    objectives: [OBJ-4.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהשוויונות הבאים נכונים לכל $x,y>0$ ולכל $r$ ממשי? סמנו את כולם.
+    choices:
+      - text: '$\ln(xy)=\ln x+\ln y$'
+        correct: true
+        feedback: נכון. זה חוק החזקות $e^{a+b}=e^ae^b$, דרך ההפוכה.
+      - text: '$\ln(x^r)=r\ln x$'
+        correct: true
+        feedback: 'נכון. $x^r=e^{r\ln x}$, וזו אפילו דרך טובה להגדיר $x^r$ לכל $r$ ממשי.'
+      - text: '$\ln 1=0$'
+        correct: true
+        feedback: נכון, כי $e^0=1$.
+      - text: '$\ln(x+y)=\ln x\cdot\ln y$'
+        feedback: >-
+          אין חוק כזה. עם $x=y=1$: $\ln 2\approx0.69$, ואילו $\ln1\cdot\ln1=0$.
+        misconception: MC-log-rules-invented
+      - text: '$\ln\frac xy=\frac{\ln x}{\ln y}$'
+        feedback: >-
+          הלוגריתם הופך מנה להפרש: $\ln\frac xy=\ln x-\ln y$. עם $x=y=e$: $\ln 1=0$, ואילו $\frac{1}{1}=1$.
+        misconception: MC-log-rules-invented
+
+  - id: Q-4.6-ln-increasing
+    type: twotier
+    objectives: [OBJ-4.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם $\ln$ עולה ממש ב-$(0,\infty)$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון.
+      - text: רק ב-$(1,\infty)$, שם היא חיובית
+        feedback: >-
+          סימן ומונוטוניות הם שני דברים שונים. $\ln\frac14<\ln\frac12<0$: היא עולה גם היכן שהיא שלילית.
+    reasons:
+      - text: 'אם $x<y$ ו-$\ln x\ge\ln y$, אז $x=e^{\ln x}\ge e^{\ln y}=y$, סתירה; זה נכון להפוכה של כל פונקציה עולה ממש'
+        correct: true
+        feedback: >-
+          בדיוק. המונוטוניות עוברת להפוכה ישירות מההגדרה, בלי שום חשבון.
+      - text: '$\ln x>0$ לכל $x$'
+        feedback: >-
+          לא נכון: $\ln\frac12<0$, כי $e^0=1>\frac12$. וחיוביות גם לא הייתה גוררת מונוטוניות.
+      - text: '$\ln$ רציפה, ולכן מונוטונית'
+        feedback: >-
+          רציפות לא גוררת מונוטוניות: $\sin$ רציפה ואינה מונוטונית. (רציפה **וחד-חד-ערכית** על קטע כן גוררת,
+          שיעור 4.5.)
+
+  - id: Q-4.6-ln-proof
+    type: rank
+    objectives: [OBJ-4.6-2]
+    level: mid
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      הטענה: $\ln(xy)=\ln x+\ln y$ לכל $x,y>0$. סדרו את שלבי ההוכחה.
+    items:
+      - id: s1
+        label: 'נסמן $a=\ln x$ ו-$b=\ln y$; לפי הגדרת $\ln$, $e^a=x$ ו-$e^b=y$.'
+      - id: s2
+        label: 'לפי חוק החזקות, $e^{a+b}=e^a\,e^b=xy$.'
+      - id: s3
+        label: 'מפעילים את $\ln$, ההפוכה של $e^x$, על שני הצדדים: $a+b=\ln(xy)$.'
+      - id: s4
+        label: 'כלומר $\ln(xy)=\ln x+\ln y$.'
+    order: [s1, s2, s3, s4]
+    correctFeedback: >-
+      נכון. כל תכונה של $\ln$ מתקבלת כך: מתרגמים לשפה של $e^x$, משתמשים בתכונה המתאימה שם, וחוזרים עם $\ln$.
+    wrongFeedback: >-
+      קודם עוברים לשפה של $e^x$ (מה הם $x$ ו-$y$ במונחי $e$), שם משתמשים בחוק החזקות, ורק בסוף חוזרים עם $\ln$.
+
+  - id: Q-4.6-lim-e3
+    type: mc
+    objectives: [OBJ-4.6-3]
+    level: basic
+    prompt: >-
+      מהו $\lim_{n\to\infty}\left(1+\frac3n\right)^n$?
+    choices:
+      - text: '$e^3$'
+        correct: true
+        feedback: >-
+          נכון. $\left(1+\frac an\right)^n\to e^a$ לכל $a$ ממשי; כאן $a=3$, והגבול בערך $20.09$.
+      - text: '$1$'
+        feedback: >-
+          הבסיס שואף ל-1, אבל המעריך שואף לאינסוף: זו צורה לא מוגדרת. ואכן $\left(1+\frac3n\right)^n\ge 1+3=4$
+          לכל $n$ (ברנולי).
+        misconception: MC-one-power-infinity-is-one
+      - text: '$e$'
+        feedback: >-
+          $e$ הוא הגבול של $\left(1+\frac1n\right)^n$. הקבוע 3 במונה משנה את הגבול ל-$e^3$.
+        misconception: MC-e-limit-pattern-misapplied
+      - text: '$3e$'
+        feedback: >-
+          הקבוע נכנס למעריך, לא כמקדם: $\left(1+\frac3n\right)^n\to e^3\approx20.09$, ואילו $3e\approx8.15$.
+        misconception: MC-e-limit-pattern-misapplied
+
+  - id: Q-4.6-lim-1inf
+    type: twotier
+    objectives: [OBJ-4.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מהו $\lim_{n\to\infty}\left(1+\frac1n\right)^{n^2}$?
+    choices:
+      - text: '$\infty$'
+        correct: true
+        feedback: נכון. המעריך גדל מהר מדי בשביל גבול סופי.
+      - text: '$1$'
+        feedback: >-
+          "בסיס ששואף ל-1 בחזקת מעריך ששואף לאינסוף" היא צורה לא מוגדרת. כאן החזקה גדלה בלי חסם.
+        misconception: MC-one-power-infinity-is-one
+      - text: '$e$'
+        feedback: >-
+          $e$ הוא הגבול כשהמעריך הוא $n$. כאן המעריך $n^2$, כלומר מעלים את $\left(1+\frac1n\right)^n$ עוד בחזקת
+          $n$.
+        misconception: MC-e-limit-pattern-misapplied
+    reasons:
+      - text: '$\left(1+\frac1n\right)^{n^2}=\left(\left(1+\frac1n\right)^n\right)^n\ge 2^n$, כי $\left(1+\frac1n\right)^n\ge2$ (ברנולי)'
+        correct: true
+        feedback: >-
+          בדיוק. $2^n\to\infty$, ולכן גם הסדרה הגדולה ממנה.
+      - text: הבסיס שואף ל-1, ו-1 בכל חזקה הוא 1
+        feedback: >-
+          הבסיס אינו 1, הוא רק שואף ל-1, והמעריך גדל בינתיים. אי אפשר לקחת גבול של הבסיס בנפרד כשהמעריך שואף
+          לאינסוף.
+        misconception: MC-one-power-infinity-is-one
+      - text: '$\left(1+\frac1n\right)^n\to e$, ולכן כל חזקה שלה שואפת ל-$e$'
+        feedback: >-
+          מעלים אותה בחזקת $n$, שמשתנה עם $n$. חזקה קבועה $k$ הייתה נותנת $e^k$; חזקה שגדלה נותנת אינסוף.
+        misconception: MC-e-limit-pattern-misapplied
+
+  - id: Q-4.6-lim-neg
+    type: numeric
+    objectives: [OBJ-4.6-3]
+    level: mid
+    prompt: >-
+      חשבו את $\lim_{n\to\infty}\left(1-\frac2n\right)^{3n}$ ותנו את התשובה בארבע ספרות משמעותיות.
+    answer: 0.0024788
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\left(1-\frac2n\right)^{3n}=\left(\left(1-\frac2n\right)^n\right)^3\to\left(e^{-2}\right)^3=e^{-6}\approx0.002479$.
+      המעבר האחרון הוא רציפות של $t\mapsto t^3$.
+    wrongFeedback: >-
+      כתבו $\left(1-\frac2n\right)^{3n}=\left(\left(1-\frac2n\right)^n\right)^3$, והשתמשו ב-$\left(1+\frac an\right)^n\to e^a$
+      עם $a=-2$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          הבסיס שואף ל-1 והמעריך לאינסוף: זו צורה לא מוגדרת, לא 1.
+        misconception: MC-one-power-infinity-is-one
+      - value: 0.135335
+        feedback: >-
+          זה $e^{-2}$, הגבול של $\left(1-\frac2n\right)^n$. המעריך כאן הוא $3n$, ולכן צריך עוד להעלות בחזקת 3.
+        misconception: MC-e-limit-pattern-misapplied
+      - value: 403.4288
+        feedback: >-
+          זה $e^{6}$: הסימן אבד. כאן $a=-2$, כי הבסיס $1-\frac2n$ קטן מ-1.
+      - value: 0.513417
+        feedback: >-
+          זה $e^{-2/3}$: חילקו במקום להכפיל. $\left(\left(1-\frac2n\right)^n\right)^3$ נותן $e^{-2\cdot 3}$.
+        misconception: MC-e-limit-pattern-misapplied
+
+  - id: Q-4.6-lim-log
+    type: numeric
+    objectives: [OBJ-4.6-3]
+    level: mid
+    prompt: >-
+      חשבו את $\lim_{x\to0}\frac{\ln(1+3x)}{2x}$. (מותר להשתמש ב-$(1+t)^{1/t}\to e$ כש-$t\to0$.)
+    answer: 1.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac{\ln(1+t)}{t}=\ln\left((1+t)^{1/t}\right)\to\ln e=1$, מהרציפות של $\ln$. עם $t=3x$:
+      $\frac{\ln(1+3x)}{2x}=\frac32\cdot\frac{\ln(1+3x)}{3x}\to\frac32$.
+    wrongFeedback: >-
+      הראו קודם ש-$\frac{\ln(1+t)}{t}\to 1$ (כתבו אותו כ-$\ln$ של חזקה), ואז התאימו את המכנה לארגומנט:
+      $\frac{\ln(1+3x)}{2x}=\frac32\cdot\frac{\ln(1+3x)}{3x}$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $\frac{\ln(1+t)}{t}\to1$ רק כשהמכנה שווה ל-$t$. כאן $t=3x$ והמכנה $2x$.
+        misconception: MC-e-limit-pattern-misapplied
+      - value: 0.6666667
+        feedback: 'זה $\frac23$: המקדמים התהפכו.'
+      - value: 3
+        feedback: '$\frac{\ln(1+3x)}{x}\to3$, אבל המכנה הוא $2x$.'
+
+  - id: Q-4.6-lim-root
+    type: numeric
+    objectives: [OBJ-4.6-3]
+    level: exam
+    prompt: >-
+      חשבו את $\lim_{n\to\infty} n\left(2^{1/n}-1\right)$ ותנו את התשובה בארבע ספרות משמעותיות.
+    answer: 0.693147
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, הגבול הוא $\ln 2\approx0.6931$. נסמן $t_n=2^{1/n}-1\to0$. אז $\frac1n\ln 2=\ln(1+t_n)$, ולכן
+      $n\,t_n=\ln2\cdot\frac{t_n}{\ln(1+t_n)}$. מכיוון ש-$\frac{\ln(1+t)}{t}\to1$ כש-$t\to0$ (והיינה), $n\,t_n\to\ln 2$.
+    wrongFeedback: >-
+      זו צורה מסוג "אינסוף כפול אפס". סמנו $t_n=2^{1/n}-1$, בטאו את $\frac1n$ בעזרת $\ln(1+t_n)$, והשתמשו
+      ב-$\frac{\ln(1+t)}{t}\to1$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $2^{1/n}-1\to0$, אבל הוא מוכפל ב-$n\to\infty$: "אפס כפול אינסוף" היא צורה לא מוגדרת, לא אפס.
+        misconception: MC-indeterminate-form-value
+      - value: 1
+        feedback: >-
+          זה היה נכון אילו $2^{1/n}-1$ היה בערך $\frac1n$. אבל $2^{1/n}=e^{\frac{\ln2}{n}}$, ולכן ההפרש בערך
+          $\frac{\ln2}{n}$.
+    hints:
+      - '$\frac1n\ln2=\ln\left(2^{1/n}\right)=\ln(1+t_n)$.'

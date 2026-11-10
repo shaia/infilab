@@ -1,0 +1,317 @@
+# Lesson 4.5 — continuity of monotone and inverse functions.
+# Objectives (src/course.ts):
+#   OBJ-4.5-1  prove that a monotone function whose image is an interval is continuous
+#   OBJ-4.5-2  prove that a continuous injective function on an interval is strictly monotone, and that its inverse is continuous
+#   OBJ-4.5-3  deduce the continuity of roots and of the inverse trigonometric functions
+chapter: 4
+questions:
+  - id: Q-4.5-monotone-image
+    type: twotier
+    objectives: [OBJ-4.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ עולה (במובן החלש) בקטע $[0,2]$, והתמונה שלה היא $f([0,2])=[1,5]$. האם $f$ בהכרח רציפה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. מונוטוניות יחד עם תמונה שהיא קטע גוררות רציפות.
+      - text: לא בהכרח
+        feedback: >-
+          אילו $f$ הייתה קופצת בנקודה כלשהי, היה "חור" בתמונה: ערכים בין הגבול משמאל לגבול מימין שאינם
+          מתקבלים. אבל התמונה היא קטע, בלי חורים.
+    reasons:
+      - text: לפונקציה מונוטונית יש רק אי-רציפויות מסוג קפיצה, וקפיצה משאירה בתמונה חור, בסתירה לכך שהתמונה קטע
+        correct: true
+        feedback: >-
+          בדיוק. זה כל המשפט: מונוטוניות שוללת את שאר סוגי אי-הרציפות, והתמונה שוללת קפיצות.
+      - text: כל פונקציה מונוטונית רציפה
+        feedback: >-
+          לא נכון: $\lfloor x\rfloor$ עולה וקופצת בכל מספר שלם. כאן הרציפות נובעת מכך שהתמונה קטע.
+        misconception: MC-monotone-is-continuous
+      - text: כל פונקציה שהתמונה שלה קטע רציפה
+        feedback: >-
+          לא נכון בלי מונוטוניות: $f(x)=2x$ ב-$[0,\frac12]$ ו-$f(x)=2x-1$ ב-$(\frac12,1]$ מעבירה את $[0,1]$ על
+          $[0,1]$ וקופצת ב-$\frac12$.
+        misconception: MC-interval-image-implies-continuous
+
+  - id: Q-4.5-monotone-jump
+    type: mc
+    objectives: [OBJ-4.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ עולה ב-$\mathbb{R}$ ואינה רציפה בנקודה $x_0$. איזה סוג אי-רציפות יש לה שם?
+    choices:
+      - text: קפיצה
+        correct: true
+        feedback: >-
+          נכון. לפונקציה מונוטונית יש גבולות חד-צדדיים בכל נקודה (שיעור 3.6), ו-$f(x_0^-)\le f(x_0)\le f(x_0^+)$.
+          אם שני הגבולות היו שווים, הערך היה "נלחץ" ביניהם ו-$f$ הייתה רציפה; לכן הם שונים.
+      - text: סליקה
+        feedback: >-
+          בסליקה שני הגבולות החד-צדדיים שווים, ואצל פונקציה עולה הערך תקוע ביניהם: $f(x_0^-)\le f(x_0)\le f(x_0^+)$.
+          אז הוא שווה להם, ו-$f$ רציפה.
+        misconception: MC-monotone-any-discontinuity
+      - text: מסוג שני
+        feedback: >-
+          לפונקציה מונוטונית יש גבולות חד-צדדיים סופיים בכל נקודה (הסופרמום של הערכים משמאל, האינפימום של
+          הערכים מימין). לכן אין לה אי-רציפות מסוג שני.
+        misconception: MC-monotone-any-discontinuity
+      - text: זה לא ייתכן, פונקציה מונוטונית רציפה
+        feedback: >-
+          $\lfloor x\rfloor$ עולה ואינה רציפה בכל מספר שלם.
+        misconception: MC-monotone-is-continuous
+
+  - id: Q-4.5-interval-image-needed
+    type: twotier
+    objectives: [OBJ-4.5-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f:[0,1]\to\mathbb{R}$ **אינה** מונוטונית, והתמונה שלה היא הקטע $[0,1]$. האם $f$ בהכרח רציפה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. בלי מונוטוניות, תמונה שהיא קטע לא מספיקה.
+      - text: כן
+        feedback: >-
+          דוגמה נגדית: $f(x)=2x$ ב-$[0,\frac12]$ ו-$f(x)=2x-1$ ב-$(\frac12,1]$. התמונה
+          $[0,1]\cup(0,1]=[0,1]$, ו-$f$ קופצת מ-1 ל-0 ב-$\frac12$.
+        misconception: MC-interval-image-implies-continuous
+    reasons:
+      - text: '$f(x)=2x$ ב-$[0,\frac12]$ ו-$f(x)=2x-1$ ב-$(\frac12,1]$: התמונה $[0,1]$, ו-$f$ אינה רציפה ב-$\frac12$'
+        correct: true
+        feedback: >-
+          בדיוק. הקפיצה לא משאירה חור, כי הערכים ש"דילגנו" עליהם מתקבלים בחלק אחר של הקטע. מונוטוניות
+          מונעת בדיוק את זה.
+      - text: תמונה שהיא קטע פירושה שאין בגרף קפיצות
+        feedback: >-
+          ערך שדילגו עליו בקפיצה יכול להתקבל במקום אחר, אם הפונקציה אינה מונוטונית.
+        misconception: MC-interval-image-implies-continuous
+      - text: לפי משפט ערך הביניים, תמונה שהיא קטע שקולה לרציפות
+        feedback: >-
+          משפט ערך הביניים הוא רק "רציפה גוררת תמונה שהיא קטע". הכיוון ההפוך שגוי.
+        misconception: MC-ivt-property-implies-continuous
+
+  - id: Q-4.5-proof-gap
+    type: rank
+    objectives: [OBJ-4.5-1]
+    level: exam
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      הטענה: אם $f$ עולה בקטע $I$ ו-$f(I)$ הוא קטע, אז $f$ רציפה בכל נקודה פנימית של $I$. סדרו את שלבי
+      ההוכחה.
+    items:
+      - id: s1
+        label: 'נניח בשלילה ש-$f$ אינה רציפה בנקודה פנימית $x_0$ של $I$.'
+      - id: s2
+        label: 'לפונקציה עולה יש גבולות חד-צדדיים, ו-$f(x_0^-)\le f(x_0)\le f(x_0^+)$; מאי-הרציפות לפחות אחד מהם חזק, נניח $f(x_0^-)<f(x_0)$.'
+      - id: s3
+        label: 'בוחרים $y$ עם $f(x_0^-)<y<f(x_0)$.'
+      - id: s4
+        label: 'לכל $x<x_0$ מתקיים $f(x)\le f(x_0^-)<y$, ולכל $x\ge x_0$ מתקיים $f(x)\ge f(x_0)>y$; לכן $y\notin f(I)$.'
+      - id: s5
+        label: 'אבל עבור $a<x_0$ ב-$I$: $f(a)<y<f(x_0)$, ושני הערכים בקטע $f(I)$; לכן $y\in f(I)$. סתירה.'
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. הקפיצה יוצרת ערך $y$ שאין לו מקור, ותכונת הקטע של התמונה מחייבת שיהיה לו מקור. (בנקודת קצה של $I$
+      הנימוק דומה, עם גבול חד-צדדי אחד.)
+    wrongFeedback: >-
+      קודם צריך לדעת איך נראית אי-רציפות של פונקציה עולה (קפיצה), רק אז לבחור ערך בתוך הקפיצה, ורק אז להראות
+      שהוא חסר ושהוא חייב להתקבל.
+
+  - id: Q-4.5-injective-mono
+    type: twotier
+    objectives: [OBJ-4.5-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ רציפה וחד-חד-ערכית בקטע $[0,1]$. האם $f$ בהכרח מונוטונית ממש?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. על קטע, רציפות וחד-חד-ערכיות יחד גוררות מונוטוניות ממש.
+      - text: לא בהכרח
+        feedback: >-
+          נסו לצייר פונקציה רציפה שעולה ואחר כך יורדת: ערך קצת מתחת לשיא מתקבל פעמיים, פעם בעלייה ופעם
+          בירידה. זה סותר חד-חד-ערכיות.
+    reasons:
+      - text: 'אחרת יש $a<b<c$ עם $f(b)$ גדול משני הערכים $f(a),f(c)$ (או קטן משניהם); ערך שבין $\max(f(a),f(c))$ ל-$f(b)$ מתקבל גם ב-$(a,b)$ וגם ב-$(b,c)$'
+        correct: true
+        feedback: >-
+          בדיוק: משפט ערך הביניים פעמיים, וסתירה לחד-חד-ערכיות. (שלב הכנה: פונקציה שאינה מונוטונית ממש בקטע
+          ואינה מקבלת ערך פעמיים, חייבת "לשנות כיוון" בשלוש נקודות כאלה.)
+      - text: כל פונקציה חד-חד-ערכית מונוטונית ממש
+        feedback: >-
+          בלי רציפות זה שגוי: $f(x)=x$ ב-$[0,\frac12]$ ו-$f(x)=2-x$ ב-$(\frac12,1]$ חד-חד-ערכית (התמונות
+          $[0,\frac12]$ ו-$[1,\frac32)$ זרות), עולה ואחר כך יורדת.
+        misconception: MC-injective-is-monotone
+      - text: 'חד-חד-ערכית פירושו ש-$x<y$ גורר $f(x)<f(y)$'
+        feedback: >-
+          חד-חד-ערכית פירושו רק $x\ne y \Rightarrow f(x)\ne f(y)$. "$x<y$ גורר $f(x)<f(y)$" הוא הגדרת עולה ממש,
+          תכונה חזקה יותר.
+        misconception: MC-injective-is-monotone
+
+  - id: Q-4.5-injective-nonint
+    type: mc
+    objectives: [OBJ-4.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      איזו מהפונקציות הבאות רציפה וחד-חד-ערכית בתחום ההגדרה שלה, ובכל זאת **אינה** מונוטונית בו?
+    choices:
+      - text: '$\frac1x$ על $\mathbb{R}\setminus\{0\}$'
+        correct: true
+        feedback: >-
+          נכון. $-1<1$ ו-$f(-1)=-1<1=f(1)$, אבל $1<2$ ו-$f(1)=1>\frac12=f(2)$. המשפט נכשל כי התחום אינו קטע: על
+          כל אחד משני החצאים היא יורדת ממש.
+      - text: '$x^3$ על $\mathbb{R}$'
+        feedback: היא עולה ממש, כלומר מונוטונית.
+      - text: '$x^2$ על $\mathbb{R}$'
+        feedback: 'היא אינה חד-חד-ערכית: $(-1)^2=1^2$.'
+      - text: אין כזו, רציפה וחד-חד-ערכית תמיד גוררת מונוטונית
+        feedback: >-
+          המשפט דורש שהתחום יהיה **קטע**. על איחוד של שני קטעים, כמו התחום של $\frac1x$, הוא נכשל.
+        misconception: MC-injective-is-monotone
+
+  - id: Q-4.5-inverse-cont
+    type: twotier
+    objectives: [OBJ-4.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ רציפה ועולה ממש בקטע $[a,b]$. האם הפונקציה ההפוכה $f^{-1}:[f(a),f(b)]\to[a,b]$ רציפה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון.
+      - text: לא בהכרח
+        feedback: >-
+          על **קטע** זה תמיד נכון: ההפוכה מונוטונית והתמונה שלה היא הקטע $[a,b]$. (על תחום שאינו קטע זה יכול
+          להיכשל.)
+    reasons:
+      - text: '$f^{-1}$ עולה ממש, והתמונה שלה היא הקטע $[a,b]$; לפי המשפט על פונקציות מונוטוניות היא רציפה'
+        correct: true
+        feedback: >-
+          בדיוק. (ולפי ערך הביניים התחום של $f^{-1}$, כלומר $f([a,b])$, הוא באמת כל הקטע $[f(a),f(b)]$.)
+      - text: ההפוכה של כל פונקציה רציפה וחד-חד-ערכית רציפה
+        feedback: >-
+          לא בכל תחום. כאן זה נכון כי התחום הוא קטע, וזה מה שהנימוק חייב להשתמש בו.
+        misconception: MC-inverse-always-continuous
+      - text: הגרף של $f^{-1}$ הוא שיקוף של הגרף של $f$, ולכן גם הוא "בלי קפיצות"
+        feedback: >-
+          זו אינטואיציה טובה, אבל לא הוכחה: "בלי קפיצות" אינו מוגדר, והשיקוף לא מראה את אפסילון-דלתא. ההוכחה
+          עוברת דרך המונוטוניות של $f^{-1}$ והתמונה שלה.
+
+  - id: Q-4.5-inverse-noninterval
+    type: twotier
+    objectives: [OBJ-4.5-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $D=[0,1)\cup[2,3]$, ו-$f(x)=x$ לכל $x\in[0,1)$, $f(x)=x-1$ לכל $x\in[2,3]$. $f$ רציפה בכל נקודה של $D$,
+      עולה ממש, והתמונה שלה היא $[0,2]$. האם ההפוכה $f^{-1}:[0,2]\to D$ רציפה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. היא קופצת בנקודה 1.
+      - text: כן
+        feedback: >-
+          $f^{-1}(y)=y$ ל-$y\in[0,1)$ ו-$f^{-1}(y)=y+1$ ל-$y\in[1,2]$. בנקודה 1: $f^{-1}(1)=2$, אבל
+          $f^{-1}(y)\to1$ כש-$y\to1^-$.
+        misconception: MC-inverse-always-continuous
+    reasons:
+      - text: '$f^{-1}(1)=2$ ואילו $\lim_{y\to1^-}f^{-1}(y)=1$: קפיצה'
+        correct: true
+        feedback: >-
+          בדיוק. ההפוכה מונוטונית, אבל התמונה שלה, $D$, אינה קטע, ולכן המשפט על פונקציות מונוטוניות לא חל.
+      - text: ההפוכה של פונקציה רציפה ועולה ממש תמיד רציפה
+        feedback: >-
+          רק כשהתחום הוא קטע. ה"חור" $[1,2)$ בתחום של $f$ הופך לקפיצה של ההפוכה.
+        misconception: MC-inverse-always-continuous
+      - text: '$f$ אינה רציפה ב-2, ולכן השאלה על ההפוכה לא רלוונטית'
+        feedback: >-
+          $f$ רציפה ב-2: הנקודות של $D$ שקרובות ל-2 הן רק נקודות של $[2,3]$, ושם $f(x)=x-1$. רציפות נבדקת בתוך
+          התחום.
+        misconception: MC-cont-means-whole-line
+
+  - id: Q-4.5-sqrt
+    type: mc
+    objectives: [OBJ-4.5-3]
+    level: basic
+    prompt: >-
+      מה הנימוק הקצר ביותר לכך ש-$\sqrt x$ רציפה ב-$[0,\infty)$?
+    choices:
+      - text: 'היא ההפוכה של $x^2$ על $[0,\infty)$, שרציפה ועולה ממש בקטע; ההפוכה עולה והתמונה שלה $[0,\infty)$, קטע'
+        correct: true
+        feedback: >-
+          נכון. באותה דרך $\sqrt[n]{x}$ רציפה, כהפוכה של $x^n$ על $[0,\infty)$ (ולכל $x$ ממשי כש-$n$ אי-זוגי).
+      - text: היא פולינום
+        feedback: >-
+          $\sqrt x$ אינה פולינום: אילו $\sqrt x=p(x)$ לפולינום $p$, אז $p(x)^2=x$, ומעלת הצד השמאלי זוגית ואילו
+          מעלת $x$ היא 1.
+      - text: 'מההגדרה, עם $\delta=\varepsilon$'
+        feedback: >-
+          ב-0 זה לא עובד: עם $\varepsilon=\delta=0.01$ הנקודה $x=0.009$ קרובה ל-0 פחות מ-$\delta$, אבל
+          $\sqrt{0.009}\approx0.095>\varepsilon$. ב-0 מתאים $\delta=\varepsilon^2$, ובכל זאת הנימוק דרך ההפוכה קצר
+          יותר ועובד בכל נקודה.
+      - text: '$\sqrt x=x^{1/2}$, וחזקות רציפות'
+        feedback: >-
+          רציפות של $x^r$ למעריך לא שלם מוכיחים בדיוק כך, דרך פונקציות הפוכות (או דרך המעריכית, שיעור 4.6). הנימוק
+          מעגלי.
+
+  - id: Q-4.5-arcsin
+    type: mc
+    objectives: [OBJ-4.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      כדי להגדיר פונקציה הפוכה רציפה $\arcsin:[-1,1]\to\mathbb{R}$, על איזה קטע מצמצמים את $\sin$?
+    choices:
+      - text: '$[-\frac\pi2,\ \frac\pi2]$'
+        correct: true
+        feedback: >-
+          נכון. שם $\sin$ רציפה ועולה ממש מ-$-1$ ל-1; לכן היא הפיכה, וההפוכה רציפה (משפט ההפוכה על קטע).
+      - text: '$[0,\ \pi]$'
+        feedback: >-
+          שם $\sin$ אינה חד-חד-ערכית: $\sin\frac\pi4=\sin\frac{3\pi}4$. היא עולה ואחר כך יורדת, והתמונה רק
+          $[0,1]$.
+        misconception: MC-arcsin-any-restriction
+      - text: '$[0,\ 2\pi]$'
+        feedback: >-
+          זה מחזור שלם: כל ערך ב-$(-1,1)$ מתקבל פעמיים. צריך קטע שעליו $\sin$ מונוטונית ממש.
+        misconception: MC-arcsin-any-restriction
+      - text: לא צריך לצמצם, $\sin$ רציפה ב-$\mathbb{R}$ ולכן הפיכה
+        feedback: >-
+          רציפות לא גוררת חד-חד-ערכיות: $\sin 0=\sin\pi$. פונקציה הפוכה דורשת חד-חד-ערכיות.
+        misconception: MC-inverse-without-injective
+
+  - id: Q-4.5-arctan
+    type: multi
+    objectives: [OBJ-4.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\arctan$ היא ההפוכה של $\tan$ על $(-\frac\pi2,\frac\pi2)$. אילו מהטענות נכונות? סמנו את כולן.
+    choices:
+      - text: $\arctan$ רציפה בכל $\mathbb{R}$
+        correct: true
+        feedback: >-
+          נכון. $\tan$ רציפה ועולה ממש על הקטע $(-\frac\pi2,\frac\pi2)$, ולכן ההפוכה רציפה.
+      - text: $\arctan$ עולה ממש
+        correct: true
+        feedback: נכון. ההפוכה של פונקציה עולה ממש עולה ממש.
+      - text: '$\lim_{x\to\infty}\arctan x=\frac\pi2$'
+        correct: true
+        feedback: >-
+          נכון. $\arctan$ עולה, והסופרמום של התמונה $(-\frac\pi2,\frac\pi2)$ הוא $\frac\pi2$; לפונקציה עולה
+          הגבול באינסוף הוא הסופרמום של ערכיה.
+      - text: $\arctan$ מקבלת מקסימום ב-$\mathbb{R}$
+        feedback: >-
+          הסופרמום $\frac\pi2$ אינו מתקבל: $\tan$ אינה מוגדרת ב-$\frac\pi2$. $\arctan$ חסומה, בלי מקסימום.
+        misconception: MC-bounded-attains-bounds
+      - text: 'התמונה של $\arctan$ היא $[-\frac\pi2,\ \frac\pi2]$'
+        feedback: >-
+          התמונה של ההפוכה היא התחום של $\tan$ המצומצמת, $(-\frac\pi2,\frac\pi2)$: הקצוות אינם בה.
+        misconception: MC-bounded-attains-bounds

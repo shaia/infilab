@@ -1,0 +1,48 @@
+# Misconceptions first detected in lesson 3.5 (limit arithmetic for functions, sin x / x, composition).
+- id: MC-sinx-over-x-everywhere
+  title: משתמשים בגבול של סינוס x חלקי x בנקודה שאינה אפס
+  belief: >-
+    $\frac{\sin x}{x}\to1$ תמיד, גם כש-$x\to\pi$ או כש-$x\to\infty$.
+  truth: >-
+    הגבול $\frac{\sin x}{x}\to1$ הוא גבול **ב-0**. ב-$\pi$ הגבול הוא $\frac{\sin\pi}{\pi}=0$ לפי כלל המנה, ובאינסוף
+    הוא 0 לפי סנדוויץ' עם $\frac{1}{|x|}$. מה שחוזר על עצמו הוא הצורה: $\frac{\sin u}{u}\to1$ כש-$u\to0$.
+  remedy: { lesson: '3.5', label: 'הגבול של סינוס x חלקי x באפס' }
+
+# MC-sin-kx-over-x-is-one (sin 3x / x taken to tend to 1) is the same mistake as the entry of that id in
+# misconceptions/4-2.yaml; the banks of chapter 3 tag it from there. It is first met here, in 3.5.
+
+- id: MC-composition-limit-no-condition
+  title: מחשבים גבול של הרכבה בלי לבדוק את התנאי
+  belief: >-
+    אם $g(x)\to b$ כש-$x\to a$ ו-$f(y)\to L$ כש-$y\to b$, אז תמיד $f(g(x))\to L$.
+  truth: >-
+    צריך תנאי נוסף: $g(x)\neq b$ לכל $x$ בסביבה מנוקבת של $a$, או ש-$f$ מוגדרת ב-$b$ ו-$f(b)=L$. בלעדיו
+    הטענה נכשלת: עם $g\equiv0$ ו-$f(y)=1$ כש-$y\neq0$, $f(0)=0$, מקבלים $f(g(x))=0$, אף ש-$\lim_{y\to0}f(y)=1$.
+  remedy: { lesson: '3.5', label: 'גבול של הרכבה והתנאי שהוא דורש' }
+
+- id: MC-abs-limit-gives-limit
+  title: מסיקים מגבול של הערך המוחלט את הגבול של הפונקציה
+  belief: >-
+    אם $|f(x)|\to1$, אז $f(x)\to1$ או $f(x)\to-1$.
+  truth: >-
+    זה נכון רק כשהגבול של $|f|$ הוא 0: $|f|\to0$ גורר $f\to0$. עבור $f(x)=1$ כש-$x>0$ ו-$f(x)=-1$ כש-$x<0$,
+    $|f|$ קבועה ושווה ל-1, ול-$f$ אין גבול ב-0.
+  remedy: { lesson: '3.5', label: 'חשבון הגבולות וערך מוחלט' }
+
+- id: MC-adding-limit-fixes-divergence
+  title: חושבים שהוספת פונקציה מתכנסת יכולה ליצור גבול
+  belief: >-
+    לפונקציה בלי גבול ועוד פונקציה עם גבול יכול להיות גבול.
+  truth: >-
+    אם ל-$g$ יש גבול ול-$f+g$ יש גבול, אז ל-$f=(f+g)-g$ יש גבול לפי כלל ההפרש. לכן אם ל-$f$ אין גבול, גם ל-$f+g$
+    אין. (סכום של **שתי** פונקציות בלי גבול כן יכול להתכנס.)
+  remedy: { lesson: '3.5', label: 'חשבון הגבולות: הוכחת אי-קיום' }
+
+- id: MC-sin-kx-over-x-is-one
+  title: חושבים שסינוס של kx חלקי x שואף ל-1
+  belief: >-
+    כל מנה של סינוס של ביטוי ששואף ל-0 בביטוי אחר ששואף ל-0 שואפת ל-1, למשל $\frac{\sin 3x}{2x}\to 1$.
+  truth: >-
+    $\frac{\sin t}{t}\to1$ רק כשהמכנה הוא בדיוק הארגומנט של הסינוס. כותבים
+    $\frac{\sin 3x}{2x}=\frac32\cdot\frac{\sin 3x}{3x}\to\frac32$.
+  remedy: { lesson: '3.5', label: 'הגבול של סינוס x חלקי x, וגבולות שנגזרים ממנו' }

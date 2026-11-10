@@ -1,0 +1,340 @@
+# Lesson 5.1 — the definition of the derivative.
+# Objectives (src/course.ts):
+#   OBJ-5.1-1  define the derivative as the limit of the difference quotient; compute derivatives from the definition
+#   OBJ-5.1-2  the derivative as the slope of the tangent and as a rate of change; the equation of the tangent
+#   OBJ-5.1-3  differentiable at a point ⇒ continuous there; the converse fails (|x| at 0)
+chapter: 5
+questions:
+  - id: Q-5.1-def
+    type: mc
+    objectives: [OBJ-5.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      תהי $f$ מוגדרת בסביבה של $x_0$. איזה מהביטויים הבאים הוא ההגדרה של הנגזרת $f'(x_0)$, כשהגבול קיים
+      וסופי?
+    choices:
+      - text: '$\lim_{h\to 0} \frac{f(x_0+h)-f(x_0)}{h}$'
+        correct: true
+        feedback: >-
+          נכון. זה הגבול של מנת ההפרשים, שיפוע המיתר מ-$x_0$ ל-$x_0+h$, כש-$h$ שואף ל-0 משני הצדדים ו-$h\neq0$.
+      - text: '$\lim_{h\to 0} \frac{f(x_0+h)-f(x_0-h)}{2h}$'
+        feedback: >-
+          זו המנה הסימטרית. אם $f$ גזירה ב-$x_0$ היא אכן שואפת ל-$f'(x_0)$, אבל היא יכולה להתכנס גם כשאין
+          נגזרת: עבור $f(x)=|x|$ ב-0 המונה הוא $|h|-|-h|=0$ לכל $h$, והגבול 0, אף ש-$|x|$ אינה גזירה ב-0.
+        misconception: MC-deriv-symmetric-quotient
+      - text: '$\lim_{n\to\infty} n\left(f(x_0+\tfrac1n)-f(x_0)\right)$'
+        feedback: >-
+          כאן $h$ רץ רק על הסדרה $\frac1n$, ורק מימין. עבור $|x|$ ב-0 הביטוי שווה ל-1 לכל $n$, אבל כש-$h<0$
+          מנת ההפרשים $\frac{|h|}{h}$ שווה למינוס 1, ולכן אין נגזרת. לפי היינה (שיעור 3.4) הגבול צריך להתקיים
+          לכל סדרה $h_n\to0$ עם $h_n\neq0$.
+        misconception: MC-heine-one-sequence
+      - text: '$\lim_{h\to 0} \left(f(x_0+h)-f(x_0)\right)$'
+        feedback: >-
+          הגבול הזה שווה ל-0 לכל פונקציה רציפה ב-$x_0$: זו הגדרת הרציפות, לא הנגזרת. בלי החלוקה ב-$h$ לא
+          מודדים שיפוע.
+        misconception: MC-deriv-numerator-limit
+    explanation: >-
+      הנגזרת היא גבול של פונקציה של $h$, ולכן כל מה שלמדנו על גבולות בפרק 3 חל עליה: גבול דו-צדדי, $h\neq0$,
+      וכל הסדרות $h_n\to0$ יחד.
+
+  - id: Q-5.1-quot
+    type: numeric
+    objectives: [OBJ-5.1-1]
+    level: basic
+    prompt: >-
+      עבור $f(x)=x^3$, $x_0=1$ ו-$h=0.1$, חשבו את מנת ההפרשים $\frac{f(x_0+h)-f(x_0)}{h}$.
+    answer: 3.31
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $(1.1)^3 = 1.331$, ולכן המנה היא $\frac{0.331}{0.1} = 3.31$. באופן כללי
+      $\frac{(1+h)^3-1}{h} = 3+3h+h^2$, וכש-$h\to0$ המנה שואפת ל-$f'(1)=3$.
+    wrongFeedback: >-
+      הציבו $x_0+h = 1.1$: חשבו את $(1.1)^3$, החסירו $1^3$, וחלקו ב-$0.1$.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          3 הוא $f'(1)$, הגבול של מנת ההפרשים כש-$h\to0$. כאן $h=0.1$ קבוע, והמנה היא שיפוע המיתר, לא שיפוע
+          המשיק.
+        misconception: MC-deriv-fixed-h-is-derivative
+      - value: 0.331
+        feedback: >-
+          זה ההפרש $f(1.1)-f(1)$. שכחתם לחלק ב-$h=0.1$: מנת ההפרשים היא שיפוע, הפרש הערכים חלקי הפרש הנקודות.
+
+  - id: Q-5.1-sqrt
+    type: numeric
+    objectives: [OBJ-5.1-1]
+    level: mid
+    prompt: >-
+      חשבו מההגדרה את $f'(4)$ עבור $f(x)=\sqrt{x}$.
+    answer: 0.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. כפל בצמוד נותן
+      $$\frac{\sqrt{4+h}-2}{h} = \frac{(4+h)-4}{h\left(\sqrt{4+h}+2\right)} = \frac{1}{\sqrt{4+h}+2},$$
+      ומרציפות השורש (שיעור 4.5) הגבול כש-$h\to0$ הוא $\frac{1}{2+2}=\frac14$.
+    wrongFeedback: >-
+      כתבו את מנת ההפרשים $\frac{\sqrt{4+h}-2}{h}$ וכפלו את המונה ואת המכנה בצמוד $\sqrt{4+h}+2$.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          חצי מתקבל מ-$\frac{1}{\sqrt4}$. אחרי הכפל בצמוד המכנה הוא $\sqrt{4+h}+2$, והוא שואף ל-$2+2=4$, לא ל-2.
+      - value: 2
+        feedback: >-
+          2 הוא $\sqrt4$, הערך של הפונקציה בנקודה, לא השיפוע שלה שם.
+    hints:
+      - כפלו את המונה ואת המכנה בצמוד $\sqrt{4+h}+2$.
+
+  - id: Q-5.1-tangent
+    type: numeric
+    objectives: [OBJ-5.1-2]
+    level: basic
+    prompt: >-
+      המשיק לגרף של $f(x)=x^2$ בנקודה $x_0=3$ הוא הישר $y=mx+b$. מהו $b$, נקודת החיתוך של המשיק עם ציר $y$?
+    answer: -9
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f(3)=9$ ו-$f'(3)=6$, והמשיק הוא $y=f(x_0)+f'(x_0)(x-x_0) = 9+6(x-3) = 6x-9$.
+    wrongFeedback: >-
+      משוואת המשיק היא $y=f(x_0)+f'(x_0)(x-x_0)$: ישר שעובר בנקודה $(x_0, f(x_0))$ ושיפועו $f'(x_0)$.
+    commonWrong:
+      - value: -18
+        feedback: >-
+          זה מתקבל מ-$y=f'(x_0)(x-x_0)$, ישר שעובר בנקודה $(3,0)$ ולא בנקודה $(3,9)$ שעל הגרף. חסר המחובר
+          $f(x_0)$.
+        misconception: MC-tangent-line-formula
+      - value: 9
+        feedback: >-
+          זה מתקבל מ-$y=f(x_0)+f'(x_0)\,x$. הישר הזה שיפועו נכון, אבל הוא עובר ב-$x=3$ בגובה $27$, לא $9$: צריך
+          $x-x_0$, לא $x$.
+        misconception: MC-tangent-line-formula
+
+  - id: Q-5.1-touch
+    type: twotier
+    objectives: [OBJ-5.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      טענה: המשיק לגרף של פונקציה גזירה בנקודה $x_0$ פוגש את הגרף רק בנקודה $(x_0, f(x_0))$. האם הטענה
+      נכונה?
+    choices:
+      - text: הטענה לא נכונה
+        correct: true
+        feedback: >-
+          נכון. המשיק מוגדר בשיפוע שלו, כגבול של שיפועי מיתרים, ולא במספר הנקודות שבהן הוא פוגש את הגרף.
+      - text: הטענה נכונה
+        feedback: >-
+          זה נכון למעגל, ומשם כנראה האינטואיציה. לגרף של פונקציה זה לא נכון: המשיק ל-$x^3$ ב-$x_0=1$ פוגש
+          את הגרף פעם נוספת.
+        misconception: MC-tangent-touches-once
+    reasons:
+      - text: >-
+          המשיק ל-$x^3$ בנקודה $x_0=1$ הוא $y=3x-2$, והוא פוגש את הגרף גם בנקודה שבה $x$ שווה למינוס 2
+        correct: true
+        feedback: >-
+          נכון: $x^3-3x+2 = (x-1)^2(x+2)$, ולכן הישר והגרף נפגשים ב-1 וב-$(-2)$.
+      - text: המשיק נוגע בגרף ואינו חותך אותו, ולכן יש ביניהם נקודת מפגש אחת
+        feedback: >-
+          גם "אינו חותך" לא נכון: המשיק ל-$x^3$ ב-0 הוא $y=0$, והגרף חוצה אותו שם מלמטה למעלה. ומשיק שנוגע
+          בלי לחתוך, כמו $y=1$ לגרף של $\cos x$ ב-0, פוגש את הגרף שוב בכל $x=2\pi k$.
+        misconception: MC-tangent-touches-once
+      - text: ישר שפוגש את הגרף בנקודה אחת בלבד הוא המשיק, וזו ההגדרה
+        feedback: >-
+          זו לא ההגדרה, וגם הכיוון הזה נכשל: הישר $y=\frac{x}{2}$ פוגש את הגרף של $|x|$ רק ב-0, ואין ל-$|x|$
+          משיק ב-0 בכלל.
+        misconception: MC-tangent-touches-once
+
+  - id: Q-5.1-approx
+    type: numeric
+    objectives: [OBJ-5.1-2]
+    level: mid
+    prompt: >-
+      ידוע ש-$f(1)=2$ ו-$f'(1)=3$. מהו הגובה של המשיק לגרף בנקודה $x_0=1$ כש-$x=1.01$? זה הקירוב של
+      $f(1.01)$ שהנגזרת נותנת.
+    answer: 2.03
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $y = 2 + 3\,(1.01-1) = 2.03$. זה הפירוש של "קצב שינוי": כש-$x$ זז ב-$0.01$, הערך של $f$ זז בערך
+      פי 3 מזה.
+    wrongFeedback: >-
+      הציבו $x=1.01$ במשוואת המשיק $y=f(1)+f'(1)(x-1)$.
+    commonWrong:
+      - value: 5.03
+        feedback: >-
+          זה $2+3\cdot1.01$: הצבתם $x$ במקום $x-x_0$. הישר הזה לא עובר בנקודה $(1,2)$.
+        misconception: MC-tangent-line-formula
+      - value: 0.03
+        feedback: >-
+          זה רק השינוי $f'(1)\cdot0.01$. המשיק מתחיל בגובה $f(1)=2$, ולכן חסר המחובר $f(x_0)$.
+        misconception: MC-tangent-line-formula
+      - value: 2.3
+        feedback: >-
+          השינוי ב-$x$ הוא $0.01$, לא $0.1$: $3\cdot0.01=0.03$.
+    explanation: >-
+      הקירוב טוב כי ההפרש $f(x)-\left(f(x_0)+f'(x_0)(x-x_0)\right)$, חלקי $x-x_0$, שואף ל-0: זו בדיוק הגדרת
+      הנגזרת, כתובה מחדש.
+
+  - id: Q-5.1-cont
+    type: twotier
+    objectives: [OBJ-5.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      טענה: אם $f$ רציפה ב-$x_0$, אז $f$ גזירה ב-$x_0$. האם הטענה נכונה?
+    choices:
+      - text: הטענה לא נכונה
+        correct: true
+        feedback: >-
+          נכון. הכיוון הנכון הוא ההפוך: גזירה גוררת רציפה. רציפות לבדה לא מבטיחה שיפוע.
+      - text: הטענה נכונה
+        feedback: >-
+          הפונקציה $|x|$ רציפה ב-0 ואינה גזירה שם, ולכן הטענה לא נכונה.
+        misconception: MC-continuous-implies-differentiable
+    reasons:
+      - text: >-
+          $f(x)=|x|$ רציפה ב-0, אבל מנת ההפרשים $\frac{|h|}{h}$ שווה ל-1 כש-$h>0$ ולמינוס 1 כש-$h<0$
+        correct: true
+        feedback: >-
+          בדיוק. שני הגבולות החד-צדדיים של המנה שונים, ולכן לגבול הדו-צדדי אין קיום (שיעור 3.6).
+      - text: >-
+          רציפות היא קיום הגבול $\lim_{h\to0}\left(f(x_0+h)-f(x_0)\right)$, וזו הנגזרת
+        feedback: >-
+          הגבול הזה הוא 0 לכל פונקציה רציפה. הנגזרת היא גבול של ההפרש **חלקי $h$**, וזה דבר אחר.
+        misconception: MC-deriv-numerator-limit
+      - text: גזירה גוררת רציפה, ולכן גם רציפה גוררת גזירה
+        feedback: >-
+          גרירה אינה שקולה להפוכה שלה (שיעור 0.2). כאן ההפוכה נכשלת, ו-$|x|$ היא הדוגמה הנגדית.
+        misconception: MC-continuous-implies-differentiable
+
+  - id: Q-5.1-proof
+    type: rank
+    objectives: [OBJ-5.1-3]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה של הטענה: אם $f$ גזירה ב-$x_0$, אז $f$ רציפה ב-$x_0$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: a
+        label: >-
+          נניח ש-$f$ גזירה ב-$x_0$, כלומר $\lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0} = f'(x_0)$ קיים וסופי.
+      - id: b
+        label: >-
+          לכל $x\neq x_0$ כותבים $f(x)-f(x_0) = \frac{f(x)-f(x_0)}{x-x_0}\cdot(x-x_0)$.
+      - id: c
+        label: >-
+          לפי כלל המכפלה לגבולות, הגבול של אגף ימין כש-$x\to x_0$ הוא $f'(x_0)\cdot 0 = 0$.
+      - id: d
+        label: >-
+          לכן $\lim_{x\to x_0} f(x) = f(x_0)$, כלומר $f$ רציפה ב-$x_0$.
+    order: [a, b, c, d]
+    correctFeedback: >-
+      נכון. שימו לב לשלב ב: הכפל והחילוק ב-$x-x_0$ מותרים רק כש-$x\neq x_0$, וזה בדיוק מה שהגבול צריך. כלל
+      המכפלה בשלב ג דורש ששני הגבולות קיימים וסופיים, ולכן ההנחה שהנגזרת **סופית** נחוצה.
+    wrongFeedback: >-
+      מתחילים מההנחה, מפרקים את ההפרש למכפלה של מנת ההפרשים ב-$x-x_0$, מחשבים את הגבול, ורק אז מסיקים.
+
+  - id: Q-5.1-abs
+    type: multi
+    objectives: [OBJ-5.1-1, OBJ-5.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      עבור $f(x)=|x|$ בנקודה $x_0=0$, סמנו את כל הטענות הנכונות.
+    choices:
+      - text: $f$ רציפה ב-0
+        correct: true
+        feedback: >-
+          נכון: $\big||x|-0\big| = |x|$, ולכן אפשר לבחור $\delta=\varepsilon$.
+      - text: '$\lim_{h\to0^+}\frac{f(h)-f(0)}{h}=1$'
+        correct: true
+        feedback: >-
+          נכון: כש-$h>0$ המנה היא $\frac{h}{h}=1$. זו הנגזרת החד-צדדית מימין, $f'_+(0)=1$.
+      - text: $f$ אינה גזירה ב-0
+        correct: true
+        feedback: >-
+          נכון: הנגזרת מימין היא 1 והנגזרת משמאל היא מינוס 1, ולכן הגבול הדו-צדדי של מנת ההפרשים לא קיים.
+      - text: >-
+          $f'(0)=0$, כי 0 הוא הממוצע של שתי הנגזרות החד-צדדיות
+        feedback: >-
+          הממוצע של שתי המנות החד-צדדיות הוא המנה הסימטרית, $\frac{f(h)-f(-h)}{2h}$, והיא אכן שואפת ל-0. אבל
+          הנגזרת היא גבול של מנת ההפרשים עצמה, ולגבול הזה אין קיום.
+        misconception: MC-deriv-symmetric-quotient
+      - text: $f$ גזירה ב-0 מימין, ולכן היא גזירה ב-0
+        feedback: >-
+          גזירות היא גבול דו-צדדי. נגזרת מימין לבדה, או שתי נגזרות חד-צדדיות שונות, אינן נגזרת.
+        misconception: MC-onesided-equals-derivative
+
+  - id: Q-5.1-dirichlet
+    type: twotier
+    objectives: [OBJ-5.1-1, OBJ-5.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      תהי $f(x)=x^2$ כש-$x$ רציונלי, ו-$f(x)=0$ כש-$x$ אי-רציונלי. האם $f$ גזירה בנקודה $x_0=0$?
+    choices:
+      - text: כן, ו-$f'(0)=0$
+        correct: true
+        feedback: >-
+          נכון. ובכל נקודה אחרת $f$ אינה רציפה (שיעור 4.2), ולכן גם אינה גזירה: זו פונקציה שגזירה בנקודה אחת
+          בדיוק.
+      - text: לא, כי $f$ אינה רציפה ב-0
+        feedback: >-
+          דווקא ב-0 היא רציפה: $|f(x)|\le x^2$ לכל $x$, ו-$x^2\to0$. היא אינה רציפה בכל נקודה אחרת, אבל רציפות
+          וגזירות בנקודה תלויות רק בהתנהגות סביב הנקודה עצמה.
+        misconception: MC-differentiable-point-vs-neighbourhood
+      - text: כן, והיא גזירה בכל נקודה
+        feedback: >-
+          ב-$x_0\neq0$ הפונקציה אינה רציפה: על סדרת רציונליים ששואפת ל-$x_0$ הערכים שואפים ל-$x_0^2\neq0$,
+          ועל סדרת אי-רציונליים הם 0. פונקציה שאינה רציפה בנקודה אינה גזירה בה.
+        misconception: MC-differentiable-point-vs-neighbourhood
+    reasons:
+      - text: >-
+          $\left|\frac{f(h)-f(0)}{h}\right| \le |h|$ לכל $h\neq0$, ולפי כלל הסנדוויץ' המנה שואפת ל-0
+        correct: true
+        feedback: >-
+          בדיוק. על הרציונליים המנה היא $h$, על האי-רציונליים היא 0, ושתיהן חסומות בערך מוחלט על ידי $|h|$.
+      - text: $f$ רציפה ב-0, ולכן גזירה שם
+        feedback: >-
+          המסקנה נכונה כאן, אבל ההסקה לא: רציפות אינה גוררת גזירות, ראו $|x|$ ב-0.
+        misconception: MC-continuous-implies-differentiable
+      - text: $f$ אינה רציפה באף נקודה פרט ל-0, ולכן אין לה נגזרת ב-0
+        feedback: >-
+          הנגזרת ב-0 היא גבול של מנת ההפרשים ב-0, ואינה דורשת רציפות בשום נקודה אחרת.
+        misconception: MC-differentiable-point-vs-neighbourhood
+
+  - id: Q-5.1-xsin
+    type: twotier
+    objectives: [OBJ-5.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      תהי $g(x)=x\sin\frac1x$ עבור $x\neq0$, ו-$g(0)=0$. מה נכון לגבי $g$ בנקודה 0?
+    choices:
+      - text: $g$ רציפה ב-0 ואינה גזירה בה
+        correct: true
+        feedback: >-
+          נכון. זו דוגמה נגדית נוספת לכיוון ההפוך: רציפות בלי גזירות, והפעם בלי "פינה" בגרף אלא בגלל תנודות.
+      - text: $g$ רציפה וגזירה ב-0
+        feedback: >-
+          $g$ אכן רציפה, אבל מנת ההפרשים $\frac{g(h)-g(0)}{h} = \sin\frac1h$ אין לה גבול כש-$h\to0$.
+        misconception: MC-continuous-implies-differentiable
+      - text: $g$ אינה רציפה ב-0
+        feedback: >-
+          $\sin\frac1x$ אין לה גבול ב-0, אבל כפול $x$ ששואף ל-0 היא שואפת ל-0: $|g(x)|\le|x|$. אפס כפול חסומה
+          שואפת לאפס (שיעור 2.5 ושיעור 3.5).
+        misconception: MC-bounded-factor-blocks-limit
+    reasons:
+      - text: >-
+          $|g(x)|\le|x|$ נותן רציפות, ומנת ההפרשים $\sin\frac1h$ מקבלת את הערכים 1 ומינוס 1 בכל סביבה של 0
+        correct: true
+        feedback: >-
+          בדיוק. על $h_n=\frac{1}{\pi/2+2\pi n}$ המנה שווה ל-1, ועל $h_n=\frac{1}{3\pi/2+2\pi n}$ היא שווה
+          למינוס 1, ולפי היינה אין גבול.
+      - text: מנת ההפרשים $\sin\frac1h$ חסומה, ולכן יש לה גבול
+        feedback: >-
+          חסימות אינה גוררת קיום גבול: $\sin\frac1h$ חסומה ב-1 ומתנדנדת בין 1 למינוס 1 בכל סביבה של 0.
+        misconception: MC-bounded-implies-convergent
+      - text: מכפלה בגורם שאין לו גבול ב-0 אין לה גבול ב-0
+        feedback: >-
+          זה לא נכון כשהגורם השני שואף ל-0 והראשון חסום: אז המכפלה שואפת ל-0.
+        misconception: MC-bounded-factor-blocks-limit

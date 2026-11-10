@@ -1,0 +1,351 @@
+# Lesson 5.6 — the mean value theorem (Lagrange and Cauchy).
+# Objectives (src/course.ts):
+#   OBJ-5.6-1  state and prove Lagrange's theorem and Cauchy's theorem
+#   OBJ-5.6-2  use Lagrange's theorem to prove inequalities and estimate differences
+#   OBJ-5.6-3  zero derivative on an interval ⇒ constant; bounded derivative ⇒ Lipschitz
+chapter: 5
+questions:
+  - id: Q-5.6-statement
+    type: mc
+    objectives: [OBJ-5.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזה מהניסוחים הבאים הוא משפט לגרנז' (משפט הערך הממוצע)?
+    choices:
+      - text: >-
+          אם $f$ רציפה ב-$[a,b]$ וגזירה ב-$(a,b)$, אז קיימת $c\in(a,b)$ כך ש-$f'(c)=\frac{f(b)-f(a)}{b-a}$.
+        correct: true
+        feedback: >-
+          נכון. השיפוע של המיתר בין שתי הקצוות שווה לשיפוע המשיק בנקודה פנימית אחת לפחות.
+      - text: >-
+          אם $f$ רציפה ב-$[a,b]$ וגזירה ב-$(a,b)$, אז לכל $c\in(a,b)$ מתקיים $f'(c)=\frac{f(b)-f(a)}{b-a}$.
+        feedback: >-
+          המשפט מבטיח נקודה **אחת** לפחות, לא את כולן. עבור $f(x)=x^2$ ב-$[0,2]$ שיפוע המיתר הוא $2$, ו-$f'(c)=2c$
+          שווה לו רק ב-$c=1$.
+        misconception: MC-mvt-for-all-c
+      - text: >-
+          אם $f$ רציפה ב-$(a,b)$ וגזירה ב-$(a,b)$, אז קיימת $c\in(a,b)$ כך ש-$f'(c)=\frac{f(b)-f(a)}{b-a}$.
+        feedback: >-
+          בלי רציפות בקצוות הערכים $f(a)$, $f(b)$ לא קשורים לפונקציה שבפנים. דוגמה נגדית: $f(x)=x$ ב-$(0,1]$
+          ו-$f(0)=1$. אז שיפוע המיתר הוא $0$, ו-$f'(c)=1$ לכל $c\in(0,1)$.
+        misconception: MC-rolle-open-continuity
+      - text: >-
+          אם $f$ רציפה ב-$[a,b]$, אז קיימת $c\in(a,b)$ כך ש-$f'(c)=\frac{f(b)-f(a)}{b-a}$.
+        feedback: >-
+          בלי גזירות אין משפט. $f(x)=|x|$ רציפה ב-$[-1,1]$ ושיפוע המיתר הוא $0$, אבל $f'(c)=\pm1$ בכל נקודה שבה
+          הנגזרת קיימת.
+        misconception: MC-mvt-no-differentiability
+    explanation: >-
+      משפט לגרנז' הוא משפט רול "מוטה": מחסירים מ-$f$ את הישר שעובר דרך שתי הקצוות, ומקבלים פונקציה ששווה
+      בקצוות. לכן הוא דורש בדיוק את ההנחות של רול: רציפות בקטע הסגור וגזירות בקטע הפתוח.
+
+  - id: Q-5.6-proof
+    type: rank
+    objectives: [OBJ-5.6-1]
+    level: mid
+    prompt: >-
+      הוכחת משפט לגרנז': $f$ רציפה ב-$[a,b]$ וגזירה ב-$(a,b)$, ונסמן $m=\frac{f(b)-f(a)}{b-a}$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: g
+        label: 'מגדירים $g(x)=f(x)-f(a)-m(x-a)$.'
+      - id: hyp
+        label: '$g$ רציפה ב-$[a,b]$ וגזירה ב-$(a,b)$, כי היא הפרש של $f$ ושל פולינום.'
+      - id: ends
+        label: 'מציבים: $g(a)=0$ וגם $g(b)=f(b)-f(a)-m(b-a)=0$.'
+      - id: rolle
+        label: 'לפי משפט רול קיימת $c\in(a,b)$ כך ש-$g''(c)=0$.'
+      - id: done
+        label: 'אבל $g''(c)=f''(c)-m$, ולכן $f''(c)=m$.'
+    order: [g, hyp, ends, rolle, done]
+    correctFeedback: >-
+      נכון. הרעיון כולו בשלב הראשון: מחסירים את המיתר כדי לקבל פונקציה ששווה בקצוות, ואז רול עושה את השאר.
+    wrongFeedback: >-
+      כדי להפעיל את רול צריך פונקציה, ואז לבדוק את שלוש ההנחות שלו: רציפות, גזירות ושוויון בקצוות. רק אחרי
+      שרול נתן את $c$ אפשר לחשב את $g'(c)$.
+
+  - id: Q-5.6-cauchy-c
+    type: numeric
+    objectives: [OBJ-5.6-1]
+    level: mid
+    prompt: >-
+      משפט קושי: אם $f,g$ רציפות ב-$[a,b]$ וגזירות ב-$(a,b)$, קיימת $c\in(a,b)$ כך ש-
+      $$\bigl(f(b)-f(a)\bigr)\,g'(c)=\bigl(g(b)-g(a)\bigr)\,f'(c).$$
+      עבור $f(x)=x^2$, $g(x)=x^3$ בקטע $[1,2]$, מצאו את $c$.
+    answer: 1.5555555556
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f(2)-f(1)=3$ ו-$g(2)-g(1)=7$, ולכן $3\cdot 3c^2=7\cdot 2c$, כלומר $9c^2=14c$. הפתרון $c=0$ אינו
+      בקטע, ונשאר $c=\frac{14}{9}\approx1.556$.
+    wrongFeedback: >-
+      הציבו במשוואה של קושי: $f(2)-f(1)$, $g(2)-g(1)$, $f'(c)=2c$, $g'(c)=3c^2$. חלקו ב-$c\neq0$.
+    commonWrong:
+      - value: 0.2857142857
+        feedback: >-
+          $\frac27$ מתקבל כשהופכים את היחס: $\frac{f'(c)}{g'(c)}=\frac{g(2)-g(1)}{f(2)-f(1)}$. שימו לב גם ש-$\frac27$
+          בכלל אינו בקטע $(1,2)$, וזה כבר סימן לטעות.
+      - value: 1.5
+        feedback: >-
+          $1.5$ הוא ה-$c$ של לגרנז' עבור $f$ לבדה ($2c=3$). במשפט קושי מחפשים $c$ **אחד** שמתאים לשתי הפונקציות
+          יחד, והוא בדרך כלל שונה מה-$c$ של כל אחת מהן.
+        misconception: MC-cauchy-from-two-lagrange
+      - value: 1.5275252317
+        feedback: >-
+          $\sqrt{7/3}\approx1.528$ הוא ה-$c$ של לגרנז' עבור $g$ לבדה ($3c^2=7$). משפט קושי מחפש $c$ משותף אחד.
+        misconception: MC-cauchy-from-two-lagrange
+
+  - id: Q-5.6-cauchy-why
+    type: twotier
+    objectives: [OBJ-5.6-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      מישהו "מוכיח" את משפט קושי כך: מפעילים את לגרנז' על $f$ ועל $g$, מקבלים
+      $f(b)-f(a)=f'(c)(b-a)$ ו-$g(b)-g(a)=g'(c)(b-a)$, ומחלקים. האם ההוכחה נכונה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. לגרנז' נותן לכל פונקציה נקודה משלה, ואין סיבה שהן יהיו אותה נקודה.
+      - text: כן
+        feedback: >-
+          ההוכחה משתמשת באותה אות $c$ לשתי נקודות שונות. עבור $f(x)=x^2$, $g(x)=x^3$ ב-$[0,1]$: לגרנז' נותן
+          $c=\frac12$ ל-$f$ ו-$c=\frac{1}{\sqrt3}$ ל-$g$, ואילו ה-$c$ של קושי הוא $\frac23$.
+        misconception: MC-cauchy-from-two-lagrange
+    reasons:
+      - text: 'לגרנז'' נותן $c_1$ עבור $f$ ו-$c_2$ עבור $g$, ובדרך כלל $c_1\neq c_2$'
+        correct: true
+        feedback: >-
+          בדיוק. ההוכחה הנכונה מפעילה את רול על פונקציה אחת שבנויה משתיהן,
+          $h(x)=\bigl(f(b)-f(a)\bigr)g(x)-\bigl(g(b)-g(a)\bigr)f(x)$, ששווה בשתי הקצוות.
+      - text: 'החלוקה אסורה כי ייתכן ש-$g''(c)=0$'
+        feedback: >-
+          זו בעיה אמיתית בניסוח עם המנה, אבל היא לא הטעות המרכזית: גם כש-$g'$ לא מתאפסת בכלל, שתי הנקודות
+          שלגרנז' נותן שונות זו מזו.
+        misconception: MC-cauchy-from-two-lagrange
+      - text: 'ההוכחה נכונה, כי החלוקה ב-$b-a$ מותרת: $b-a>0$'
+        feedback: >-
+          החלוקה ב-$b-a$ אכן מותרת, אבל זו לא הבעיה. הבעיה היא שהאות $c$ מסמנת בשתי המשוואות שתי נקודות שונות.
+        misconception: MC-cauchy-from-two-lagrange
+
+  - id: Q-5.6-sin
+    type: twotier
+    objectives: [OBJ-5.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם לכל $a,b\in\mathbb{R}$ מתקיים $|\sin a-\sin b|\le|a-b|$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. זה אחד השימושים הקלאסיים במשפט לגרנז'.
+      - text: לא
+        feedback: >-
+          נסו לחפש דוגמה נגדית ותראו שאין: לפי לגרנז' ההפרש $\sin a-\sin b$ הוא $\cos c\cdot(a-b)$, ו-$|\cos c|\le1$.
+        misconception: MC-mvt-bound-values-instead
+    reasons:
+      - text: 'לפי לגרנז'' קיימת $c$ בין $a$ ל-$b$ עם $\sin a-\sin b=\cos c\,(a-b)$, ו-$|\cos c|\le 1$'
+        correct: true
+        feedback: >-
+          בדיוק. (כש-$a=b$ אין מה להוכיח, ואחרת מפעילים את המשפט בקטע שבין $a$ ל-$b$.)
+      - text: 'כי $|\sin x|\le1$ לכל $x$'
+        feedback: >-
+          חסם על הערכים נותן רק $|\sin a-\sin b|\le2$, שאינו קשור ל-$|a-b|$. כש-$a$ ו-$b$ קרובים זה חסם חלש מאוד.
+          מה שחוסם הפרשים הוא חסם על **הנגזרת**.
+        misconception: MC-mvt-bound-values-instead
+      - text: 'כי $\sin x<x$ לכל $x>0$'
+        feedback: >-
+          אי-השוויון הזה (משיעור 3.2) מטפל רק במקרה $b=0$, $a>0$. בשביל זוג כללי $a,b$ צריך כלי שמשווה הפרשים:
+          משפט לגרנז'.
+        misconception: MC-mvt-bound-values-instead
+
+  - id: Q-5.6-ln
+    type: mc
+    objectives: [OBJ-5.6-2]
+    level: mid
+    prompt: >-
+      מפעילים את משפט לגרנז' על $f(t)=\ln(1+t)$ בקטע $[0,x]$, כאשר $x>0$. מה מקבלים?
+    choices:
+      - text: '$\frac{x}{1+x}<\ln(1+x)<x$'
+        correct: true
+        feedback: >-
+          נכון. $\ln(1+x)-\ln1=\frac{x}{1+c}$ עם $0<c<x$, ולכן $\frac{1}{1+x}<\frac{1}{1+c}<1$. כופלים ב-$x>0$.
+      - text: '$\ln(1+x)=\frac{x}{1+x/2}$'
+        feedback: >-
+          המשפט לא אומר איפה $c$, ובפרט לא שהוא אמצע הקטע. עבור $x=1$ צד ימין הוא $\frac23\approx0.667$, ואילו
+          $\ln2\approx0.693$.
+        misconception: MC-mvt-c-midpoint
+      - text: '$x<\ln(1+x)<\frac{x}{1+x}$'
+        feedback: >-
+          הכיוונים התהפכו: $\frac{x}{1+x}<x$ לכל $x>0$, כך שהשרשרת הזו לא יכולה להתקיים. מ-$0<c<x$ נובע
+          $\frac{1}{1+c}<1$, ולכן $\ln(1+x)<x$.
+        misconception: MC-mvt-bound-direction
+      - text: '$0<\ln(1+x)<1$'
+        feedback: >-
+          זה לא נכון לכל $x>0$: $\ln(1+e^2)>2$. משפט לגרנז' נותן חסם שתלוי ב-$x$, כי ההפרש $\ln(1+x)-\ln 1$
+          שווה לנגזרת **כפול אורך הקטע**.
+        misconception: MC-mvt-bound-values-instead
+    hints:
+      - 'כתבו את מסקנת המשפט עם $f''(t)=\frac{1}{1+t}$, ואחר כך השתמשו רק בכך ש-$0<c<x$.'
+
+  - id: Q-5.6-sqrt
+    type: numeric
+    objectives: [OBJ-5.6-2]
+    level: basic
+    prompt: >-
+      לפי משפט לגרנז' עבור $f(x)=\sqrt x$ בקטע $[100,101]$ מתקיים $\sqrt{101}-10=\frac{1}{2\sqrt c}$ עבור $c\in(100,101)$
+      כלשהו. איזה חסם עליון על $\sqrt{101}-10$ מקבלים כשמשתמשים רק בכך ש-$c>100$?
+    answer: 0.05
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $c>100$ גורר $\sqrt c>10$, ולכן $\frac{1}{2\sqrt c}<\frac{1}{20}=0.05$. (הערך האמיתי הוא $0.04988$.)
+    wrongFeedback: >-
+      $\frac{1}{2\sqrt c}$ יורד כש-$c$ עולה, ולכן חוסמים אותו מלמעלה בעזרת הקצה השמאלי $c=100$.
+    commonWrong:
+      - value: 0.1
+        feedback: >-
+          $0.1=\frac{1}{\sqrt{100}}$: שכחתם את ה-$2$ בנגזרת $\frac{1}{2\sqrt x}$.
+      - value: 0.0497518595
+        feedback: >-
+          זה $\frac{1}{2\sqrt{101}}$, החסם **התחתון**: הקצה הימני נותן את הערך הקטן ביותר של $\frac{1}{2\sqrt c}$.
+        misconception: MC-mvt-bound-direction
+
+  - id: Q-5.6-exp
+    type: twotier
+    objectives: [OBJ-5.6-2]
+    level: exam
+    prompt: >-
+      ל-$x>0$ הוכיחו בעזרת לגרנז' ש-$e^x>1+x$: $e^x-1=e^c\,x$ עם $0<c<x$, ו-$e^c>1$. האם אותו טיעון מוכיח
+      את $e^x>1+x$ גם ל-$x<0$?
+    choices:
+      - text: כן, עם תיקון קטן
+        correct: true
+        feedback: >-
+          נכון. ל-$x<0$ הנקודה $c$ נמצאת ב-$(x,0)$ ולכן $e^c<1$, אבל גם $x<0$: שני ההיפוכים מבטלים זה את זה.
+      - text: לא, ל-$x<0$ הטיעון נותן את אי-השוויון ההפוך
+        feedback: >-
+          נכון ש-$e^c<1$, אבל כשכופלים אי-שוויון במספר שלילי הכיוון מתהפך: מ-$e^c<1$ ומ-$x<0$ נובע $e^c x>x$.
+        misconception: MC-mvt-bound-direction
+    reasons:
+      - text: 'ל-$x<0$: $e^x-1=e^c x$ עם $x<c<0$, ומ-$e^c<1$ ו-$x<0$ נובע $e^c x>x$'
+        correct: true
+        feedback: >-
+          בדיוק. לכן $e^x>1+x$ לכל $x\neq0$, ושוויון רק ב-$x=0$.
+      - text: 'ל-$x<0$: $e^c<1$, ולכן $e^c x<x$'
+        feedback: >-
+          זו כפל של אי-שוויון במספר שלילי בלי להפוך את הכיוון. דוגמה: $\frac12<1$, אבל $\frac12\cdot(-2)=-1>-2$.
+        misconception: MC-mvt-bound-direction
+      - text: 'ל-$x<0$: גם כאן $c>0$, ולכן $e^c>1$ ו-$e^c x>x$'
+        feedback: >-
+          המסקנה נכונה אבל הנימוק לא: ל-$x<0$ המשפט מופעל בקטע $[x,0]$, ולכן $x<c<0$ ו-$e^c<1$. מה שמציל את
+          הטיעון הוא שגם $x$ שלילי.
+        misconception: MC-mvt-bound-direction
+
+  - id: Q-5.6-const-where
+    type: mc
+    objectives: [OBJ-5.6-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      הוכחה: "$f$ גזירה בקטע $I$ ו-$f'=0$ בו. יהיו $x<y$ ב-$I$. לפי לגרנז' $f(y)-f(x)=f'(c)(y-x)=0$, ולכן $f$ קבועה."
+      באיזה מקום בהוכחה משתמשים בכך ש-$I$ הוא **קטע**?
+    choices:
+      - text: 'כדי ש-$[x,y]$ יהיה מוכל ב-$I$, כך ש-$f$ רציפה וגזירה בכל $[x,y]$ ואפשר להפעיל את לגרנז'''
+        correct: true
+        feedback: >-
+          נכון. קטע מכיל כל נקודה שבין שתיים מנקודותיו. בלי זה אין שום מידע על $f$ בין $x$ ל-$y$.
+      - text: 'כדי ש-$f''(c)=0$'
+        feedback: >-
+          $f'(c)=0$ נובע מכך ש-$c\in I$, וזה עצמו נובע מכך ש-$[x,y]\subseteq I$. השאלה היא למה $[x,y]\subseteq I$.
+        misconception: MC-derivative-theorems-on-union
+      - text: 'לא משתמשים בזה: הטענה נכונה בכל תחום'
+        feedback: >-
+          הטענה נכשלת בלי קטע: $f=0$ ב-$(0,1)$ ו-$f=1$ ב-$(2,3)$ מקיימת $f'=0$ בכל התחום שלה ואינה קבועה.
+        misconception: MC-derivative-theorems-on-union
+      - text: 'כדי ש-$y-x>0$'
+        feedback: >-
+          $y-x>0$ נובע מכך שבחרנו $x<y$, בלי קשר לצורת התחום.
+        misconception: MC-derivative-theorems-on-union
+
+  - id: Q-5.6-const-union
+    type: twotier
+    objectives: [OBJ-5.6-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=\arctan x+\arctan\frac1x$ מוגדרת וגזירה לכל $x\neq0$, ומחשבים ש-$f'(x)=\frac{1}{1+x^2}-\frac{1}{1+x^2}=0$.
+      האם $f$ קבועה בתחום הגדרתה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $f(1)=\frac\pi4+\frac\pi4=\frac\pi2$, ואילו $f(-1)=-\frac\pi2$. היא קבועה בכל אחד משני הקטעים בנפרד.
+      - text: כן
+        feedback: >-
+          חשבו: $f(1)=\frac\pi2$ ו-$f(-1)=-\frac\pi2$. המשפט "נגזרת אפס גוררת קבועה" נכון רק **בקטע**.
+        misconception: MC-derivative-theorems-on-union
+    reasons:
+      - text: 'התחום $\mathbb{R}\setminus\{0\}$ אינו קטע, ואין קטע שמכיל את $-1$ ואת $1$ ונמצא בתוך התחום'
+        correct: true
+        feedback: >-
+          בדיוק. המשפט נותן קבוע אחד ב-$(0,\infty)$ וקבוע אחר, אולי שונה, ב-$(-\infty,0)$.
+      - text: 'הנגזרת אפס, ולכן $f$ קבועה'
+        feedback: >-
+          זה נכון בקטע ולא באיחוד של קטעים. ההוכחה מפעילה את לגרנז' על $[x,y]$, וכאן $[-1,1]$ מכיל את $0$, שאינו בתחום.
+        misconception: MC-derivative-theorems-on-union
+      - text: 'החישוב של $f''$ שגוי'
+        feedback: >-
+          החישוב נכון: לפי כלל השרשרת $\bigl(\arctan\frac1x\bigr)'=\frac{1}{1+1/x^2}\cdot\bigl(-\frac{1}{x^2}\bigr)=-\frac{1}{1+x^2}$.
+        misconception: MC-derivative-theorems-on-union
+
+  - id: Q-5.6-lip-const
+    type: numeric
+    objectives: [OBJ-5.6-3]
+    level: basic
+    prompt: >-
+      עבור $f(x)=3\sin x-4\cos x$, מהו המספר הקטן ביותר $M$ כך ש-$|f'(x)|\le M$ לכל $x$? (לפי לגרנז' זה גם
+      קבוע ליפשיץ: $|f(x)-f(y)|\le M|x-y|$.)
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f'(x)=3\cos x+4\sin x=5\cos(x-\varphi)$ עבור זווית $\varphi$ מתאימה, ולכן $\max|f'|=\sqrt{3^2+4^2}=5$.
+    wrongFeedback: >-
+      גזרו, וכתבו את $a\cos x+b\sin x$ בצורה $R\cos(x-\varphi)$ עם $R=\sqrt{a^2+b^2}$.
+    commonWrong:
+      - value: 7
+        feedback: >-
+          $7=3+4$ מאי-שוויון המשולש. זה חסם נכון על $|f'|$, ולכן גם קבוע ליפשיץ תקף, אבל לא הקטן ביותר:
+          $3\cos x$ ו-$4\sin x$ לא מגיעים למקסימום באותה נקודה.
+
+  - id: Q-5.6-lip-multi
+    type: multi
+    objectives: [OBJ-5.6-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ מקיימת **תנאי ליפשיץ** בקבוצה $A$ אם קיים $M$ כך ש-$|f(x)-f(y)|\le M|x-y|$ לכל $x,y\in A$.
+      אילו מהטענות נכונות? סמנו את כולן.
+    choices:
+      - text: 'אם $f$ גזירה בקטע $I$ ו-$|f''|\le M$ בו, אז $f$ מקיימת תנאי ליפשיץ עם הקבוע $M$ ב-$I$'
+        correct: true
+        feedback: >-
+          נכון: $|f(x)-f(y)|=|f'(c)|\,|x-y|\le M|x-y|$ לפי לגרנז' בקטע שבין $x$ ל-$y$.
+      - text: 'אם $f$ מקיימת תנאי ליפשיץ ב-$\mathbb{R}$, אז היא גזירה'
+        feedback: >-
+          לא. $|x|$ מקיימת $\bigl||x|-|y|\bigr|\le|x-y|$ (אי-השוויון ההפוך של המשולש), ואינה גזירה ב-$0$.
+        misconception: MC-lipschitz-implies-differentiable
+      - text: 'אם $f$ גזירה ב-$\mathbb{R}$ ומקיימת תנאי ליפשיץ עם קבוע $M$, אז $|f''(x)|\le M$ לכל $x$'
+        correct: true
+        feedback: >-
+          נכון: $\left|\frac{f(x+h)-f(x)}{h}\right|\le M$ לכל $h\neq0$, וגבולות שומרים על אי-שוויון חלש.
+      - text: 'אם $f$ גזירה ב-$\mathbb{R}$ ו-$f''$ חסומה, אז $f$ חסומה'
+        feedback: >-
+          לא. $f(x)=x$ היא דוגמה נגדית: $f'=1$ חסומה, ו-$f$ אינה חסומה. נגזרת חסומה חוסמת את **קצב** הגדילה,
+          לא את הערכים.
+        misconception: MC-bounded-derivative-bounded-function
+      - text: '$\sqrt x$ מקיימת תנאי ליפשיץ ב-$[0,1]$'
+        feedback: >-
+          לא. עם $y=0$: $\frac{|\sqrt x-0|}{|x-0|}=\frac{1}{\sqrt x}$, שאינו חסום כש-$x\to0^+$. הנגזרת
+          $\frac{1}{2\sqrt x}$ אינה חסומה ליד $0$, וזה בדיוק מה שמשתבש.
+        misconception: MC-continuous-implies-lipschitz

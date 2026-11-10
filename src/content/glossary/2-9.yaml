@@ -1,0 +1,24 @@
+# Terms first defined in lesson 2.9.
+- id: subsequence
+  term: תת-סדרה
+  en: subsequence
+  symbol: '(a_{n_k})_{k=1}^{\infty}'
+  definition: >-
+    בהינתן סדרה $a_n$ וסדרת אינדקסים טבעיים עולה ממש $n_1<n_2<n_3<\dots$, הסדרה $b_k=a_{n_k}$ היא תת-סדרה של $a_n$.
+    באינדוקציה $n_k\ge k$ לכל $k$.
+  reject: [תת סדרה]
+  lesson: '2.9'
+- id: partial-limit
+  term: גבול חלקי
+  en: partial limit (subsequential limit)
+  definition: >-
+    מספר ממשי $L$ הוא גבול חלקי של $a_n$ אם יש תת-סדרה $a_{n_k}\to L$. שקול: לכל $\varepsilon>0$ יש אינסוף
+    אינדקסים $n$ עם $|a_n-L|<\varepsilon$.
+  lesson: '2.9'
+- id: bolzano-weierstrass
+  term: משפט בולצאנו-ויירשטראס
+  en: Bolzano–Weierstrass theorem
+  definition: >-
+    לכל סדרה חסומה יש תת-סדרה מתכנסת. במילים אחרות: לכל סדרה חסומה יש לפחות גבול חלקי אחד.
+  reject: [בולצנו, ויירשטרס]
+  lesson: '2.9'

@@ -1,0 +1,320 @@
+# Lesson 5.8 — extreme points.
+# Objectives (src/course.ts):
+#   OBJ-5.8-1  local extrema by the first and the second derivative tests
+#   OBJ-5.8-2  absolute maximum and minimum on a closed and on an open interval
+#   OBJ-5.8-3  extremum problems stated in words
+chapter: 5
+questions:
+  - id: Q-5.8-critical
+    type: twotier
+    objectives: [OBJ-5.8-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ גזירה ב-$\mathbb{R}$ ו-$f'(x_0)=0$. האם $x_0$ בהכרח נקודת קיצון מקומית של $f$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. משפט פרמה אומר שבנקודת קיצון פנימית הנגזרת מתאפסת; ההפך לא נכון.
+      - text: כן
+        feedback: >-
+          $f(x)=x^3$ מקיימת $f'(0)=0$, אבל היא עולה ממש, ולכן ל-$0$ אין קיצון.
+        misconception: MC-critical-point-is-extremum
+    reasons:
+      - text: '$x^3$: הנגזרת מתאפסת ב-$0$, ו-$f$ עולה ממש משני צדדיו'
+        correct: true
+        feedback: >-
+          בדיוק. נקודה שבה $f'=0$ היא רק **מועמדת** לקיצון. כדי להכריע בודקים אם $f'$ מחליפה סימן.
+      - text: 'לפי משפט פרמה'
+        feedback: >-
+          פרמה הולך בכיוון ההפוך: מקיצון ל-$f'=0$. מ-$f'=0$ לא נובע קיצון.
+        misconception: MC-critical-point-is-extremum
+      - text: 'המשיק אופקי, ולכן הגרף "מסתובב" שם'
+        feedback: >-
+          משיק אופקי לא מחייב שינוי כיוון. בגרף של $x^3$ המשיק ב-$0$ אופקי, והגרף ממשיך לעלות.
+        misconception: MC-critical-point-is-extremum
+
+  - id: Q-5.8-second-zero
+    type: multi
+    objectives: [OBJ-5.8-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ גזירה פעמיים ב-$\mathbb{R}$, ו-$f'(0)=f''(0)=0$. מה **ייתכן**? סמנו את כל האפשרויות.
+    choices:
+      - text: '$0$ נקודת מינימום מקומי'
+        correct: true
+        feedback: 'ייתכן: $f(x)=x^4$.'
+      - text: '$0$ נקודת מקסימום מקומי'
+        correct: true
+        feedback: 'ייתכן: $f(x)=-x^4$.'
+      - text: '$0$ אינה נקודת קיצון'
+        correct: true
+        feedback: 'ייתכן: $f(x)=x^3$.'
+      - text: 'מבחן הנגזרת השנייה מראה ש-$0$ אינה נקודת קיצון'
+        feedback: >-
+          כש-$f''(0)=0$ המבחן **אינו מכריע**: שלוש הפונקציות $x^4$, $-x^4$, $x^3$ מקיימות אותו ומתנהגות שונה.
+          חוזרים למבחן הנגזרת הראשונה: האם $f'$ מחליפה סימן ב-$0$?
+        misconception: MC-second-test-zero-no-extremum
+    explanation: >-
+      מבחן הנגזרת השנייה מכריע רק כש-$f''(x_0)\neq0$: אם $f''(x_0)>0$ יש מינימום, ואם $f''(x_0)<0$ יש מקסימום.
+      כש-$f''(x_0)=0$ הוא שותק, ומבחן הנגזרת הראשונה עדיין עובד.
+
+  - id: Q-5.8-first-test
+    type: numeric
+    objectives: [OBJ-5.8-1]
+    level: basic
+    prompt: >-
+      מצאו את ערך המקסימום המקומי של $f(x)=x^3-3x^2-9x+1$.
+    answer: 6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f'(x)=3x^2-6x-9=3(x-3)(x+1)$ חיובית משמאל ל-$-1$ ושלילית ב-$(-1,3)$, ולכן ב-$x=-1$ יש מקסימום
+      מקומי, וערכו $f(-1)=-1-3+9+1=6$.
+    wrongFeedback: >-
+      מצאו את שורשי $f'$, קבעו בעזרת סימן $f'$ (או $f''$) איזה מהם מקסימום, והציבו אותו ב-$f$.
+    commonWrong:
+      - value: -1
+        feedback: >-
+          $-1$ היא **נקודת** המקסימום. השאלה מבקשת את **הערך** של $f$ בה.
+        misconception: MC-extremum-point-for-value
+      - value: -26
+        feedback: >-
+          $-26=f(3)$ הוא ערך המינימום המקומי: ב-$x=3$ הנגזרת עוברת משלילית לחיובית.
+        misconception: MC-first-test-reversed
+
+  - id: Q-5.8-cuberoot
+    type: mc
+    objectives: [OBJ-5.8-1]
+    level: mid
+    prompt: >-
+      $f(x)=\sqrt[3]{x^2}\,(x-5)$, ולכל $x\neq0$ מתקיים $f'(x)=\frac{5(x-2)}{3\sqrt[3]{x}}$. מהן נקודות הקיצון
+      המקומי של $f$?
+    choices:
+      - text: 'מקסימום מקומי ב-$x=0$ (ערך $0$) ומינימום מקומי ב-$x=2$ (ערך $-3\sqrt[3]{4}$)'
+        correct: true
+        feedback: >-
+          נכון. $f'>0$ ל-$x<0$, $f'<0$ ב-$(0,2)$ ו-$f'>0$ ל-$x>2$. ב-$0$ הנגזרת לא קיימת, ובכל זאת $f$ עוברת שם
+          מעלייה לירידה.
+      - text: 'רק מינימום מקומי ב-$x=2$'
+        feedback: >-
+          המועמדים לקיצון הם הנקודות שבהן $f'=0$ **וגם** הנקודות שבהן $f$ אינה גזירה. ב-$0$ הסימן של $f'$
+          מתחלף מ-$+$ ל-$-$, ולכן יש שם מקסימום.
+        misconception: MC-extremum-only-where-derivative-zero
+      - text: 'מינימום מקומי ב-$x=0$ ומקסימום מקומי ב-$x=2$'
+        feedback: >-
+          הפוך: כש-$f'$ עוברת מחיובית לשלילית, הפונקציה עולה ואחר כך יורדת, וזה מקסימום.
+        misconception: MC-first-test-reversed
+      - text: 'אין נקודות קיצון, כי $f$ אינה גזירה ב-$0$'
+        feedback: >-
+          אי-גזירות בנקודה אחת לא מונעת קיצון בה ($|x|$ ב-$0$), ובוודאי לא בנקודות אחרות: ב-$2$ יש מינימום.
+        misconception: MC-extremum-only-where-derivative-zero
+    hints:
+      - 'קבעו את הסימן של $f''$ בכל אחד מהקטעים $(-\infty,0)$, $(0,2)$, $(2,\infty)$.'
+
+  - id: Q-5.8-why-candidates
+    type: mc
+    objectives: [OBJ-5.8-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ רציפה ב-$[a,b]$ וגזירה ב-$(a,b)$. למה כדי למצוא את המקסימום המוחלט מספיק להשוות את ערכי $f$ בקצוות
+      ובנקודות שבהן $f'=0$?
+    choices:
+      - text: >-
+          לפי ויירשטראס יש מקסימום; אם הוא בנקודה פנימית, לפי פרמה $f'=0$ שם. לכן הוא בקצה או בנקודה קריטית.
+        correct: true
+        feedback: >-
+          נכון. שני המשפטים נחוצים: ויירשטראס מבטיח שיש מה לחפש, ופרמה מצמצם את החיפוש למספר קטן של מועמדים.
+      - text: 'כי במקסימום תמיד $f''=0$'
+        feedback: >-
+          לא בקצה: $f(x)=x$ ב-$[0,1]$ מקבלת מקסימום ב-$1$ ו-$f'=1$ שם. לכן חייבים לבדוק גם את הקצוות.
+        misconception: MC-absolute-extrema-candidates
+      - text: 'כי בין שתי נקודות קריטיות סמוכות $f$ מונוטונית, ולכן אין מועמדים נוספים'
+        feedback: >-
+          זה מסביר למה אין מועמדים נוספים, אבל לא למה המקסימום **קיים**. בקטע פתוח אותו טיעון נכשל: $x$ ב-$(0,1)$
+          אין לה מקסימום. הקיום בא מוויירשטראס.
+        misconception: MC-extremum-existence-assumed
+      - text: 'כי במקסימום $f''''<0$'
+        feedback: >-
+          זה לא נדרש ולא תמיד נכון: $-x^4$ מקבלת מקסימום ב-$0$ ו-$f''(0)=0$. וגם כאן חסר הנימוק לקיום המקסימום.
+        misconception: MC-second-test-zero-no-extremum
+
+  - id: Q-5.8-closed
+    type: numeric
+    objectives: [OBJ-5.8-2]
+    level: mid
+    prompt: >-
+      מצאו את המקסימום המוחלט של $f(x)=x^4-8x^2$ בקטע $[-1,3]$.
+    answer: 9
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f'(x)=4x(x-2)(x+2)$, והנקודות הקריטיות בקטע הן $0$ ו-$2$. משווים: $f(-1)=-7$, $f(0)=0$, $f(2)=-16$,
+      $f(3)=9$. המקסימום $9$ מתקבל בקצה $x=3$ (והמינימום $-16$ ב-$x=2$).
+    wrongFeedback: >-
+      רשמו את כל המועמדים: שני הקצוות והנקודות הקריטיות שבתוך הקטע, וחשבו את $f$ בכל אחד.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $0=f(0)$ הוא מקסימום **מקומי**. המקסימום המוחלט בקטע סגור יכול להיות בקצה, וכאן $f(3)=9>0$.
+        misconception: MC-absolute-extrema-candidates
+      - value: 3
+        feedback: >-
+          $3$ היא **הנקודה** שבה מתקבל המקסימום. השאלה מבקשת את הערך $f(3)$.
+        misconception: MC-extremum-point-for-value
+
+  - id: Q-5.8-open
+    type: numeric
+    objectives: [OBJ-5.8-2]
+    level: basic
+    prompt: >-
+      מצאו את המינימום המוחלט של $f(x)=x^2+\frac{16}{x}$ בקטע $(0,\infty)$.
+    answer: 12
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f'(x)=2x-\frac{16}{x^2}$ מתאפסת רק ב-$x=2$; משמאל לה $f'<0$ ומימין $f'>0$, ולכן $f$ יורדת ב-$(0,2]$
+      ועולה ב-$[2,\infty)$. המינימום המוחלט $f(2)=4+8=12$. (מקסימום אין: $f\to\infty$ בשני הקצוות.)
+    wrongFeedback: >-
+      פתרו $f'(x)=0$, וקבעו את סימן $f'$ משני הצדדים כדי לדעת שהנקודה היא מינימום של כל הקטע.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          $2$ היא **הנקודה** שבה מתקבל המינימום. הערך הוא $f(2)$.
+        misconception: MC-extremum-point-for-value
+
+  - id: Q-5.8-single-critical
+    type: twotier
+    objectives: [OBJ-5.8-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ גזירה בקטע פתוח $I$, יש לה בו נקודה קריטית אחת בלבד, $c$, ו-$c$ נקודת מינימום מקומי. האם $c$ בהכרח
+      נקודת מינימום מוחלט של $f$ ב-$I$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. בפונקציה של משתנה אחד מינימום מקומי יחיד הוא גם מוחלט: כדי "לרדת" מתחת ל-$f(c)$ הפונקציה הייתה
+          צריכה לעלות קודם ולהסתובב, ובהסתובבות יש נקודה קריטית נוספת.
+      - text: לא
+        feedback: >-
+          נסו לבנות דוגמה נגדית ותראו שלא מצליחים: אם $f(x_1)<f(c)$, ל-$f$ יש בין $c$ ל-$x_1$ נקודת מקסימום פנימית,
+          כלומר נקודה קריטית שנייה.
+        misconception: MC-unique-critical-not-global
+    reasons:
+      - text: 'אם $f(x_1)<f(c)$ עבור $x_1>c$, המקסימום של $f$ ב-$[c,x_1]$ מתקבל בנקודה פנימית, ושם $f''=0$'
+        correct: true
+        feedback: >-
+          בדיוק. ליד $c$ יש ערכים $\ge f(c)>f(x_1)$, ולכן המקסימום ב-$[c,x_1]$ אינו ב-$x_1$; ואם הוא ב-$c$ בלבד,
+          $f$ קבועה ליד $c$ ויש אינסוף נקודות קריטיות. כך או כך: סתירה. אותו דבר משמאל ל-$c$.
+      - text: 'כל מינימום מקומי הוא מינימום מוחלט'
+        feedback: >-
+          לא נכון באופן כללי: $x^3-3x$ מקבלת מינימום מקומי ב-$1$ ואינה חסומה מלרע. כאן הטענה נכונה רק בגלל
+          שהנקודה הקריטית **יחידה**.
+        misconception: MC-local-is-absolute
+      - text: 'צריך גם להשוות לערכים בקצוות של $I$'
+        feedback: >-
+          לקטע פתוח אין קצוות ששייכים לו. מה שצריך לבדוק הוא שהפונקציה לא יורדת מתחת ל-$f(c)$ בשום מקום, וזה
+          נובע מיחידות הנקודה הקריטית.
+        misconception: MC-unique-critical-not-global
+
+  - id: Q-5.8-fence
+    type: numeric
+    objectives: [OBJ-5.8-3]
+    level: basic
+    prompt: >-
+      גודרים שטח מלבני לאורך נהר בעזרת $100$ מטרים של גדר. בצד של הנהר אין גדר, כך שגודרים רק שלוש צלעות. מהו
+      השטח הגדול ביותר (במטרים רבועים) שאפשר לגדור?
+    answer: 1250
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. אם שתי הצלעות הניצבות לנהר באורך $x$, הצלע המקבילה באורך $100-2x$, והשטח
+      $S(x)=x(100-2x)$ ב-$[0,50]$. $S'(x)=100-4x=0$ ב-$x=25$, $S(25)=25\cdot50=1250$, ובקצוות $S=0$.
+    wrongFeedback: >-
+      סמנו ב-$x$ את אורך הצלעות הניצבות לנהר, בטאו את השטח כפונקציה של $x$, וקבעו את תחום ההגדרה לפני שגוזרים.
+    commonWrong:
+      - value: 625
+        feedback: >-
+          $625=25^2$ הוא השטח של ריבוע שכל ארבע צלעותיו גדורות. כאן גודרים רק שלוש צלעות, והמלבן הטוב ביותר אינו ריבוע.
+      - value: 25
+        feedback: >-
+          $25$ הוא אורך הצלע הניצבת בפתרון האופטימלי. השאלה מבקשת את השטח.
+        misconception: MC-extremum-point-for-value
+
+  - id: Q-5.8-box
+    type: numeric
+    objectives: [OBJ-5.8-3]
+    level: mid
+    prompt: >-
+      מגיליון ריבועי שצלעו $12$ גוזרים מכל פינה ריבוע שצלעו $x$, ומקפלים את השוליים לקופסה פתוחה. מהו הנפח
+      הגדול ביותר של הקופסה?
+    answer: 128
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $V(x)=x(12-2x)^2$ ב-$[0,6]$. $V'(x)=(12-2x)(12-6x)$ מתאפסת בתוך הקטע רק ב-$x=2$, ו-$V(0)=V(6)=0$.
+      לכן המקסימום $V(2)=2\cdot8^2=128$.
+    wrongFeedback: >-
+      בסיס הקופסה הוא ריבוע שצלעו $12-2x$, והגובה $x$. מצאו את המקסימום של $V$ בקטע $[0,6]$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          $x=2$ הוא גודל הריבוע שגוזרים. השאלה מבקשת את הנפח $V(2)$.
+        misconception: MC-extremum-point-for-value
+      - value: 0
+        feedback: >-
+          $x=6$ הוא גם שורש של $V'$, אבל שם הנפח $0$: זה מינימום, בקצה התחום. בודקים את כל המועמדים ומשווים.
+        misconception: MC-extremum-type-not-checked
+
+  - id: Q-5.8-distance
+    type: numeric
+    objectives: [OBJ-5.8-3]
+    level: exam
+    prompt: >-
+      מהו המרחק הקטן ביותר בין הנקודה $(0,3)$ לבין נקודה על הפרבולה $y=x^2$?
+    answer: 1.6583123952
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. ריבוע המרחק הוא $D(x)=x^2+(x^2-3)^2=x^4-5x^2+9$, ו-$D'(x)=2x(2x^2-5)$. הנקודות הקריטיות $0$ ו-$\pm\sqrt{5/2}$,
+      עם $D(0)=9$ ו-$D(\pm\sqrt{5/2})=\frac{11}{4}$. כש-$|x|\to\infty$ גם $D\to\infty$, ולכן המינימום $\frac{11}{4}$ והמרחק
+      $\frac{\sqrt{11}}{2}\approx1.658$.
+    wrongFeedback: >-
+      מזערו את **ריבוע** המרחק, $x^2+(x^2-3)^2$, ובסוף הוציאו שורש.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          $3$ הוא המרחק ל-$(0,0)$, שמתקבל מהנקודה הקריטית $x=0$. אבל שם $D$ מקבלת מקסימום **מקומי**
+          ($D''(0)=-10<0$). לא כל נקודה קריטית היא המינימום המבוקש.
+        misconception: MC-extremum-type-not-checked
+      - value: 2.75
+        feedback: >-
+          $\frac{11}{4}$ הוא **ריבוע** המרחק המינימלי. המרחק עצמו הוא השורש שלו.
+        misconception: MC-square-trick-same-values
+      - value: 1.5811388301
+        feedback: >-
+          $\sqrt{5/2}$ הוא שיעור ה-$x$ של הנקודה הקרובה ביותר, לא המרחק.
+        misconception: MC-extremum-point-for-value
+
+  - id: Q-5.8-square-trick
+    type: mc
+    objectives: [OBJ-5.8-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בבעיית מרחק מחפשים את המינימום של $d(x)=\sqrt{D(x)}$ ומחליפים אותו במינימום של $D(x)$. למה מותר?
+    choices:
+      - text: '$t\mapsto\sqrt t$ עולה ממש ב-$[0,\infty)$, ולכן $D(x_1)<D(x_2)$ אם ורק אם $d(x_1)<d(x_2)$'
+        correct: true
+        feedback: >-
+          נכון. הרכבה עם פונקציה עולה ממש שומרת על נקודות המינימום והמקסימום (לא על הערכים: הערך המינימלי של $d$
+          הוא שורש הערך המינימלי של $D$).
+      - text: 'כי $D''=d''$'
+        feedback: >-
+          לא: לפי כלל השרשרת $d'=\frac{D'}{2\sqrt D}$. מה שנכון הוא ש-$d'$ ו-$D'$ מתאפסות באותן נקודות (כש-$D>0$),
+          אבל זה נובע מהמונוטוניות של השורש.
+        misconception: MC-square-trick-same-values
+      - text: 'כי שתי הפונקציות מקבלות את אותו ערך מינימלי'
+        feedback: >-
+          הערכים שונים: אם המינימום של $D$ הוא $\frac{11}{4}$, המינימום של $d$ הוא $\frac{\sqrt{11}}{2}$. רק
+          **נקודת** המינימום משותפת.
+        misconception: MC-square-trick-same-values

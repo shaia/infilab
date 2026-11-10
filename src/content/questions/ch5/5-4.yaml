@@ -1,0 +1,340 @@
+# Lesson 5.4 — higher derivatives and continuous differentiability.
+# Objectives (src/course.ts):
+#   OBJ-5.4-1  compute higher derivatives, including a general formula for the n-th derivative by induction
+#   OBJ-5.4-2  tell differentiable from continuously differentiable, with x² sin(1/x)
+#   OBJ-5.4-3  use Leibniz's formula for the n-th derivative of a product
+chapter: 5
+questions:
+  - id: Q-5.4-poly
+    type: numeric
+    objectives: [OBJ-5.4-1]
+    level: basic
+    prompt: >-
+      חשבו את $f'''(1)$ עבור $f(x)=x^6-3x^4+x$.
+    answer: 48
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f'(x)=6x^5-12x^3+1$, $f''(x)=30x^4-36x^2$, $f'''(x)=120x^3-72x$, וב-1 זה $120-72=48$.
+    wrongFeedback: >-
+      גזרו שלוש פעמים, ורק בסוף הציבו $x=1$.
+    commonWrong:
+      - value: -6
+        feedback: >-
+          זה $f''(1)=30-36$, הנגזרת השנייה. נשארה עוד גזירה אחת.
+      - value: 0
+        feedback: >-
+          הצבתם $x=1$ לפני שגזרתם: מספר קבוע נגזר לאפס. קודם גוזרים את הפונקציה, ורק בסוף מציבים.
+        misconception: MC-substitute-before-differentiating
+
+  - id: Q-5.4-sin
+    type: numeric
+    objectives: [OBJ-5.4-1]
+    level: basic
+    prompt: >-
+      חשבו את $\sin^{(2027)}(0)$, הנגזרת מסדר 2027 של $\sin$ בנקודה 0.
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. הנגזרות של $\sin$ חוזרות במחזור של 4: $\sin,\ \cos,\ -\sin,\ -\cos$, ובאינדוקציה
+      $\sin^{(n)}(x)=\sin\left(x+\frac{n\pi}{2}\right)$. מכיוון ש-$2027=4\cdot506+3$, הנגזרת היא מינוס $\cos$, וב-0
+      ערכה מינוס 1.
+    wrongFeedback: >-
+      כתבו את ארבע הנגזרות הראשונות של $\sin$, ומצאו את השארית של 2027 בחלוקה ב-4.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          זה $\cos 0$: התעלמתם מהסימנים. המחזור הוא 4, לא 2: $\sin'=\cos$, אבל $\sin'''=-\cos$.
+        misconception: MC-trig-nth-period-two
+      - value: 0
+        feedback: >-
+          נגזרת מסדר אי-זוגי של $\sin$ היא $\pm\cos$, וב-0 הערך שלה הוא 1 או מינוס 1, לא 0.
+
+  - id: Q-5.4-geom
+    type: mc
+    objectives: [OBJ-5.4-1]
+    level: mid
+    prompt: >-
+      מהי הנגזרת ה-$n$-ית של $f(x)=\frac{1}{1-x}$ (כש-$x\neq1$ ו-$n\in\mathbb{N}$)?
+    choices:
+      - text: '$\frac{n!}{(1-x)^{n+1}}$'
+        correct: true
+        feedback: >-
+          נכון. בדיקה: $f'(x)=\frac{1}{(1-x)^2}$ ו-$f''(x)=\frac{2}{(1-x)^3}$. ההוכחה הכללית באינדוקציה.
+      - text: '$\frac{(-1)^n\,n!}{(1-x)^{n+1}}$'
+        feedback: >-
+          הסימן מתהפך רק כששוכחים את הנגזרת הפנימית: $\left((1-x)^{-1}\right)'=(-1)(1-x)^{-2}\cdot(-1)$, ושני
+          המינוסים מבטלים זה את זה. לכן כל הנגזרות חיוביות כש-$x<1$.
+        misconception: MC-chain-forget-inner
+      - text: '$\frac{n!}{(1-x)^{n}}$'
+        feedback: >-
+          בדקו ב-$n=1$: הנוסחה נותנת $\frac{1}{1-x}$, שהיא $f$ עצמה ולא $f'$. נוסחה לנגזרת ה-$n$-ית בודקים קודם
+          במקרה הבסיס.
+        misconception: MC-nth-formula-not-checked
+
+  - id: Q-5.4-induction
+    type: rank
+    objectives: [OBJ-5.4-1]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה באינדוקציה ש-$f^{(n)}(x)=\frac{n!}{(1-x)^{n+1}}$ לכל $n\in\mathbb{N}$, עבור
+      $f(x)=\frac{1}{1-x}$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: a
+        label: >-
+          בסיס: $f'(x)=\frac{1}{(1-x)^2}=\frac{1!}{(1-x)^{2}}$.
+      - id: b
+        label: >-
+          הנחת האינדוקציה: עבור $n$ מסוים, $f^{(n)}(x)=n!\,(1-x)^{-(n+1)}$.
+      - id: c
+        label: >-
+          גוזרים את שני האגפים לפי כלל השרשרת: $f^{(n+1)}(x)=n!\cdot\left(-(n+1)\right)(1-x)^{-(n+2)}\cdot(-1)$.
+      - id: d
+        label: >-
+          מפשטים: $f^{(n+1)}(x)=\frac{(n+1)!}{(1-x)^{n+2}}$, זו הטענה עבור $n+1$, ולכן היא נכונה לכל $n$.
+    order: [a, b, c, d]
+    correctFeedback: >-
+      נכון. בשלב ג הנגזרת של $f^{(n+1)}$ היא הנגזרת של $f^{(n)}$, ולכן מותר לגזור את הנוסחה מהנחת האינדוקציה.
+      הגורם $(-1)$ הוא הנגזרת הפנימית של $1-x$.
+    wrongFeedback: >-
+      הוכחה באינדוקציה: בסיס, הנחה עבור $n$, צעד שגוזר את הנוסחה של $f^{(n)}$, ומסקנה עבור $n+1$.
+
+  - id: Q-5.4-xabs
+    type: twotier
+    objectives: [OBJ-5.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=x|x|$ גזירה בכל הישר. האם היא גזירה פעמיים בנקודה 0?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $f$ גזירה בכל נקודה ו-$f'$ רציפה, כלומר $f$ גזירה ברציפות, אבל לא גזירה פעמיים ב-0.
+      - text: כן
+        feedback: >-
+          $f'(x)=2|x|$ בכל נקודה (גם ב-0, שם $f'(0)=0$), ו-$2|x|$ אינה גזירה ב-0. לכן $f''(0)$ לא קיימת.
+        misconception: MC-differentiable-implies-twice
+    reasons:
+      - text: >-
+          $f'(x)=2|x|$ לכל $x$, והפונקציה $|x|$ אינה גזירה ב-0
+        correct: true
+        feedback: >-
+          בדיוק. $f''(0)$ היא הנגזרת של $f'$ ב-0, ומנת ההפרשים של $f'$ שם היא $\frac{2|h|}{h}=\pm2$.
+      - text: $f$ גזירה בכל נקודה, ולכן גם $f'$ גזירה
+        feedback: >-
+          גזירות של $f$ לא אומרת דבר על גזירות של $f'$. כאן $f'=2|x|$, ויש לה פינה ב-0.
+        misconception: MC-differentiable-implies-twice
+      - text: >-
+          $f''=2$ מימין ל-0 ו-$f''=-2$ משמאל, ולכן ב-0 הנגזרת השנייה היא הממוצע, 0
+        feedback: >-
+          ממוצע של שתי נגזרות חד-צדדיות אינו נגזרת. $f''(0)$ קיימת רק כששתי הנגזרות החד-צדדיות של $f'$ ב-0 שוות,
+          וכאן הן 2 ומינוס 2.
+        misconception: MC-deriv-symmetric-quotient
+
+  - id: Q-5.4-c1
+    type: mc
+    objectives: [OBJ-5.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה פירוש הטענה "$f$ גזירה ברציפות בקטע הפתוח $I$"?
+    choices:
+      - text: $f$ גזירה בכל נקודה של $I$, ופונקציית הנגזרת $f'$ רציפה ב-$I$
+        correct: true
+        feedback: >-
+          נכון. "ברציפות" מתאר את הנגזרת, לא את $f$. הרציפות של $f$ עצמה נובעת כבר מהגזירות.
+      - text: $f$ רציפה וגזירה בכל נקודה של $I$
+        feedback: >-
+          פונקציה גזירה רציפה ממילא (שיעור 5.1), ולכן זו רק "גזירה". $x^2\sin\frac1x$ (עם 0 ב-0) גזירה בכל
+          הישר, ובכל זאת אינה גזירה ברציפות: הנגזרת שלה אינה רציפה ב-0.
+        misconception: MC-derivative-always-continuous
+      - text: $f'$ קיימת בכל נקודה של $I$ וחסומה בה
+        feedback: >-
+          חסימות אינה רציפות: הנגזרת של $x^2\sin\frac1x$ חסומה ליד 0 (בערך מוחלט היא לכל היותר $2|x|+1$),
+          ואינה רציפה שם.
+        misconception: MC-derivative-always-continuous
+
+  - id: Q-5.4-x2sin-diff
+    type: twotier
+    objectives: [OBJ-5.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      תהי $f(x)=x^2\sin\frac1x$ עבור $x\neq0$, ו-$f(0)=0$. האם $f$ גזירה ב-0?
+    choices:
+      - text: כן, ו-$f'(0)=0$
+        correct: true
+        feedback: >-
+          נכון. יחד עם הנוסחה $f'(x)=2x\sin\frac1x-\cos\frac1x$ עבור $x\neq0$, $f$ גזירה בכל הישר.
+      - text: לא
+        feedback: >-
+          הגבול של $f'(x)$ כש-$x\to0$ אכן לא קיים, אבל $f'(0)$ מוגדרת כגבול של מנת ההפרשים, וזה גבול אחר, שכן
+          קיים.
+        misconception: MC-derivative-via-limit-of-derivative
+    reasons:
+      - text: >-
+          $\left|\frac{f(h)-f(0)}{h}\right|=\left|h\sin\frac1h\right|\le|h|$, ולפי כלל הסנדוויץ' המנה שואפת ל-0
+        correct: true
+        feedback: >-
+          בדיוק. בנקודת תפר, ובכל נקודה "מיוחדת", הולכים להגדרה: מנת ההפרשים בנקודה עצמה.
+      - text: >-
+          $f'(x)=2x\sin\frac1x-\cos\frac1x$ אין לה גבול ב-0, ולכן $f'(0)$ לא קיימת
+        feedback: >-
+          הנוסחה הזו נכונה רק כש-$x\neq0$, והגבול שלה ב-0 אינו $f'(0)$. מכך שאין לה גבול נובע רק ש-$f'$ אינה רציפה
+          ב-0, לא ש-$f'(0)$ לא קיימת.
+        misconception: MC-derivative-via-limit-of-derivative
+
+  - id: Q-5.4-x2sin-cont
+    type: twotier
+    objectives: [OBJ-5.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      עבור אותה $f$ ($f(x)=x^2\sin\frac1x$ כש-$x\neq0$, $f(0)=0$, ו-$f'(0)=0$): האם פונקציית הנגזרת $f'$ רציפה
+      ב-0?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. זו פונקציה גזירה בכל הישר שאינה גזירה ברציפות.
+      - text: כן
+        feedback: >-
+          עבור $x\neq0$, $f'(x)=2x\sin\frac1x-\cos\frac1x$. המחובר הראשון שואף ל-0, אבל $\cos\frac1x$ מתנדנד בין
+          1 למינוס 1, ולכן ל-$f'$ אין גבול ב-0.
+        misconception: MC-derivative-always-continuous
+    reasons:
+      - text: >-
+          על $x_n=\frac{1}{2\pi n}\to0$ מתקיים $f'(x_n)=-\cos(2\pi n)=-1$, ולא 0
+        correct: true
+        feedback: >-
+          בדיוק. לפי היינה, סדרה אחת $x_n\to0$ שעליה $f'(x_n)$ אינה שואפת ל-$f'(0)$ מספיקה כדי להוכיח אי-רציפות.
+      - text: $f'$ מוגדרת בכל נקודה, ולכן היא רציפה
+        feedback: >-
+          פונקציה שמוגדרת בכל נקודה אינה בהכרח רציפה, וזה נכון גם לנגזרות. כאן $f'(x_n)=-1$ על $x_n=\frac{1}{2\pi n}$.
+        misconception: MC-derivative-always-continuous
+      - text: $f'$ חסומה ליד 0, ולכן יש לה גבול שם
+        feedback: >-
+          חסימות אינה גוררת גבול: $\cos\frac1x$ חסומה ומתנדנדת בכל סביבה של 0.
+        misconception: MC-bounded-implies-convergent
+
+  - id: Q-5.4-family
+    type: multi
+    objectives: [OBJ-5.4-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      לכל $k\in\mathbb{N}$ תהי $f_k(x)=x^k\sin\frac1x$ עבור $x\neq0$, ו-$f_k(0)=0$. סמנו את כל הטענות הנכונות.
+    choices:
+      - text: $f_1$ רציפה ב-0 ואינה גזירה בה
+        correct: true
+        feedback: >-
+          נכון. $|f_1(x)|\le|x|$, ומנת ההפרשים $\sin\frac1h$ אין לה גבול.
+      - text: $f_2$ גזירה בכל הישר, ו-$f_2'$ אינה רציפה ב-0
+        correct: true
+        feedback: >-
+          נכון, זו הדוגמה של השיעור: $f_2'(x)=2x\sin\frac1x-\cos\frac1x$ עבור $x\neq0$.
+      - text: $f_3$ גזירה ברציפות בכל הישר
+        correct: true
+        feedback: >-
+          נכון. $f_3'(0)=\lim h^2\sin\frac1h=0$, ועבור $x\neq0$, $f_3'(x)=3x^2\sin\frac1x-x\cos\frac1x$, ששואפת
+          ל-0 כש-$x\to0$.
+      - text: $f_3$ גזירה פעמיים ב-0
+        feedback: >-
+          לא. מנת ההפרשים של $f_3'$ ב-0 היא $\frac{f_3'(h)}{h}=3h\sin\frac1h-\cos\frac1h$, ואין לה גבול. כל חזקה
+          נוספת של $x$ "קונה" עוד סדר אחד של גזירות, לא שניים.
+        misconception: MC-differentiable-implies-twice
+      - text: $f_4$ גזירה פעמיים ב-0
+        correct: true
+        feedback: >-
+          נכון. $f_4'(x)=4x^3\sin\frac1x-x^2\cos\frac1x$ עבור $x\neq0$ ו-$f_4'(0)=0$, ולכן
+          $\frac{f_4'(h)}{h}=4h^2\sin\frac1h-h\cos\frac1h\to0$, כלומר $f_4''(0)=0$.
+      - text: $f_2$ גזירה פעמיים ב-0
+        feedback: >-
+          לא. $f_2'$ אינה רציפה ב-0, ופונקציה שאינה רציפה בנקודה אינה גזירה בה. לכן $f_2''(0)$ לא קיימת.
+        misconception: MC-differentiable-implies-twice
+    explanation: >-
+      התבנית: $f_{2m}$ גזירה $m$ פעמיים ב-0 והנגזרת ה-$m$-ית שלה אינה רציפה שם; $f_{2m+1}$ גזירה $m$ פעמיים
+      ברציפות, ואינה גזירה פעם נוספת ב-0.
+
+  - id: Q-5.4-leibniz-form
+    type: mc
+    objectives: [OBJ-5.4-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ ו-$g$ גזירות $n$ פעמים. מהי $(fg)^{(n)}$ לפי נוסחת לייבניץ?
+    choices:
+      - text: '$\sum_{k=0}^{n}\binom{n}{k}f^{(k)}g^{(n-k)}$'
+        correct: true
+        feedback: >-
+          נכון. בדיקה עם $n=2$ ו-$f=g=x$: $(x^2)''=2$, ובנוסחה רק $k=1$ תורם, $\binom21\cdot1\cdot1=2$. המקדמים
+          הם המקדמים הבינומיים, כמו בפיתוח של $(a+b)^n$.
+      - text: '$f^{(n)}g^{(n)}$'
+        feedback: >-
+          עם $n=2$ ו-$f=g=x$ זה נותן $0\cdot0=0$, אבל $(x^2)''=2$. כבר בסדר 1 נגזרת של מכפלה אינה מכפלת הנגזרות.
+        misconception: MC-product-rule-naive
+      - text: '$\sum_{k=0}^{n}f^{(k)}g^{(n-k)}$'
+        feedback: >-
+          חסרים המקדמים הבינומיים. עם $n=2$ ו-$f=g=x$ זה נותן 1 במקום 2: האיבר $f'g'$ מתקבל פעמיים, פעם מגזירת
+          $f'g$ ופעם מגזירת $fg'$.
+        misconception: MC-leibniz-no-binomial
+      - text: '$f^{(n)}g+fg^{(n)}$'
+        feedback: >-
+          חסרים כל האיברים האמצעיים. עם $n=2$ ו-$f=g=x$ זה נותן 0 במקום 2.
+        misconception: MC-leibniz-no-binomial
+
+  - id: Q-5.4-leibniz-num
+    type: numeric
+    objectives: [OBJ-5.4-3]
+    level: mid
+    prompt: >-
+      חשבו את $\left(x^2e^x\right)^{(10)}$ בנקודה $x=0$.
+    answer: 90
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי לייבניץ, ומכיוון ש-$(x^2)^{(k)}=0$ כש-$k\ge3$:
+      $$\left(x^2e^x\right)^{(10)}=e^x\left(x^2+\binom{10}{1}2x+\binom{10}{2}\cdot2\right).$$
+      ב-0 נשאר רק $\binom{10}{2}\cdot2=45\cdot2=90$.
+    wrongFeedback: >-
+      $e^x$ נגזרת לעצמה, ולכן כל הנגזרות שלה ב-0 שוות ל-1. מ-$x^2$ רק שלוש נגזרות אינן אפס: $x^2$, $2x$ ו-$2$.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          זה האיבר $(x^2)''\cdot(e^x)^{(8)}$ בלי המקדם הבינומי $\binom{10}{2}=45$.
+        misconception: MC-leibniz-no-binomial
+      - value: 45
+        feedback: >-
+          המקדם $\binom{10}{2}=45$ נכון, אבל $(x^2)''=2$, לא 1.
+      - value: 0
+        feedback: >-
+          זה רק האיבר $k=0$, כלומר $x^2e^x$ ב-0. האיבר עם $(x^2)''=2$ אינו מתאפס ב-0.
+
+  - id: Q-5.4-leibniz-exam
+    type: numeric
+    objectives: [OBJ-5.4-1, OBJ-5.4-3]
+    level: exam
+    prompt: >-
+      חשבו את $f^{(20)}(0)$ עבור $f(x)=x^3\sin x$.
+    answer: 6840
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לפי לייבניץ $f^{(20)}=\sum_{k=0}^{20}\binom{20}{k}(x^3)^{(k)}\sin^{(20-k)}$. ב-0 מתאפסים כל האיברים פרט
+      ל-$k=3$, כי $(x^3)^{(k)}$ מתאפסת ב-0 כש-$k\neq3$. נשאר
+      $$\binom{20}{3}\cdot3!\cdot\sin^{(17)}(0)=1140\cdot6\cdot\sin\left(\tfrac{17\pi}{2}\right)=6840.$$
+    wrongFeedback: >-
+      בדקו אילו איברים בנוסחת לייבניץ אינם מתאפסים ב-0: $(x^3)^{(k)}$ ב-0 שונה מאפס רק כש-$k=3$.
+    commonWrong:
+      - value: 1140
+        feedback: >-
+          זה $\binom{20}{3}$. חסר הגורם $(x^3)'''=3!=6$.
+      - value: -6840
+        feedback: >-
+          הסימן: $17=4\cdot4+1$, ולכן $\sin^{(17)}=\cos$, וב-0 ערכה 1, לא מינוס 1.
+        misconception: MC-trig-nth-period-two
+      - value: 6
+        feedback: >-
+          חסר המקדם הבינומי $\binom{20}{3}=1140$.
+        misconception: MC-leibniz-no-binomial
+    hints:
+      - 'ב-0, $(x^3)^{(k)}$ שונה מאפס רק עבור $k=3$, ושם הוא $3!$.'

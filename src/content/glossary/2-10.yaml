@@ -1,0 +1,9 @@
+# Terms first defined in lesson 2.10.
+- id: cauchy-sequence
+  term: סדרת קושי
+  en: Cauchy sequence
+  symbol: '\forall\varepsilon>0\ \exists N\ \forall m,n>N:\ |a_m-a_n|<\varepsilon'
+  definition: >-
+    סדרה שאיבריה מתקרבים זה לזה: לכל $\varepsilon>0$ קיים $N$ כך שלכל $m,n>N$ מתקיים $|a_m-a_n|<\varepsilon$.
+    בממשיים סדרה מתכנסת אם ורק אם היא סדרת קושי.
+  lesson: '2.10'

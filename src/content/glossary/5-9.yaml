@@ -1,0 +1,28 @@
+# Terms first defined in lesson 5.9.
+- id: convex-function
+  term: פונקציה קמורה
+  en: convex function
+  definition: >-
+    $f$ קמורה בקטע $I$ אם לכל $x,y\in I$ ולכל $t\in[0,1]$ מתקיים $f\bigl(tx+(1-t)y\bigr)\le t\,f(x)+(1-t)\,f(y)$:
+    כל מיתר נמצא מעל הגרף או עליו. בספרים אחרים המילים "קמורה" ו"קעורה" מתחלפות, ולכן בקורס תמיד מציינים את אי-השוויון.
+  lesson: '5.9'
+- id: concave-function
+  term: פונקציה קעורה
+  en: concave function
+  definition: >-
+    $f$ קעורה בקטע $I$ אם $-f$ קמורה בו, כלומר $f\bigl(tx+(1-t)y\bigr)\ge t\,f(x)+(1-t)\,f(y)$: כל מיתר נמצא מתחת לגרף או עליו.
+  lesson: '5.9'
+- id: inflection-point
+  term: נקודת פיתול
+  en: inflection point
+  definition: >-
+    נקודה $x_0$ שבה $f$ רציפה, ובסביבה קטנה שלה $f$ קמורה מצד אחד וקעורה מהצד השני. לפונקציה גזירה פעמיים
+    $f''(x_0)=0$ שם, אבל זה לא מספיק ($x^4$ ב-$0$).
+  lesson: '5.9'
+- id: jensen-inequality
+  term: אי-שוויון ינסן
+  en: Jensen's inequality
+  definition: >-
+    עבור $f$ קמורה: $f\bigl(\sum t_i x_i\bigr)\le\sum t_i f(x_i)$ כאשר $t_i\ge0$ ו-$\sum t_i=1$. המקרה של שתי נקודות הוא
+    ההגדרה של קמירות.
+  lesson: '5.9'

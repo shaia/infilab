@@ -1,0 +1,7 @@
+---
+/** Lesson-0.7 figure: <Spread figure={AbsLine} figureProps={{…}}>. */
+import AbsLine, { type AbsLineProps } from './AbsLine';
+type Props = AbsLineProps;
+---
+
+<AbsLine client:visible {...Astro.props} />

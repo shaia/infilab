@@ -1,0 +1,26 @@
+# Terms first defined in lesson 3.6.
+- id: one-sided-limit
+  term: גבול חד-צדדי
+  en: one-sided limit
+  symbol: '\lim_{x\to a^{+}} f(x)'
+  definition: >-
+    הגבול מימין, $\lim_{x\to a^+}f(x)=L$, פירושו שלכל $\varepsilon>0$ קיים $\delta>0$ כך ש-$a<x<a+\delta$ גורר
+    $|f(x)-L|<\varepsilon$; הגבול משמאל מוגדר עם $a-\delta<x<a$. הגבול הדו-צדדי קיים אם ורק אם שניהם קיימים
+    ושווים.
+  reject: [גבול חד צדדי]
+  lesson: '3.6'
+- id: limit-at-infinity
+  term: גבול באינסוף
+  en: limit at infinity
+  symbol: '\lim_{x\to\infty} f(x) = L'
+  definition: >-
+    לכל $\varepsilon>0$ קיים $K$ כך שלכל $x>K$ מתקיים $|f(x)-L|<\varepsilon$. באופן דומה ב-$-\infty$, עם $x<K$.
+  lesson: '3.6'
+- id: infinite-limit
+  term: גבול אינסופי
+  en: infinite limit
+  symbol: '\lim_{x\to a} f(x) = \infty'
+  definition: >-
+    לכל $M$ קיים $\delta>0$ כך ש-$0<|x-a|<\delta$ גורר $f(x)>M$. גבול אינסופי אינו מספר: כש-$f(x)\to\infty$
+    אין ל-$f$ גבול סופי ב-$a$, וחשבון הגבולות הרגיל לא חל עליו.
+  lesson: '3.6'

@@ -1,0 +1,17 @@
+# Terms first defined in lesson 6.1.
+- id: lim-sup
+  term: גבול עליון
+  en: limit superior
+  symbol: '\limsup_{n\to\infty} a_n'
+  definition: >-
+    $\limsup a_n = \lim_{n\to\infty} \sup_{k\ge n} a_k$: הגבול של הסופרמומים של הזנבות. לסדרה חסומה זה
+    הגבול החלקי הגדול ביותר; לסדרה שאינה חסומה מלעיל מגדירים $\limsup a_n = \infty$.
+  lesson: '6.1'
+- id: lim-inf
+  term: גבול תחתון
+  en: limit inferior
+  symbol: '\liminf_{n\to\infty} a_n'
+  definition: >-
+    $\liminf a_n = \lim_{n\to\infty} \inf_{k\ge n} a_k$: הגבול של האינפימומים של הזנבות. לסדרה חסומה זה
+    הגבול החלקי הקטן ביותר; לסדרה שאינה חסומה מלרע מגדירים $\liminf a_n = -\infty$.
+  lesson: '6.1'

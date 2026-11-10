@@ -1,0 +1,376 @@
+# Chapter 3 review questions: real functions and limits of functions, from easy to hard.
+# Every lesson 3.1–3.6 is touched; the questions marked "combines" list objectives of two or more lessons.
+# D is Dirichlet's function and R Riemann's function, as defined in lesson 3.2.
+chapter: 3
+questions:
+  - id: Q-3-review-01
+    type: mc
+    objectives: [OBJ-3.1-3]
+    level: basic
+    prompt: >-
+      $f(x)=\sqrt{x}$ ו-$g(x)=x-2$. מהו התחום של $f\circ g$, כלומר של $\sqrt{x-2}$?
+    choices:
+      - text: '$[2,\infty)$'
+        correct: true
+        feedback: >-
+          נכון. $g(x)$ מוגדר לכל $x$, וצריך גם $g(x)\in[0,\infty)$, כלומר $x-2\ge0$.
+      - text: '$[0,\infty)$'
+        feedback: >-
+          זה התחום של $f$, אבל $f$ מקבלת את $x-2$, לא את $x$. ב-$x=1$ מקבלים $\sqrt{-1}$, שאינו מוגדר.
+        misconception: MC-composition-domain-one-function
+      - text: '$\mathbb{R}$'
+        feedback: >-
+          זה התחום של $g$ בלבד. צריך גם שהערך $g(x)$ יהיה בתחום של $f$.
+        misconception: MC-composition-domain-one-function
+    hints:
+      - 'חזרו לשיעור 3.1: התחום של הרכבה הוא קבוצת ה-$x$ שבתחום של $g$, ושהערך $g(x)$ שלהם בתחום של $f$.'
+
+  - id: Q-3-review-02
+    type: numeric
+    objectives: [OBJ-3.2-3]
+    level: basic
+    prompt: >-
+      $R$ היא פונקציית רימן. חשבו את $R(0.4)$.
+    answer: 0.2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $0.4=\frac{4}{10}=\frac25$ בצורה מצומצמת, ולכן $R(0.4)=\frac15$.
+    wrongFeedback: >-
+      כתבו את $0.4$ כשבר מצומצם $\frac{p}{q}$ עם $q>0$, והערך הוא $\frac1q$.
+    commonWrong:
+      - value: 0.1
+        feedback: >-
+          $\frac{4}{10}$ אינו מצומצם. ההגדרה משתמשת בשבר המצומצם $\frac25$, ולכן הערך $\frac15$.
+        misconception: MC-thomae-unreduced-fraction
+      - value: 0.4
+        feedback: >-
+          $R$ אינה מחזירה את המספר עצמו: היא מחזירה אחד חלקי המכנה של השבר המצומצם.
+    hints:
+      - 'חזרו לשיעור 3.2: ההגדרה של פונקציית רימן משתמשת בשבר **מצומצם**.'
+
+  - id: Q-3-review-03
+    type: numeric
+    objectives: [OBJ-3.3-3, OBJ-3.6-1, OBJ-3.1-1]
+    level: basic
+    prompt: >-
+      $f(x)=x+1$ כש-$x<1$, $f(x)=3x-1$ כש-$x>1$, ו-$f(1)=7$. חשבו את $\lim_{x\to1}f(x)$.
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. משמאל $x+1\to2$ ומימין $3x-1\to2$: שני הגבולות החד-צדדיים שווים, ולכן הגבול 2. הערך $f(1)=7$ לא משתתף.
+    wrongFeedback: >-
+      חשבו כל צד לחוד, והשוו. הערך בנקודה עצמה לא שייך לאף צד.
+    commonWrong:
+      - value: 7
+        feedback: >-
+          7 הוא הערך $f(1)$, לא הגבול. הגבול נקבע רק לפי $x\neq1$ קרובים ל-1, ושם הערכים קרובים ל-2.
+        misconception: MC-function-limit-is-value
+    hints:
+      - 'חזרו לשיעור 3.6: הגבול קיים אם ורק אם שני הגבולות החד-צדדיים קיימים ושווים; ולשיעור 3.3: הערך בנקודה לא משנה.'
+
+  - id: Q-3-review-04
+    type: numeric
+    objectives: [OBJ-3.5-2]
+    level: basic
+    prompt: >-
+      חשבו את $\displaystyle\lim_{x\to0}\frac{\tan 2x}{x}$.
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac{\tan2x}{x}=2\cdot\frac{\sin2x}{2x}\cdot\frac{1}{\cos2x}\to2\cdot1\cdot1$.
+    wrongFeedback: >-
+      כתבו $\tan2x=\frac{\sin2x}{\cos2x}$, ודאגו שבמכנה יופיע $2x$, אותו ביטוי שבתוך הסינוס.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          חסר הגורם 2: בתוך הטנגנס $2x$ ובמכנה $x$. $\frac{\tan2x}{x}=2\cdot\frac{\tan2x}{2x}$.
+        misconception: MC-sin-kx-over-x-is-one
+      - value: 0.5
+        feedback: >-
+          הפכתם את הגורם: $\frac{\tan 2x}{x}=2\cdot\frac{\tan2x}{2x}$, לא $\frac12\cdot\frac{\tan 2x}{2x}$.
+    hints:
+      - 'חזרו לשיעור 3.5: הגבול $\frac{\sin u}{u}\to1$ דורש במכנה את אותו $u$ שבתוך הסינוס.'
+
+  - id: Q-3-review-05
+    type: mc
+    objectives: [OBJ-3.3-2]
+    level: mid
+    prompt: >-
+      בהוכחה ש-$\lim_{x\to1}(x^2+x)=2$ כותבים $|x^2+x-2|=|x-1|\cdot|x+2|$. איזו בחירה של $\delta$ עובדת לכל
+      $\varepsilon>0$?
+    choices:
+      - text: '$\delta=\min\left(1,\frac{\varepsilon}{4}\right)$'
+        correct: true
+        feedback: >-
+          נכון. $|x-1|<1$ נותן $0<x<2$, ולכן $|x+2|<4$; ואז $|x^2+x-2|<\frac{\varepsilon}{4}\cdot4=\varepsilon$.
+      - text: '$\delta=\frac{\varepsilon}{3}$'
+        feedback: >-
+          ליד 1 אמנם $|x+2|\approx3$, אבל בלי לחסום את $|x-1|$ אין שום חסם על $|x+2|$. עם $\varepsilon=30$ מקבלים
+          $\delta=10$, ו-$x=11$ נותן $|121+11-2|=130>30$.
+        misconception: MC-delta-forgets-local-bound
+      - text: '$\delta=\frac{\varepsilon}{|x+2|}$'
+        feedback: >-
+          $\delta$ נבחר לפני $x$ ולא יכול להיות תלוי בו. חוסמים את $|x+2|$ בסביבה קבועה של 1, ומכניסים את החסם
+          ל-$\delta$.
+        misconception: MC-delta-depends-on-x
+    hints:
+      - 'חזרו לשיעור 3.3: חסם מקומי על הגורם $|x+2|$, ו-$\delta$ שמבטיח גם אותו.'
+
+  - id: Q-3-review-06
+    type: twotier
+    objectives: [OBJ-3.2-3, OBJ-3.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם קיים $\displaystyle\lim_{x\to0}\cos\frac1x$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. כמו $\sin\frac1x$, הפונקציה עוברת בין 1 ל-$(-1)$ אינסוף פעמים בכל סביבה של 0.
+      - text: 'כן, והוא $\cos0=1$'
+        feedback: >-
+          $\frac1x$ לא שואף ל-0 כש-$x\to0$, אלא גדל בערכו המוחלט בלי הגבלה. בסדרה $y_n=\frac{1}{\pi+2n\pi}$ מקבלים
+          $\cos\frac{1}{y_n}=-1$.
+        misconception: MC-sin-recip-few-oscillations
+    reasons:
+      - text: '$x_n=\frac{1}{2n\pi}$ נותנת $\cos(2n\pi)=1$, ו-$y_n=\frac{1}{\pi+2n\pi}$ נותנת $\cos(\pi+2n\pi)=-1$'
+        correct: true
+        feedback: >-
+          בדיוק: שתי סדרות ששואפות ל-0, שונות מ-0, עם גבולות שונים של ערכי הפונקציה. לפי היינה אין גבול.
+      - text: 'הסדרה $x_n=\frac{1}{2n\pi}$ נותנת 1, ולכן הגבול 1'
+        feedback: >-
+          סדרה אחת לא קובעת גבול. צריך $f(x_n)\to L$ לכל סדרה, ו-$y_n=\frac{1}{\pi+2n\pi}$ נותנת $(-1)$.
+        misconception: MC-heine-some-sequences
+      - text: 'ככל ש-$x$ קטן, $\cos\frac1x$ מתייצב'
+        feedback: >-
+          להפך: ככל ש-$x$ קטן, $\frac1x$ עובר מחזורים שלמים של הקוסינוס על קטעים קצרים יותר ויותר של $x$.
+        misconception: MC-sin-recip-few-oscillations
+    hints:
+      - 'חזרו לשיעור 3.4: שתי סדרות ששואפות ל-0, עם גבולות שונים של ערכי הפונקציה. ולשיעור 3.2: היכן $\cos\frac1x$ שווה ל-1 ול-$(-1)$?'
+
+  - id: Q-3-review-07
+    type: twotier
+    objectives: [OBJ-3.1-2, OBJ-3.6-2, OBJ-3.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f:\mathbb{R}\to\mathbb{R}$ מחזורית ואינה קבועה. האם ייתכן ש-$\lim_{x\to\infty}f(x)$ קיים?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. מחזוריות חוזרת על כל ערך שוב ושוב, עד אינסוף.
+      - text: כן, ייתכן
+        feedback: >-
+          אם $f(x_1)\neq f(x_2)$ ו-$T$ מחזור, הסדרות $x_1+nT$ ו-$x_2+nT$ שואפות לאינסוף, ועליהן $f$ קבועה ושווה
+          ל-$f(x_1)$ ול-$f(x_2)$. שני גבולות שונים.
+        misconception: MC-integer-points-limit-at-infinity
+    reasons:
+      - text: 'יש $x_1,x_2$ עם $f(x_1)\neq f(x_2)$; לאורך $x_1+nT$ ו-$x_2+nT$ הערכים קבועים ושונים'
+        correct: true
+        feedback: >-
+          בדיוק. זו הגדרת היינה באינסוף: לכל סדרה $x_n\to\infty$ צריך $f(x_n)\to L$, וכאן שתי סדרות נותנות שני
+          ערכים שונים.
+      - text: 'הסדרה $f(nT)=f(0)$ קבועה, ולכן הגבול באינסוף הוא $f(0)$'
+        feedback: >-
+          סדרה אחת, כמו הנקודות $nT$, לא קובעת גבול באינסוף. $\sin x$ מקיימת $\sin(2n\pi)=0$, ואין לה גבול.
+        misconception: MC-integer-points-limit-at-infinity
+      - text: 'פונקציה מחזורית חסומה, ולכן יש לה גבול'
+        feedback: >-
+          חסימות לא גוררת התכנסות, לא בסדרות ולא בפונקציות: $\sin x$ חסומה, ואין לה גבול באינסוף.
+        misconception: MC-bounded-implies-convergent
+    hints:
+      - 'חזרו לשיעור 3.4: איך מוכיחים שגבול אינו קיים בעזרת שתי סדרות; ולשיעור 3.6: גבול באינסוף.'
+
+  - id: Q-3-review-08
+    type: mc
+    objectives: [OBJ-3.5-1, OBJ-3.5-2, OBJ-3.2-3]
+    level: mid
+    prompt: >-
+      איזה טיעון מחשב נכון את $\displaystyle\lim_{x\to0}\frac{x^2\sin\frac1x}{\sin x}$?
+    choices:
+      - text: 'כותבים $\frac{x}{\sin x}\cdot x\sin\frac1x$; שני הגורמים מתכנסים, ל-1 ול-0, ולכן הגבול $1\cdot0=0$'
+        correct: true
+        feedback: >-
+          נכון. כאן כלל המכפלה חל, כי לשני הגורמים יש גבול: $\frac{x}{\sin x}\to1$ (כלל המנה) ו-$x\sin\frac1x\to0$
+          (סנדוויץ').
+      - text: 'אין גבול, כי ל-$\sin\frac1x$ אין גבול ב-0'
+        feedback: >-
+          הגורם $\sin\frac1x$ חסום, והוא מוכפל בגורם ששואף ל-0. ביטוי כזה שואף ל-0, גם כשלגורם החסום אין גבול.
+        misconception: MC-bounded-factor-blocks-limit
+      - text: 'לפי כלל המנה: המונה והמכנה שואפים ל-0, ולכן הגבול 1'
+        feedback: >-
+          כלל המנה לא חל כשהמכנה שואף ל-0, ו"אפס חלקי אפס" אינו 1. צריך לשנות את צורת הביטוי לפני שמשתמשים בכללים.
+        misconception: MC-indeterminate-form-value
+    hints:
+      - 'חזרו לשיעור 3.5: מתי כלל המכפלה חל, ואיך מטפלים בגורם חסום כפול גורם ששואף ל-0.'
+
+  - id: Q-3-review-09
+    type: numeric
+    objectives: [OBJ-3.6-2, OBJ-3.5-3, OBJ-3.5-2]
+    level: mid
+    prompt: >-
+      חשבו את $\displaystyle\lim_{x\to\infty}x\sin\frac1x$.
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. מציבים $t=\frac1x$: כש-$x\to\infty$, $t\to0^+$ ו-$t\neq0$, ולכן $x\sin\frac1x=\frac{\sin t}{t}\to1$. התנאי של
+      גבול ההרכבה ($t\neq0$) מתקיים.
+    wrongFeedback: >-
+      הציבו $t=\frac1x$, ובדקו לאן $t$ שואף ואיזה ביטוי מתקבל.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $\sin\frac1x\to0$, אבל $x\to\infty$, ו"אינסוף כפול אפס" הוא צורה לא מוגדרת, לא 0. אחרי ההצבה $t=\frac1x$
+          מקבלים $\frac{\sin t}{t}$.
+        misconception: MC-indeterminate-form-value
+    hints:
+      - 'חזרו לשיעור 3.5: גבול של הרכבה. ולשיעור 3.6: גבול באינסוף. מה קורה ל-$\frac1x$ כש-$x\to\infty$?'
+
+  - id: Q-3-review-10
+    type: twotier
+    objectives: [OBJ-3.6-3, OBJ-3.6-2, OBJ-3.1-2, OBJ-1.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f:\mathbb{R}\to\mathbb{R}$ עולה וחסומה מלעיל. האם בהכרח קיים $\lim_{x\to\infty}f(x)$?
+    choices:
+      - text: 'כן, והוא $\sup\{f(x):x\in\mathbb{R}\}$'
+        correct: true
+        feedback: >-
+          נכון. זו אותה הוכחה כמו לסדרה עולה וחסומה: הסופרמום $s$ קיים, לכל $\varepsilon$ יש $x_0$ עם $f(x_0)>s-\varepsilon$,
+          ולכל $x>x_0$: $s-\varepsilon<f(x_0)\le f(x)\le s$.
+      - text: לא בהכרח
+        feedback: >-
+          מונוטוניות וחסימות יחד מספיקות. דוגמאות כמו $\sin x$, שחסומה ואין לה גבול, אינן מונוטוניות.
+        misconception: MC-bounded-attains-bounds
+    reasons:
+      - text: 'הסופרמום קיים, והמונוטוניות מעבירה את הקרבה אליו מנקודה אחת $x_0$ לכל $x>x_0$'
+        correct: true
+        feedback: >-
+          בדיוק. האפיון של הסופרמום עם אפסילון (שיעור 1.4) נותן את $x_0$, והמונוטוניות עושה את השאר.
+      - text: 'הסופרמום לא בהכרח מתקבל, ולכן אין לאן לשאוף'
+        feedback: >-
+          הגבול לא חייב להיות ערך של $f$. $\frac{x}{1+|x|}$ עולה, חסומה ב-1, לא מקבלת את 1, ושואפת ל-1 באינסוף.
+        misconception: MC-bounded-attains-bounds
+      - text: 'פונקציה עולה שואפת לאינסוף'
+        feedback: >-
+          עולה לא אומר לא חסומה: $\frac{x}{1+|x|}$ עולה וכל ערכיה קטנים מ-1.
+        misconception: MC-increasing-means-unbounded
+    hints:
+      - 'חזרו לשיעור 3.6: ההוכחה שלפונקציה מונוטונית יש גבולות חד-צדדיים, ולשיעור 1.4: האפיון של הסופרמום.'
+
+  - id: Q-3-review-11
+    type: rank
+    objectives: [OBJ-3.3-3, OBJ-3.2-3, OBJ-1.6-2]
+    level: exam
+    prompt: >-
+      הוכיחו מהגדרת קושי שלפונקציית דיריכלה $D$ אין גבול באף נקודה $a$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: assume
+        label: 'נניח בשלילה ש-$\lim_{x\to a}D(x)=L$ עבור $a$ ו-$L$ כלשהם.'
+      - id: eps
+        label: 'ניקח $\varepsilon=\frac12$, ויהי $\delta>0$ שההגדרה מבטיחה עבורו.'
+      - id: dense
+        label: 'לפי הצפיפות (שיעור 1.6) יש בקטע $(a,a+\delta)$ מספר רציונלי $q$ ומספר אי-רציונלי $r$.'
+      - id: both
+        label: 'שניהם מקיימים $0<|x-a|<\delta$, ולכן $|1-L|<\frac12$ וגם $|0-L|<\frac12$.'
+      - id: contra
+        label: 'לפי אי-שוויון המשולש $1=|1-0|\le|1-L|+|L-0|<1$, סתירה. לכן אין גבול ב-$a$.'
+    order: [assume, eps, dense, both, contra]
+    correctFeedback: >-
+      נכון. אותה הוכחה בשפת היינה: סדרת רציונליים וסדרת אי-רציונליים ששואפות ל-$a$. שתי ההוכחות משתמשות באותה
+      עובדה, הצפיפות.
+    wrongFeedback: >-
+      הוכחה בשלילה מתחילה בהנחה. אחריה: $\varepsilon$ אחד מתאים, הדלתא שההנחה נותנת, שתי נקודות בתוך הסביבה,
+      וסתירה.
+    hints:
+      - 'חזרו לשיעור 3.3: שלילת הגדרת הגבול; ולשיעור 1.6: בין כל שני ממשיים יש רציונלי ואי-רציונלי.'
+
+  - id: Q-3-review-12
+    type: multi
+    objectives: [OBJ-3.5-1, OBJ-3.6-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ ו-$g$ מוגדרות בסביבה מנוקבת של $a$. אילו מהטענות הבאות נכונות תמיד? סמנו את כולן.
+    choices:
+      - text: 'אם $\lim_{x\to a}f(x)=0$ ו-$g$ חסומה ליד $a$, אז $\lim_{x\to a}f(x)g(x)=0$'
+        correct: true
+        feedback: >-
+          נכון. $|f(x)g(x)|\le M|f(x)|\to0$, וסנדוויץ'. לא צריך ש-$g$ תתכנס.
+      - text: 'אם $\lim_{x\to a}|f(x)|=0$, אז $\lim_{x\to a}f(x)=0$'
+        correct: true
+        feedback: >-
+          נכון. $|f(x)-0|=\big||f(x)|-0\big|$, כך שההגדרות זהות מילה במילה.
+      - text: 'אם $\lim_{x\to a}|f(x)|=1$, אז $\lim_{x\to a}f(x)$ הוא 1 או $(-1)$'
+        feedback: >-
+          $f(x)=1$ כש-$x>a$ ו-$f(x)=-1$ כש-$x<a$: $|f|\equiv1$, אבל הגבולות החד-צדדיים של $f$ הם 1 ו-$(-1)$, ולכן אין
+          לה גבול.
+        misconception: MC-abs-limit-gives-limit
+      - text: 'אם $\lim_{x\to a}f(x)g(x)$ ו-$\lim_{x\to a}g(x)$ קיימים, אז $\lim_{x\to a}f(x)$ קיים'
+        feedback: >-
+          לא כש-$g\to0$: עם $a=0$, $f=\sin\frac1x$ ו-$g=x$, המכפלה שואפת ל-0 ו-$g$ ל-0, ול-$f$ אין גבול. (אם
+          $\lim g\neq0$ הטענה נכונה, דרך $f=\frac{fg}{g}$.)
+        misconception: MC-product-converges-factor-converges
+      - text: 'אם $\lim_{x\to a}\left(f(x)+g(x)\right)$ ו-$\lim_{x\to a}g(x)$ קיימים, אז $\lim_{x\to a}f(x)$ קיים'
+        correct: true
+        feedback: >-
+          נכון. $f=(f+g)-g$, ולפי כלל ההפרש לשני הגבולות הקיימים.
+    hints:
+      - 'חזרו לשיעור 3.5: חשבון הגבולות וכל מה שהוא דורש; ולשיעור 3.6: גבולות חד-צדדיים, למציאת דוגמה נגדית.'
+
+  - id: Q-3-review-13
+    type: twotier
+    objectives: [OBJ-3.6-2, OBJ-3.4-2, OBJ-1.6-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם קיים $\lim_{x\to\infty}\left(x-\lfloor x\rfloor\right)$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. החלק השברי חוזר על אותם ערכים בכל קטע $[n,n+1)$.
+      - text: 'כן, והוא 0'
+        feedback: >-
+          בשלמים אמנם $n-\lfloor n\rfloor=0$, אבל ב-$x=n+\frac12$ הערך $\frac12$. הנקודות השלמות אינן כל הנקודות.
+        misconception: MC-integer-points-limit-at-infinity
+    reasons:
+      - text: '$x_n=n$ נותנת 0 ו-$y_n=n+\frac12$ נותנת $\frac12$; שתיהן שואפות לאינסוף'
+        correct: true
+        feedback: >-
+          בדיוק. היינה באינסוף: שני גבולות שונים לאורך שתי סדרות ששואפות לאינסוף, ולכן אין גבול.
+      - text: 'הערך בכל שלם $n$ הוא 0, ולכן הגבול 0'
+        feedback: >-
+          הסדרה $f(n)$ רואה רק את השלמים. גבול באינסוף דורש $|f(x)-L|<\varepsilon$ לכל $x>K$, לא רק לשלמים.
+        misconception: MC-integer-points-limit-at-infinity
+      - text: 'הפונקציה חסומה בין 0 ל-1, ולכן יש לה גבול'
+        feedback: >-
+          חסימות לא גוררת התכנסות, גם לא באינסוף: החלק השברי חסום ומתנודד.
+        misconception: MC-bounded-implies-convergent
+    hints:
+      - 'חזרו לשיעור 3.4: הוכחת אי-קיום בשתי סדרות; ולשיעור 3.6: גבול באינסוף. מה הערך ב-$n$, ומה ב-$n+\frac12$?'
+
+  - id: Q-3-review-14
+    type: mc
+    objectives: [OBJ-3.5-3, OBJ-3.2-3, OBJ-3.4-2]
+    level: exam
+    prompt: >-
+      $g(x)=x\cdot D(x)$, ו-$f(y)=\frac{\sin y}{y}$ כש-$y\neq0$, $f(0)=0$. ידוע ש-$\lim_{x\to0}g(x)=0$ ו-$\lim_{y\to0}f(y)=1$.
+      מהו $\lim_{x\to0}f(g(x))$?
+    choices:
+      - text: 'הגבול אינו קיים'
+        correct: true
+        feedback: >-
+          נכון. ברציונליים $x\neq0$: $g(x)=x$ ו-$f(g(x))=\frac{\sin x}{x}\to1$. באי-רציונליים $g(x)=0$ ו-$f(g(x))=f(0)=0$.
+          שתי סדרות, שני גבולות. התנאי של גבול ההרכבה נכשל: $g(x)=0$ באי-רציונליים קרובים ל-0 כרצוננו, ו-$f(0)\neq1$.
+      - text: '1'
+        feedback: >-
+          זו הצבה בלי לבדוק את התנאי. $g(x)=0$ בכל אי-רציונלי, ושם $f(g(x))=f(0)=0$, לא קרוב ל-1.
+        misconception: MC-composition-limit-no-condition
+      - text: '0'
+        feedback: >-
+          $f(0)=0$ הוא ערך בנקודה, לא הגבול. ברציונליים $f(g(x))=\frac{\sin x}{x}$, קרוב ל-1.
+        misconception: MC-function-limit-is-value
+    hints:
+      - 'חזרו לשיעור 3.5: גבול של הרכבה והתנאי שהוא דורש. ולשיעור 3.4: בדקו בנפרד רציונליים ואי-רציונליים.'

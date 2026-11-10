@@ -1,0 +1,320 @@
+# Lesson 3.2 — the elementary functions, and the pathological ones the course returns to.
+# Objectives (src/course.ts):
+#   OBJ-3.2-1  polynomials, rational functions, the trigonometric functions and their inverses, and their properties
+#   OBJ-3.2-2  trigonometric identities and the inequality sin x < x for x > 0
+#   OBJ-3.2-3  the "pathological" functions: Dirichlet's, Riemann's, and sin(1/x)
+# Conventions used in every bank of chapter 3:
+#   D(x) = 1 for rational x, 0 for irrational x (Dirichlet's function)
+#   R(p/q) = 1/q for p/q in lowest terms with q > 0, R(0) = 1, R(x) = 0 for irrational x (Riemann's function)
+chapter: 3
+questions:
+  - id: Q-3.2-period
+    type: mc
+    objectives: [OBJ-3.2-1]
+    level: basic
+    prompt: >-
+      מהו המחזור החיובי הקטן ביותר של $f(x)=\sin(3x)$?
+    choices:
+      - text: '$\frac{2\pi}{3}$'
+        correct: true
+        feedback: >-
+          נכון. $\sin(3(x+T))=\sin(3x+3T)$, וזה שווה ל-$\sin(3x)$ לכל $x$ בדיוק כש-$3T$ הוא כפולה של $2\pi$.
+          הקטן החיובי הוא $3T=2\pi$, כלומר $T=\frac{2\pi}{3}$.
+      - text: '$6\pi$'
+        feedback: >-
+          $6\pi$ אכן מחזור (כפולה של $\frac{2\pi}{3}$), אבל לא הקטן ביותר. הכפל ב-3 בתוך הסינוס **מכווץ** את
+          הגרף, ולכן המחזור קטן פי 3, לא גדל.
+        misconception: MC-period-scaling-direction
+      - text: '$2\pi$'
+        feedback: >-
+          $2\pi$ הוא מחזור של $\sin(3x)$, אבל לא הקטן ביותר: כבר $T=\frac{2\pi}{3}$ נותן $\sin(3x+2\pi)=\sin(3x)$.
+          המקדם של $x$ משנה את המחזור.
+        misconception: MC-period-scaling-direction
+
+  - id: Q-3.2-arcsin
+    type: numeric
+    objectives: [OBJ-3.2-1]
+    level: mid
+    prompt: >-
+      כתבו את $\arcsin\left(\sin\frac{5\pi}{6}\right)$ בצורה $k\pi$. מהו $k$?
+    answer: 0.16666666666666666
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $k=\frac16$. $\sin\frac{5\pi}{6}=\frac12$, ו-$\arcsin\frac12$ הוא המספר היחיד בקטע
+      $[-\frac{\pi}{2},\frac{\pi}{2}]$ שהסינוס שלו $\frac12$, כלומר $\frac{\pi}{6}$.
+    wrongFeedback: >-
+      הערכים של $\arcsin$ תמיד בקטע $[-\frac{\pi}{2},\frac{\pi}{2}]$. חשבו קודם את $\sin\frac{5\pi}{6}$, ואז חפשו
+      בקטע הזה את הזווית עם אותו סינוס.
+    commonWrong:
+      - value: 0.8333333333333334
+        feedback: >-
+          $\frac{5\pi}{6}$ אינו בקטע $[-\frac{\pi}{2},\frac{\pi}{2}]$, ולכן הוא לא יכול להיות ערך של $\arcsin$.
+          $\arcsin(\sin x)=x$ רק כש-$x$ בקטע הזה.
+        misconception: MC-arcsin-sin-cancel
+      - value: 0.5
+        feedback: >-
+          $\frac12$ הוא $\sin\frac{5\pi}{6}$, כלומר הערך שמכניסים ל-$\arcsin$, לא התוצאה. השאלה מבקשת את $k$
+          כך שהתוצאה היא $k\pi$.
+
+  - id: Q-3.2-poly-roots
+    type: twotier
+    objectives: [OBJ-3.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם לכל פולינום ממעלה 3 (עם מקדמים ממשיים) יש בדיוק שלושה שורשים ממשיים?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. יש לכל היותר שלושה.
+      - text: כן
+        feedback: >-
+          לפולינום ממעלה $n$ יש **לכל היותר** $n$ שורשים ממשיים. $x^3+x=x(x^2+1)$ מתאפס רק ב-0, כי
+          $x^2+1\ge1$.
+        misconception: MC-poly-exactly-n-roots
+    reasons:
+      - text: 'ל-$x^3+x=x(x^2+1)$ יש שורש ממשי אחד בלבד, כי $x^2+1>0$ לכל $x$'
+        correct: true
+        feedback: >-
+          בדיוק. דוגמה נגדית אחת מספיקה. מה שנכון הוא החסם: כל שורש $a$ נותן פירוק $p(x)=(x-a)q(x)$ עם $q$ ממעלה
+          נמוכה ב-1, ולכן יש לכל היותר $n$ שורשים.
+      - text: 'לפולינום ממעלה אי-זוגית יש שורש, ולכן כל שורשיו ממשיים'
+        feedback: >-
+          החלק הראשון נכון (יוכח בשיעור 4.3 ממשפט ערך הביניים), אבל הוא מבטיח שורש **אחד**, לא את כולם.
+          ל-$x^3+x$ יש בדיוק שורש ממשי אחד.
+        misconception: MC-poly-exactly-n-roots
+      - text: 'כל פולינום ממעלה $n$ אפשר לפרק ל-$n$ גורמים לינאריים ממשיים'
+        feedback: >-
+          $x^2+1$ אינו מתפרק לגורמים לינאריים ממשיים: אילו $x^2+1=(x-a)(x-b)$, אז $a$ היה שורש, אבל
+          $a^2+1\ge1$.
+        misconception: MC-poly-exactly-n-roots
+
+  - id: Q-3.2-sin-le-x
+    type: twotier
+    objectives: [OBJ-3.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם $\sin x\le x$ לכל $x\in\mathbb{R}$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. אי-השוויון נכון רק עבור $x\ge0$.
+      - text: כן
+        feedback: >-
+          ב-$x=-1$: $\sin(-1)\approx-0.841$, וזה **גדול** מ-$(-1)$. הסינוס אי-זוגי, ולכן עבור $x<0$ אי-השוויון
+          מתהפך.
+        misconception: MC-sinx-le-x-everywhere
+    reasons:
+      - text: 'עבור $x=-1$ מתקיים $\sin(-1)=-\sin1>-1$, כי $\sin1<1$'
+        correct: true
+        feedback: >-
+          בדיוק. הצורה הנכונה לכל $x$ היא $|\sin x|\le|x|$: עבור $x>0$ זה $\sin x<x$ יחד עם $-\sin x<x$, ועבור
+          $x<0$ מציבים $-x$ ומשתמשים באי-הזוגיות.
+      - text: 'הגרף של $\sin$ נמצא כולו מתחת לישר $y=x$'
+        feedback: >-
+          רק מימין לראשית. משמאל לראשית הישר $y=x$ יורד למטה מהר, והסינוס, שתמיד בין $-1$ ל-1, נשאר מעליו.
+        misconception: MC-sinx-le-x-everywhere
+      - text: 'כי $|\sin x|\le|x|$, ומזה אפשר להשמיט את הערך המוחלט'
+        feedback: >-
+          $|a|\le|b|$ אינו גורר $a\le b$: $|{-1}|\le|{-2}|$, אבל $(-1)>(-2)$. הערך המוחלט הוא בדיוק מה שמכסה את
+          המקרה $x<0$.
+        misconception: MC-sinx-le-x-everywhere
+
+  - id: Q-3.2-sin-proof
+    type: rank
+    objectives: [OBJ-3.2-2]
+    level: exam
+    prompt: >-
+      הוכיחו ש-$\sin x<x$ לכל $x>0$. (הזוויות ברדיאנים; שטח של גזרה במעגל היחידה עם זווית $x$ הוא $\frac{x}{2}$.)
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: setup
+        label: 'יהי $0<x<\frac{\pi}{2}$. במעגל היחידה סביב $O$ ניקח $A=(1,0)$ ו-$B=(\cos x,\sin x)$.'
+      - id: triangle
+        label: 'למשולש $OAB$ יש בסיס $OA=1$ וגובה $\sin x$, ולכן שטחו $\frac12\sin x$.'
+      - id: sector
+        label: 'לגזרה $OAB$ של המעגל יש שטח $\frac{x}{2}$.'
+      - id: compare
+        label: 'המשולש מוכל בגזרה ושטחו קטן ממש משטחה, ולכן $\frac12\sin x<\frac{x}{2}$, כלומר $\sin x<x$.'
+      - id: large
+        label: 'עבור $x\ge\frac{\pi}{2}$: $\sin x\le1<\frac{\pi}{2}\le x$. לכן $\sin x<x$ לכל $x>0$.'
+    order: [setup, triangle, sector, compare, large]
+    correctFeedback: >-
+      נכון. ההוכחה הגאומטרית מכסה רק זוויות חדות; את השאר סוגר החסם $\sin x\le1$, כי $\frac{\pi}{2}>1$. מכאן ומאי-הזוגיות
+      של $\sin$ נובע $|\sin x|\le|x|$ לכל $x$.
+    wrongFeedback: >-
+      קודם בונים את הציור (נקודות), אחר כך מחשבים שני שטחים, משווים אותם, ובסוף מטפלים בזוויות שהציור לא כיסה.
+
+  - id: Q-3.2-sin2a
+    type: numeric
+    objectives: [OBJ-3.2-2]
+    level: basic
+    prompt: >-
+      ידוע ש-$\sin a=\frac35$ ו-$\frac{\pi}{2}<a<\pi$. חשבו את $\sin(2a)$.
+    answer: -0.96
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\cos^2a=1-\frac{9}{25}=\frac{16}{25}$, ובקטע $(\frac{\pi}{2},\pi)$ הקוסינוס שלילי, ולכן
+      $\cos a=-\frac45$. מכאן $\sin 2a=2\sin a\cos a=2\cdot\frac35\cdot(-\frac45)=-\frac{24}{25}$.
+    wrongFeedback: >-
+      השתמשו ב-$\sin 2a=2\sin a\cos a$. את $\cos a$ מוצאים מ-$\sin^2a+\cos^2a=1$, ואת הסימן שלו קובע הקטע שבו $a$
+      נמצא.
+    commonWrong:
+      - value: 0.96
+        feedback: >-
+          לקחתם $\cos a=\frac45$. כש-$\frac{\pi}{2}<a<\pi$ הנקודה על מעגל היחידה ברביע השני, והקוסינוס שלילי.
+      - value: 1.2
+        feedback: >-
+          חישבתם $2\sin a$. הסינוס אינו לינארי: $\sin 2a=2\sin a\cos a$, ולא $2\sin a$.
+        misconception: MC-sin-additive
+
+  - id: Q-3.2-sin-diff
+    type: mc
+    objectives: [OBJ-3.2-2]
+    level: exam
+    prompt: >-
+      רוצים להוכיח ש-$|\sin x-\sin y|\le|x-y|$ לכל $x,y$. איזה צעד מוביל להוכחה נכונה?
+    choices:
+      - text: >-
+          לכתוב $\sin x-\sin y=2\cos\frac{x+y}{2}\sin\frac{x-y}{2}$, ואז להשתמש ב-$|\cos t|\le1$ וב-$|\sin t|\le|t|$
+        correct: true
+        feedback: >-
+          נכון. מקבלים
+          $|\sin x-\sin y|\le2\cdot1\cdot\left|\frac{x-y}{2}\right|=|x-y|$. האי-שוויון הזה יחזור בשיעור 3.5:
+          ממנו נובע ש-$\sin x\to\sin a$ כש-$x\to a$.
+      - text: 'לכתוב $\sin x-\sin y=\sin(x-y)$, ואז להשתמש ב-$|\sin t|\le|t|$'
+        feedback: >-
+          הזהות שגויה: עם $x=\frac{\pi}{2}$ ו-$y=-\frac{\pi}{2}$ האגף השמאלי הוא $1-(-1)=2$ והימני $\sin\pi=0$.
+          הסינוס אינו לינארי.
+        misconception: MC-sin-additive
+      - text: 'לחסר את אי-השוויונות $\sin x\le x$ ו-$\sin y\le y$ ולקבל $\sin x-\sin y\le x-y$'
+        feedback: >-
+          אי-שוויונות מותר לחבר, לא לחסר. עם $x=\frac{\pi}{2}$ ו-$y=\pi$ מקבלים $\sin x-\sin y=1$, וזה **לא**
+          קטן מ-$x-y=-\frac{\pi}{2}$.
+        misconception: MC-subtract-inequalities
+
+  - id: Q-3.2-dirichlet
+    type: numeric
+    objectives: [OBJ-3.2-3]
+    level: basic
+    prompt: >-
+      פונקציית דיריכלה מוגדרת על ידי $D(x)=1$ כש-$x$ רציונלי ו-$D(x)=0$ כש-$x$ אי-רציונלי. חשבו את
+      $D(\sqrt2)+D(0.25)+D(D(\pi))$.
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $D(\sqrt2)=0$, $D(0.25)=1$ כי $0.25=\frac14$, ו-$D(\pi)=0$, כך ש-$D(D(\pi))=D(0)=1$ (אפס רציונלי).
+      הסכום $0+1+1=2$.
+    wrongFeedback: >-
+      חשבו כל מחובר לחוד: בכל פעם שאלו רק אם המספר שבתוך $D$ רציונלי. ב-$D(D(\pi))$ חשבו קודם את הפנימי.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          את $D(D(\pi))$ צריך לחשב מבפנים החוצה: $D(\pi)=0$, ואז $D(0)=1$, כי 0 רציונלי.
+      - value: 3
+        feedback: >-
+          $\sqrt2$ אינו רציונלי, ולכן $D(\sqrt2)=0$.
+
+  - id: Q-3.2-dirichlet-period
+    type: twotier
+    objectives: [OBJ-3.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $D$ היא פונקציית דיריכלה. האם $T=\sqrt2$ הוא מחזור של $D$, כלומר $D(x+\sqrt2)=D(x)$ לכל $x$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. מחזורים של $D$ הם בדיוק הרציונליים החיוביים.
+      - text: כן
+        feedback: >-
+          בדקו ב-$x=-\sqrt2$: $D(-\sqrt2+\sqrt2)=D(0)=1$, אבל $D(-\sqrt2)=0$. נקודה אחת שבה השוויון נכשל מספיקה.
+        misconception: MC-irrational-closure-confused
+    reasons:
+      - text: 'ב-$x=-\sqrt2$: $D(x+\sqrt2)=D(0)=1$ ואילו $D(x)=0$'
+        correct: true
+        feedback: >-
+          בדיוק. לעומת זאת כל רציונלי $r>0$ **כן** מחזור: $x+r$ רציונלי אם ורק אם $x$ רציונלי. לכן ל-$D$ אין
+          מחזור חיובי קטן ביותר.
+      - text: 'אם $x$ אי-רציונלי גם $x+\sqrt2$ אי-רציונלי, ואם $x$ רציונלי גם $x+\sqrt2$ אי-רציונלי'
+        feedback: >-
+          החצי השני נכון (רציונלי ועוד אי-רציונלי הוא אי-רציונלי), ודווקא הוא מספיק כדי להפריך: ב-$x=0$ מקבלים
+          $D(\sqrt2)=0\neq1=D(0)$. החצי הראשון שגוי: $-\sqrt2+\sqrt2=0$.
+        misconception: MC-irrational-closure-confused
+      - text: 'לפונקציה שמקבלת רק שני ערכים כל מספר הוא מחזור'
+        feedback: >-
+          שני ערכים לא אומרים דבר על מחזוריות. גם $D(x+\sqrt2)$ מקבלת רק 0 ו-1, אבל לא באותם מקומות כמו $D(x)$.
+        misconception: MC-periodic-has-least-period
+
+  - id: Q-3.2-riemann
+    type: numeric
+    objectives: [OBJ-3.2-3]
+    level: mid
+    prompt: >-
+      פונקציית רימן מוגדרת על ידי $R(x)=\frac1q$ כש-$x=\frac{p}{q}$ שבר מצומצם עם $q>0$, $R(0)=1$, ו-$R(x)=0$
+      כש-$x$ אי-רציונלי. חשבו את $R\left(\frac68\right)+R(0.5)$.
+    answer: 0.75
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac68=\frac34$, ולכן $R(\frac68)=\frac14$; $0.5=\frac12$, ולכן $R(0.5)=\frac12$. הסכום $\frac34$.
+    wrongFeedback: >-
+      לפני שקוראים את המכנה, צמצמו את השבר עד הסוף. אותו מספר צריך לקבל ערך אחד, איך שלא כותבים אותו.
+    commonWrong:
+      - value: 0.625
+        feedback: >-
+          לקחתם את המכנה 8 של $\frac68$ בלי לצמצם. ההגדרה משתמשת בשבר המצומצם $\frac34$: אחרת $\frac34$ ו-$\frac68$,
+          שהם אותו מספר, היו מקבלים ערכים שונים.
+        misconception: MC-thomae-unreduced-fraction
+      - value: 0
+        feedback: >-
+          $\frac68$ ו-$0.5$ רציונליים, ולכן הערך שלהם חיובי. $R$ מתאפסת רק באי-רציונליים.
+
+  - id: Q-3.2-sin-recip
+    type: multi
+    objectives: [OBJ-3.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נתונה $f(x)=\sin\frac1x$ על $(0,1)$. אילו מהטענות הבאות נכונות? סמנו את כולן.
+    choices:
+      - text: 'לכל $\delta>0$ יש $x\in(0,\delta)$ עם $f(x)=1$'
+        correct: true
+        feedback: >-
+          נכון. $f(x)=1$ כש-$\frac1x=\frac{\pi}{2}+2k\pi$, כלומר $x=\frac{1}{\frac{\pi}{2}+2k\pi}$, ועבור $k$ גדול
+          מספיק הנקודה הזו קטנה מ-$\delta$.
+      - text: 'ל-$f$ יש אינסוף אפסים בקטע $(0,0.01)$'
+        correct: true
+        feedback: >-
+          נכון. $f\left(\frac{1}{k\pi}\right)=\sin(k\pi)=0$, ו-$\frac{1}{k\pi}<0.01$ לכל $k\ge32$ (כי $32\pi>100$).
+      - text: '$f$ חסומה'
+        correct: true
+        feedback: נכון. $|\sin t|\le1$ לכל $t$, ולכן $|f(x)|\le1$.
+      - text: 'יש $\delta>0$ כך של-$f$ אין אפסים בקטע $(0,\delta)$'
+        feedback: >-
+          לכל $\delta>0$ יש $k$ עם $\frac{1}{k\pi}<\delta$, והנקודה הזו היא אפס של $f$. כש-$x$ עובר בקטע
+          $(0,\delta)$, הביטוי $\frac1x$ עובר על אינסוף מחזורים של הסינוס.
+        misconception: MC-sin-recip-few-oscillations
+
+  - id: Q-3.2-xsin
+    type: multi
+    objectives: [OBJ-3.2-2, OBJ-3.2-3]
+    level: mid
+    prompt: >-
+      $g(x)=x\sin\frac1x$ עבור $x\neq0$. אילו מהטענות הבאות נכונות **לכל** $x\neq0$? סמנו את כולן.
+    choices:
+      - text: '$|g(x)|\le|x|$'
+        correct: true
+        feedback: >-
+          נכון. $|g(x)|=|x|\cdot\left|\sin\frac1x\right|\le|x|\cdot1$. זה מה שמבדיל את $g$ מ-$\sin\frac1x$: התנודות
+          שלה נלחצות בין הישרים $y=|x|$ ו-$y=-|x|$.
+      - text: '$|g(x)|\le1$'
+        correct: true
+        feedback: >-
+          נכון, וזה פחות מובן מאליו. לפי $|\sin t|\le|t|$ עם $t=\frac1x$: $\left|\sin\frac1x\right|\le\frac{1}{|x|}$,
+          ולכן $|g(x)|\le|x|\cdot\frac{1}{|x|}=1$.
+      - text: '$g(x)\le x$'
+        feedback: >-
+          ב-$x=-1$: $g(-1)=(-1)\sin(-1)=\sin1\approx0.84$, וזה גדול מ-$(-1)$. בלי ערך מוחלט החסם נכשל
+          עבור $x$ שלילי.
+        misconception: MC-sinx-le-x-everywhere

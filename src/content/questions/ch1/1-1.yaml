@@ -1,0 +1,343 @@
+# Lesson 1.1 — the field axioms.
+# Objectives (src/course.ts):
+#   OBJ-1.1-1  list the field axioms and explain the role of each
+#   OBJ-1.1-2  prove from the axioms alone: uniqueness of zero and of the inverse, a·0 = 0
+#   OBJ-1.1-3  tell fields from non-fields and name the axiom that fails
+chapter: 1
+questions:
+  - id: Q-1.1-which-axiom
+    type: mc
+    objectives: [OBJ-1.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בהוכחה ש-$a\cdot 0=0$ בכל שדה כותבים
+      $$a\cdot 0 = a\cdot(0+0) = a\cdot 0 + a\cdot 0.$$
+      איזו אקסיומה מצדיקה את השוויון **השני**?
+    choices:
+      - text: חוק הפילוג
+        correct: true
+        feedback: >-
+          נכון. $a\cdot(0+0) = a\cdot 0 + a\cdot 0$ הוא חוק הפילוג $a(b+c)=ab+ac$ עם $b=c=0$. זו האקסיומה
+          היחידה שמקשרת בין החיבור לכפל, ולכן כל טענה על $a\cdot 0$ חייבת לעבור דרכה.
+      - text: קיום איבר ניטרלי לחיבור
+        feedback: >-
+          האקסיומה הזו ($x+0=x$, ובפרט $0+0=0$) מצדיקה את השוויון **הראשון**, שבו מחליפים את $0$ ב-$0+0$.
+          השוויון השני פותח מכפלה של סכום, וזה חוק הפילוג.
+        misconception: MC-axiom-misattributed
+      - text: חילופיות הכפל
+        feedback: >-
+          חילופיות אומרת רק $xy=yx$: היא מחליפה את סדר הגורמים, אבל לא פותחת סוגריים. לפתוח $a\cdot(0+0)$
+          לשני מחוברים מותר רק בזכות חוק הפילוג.
+        misconception: MC-axiom-misattributed
+      - text: קיום נגדי
+        feedback: >-
+          הנגדי של $a\cdot 0$ נכנס רק בשלב הבא, כשמוסיפים אותו לשני האגפים כדי לקבל $0=a\cdot 0$. בשוויון
+          השני אין שום נגדי.
+        misconception: MC-axiom-misattributed
+
+  - id: Q-1.1-solve-equation
+    type: mc
+    objectives: [OBJ-1.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בכל שדה, למשוואה $a+x=b$ יש פתרון $x$. בלי איזו אקסיומה הטענה הזו עלולה להיכשל?
+    choices:
+      - text: קיום נגדי לכל איבר
+        correct: true
+        feedback: >-
+          נכון. הפתרון הוא $x=(-a)+b$, והוא קיים רק כי ל-$a$ יש נגדי. בקבוצה $\{0,1,2,\dots\}$ כל שאר
+          אקסיומות החיבור מתקיימות, ובכל זאת ל-$1+x=0$ אין בה פתרון.
+      - text: חילופיות החיבור
+        feedback: >-
+          חילופיות עוזרת לבדוק שהפתרון עובד, אבל היא לא יוצרת אותו. ב-$\{0,1,2,\dots\}$ החיבור חילופי, ולמשוואה
+          $1+x=0$ עדיין אין פתרון: חסר נגדי.
+        misconception: MC-axiom-misattributed
+      - text: חוק הפילוג
+        feedback: >-
+          המשוואה $a+x=b$ כוללת רק חיבור, וחוק הפילוג עוסק בקשר בין כפל לחיבור. מה שחסר כשאין פתרון הוא נגדי.
+        misconception: MC-axiom-misattributed
+      - text: קיום הופכי לכל איבר שונה מאפס
+        feedback: >-
+          ההופכי פותר משוואות **כפל**, כמו $a\cdot x=b$. למשוואת חיבור צריך את הנגדי $-a$.
+        misconception: MC-field-inverse-confusion
+
+  - id: Q-1.1-zero-no-inverse
+    type: twotier
+    objectives: [OBJ-1.1-1, OBJ-1.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אקסיומת ההופכי אומרת: לכל $a\neq 0$ קיים $a^{-1}$ כך ש-$a\cdot a^{-1}=1$. אפשר היה למחוק את ההחרגה
+      $a\neq 0$ ולדרוש הופכי גם לאפס, ועדיין לקבל אקסיומות שיש להן מודל (למשל הממשיים)?
+    choices:
+      - text: לא. עם הדרישה הזו אין אף שדה
+        correct: true
+        feedback: >-
+          נכון. מהאקסיומות נובע ש-$0\cdot x=0$ לכל $x$, ולכן $0\cdot 0^{-1}$ היה צריך להיות גם $0$ וגם $1$,
+          בסתירה לאקסיומה $0\neq 1$.
+      - text: כן. פשוט מגדירים את ההופכי של אפס להיות אינסוף
+        feedback: >-
+          אינסוף אינו איבר של השדה, וגם אילו הוספנו אותו, האקסיומות היו מחייבות $0\cdot\infty = 0$ (כי
+          $0\cdot x=0$ לכל $x$), ולא $1$. "אחד חלקי אפס שווה אינסוף" אינו חשבון בשדה.
+        misconception: MC-zero-inverse-is-infinity
+    reasons:
+      - text: 'הוכחנו מהאקסיומות ש-$0\cdot x=0$ לכל $x$, ולכן $0\cdot x=1$ אומר $0=1$'
+        correct: true
+        feedback: >-
+          בדיוק. ההחרגה $a\neq0$ אינה קישוט: בלעדיה האקסיומות סותרות זו את זו.
+      - text: ההחרגה היא רק מוסכמה, כדי שלא נצטרך לדבר על אינסוף
+        feedback: >-
+          זו לא מוסכמה אלא הכרח: דרישת הופכי לאפס, יחד עם שאר האקסיומות, מובילה לסתירה $0=1$.
+        misconception: MC-zero-inverse-is-infinity
+      - text: אי אפשר לחלק באפס כי כך למדנו בבית הספר
+        feedback: >-
+          בקורס הזה "כך למדנו" אינו נימוק. האיסור לחלק באפס הוא **משפט**: הוא נובע מ-$0\cdot x=0$, שמוכיחים
+          מחוק הפילוג.
+        misconception: MC-field-fact-taken-as-axiom
+
+  - id: Q-1.1-times-zero
+    type: rank
+    objectives: [OBJ-1.1-2]
+    level: mid
+    prompt: הוכיחו מאקסיומות השדה בלבד ש-$a\cdot 0=0$ לכל $a$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: 'כי $0+0=0$ (איבר ניטרלי לחיבור), מתקיים $a\cdot 0 = a\cdot (0+0)$'
+      - id: s2
+        label: 'לפי חוק הפילוג, $a\cdot(0+0) = a\cdot 0 + a\cdot 0$, ולכן $a\cdot 0 = a\cdot 0 + a\cdot 0$'
+      - id: s3
+        label: 'מוסיפים לשני האגפים את הנגדי $-(a\cdot 0)$'
+      - id: s4
+        label: 'באגף שמאל מתקבל $0$; באגף ימין, לפי הקיבוציות, $a\cdot 0 + \bigl(a\cdot 0 + (-(a\cdot 0))\bigr) = a\cdot 0 + 0 = a\cdot 0$'
+      - id: s5
+        label: 'לכן $0 = a\cdot 0$'
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. שימו לב לרעיון: מקבלים שוויון מהצורה $x = x + x$ ומבטלים $x$ אחד בעזרת הנגדי שלו.
+    wrongFeedback: >-
+      התחילו ממה שמותר לכתוב בלי שום הכנה: $0=0+0$. רק אחרי שיש באגף ימין שני עותקים של $a\cdot 0$ יש מה
+      לבטל בעזרת הנגדי.
+
+  - id: Q-1.1-theorem-steps
+    type: multi
+    objectives: [OBJ-1.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הנה הוכחה ש-$(-1)\cdot a = -a$:
+
+      (1) $a + (-1)a = 1\cdot a + (-1)\cdot a$ (איבר ניטרלי לכפל)
+
+      (2) $= (1+(-1))\cdot a$ (חוק הפילוג וחילופיות הכפל)
+
+      (3) $= 0\cdot a$ (הנגדי של 1)
+
+      (4) $= 0$
+
+      (5) לכן $(-1)a$ הוא נגדי של $a$, ומכאן $(-1)a = -a$.
+
+      באילו שלבים משתמשים בטענה **שהוכחה** קודם, ולא באקסיומה? סמנו את כולם.
+    choices:
+      - text: שלב (4)
+        correct: true
+        feedback: >-
+          נכון. $0\cdot a = 0$ אינה אקסיומה: הוכחנו אותה מחוק הפילוג ומהנגדי.
+      - text: שלב (5)
+        correct: true
+        feedback: >-
+          נכון. מ-"$(-1)a$ הוא נגדי של $a$" נובע $(-1)a=-a$ רק בזכות **יחידות** הנגדי, שהיא משפט: אילו היו
+          ל-$a$ שני נגדיים, הסימן $-a$ לא היה מוגדר.
+      - text: שלב (1)
+        feedback: >-
+          $1\cdot a=a$ היא אקסיומה (קיום איבר ניטרלי לכפל). כאן פשוט כותבים את $a$ בצורה $1\cdot a$.
+        misconception: MC-field-fact-taken-as-axiom
+      - text: שלב (3)
+        feedback: >-
+          $1+(-1)=0$ היא בדיוק אקסיומת הנגדי, עבור האיבר $1$.
+        misconception: MC-field-fact-taken-as-axiom
+
+  - id: Q-1.1-zero-product
+    type: twotier
+    objectives: [OBJ-1.1-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      טענה: בכל שדה, אם $ab=0$ אז $a=0$ או $b=0$. האם הטענה נכונה?
+    choices:
+      - text: נכונה
+        correct: true
+        feedback: >-
+          נכון. זו תכונה של כל שדה, ומוכיחים אותה מהאקסיומות ומ-$x\cdot 0 = 0$.
+      - text: לא נכונה
+        feedback: >-
+          הדוגמאות ה"נגדיות" שמוכרות לכם, כמו $2\cdot 3=0$ בחשבון מודולו 6, באות ממבנים שאינם שדות. בשדה
+          הטענה נכונה תמיד.
+        misconception: MC-zn-always-field
+    reasons:
+      - text: 'אם $a\neq0$, כופלים ב-$a^{-1}$: $b = a^{-1}(ab) = a^{-1}\cdot 0 = 0$'
+        correct: true
+        feedback: >-
+          בדיוק. מחלקים למקרים: אם $a=0$ סיימנו; אחרת יש ל-$a$ הופכי, ושימוש בקיבוציות ובטענה $x\cdot0=0$
+          נותן $b=0$.
+      - text: כך זה במספרים הממשיים שאנחנו מכירים, ולכן כך זה בכל שדה
+        feedback: >-
+          שדה הוא כל מבנה שמקיים את האקסיומות, וגם ב-$\mathbb{R}$ עצמו הטענה דורשת הוכחה. "כך זה במספרים
+          המוכרים" אינו נימוק לשום שדה.
+        misconception: MC-field-fact-taken-as-axiom
+      - text: 'בחשבון מודולו 6 מתקיים $2\cdot3=0$, ולכן הטענה לא נכונה'
+        feedback: >-
+          החשבון מודולו 6 אינו שדה: ל-$2$ אין בו הופכי (אילו $2x=1$, אז $3=3\cdot 2x = 0\cdot x = 0$). הדוגמה
+          לא אומרת דבר על שדות.
+        misconception: MC-zn-always-field
+
+  - id: Q-1.1-integers
+    type: mc
+    objectives: [OBJ-1.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\mathbb{Z}$ עם החיבור והכפל הרגילים אינו שדה. איזו אקסיומה נכשלת?
+    choices:
+      - text: קיום הופכי לכל איבר שונה מאפס
+        correct: true
+        feedback: >-
+          נכון. ל-$2$ אין הופכי ב-$\mathbb{Z}$: אין שלם $x$ עם $2x=1$. כל שאר האקסיומות מתקיימות.
+      - text: אף אחת; $\mathbb{Z}$ הוא שדה כי סכום ומכפלה של שלמים הם שלמים
+        feedback: >-
+          סגירות לחיבור ולכפל היא רק נקודת המוצא. שדה דורש גם נגדי לכל איבר והופכי לכל איבר שונה מאפס, ו-$2$
+          אין לו הופכי שלם.
+        misconception: MC-field-closure-enough
+      - text: קיום נגדי לכל איבר
+        feedback: >-
+          לכל שלם $n$ יש נגדי שלם, $-n$. הבעיה היא בכפל: ל-$2$ אין הופכי.
+        misconception: MC-field-inverse-confusion
+      - text: חוק הפילוג
+        feedback: >-
+          חוק הפילוג מתקיים ב-$\mathbb{Z}$ כמו ב-$\mathbb{R}$, כי השלמים הם חלק מהממשיים עם אותן פעולות.
+        misconception: MC-axiom-misattributed
+
+  - id: Q-1.1-zn-fields
+    type: multi
+    objectives: [OBJ-1.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\mathbb{Z}_n$ היא הקבוצה $\{0,1,\dots,n-1\}$ עם חיבור וכפל מודולו $n$ (לוקחים את השארית בחלוקה
+      ב-$n$). אילו מהבאים הם שדות? סמנו את כולם.
+    choices:
+      - text: '$\mathbb{Z}_2$'
+        correct: true
+        feedback: נכון. האיבר היחיד ששונה מאפס הוא $1$, והוא ההופכי של עצמו.
+      - text: '$\mathbb{Z}_5$'
+        correct: true
+        feedback: >-
+          נכון. $1\cdot1=1$, $2\cdot3=6=1$, $4\cdot4=16=1$: לכל איבר שונה מאפס יש הופכי.
+      - text: '$\mathbb{Z}_7$'
+        correct: true
+        feedback: >-
+          נכון. $7$ ראשוני, ולכן לכל $a\neq0$ יש הופכי (למשל $3\cdot 5=15=1$).
+      - text: '$\mathbb{Z}_4$'
+        feedback: >-
+          $2\cdot 2 = 4 = 0$. אילו היה ל-$2$ הופכי $x$, היינו מקבלים $2 = 2\cdot(2x) = (2\cdot2)x = 0$. כשיש
+          שני איברים שונים מאפס שמכפלתם אפס, המבנה אינו שדה.
+        misconception: MC-zn-always-field
+      - text: '$\mathbb{Z}_6$'
+        feedback: >-
+          $2\cdot 3 = 6 = 0$, ובשדה מכפלה של שני איברים שונים מאפס אינה אפס. בפרט ל-$2$ אין הופכי: $2x$ תמיד
+          זוגי, ולכן אף פעם לא שווה ל-$1$.
+        misconception: MC-zn-always-field
+    explanation: >-
+      $\mathbb{Z}_n$ שדה בדיוק כש-$n$ ראשוני. כש-$n=ab$ עם $1<a,b<n$, מתקיים $a\cdot b=0$, ואז ל-$a$ אין הופכי.
+
+  - id: Q-1.1-inverse-z7
+    type: numeric
+    objectives: [OBJ-1.1-3]
+    level: basic
+    prompt: >-
+      בשדה $\mathbb{Z}_7$ (חשבון מודולו 7), מהו ההופכי של $3$? כתבו מספר מ-$\{0,1,\dots,6\}$.
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $3\cdot 5=15 = 2\cdot 7+1$, כלומר $3\cdot5=1$ ב-$\mathbb{Z}_7$.
+    wrongFeedback: >-
+      חפשו $x\in\{1,\dots,6\}$ כך שהשארית של $3x$ בחלוקה ב-7 היא $1$.
+    commonWrong:
+      - value: 4
+        feedback: >-
+          $3+4=7=0$, ולכן $4$ הוא ה**נגדי** של $3$, לא ההופכי. ההופכי מקיים $3\cdot x=1$.
+        misconception: MC-field-inverse-confusion
+      - value: 0.333333
+        feedback: >-
+          $\frac13$ אינו איבר של $\mathbb{Z}_7$. ההופכי מוגדר בתוך המבנה: מחפשים איבר של $\{0,\dots,6\}$
+          שמכפלתו ב-$3$ היא $1$ מודולו 7.
+        misconception: MC-field-must-be-numbers
+
+  - id: Q-1.1-matrices
+    type: twotier
+    objectives: [OBJ-1.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם קבוצת המטריצות הממשיות מסדר $2\times 2$, עם חיבור וכפל של מטריצות, היא שדה? (איבר האפס הוא
+      מטריצת האפס, ואיבר היחידה הוא מטריצת היחידה $I$.)
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. נכשלות שתי אקסיומות של הכפל.
+      - text: כן
+        feedback: >-
+          יש אפס, יש יחידה, יש נגדי וחוק הפילוג מתקיים, אבל זה לא מספיק: כל האקסיומות צריכות להתקיים.
+        misconception: MC-field-closure-enough
+    reasons:
+      - text: >-
+          הכפל אינו חילופי, ויש מטריצות שונות מאפס בלי הופכי, למשל
+          $\begin{pmatrix}1&0\\0&0\end{pmatrix}$
+        correct: true
+        feedback: >-
+          בדיוק. מכפלת המטריצה הזו בכל מטריצה אחרת משאירה שורה שנייה של אפסים, ולכן אף פעם אינה $I$.
+      - text: 'הפעולות סגורות, יש איבר אפס, איבר יחידה ונגדי, ולכן זה שדה'
+        feedback: >-
+          רשימה חלקית של אקסיומות אינה שדה. חסרים ההופכי לכל איבר שונה מאפס והחילופיות של הכפל.
+        misconception: MC-field-closure-enough
+      - text: מטריצות אינן מספרים, ולכן הן לא יכולות להיות שדה
+        feedback: >-
+          שדה מוגדר רק על ידי האקסיומות, לא על ידי "מה הם האיברים". למשל $\mathbb{Z}_5$ הוא שדה שאיבריו
+          שאריות. המטריצות נכשלות בגלל אקסיומות מסוימות, לא בגלל צורתן.
+        misconception: MC-field-must-be-numbers
+
+  - id: Q-1.1-strange-product
+    type: twotier
+    objectives: [OBJ-1.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      על $\mathbb{R}$ מגדירים את החיבור הרגיל, וכפל חדש $a * b = 2ab$. האם $\mathbb{R}$ עם $+$ ו-$*$ הוא
+      שדה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. כל האקסיומות מתקיימות, עם איבר יחידה אחר מזה שאתם רגילים אליו.
+      - text: לא
+        feedback: >-
+          $1 * a = 2a$, ולכן $1$ אינו איבר היחידה של $*$. אבל האקסיומה דורשת רק שיהיה איבר יחידה **כלשהו**, והוא
+          קיים: $\frac12 * a = a$.
+        misconception: MC-field-usual-operations
+    reasons:
+      - text: 'איבר היחידה הוא $\frac12$, ההופכי של $a\neq0$ הוא $\frac{1}{4a}$, ושאר האקסיומות נבדקות ישירות'
+        correct: true
+        feedback: >-
+          בדיוק. $a*\frac12 = a$ ו-$a * \frac{1}{4a} = \frac12$. חילופיות וקיבוציות: $(a*b)*c = 4abc = a*(b*c)$.
+          פילוג: $a*(b+c) = 2ab+2ac = a*b + a*c$. ואיבר האפס $0$ שונה מאיבר היחידה $\frac12$.
+      - text: 'אין איבר יחידה, כי $1*a = 2a \neq a$'
+        feedback: >-
+          בודקים רק את המספר $1$, כאילו איבר היחידה חייב להיות $1$. האקסיומה דורשת קיום של איבר $e$ עם $e*a=a$
+          לכל $a$, ו-$e=\frac12$ מקיים זאת.
+        misconception: MC-field-usual-operations
+      - text: 'חוק הפילוג נכשל, כי $a*(b+c) = 2a(b+c)$ ואילו $ab+ac$ שונה מזה'
+        feedback: >-
+          את אגף ימין של חוק הפילוג צריך לחשב עם הכפל **החדש**: $a*b + a*c = 2ab+2ac = 2a(b+c)$. השוויון
+          מתקיים.
+        misconception: MC-field-usual-operations

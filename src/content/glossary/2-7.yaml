@@ -1,0 +1,23 @@
+# Terms first defined in lesson 2.7.
+- id: monotone-convergence-theorem
+  term: משפט ההתכנסות המונוטונית
+  en: monotone convergence theorem
+  definition: >-
+    סדרה עולה וחסומה מלעיל מתכנסת, וגבולה הוא $\sup\{a_n : n\in\mathbb{N}\}$. סדרה יורדת וחסומה מלרע מתכנסת,
+    וגבולה הוא $\inf\{a_n : n\in\mathbb{N}\}$. ההוכחה משתמשת באקסיומת השלמות.
+  lesson: '2.7'
+- id: fixed-point-equation
+  term: משוואת הנקודה הקבועה
+  en: fixed-point equation
+  symbol: 'L = f(L)'
+  definition: >-
+    בסדרה רקורסיבית $a_{n+1}=f(a_n)$: אם הסדרה מתכנסת ל-$L$ (ו-$f$ מאפשרת מעבר לגבול), אז $L=f(L)$. המשוואה
+    מצמצמת את המועמדים לגבול, אבל אינה מוכיחה שיש גבול.
+  lesson: '2.7'
+- id: number-e
+  term: המספר e
+  en: Euler's number e
+  symbol: 'e = \lim_{n\to\infty}\left(1+\frac1n\right)^n'
+  definition: >-
+    הגבול של הסדרה $\left(1+\frac1n\right)^n$, שעולה וחסומה על ידי 3 ולכן מתכנסת. $e\approx 2.71828$.
+  lesson: '2.7'

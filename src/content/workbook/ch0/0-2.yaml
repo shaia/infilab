@@ -1,0 +1,464 @@
+# Workbook of lesson 0.2 — statements, connectives and implication.
+# Objectives (src/course.ts):
+#   OBJ-0.2-1  truth tables of implication, equivalence, "and", "or"; why an implication with a false hypothesis is true
+#   OBJ-0.2-2  a statement, its converse, its inverse and its contrapositive; which of them are equivalent
+#   OBJ-0.2-3  "necessary condition" and "sufficient condition" in words and in symbols
+# Every truth table and equivalence below was recomputed with src/math/logic.ts (column, equivalent,
+# differingRows, falsifying); every numerical counterexample with npx tsx.
+lesson: '0.2'
+practice:
+  - id: W-0.2-01
+    level: basic
+    objectives: [OBJ-0.2-1]
+    prompt: >-
+      בנו את טבלת האמת של הפסוק $(P\Rightarrow Q)\lor(Q\Rightarrow P)$. מה מיוחד בעמודה שקיבלתם?
+    answer: >-
+      העמודה היא $\mathrm{T},\mathrm{T},\mathrm{T},\mathrm{T}$: הפסוק אמת בכל ארבע השורות.
+    solution:
+      - kind: idea
+        text: >-
+          בונים עמודה לכל גרירה, ואז את ה"או" שלהן. גרירה שקר רק בשורה שבה ההנחה אמת והמסקנה שקר, ו"או" שקר רק
+          כששני חלקיו שקר.
+      - kind: computation
+        text: >-
+          $P\Rightarrow Q$ שקר רק בשורה $P=\mathrm{T},Q=\mathrm{F}$, ולכן העמודה שלה היא
+          $\mathrm{T},\mathrm{F},\mathrm{T},\mathrm{T}$. $Q\Rightarrow P$ שקר רק בשורה $Q=\mathrm{T},P=\mathrm{F}$,
+          ולכן העמודה שלה היא $\mathrm{T},\mathrm{T},\mathrm{F},\mathrm{T}$.
+      - kind: computation
+        text: >-
+          "או" שקר רק בשורה שבה שתי העמודות $\mathrm{F}$. אין שורה כזו: בשורה 2 רק הראשונה $\mathrm{F}$, ובשורה 3 רק
+          השנייה. לכן העמודה של הפסוק היא $\mathrm{T},\mathrm{T},\mathrm{T},\mathrm{T}$.
+      - kind: check
+        text: >-
+          במילים: אם $P$ שקר, הגרירה $P\Rightarrow Q$ אמת ריקה; ואם $P$ אמת, הגרירה $Q\Rightarrow P$ אמת כי
+          המסקנה שלה אמת. בכל מקרה לפחות אחת מהן אמת.
+      - kind: result
+        text: >-
+          הפסוק אמת בכל השורות, כלומר הוא אמת תמיד, מה שלא יהיו $P$ ו-$Q$.
+
+  - id: W-0.2-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-0.2-1]
+    prompt: >-
+      קבעו אם כל פסוק אמת או שקר, ונמקו לפי טבלת האמת של הקשר.
+
+      (א) אם $\pi>4$ אז $\pi<0$.
+
+      (ב) $\sqrt2<2$ וגם $2^{10}>1000$.
+
+      (ג) אם $3^2=9$ אז $2^3=9$.
+
+      (ד) $5<3$ או $5\ne5$.
+    answer: >-
+      (א) אמת. (ב) אמת. (ג) שקר. (ד) שקר.
+    solution:
+      - kind: idea
+        text: >-
+          קובעים את ערך האמת של כל חלק, ואז קוראים את השורה המתאימה בטבלת האמת של הקשר. התוכן לא משנה.
+      - kind: step
+        text: >-
+          (א) $\pi\approx3.14$, ולכן ההנחה $\pi>4$ שקר. גרירה עם הנחה שקרית היא אמת ריקה: הפסוק **אמת**, אף שגם
+          המסקנה שקר.
+      - kind: computation
+        text: >-
+          (ב) $\sqrt2\approx1.41<2$ אמת, ו-$2^{10}=1024>1000$ אמת. "וגם" של שני פסוקי אמת הוא **אמת**.
+      - kind: step
+        text: >-
+          (ג) ההנחה $3^2=9$ אמת, והמסקנה שקר, כי $2^3=8$. זו השורה היחידה שבה גרירה שקר: הפסוק **שקר**.
+      - kind: step
+        text: >-
+          (ד) $5<3$ שקר ו-$5\ne5$ שקר. "או" של שני פסוקי שקר הוא **שקר**.
+      - kind: result
+        text: >-
+          (א) אמת, (ב) אמת, (ג) שקר, (ד) שקר. רק (ג) נמצא בשורה $\mathrm{T},\mathrm{F}$ של גרירה.
+
+  - id: W-0.2-03
+    level: basic
+    objectives: [OBJ-0.2-2]
+    prompt: >-
+      עבור $x$ ממשי נתונה הטענה "אם $x=2$ אז $x^2=4$". כתבו את ההפוכה, את הנגדית ואת הקונטרפוזיטיב שלה, וקבעו
+      אילו מארבע הטענות נכונות לכל $x$.
+    answer: >-
+      ההפוכה: אם $x^2=4$ אז $x=2$ (לא נכונה). הנגדית: אם $x\ne2$ אז $x^2\ne4$ (לא נכונה). הקונטרפוזיטיב: אם
+      $x^2\ne4$ אז $x\ne2$ (נכונה, כמו הטענה). דוגמה נגדית לשתיים: $x=-2$.
+    solution:
+      - kind: definition
+        text: >-
+          לטענה $P\Rightarrow Q$: ההפוכה $Q\Rightarrow P$, הנגדית $\neg P\Rightarrow\neg Q$, הקונטרפוזיטיב
+          $\neg Q\Rightarrow\neg P$. כאן $P$ הוא "$x=2$" ו-$Q$ הוא "$x^2=4$".
+      - kind: step
+        text: >-
+          הטענה נכונה: אם $x=2$ אז $x^2=2\cdot2=4$.
+      - kind: step
+        text: >-
+          ההפוכה, "אם $x^2=4$ אז $x=2$", לא נכונה. דוגמה נגדית: $x=-2$, שעבורו $x^2=4$, אבל $x\ne2$.
+      - kind: step
+        text: >-
+          הנגדית, "אם $x\ne2$ אז $x^2\ne4$", לא נכונה מאותה סיבה: $x=-2$ מקיים $x\ne2$ ו-$x^2=4$.
+      - kind: theorem
+        text: >-
+          הקונטרפוזיטיב, "אם $x^2\ne4$ אז $x\ne2$", שקול לטענה, ולכן נכון. (ישירות: אילו $x=2$, היה $x^2=4$.)
+      - kind: result
+        text: >-
+          נכונות: הטענה והקונטרפוזיטיב. לא נכונות: ההפוכה והנגדית, ואותה דוגמה נגדית, $x=-2$, מפריכה את שתיהן.
+
+  - id: W-0.2-04
+    level: mid
+    qualitative: true
+    objectives: [OBJ-0.2-1]
+    prompt: >-
+      כתבו את השלילה של כל פסוק בלי המילים "לא נכון ש", כך שאין שלילה לפני סוגריים.
+
+      (א) עבור מספר טבעי $n$ מסוים: אם $n$ ראשוני אז $n$ אי-זוגי.
+
+      (ב) עבור מספר ממשי $x$ מסוים: $x>0$ וגם $x<1$.
+
+      (ג) עבור מספרים ממשיים $x,y$ מסוימים: $x=0$ או $y=0$.
+
+      (ד) הטענה "לכל $n$ טבעי, אם $n$ ראשוני אז $n$ אי-זוגי" אינה נכונה. איזה $n$ מקיים את השלילה שכתבתם ב-(א)?
+    answer: >-
+      (א) $n$ ראשוני וגם $n$ זוגי. (ב) $x\le0$ או $x\ge1$. (ג) $x\ne0$ וגם $y\ne0$. (ד) $n=2$.
+    solution:
+      - kind: theorem
+        text: >-
+          $\neg(P\Rightarrow Q)\equiv P\land\neg Q$, ולפי כללי דה-מורגן $\neg(P\land Q)\equiv\neg P\lor\neg Q$ ו-
+          $\neg(P\lor Q)\equiv\neg P\land\neg Q$.
+      - kind: step
+        text: >-
+          (א) השלילה של גרירה היא "וגם": "$n$ ראשוני **וגם** $n$ אינו אי-זוגי", כלומר "$n$ ראשוני וגם $n$ זוגי". לא
+          "אם $n$ ראשוני אז $n$ זוגי": זו שוב גרירה, והיא אמת ריקה לכל $n$ שאינו ראשוני.
+      - kind: step
+        text: >-
+          (ב) השלילה של "וגם" היא "או" של השלילות. השלילה של $x>0$ היא $x\le0$, ושל $x<1$ היא $x\ge1$. לכן:
+          $x\le0$ או $x\ge1$.
+      - kind: step
+        text: >-
+          (ג) השלילה של "או" היא "וגם" של השלילות: $x\ne0$ וגם $y\ne0$.
+      - kind: check
+        text: >-
+          (ד) צריך $n$ ראשוני וזוגי. $n=2$ ראשוני וזוגי, והוא היחיד: כל זוגי אחר מתחלק ב-2 ואינו 2, ולכן אינו ראשוני.
+          ב-(ב), בדיקה עם $x=\frac12$: הפסוק אמת והשלילה שקר; עם $x=3$: הפסוק שקר והשלילה אמת.
+      - kind: result
+        text: >-
+          (א) $n$ ראשוני וגם $n$ זוגי. (ב) $x\le0$ או $x\ge1$. (ג) $x\ne0$ וגם $y\ne0$. (ד) $n=2$.
+
+  - id: W-0.2-05
+    level: mid
+    objectives: [OBJ-0.2-1]
+    prompt: >-
+      (א) הוכיחו ש-$P\Rightarrow(Q\Rightarrow R)$ שקול ל-$(P\land Q)\Rightarrow R$.
+
+      (ב) האם $P\Rightarrow(Q\Rightarrow R)$ שקול ל-$(P\Rightarrow Q)\Rightarrow R$? אם לא, מצאו שורה שמפרידה
+      ביניהם.
+    answer: >-
+      (א) שניהם שקר בדיוק כש-$P$ ו-$Q$ אמת ו-$R$ שקר. (ב) לא: בשורה $P=Q=R=\mathrm{F}$ הראשון אמת והשני שקר.
+    solution:
+      - kind: idea
+        text: >-
+          בטבלה של שלושה פסוקים יש שמונה שורות. במקום לבנות את כולן, מוצאים באילו שורות כל צד שקר: גרירה שקר רק
+          כשההנחה אמת והמסקנה שקר.
+      - kind: step
+        text: >-
+          (א) $P\Rightarrow(Q\Rightarrow R)$ שקר בדיוק כש-$P$ אמת ו-$Q\Rightarrow R$ שקר, כלומר כש-$P$ אמת, $Q$ אמת
+          ו-$R$ שקר.
+      - kind: step
+        text: >-
+          $(P\land Q)\Rightarrow R$ שקר בדיוק כש-$P\land Q$ אמת ו-$R$ שקר: שוב $P$ אמת, $Q$ אמת, $R$ שקר. שני
+          הצדדים שקר באותה שורה יחידה ואמת בשבע האחרות, ולכן הם שקולים.
+      - kind: computation
+        text: >-
+          (ב) נבדוק את השורה $P=Q=R=\mathrm{F}$. ב-$P\Rightarrow(Q\Rightarrow R)$ ההנחה $P$ שקר, ולכן הוא אמת. ב-
+          $(P\Rightarrow Q)\Rightarrow R$: $P\Rightarrow Q$ אמת (הנחה שקרית) ו-$R$ שקר, ולכן הוא שקר.
+      - kind: check
+        text: >-
+          גם השורה $P=\mathrm{F}$, $Q=\mathrm{T}$, $R=\mathrm{F}$ מפרידה, מאותה סיבה. בשתי השורות $P$ שקר: הסוגריים
+          משנים את המשמעות.
+      - kind: result
+        text: >-
+          (א) שקולים. (ב) לא שקולים; למשל בשורה $P=Q=R=\mathrm{F}$ הראשון אמת והשני שקר.
+
+  - id: W-0.2-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-0.2-2]
+    prompt: >-
+      ידוע שהטענה "אם $n$ מתחלק ב-6 אז $n$ זוגי" נכונה לכל $n$ טבעי.
+
+      (א) ידוע ש-$n=35$ אי-זוגי. מה אפשר להסיק על חלוקתו ב-6? איזו טענה שקולה הצדיקה את המסקנה?
+
+      (ב) ידוע ש-$n$ זוגי. האם אפשר להסיק ש-$n$ מתחלק ב-6? האם אפשר להסיק שאינו מתחלק ב-6?
+    answer: >-
+      (א) $35$ אינו מתחלק ב-6, לפי הקונטרפוזיטיב "אם $n$ אינו זוגי אז $n$ אינו מתחלק ב-6". (ב) אף אחד מהשניים:
+      $n=12$ זוגי ומתחלק ב-6, ו-$n=4$ זוגי ולא מתחלק ב-6.
+    solution:
+      - kind: theorem
+        text: >-
+          טענה $P\Rightarrow Q$ שקולה לקונטרפוזיטיב $\neg Q\Rightarrow\neg P$, ואינה אומרת דבר על ההפוכה
+          $Q\Rightarrow P$.
+      - kind: step
+        text: >-
+          (א) הקונטרפוזיטיב הוא "אם $n$ אינו זוגי אז $n$ אינו מתחלק ב-6", והוא נכון כי הוא שקול לטענה. $35$ אינו
+          זוגי, ולכן אינו מתחלק ב-6.
+      - kind: step
+        text: >-
+          (ב) "זוגי, ולכן מתחלק ב-6" הוא שימוש בהפוכה, "אם $n$ זוגי אז $n$ מתחלק ב-6", והיא לא נובעת מהטענה. היא גם
+          לא נכונה: $n=4$.
+      - kind: check
+        text: >-
+          גם המסקנה ההפוכה לא נובעת: $n=12$ זוגי ומתחלק ב-6. בטבלת האמת, $Q$ אמת מתאים לשתי שורות, $\mathrm{T},\mathrm{T}$
+          ו-$\mathrm{F},\mathrm{T}$, ובשתיהן הגרירה אמת. לכן ידיעה ש-$Q$ אמת לא קובעת את $P$.
+      - kind: result
+        text: >-
+          (א) $35$ אינו מתחלק ב-6 (קונטרפוזיטיב). (ב) אי אפשר להסיק דבר על $n$ זוגי: $12$ מתחלק ב-6 ו-$4$ לא.
+
+  - id: W-0.2-07
+    level: mid
+    objectives: [OBJ-0.2-3]
+    prompt: >-
+      כתבו כל משפט כגרירה בסימנים, בצורה $A\Rightarrow B$, וקבעו אם הוא נכון לכל המספרים שהוא מדבר עליהם.
+
+      (א) כדי ש-$n^2$ יהיה אי-זוגי, מספיק ש-$n$ יהיה אי-זוגי ($n$ טבעי).
+
+      (ב) תנאי הכרחי לכך ש-$x>5$ הוא ש-$x>2$ ($x$ ממשי).
+
+      (ג) $ab=0$ רק אם $a=0$ ($a,b$ ממשיים).
+    answer: >-
+      (א) $n$ אי-זוגי $\Rightarrow$ $n^2$ אי-זוגי: נכון. (ב) $x>5\Rightarrow x>2$: נכון. (ג) $ab=0\Rightarrow a=0$:
+      לא נכון ($a=1$, $b=0$).
+    solution:
+      - kind: definition
+        text: >-
+          "$A$ מספיק ל-$B$" הוא $A\Rightarrow B$. "$A$ הכרחי ל-$B$" הוא $B\Rightarrow A$. "$B$ רק אם $A$" הוא
+          $B\Rightarrow A$.
+      - kind: step
+        text: >-
+          (א) התנאי המספיק הוא "$n$ אי-זוגי", ולכן הגרירה היא "אם $n$ אי-זוגי אז $n^2$ אי-זוגי". היא נכונה: אם
+          $n=2k+1$ אז $n^2=4k^2+4k+1=2(2k^2+2k)+1$.
+      - kind: step
+        text: >-
+          (ב) "$x>2$" הוא התנאי ההכרחי ל-"$x>5$", ולכן הגרירה היא $x>5\Rightarrow x>2$: בלי $x>2$ אין $x>5$. היא
+          נכונה, כי $x>5>2$.
+      - kind: step
+        text: >-
+          (ג) "$ab=0$ רק אם $a=0$" היא $ab=0\Rightarrow a=0$. היא לא נכונה: $a=1$, $b=0$ נותנים $ab=0$ ו-$a\ne0$.
+      - kind: check
+        text: >-
+          ב-(ג) הנכון הוא "$ab=0$ רק אם $a=0$ **או** $b=0$". וב-(ב) שימו לב לכיוון: החץ הולך מהמספיק ($x>5$)
+          אל ההכרחי ($x>2$).
+      - kind: result
+        text: >-
+          (א) נכון. (ב) נכון. (ג) לא נכון.
+
+  - id: W-0.2-08
+    level: exam
+    objectives: [OBJ-0.2-1, OBJ-0.2-2]
+    prompt: >-
+      (א) הוכיחו שהפסוק $\bigl((P\Rightarrow Q)\land(Q\Rightarrow R)\bigr)\Rightarrow(P\Rightarrow R)$ אמת בכל
+      שמונה השורות של טבלת האמת שלו.
+
+      (ב) כתבו את ההפוכה של הפסוק מ-(א), כלומר $(P\Rightarrow R)\Rightarrow\bigl((P\Rightarrow Q)\land(Q\Rightarrow R)\bigr)$,
+      והראו שהיא אינה אמת בכל השורות.
+
+      (ג) הסבירו במשפט אחד מה (א) אומר על שרשרת של גרירות בהוכחה.
+    answer: >-
+      (א) הפסוק יכול להיות שקר רק כש-$P$ אמת ו-$R$ שקר, ושם ההנחה שלו שקר. (ב) בשורה $P=\mathrm{T}$,
+      $Q=\mathrm{F}$, $R=\mathrm{T}$ ההפוכה שקר. (ג) מותר לשרשר גרירות: מ-$P\Rightarrow Q$ ומ-$Q\Rightarrow R$ נובע
+      $P\Rightarrow R$.
+    solution:
+      - kind: idea
+        text: >-
+          גרירה שקרית רק כשההנחה שלה אמת והמסקנה שלה שקרית. נחלק את השורות לשני סוגים, לפי המסקנה
+          $P\Rightarrow R$, ונראה שבכל סוג הפסוק אמת.
+      - kind: step
+        text: >-
+          (א) סוג ראשון: השורות שבהן המסקנה $P\Rightarrow R$ אמת. גרירה שהמסקנה שלה אמת היא אמת, ולכן הפסוק אמיתי
+          בהן.
+      - kind: step
+        text: >-
+          סוג שני: השורות שבהן $P\Rightarrow R$ שקרית, כלומר $P$ אמת ו-$R$ שקרי. נבדוק את $Q$. אם $Q$ אמת, אז
+          $Q\Rightarrow R$ שקרית, כי $R$ שקרי. אם $Q$ שקרי, אז $P\Rightarrow Q$ שקרית, כי $P$ אמת. בשני המקרים
+          ההנחה $(P\Rightarrow Q)\land(Q\Rightarrow R)$ שקרית, ולכן הפסוק אמיתי (אמת ריקה).
+      - kind: step
+        text: >-
+          כל שורה היא מאחד משני הסוגים, ולכן הפסוק אמיתי בכל שמונה השורות.
+      - kind: computation
+        text: >-
+          (ב) בשורה $P=\mathrm{T}$, $Q=\mathrm{F}$, $R=\mathrm{T}$: $P\Rightarrow R$ אמת, אבל $P\Rightarrow Q$ שקר, ולכן
+          גם ה"וגם" שקר. ההפוכה היא גרירה מהנחה אמת למסקנה שקר: שקר.
+      - kind: check
+        text: >-
+          שורה נוספת שבה ההפוכה שקר: $P=\mathrm{F}$, $Q=\mathrm{T}$, $R=\mathrm{F}$. שם $P\Rightarrow R$ אמת ריקה,
+          ו-$Q\Rightarrow R$ שקר.
+      - kind: result
+        text: >-
+          (א) הפסוק אמת בכל השורות. (ב) ההפוכה שקר, למשל בשורה $P=\mathrm{T},Q=\mathrm{F},R=\mathrm{T}$. (ג) בהוכחה
+          מותר לשרשר: אם הוכחנו $P\Rightarrow Q$ ו-$Q\Rightarrow R$, הוכחנו $P\Rightarrow R$. ולהפך לא: מ-
+          $P\Rightarrow R$ לא נובע שכל שלב בדרך נכון.
+
+  - id: W-0.2-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-0.2-3]
+    prompt: >-
+      עבור $x$ ממשי שונה מ-0 קבעו, והוכיחו, איזה תנאי (מספיק ולא הכרחי, הכרחי ולא מספיק, הכרחי ומספיק, או אף
+      אחד מהם) הוא:
+
+      (א) "$x^2<x$" לכך ש-$x<1$.
+
+      (ב) "$x>0$" לכך ש-$\frac1x<1$.
+
+      (ג) "$x>1$" לכך ש-$\frac1x<1$.
+    answer: >-
+      (א) מספיק ולא הכרחי. (ב) לא הכרחי ולא מספיק. (ג) מספיק ולא הכרחי.
+    solution:
+      - kind: idea
+        text: >-
+          לכל סעיף בודקים שני כיוונים: מספיק פירושו "התנאי גורר את המטרה", הכרחי פירושו "המטרה גוררת את התנאי".
+          כיוון נכון מוכיחים, כיוון לא נכון מפריכים בדוגמה נגדית.
+      - kind: step
+        text: >-
+          (א) מספיק: אם $x^2<x$ אז $x(x-1)<0$, ולכן $x$ ו-$x-1$ בסימנים שונים. כיוון ש-$x-1<x$, זה אומר
+          $x-1<0<x$, ובפרט $x<1$.
+      - kind: step
+        text: >-
+          לא הכרחי: $x=-1$ מקיים $x<1$, אבל $x^2=1>-1=x$.
+      - kind: step
+        text: >-
+          (ב) לא מספיק: $x=\frac12>0$, אבל $\frac1x=2$, ו-$2<1$ שקר. לא הכרחי: $x=-1$ מקיים $\frac1x=-1<1$, אבל
+          $x<0$.
+      - kind: step
+        text: >-
+          (ג) מספיק: אם $x>1$ אז $x>0$, ומחלקים את $1<x$ ב-$x$: $\frac1x<1$. לא הכרחי: שוב $x=-1$, שעבורו
+          $\frac1x=-1<1$ ו-$x<1$.
+      - kind: step
+        text: >-
+          מה התנאי ההכרחי והמספיק ל-$\frac1x<1$? שני מקרים לפי הסימן של $x$. אם $x<0$, אז $\frac1x<0<1$, ולכן
+          $\frac1x<1$ תמיד. אם $x>0$, כפל ב-$x$ החיובי שומר על כיוון אי-השוויון: $\frac1x<1$ אם ורק אם $1<x$. לכן
+          $\frac1x<1$ אם ורק אם $x<0$ או $x>1$.
+      - kind: check
+        text: >-
+          זה מסביר את שלושת הסעיפים: "$x>1$" הוא רק חלק מ"$x<0$ או $x>1$" (מספיק ולא הכרחי), ו-"$x>0$" לא מוכל בו
+          ולא מכיל אותו (לא זה ולא זה). בדיקה מספרית: $x=-2,-\frac12,2$ מקיימים $\frac1x<1$, ו-$x=\frac12,1$ לא.
+      - kind: result
+        text: >-
+          (א) מספיק ולא הכרחי. (ב) לא הכרחי ולא מספיק. (ג) מספיק ולא הכרחי.
+
+  - id: W-0.2-10
+    level: exam
+    objectives: [OBJ-0.2-2, OBJ-0.2-3]
+    prompt: >-
+      הוכיחו: עבור $n$ טבעי, "$n$ אי-זוגי" הוא תנאי הכרחי ומספיק לכך ש-$n^2-1$ מתחלק ב-8. בכיוון אחד היעזרו
+      בקונטרפוזיטיב, ואמרו איזו טענה הוכחתם בפועל ולמה זה מספיק.
+    answer: >-
+      מספיק: $n=2k+1$ נותן $n^2-1=4k(k+1)$, ו-$k(k+1)$ זוגי. הכרחי: הקונטרפוזיטיב "אם $n$ זוגי אז $n^2-1$ אינו
+      מתחלק ב-8" נכון, כי אז $n^2-1$ אי-זוגי.
+    solution:
+      - kind: goal
+        text: >-
+          שני כיוונים. מספיק: $n$ אי-זוגי $\Rightarrow$ $n^2-1$ מתחלק ב-8. הכרחי: $n^2-1$ מתחלק ב-8 $\Rightarrow$
+          $n$ אי-זוגי.
+      - kind: idea
+        text: >-
+          את הכיוון הראשון מחשבים ישירות. בכיוון השני קשה להתחיל מ"מתחלק ב-8", ולכן מוכיחים את הקונטרפוזיטיב שלו,
+          שמתחיל מ"$n$ זוגי", ששקול לו.
+      - kind: computation
+        text: >-
+          מספיק: אם $n=2k+1$, $k\ge0$ שלם, אז $n^2-1=4k^2+4k=4k(k+1)$. אחד מ-$k$ ו-$k+1$ זוגי, ולכן $k(k+1)=2m$
+          עם $m$ שלם, ו-$n^2-1=8m$. גם המקרה $n=1$ ($k=0$) נכלל: $n^2-1=0=8\cdot0$, ו-0 מתחלק ב-8.
+      - kind: step
+        text: >-
+          הכרחי: הקונטרפוזיטיב של "אם $n^2-1$ מתחלק ב-8 אז $n$ אי-זוגי" הוא "אם $n$ זוגי אז $n^2-1$ אינו מתחלק
+          ב-8". אם $n=2k$ אז $n^2-1=4k^2-1=2(2k^2-1)+1$ אי-זוגי, ומספר אי-זוגי אינו מתחלק ב-8 (ואפילו לא ב-2).
+      - kind: theorem
+        text: >-
+          טענה שקולה לקונטרפוזיטיב שלה, ולכן הוכחת הקונטרפוזיטיב היא הוכחה של הכיוון השני.
+      - kind: check
+        text: >-
+          $n=1,3,5,7$: $n^2-1=0,8,24,48$, כולם מתחלקים ב-8. $n=2,4,6$: $3,15,35$, אי-זוגיים. (נבדק עד $n=20$.)
+      - kind: result
+        text: >-
+          $n^2-1$ מתחלק ב-8 אם ורק אם $n$ אי-זוגי: "$n$ אי-זוגי" הוא תנאי הכרחי ומספיק.
+
+challenge:
+  - id: W-0.2-c1
+    stars: 1
+    objectives: [OBJ-0.2-1]
+    prompt: >-
+      ידוע שהפסוק $\bigl((P\land Q)\lor R\bigr)\Rightarrow(R\lor S)$ **שקר**. מצאו את ערכי האמת של $P$, $Q$, $R$
+      ו-$S$, בלי לבנות טבלת אמת (יש לה 16 שורות). הסבירו למה התשובה יחידה.
+    answer: >-
+      $P$ אמת, $Q$ אמת, $R$ שקר, $S$ שקר, וזו האפשרות היחידה.
+    solution:
+      - kind: idea
+        text: >-
+          גרירה שקר רק כשההנחה שלה אמת והמסקנה שלה שקר. משתי העובדות האלה קובעים את הפסוקים אחד אחרי השני.
+      - kind: step
+        text: >-
+          הגרירה שקר, ולכן המסקנה $R\lor S$ שקר וההנחה $(P\land Q)\lor R$ אמת.
+      - kind: step
+        text: >-
+          "או" שקר רק כששני חלקיו שקר: $R$ שקר ו-$S$ שקר.
+      - kind: step
+        text: >-
+          ההנחה $(P\land Q)\lor R$ אמת ו-$R$ שקר, ולכן $P\land Q$ אמת, כלומר $P$ אמת ו-$Q$ אמת.
+      - kind: check
+        text: >-
+          הצבה: $(P\land Q)\lor R=\mathrm{T}\lor\mathrm{F}=\mathrm{T}$ ו-$R\lor S=\mathrm{F}$, ולכן הגרירה
+          $\mathrm{T}\Rightarrow\mathrm{F}$ שקר. כל צעד היה מאולץ, ולכן אין אפשרות אחרת; גם בדיקה של כל 16 השורות
+          נותנת שורה שקרית אחת בלבד.
+      - kind: result
+        text: >-
+          $P=\mathrm{T}$, $Q=\mathrm{T}$, $R=\mathrm{F}$, $S=\mathrm{F}$, באופן יחיד.
+    source:
+      name: Richard Hammack, Book of Proof (3rd edition, version 3.4)
+      year: 2018
+      problem: Chapter 2, Exercise 2.5.10
+      url: https://richardhammack.github.io/BookOfProof/Main.pdf
+      verified: '2026-11-09'
+      adapted: true
+
+  - id: W-0.2-c2
+    stars: 1
+    objectives: [OBJ-0.2-1, OBJ-0.2-2]
+    prompt: >-
+      (א) הוכיחו ש-$P\Rightarrow Q$ שקול ל-$(P\land\neg Q)\Rightarrow(Q\land\neg Q)$.
+
+      (ב) הפסוק $Q\land\neg Q$ שקר תמיד: זו **סתירה**. הסבירו בעזרת (א) למה מותר להוכיח "אם $P$ אז $Q$" כך: מניחים
+      $P$, מניחים בנוסף ש-$Q$ שקר, ומגיעים לסתירה.
+    answer: >-
+      (א) $Q\land\neg Q$ שקר תמיד, ולכן הצד הימני אמת בדיוק כש-$P\land\neg Q$ שקר, כלומר כשהגרירה $P\Rightarrow Q$
+      אמת. (ב) מי שהגיע מ-$P\land\neg Q$ לסתירה הוכיח את הצד הימני, ששקול ל-$P\Rightarrow Q$.
+    solution:
+      - kind: idea
+        text: >-
+          המסקנה של הצד הימני שקר תמיד, וגרירה שהמסקנה שלה שקר היא אמת בדיוק כשההנחה שלה שקר.
+      - kind: step
+        text: >-
+          (א) בכל שורה, $Q\land\neg Q$ שקר: $Q$ ו-$\neg Q$ לא יכולים להיות אמת יחד.
+      - kind: step
+        text: >-
+          לכן $(P\land\neg Q)\Rightarrow(Q\land\neg Q)$ אמת בדיוק כשההנחה $P\land\neg Q$ שקר, כלומר בכל השורות
+          חוץ מ-$P=\mathrm{T}$, $Q=\mathrm{F}$.
+      - kind: theorem
+        text: >-
+          גם $P\Rightarrow Q$ שקר רק בשורה $P=\mathrm{T}$, $Q=\mathrm{F}$. שני הפסוקים שקר באותה שורה בדיוק, ולכן
+          הם שקולים.
+      - kind: step
+        text: >-
+          (ב) ההוכחה המתוארת מראה: מההנחה $P\land\neg Q$ נובעת הסתירה $Q\land\neg Q$. כלומר היא מוכיחה את
+          $(P\land\neg Q)\Rightarrow(Q\land\neg Q)$, ולפי (א) זה שקול ל-$P\Rightarrow Q$. זו ההצדקה הלוגית של
+          הוכחה בדרך השלילה (שיעור 0.4).
+      - kind: check
+        text: >-
+          העמודה של הצד הימני היא $\mathrm{T},\mathrm{F},\mathrm{T},\mathrm{T}$, בדיוק העמודה של $P\Rightarrow Q$.
+      - kind: result
+        text: >-
+          (א) שני הפסוקים שקולים. (ב) לכן "להניח $P$ ו-$\neg Q$ ולהגיע לסתירה" מוכיח את $P\Rightarrow Q$.
+    source:
+      name: Richard Hammack, Book of Proof (3rd edition, version 3.4)
+      year: 2018
+      problem: Chapter 2, Exercise 2.6.7
+      url: https://richardhammack.github.io/BookOfProof/Main.pdf
+      verified: '2026-11-09'
+      adapted: true

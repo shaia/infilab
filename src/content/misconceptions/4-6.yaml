@@ -1,0 +1,29 @@
+# Misconceptions first detected in lesson 4.6 (the exponential and the logarithm).
+# Reused from other lessons: MC-one-power-infinity-is-one (2-7.yaml),
+# MC-indeterminate-form-value (2-6.yaml), MC-inverse-always-continuous (4-5.yaml).
+- id: MC-exp-always-increasing
+  title: חושבים שכל פונקציה מעריכית עולה
+  belief: >-
+    $a^x$ עולה לכל בסיס חיובי $a$.
+  truth: >-
+    $a^x$ עולה ממש רק כש-$a>1$. כש-$a=1$ היא קבועה, וכש-$0<a<1$ היא יורדת ממש, כי $a^x=(\frac1a)^{-x}$.
+  remedy: { lesson: '4.6', label: 'תכונות פונקציית המעריך' }
+
+- id: MC-log-rules-invented
+  title: ממציאים חוקי לוגריתם לסכום ולמנה
+  belief: >-
+    $\ln(x+y)=\ln x\cdot\ln y$, או $\ln\frac xy=\frac{\ln x}{\ln y}$.
+  truth: >-
+    הלוגריתם הופך **מכפלה** לסכום ומנה להפרש: $\ln(xy)=\ln x+\ln y$, $\ln\frac xy=\ln x-\ln y$. לסכום
+    $\ln(x+y)$ אין נוסחה כזו.
+  remedy: { lesson: '4.6', label: 'תכונות הלוגריתם' }
+
+- id: MC-e-limit-pattern-misapplied
+  title: מפעילים את הגבול של e בלי להתאים את הקבועים
+  belief: >-
+    כל ביטוי שנראה כמו $\left(1+\frac{\dots}{n}\right)^{\dots}$ שואף ל-$e$, וכל מנה כמו $\frac{\ln(1+\dots)}{\dots}$
+    שואפת ל-1.
+  truth: >-
+    $\left(1+\frac an\right)^{n}\to e^a$: הקבוע במונה עובר למעריך, ומעריך $kn$ מעלה בחזקת $k$. מעריך כמו
+    $n^2$ כבר משנה את הגבול לאינסוף. ב-$\frac{\ln(1+t)}{t}\to1$ המכנה חייב להיות בדיוק $t$.
+  remedy: { lesson: '4.6', label: 'גבולות עם חזקות: אחד בחזקת אינסוף' }

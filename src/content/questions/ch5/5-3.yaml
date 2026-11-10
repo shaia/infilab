@@ -1,0 +1,355 @@
+# Lesson 5.3 — the chain rule and the derivative of an inverse function.
+# Objectives (src/course.ts):
+#   OBJ-5.3-1  state and prove the chain rule; use it on nested compositions
+#   OBJ-5.3-2  state and prove the theorem on the derivative of an inverse function
+#   OBJ-5.3-3  differentiate the elementary functions: exp, log, real powers, inverse trigonometric functions
+chapter: 5
+questions:
+  - id: Q-5.3-chain-form
+    type: mc
+    objectives: [OBJ-5.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $g$ גזירה ב-$x$ ו-$f$ גזירה ב-$g(x)$. מהי $(f\circ g)'(x)$?
+    choices:
+      - text: >-
+          $f'(g(x))\cdot g'(x)$
+        correct: true
+        feedback: >-
+          נכון. את $f$ גוזרים בנקודה שאליה $g$ מעבירה את $x$, וכופלים בקצב שבו $g$ משתנה. בדיקה עם
+          $f(u)=u^3$, $g(x)=x^2+1$ ו-$x=1$: $(x^2+1)^3$ נגזרת ל-$3(x^2+1)^2\cdot2x$, ובנקודה 1 זה $24$.
+      - text: >-
+          $f'(x)\cdot g'(x)$
+        feedback: >-
+          כאן $f$ נגזרת בנקודה הלא נכונה. עם $f(u)=u^3$, $g(x)=x^2+1$ ו-$x=1$ זה נותן $3\cdot2=6$, אבל הנגזרת של
+          $(x^2+1)^3$ ב-1 היא $24$: את $f$ צריך לגזור ב-$g(1)=2$.
+        misconception: MC-chain-wrong-point
+      - text: >-
+          $f'(g(x))$
+        feedback: >-
+          חסרה הנגזרת הפנימית. עם $f(u)=u^3$, $g(x)=x^2+1$ ו-$x=1$ זה נותן $3\cdot2^2=12$, חצי מהתשובה הנכונה:
+          חסר הגורם $g'(1)=2$.
+        misconception: MC-chain-forget-inner
+      - text: >-
+          $f'(g'(x))$
+        feedback: >-
+          זו הרכבה של הנגזרות, לא נגזרת של הרכבה. עם $f(u)=u^3$ ו-$g(x)=3x$ זה נותן $f'(3)=27$, אבל
+          $(3x)^3=27x^3$ ונגזרתה $81x^2$, תלויה ב-$x$.
+        misconception: MC-chain-wrong-point
+
+  - id: Q-5.3-nested
+    type: numeric
+    objectives: [OBJ-5.3-1]
+    level: mid
+    prompt: >-
+      חשבו את $h'(1)$ עבור $h(x)=\left((x^2+1)^3-7\right)^2$.
+    answer: 48
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. שלוש שכבות: $u=x^2+1$, $v=u^3-7$, $h=v^2$. ב-$x=1$: $u=2$, $v=1$, ולכן
+      $h'(1)=2v\cdot3u^2\cdot2x = 2\cdot1\cdot12\cdot2 = 48$.
+    wrongFeedback: >-
+      פרקו את $h$ לשכבות, מהחיצונית לפנימית, וכפלו את הנגזרות של כל השכבות, כל אחת בנקודה שלה.
+    commonWrong:
+      - value: 24
+        feedback: >-
+          חסרה הנגזרת של השכבה הפנימית ביותר, $(x^2+1)'=2x$, שב-1 שווה ל-2.
+        misconception: MC-chain-forget-inner
+      - value: 2
+        feedback: >-
+          זו רק הנגזרת של השכבה החיצונית, $2v$ ב-$v=1$. כל שכבה תורמת גורם משלה.
+        misconception: MC-chain-forget-inner
+    hints:
+      - 'סמנו $u=x^2+1$ ו-$v=u^3-7$, ואז $h=v^2$.'
+
+  - id: Q-5.3-chain-proof
+    type: rank
+    objectives: [OBJ-5.3-1]
+    level: mid
+    prompt: >-
+      סדרו את שלבי ההוכחה של כלל השרשרת: $g$ גזירה ב-$x_0$, $f$ גזירה ב-$y_0=g(x_0)$, ולכן
+      $(f\circ g)'(x_0)=f'(y_0)\,g'(x_0)$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: a
+        label: >-
+          מגדירים $\varphi(y)=\frac{f(y)-f(y_0)}{y-y_0}$ כש-$y\neq y_0$, ו-$\varphi(y_0)=f'(y_0)$. מהגזירות של
+          $f$ ב-$y_0$, $\varphi$ רציפה ב-$y_0$.
+      - id: b
+        label: >-
+          לכל $y$ בסביבה של $y_0$, כולל $y=y_0$, מתקיים $f(y)-f(y_0)=\varphi(y)\,(y-y_0)$.
+      - id: c
+        label: >-
+          מציבים $y=g(x)$ ומחלקים ב-$x-x_0\neq0$:
+          $\frac{f(g(x))-f(g(x_0))}{x-x_0}=\varphi(g(x))\cdot\frac{g(x)-g(x_0)}{x-x_0}$.
+      - id: d
+        label: >-
+          $g$ רציפה ב-$x_0$ ו-$\varphi$ רציפה ב-$y_0$, ולכן $\varphi(g(x))\to f'(y_0)$; הגורם השני שואף ל-$g'(x_0)$.
+      - id: e
+        label: >-
+          לפי כלל המכפלה לגבולות, $(f\circ g)'(x_0)=f'(y_0)\,g'(x_0)$.
+    order: [a, b, c, d, e]
+    correctFeedback: >-
+      נכון. הפונקציה $\varphi$ היא כל הרעיון: השוויון בשלב ב נכון גם כש-$g(x)=g(x_0)$, ולכן לא מחלקים אף פעם
+      ב-$g(x)-g(x_0)$, שעלול להתאפס. בשלב ד משתמשים בגבול של הרכבה של פונקציה רציפה (שיעור 4.1).
+    wrongFeedback: >-
+      הכינו קודם את הכלי, הפונקציה $\varphi$, ואת הזהות שהיא מקיימת; רק אחר כך מציבים בה $g(x)$ ומחשבים גבול.
+
+  - id: Q-5.3-chain-gap
+    type: twotier
+    objectives: [OBJ-5.3-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      "הוכחה" של כלל השרשרת: כופלים ומחלקים ב-$g(x)-g(x_0)$,
+      $$\frac{f(g(x))-f(g(x_0))}{x-x_0}=\frac{f(g(x))-f(g(x_0))}{g(x)-g(x_0)}\cdot\frac{g(x)-g(x_0)}{x-x_0},$$
+      והגורם הראשון שואף ל-$f'(g(x_0))$ כי $g(x)\to g(x_0)$. האם ההוכחה הזו שלמה?
+    choices:
+      - text: לא, יש בה פער
+        correct: true
+        feedback: >-
+          נכון. ההוכחה עובדת רק כש-$g(x)\neq g(x_0)$ לכל $x$ קרוב מספיק ל-$x_0$. ההוכחה עם הפונקציה העזר
+          $\varphi$ סוגרת בדיוק את הפער הזה.
+      - text: כן, ההוכחה שלמה
+        feedback: >-
+          חלוקה ב-$g(x)-g(x_0)$ מותרת רק כשהוא שונה מאפס, ויש פונקציות גזירות שבהן הוא מתאפס בנקודות קרובות
+          כרצוננו ל-$x_0$.
+        misconception: MC-chain-naive-proof
+    reasons:
+      - text: >-
+          ייתכן ש-$g(x)=g(x_0)$ עבור $x$ קרובים כרצוננו ל-$x_0$, ואז מחלקים באפס; למשל $g$ קבועה
+        correct: true
+        feedback: >-
+          בדיוק. עבור $g$ קבועה המכנה מתאפס לכל $x$. דוגמה פחות טריוויאלית: $x^2\sin\frac1x$ (עם 0 ב-0) מתאפסת
+          בכל הנקודות $\frac{1}{\pi n}$, שמצטברות ב-0.
+      - text: >-
+          $g$ רציפה ב-$x_0$, ולכן $g(x)\to g(x_0)$, וזה כל מה שהגורם הראשון צריך
+        feedback: >-
+          $g(x)\to g(x_0)$ אכן נכון, אבל הגבול של הגורם הראשון הוא גבול של הרכבה, והוא מוגדר רק כשהמכנה
+          $g(x)-g(x_0)$ שונה מאפס. בדיוק זה לא מובטח.
+        misconception: MC-chain-naive-proof
+      - text: >-
+          הבעיה היא שהגבול של הגורם השני, $\frac{g(x)-g(x_0)}{x-x_0}$, אולי לא קיים
+        feedback: >-
+          הגבול הזה קיים: זו ההנחה ש-$g$ גזירה ב-$x_0$. הפער נמצא בגורם הראשון.
+        misconception: MC-chain-naive-proof
+
+  - id: Q-5.3-inverse-num
+    type: numeric
+    objectives: [OBJ-5.3-2]
+    level: basic
+    prompt: >-
+      $f(x)=x^3+x$ עולה ממש ורציפה על הישר, ולכן הפיכה. חשבו את $(f^{-1})'(2)$.
+    answer: 0.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f(1)=2$, כלומר $f^{-1}(2)=1$, ו-$f'(1)=3+1=4\neq0$. לפי המשפט
+      $(f^{-1})'(2)=\frac{1}{f'(f^{-1}(2))}=\frac{1}{f'(1)}=\frac14$.
+    wrongFeedback: >-
+      מצאו קודם את $x_0$ שעבורו $f(x_0)=2$. הנגזרת של ההפוכה ב-$y_0$ היא $\frac{1}{f'(x_0)}$, עם $x_0=f^{-1}(y_0)$.
+    commonWrong:
+      - value: 0.07692307692
+        feedback: >-
+          זה $\frac{1}{f'(2)}=\frac{1}{13}$: גזרתם את $f$ בנקודה $2$, שהיא נקודה על ציר ה-$y$. את $f$ גוזרים
+          בנקודה $f^{-1}(2)=1$.
+        misconception: MC-inverse-deriv-wrong-point
+      - value: 4
+        feedback: >-
+          זה $f'(1)$. הגרף של ההפוכה הוא שיקוף של הגרף של $f$ סביב $y=x$, והשיקוף הופך את השיפוע: צריך
+          $\frac{1}{f'(1)}$.
+        misconception: MC-inverse-deriv-no-reciprocal
+
+  - id: Q-5.3-cbrt
+    type: twotier
+    objectives: [OBJ-5.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=x^3$ רציפה, עולה ממש וגזירה בכל הישר, וההפוכה שלה היא $g(y)=\sqrt[3]{y}$. האם $g$ גזירה ב-0?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. ישירות: $\frac{\sqrt[3]{h}-0}{h}=|h|^{-2/3}\to\infty$ כש-$h\to0$. הגרף של $\sqrt[3]{y}$ משיק ב-0 לציר
+          האנכי.
+      - text: כן
+        feedback: >-
+          מנת ההפרשים של $\sqrt[3]{y}$ ב-0 היא $|h|^{-2/3}$, והיא שואפת לאינסוף. הפיכות וגזירות של $f$ אינן
+          מספיקות: צריך גם $f'\neq0$.
+        misconception: MC-inverse-always-differentiable
+    reasons:
+      - text: >-
+          אילו $g$ הייתה גזירה ב-0, כלל השרשרת על $f(g(y))=y$ היה נותן $f'(0)\,g'(0)=1$, אבל $f'(0)=0$
+        correct: true
+        feedback: >-
+          בדיוק. הטיעון הזה מראה שבנקודה שבה $f'(x_0)=0$ ההפוכה **לעולם** אינה גזירה ב-$f(x_0)$, לא רק כאן.
+      - text: ההפוכה של פונקציה גזירה וחד-חד-ערכית גזירה
+        feedback: >-
+          זה נכון רק בנקודות שבהן $f'(x_0)\neq0$. כאן $f'(0)=0$, והמשיק האופקי של $x^3$ הופך למשיק אנכי של
+          $\sqrt[3]{y}$.
+        misconception: MC-inverse-always-differentiable
+      - text: המשפט על נגזרת ההפוכה דורש $f'(0)\neq0$, ההנחה הזו לא מתקיימת, ולכן $g$ אינה גזירה ב-0
+        feedback: >-
+          המסקנה נכונה, אבל הנימוק לא: כשהנחה של משפט לא מתקיימת, המשפט פשוט לא אומר דבר. כדי להוכיח שאין נגזרת
+          צריך טיעון נוסף, למשל כלל השרשרת על $f(g(y))=y$.
+        misconception: MC-hypothesis-fails-so-conclusion-fails
+
+  - id: Q-5.3-inverse-proof
+    type: mc
+    objectives: [OBJ-5.3-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחת המשפט על נגזרת ההפוכה, $g=f^{-1}$ ו-$y_0=f(x_0)$, כותבים לכל $y\neq y_0$ עם $x=g(y)$:
+      $$\frac{g(y)-g(y_0)}{y-y_0}=\frac{1}{\;\frac{f(x)-f(x_0)}{x-x_0}\;}.$$
+      כדי שאגף ימין ישאף ל-$\frac{1}{f'(x_0)}$ צריך ש-$x\neq x_0$ ו-$x\to x_0$ כש-$y\to y_0$. מה מבטיח את שני
+      הדברים?
+    choices:
+      - text: >-
+          $g$ חד-חד-ערכית, ולכן $x\neq x_0$; ו-$g$ רציפה ב-$y_0$ (ההפוכה של פונקציה רציפה ומונוטונית ממש על קטע
+          רציפה, שיעור 4.5), ולכן $x\to x_0$
+        correct: true
+        feedback: >-
+          נכון. אחרי זה הגבול של אגף ימין הוא גבול של הרכבה, ו-$f'(x_0)\neq0$ מאפשר לחלק.
+      - text: >-
+          $f$ גזירה ב-$x_0$, ולכן $x\to x_0$
+        feedback: >-
+          הגזירות של $f$ אומרת מה קורה ל-$f(x)$ כש-$x\to x_0$, ולא להפך. כאן $y$ הוא שזז, וצריך לדעת ש-$x=g(y)$
+          זז אחריו: זו רציפות של $g$.
+        misconception: MC-inverse-continuity-assumed
+      - text: >-
+          $y=f(x)$, ולכן כש-$y\to y_0$ ברור ש-$x\to x_0$
+        feedback: >-
+          זה לא ברור מעצמו: זו בדיוק הטענה ש-$g$ רציפה ב-$y_0$, והיא דורשת משפט (רציפות ההפוכה על קטע). בלי
+          קטע היא יכולה להיכשל.
+        misconception: MC-inverse-continuity-assumed
+
+  - id: Q-5.3-arcsin
+    type: numeric
+    objectives: [OBJ-5.3-3]
+    level: basic
+    prompt: >-
+      חשבו את הנגזרת של $\arcsin$ בנקודה $0.6$.
+    answer: 1.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $(\arcsin)'(y)=\frac{1}{\cos(\arcsin y)}=\frac{1}{\sqrt{1-y^2}}$, כי $\arcsin y\in[-\frac\pi2,\frac\pi2]$
+      ושם הקוסינוס אי-שלילי. ב-$0.6$: $\frac{1}{\sqrt{1-0.36}}=\frac{1}{0.8}=1.25$.
+    wrongFeedback: >-
+      $\arcsin$ היא ההפוכה של $\sin$ על $[-\frac\pi2,\frac\pi2]$. השתמשו ב-$\frac{1}{\sin'(x)}$ עם $x=\arcsin(0.6)$,
+      ובזהות $\cos x=\sqrt{1-\sin^2x}$ על הקטע הזה.
+    commonWrong:
+      - value: 0.8
+        feedback: >-
+          זה $\sqrt{1-0.6^2}=\cos(\arcsin 0.6)$, הנגזרת של $\sin$ בנקודה המתאימה. הנגזרת של ההפוכה היא ההופכי
+          שלה.
+        misconception: MC-inverse-deriv-no-reciprocal
+      - value: 1.21163
+        feedback: >-
+          זה $\frac{1}{\cos(0.6)}$: גזרתם את $\sin$ בנקודה $0.6$ עצמה. את $\sin$ צריך לגזור ב-$\arcsin(0.6)$.
+        misconception: MC-inverse-deriv-wrong-point
+
+  - id: Q-5.3-xx
+    type: mc
+    objectives: [OBJ-5.3-3]
+    level: mid
+    prompt: >-
+      מהי הנגזרת של $f(x)=x^x$ (כש-$x>0$) בנקודה $x=2$?
+    choices:
+      - text: >-
+          $4(1+\ln 2)$
+        correct: true
+        feedback: >-
+          נכון. $x^x=e^{x\ln x}$, ולפי כלל השרשרת $f'(x)=e^{x\ln x}(\ln x+1)=x^x(\ln x+1)$. ב-2: $4(\ln2+1)$.
+      - text: '$4$'
+        feedback: >-
+          זה $x\cdot x^{x-1}$, כלל החזקה. כלל החזקה $(x^\alpha)'=\alpha x^{\alpha-1}$ נכון רק למעריך **קבוע**, וכאן
+          המעריך משתנה עם $x$.
+        misconception: MC-power-rule-variable-exponent
+      - text: >-
+          $4\ln 2$
+        feedback: >-
+          זה $2^x\ln2$ ב-2, הנגזרת של מעריכית עם בסיס קבוע. כאן גם הבסיס משתנה. התשובה הנכונה היא סכום של
+          שתי התרומות: $4\ln2+4$.
+        misconception: MC-power-rule-variable-exponent
+    hints:
+      - 'כתבו $x^x=e^{x\ln x}$ וגזרו לפי כלל השרשרת.'
+
+  - id: Q-5.3-ln
+    type: mc
+    objectives: [OBJ-5.3-2, OBJ-5.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      למה $\ln$ גזירה בכל $y>0$, ומהי הנגזרת שלה?
+    choices:
+      - text: >-
+          $\ln$ היא ההפוכה של $\exp$, ו-$\exp'(x)=e^x\neq0$, ולכן $(\ln)'(y)=\frac{1}{e^{\ln y}}=\frac1y$
+        correct: true
+        feedback: >-
+          נכון. $\exp$ רציפה ועולה ממש על הישר (שיעור 4.6), גזירה, ונגזרתה אף פעם לא מתאפסת, ולכן המשפט על
+          נגזרת ההפוכה חל בכל נקודה.
+      - text: >-
+          $(\ln)'(y)=\frac{1}{\exp'(y)}=\frac{1}{e^y}$
+        feedback: >-
+          את $\exp$ צריך לגזור בנקודה $x=\ln y$, לא בנקודה $y$. אז $\frac{1}{e^{\ln y}}=\frac1y$.
+        misconception: MC-inverse-deriv-wrong-point
+      - text: >-
+          $\ln$ רציפה ועולה ממש, ולכן גזירה
+        feedback: >-
+          רציפות ומונוטוניות אינן גוררות גזירות: $\sqrt[3]{x}$ רציפה ועולה ממש ואינה גזירה ב-0. הגזירות של
+          $\ln$ נובעת מהמשפט על נגזרת ההפוכה, כי $\exp'$ לא מתאפסת.
+        misconception: MC-continuous-implies-differentiable
+
+  - id: Q-5.3-power
+    type: mc
+    objectives: [OBJ-5.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      איך מוכיחים ש-$(x^\alpha)'=\alpha x^{\alpha-1}$ לכל $x>0$ ולכל מעריך ממשי $\alpha$, גם אי-רציונלי?
+    choices:
+      - text: >-
+          כותבים $x^\alpha=e^{\alpha\ln x}$ וגוזרים לפי כלל השרשרת: $e^{\alpha\ln x}\cdot\frac{\alpha}{x}=\alpha x^{\alpha-1}$
+        correct: true
+        feedback: >-
+          נכון. זו ההגדרה של חזקה ממשית דרך המעריכית והלוגריתם (שיעור 4.6), ואחריה הוכחה בשורה אחת.
+      - text: באינדוקציה על $\alpha$, כמו לחזקה טבעית
+        feedback: >-
+          אינדוקציה מוכיחה טענות רק על טבעיים: היא עוברת מ-$n$ ל-$n+1$, ואינה מגיעה ל-$\alpha=\sqrt2$.
+        misconception: MC-induction-on-real-exponent
+      - text: >-
+          מקרבים את $\alpha$ ברציונליים $r_n\to\alpha$; הנגזרות $r_nx^{r_n-1}$ שואפות ל-$\alpha x^{\alpha-1}$, וזו
+          הנגזרת של הגבול
+        feedback: >-
+          גבול של נגזרות אינו בהכרח הנגזרת של הגבול: $\frac{\sin(nx)}{n}\to0$ לכל $x$, אבל הנגזרות $\cos(nx)$ אינן
+          שואפות ל-0. כאן המסקנה נכונה, אבל הנימוק אינו הוכחה.
+        misconception: MC-limit-of-derivatives
+
+  - id: Q-5.3-arctan-sum
+    type: mc
+    objectives: [OBJ-5.3-1, OBJ-5.3-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      תהי $f(x)=\arctan x+\arctan\frac1x$ עבור $x\neq0$. מהי $f'(x)$?
+    choices:
+      - text: '$0$ לכל $x\neq0$'
+        correct: true
+        feedback: >-
+          נכון. $(\arctan)'(y)=\frac{1}{1+y^2}$, ולפי כלל השרשרת
+          $$f'(x)=\frac{1}{1+x^2}+\frac{1}{1+\frac{1}{x^2}}\cdot\left(-\frac{1}{x^2}\right)=\frac{1}{1+x^2}-\frac{1}{x^2+1}=0.$$
+          ב-$x=1$ הערך הוא $\frac\pi4+\frac\pi4$, וב-$x=-1$ הוא מינוס אותו מספר: הנגזרת מתאפסת, ובכל זאת $f$
+          אינה קבועה על כל התחום, כי התחום אינו קטע.
+      - text: '$1$ לכל $x\neq0$'
+        feedback: >-
+          זה מתקבל כששוכחים את הנגזרת הפנימית $\left(\frac1x\right)'=-\frac{1}{x^2}$: אז המחובר השני הוא
+          $\frac{x^2}{x^2+1}$, והסכום 1.
+        misconception: MC-chain-forget-inner
+      - text: >-
+          $\frac{2}{1+x^2}$ לכל $x\neq0$
+        feedback: >-
+          זה מתקבל מ-$\left(\frac1x\right)'=+\frac{1}{x^2}$, טעות סימן. לפי כלל המנה
+          $\left(\frac1x\right)'=\frac{0\cdot x-1\cdot1}{x^2}$, שלילי.
+        misconception: MC-quotient-rule-order

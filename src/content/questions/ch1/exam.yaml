@@ -1,0 +1,350 @@
+# Chapter 1 exam questions — original, in the style of an 80131 final (not taken from a real exam).
+# Each is worth 25 points in lettered parts, with at least one open part graded against a model solution and a rubric.
+chapter: 1
+questions:
+  - id: Q-1-exam-1
+    type: exam
+    title: סופרמום של קבוצת הפרשים
+    prompt: >-
+      נתונה הקבוצה
+      $$A=\left\{\frac1n-\frac1m : n,m\in\mathbb{N}\right\}.$$
+    parts:
+      - label: א
+        points: 4
+        type: numeric
+        objectives: [OBJ-1.5-2]
+        prompt: מהו $\sup A$?
+        answer: 1
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. האיבר גדול ככל ש-$\frac1n$ גדול ($n=1$) ו-$\frac1m$ קטן ($m$ גדול): $1-\frac1m$ מתקרב ל-1 ולא
+          מגיע אליו.
+        wrongFeedback: >-
+          מתי $\frac1n-\frac1m$ גדול? בחרו $n$ שנותן את $\frac1n$ הגדול ביותר, ו-$m$ שנותן $\frac1m$ קטן כרצוננו.
+        commonWrong:
+          - value: 0.5
+            feedback: >-
+              $\frac12=1-\frac12$ ($n=1$, $m=2$) הוא הגדול מבין כמה איברים ראשונים, אבל $m=3$ כבר נותן
+              $\frac23>\frac12$.
+            misconception: MC-extremum-from-first-terms
+          - value: 0
+            feedback: >-
+              $0$ מתקבל כש-$n=m$, אבל הקבוצה מכילה גם איברים חיוביים, למשל $1-\frac12$.
+
+      - label: ב
+        points: 12
+        type: open
+        objectives: [OBJ-1.5-2, OBJ-1.4-3, OBJ-1.6-1]
+        prompt: הוכיחו מההגדרה ש-$\sup A=1$.
+        solution:
+          - kind: given
+            text: '$A=\left\{\frac1n-\frac1m : n,m\in\mathbb{N}\right\}$.'
+          - kind: goal
+            text: >-
+              שני דברים: $1$ חסם מלעיל של $A$, ולכל $\varepsilon>0$ יש איבר של $A$ שגדול מ-$1-\varepsilon$
+              (אפיון הסופרמום).
+          - kind: idea
+            text: >-
+              האיבר גדול כש-$\frac1n$ גדול ו-$\frac1m$ קטן. לכן קובעים $n=1$, ובוחרים $m$ גדול בעזרת תכונת
+              ארכימדס.
+          - kind: step
+            text: >-
+              חסם מלעיל: לכל $n,m\in\mathbb{N}$, $n\ge1$ ולכן $\frac1n\le1$, ו-$\frac1m>0$. לכן
+              $\frac1n-\frac1m<1$, ו-$1$ חסם מלעיל של $A$.
+          - kind: theorem
+            text: >-
+              תכונת ארכימדס: לכל $\varepsilon>0$ יש $m\in\mathbb{N}$ עם $m>\frac1\varepsilon$, כלומר
+              $\frac1m<\varepsilon$.
+          - kind: step
+            text: >-
+              יהי $\varepsilon>0$, ו-$m$ כמו בתכונת ארכימדס. האיבר $1-\frac1m$ (עם $n=1$) שייך ל-$A$, ו-$1-\frac1m>1-\varepsilon$.
+          - kind: result
+            text: >-
+              $1$ חסם מלעיל, ולכל $\varepsilon>0$ יש איבר של $A$ מעל $1-\varepsilon$; לפי אפיון הסופרמום,
+              $\sup A=1$.
+        rubric:
+          - text: 'הוכחה ש-$1$ חסם מלעיל, עם הצדקה של $\frac1n\le1$ ושל $\frac1m>0$'
+            weight: 3
+          - text: 'ניסוח נכון של מה שנשאר להוכיח: לכל $\varepsilon>0$ קיים איבר גדול מ-$1-\varepsilon$'
+            weight: 3
+          - text: 'שימוש מפורש בתכונת ארכימדס לבחירת $m$ עם $\frac1m<\varepsilon$'
+            weight: 3
+          - text: 'בדיקה שהאיבר שנבחר שייך ל-$A$ ושהוא גדול מ-$1-\varepsilon$, ומסקנה'
+            weight: 3
+
+      - label: ג
+        points: 4
+        type: mc
+        standalone: false
+        objectives: [OBJ-1.4-2]
+        qualitative: true
+        prompt: האם יש ל-$A$ מקסימום?
+        choices:
+          - text: 'לא: כל איבר קטן ממש מ-$1=\sup A$, ולכן הסופרמום אינו מתקבל'
+            correct: true
+            feedback: >-
+              נכון. מסעיף ב, $\frac1n-\frac1m<1$ לכל $n,m$. אילו היה מקסימום, הוא היה שווה לסופרמום, כלומר ל-1.
+          - text: 'כן, $\max A=1$, שמתקבל כש-$m$ שואף לאינסוף'
+            feedback: >-
+              $m$ הוא מספר טבעי מסוים בכל איבר, ואין איבר עם "$m=\infty$". לכל $m$ האיבר קטן מ-1, ולכן 1 הוא
+              סופרמום בלבד.
+            misconception: MC-sup-is-max
+          - text: 'כן, $\max A=\frac12$, שמתקבל ב-$n=1$, $m=2$'
+            feedback: >-
+              $m=3$ נותן $\frac23>\frac12$. אין איבר גדול ביותר: כל $m$ גדול יותר נותן איבר גדול יותר.
+            misconception: MC-extremum-from-first-terms
+
+      - label: ד
+        points: 5
+        type: numeric
+        standalone: false
+        objectives: [OBJ-1.5-3]
+        prompt: >-
+          מהו $\inf\{-3a : a\in A\}$?
+        answer: -3
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. כפל ב-$-3$ הופך את הסדר, ולכן האינפימום של $-3A$ בא מהסופרמום של $A$: $-3\cdot1=-3$.
+        wrongFeedback: >-
+          עבור $c<0$: $\inf(cA)=c\sup A$ ו-$\sup(cA)=c\inf A$. השתמשו בסעיף ב.
+        commonWrong:
+          - value: 3
+            feedback: >-
+              $3=-3\cdot\inf A$ (כי $\inf A=-1$), וזה $\sup(-3A)$. האינפימום של $-3A$ בא מה**סופרמום** של $A$.
+            misconception: MC-sup-negative-scalar
+
+  - id: Q-1-exam-2
+    type: exam
+    title: צפיפות הרציונליים
+    prompt: >-
+      בשאלה זו $a<b$ הם מספרים ממשיים.
+    parts:
+      - label: א
+        points: 5
+        type: numeric
+        objectives: [OBJ-1.6-1]
+        prompt: >-
+          עבור $a=0.31$ ו-$b=0.32$: מהו ה-$n\in\mathbb{N}$ הקטן ביותר שמקיים $\frac1n<b-a$?
+        answer: 101
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $b-a=0.01$, ו-$\frac1n<0.01\iff n>100$. לכן $n=101$.
+        wrongFeedback: >-
+          חשבו את $b-a$ ופתרו $\frac1n<b-a$. שימו לב שאי-השוויון חזק.
+        commonWrong:
+          - value: 100
+            feedback: >-
+              $\frac1{100}=0.01$, ואינו קטן **ממש** מ-$b-a=0.01$.
+
+      - label: ב
+        points: 12
+        type: open
+        objectives: [OBJ-1.6-2, OBJ-1.6-1, OBJ-1.6-3]
+        prompt: הוכיחו שיש מספר רציונלי $q$ עם $a<q<b$.
+        solution:
+          - kind: given
+            text: '$a<b$ ממשיים.'
+          - kind: goal
+            text: 'שלמים $m$ ו-$n\ge1$ עם $a<\frac mn<b$.'
+          - kind: idea
+            text: >-
+              מסתכלים על הנקודות $\frac mn$, $m\in\mathbb{Z}$, שמרווחן $\frac1n$. אם המרווח קטן מאורך הקטע,
+              הנקודה הראשונה אחרי $a$ חייבת ליפול לפני $b$.
+          - kind: theorem
+            text: >-
+              תכונת ארכימדס: יש $n\in\mathbb{N}$ עם $n>\frac1{b-a}$ (המספר $\frac1{b-a}$ חיובי כי $b>a$), כלומר
+              $\frac1n<b-a$.
+          - kind: definition
+            text: >-
+              $m=\lfloor na\rfloor+1$. לפי הגדרת הערך השלם, $\lfloor na\rfloor\le na<\lfloor na\rfloor+1$, כלומר
+              $m-1\le na<m$.
+          - kind: step
+            text: 'מ-$na<m$, בחלוקה ב-$n>0$: $a<\frac mn$.'
+          - kind: computation
+            text: 'מ-$m-1\le na$: $\frac mn\le a+\frac1n<a+(b-a)=b$.'
+          - kind: result
+            text: '$q=\frac mn$ רציונלי ומקיים $a<q<b$.'
+        rubric:
+          - text: 'שימוש בתכונת ארכימדס לבחירת $n$ עם $\frac1n<b-a$, כולל הנימוק ש-$b-a>0$'
+            weight: 3
+          - text: 'בחירת $m$ בעזרת הערך השלם, עם אי-השוויון $m-1\le na<m$'
+            weight: 3
+          - text: 'הוכחה ש-$a<\frac mn$'
+            weight: 2
+          - text: 'הוכחה ש-$\frac mn<b$, דרך $\frac mn\le a+\frac1n$'
+            weight: 3
+          - text: 'מסקנה מפורשת ש-$\frac mn$ רציונלי ונמצא בקטע'
+            weight: 1
+
+      - label: ג
+        points: 4
+        type: open
+        standalone: false
+        objectives: [OBJ-1.6-2]
+        prompt: הסיקו מסעיף ב שבקטע $(a,b)$ יש אינסוף מספרים רציונליים.
+        solution:
+          - kind: goal
+            text: 'לא קיים מספר סופי של רציונליים שהם כל הרציונליים ב-$(a,b)$.'
+          - kind: idea
+            text: 'מפעילים את סעיף ב על קטע קטן יותר, שמתחיל ב-$a$ ונגמר ברציונלי שכבר מצאנו.'
+          - kind: step
+            text: >-
+              נניח בשלילה שב-$(a,b)$ יש רק מספר סופי של רציונליים, ויש לפחות אחד לפי סעיף ב. יהי $q_1$ הקטן
+              שבהם.
+          - kind: step
+            text: >-
+              לפי סעיף ב, בקטע $(a,q_1)$ יש רציונלי $q$. אז $a<q<q_1<b$, ולכן $q$ רציונלי ב-$(a,b)$ שקטן
+              מ-$q_1$.
+          - kind: result
+            text: 'זו סתירה לבחירת $q_1$ כקטן ביותר; לכן ב-$(a,b)$ יש אינסוף רציונליים.'
+        rubric:
+          - text: 'הפעלת סעיף ב על קטע חדש, שקצהו רציונלי שכבר נמצא'
+            weight: 2
+          - text: 'טיעון שלם (בשלילה, או בבנייה של אינסוף רציונליים שונים), לא רק "וכך הלאה"'
+            weight: 2
+
+      - label: ד
+        points: 4
+        type: mc
+        objectives: [OBJ-1.6-2]
+        prompt: >-
+          איזו בנייה נותנת **תמיד** מספר אי-רציונלי ב-$(a,b)$? (מותר להשתמש בסעיף ב ובכך ש-$\sqrt2$ אי-רציונלי.)
+        choices:
+          - text: 'רציונלי $q$ בקטע $(a-\sqrt2,\ b-\sqrt2)$, ואז $q+\sqrt2$'
+            correct: true
+            feedback: >-
+              נכון. לפי סעיף ב יש $q$ כזה, ו-$a<q+\sqrt2<b$. סכום של רציונלי ואי-רציונלי הוא אי-רציונלי.
+          - text: 'הממוצע $\frac{a+b}2$'
+            feedback: >-
+              עבור $a=0$, $b=1$ הממוצע $\frac12$ רציונלי. בנייה צריכה לעבוד לכל $a<b$.
+            misconception: MC-density-construction-special-case
+          - text: 'רציונלי $q$ בקטע $(a,b)$, ואז $q\sqrt2$'
+            feedback: >-
+              $q\sqrt2$ אי-רציונלי כש-$q\neq0$, אבל הוא בכלל לא חייב להיות בקטע: עם $a=1$, $b=1.1$ ו-$q=1.05$,
+              $q\sqrt2\approx1.48$.
+            misconception: MC-density-construction-special-case
+
+  - id: Q-1-exam-3
+    type: exam
+    title: תכונות של סופרמום
+    prompt: >-
+      $A$ ו-$B$ הן תת-קבוצות לא ריקות של $\mathbb{R}$, חסומות מלעיל.
+    parts:
+      - label: א
+        points: 9
+        type: open
+        objectives: [OBJ-1.5-3, OBJ-1.4-3]
+        prompt: >-
+          הוכיחו ש-$\sup(A+B)=\sup A+\sup B$, כאשר $A+B=\{a+b : a\in A,\ b\in B\}$.
+        solution:
+          - kind: given
+            text: '$A,B$ לא ריקות וחסומות מלעיל; לפי אקסיומת השלמות קיימים $\alpha=\sup A$ ו-$\beta=\sup B$.'
+          - kind: goal
+            text: '$\alpha+\beta$ חסם מלעיל של $A+B$, ולכל $\varepsilon>0$ יש איבר של $A+B$ מעל $\alpha+\beta-\varepsilon$.'
+          - kind: idea
+            text: >-
+              החסם מתקבל מחיבור אי-שוויונות. לכיוון השני מחלקים את $\varepsilon$ לשני חצאים: איבר של $A$ קרוב
+              ל-$\alpha$ עד $\frac\varepsilon2$, ואיבר של $B$ קרוב ל-$\beta$ עד $\frac\varepsilon2$.
+          - kind: step
+            text: >-
+              לכל $a\in A$ ו-$b\in B$: $a\le\alpha$ ו-$b\le\beta$, ולכן $a+b\le\alpha+\beta$. כלומר $\alpha+\beta$
+              חסם מלעיל של $A+B$.
+          - kind: theorem
+            text: >-
+              אפיון הסופרמום: $s$ חסם מלעיל של $X$ הוא $\sup X$ אם ורק אם לכל $\delta>0$ יש $x\in X$ עם
+              $x>s-\delta$.
+          - kind: step
+            text: >-
+              יהי $\varepsilon>0$. לפי האפיון, עם $\delta=\frac\varepsilon2$, יש $a\in A$ עם
+              $a>\alpha-\frac\varepsilon2$ ו-$b\in B$ עם $b>\beta-\frac\varepsilon2$.
+          - kind: computation
+            text: '$a+b>\alpha+\beta-\varepsilon$, ו-$a+b\in A+B$.'
+          - kind: result
+            text: 'לפי אפיון הסופרמום, $\sup(A+B)=\sup A+\sup B$.'
+        rubric:
+          - text: 'ציון שהסופרמומים קיימים (אקסיומת השלמות)'
+            weight: 1
+          - text: 'הוכחה ש-$\sup A+\sup B$ חסם מלעיל של $A+B$'
+            weight: 2
+          - text: 'בחירת $a$ ו-$b$ בעזרת אפיון הסופרמום עם $\frac\varepsilon2$ (או חלוקה שקולה)'
+            weight: 3
+          - text: 'חישוב $a+b>\sup A+\sup B-\varepsilon$ ומסקנה מאפיון הסופרמום'
+            weight: 2
+
+      - label: ב
+        points: 5
+        type: open
+        objectives: [OBJ-1.5-3]
+        prompt: הוכיחו שאם $A\subseteq B$ אז $\sup A\le\sup B$.
+        solution:
+          - kind: goal
+            text: '$\sup A\le\sup B$.'
+          - kind: idea
+            text: '$\sup A$ קטן מכל חסם מלעיל של $A$; מספיק להראות ש-$\sup B$ הוא חסם כזה.'
+          - kind: step
+            text: >-
+              לכל $a\in A$: $a\in B$ (כי $A\subseteq B$), ולכן $a\le\sup B$. לכן $\sup B$ חסם מלעיל של $A$.
+          - kind: definition
+            text: '$\sup A$ הוא החסם מלעיל הקטן ביותר של $A$, ולכן הוא קטן או שווה לכל חסם מלעיל של $A$.'
+          - kind: result
+            text: '$\sup A\le\sup B$.'
+        rubric:
+          - text: 'הוכחה ש-$\sup B$ חסם מלעיל של $A$, בעזרת ההכלה'
+            weight: 3
+          - text: 'שימוש בכך ש-$\sup A$ הוא החסם מלעיל הקטן ביותר'
+            weight: 2
+
+      - label: ג
+        points: 6
+        type: twotier
+        objectives: [OBJ-1.5-3]
+        qualitative: true
+        prompt: >-
+          טענה: אם $A\cap B\neq\varnothing$, אז $\sup(A\cap B)=\min(\sup A,\sup B)$. האם הטענה נכונה?
+        choices:
+          - text: לא נכונה
+            correct: true
+            feedback: נכון. נכון רק אי-שוויון אחד.
+          - text: נכונה
+            feedback: >-
+              $A=\{0,2\}$, $B=\{0,3\}$: $A\cap B=\{0\}$, ולכן $\sup(A\cap B)=0$, ואילו $\min(2,3)=2$.
+            misconception: MC-sup-strict-inclusion
+        reasons:
+          - text: >-
+              $A=\{0,2\}$, $B=\{0,3\}$ היא דוגמה נגדית; מסעיף ב נובע רק $\sup(A\cap B)\le\min(\sup A,\sup B)$
+            correct: true
+            feedback: >-
+              בדיוק. $A\cap B\subseteq A$ ו-$A\cap B\subseteq B$ נותנים שני אי-שוויונות $\le$, אבל החיתוך יכול
+              לאבד את האיברים הגדולים של שתי הקבוצות.
+          - text: 'לפי סעיף ב פעמיים, $\sup(A\cap B)$ שווה לקטן מבין שני הסופרמומים'
+            feedback: >-
+              סעיף ב נותן אי-שוויון, לא שוויון: $\sup(A\cap B)\le\sup A$ ו-$\sup(A\cap B)\le\sup B$. שוויון לא נובע
+              ממנו, והדוגמה $\{0,2\}$, $\{0,3\}$ מראה שהוא נכשל.
+            misconception: MC-sup-strict-inclusion
+          - text: 'האיברים המשותפים מגיעים עד הסופרמום הקטן מבין השניים'
+            feedback: >-
+              אין סיבה לכך: האיברים הגדולים של $A$ ושל $B$ יכולים להיות שונים זה מזה, ואז הם לא בחיתוך.
+            misconception: MC-sup-strict-inclusion
+
+      - label: ד
+        points: 5
+        type: numeric
+        objectives: [OBJ-1.5-3]
+        prompt: >-
+          בסעיף זה ידוע ש-$\sup A=3$ ו-$\inf A=-2$. מהו $\sup(-2A)$, כאשר $-2A=\{-2a : a\in A\}$?
+        answer: 4
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. כפל ב-$-2$ הופך את הסדר, ולכן $\sup(-2A)=-2\inf A=-2\cdot(-2)=4$.
+        wrongFeedback: >-
+          $a\ge-2$ לכל $a\in A$. מה נובע מזה על $-2a$?
+        commonWrong:
+          - value: -6
+            feedback: >-
+              $-6=-2\sup A$, וזה $\inf(-2A)$: האיבר הגדול של $A$ הופך לקטן של $-2A$.
+            misconception: MC-sup-negative-scalar
+          - value: 6
+            feedback: >-
+              $6=2\sup A$, כאילו הסימן נעלם. כפל במספר שלילי מחליף בין סופרמום לאינפימום:
+              $\sup(-2A)=-2\inf A$.
+            misconception: MC-sup-negative-scalar

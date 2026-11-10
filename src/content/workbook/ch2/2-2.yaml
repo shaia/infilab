@@ -1,0 +1,623 @@
+# Workbook of lesson 2.2 — the definition of a limit (ε and N).
+# Objectives (src/course.ts):
+#   OBJ-2.2-1  state the ε-N definition and explain each quantifier with a band around the limit
+#   OBJ-2.2-2  negate the definition: what "aₙ does not tend to L" means
+#   OBJ-2.2-3  find a suitable N for a given ε for simple sequences
+# Every number below was recomputed with src/math/analysis.ts (firstN − 1 is the definition's N).
+lesson: '2.2'
+practice:
+  - id: W-2.2-01
+    level: basic
+    qualitative: true
+    objectives: [OBJ-2.2-1]
+    prompt: >-
+      נתונה סדרה $a_n$ ששואפת ל-$L=-2$.
+
+      (א) כתבו במלואה, עם כל הכמתים, את הטענה $\lim_{n\to\infty} a_n = -2$.
+
+      (ב) מה אומרת הטענה עבור $\varepsilon = 0.1$? תארו זאת בעזרת רצועה על ציר המספרים.
+
+      (ג) מישהו בדק ש-$N=40$ מתאים ל-$\varepsilon=0.1$. האם מזה נובע ש-$N=40$ מתאים גם ל-$\varepsilon=0.5$?
+      ול-$\varepsilon=0.01$?
+    answer: >-
+      (א) $\forall \varepsilon>0\ \exists N\in\mathbb{N}\ \forall n>N:\ |a_n+2|<\varepsilon$.
+
+      (ב) יש מקום $N$ בסדרה שאחריו כל האיברים בקטע $(-2.1,\ -1.9)$.
+
+      (ג) ל-$\varepsilon=0.5$ כן, כי הרצועה רחבה יותר. ל-$\varepsilon=0.01$ לא בהכרח: $N$ תלוי ב-$\varepsilon$.
+    solution:
+      - kind: definition
+        text: >-
+          $\lim_{n\to\infty} a_n = L$ פירושו: לכל $\varepsilon>0$ קיים $N\in\mathbb{N}$ כך שלכל $n>N$ מתקיים
+          $|a_n-L|<\varepsilon$. כאן $L=-2$, ולכן המרחק לגבול הוא $|a_n-(-2)| = |a_n+2|$.
+      - kind: step
+        text: >-
+          (א) בכתיב מלא:
+
+          $$\forall \varepsilon>0\ \ \exists N\in\mathbb{N}\ \ \forall n>N:\quad |a_n+2|<\varepsilon$$
+
+          קודם בוחרים את את $\varepsilon$, ורק אחריו מחפשים את $N$. לכן $N$ רשאי להיות תלוי ב-$\varepsilon$.
+      - kind: computation
+        text: >-
+          (ב) מציבים $\varepsilon=0.1$ ופותחים את הערך המוחלט:
+
+          $$|a_n+2|<0.1 \iff -0.1<a_n+2<0.1 \iff -2.1<a_n<-1.9$$
+      - kind: step
+        text: >-
+          במילים: קיים מקום $N$ בסדרה שאחריו כל האיברים נמצאים ברצועה $(-2.1,\ -1.9)$, שמרכזה בגבול,
+          והיא מגיעה עד מרחק $0.1$ ממנו בכל צד. האיברים $a_1,\dots,a_N$, שהם מספר סופי, רשאים להיות בכל מקום.
+      - kind: step
+        text: >-
+          (ג) עבור $\varepsilon=0.5$ הרצועה $(-2.5,\ -1.5)$ מכילה את $(-2.1,\ -1.9)$. אם לכל $n>40$ מתקיים
+          $|a_n+2|<0.1$, אז בוודאי גם $|a_n+2|<0.5$. לכן $N=40$ מתאים גם כאן.
+      - kind: check
+        text: >-
+          עבור $\varepsilon=0.01$ הרצועה צרה פי עשרה, ומכך שהאיברים אחרי המקום 40 נמצאים ברצועה הרחבה לא נובע שהם
+          ברצועה הצרה. דוגמה: $a_n=-2+\frac1n$. לכל $n>40$ מתקיים $|a_n+2|=\frac1n<\frac1{40}<0.1$, אבל
+          $|a_{41}+2|=\frac1{41}\approx0.024$, שאינו קטן מ-$0.01$. בסדרה הזו ה-$N$ הקטן ביותר ל-$\varepsilon=0.01$
+          הוא 100.
+      - kind: result
+        text: >-
+          ההגדרה: לכל $\varepsilon>0$ קיים $N$ שאחריו כל האיברים ברצועה של $\varepsilon$ סביב הגבול. $N$ שמתאים
+          ל-$\varepsilon$ מסוים מתאים לכל $\varepsilon$ גדול יותר, ולא בהכרח לקטן יותר.
+
+  - id: W-2.2-02
+    level: basic
+    objectives: [OBJ-2.2-3]
+    prompt: >-
+      הסדרה $a_n = \frac{n}{n+5}$ שואפת ל-1. מצאו את ה-$N$ **הקטן ביותר** כך שלכל $n>N$ מתקיים
+      $|a_n-1|<0.01$.
+    answer: '$N=495$'
+    solution:
+      - kind: given
+        text: '$a_n=\frac{n}{n+5}$, הגבול $L=1$, ואת $\varepsilon=0.01$.'
+      - kind: idea
+        text: >-
+          קודם מפשטים את המרחק לגבול לביטוי פשוט, אחר כך פותרים את אי-השוויון עבור $n$, ובסוף בודקים את האיבר
+          שעל הגבול של התחום.
+      - kind: computation
+        text: >-
+          $$a_n-1=\frac{n}{n+5}-\frac{n+5}{n+5}=\frac{-5}{n+5}$$
+
+          המכנה חיובי, ולכן הערך המוחלט רק מוריד את המינוס: $|a_n-1|=\frac{5}{n+5}$.
+      - kind: computation
+        text: >-
+          $$\frac{5}{n+5}<0.01 \iff 5<0.01\,(n+5) \iff 500<n+5 \iff n>495$$
+
+          כפלנו את שני הצדדים ב-$n+5$, שהוא חיובי, ולכן כיוון אי-השוויון נשמר; אחר כך כפלנו ב-100.
+      - kind: step
+        text: 'מכאן $N=495$ מתאים: אם $n>495$ אז $|a_n-1|<0.01$.'
+      - kind: check
+        text: >-
+          אף $N$ קטן מ-495 לא מתאים, כי "לכל $n>N$" כולל אז גם את $n=495$, ושם
+          $|a_{495}-1|=\frac{5}{500}=0.01$, שאינו קטן **ממש** מ-$0.01$.
+      - kind: result
+        text: '$N=495$ הוא הקטן ביותר. כל $N$ גדול ממנו מתאים גם הוא, כי $n>N$ גורר אז $n>495$.'
+
+  - id: W-2.2-03
+    level: basic
+    objectives: [OBJ-2.2-3]
+    prompt: >-
+      הסדרה $a_n=\frac{2n^2+1}{n^2}$ שואפת ל-2. מצאו את ה-$N$ הקטן ביותר כך שלכל $n>N$ מתקיים
+      $|a_n-2|<0.003$.
+    answer: '$N=18$'
+    solution:
+      - kind: given
+        text: '$a_n=\frac{2n^2+1}{n^2}$, $L=2$, $\varepsilon=0.003$.'
+      - kind: computation
+        text: >-
+          $$a_n-2=\frac{2n^2+1}{n^2}-\frac{2n^2}{n^2}=\frac{1}{n^2}$$
+
+          זה מספר חיובי, ולכן $|a_n-2|=\frac{1}{n^2}$.
+      - kind: computation
+        text: >-
+          $$\frac{1}{n^2}<0.003 \iff 1<0.003\,n^2 \iff n^2>\frac{1}{0.003}=333.\overline{3}$$
+
+          כפלנו ב-$n^2$, שהוא חיובי, ואחר כך חילקנו ב-$0.003$, שגם הוא חיובי.
+      - kind: step
+        text: >-
+          שני הצדדים של $n^2>333.\overline{3}$ חיוביים, והשורש שומר על הסדר בין מספרים חיוביים, ולכן התנאי שקול
+          ל-$n>\sqrt{333.\overline{3}}\approx18.26$.
+      - kind: step
+        text: >-
+          הטבעיים שגדולים מ-$18.26$ הם $n\ge19$. התנאי "לכל $n>N$" מתחיל ב-19 בדיוק כאשר $N=18$, כלומר
+          $N=\lfloor 18.26\rfloor$, הערך השלם (הרצפה) של השורש.
+      - kind: check
+        text: >-
+          $n=18$: $\frac{1}{324}\approx0.00309$, מחוץ לרצועה, ולכן $N=17$ לא מתאים. $n=19$:
+          $\frac{1}{361}\approx0.00277<0.003$, בתוך הרצועה.
+      - kind: result
+        text: '$N=18$.'
+
+  - id: W-2.2-04
+    level: mid
+    objectives: [OBJ-2.2-3]
+    prompt: >-
+      נתונה הסדרה $a_n=\frac{4n-1}{2n+1}$, ששואפת ל-2.
+
+      (א) מצאו נוסחה ל-$N$ כפונקציה של $\varepsilon$, כך שלכל $\varepsilon>0$ ולכל $n>N$ מתקיים
+      $|a_n-2|<\varepsilon$. נמקו למה היא עובדת.
+
+      (ב) הציבו $\varepsilon=0.01$ בנוסחה שלכם, ומצאו גם את ה-$N$ הקטן ביותר שמתאים ל-$\varepsilon$ הזה. האם שני
+      המספרים חייבים להיות שווים?
+    answer: >-
+      (א) למשל $N=\left\lceil\frac{3}{2\varepsilon}\right\rceil$, כי $|a_n-2|=\frac{3}{2n+1}<\frac{3}{2n}$.
+
+      (ב) הנוסחה נותנת 150, וה-$N$ הקטן ביותר הוא 149. הם לא חייבים להיות שווים: ההגדרה מבקשת $N$ מתאים כלשהו.
+    solution:
+      - kind: computation
+        text: >-
+          $$a_n-2=\frac{4n-1-2(2n+1)}{2n+1}=\frac{-3}{2n+1},\qquad |a_n-2|=\frac{3}{2n+1}$$
+      - kind: idea
+        text: >-
+          אפשר לפתור את $\frac{3}{2n+1}<\varepsilon$ במדויק, אבל קל יותר להגדיל את המרחק לביטוי פשוט יותר: אם
+          הביטוי הגדול קטן מ-$\varepsilon$, גם המרחק עצמו קטן מ-$\varepsilon$.
+      - kind: computation
+        text: >-
+          המכנה $2n+1$ גדול מ-$2n$, ושבר עם אותו מונה חיובי ומכנה גדול יותר הוא קטן יותר:
+
+          $$|a_n-2|=\frac{3}{2n+1}<\frac{3}{2n}$$
+      - kind: step
+        text: >-
+          (א) מספיק ש-$n>\frac{3}{2\varepsilon}$. המספר $\frac{3}{2\varepsilon}$ בדרך כלל אינו שלם, ו-$N$ חייב להיות
+          טבעי, ולכן לוקחים את התקרה שלו: $N=\left\lceil\frac{3}{2\varepsilon}\right\rceil$, השלם הקטן ביותר שגדול או
+          שווה ל-$\frac{3}{2\varepsilon}$.
+      - kind: step
+        text: >-
+          למה זה עובד: יהי $n>N$. אז $n>N\ge\frac{3}{2\varepsilon}$. כופלים ב-$2\varepsilon>0$ ומקבלים
+          $2n\varepsilon>3$, כלומר $\frac{3}{2n}<\varepsilon$. יחד עם ההערכה:
+          $|a_n-2|<\frac{3}{2n}<\varepsilon$.
+      - kind: computation
+        text: '(ב) בנוסחה: $\frac{3}{2\cdot0.01}=150$, ולכן $N=150$.'
+      - kind: computation
+        text: >-
+          החישוב המדויק:
+
+          $$\frac{3}{2n+1}<0.01 \iff 300<2n+1 \iff n>149.5$$
+
+          כלומר האיברים בתוך הרצועה הם בדיוק $n\ge150$, וה-$N$ הקטן ביותר הוא 149. ($N=148$ לא מתאים: הוא כולל
+          את $n=149$, ושם $\frac{3}{299}\approx0.01003$.)
+      - kind: check
+        text: >-
+          150 ו-149 שניהם מתאימים. כל $N$ גדול מ-$N$ שמתאים גם מתאים: אם $n>150$ אז בפרט $n>149$. ההערכה עלתה לנו
+          מקום אחד ב-$N$, וזה מותר.
+      - kind: result
+        text: >-
+          (א) $N=\left\lceil\frac{3}{2\varepsilon}\right\rceil$. (ב) הנוסחה נותנת 150, הקטן ביותר הוא 149, ושניהם
+          תקינים.
+
+  - id: W-2.2-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.2-1, OBJ-2.2-3]
+    prompt: >-
+      נגדיר
+
+      $$a_n=\begin{cases} n^2, & n\le 1000\\ 3-\frac1n, & n>1000\end{cases}$$
+
+      (א) מישהו טוען: "האיברים מגיעים עד מיליון, ולכן הסדרה לא יכולה לשאוף ל-3." האם הוא צודק? הוכיחו מההגדרה
+      ש-$a_n\to3$, או הפריכו.
+
+      (ב) מצאו את ה-$N$ הקטן ביותר שמתאים ל-$\varepsilon=0.01$, ואת ה-$N$ הקטן ביותר שמתאים
+      ל-$\varepsilon=10^{-4}$.
+    answer: >-
+      (א) לא צודק: $a_n\to3$, למשל עם $N=\max\left(1000,\ \left\lceil\frac1\varepsilon\right\rceil\right)$.
+
+      (ב) $N=1000$ עבור $\varepsilon=0.01$, ו-$N=10000$ עבור $\varepsilon=10^{-4}$.
+    solution:
+      - kind: idea
+        text: >-
+          ההגדרה מדברת רק על האיברים שאחרי $N$, ואנחנו בוחרים את $N$. אם נבחר $N\ge1000$, אלף האיברים הראשונים
+          לא ייבדקו בכלל.
+      - kind: computation
+        text: 'לכל $n>1000$: $|a_n-3|=\left|-\frac1n\right|=\frac1n$.'
+      - kind: step
+        text: >-
+          (א) יהי $\varepsilon>0$, ונבחר $N=\max\left(1000,\ \left\lceil\frac1\varepsilon\right\rceil\right)$. יהי
+          $n>N$. אז $n>1000$, ולכן $a_n=3-\frac1n$; וגם $n>\frac1\varepsilon$, ולכן $\frac1n<\varepsilon$. יחד:
+          $|a_n-3|=\frac1n<\varepsilon$. הוכחנו ש-$a_n\to3$.
+      - kind: step
+        text: >-
+          הטעות בטענה: היא מניחה שכל האיברים צריכים להיות קרובים לגבול. ההגדרה מתירה למספר סופי של איברים (כאן
+          אלף) להיות בכל מקום, גדולים ככל שיהיו. המקסימום עם 1000 הוא בדיוק מה שמדלג עליהם.
+      - kind: computation
+        text: >-
+          (ב) $\varepsilon=0.01$: כל אלף האיברים הראשונים מחוץ לרצועה, כי $|1-3|=2$ ולכל $n\ge2$
+          מתקיים $n^2-3\ge1$. בפרט $a_{1000}$ בחוץ, ולכן $N\ge1000$. לכל $n>1000$:
+          $\frac1n<\frac1{1000}<0.01$, בפנים. לכן ה-$N$ הקטן ביותר הוא 1000.
+      - kind: computation
+        text: >-
+          $\varepsilon=10^{-4}$: לכל $n>1000$ מתקיים $\frac1n<10^{-4} \iff n>10^4$. האיבר $n=10^4$ עצמו בחוץ
+          ($\frac{1}{10^4}$ אינו קטן ממש מ-$10^{-4}$), וכל האיברים אחריו בפנים. לכן ה-$N$ הקטן ביותר הוא 10000.
+      - kind: check
+        text: >-
+          הנוסחה מ-(א) נותנת $\max(1000,\ 100)=1000$ ו-$\max(1000,\ 10000)=10000$: במקרה הזה היא נותנת בדיוק את
+          ה-$N$ הקטן ביותר.
+      - kind: result
+        text: >-
+          (א) הטענה שגויה: $a_n\to3$. (ב) $N=1000$ ו-$N=10000$.
+
+  - id: W-2.2-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.2-2]
+    prompt: >-
+      הסדרה $a_n=\frac{n}{n+1}$ עוברת קרוב מאוד ל-0.9 בדרכה: $a_9=0.9$ בדיוק.
+
+      (א) כתבו במלואה את הטענה "$a_n$ אינה שואפת ל-0.9".
+
+      (ב) הוכיחו אותה: מצאו $\varepsilon$ מתאים, ולכל $N$ הראו $n>N$ מתאים.
+
+      (ג) האם גם $\varepsilon=0.1$ מתאים להוכחה?
+    answer: >-
+      (א) $\exists\varepsilon>0\ \forall N\in\mathbb{N}\ \exists n>N:\ |a_n-0.9|\ge\varepsilon$.
+
+      (ב) $\varepsilon=0.05$, ולכל $N$ האיבר $n=N+19$: לכל $n\ge19$ מתקיים $a_n-0.9\ge0.05$.
+
+      (ג) לא: כל האיברים מ-$n=5$ והלאה נמצאים ברצועה $(0.8,\ 1)$.
+    solution:
+      - kind: definition
+        text: >-
+          (א) השלילה הופכת כל "לכל" ל"קיים" ולהפך, ושוללת את אי-השוויון שבסוף:
+
+          $$\exists\varepsilon>0\ \ \forall N\in\mathbb{N}\ \ \exists n>N:\quad |a_n-0.9|\ge\varepsilon$$
+
+          במילים: יש רצועה אחת סביב 0.9 שכל זנב של הסדרה יוצא ממנה.
+      - kind: idea
+        text: >-
+          האיברים מתקרבים ל-1, שמרחקו מ-0.9 הוא $0.1$. מתישהו הם יהיו קרובים ל-1 יותר מאשר ל-0.9, ולכן נבחר
+          $\varepsilon$ קטן מ-$0.1$, למשל $\varepsilon=0.05$.
+      - kind: computation
+        text: >-
+          מתי $a_n-0.9\ge0.05$? כופלים ב-$n+1>0$:
+
+          $$\frac{n}{n+1}\ge0.95 \iff n\ge0.95n+0.95 \iff 0.05\,n\ge0.95 \iff n\ge19$$
+      - kind: step
+        text: >-
+          (ב) יהי $N\in\mathbb{N}$ כלשהו, ונבחר $n=N+19$. אז $n>N$ וגם $n\ge19$, ולכן $a_n-0.9\ge0.05$. זה מספר
+          חיובי, ולכן $|a_n-0.9|\ge0.05$. מצאנו, לכל $N$, איבר אחריו מחוץ לרצועה: השלילה מתקיימת.
+      - kind: check
+        text: >-
+          (ג) עם $\varepsilon=0.1$ הרצועה היא $(0.8,\ 1)$. תמיד $a_n<1$, ו-$\frac{n}{n+1}>0.8 \iff 0.2\,n>0.8
+          \iff n>4$. כלומר עם $N=4$ כל האיברים שאחריו בפנים, ואין איבר בחוץ להראות. $\varepsilon=0.1$ לא מוכיח
+          כלום.
+      - kind: result
+        text: >-
+          השלילה דורשת **קיום** של $\varepsilon$ אחד שעובד, ולכן צריך לבחור אותו בתבונה: כאן כל
+          $\varepsilon<0.1$ מתאים, למשל $0.05$, ו-$\varepsilon=0.1$ לא מתאים.
+
+  - id: W-2.2-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.2-1, OBJ-2.2-2]
+    prompt: >-
+      לפניכם ארבעה ניסוחים. קבעו עבור כל אחד אם הוא **שקול** להגדרה של $a_n\to L$ (כלומר מתקיים לסדרה בדיוק
+      כשההגדרה מתקיימת), ונמקו: הוכחה של השקילות, או דוגמה נגדית.
+
+      (א) $\forall\varepsilon>0\ \exists N\in\mathbb{N}\ \forall n\ge N:\ |a_n-L|\le\varepsilon$
+
+      (ב) $\forall\varepsilon>0\ \exists N\in\mathbb{N}\ \forall n>N:\ |a_n-L|<100\varepsilon$
+
+      (ג) $\forall k\in\mathbb{N}\ \exists N\in\mathbb{N}\ \forall n>N:\ |a_n-L|<\frac1k$
+
+      (ד) $\forall N\in\mathbb{N}\ \exists\varepsilon>0\ \forall n>N:\ |a_n-L|<\varepsilon$
+    answer: >-
+      (א), (ב) ו-(ג) שקולים להגדרה. (ד) לא: הסדרה הקבועה $a_n=1$ מקיימת אותו עם $L=0$ (קחו $\varepsilon=2$),
+      ואינה שואפת ל-0.
+    solution:
+      - kind: idea
+        text: >-
+          שקילות היא שני כיוונים: ההגדרה גוררת את הניסוח, והניסוח גורר את ההגדרה. התחבולה: ניסוח שמתקיים **לכל**
+          $\varepsilon$ מותר להפעיל עם $\varepsilon$ אחר, קטן יותר, ממה שקיבלנו.
+      - kind: step
+        text: >-
+          (א), מההגדרה לניסוח: בהינתן $\varepsilon$, ההגדרה נותנת $N_0$ כך ש-$|a_n-L|<\varepsilon$ לכל $n>N_0$.
+          ניקח $N=N_0+1$: אם $n\ge N$ אז $n>N_0$, ולכן $|a_n-L|<\varepsilon$, ובפרט $|a_n-L|\le\varepsilon$.
+      - kind: step
+        text: >-
+          (א), מהניסוח להגדרה: בהינתן $\varepsilon>0$, נפעיל את (א) עם $\frac{\varepsilon}{2}$ ונקבל $N_1$ כך
+          ש-$|a_n-L|\le\frac{\varepsilon}{2}<\varepsilon$ לכל $n\ge N_1$. ניקח $N=N_1$: אם $n>N_1$ אז בפרט
+          $n\ge N_1$. לכן "קטן" מול "קטן או שווה" ו-"$n>N$" מול "$n\ge N$" לא משנים דבר.
+      - kind: step
+        text: >-
+          (ב): מההגדרה לניסוח מיידי, כי $\varepsilon<100\varepsilon$. מהניסוח להגדרה: בהינתן $\varepsilon>0$,
+          נפעיל את (ב) עם $\frac{\varepsilon}{100}>0$, ונקבל $N$ כך שלכל $n>N$ מתקיים
+          $|a_n-L|<100\cdot\frac{\varepsilon}{100}=\varepsilon$.
+      - kind: step
+        text: >-
+          (ג): מההגדרה לניסוח: מציבים $\varepsilon=\frac1k$. מהניסוח להגדרה: בהינתן $\varepsilon>0$, לפי תכונת
+          ארכימדס (שיעור 1.6) יש $k\in\mathbb{N}$ עם $k>\frac1\varepsilon$, כלומר $\frac1k<\varepsilon$. נפעיל את
+          (ג) עם ה-$k$ הזה: לכל $n>N$ מתקיים $|a_n-L|<\frac1k<\varepsilon$.
+      - kind: step
+        text: >-
+          (ד): כאן סדר הכמתים הפוך, ו-$\varepsilon$ נבחר **אחרי** $N$, כך שמותר לבחור אותו ענק. דוגמה נגדית:
+          $a_n=1$ ו-$L=0$. לכל $N$ ניקח $\varepsilon=2$, ואז $|a_n-0|=1<2$ לכל $n$: (ד) מתקיים. אבל $a_n$ אינה
+          שואפת ל-0: עם $\varepsilon=\frac12$, לכל $N$ ולכל $n>N$ מתקיים $|a_n-0|=1\ge\frac12$, וזו בדיוק שלילת
+          ההגדרה.
+      - kind: check
+        text: >-
+          מה (ד) אומר באמת? רק שכל זנב של הסדרה חסום. למשל כל סדרה חסומה, $|a_n|\le M$, מקיימת אותו לכל $L$
+          עם $\varepsilon=M+|L|+1$. זה רחוק מאוד מהתכנסות.
+      - kind: result
+        text: >-
+          (א), (ב), (ג) שקולים להגדרה; (ד) אינו שקול לה, והדוגמה $a_n=1$, $L=0$ מראה זאת.
+
+  - id: W-2.2-08
+    level: exam
+    objectives: [OBJ-2.2-3, OBJ-2.2-1]
+    prompt: >-
+      נתונה הסדרה $a_n=\frac{3n^2+4n}{n^2+1}$.
+
+      (א) הראו שלכל $n\in\mathbb{N}$ מתקיים $0<a_n-3<\frac4n$.
+
+      (ב) הוכיחו מההגדרה ש-$a_n\to3$: לכל $\varepsilon>0$ תנו $N$ מפורש, והראו שהוא מתאים.
+
+      (ג) עבור $\varepsilon=0.01$: איזה $N$ נותנת הנוסחה שלכם מ-(ב)? מצאו את ה-$N$ הקטן ביותר, והסבירו למה
+      ההערכה מ-(א) לא נותנת בדיוק אותו.
+    answer: >-
+      (א) $a_n-3=\frac{4n-3}{n^2+1}$, ואי-השוויון $\frac{4n-3}{n^2+1}<\frac4n$ שקול ל-$3n+4>0$.
+
+      (ב) $N=\left\lceil\frac4\varepsilon\right\rceil$.
+
+      (ג) הנוסחה נותנת 400, וה-$N$ הקטן ביותר הוא 399: ההערכה הגדילה את המרחק, ולכן ה-$N$ שלה יכול לצאת גדול
+      יותר.
+    solution:
+      - kind: computation
+        text: >-
+          (א) $$a_n-3=\frac{3n^2+4n-3(n^2+1)}{n^2+1}=\frac{4n-3}{n^2+1}$$
+
+          המונה $4n-3\ge1$ והמכנה חיובי, ולכן $a_n-3>0$.
+      - kind: computation
+        text: >-
+          כדי להשוות ל-$\frac4n$ כופלים את שני הצדדים ב-$n(n^2+1)>0$, וכיוון אי-השוויון נשמר:
+
+          $$\frac{4n-3}{n^2+1}<\frac4n \iff n(4n-3)<4(n^2+1) \iff 4n^2-3n<4n^2+4 \iff -3n<4$$
+
+          השורה האחרונה נכונה לכל $n\in\mathbb{N}$, וכל המעברים שקולים, ולכן גם הראשונה נכונה.
+      - kind: step
+        text: >-
+          (ב) יהי $\varepsilon>0$, ונבחר $N=\left\lceil\frac4\varepsilon\right\rceil$ (התקרה, כי $N$ חייב להיות
+          טבעי). יהי $n>N$. אז $n>\frac4\varepsilon$, וכפל ב-$\frac{\varepsilon}{n}>0$ נותן $\frac4n<\varepsilon$.
+          לפי (א): $|a_n-3|=a_n-3<\frac4n<\varepsilon$.
+      - kind: computation
+        text: '(ג) הנוסחה: $\frac{4}{0.01}=400$, ולכן $N=400$.'
+      - kind: computation
+        text: >-
+          החישוב המדויק. כופלים ב-$100(n^2+1)>0$:
+
+          $$\frac{4n-3}{n^2+1}<0.01 \iff 400n-300<n^2+1 \iff n^2-400n+301>0$$
+
+          נכתוב את אגף שמאל כ-$301-n(400-n)$.
+      - kind: step
+        text: >-
+          לכל $n\ge400$: $n(400-n)\le0$, ולכן הביטוי לפחות $301>0$, והאיבר בתוך הרצועה. לכל $1\le n\le399$:
+          $n(400-n)-399=(n-1)(399-n)\ge0$, ולכן $n(400-n)\ge399$ והביטוי לכל היותר $301-399<0$: האיבר מחוץ
+          לרצועה. בפרט $a_{399}$ בחוץ, ולכן ה-$N$ הקטן ביותר הוא 399.
+      - kind: check
+        text: >-
+          במספרים: $|a_{399}-3|\approx0.010006$, בחוץ, ו-$|a_{400}-3|\approx0.009981$, בפנים.
+      - kind: step
+        text: >-
+          למה ההערכה לא נותנת בדיוק 399: $\frac4n$ גדול מהמרחק האמיתי. כשההערכה אומרת "בפנים", האיבר באמת
+          בפנים, אבל לא להפך. ההערכה עולה לנו מקום אחד, וזה מותר, כי כל $N$ גדול מ-$N$ שמתאים גם מתאים.
+      - kind: result
+        text: >-
+          (ב) $N=\left\lceil\frac4\varepsilon\right\rceil$. (ג) הנוסחה נותנת 400, הקטן ביותר הוא 399, ושניהם
+          תקינים.
+
+  - id: W-2.2-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-2.2-2, OBJ-2.2-1]
+    prompt: >-
+      נגדיר $a_n=1$ כאשר $n$ הוא ריבוע של מספר טבעי ($n=1,4,9,16,\dots$), ו-$a_n=\frac1n$ לכל $n$ אחר.
+
+      (א) סטודנט כותב: "עד מיליון יש רק אלף ריבועים, כך שכמעט כל האיברים קרובים ל-0, ולכן $a_n\to0$." מצאו את
+      הטעות.
+
+      (ב) הוכיחו מההגדרה ש-$a_n$ אינה שואפת ל-0.
+
+      (ג) הוכיחו ש-$a_n$ אינה שואפת גם ל-1.
+    answer: >-
+      (א) ההגדרה דורשת שאחרי $N$ **כל** האיברים יהיו ברצועה, ואחרי כל $N$ יש עוד ריבוע.
+
+      (ב) $\varepsilon=\frac12$, ולכל $N$ האיבר $n=(N+1)^2$.
+
+      (ג) $\varepsilon=\frac12$, ולכל $N$ האיבר $n=(N+1)^2+1$, שאינו ריבוע.
+    solution:
+      - kind: step
+        text: >-
+          (א) "כמעט כל האיברים" אינו מה שההגדרה דורשת. היא דורשת מקום $N$ שאחריו **כל** האיברים ברצועה. אבל אחרי
+          כל $N$ יש ריבוע, למשל $(N+1)^2$, ושם $a_n=1$, במרחק 1 מ-0. יש אינסוף איברים כאלה, גם אם הם נדירים.
+      - kind: definition
+        text: >-
+          השלילה של $a_n\to0$: $\exists\varepsilon>0\ \forall N\in\mathbb{N}\ \exists n>N:\ |a_n|\ge\varepsilon$.
+      - kind: step
+        text: >-
+          (ב) נבחר $\varepsilon=\frac12$. יהי $N$ כלשהו, ונבחר $n=(N+1)^2$. כיוון ש-$N+1\ge1$, מתקיים
+          $(N+1)^2\ge N+1>N$. המספר $n$ ריבוע, ולכן $|a_n-0|=1\ge\frac12$. זו השלילה.
+      - kind: idea
+        text: >-
+          (ג) עכשיו הריבועים לא מפריעים (מרחקם מ-1 הוא 0), והאיברים שאינם ריבועים רחוקים מ-1. צריך להראות שאחרי
+          כל $N$ יש מספר שאינו ריבוע, ושהאיבר שלו רחוק מ-1.
+      - kind: step
+        text: >-
+          נבחר $\varepsilon=\frac12$. יהי $N$ כלשהו, ונבחר $n=(N+1)^2+1>N$. הריבוע הבא אחרי $(N+1)^2$ הוא
+          $(N+2)^2=(N+1)^2+2N+3$, שגדול מ-$n$. לכן $n$ נמצא ממש בין שני ריבועים עוקבים, ואינו ריבוע.
+      - kind: computation
+        text: >-
+          כיוון ש-$N\ge1$, מתקיים $n\ge(1+1)^2+1=5$, ולכן $a_n=\frac1n\le\frac15$, ו-$|a_n-1|=1-\frac1n\ge\frac45\ge\frac12$.
+      - kind: check
+        text: >-
+          לא הוכחנו שלסדרה אין גבול בכלל: לשם כך צריך לשלול כל $L$ ממשי, וזה נושא של השיעור הבא. הוכחנו רק ש-0
+          ו-1 אינם הגבול שלה.
+      - kind: result
+        text: >-
+          (א) "כמעט כל" אינו "כל האיברים מ-$N$ והלאה". (ב) ו-(ג) עם $\varepsilon=\frac12$, בעזרת האיברים
+          $(N+1)^2$ ו-$(N+1)^2+1$ בהתאמה.
+
+  - id: W-2.2-10
+    level: exam
+    objectives: [OBJ-2.2-3, OBJ-2.2-1]
+    prompt: >-
+      נגדיר $a_n=\frac3n$ כאשר $n$ אי-זוגי, ו-$a_n=\frac{1}{n^2}$ כאשר $n$ זוגי.
+
+      (א) הוכיחו מההגדרה ש-$a_n\to0$: לכל $\varepsilon>0$ תנו $N$ מפורש.
+
+      (ב) מצאו את ה-$N$ הקטן ביותר שמתאים ל-$\varepsilon=0.01$.
+
+      (ג) כמה איברים של הסדרה נמצאים מחוץ לרצועה $(-0.01,\ 0.01)$? האם זה אותו מספר כמו ה-$N$ מ-(ב)?
+    answer: >-
+      (א) למשל $N=\left\lceil\frac3\varepsilon\right\rceil$, כי $|a_n|\le\frac3n$ לכל $n$.
+
+      (ב) $N=299$.
+
+      (ג) 155 איברים: 150 אי-זוגיים ו-5 זוגיים. זה לא אותו מספר: $N$ הוא המקום של האיבר האחרון שבחוץ, לא מספר
+      האיברים שבחוץ.
+    solution:
+      - kind: idea
+        text: >-
+          יש שני סוגי איברים. דרך אחת: למצוא חסם אחד שמתאים לשניהם. דרך אחרת: למצוא $N$ לכל סוג ולקחת את הגדול
+          מבין השניים.
+      - kind: step
+        text: >-
+          (א) לכל $n$ אי-זוגי $|a_n|=\frac3n$. לכל $n$ זוגי $n^2\ge n$, ולכן $|a_n|=\frac{1}{n^2}\le\frac1n<\frac3n$.
+          כלומר $|a_n|\le\frac3n$ לכל $n\in\mathbb{N}$.
+      - kind: step
+        text: >-
+          יהי $\varepsilon>0$, ונבחר $N=\left\lceil\frac3\varepsilon\right\rceil$. אם $n>N$ אז $n>\frac3\varepsilon$,
+          ולכן $\frac3n<\varepsilon$ ו-$|a_n|\le\frac3n<\varepsilon$.
+      - kind: check
+        text: >-
+          הדרך השנייה נותנת $N=\max\left(\left\lceil\frac3\varepsilon\right\rceil,\ \left\lceil\frac{1}{\sqrt\varepsilon}\right\rceil\right)$:
+          אם $n$ גדול מהמקסימום, הוא גדול משניהם, ושני הסוגים בפנים. גם זו הוכחה תקינה.
+      - kind: computation
+        text: >-
+          (ב) כל האיברים חיוביים, ולכן "בתוך הרצועה" פירושו $a_n<0.01$. אי-זוגיים: $\frac3n<0.01 \iff n>300$,
+          כלומר האי-זוגיים בפנים מ-$n=301$, ו-$n=299$ בחוץ ($\frac{3}{299}\approx0.01003$). זוגיים:
+          $\frac{1}{n^2}<0.01 \iff n^2>100 \iff n>10$, כלומר כל הזוגיים מ-12 והלאה בפנים.
+      - kind: step
+        text: >-
+          האיבר האחרון שבחוץ הוא $n=299$ (האיבר $n=300$ זוגי, $\frac{1}{90000}$, בפנים). לכן $N=299$ מתאים:
+          אחריו כל אי-זוגי הוא לפחות 301 וכל זוגי לפחות 300. $N=298$ לא מתאים, כי הוא כולל את $n=299$. הנוסחה
+          מ-(א) נותנת 300, שגם הוא מתאים.
+      - kind: computation
+        text: >-
+          (ג) בחוץ: האי-זוגיים $1,3,\dots,299$, שהם 150 איברים, והזוגיים $2,4,6,8,10$, שהם 5. סך הכול 155.
+      - kind: step
+        text: >-
+          155 אינו 299: בין האיברים שבחוץ יש איברים בפנים (הזוגיים מ-12 עד 298). ההגדרה שואלת **מאיזה מקום** כל
+          האיברים בפנים, ולא כמה איברים בחוץ.
+      - kind: result
+        text: >-
+          (א) $N=\left\lceil\frac3\varepsilon\right\rceil$. (ב) $N=299$. (ג) 155 איברים בחוץ, ו-155 שונה מ-299.
+challenge:
+  - id: W-2.2-c1
+    stars: 1
+    objectives: [OBJ-2.2-3]
+    prompt: >-
+      נתונה הסדרה $a_n=\frac{1}{20n^2+20n+2020}$.
+
+      (א) הוכיחו מההגדרה ש-$a_n\to0$, עם $N$ מפורש לכל $\varepsilon>0$.
+
+      (ב) עבור $\varepsilon=10^{-6}$ השוו בין שתי הערכות: $a_n<\frac{1}{20n}$ ו-$a_n<\frac{1}{20n^2}$. איזה $N$
+      נותנת כל אחת מהן? ומהו ה-$N$ הקטן ביותר?
+    answer: >-
+      (א) למשל $N=\left\lceil\frac{1}{20\varepsilon}\right\rceil$.
+
+      (ב) ההערכה הראשונה נותנת $N=50000$, השנייה $N=223$, וה-$N$ הקטן ביותר הוא 222. שלושתם מתאימים.
+    solution:
+      - kind: idea
+        text: >-
+          המכנה מסובך. אם מקטינים מכנה של שבר חיובי, השבר גדל, ולכן כל מכנה קטן יותר נותן חסם מלמעלה על $a_n$. כל
+          האיברים חיוביים, ולכן $|a_n-0|=a_n$.
+      - kind: step
+        text: >-
+          (א) המחוברים $20n^2$ ו-$2020$ חיוביים, ולכן $20n^2+20n+2020>20n$, ומכאן $a_n<\frac{1}{20n}$.
+      - kind: step
+        text: >-
+          יהי $\varepsilon>0$, ונבחר $N=\left\lceil\frac{1}{20\varepsilon}\right\rceil$. אם $n>N$ אז
+          $n>\frac{1}{20\varepsilon}$, כלומר $20n\varepsilon>1$, ולכן $|a_n-0|=a_n<\frac{1}{20n}<\varepsilon$.
+      - kind: computation
+        text: '(ב) ההערכה הראשונה: $\frac{1}{20\cdot10^{-6}}=50000$, ולכן $N=50000$.'
+      - kind: computation
+        text: >-
+          ההערכה השנייה: המכנה גדול מ-$20n^2$, ולכן $a_n<\frac{1}{20n^2}$, וזה קטן מ-$\varepsilon$ כאשר
+          $n^2>\frac{1}{20\varepsilon}=50000$, כלומר $n>\sqrt{50000}\approx223.6$. כל $n\ge224$ מתאים, ולכן
+          $N=\lfloor223.6\rfloor=223$.
+      - kind: computation
+        text: >-
+          ה-$N$ הקטן ביותר: $a_n<10^{-6}$ שקול לכך שהמכנה גדול מ-$10^6$:
+
+          $$20n^2+20n+2020>10^6 \iff 20n(n+1)>997980 \iff n(n+1)>49899$$
+
+          $222\cdot223=49506$, לא מספיק; $223\cdot224=49952$, מספיק; ו-$n(n+1)$ גדל עם $n$. לכן האיברים בפנים
+          הם בדיוק $n\ge223$, וה-$N$ הקטן ביותר הוא 222.
+      - kind: check
+        text: >-
+          50000 גדול פי מאתיים מ-222, ובכל זאת הוא תשובה נכונה לגמרי: ההגדרה מבקשת $N$ מתאים כלשהו, וכל $N$ גדול
+          מ-$N$ שמתאים גם מתאים. הערכה עדינה יותר נותנת $N$ קטן יותר, אבל לא הוכחה טובה יותר.
+      - kind: result
+        text: >-
+          (א) $N=\left\lceil\frac{1}{20\varepsilon}\right\rceil$. (ב) 50000, 223, והקטן ביותר 222.
+    source:
+      name: 'MIT OpenCourseWare 18.100A Real Analysis (Fall 2020), Assignment 3'
+      year: 2020
+      problem: 'Problem 6'
+      url: 'https://ocw.mit.edu/courses/18-100a-real-analysis-fall-2020/mit18_100af20_hw3.pdf'
+      verified: '2026-11-06'
+      adapted: true
+
+  - id: W-2.2-c2
+    stars: 1
+    objectives: [OBJ-2.2-1]
+    prompt: >-
+      תהי $x_n$ סדרה. נגדיר ממנה סדרה חדשה $y_n$ שמשלבת את $x_n$ עם האיברים שלה במקומות שהם ריבועים: לכל
+      $k\in\mathbb{N}$
+
+      $$y_{2k-1}=x_k,\qquad y_{2k}=x_{k^2}$$
+
+      כלומר $y_1,y_2,y_3,y_4,y_5,y_6,\dots$ הם $x_1,x_1,x_2,x_4,x_3,x_9,\dots$. הוכיחו שלכל $L\in\mathbb{R}$:
+      $x_n\to L$ אם ורק אם $y_n\to L$.
+    answer: >-
+      אם $N$ מתאים ל-$\varepsilon$ עבור $x_n$, אז $2N$ מתאים ל-$\varepsilon$ עבור $y_n$. ולהפך, אם $M$ מתאים
+      עבור $y_n$, אז אותו $M$ מתאים עבור $x_n$.
+    solution:
+      - kind: idea
+        text: >-
+          כל איבר של $y_n$ הוא איבר של $x_n$ שהאינדקס שלו לפחות כמחצית מהמקום שלו ב-$y_n$; וכל איבר $x_k$ מופיע
+          ב-$y_n$ במקום $2k-1\ge k$. לכן זנב של אחת הסדרות נמצא בתוך זנב של השנייה.
+      - kind: goal
+        text: 'שני כיוונים: אם $x_n\to L$ אז $y_n\to L$; ואם $y_n\to L$ אז $x_n\to L$.'
+      - kind: step
+        text: >-
+          נניח $x_n\to L$, ויהי $\varepsilon>0$. יש $N$ כך ש-$|x_k-L|<\varepsilon$ לכל $k>N$. נראה ש-$|y_n-L|<\varepsilon$
+          לכל $n>2N$.
+      - kind: step
+        text: >-
+          אם $n=2k$ זוגי: $2k>2N$ נותן $k>N$, וכיוון ש-$k\ge1$ גם $k^2\ge k>N$. לכן
+          $|y_n-L|=|x_{k^2}-L|<\varepsilon$.
+      - kind: step
+        text: >-
+          אם $n=2k-1$ אי-זוגי: $2k-1>2N$ נותן $k>N+\frac12>N$. לכן $|y_n-L|=|x_k-L|<\varepsilon$. בשני המקרים
+          $2N$ מתאים ל-$\varepsilon$ עבור $y_n$, ולכן $y_n\to L$.
+      - kind: step
+        text: >-
+          להפך: נניח $y_n\to L$, ויהי $\varepsilon>0$. יש $M$ כך ש-$|y_n-L|<\varepsilon$ לכל $n>M$. לכל $k>M$:
+          $2k-1=k+(k-1)\ge k>M$, ולכן $|x_k-L|=|y_{2k-1}-L|<\varepsilon$. כלומר $M$ מתאים ל-$\varepsilon$ עבור
+          $x_n$, ו-$x_n\to L$.
+      - kind: check
+        text: >-
+          למה צריך את המקומות האי-זוגיים: אילו $y_n$ הייתה רק $x_{n^2}$, הכיוון השני היה נכשל. למשל $x_n=0$ כאשר
+          $n$ ריבוע ו-$x_n=1$ אחרת: אז $x_{n^2}=0$ לכל $n$, אבל $x_n$ אינה שואפת ל-0, כי אחרי כל $N$ יש מספר
+          שאינו ריבוע. המקומות האי-זוגיים מכילים את כל $x_n$, ובזכותם הכיוון השני עובד.
+      - kind: result
+        text: >-
+          לכל $L$: $x_n\to L$ אם ורק אם $y_n\to L$. ה-$N$ עובר מסדרה לסדרה במפורש ($2N$ בכיוון אחד, $M$ בשני).
+    source:
+      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Volume I (version 6.3)'
+      year: 2026
+      problem: 'Exercise 2.1.20'
+      url: 'https://www.jirka.org/ra/realanal.pdf'
+      verified: '2026-11-06'
+      adapted: true

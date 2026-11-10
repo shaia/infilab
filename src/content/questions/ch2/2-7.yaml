@@ -1,0 +1,350 @@
+# Lesson 2.7 — monotone sequences and the number e.
+# Objectives (src/course.ts):
+#   OBJ-2.7-1  a monotone bounded sequence converges to its sup (or inf)
+#   OBJ-2.7-2  recursive sequences: monotone and bounded by induction, the limit from the fixed-point equation
+#   OBJ-2.7-3  (1 + 1/n)ⁿ converges; this defines e
+chapter: 2
+questions:
+  - id: Q-2.7-thm
+    type: mc
+    objectives: [OBJ-2.7-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      הסדרה $a_n$ עולה וחסומה מלעיל. מה ידוע עליה?
+    choices:
+      - text: 'היא מתכנסת, וגבולה הוא $\sup\{a_n : n\in\mathbb{N}\}$'
+        correct: true
+        feedback: >-
+          נכון. הסופרמום קיים לפי אקסיומת השלמות. לכל $\varepsilon$ יש איבר $a_N$ מעל $\sup-\varepsilon$, ומכיוון
+          שהסדרה עולה, כל האיברים שאחריו נמצאים בין $\sup-\varepsilon$ לבין $\sup$.
+      - text: היא מתכנסת לחסם המלעיל שלה
+        feedback: >-
+          לסדרה יש הרבה חסמים מלעיל, וגבולה הוא רק הקטן שבהם. $1-\frac1n$ חסומה מלעיל על ידי 5 וגבולה 1.
+        misconception: MC-monotone-limit-any-bound
+      - text: היא מתכנסת לאיבר הגדול ביותר שלה
+        feedback: >-
+          לסדרה עולה ממש אין איבר גדול ביותר: $1-\frac1n$ לעולם אינה מגיעה ל-1, ובכל זאת 1 הוא הגבול.
+        misconception: MC-monotone-limit-is-a-term
+      - text: אי אפשר לדעת אם היא מתכנסת בלי חסם מלרע
+        feedback: >-
+          לסדרה עולה יש תמיד חסם מלרע: $a_1$. לכן מה שחסר לסדרה עולה הוא רק חסם מלעיל, וכאן הוא נתון.
+        misconception: MC-monotone-wrong-bound
+
+  - id: Q-2.7-bound
+    type: multi
+    objectives: [OBJ-2.7-1]
+    level: mid
+    prompt: >-
+      הסדרה $a_n$ עולה, $a_n\le 5$ לכל $n$, ו-$a_n\to L$. אילו מהטענות הבאות נכונות בהכרח? סמנו את כולן.
+    choices:
+      - text: '$L\le 5$'
+        correct: true
+        feedback: >-
+          נכון. $L$ הוא הסופרמום, החסם המלעיל הקטן ביותר, ו-5 הוא חסם מלעיל. (אפשר גם: גבולות שומרים על אי-שוויון
+          חלש.)
+      - text: '$a_n\le L$ לכל $n$'
+        correct: true
+        feedback: >-
+          נכון. $L=\sup\{a_n\}$ הוא חסם מלעיל של הסדרה. כך גם רואים ש-$a_n$ מתקרבת ל-$L$ מלמטה.
+      - text: '$L=5$'
+        feedback: >-
+          5 הוא חסם, לא בהכרח החסם הקטן ביותר. $a_n=1-\frac1n$ מקיימת את כל ההנחות וגבולה 1.
+        misconception: MC-monotone-limit-any-bound
+      - text: 'קיים $n$ כך ש-$a_n=L$'
+        feedback: >-
+          אם הסדרה עולה ממש, אף איבר אינו שווה לגבול: אחרת האיבר שאחריו היה גדול מהגבול. ראו $1-\frac1n$.
+        misconception: MC-monotone-limit-is-a-term
+
+  - id: Q-2.7-tail
+    type: twotier
+    objectives: [OBJ-2.7-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הסדרה $a_n$ חסומה, והיא עולה החל מ-$n=100$: $a_{n+1}\ge a_n$ לכל $n\ge 100$. על 99 האיברים הראשונים אין
+      מידע. האם $a_n$ מתכנסת בהכרח?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. הזנב $a_{100},a_{101},\dots$ הוא סדרה עולה וחסומה, ולכן מתכנס, ו-99 האיברים הראשונים לא משנים גבול.
+      - text: לא
+        feedback: >-
+          99 האיברים הראשונים לא משפיעים על הגבול. המשפט חל על הזנב, שעולה וחסום.
+        misconception: MC-monotone-from-start
+    reasons:
+      - text: 'הזנב מ-$n=100$ עולה וחסום ולכן מתכנס, וגבול הזנב הוא גבול הסדרה'
+        correct: true
+        feedback: >-
+          בדיוק. גבול תלוי רק בזנבות (שיעור 2.2), ולכן מספיקה מונוטוניות "מנקודה מסוימת".
+      - text: 'המשפט דורש מונוטוניות מהאיבר הראשון, ולכן אפשר רק לנחש'
+        feedback: >-
+          אפשר להפעיל את המשפט על הסדרה $b_k=a_{99+k}$, שעולה מההתחלה. מה שקורה לפני כן לא משנה את הגבול.
+        misconception: MC-monotone-from-start
+      - text: 'כל סדרה חסומה מתכנסת, אז המונוטוניות לא נחוצה'
+        feedback: >-
+          $(-1)^n$ חסומה ואינה מתכנסת. כאן המונוטוניות של הזנב היא שמבטיחה התכנסות.
+        misconception: MC-bounded-implies-convergent
+
+  - id: Q-2.7-telescope
+    type: rank
+    objectives: [OBJ-2.7-1]
+    level: mid
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      ההוכחה שהסדרה $a_n=1+\frac1{2^2}+\frac1{3^2}+\dots+\frac1{n^2}$ מתכנסת התפרקה לשלבים. סדרו אותם.
+    items:
+      - id: up
+        label: 'קודם נראה שהסדרה עולה: $a_{n+1}-a_n=\frac{1}{(n+1)^2}>0$.'
+      - id: term
+        label: 'עכשיו נחסום מלעיל. לכל $k\ge 2$: $\frac1{k^2}<\frac{1}{k(k-1)}=\frac{1}{k-1}-\frac1k$.'
+      - id: sum
+        label: 'נסכם את אי-השוויון הזה מ-$k=2$ עד $k=n$; הסכום מימין מתקפל: $a_n<1+\left(1-\frac1n\right)<2$.'
+      - id: thm
+        label: 'הסדרה עולה וחסומה מלעיל על ידי 2, ולכן מתכנסת, לגבול שאינו גדול מ-2.'
+    order: [up, term, sum, thm]
+    correctFeedback: >-
+      נכון. את הגבול עצמו ההוכחה לא מגלה (הוא $\frac{\pi^2}{6}\approx 1.645$, עובדה מאינפי 2), וזה בדיוק כוחו של
+      המשפט: הוא מוכיח התכנסות בלי לדעת את הגבול.
+    wrongFeedback: >-
+      המשפט צריך שתי עובדות, עלייה וחסם מלעיל, ורק אחריהן באה המסקנה. החסם מתקבל מסכימת אי-השוויון של המחובר
+      הבודד, ולכן אי-השוויון בא לפני הסכימה.
+
+  - id: Q-2.7-sqrt
+    type: numeric
+    objectives: [OBJ-2.7-2]
+    level: basic
+    prompt: >-
+      הסדרה $a_1=0$, $a_{n+1}=\sqrt{2+a_n}$ עולה וחסומה (כך הוכח בשיעור), ולכן מתכנסת. מהו גבולה?
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. אם $a_n\to L$ אז גם $a_{n+1}\to L$, ומ-$a_{n+1}^2=2+a_n$ מקבלים $L^2=2+L$, כלומר $L=2$ או $L=-1$.
+      כל האיברים אי-שליליים, ולכן $L\ge0$ ו-$L=2$.
+    wrongFeedback: >-
+      העבירו את כלל הרקורסיה לגבול: $L^2=2+L$. מבין שני הפתרונות, בחרו את זה שמתאים לסימן של האיברים.
+    commonWrong:
+      - value: -1
+        feedback: >-
+          $-1$ פותר את $L^2=L+2$, אבל כל האיברים הם שורשים ריבועיים, ולכן אי-שליליים, ולכן גם הגבול אי-שלילי.
+        misconception: MC-fixed-point-root-choice
+      - value: 1.4142
+        feedback: >-
+          זה $a_2=\sqrt2$, האיבר השני, לא הגבול. הסדרה ממשיכה לעלות: $a_3\approx1.85$, $a_4\approx1.96$.
+
+  - id: Q-2.7-trap
+    type: twotier
+    objectives: [OBJ-2.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סטודנט חקר את הסדרה $a_1=2$, $a_{n+1}=a_n^2$ וכתב: "נסמן את הגבול ב-$L$. אז $L=L^2$, כלומר $L=0$ או $L=1$.
+      כל האיברים חיוביים, ולכן הגבול הוא 1." האם המסקנה נכונה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $a_n=2,\ 4,\ 16,\ 256,\dots$ ולמעשה $a_n=2^{2^{n-1}}\to\infty$: אין גבול סופי בכלל.
+      - text: כן
+        feedback: >-
+          המשוואה $L=L^2$ מתקיימת רק אם יש גבול. כאן $a_n\ge 2$ והסדרה עולה, אז גבול סופי $L$ היה מקיים $L\ge2$,
+          וזה סותר את $L\in\{0,1\}$.
+        misconception: MC-fixed-point-before-convergence
+    reasons:
+      - text: 'משוואת הנקודה הקבועה נכונה רק אם הסדרה מתכנסת, וכאן היא לא: $a_{n+1}-a_n=a_n(a_n-1)\ge 2$'
+        correct: true
+        feedback: >-
+          בדיוק. כל צעד מוסיף לפחות 2, ולכן $a_n\ge 2n$ והסדרה אינה חסומה. הסטודנט פתר את המשוואה לפני שהוכיח
+          שיש גבול.
+      - text: 'הסטודנט בחר את הפתרון הלא נכון: הגבול הוא 0'
+        feedback: >-
+          שני הפתרונות שגויים כאן, כי אין גבול. ובכל מקרה גבול של סדרה ש-$a_n\ge2$ לכל $n$ היה גדול או שווה ל-2.
+        misconception: MC-fixed-point-root-choice
+      - text: 'השיטה נכונה; צריך רק לבדוק שהפתרון 1 קרוב לאיברים הראשונים'
+        feedback: >-
+          שום בדיקה של מועמד לא מחליפה את הוכחת ההתכנסות. קודם מראים מונוטוניות וחסימות, ורק אז פותרים.
+        misconception: MC-fixed-point-before-convergence
+
+  - id: Q-2.7-induction
+    type: rank
+    objectives: [OBJ-2.7-2]
+    level: mid
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      ההוכחה שהסדרה $a_1=1$, $a_{n+1}=\sqrt{2+a_n}$ מתכנסת ל-2 התפרקה לשלבים. סדרו אותם.
+    items:
+      - id: base
+        label: 'בסיס: $0<a_1=1<2$.'
+      - id: step
+        label: 'צעד: אם $0<a_n<2$, אז $0<a_{n+1}=\sqrt{2+a_n}<\sqrt4=2$. לכן $0<a_n<2$ לכל $n$.'
+      - id: mono
+        label: 'מכאן $a_{n+1}^2-a_n^2=2+a_n-a_n^2=(2-a_n)(1+a_n)>0$, ושני האיברים חיוביים, ולכן $a_{n+1}>a_n$.'
+      - id: conv
+        label: 'הסדרה עולה וחסומה מלעיל, ולכן מתכנסת לגבול $L$.'
+      - id: eq
+        label: 'מעבר לגבול ב-$a_{n+1}^2=2+a_n$ נותן $L^2=2+L$, כלומר $L=2$ או $L=-1$.'
+      - id: pick
+        label: 'כל האיברים מקיימים $a_n\ge1$, ולכן $L\ge 1$ ו-$L=2$.'
+    order: [base, step, mono, conv, eq, pick]
+    correctFeedback: >-
+      נכון. זה המתכון לכל סדרה רקורסיבית: חסם באינדוקציה, מונוטוניות מהחסם, התכנסות מהמשפט, ורק בסוף משוואת
+      הנקודה הקבועה ובחירת הפתרון.
+    wrongFeedback: >-
+      המונוטוניות משתמשת בחסם $0<a_n<2$, ולכן החסם (בסיס וצעד) בא קודם. את המשוואה $L^2=2+L$ מותר לכתוב רק אחרי
+      שיודעים שיש גבול.
+
+  - id: Q-2.7-start
+    type: mc
+    objectives: [OBJ-2.7-2]
+    level: mid
+    prompt: >-
+      הסדרה $a_1=3$, $a_{n+1}=\sqrt{2+a_n}$ מתחילה ב-$3,\ \sqrt5\approx2.24,\ 2.06,\dots$. מה צריך להוכיח באינדוקציה
+      כדי להסיק שהיא מתכנסת?
+    choices:
+      - text: '$a_n>2$ לכל $n$, ו-$a_{n+1}<a_n$ לכל $n$'
+        correct: true
+        feedback: >-
+          נכון. אם $a_n>2$ אז $a_{n+1}>\sqrt4=2$, ו-$a_{n+1}^2-a_n^2=(2-a_n)(1+a_n)<0$. יורדת וחסומה מלרע, ולכן
+          מתכנסת, ושוב $L=2$.
+      - text: '$a_n<2$ לכל $n$, ו-$a_{n+1}>a_n$ לכל $n$'
+        feedback: >-
+          זה מה שמוכיחים כש-$a_1=0$ או $a_1=1$. כאן $a_1=3>2$, והאיברים יורדים לעבר 2 מלמעלה. האיבר הראשון קובע.
+        misconception: MC-recursion-ignores-start
+      - text: 'מספיק להוכיח ש-$a_{n+1}<a_n$: סדרה יורדת מתכנסת'
+        feedback: >-
+          סדרה יורדת צריכה גם חסם מלרע: $-n$ יורדת ושואפת למינוס אינסוף. כאן החסם הוא $a_n>2$.
+        misconception: MC-monotone-alone-converges
+      - text: 'מספיק לפתור $L=\sqrt{2+L}$ ולמצוא את $L=2$'
+        feedback: >-
+          המשוואה רק מוצאת את המועמד. בלי הוכחה שהסדרה מתכנסת, היא לא אומרת כלום על הסדרה.
+        misconception: MC-fixed-point-before-convergence
+
+  - id: Q-2.7-babylon
+    type: numeric
+    objectives: [OBJ-2.7-2]
+    level: exam
+    prompt: >-
+      הסדרה $a_1=2$, $a_{n+1}=\frac12\left(a_n+\frac{2}{a_n}\right)$. מאי-שוויון הממוצעים
+      $$a_{n+1}\ge\sqrt{a_n\cdot\frac{2}{a_n}}=\sqrt2,$$
+      ומכאן שלכל $n$
+      $$a_{n+1}-a_n=\frac{2-a_n^2}{2a_n}\le 0.$$
+      מה הגבול של הסדרה? (תנו ארבע ספרות אחרי הנקודה.)
+    answer: 1.41421356
+    tolerance: 0.0005
+    correctFeedback: >-
+      נכון, $\sqrt2\approx1.4142$. הסדרה יורדת וחסומה מלרע על ידי $\sqrt2$, ולכן מתכנסת ל-$L\ge\sqrt2$. מעבר לגבול:
+      $L=\frac12\left(L+\frac2L\right)$, כלומר $L^2=2$, ולכן $L=\sqrt2$.
+    wrongFeedback: >-
+      קודם הסיקו התכנסות (הסדרה יורדת וחסומה מלרע), ואז העבירו את הרקורסיה לגבול: $2L=L+\frac2L$.
+    commonWrong:
+      - value: -1.41421356
+        feedback: >-
+          $-\sqrt2$ פותר את $L^2=2$, אבל כל האיברים גדולים או שווים ל-$\sqrt2$, ולכן גם הגבול.
+        misconception: MC-fixed-point-root-choice
+      - value: 1.5
+        feedback: >-
+          זה $a_2=\frac12(2+1)$, האיבר השני. הסדרה ממשיכה לרדת: $a_3=\frac{17}{12}\approx1.4167$.
+    explanation: >-
+      זו "השיטה הבבלית" לחישוב שורש: כל צעד בערך מכפיל את מספר הספרות הנכונות. $a_4=\frac{577}{408}$ נכון כבר
+      בחמש ספרות אחרי הנקודה, ו-$a_5$ באחת-עשרה.
+
+  - id: Q-2.7-e
+    type: mc
+    objectives: [OBJ-2.7-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה הגבול של $\left(1+\frac1n\right)^n$?
+    choices:
+      - text: 'המספר $e\approx 2.718$'
+        correct: true
+        feedback: >-
+          נכון. הוכח בשיעור שהסדרה עולה וחסומה על ידי 3, ולכן מתכנסת, ואת הגבול הזה מגדירים כ-$e$.
+      - text: '1, כי $1+\frac1n\to1$ ו-1 בכל חזקה הוא 1'
+        feedback: >-
+          הבסיס שואף ל-1, אבל המעריך גדל באותו זמן. כבר $\left(1+\frac11\right)^1=2$, והסדרה עולה, ולכן כל איבריה
+          לפחות 2.
+        misconception: MC-one-power-infinity-is-one
+      - text: 'אינסוף, כי הבסיס גדול מ-1 והמעריך שואף לאינסוף'
+        feedback: >-
+          זה היה נכון עם בסיס **קבוע** גדול מ-1. כאן הבסיס מתקרב ל-1, ובשיעור הוכח שכל האיברים קטנים מ-3.
+        misconception: MC-one-power-infinity-is-one
+
+  - id: Q-2.7-e2
+    type: numeric
+    objectives: [OBJ-2.7-3]
+    level: mid
+    prompt: >-
+      חשבו את $\lim_{n\to\infty}\left(1+\frac1n\right)^{2n+3}$. (תנו שלוש ספרות אחרי הנקודה.)
+    answer: 7.3890561
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $e^2\approx7.389$. פרקו:
+      $\left(1+\frac1n\right)^{2n+3}=\left[\left(1+\frac1n\right)^n\right]^2\cdot\left(1+\frac1n\right)^3\to e^2\cdot1$.
+    wrongFeedback: >-
+      כתבו את החזקה כמכפלה של חזקות שאת הגבול שלהן אתם יודעים, והשתמשו בכלל המכפלה.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          הבסיס שואף ל-1 אבל המעריך שואף לאינסוף: זו הצורה "אחד בחזקת אינסוף", ואי אפשר להכריע אותה לפי הבסיס.
+        misconception: MC-one-power-infinity-is-one
+      - value: 2.7182818
+        feedback: >-
+          $\left(1+\frac1n\right)^n\to e$, אבל כאן המעריך הוא בערך $2n$: החזקה היא בערך הריבוע של
+          $\left(1+\frac1n\right)^n$.
+
+  - id: Q-2.7-strict
+    type: twotier
+    objectives: [OBJ-2.7-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הוכח ש-$\left(1+\frac1n\right)^n<3$ לכל $n$. האם מזה לבדו נובע ש-$e<3$?
+    choices:
+      - text: 'לא, נובע רק $e\le 3$'
+        correct: true
+        feedback: >-
+          נכון. אי-שוויון חלש עובר לגבול, אי-שוויון חזק לא בהכרח. ($e<3$ נכון, אבל צריך לשם כך חסם טוב יותר.)
+      - text: 'כן, נובע $e<3$'
+        feedback: >-
+          $1-\frac1n<1$ לכל $n$, ובכל זאת הגבול שווה ל-1. אי-שוויון חזק בין האיברים נותן בגבול רק אי-שוויון חלש.
+        misconception: MC-limit-keeps-strict
+    reasons:
+      - text: 'גבולות שומרים על $\le$ ולא בהכרח על $<$: כל האיברים של $1-\frac1n$ קטנים מ-1 והגבול שווה ל-1'
+        correct: true
+        feedback: >-
+          בדיוק. מאותה סיבה גם $\left(1+\frac1n\right)^n<e$ לכל $n$ לא נובע מאי-שוויון בגבול; הוא נובע מכך שהסדרה
+          עולה ממש וגבולה הסופרמום שלה.
+      - text: '$e$ הוא אחד מאיברי הסדרה, וכל האיברים קטנים מ-3'
+        feedback: >-
+          $e$ אינו איבר של הסדרה: הסדרה עולה ממש, ולכן כל איבר קטן מהגבול.
+        misconception: MC-monotone-limit-is-a-term
+      - text: 'אם כל איברי קבוצה קטנים מ-3, גם הסופרמום שלה קטן מ-3'
+        feedback: >-
+          הסופרמום של $\left\{1-\frac1n\right\}$ הוא 1, אף שכל איבריה קטנים מ-1. הסופרמום יכול להיות שווה לחסם.
+        misconception: MC-limit-keeps-strict
+
+  - id: Q-2.7-e-bound
+    type: rank
+    objectives: [OBJ-2.7-3]
+    level: exam
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      ההוכחה ש-$b_n=\left(1+\frac1n\right)^n<3$ לכל $n$ התפרקה לשלבים. סדרו אותם.
+    items:
+      - id: binom
+        label: 'לפי הבינום של ניוטון: $b_n=\sum_{k=0}^{n}\binom nk\frac{1}{n^k}$.'
+      - id: each
+        label: 'נחסום כל מחובר בסכום הזה: $\binom nk\frac1{n^k}=\frac1{k!}\cdot\frac nn\cdot\frac{n-1}{n}\cdots\frac{n-k+1}{n}\le\frac{1}{k!}$.'
+      - id: fact
+        label: 'ואת המכנים שקיבלנו נחסום שוב: $k!\ge 2^{k-1}$ לכל $k\ge1$ (באינדוקציה).'
+      - id: geo
+        label: 'לכן $b_n\le 1+\sum_{k=1}^{n}\frac{1}{2^{k-1}}=1+2\left(1-\frac{1}{2^n}\right)<3$.'
+    order: [binom, each, fact, geo]
+    correctFeedback: >-
+      נכון. החסם 3 הוא גס ($e\approx2.718$), אבל המשפט על סדרה מונוטונית צריך רק חסם כלשהו; יחד עם העלייה של
+      $b_n$ הוא מוכיח שהגבול $e$ קיים.
+    wrongFeedback: >-
+      כל שלב חוסם את מה שהשלב הקודם כתב: קודם הפיתוח לסכום, אחר כך כל מחובר ב-$\frac{1}{k!}$, אחר כך $\frac1{k!}$
+      בחזקה של 2, ובסוף סכום הנדסי.

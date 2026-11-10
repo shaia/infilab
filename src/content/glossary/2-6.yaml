@@ -1,0 +1,23 @@
+# Terms first defined in lesson 2.6.
+- id: tends-to-infinity
+  term: שואפת לאינסוף
+  en: tends to infinity
+  symbol: '\lim_{n\to\infty} a_n = \infty'
+  definition: >-
+    $a_n \to \infty$ אם לכל $M$ קיים $N$ כך שלכל $n>N$ מתקיים $a_n>M$: מכל מקום מסוים והלאה כל האיברים
+    מעל כל סף שנבחר. סדרה כזו מתבדרת (אין לה גבול סופי), ואומרים שהיא מתבדרת לאינסוף.
+  lesson: '2.6'
+- id: tends-to-minus-infinity
+  term: שואפת למינוס אינסוף
+  en: tends to minus infinity
+  symbol: '\lim_{n\to\infty} a_n = -\infty'
+  definition: >-
+    $a_n \to -\infty$ אם לכל $M$ קיים $N$ כך שלכל $n>N$ מתקיים $a_n<M$. שקול לכך ש-$-a_n \to \infty$.
+  lesson: '2.6'
+- id: indeterminate-form
+  term: צורה לא מוגדרת
+  en: indeterminate form
+  definition: >-
+    צירוף של גבולות שאינו קובע את גבול התוצאה: $\infty-\infty$, $0\cdot\infty$, $\frac{\infty}{\infty}$ ו-$\frac00$.
+    לכל אחד מהם יש דוגמאות עם גבולות שונים, ולכן צריך לפשט את הביטוי עצמו.
+  lesson: '2.6'

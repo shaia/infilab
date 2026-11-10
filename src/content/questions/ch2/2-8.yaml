@@ -1,0 +1,362 @@
+# Lesson 2.8 — useful limits.
+# Objectives (src/course.ts):
+#   OBJ-2.8-1  the limits of ⁿ√n, ⁿ√a and qⁿ, with proofs
+#   OBJ-2.8-2  the ratio test for sequences: convergence to 0 or divergence to ∞
+#   OBJ-2.8-3  compare growth rates: logarithm, power, exponential, factorial (ln as known from school)
+chapter: 2
+questions:
+  - id: Q-2.8-qn
+    type: multi
+    objectives: [OBJ-2.8-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      לאילו ערכים של $q$ הסדרה $q^n$ **מתכנסת**? סמנו את כולם.
+    choices:
+      - text: '$q=\frac12$'
+        correct: true
+        feedback: 'נכון: $|q|<1$, ולכן $q^n\to0$.'
+      - text: '$q=-\frac12$'
+        correct: true
+        feedback: >-
+          נכון. הסימן מתחלף, אבל $\left|q^n\right|=\frac{1}{2^n}\to0$, ולכן $q^n\to0$.
+      - text: '$q=0.99$'
+        correct: true
+        feedback: >-
+          נכון. $q^n\to 0$, אף שלאט: $0.99^{100}\approx0.37$. כל $|q|<1$ מספיק, קרוב ל-1 ככל שיהיה.
+      - text: '$q=1$'
+        correct: true
+        feedback: 'נכון: $1^n=1$ לכל $n$, סדרה קבועה שמתכנסת ל-1.'
+      - text: '$q=-1$'
+        feedback: >-
+          $(-1)^n$ מתחלפת בין $-1$ ל-$1$ ואינה מתכנסת. התנאי לשאיפה לאפס הוא $|q|<1$, לא $q<1$.
+        misconception: MC-geometric-q-less-than-one
+      - text: '$q=-2$'
+        feedback: >-
+          $\left|(-2)^n\right|=2^n\to\infty$, והסימן מתחלף: הסדרה לא חסומה ולא שואפת לאינסוף או למינוס אינסוף.
+        misconception: MC-geometric-q-less-than-one
+    explanation: >-
+      הסיכום: $q^n\to0$ כש-$|q|<1$, $q^n\to1$ כש-$q=1$, $q^n\to\infty$ כש-$q>1$, ובכל מקרה אחר ($q\le-1$) הסדרה
+      מתבדרת.
+
+  - id: Q-2.8-roots
+    type: mc
+    objectives: [OBJ-2.8-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזו מהסדרות הבאות **אינה** שואפת ל-1?
+    choices:
+      - text: '$\sqrt[n]{2^n}$'
+        correct: true
+        feedback: >-
+          נכון. $\sqrt[n]{2^n}=2$ לכל $n$. רק משהו שגדל מעריכית "שורד" את השורש ה-$n$-י.
+      - text: '$\sqrt[n]{n}$'
+        feedback: >-
+          $n$ אמנם שואף לאינסוף, אבל השורש ה-$n$-י מוחץ אותו: $\sqrt[n]n\to1$ (הוכח בשיעור בעזרת הבינום). למשל
+          $\sqrt[100]{100}\approx1.047$.
+        misconception: MC-nth-root-keeps-size
+      - text: '$\sqrt[n]{1000}$'
+        feedback: >-
+          לכל $a>0$ קבוע $\sqrt[n]a\to1$. כבר $\sqrt[1000]{1000}\approx1.007$.
+        misconception: MC-nth-root-keeps-size
+      - text: '$\sqrt[n]{\frac12}$'
+        feedback: >-
+          גם מספר קטן מ-1 נמשך ל-1: $\sqrt[n]{\frac12}=\frac{1}{\sqrt[n]2}\to1$. הסדרה עולה לעבר 1, לא יורדת ל-0.
+        misconception: MC-nth-root-keeps-size
+
+  - id: Q-2.8-rootn
+    type: rank
+    objectives: [OBJ-2.8-1]
+    level: mid
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      ההוכחה ש-$\sqrt[n]n\to1$ התפרקה לשלבים. סדרו אותם.
+    items:
+      - id: write
+        label: 'נכתוב $\sqrt[n]n=1+h_n$. כי $n\ge1$, מתקיים $h_n\ge0$.'
+      - id: binom
+        label: 'לפי הבינום, לכל $n\ge2$: $n=(1+h_n)^n\ge\binom n2h_n^2=\frac{n(n-1)}{2}h_n^2$ (שאר המחוברים אי-שליליים).'
+      - id: solve
+        label: 'לכן $h_n^2\le\frac{2}{n-1}$, כלומר $0\le h_n\le\sqrt{\frac{2}{n-1}}$.'
+      - id: squeeze
+        label: 'הצד הימני שואף ל-0, ולפי כלל הסנדוויץ'' $h_n\to0$, כלומר $\sqrt[n]n\to1$.'
+    order: [write, binom, solve, squeeze]
+    correctFeedback: >-
+      נכון. הרעיון: לא מנסים לחשב את $\sqrt[n]n$, אלא חוסמים את המרחק $h_n$ מ-1. מהבינום לוקחים רק מחובר אחד,
+      זה שמכיל $h_n^2$, כי הוא מספיק כדי לנצח את $n$ שבצד שמאל.
+    wrongFeedback: >-
+      קודם מגדירים את $h_n$, אחר כך הבינום נותן עליו אי-שוויון, ממנו מבודדים את $h_n$, ובסוף הסנדוויץ'.
+
+  - id: Q-2.8-rootsum
+    type: numeric
+    objectives: [OBJ-2.8-1]
+    level: mid
+    prompt: >-
+      חשבו את $\lim_{n\to\infty}\sqrt[n]{2^n+3^n}$.
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $3^n\le2^n+3^n\le2\cdot3^n$, ולכן $3\le\sqrt[n]{2^n+3^n}\le\sqrt[n]2\cdot3\to3$. לפי הסנדוויץ' הגבול 3:
+      המחובר הגדול קובע.
+    wrongFeedback: >-
+      חסמו את $2^n+3^n$ מלמטה ומלמעלה בכפולות של $3^n$, והוציאו שורש $n$-י.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          השורש ה-$n$-י מוחץ ל-1 רק דברים שלא גדלים מעריכית. כאן $\sqrt[n]{2^n+3^n}\ge\sqrt[n]{3^n}=3$ לכל $n$.
+        misconception: MC-nth-root-always-one
+      - value: 5
+        feedback: >-
+          שורש של סכום אינו סכום השורשים: $\sqrt[n]{2^n+3^n}\ne\sqrt[n]{2^n}+\sqrt[n]{3^n}$. כבר ב-$n=2$ מקבלים
+          $\sqrt{13}\approx3.6$, לא 5.
+
+  - id: Q-2.8-qproof
+    type: twotier
+    objectives: [OBJ-2.8-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סטודנטית כתבה: "יהי $0<q<1$. הסדרה $q^n$ יורדת וחסומה מלרע על ידי 0, ולכן $q^n\to0$." האם ההוכחה שלמה?
+    choices:
+      - text: לא, חסר שלב
+        correct: true
+        feedback: >-
+          נכון. ממונוטוניות וחסימות נובע רק ש-$q^n$ מתכנסת לגבול כלשהו $L\ge0$. עוד לא הוכח ש-$L=0$.
+      - text: כן
+        feedback: >-
+          0 הוא חסם מלרע, אבל הגבול של סדרה יורדת הוא האינפימום, לא חסם כלשהו: $1+\frac1n$ יורדת, חסומה מלרע על
+          ידי 0, ושואפת ל-1.
+        misconception: MC-monotone-limit-any-bound
+    reasons:
+      - text: 'צריך להראות שהגבול $L$ הוא 0, למשל מעבר לגבול ב-$q^{n+1}=q\cdot q^n$ נותן $L=qL$, ולכן $L=0$'
+        correct: true
+        feedback: >-
+          בדיוק. כי $q\ne1$, מ-$L=qL$ נובע $L=0$. (דרך אחרת: $\frac1q=1+h$, ואי-שוויון ברנולי נותן
+          $q^n\le\frac{1}{1+nh}$.)
+      - text: 'סדרה יורדת וחיובית שואפת תמיד ל-0'
+        feedback: >-
+          $1+\frac1n$ יורדת וחיובית, וגבולה 1. הגבול הוא האינפימום של הסדרה, ואותו עוד צריך למצוא.
+        misconception: MC-monotone-limit-any-bound
+
+  - id: Q-2.8-ratio
+    type: mc
+    objectives: [OBJ-2.8-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $a_n>0$ לכל $n$, ו-$\frac{a_{n+1}}{a_n}\to q$. מה אומר מבחן המנה?
+    choices:
+      - text: 'אם $q<1$ אז $a_n\to0$, ואם $q>1$ אז $a_n\to\infty$'
+        correct: true
+        feedback: >-
+          נכון. עם $q<1$ בוחרים $r$ בין $q$ ל-1: מ-$N$ מסוים $a_{n+1}<r\,a_n$, ולכן $a_n$ קטנה לפחות כמו $r^n$.
+      - text: '$a_n\to q$'
+        feedback: >-
+          $q$ הוא קצב, לא מקום. עבור $a_n=\frac1{2^n}$ המנה היא $\frac12$, והסדרה שואפת ל-0; עבור $a_n=5$ המנה 1
+          והגבול 5.
+        misconception: MC-ratio-limit-is-limit
+      - text: 'אם $q\le1$ אז $a_n\to0$'
+        feedback: >-
+          עם $q=1$ המבחן לא מכריע: עבור $a_n=n$ המנה $\frac{n+1}{n}\to1$, והסדרה שואפת לאינסוף.
+        misconception: MC-ratio-test-q-equals-one
+      - text: 'אם $q=1$ אז $a_n\to1$'
+        feedback: >-
+          עבור $a_n=\frac1n$ המנה $\frac{n}{n+1}\to1$, והסדרה שואפת ל-0. כש-$q=1$ אפשר לקבל כל התנהגות.
+        misconception: MC-ratio-test-q-equals-one
+
+  - id: Q-2.8-below-one
+    type: twotier
+    objectives: [OBJ-2.8-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $a_n>0$, ו-$\frac{a_{n+1}}{a_n}<1$ **לכל** $n$. האם בהכרח $a_n\to0$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $a_n=1+\frac1n$: כל מנה קטנה מ-1 (הסדרה יורדת), והגבול הוא 1.
+      - text: כן
+        feedback: >-
+          מנה קטנה מ-1 אומרת רק שהסדרה יורדת. אם המנות מתקרבות ל-1, הירידה מאטה ויכולה להיעצר לפני 0.
+        misconception: MC-ratio-below-one-implies-null
+    reasons:
+      - text: 'מבחן המנה דורש שגבול המנה קטן מ-1; ב-$1+\frac1n$ כל מנה קטנה מ-1, אבל המנות שואפות ל-1'
+        correct: true
+        feedback: >-
+          בדיוק. המנות כאן הן $\frac34,\ \frac89,\ \frac{15}{16},\dots$, כלומר $\frac{n(n+2)}{(n+1)^2}$, שואפות ל-1.
+          המבחן צריך מנות שנשארות מתחת ל-$r<1$ קבוע.
+      - text: 'בכל צעד הסדרה מוכפלת במספר קטן מ-1, ולכן היא כמו סדרה הנדסית'
+        feedback: >-
+          בסדרה הנדסית המכפיל **קבוע**. כאן המכפילים מתקרבים ל-1, והמכפלה שלהם לא חייבת לשאוף ל-0.
+        misconception: MC-ratio-below-one-implies-null
+      - text: 'סדרה יורדת וחיובית שואפת ל-0'
+        feedback: >-
+          סדרה יורדת וחסומה מלרע מתכנסת לאינפימום שלה, וכאן הוא 1, לא 0.
+        misconception: MC-monotone-limit-any-bound
+
+  - id: Q-2.8-ratio-one
+    type: multi
+    objectives: [OBJ-2.8-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$a_n>0$ ו-$\frac{a_{n+1}}{a_n}\to1$. אילו מהטענות הבאות **אפשריות**? סמנו את כולן.
+    choices:
+      - text: '$a_n\to\infty$'
+        correct: true
+        feedback: 'אפשרי: $a_n=n$, והמנה $\frac{n+1}{n}\to1$.'
+      - text: '$a_n\to0$'
+        correct: true
+        feedback: 'אפשרי: $a_n=\frac1n$, והמנה $\frac{n}{n+1}\to1$.'
+      - text: '$a_n\to 7$'
+        correct: true
+        feedback: >-
+          אפשרי: כל סדרה ששואפת לגבול חיובי $L$ מקיימת $\frac{a_{n+1}}{a_n}\to\frac LL=1$, למשל $a_n=7+\frac1n$.
+      - text: 'אף אחת מהאפשרויות האחרות: $q=1$ פירושו שהסדרה מתכנסת ל-1'
+        feedback: >-
+          שלוש הדוגמאות האחרות מראות שכש-$q=1$ אפשר לקבל אינסוף, אפס או כל גבול חיובי. המבחן פשוט לא מכריע.
+        misconception: MC-ratio-test-q-equals-one
+
+  - id: Q-2.8-factorial
+    type: numeric
+    objectives: [OBJ-2.8-2]
+    level: exam
+    prompt: >-
+      עבור $a_n=\frac{n!}{n^n}$, חשבו את $q=\lim_{n\to\infty}\frac{a_{n+1}}{a_n}$. (שלוש ספרות אחרי הנקודה.) מה זה
+      אומר על $a_n$?
+    answer: 0.36787944
+    tolerance: 0.002
+    correctFeedback: >-
+      נכון, $q=\frac1e\approx0.368$:
+      $$\frac{a_{n+1}}{a_n}=\frac{(n+1)!}{(n+1)^{n+1}}\cdot\frac{n^n}{n!}=\frac{n^n}{(n+1)^n}=\frac{1}{\left(1+\frac1n\right)^n}\to\frac1e.$$
+      כי $\frac1e<1$, מבחן המנה נותן $a_n\to0$: $n!\ll n^n$.
+    wrongFeedback: >-
+      הציבו את $n+1$ בנוסחה וצמצמו: $(n+1)!=(n+1)\cdot n!$ ו-$(n+1)^{n+1}=(n+1)\cdot(n+1)^n$. מה שנשאר מזכיר את
+      שיעור 2.7.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $\left(\frac{n}{n+1}\right)^n$ אינו שואף ל-1: הבסיס שואף ל-1, אבל המעריך גדל, וזו הצורה "אחד בחזקת
+          אינסוף". זה ההופכי של $\left(1+\frac1n\right)^n$.
+        misconception: MC-one-power-infinity-is-one
+      - value: 2.7182818
+        feedback: >-
+          זה $e$, ההופכי של התשובה. בדקו איזה איבר במונה ואיזה במכנה: $\frac{a_{n+1}}{a_n}=\frac{n^n}{(n+1)^n}<1$.
+
+  - id: Q-2.8-scale
+    type: rank
+    objectives: [OBJ-2.8-3]
+    qualitative: true
+    level: basic
+    help: 'סדרו מהסדרה שגדלה הכי לאט לזו שגדלה הכי מהר.'
+    prompt: >-
+      כל הסדרות הבאות שואפות לאינסוף. סדרו אותן לפי קצב הגדילה, כך שכל אחת היא $\ll$ של הבאה אחריה (המנה שלהן
+      שואפת ל-0).
+    items:
+      - id: log
+        label: '$\ln n$'
+      - id: sqrt
+        label: '$\sqrt n$'
+      - id: sq
+        label: '$n^2$'
+      - id: exp
+        label: '$2^n$'
+      - id: fact
+        label: '$n!$'
+      - id: nn
+        label: '$n^n$'
+    order: [log, sqrt, sq, exp, fact, nn]
+    correctFeedback: >-
+      נכון: $\ln n\ll\sqrt n\ll n^2\ll2^n\ll n!\ll n^n$. לוגריתם איטי מכל חזקה חיובית, חזקה איטית מכל מעריכית עם
+      בסיס גדול מ-1, מעריכית איטית מעצרת, ועצרת איטית מ-$n^n$.
+    wrongFeedback: >-
+      זכרו את הסולם: לוגריתם, חזקה, מעריכית, עצרת, $n^n$. בין שתי חזקות, המעריך הגדול יותר מנצח.
+
+  - id: Q-2.8-early
+    type: twotier
+    objectives: [OBJ-2.8-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ב-$n=100$ מתקיים $n^{10}=10^{20}$, בעוד ש-$1.1^{100}\approx13{,}781$. האם מזה נובע ש-$\frac{n^{10}}{1.1^n}\to\infty$?
+    choices:
+      - text: 'לא; למעשה $\frac{n^{10}}{1.1^n}\to0$'
+        correct: true
+        feedback: >-
+          נכון. $n^{10}$ אכן גדולה יותר עד בערך $n=685$, אבל משם והלאה $1.1^n$ גדולה יותר, והפער רק גדל.
+      - text: 'כן, $\frac{n^{10}}{1.1^n}\to\infty$'
+        feedback: >-
+          גבול נקבע בזנב, לא בערכים שבדקתם. בדקו את המנה של איברים עוקבים, כמו בנימוק הנכון.
+        misconception: MC-growth-judged-by-early-terms
+    reasons:
+      - text: 'מנת איברים עוקבים היא $\left(\frac{n+1}{n}\right)^{10}\cdot\frac1{1.1}\to\frac{1}{1.1}<1$, ולפי מבחן המנה הסדרה שואפת ל-0'
+        correct: true
+        feedback: >-
+          בדיוק. בכל צעד החזקה מוכפלת במספר שמתקרב ל-1, והמעריכית ב-1.1 קבוע. בסוף המעריכית מנצחת.
+      - text: 'חזקה גבוהה כמו $n^{10}$ גדלה מהר יותר ממעריכית שהבסיס שלה קרוב ל-1'
+        feedback: >-
+          כל מעריכית עם בסיס גדול מ-1 מנצחת כל חזקה, מעריך גדול ככל שיהיה ובסיס קרוב ל-1 ככל שיהיה. רק נקודת
+          המפגש מתרחקת.
+        misconception: MC-growth-judged-by-early-terms
+      - text: 'בדקנו גם את $n=10$ וגם את $n=100$, ובשניהם החזקה גדולה יותר'
+        feedback: >-
+          מספר סופי של בדיקות אינו מוכיח דבר על גבול. כאן הבדיקות אפילו מטעות: המגמה מתהפכת אחרי $n\approx685$.
+        misconception: MC-growth-judged-by-early-terms
+
+  - id: Q-2.8-null
+    type: multi
+    objectives: [OBJ-2.8-3]
+    level: mid
+    prompt: >-
+      אילו מהסדרות הבאות שואפות ל-0? סמנו את כולן.
+    choices:
+      - text: '$\frac{n^{100}}{2^n}$'
+        correct: true
+        feedback: >-
+          נכון. מעריכית מנצחת חזקה: מנת איברים עוקבים שואפת ל-$\frac12$.
+      - text: '$\frac{2^n}{n!}$'
+        correct: true
+        feedback: >-
+          נכון. מנת איברים עוקבים היא $\frac{2}{n+1}\to0$.
+      - text: '$\frac{(\ln n)^3}{n}$'
+        correct: true
+        feedback: >-
+          נכון. $\ln n\ll n^{1/3}$, כלומר $\frac{\ln n}{n^{1/3}}\to0$, ולכן גם החזקה השלישית של המנה הזו, שהיא
+          $\frac{(\ln n)^3}{n}$, שואפת ל-0.
+      - text: '$\frac{n!}{10^n}$'
+        feedback: >-
+          האיברים הראשונים אכן קטנים ($\frac{1}{10},\ \frac{2}{100},\dots$), אבל מנת איברים עוקבים היא
+          $\frac{n+1}{10}\to\infty$: הסדרה שואפת לאינסוף. ב-$n=30$ היא כבר בערך 265.
+        misconception: MC-growth-judged-by-early-terms
+      - text: '$\frac{2^n}{n^{100}}$'
+        feedback: >-
+          זו ההופכית של הסדרה הראשונה, ולכן שואפת לאינסוף. האיברים הראשונים קטנים מאוד ($\frac{2^{10}}{10^{100}}$),
+          וזה מטעה.
+        misconception: MC-growth-judged-by-early-terms
+
+  - id: Q-2.8-dominant
+    type: numeric
+    objectives: [OBJ-2.8-3]
+    level: exam
+    prompt: >-
+      חשבו את
+      $$\lim_{n\to\infty}\frac{n\cdot2^n+3^n}{n^2\cdot2^n+3^{n+1}}.$$
+    answer: 0.3333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac13$. מחלקים מונה ומכנה ב-$3^n$, המחובר הדומיננטי:
+      $$\frac{n\left(\frac23\right)^n+1}{n^2\left(\frac23\right)^n+3}\to\frac{0+1}{0+3},$$
+      כי $n^k q^n\to0$ לכל $k$ ולכל $0<q<1$.
+    wrongFeedback: >-
+      מצאו את המחובר שגדל הכי מהר, במונה ובמכנה, וחלקו בו. השתמשו בכך ש-$n^2\ll\left(\frac32\right)^n$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $3^{n+1}=3\cdot3^n$, ולכן אחרי החלוקה ב-$3^n$ נשאר במכנה 3, לא 1.
+      - value: 0
+        feedback: >-
+          $n^2 2^n$ אינו הדומיננטי במכנה: $\frac{n^22^n}{3^n}=n^2\left(\frac23\right)^n\to0$. הוא גדול מ-$3^{n+1}$ רק
+          ב-$n=4,5,6$, וזה לא אומר דבר על הגבול.
+        misconception: MC-growth-judged-by-early-terms

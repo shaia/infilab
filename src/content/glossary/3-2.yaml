@@ -1,0 +1,41 @@
+# Terms first defined in lesson 3.2.
+- id: polynomial
+  term: פולינום
+  en: polynomial
+  definition: >-
+    פונקציה מהצורה $p(x)=a_nx^n+\dots+a_1x+a_0$ עם מקדמים ממשיים. אם $a_n\neq0$, המעלה של $p$ היא $n$, ולפולינום
+    ממעלה $n\ge1$ יש לכל היותר $n$ שורשים ממשיים.
+  reject: [פולינם]
+  lesson: '3.2'
+- id: rational-function
+  term: פונקציה רציונלית
+  en: rational function
+  definition: >-
+    מנה $\frac{p(x)}{q(x)}$ של שני פולינומים, כש-$q$ אינו פולינום האפס. תחום ההגדרה הטבעי שלה הוא כל
+    הנקודות שבהן $q(x)\neq0$.
+  lesson: '3.2'
+- id: inverse-trig-function
+  term: פונקציה טריגונומטרית הפוכה
+  en: inverse trigonometric function
+  definition: >-
+    ההפוכה של פונקציה טריגונומטרית שתחומה צומצם כך שתהיה חד-חד-ערכית: $\arcsin:[-1,1]\to[-\frac{\pi}{2},\frac{\pi}{2}]$,
+    $\arccos:[-1,1]\to[0,\pi]$ ו-$\arctan:\mathbb{R}\to(-\frac{\pi}{2},\frac{\pi}{2})$.
+  lesson: '3.2'
+- id: dirichlet-function
+  term: פונקציית דיריכלה
+  en: Dirichlet function
+  symbol: 'D(x)'
+  definition: >-
+    $D(x)=1$ כש-$x$ רציונלי ו-$D(x)=0$ כש-$x$ אי-רציונלי. בכל קטע, קטן ככל שיהיה, היא מקבלת את שני הערכים, ולכן
+    אין לה גבול באף נקודה.
+  reject: [דירכלה, דיריכלט]
+  lesson: '3.2'
+- id: riemann-function
+  term: פונקציית רימן
+  en: Riemann (Thomae) function
+  symbol: 'R(x)'
+  definition: >-
+    $R\left(\frac{p}{q}\right)=\frac1q$ כש-$\frac{p}{q}$ שבר מצומצם עם $q>0$, $R(0)=1$, ו-$R(x)=0$ כש-$x$
+    אי-רציונלי. בספרים באנגלית היא נקראת גם על שם תומה.
+  reject: [רימאן]
+  lesson: '3.2'

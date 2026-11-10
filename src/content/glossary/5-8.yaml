@@ -1,0 +1,22 @@
+# Terms first defined in lesson 5.8.
+- id: absolute-extremum
+  term: קיצון מוחלט
+  en: absolute (global) extremum
+  definition: >-
+    $x_0$ נקודת מקסימום מוחלט של $f$ בקבוצה $A$ אם $f(x)\le f(x_0)$ לכל $x\in A$ (ומינימום מוחלט אם
+    $f(x)\ge f(x_0)$ לכל $x\in A$). הערך $f(x_0)$ הוא המקסימום (או המינימום) של $f$ ב-$A$.
+  lesson: '5.8'
+- id: first-derivative-test
+  term: מבחן הנגזרת הראשונה
+  en: first derivative test
+  definition: >-
+    אם $f$ רציפה ב-$x_0$, ו-$f'>0$ משמאל ל-$x_0$ ו-$f'<0$ מימין לו (בסביבה קטנה), ב-$x_0$ יש מקסימום מקומי;
+    בסימנים הפוכים, מינימום מקומי. אם $f'$ שומרת על סימן משני הצדדים, אין קיצון.
+  lesson: '5.8'
+- id: second-derivative-test
+  term: מבחן הנגזרת השנייה
+  en: second derivative test
+  definition: >-
+    אם $f'(x_0)=0$ ו-$f''(x_0)>0$, ב-$x_0$ יש מינימום מקומי; אם $f'(x_0)=0$ ו-$f''(x_0)<0$, מקסימום מקומי.
+    כש-$f''(x_0)=0$ המבחן אינו מכריע.
+  lesson: '5.8'

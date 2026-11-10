@@ -1,0 +1,401 @@
+# Chapter 4 (continuity): review questions over the whole chapter, from easy to hard.
+# Each has a hint that names the lesson to go back to. Questions 04 and 06–14 combine two or more lessons.
+chapter: 4
+questions:
+  - id: Q-4-review-01
+    type: mc
+    objectives: [OBJ-4.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מוכיחים מההגדרה ש-$f(x)=|x|$ רציפה ב-0. איזו בחירה של $\delta$ עובדת **לכל** $\varepsilon>0$?
+    choices:
+      - text: '$\delta=\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. $\big||x|-|0|\big|=|x|<\delta=\varepsilon$.
+      - text: '$\delta=2\varepsilon$'
+        feedback: >-
+          גדול מדי: $x=1.5\varepsilon$ מקיים $|x|<\delta$, אבל $|x|=1.5\varepsilon>\varepsilon$.
+      - text: '$\delta=\varepsilon^2$'
+        feedback: >-
+          עובד רק כש-$\varepsilon\le1$. עם $\varepsilon=2$ מקבלים $\delta=4$, ו-$x=3$ נותן $|x|=3>2$.
+      - text: אין $\delta$ כזה, כי לגרף של $|x|$ יש "פינה" ב-0
+        feedback: >-
+          פינה אינה אי-רציפות: הגרף מצויר ב-0 בלי להרים את העיפרון, והגבול שווה לערך. פינה היא עניין של נגזרת
+          (פרק 5), לא של רציפות.
+        misconception: MC-corner-means-discontinuous
+    hints:
+      - 'חזרו לשיעור 4.1: הגדרת אפסילון-דלתא לרציפות בנקודה. מה המרחק בין $f(x)$ ל-$f(0)$?'
+
+  - id: Q-4-review-02
+    type: twotier
+    objectives: [OBJ-4.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם למשוואה $x^5+x-1=0$ יש פתרון בקטע $(0,1)$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. (הפתרון בערך $0.7549$.)
+      - text: אי אפשר לדעת בלי לפתור את המשוואה
+        feedback: >-
+          משפט ערך הביניים נותן קיום בלי למצוא את הפתרון: מספיק לבדוק סימנים בקצוות.
+    reasons:
+      - text: '$p(x)=x^5+x-1$ רציפה, $p(0)=-1<0$ ו-$p(1)=1>0$'
+        correct: true
+        feedback: 'בדיוק: משפט ערך הביניים על $[0,1]$.'
+      - text: למשוואה ממעלה אי-זוגית יש תמיד פתרון
+        feedback: >-
+          זה נכון, אבל לא אומר **איפה**. כדי לקבל פתרון ב-$(0,1)$ צריך לבדוק את הסימנים ב-0 וב-1.
+        misconception: MC-ivt-sign-change-unchecked
+      - text: '$p$ עולה ממש'
+        feedback: >-
+          מונוטוניות נותנת **יחידות** של הפתרון, לא קיום. $x+5$ עולה ממש ואין לה שורש ב-$(0,1)$.
+    hints:
+      - 'חזרו לשיעור 4.3: קיום פתרון למשוואה בעזרת משפט ערך הביניים.'
+
+  - id: Q-4-review-03
+    type: multi
+    objectives: [OBJ-4.4-1, OBJ-4.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אילו מהפונקציות הבאות מקבלות מקסימום בתחום שלידן? סמנו את כולן.
+    choices:
+      - text: '$x^2$ ב-$[-1,2]$'
+        correct: true
+        feedback: נכון. רציפה בקטע סגור (ויירשטראס); המקסימום $4$, ב-$x=2$.
+      - text: '$\sin x$ ב-$(0,\pi)$'
+        correct: true
+        feedback: >-
+          נכון, אף שהקטע פתוח: $\sin\frac\pi2=1$. כשהנחה של ויירשטראס חסרה, המסקנה עדיין יכולה להתקיים.
+      - text: '$\frac1x$ ב-$[1,\infty)$'
+        correct: true
+        feedback: נכון. היא יורדת, והמקסימום $1$ מתקבל ב-$x=1$.
+      - text: '$x^2$ ב-$(-1,2)$'
+        feedback: >-
+          הסופרמום $4$ אינו מתקבל, כי $2\notin(-1,2)$, ובכל נקודה אחרת $x^2<4$. חסומה אינה אומרת מקבלת מקסימום.
+        misconception: MC-bounded-attains-bounds
+      - text: '$f(x)=x$ ל-$x\in[0,1)$ ו-$f(1)=0$, ב-$[0,1]$'
+        feedback: >-
+          הסופרמום 1 אינו מתקבל. הקטע סגור, אבל $f$ אינה רציפה ב-1, ולכן ויירשטראס לא חל.
+        misconception: MC-bounded-attains-bounds
+    hints:
+      - 'חזרו לשיעור 4.4: משפט ויירשטראס ומה משתבש בלי כל אחת מההנחות.'
+
+  - id: Q-4-review-04
+    type: mc
+    objectives: [OBJ-4.1-2, OBJ-4.5-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      היכן הפונקציה $f(x)=\sqrt{1+\sin^2 x}$ רציפה?
+    choices:
+      - text: בכל $\mathbb{R}$, כהרכבה של פונקציות רציפות
+        correct: true
+        feedback: >-
+          נכון. $1+\sin^2x$ רציפה (חשבון של רציפות) וערכיה ב-$[1,2]$, ו-$\sqrt{\ }$ רציפה ב-$[0,\infty)$ (שיעור 4.5).
+          משפט ההרכבה נותן רציפות בכל $x$.
+      - text: 'רק ב-$[0,\infty)$, כי שם $\sqrt{\ }$ מוגדרת'
+        feedback: >-
+          התנאי הוא על **הביטוי שבתוך** השורש, לא על $x$: $1+\sin^2x\ge1>0$ לכל $x$, ולכן $f$ מוגדרת ורציפה בכל
+          הישר.
+        misconception: MC-composition-domain-one-function
+      - text: רק היכן ש-$\sin x\ne0$
+        feedback: >-
+          כש-$\sin x=0$ פשוט $f(x)=1$. אין שום בעיה בנקודות האלה: לא מכנה ולא שורש של מספר שלילי.
+        misconception: MC-cont-judged-by-formula
+      - text: באף נקודה שבה אי אפשר לחשב את $f$ במדויק
+        feedback: >-
+          רציפות אינה תלויה ביכולת לחשב ערך בצורה סגורה. $f(1)$ הוא מספר מוגדר היטב, גם אם הוא אי-רציונלי.
+    hints:
+      - 'חזרו לשיעור 4.1 (רציפות של הרכבה) ולשיעור 4.5 (רציפות השורש).'
+
+  - id: Q-4-review-05
+    type: mc
+    objectives: [OBJ-4.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=\lfloor x\rfloor+\lfloor -x\rfloor$. איזו אי-רציפות יש ל-$f$ בכל מספר שלם $n$?
+    choices:
+      - text: סליקה
+        correct: true
+        feedback: >-
+          נכון. אם $x$ אינו שלם, $\lfloor -x\rfloor=-\lfloor x\rfloor-1$, ולכן $f(x)=-1$; ואם $x=n$ שלם, $f(n)=0$.
+          הגבול ב-$n$ הוא $-1$ והערך 0.
+      - text: קפיצה
+        feedback: >-
+          שני הגבולות החד-צדדיים שווים ל-$-1$. הקפיצות של $\lfloor x\rfloor$ ושל $\lfloor -x\rfloor$ מתבטלות,
+          ונשאר רק ערך "לא במקום" בנקודה עצמה.
+        misconception: MC-jump-vs-removable
+      - text: אין אי-רציפות, כי הקפיצות מתבטלות
+        feedback: >-
+          הקפיצות מתבטלות בגבול, אבל $f(n)=0\ne-1$. לגבול יש ערך, והוא אינו שווה לערך בנקודה.
+        misconception: MC-cont-limit-exists-enough
+      - text: מסוג שני
+        feedback: >-
+          בסוג שני חסר גבול חד-צדדי. כאן שני הגבולות החד-צדדיים קיימים, ושניהם $-1$.
+    hints:
+      - 'חזרו לשיעור 4.2: סיווג נקודות אי-רציפות. חשבו את $f(2.5)$ ואת $f(2)$.'
+
+  - id: Q-4-review-06
+    type: numeric
+    objectives: [OBJ-4.2-2, OBJ-3.5-2]
+    level: mid
+    prompt: >-
+      $f(x)=\frac{1-\cos x}{x^2}$ לכל $x\ne0$, ו-$f(0)=a$. לאיזה $a$ הפונקציה $f$ רציפה ב-0?
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $1-\cos x=2\sin^2\frac x2$, ולכן $f(x)=\frac12\left(\frac{\sin(x/2)}{x/2}\right)^2\to\frac12$.
+    wrongFeedback: >-
+      השתמשו בזהות $1-\cos x=2\sin^2\frac x2$ והביאו את המנה לצורה $\frac{\sin t}{t}$ עם $t=\frac x2$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          הצבה נותנת $\frac00$, צורה לא מוגדרת, לא אפס.
+        misconception: MC-indeterminate-form-value
+      - value: 1
+        feedback: >-
+          $\frac{\sin t}{t}\to1$, אבל כאן יש עוד גורם: $f(x)=\frac12\left(\frac{\sin(x/2)}{x/2}\right)^2$.
+        misconception: MC-sin-kx-over-x-is-one
+      - value: 2
+        feedback: >-
+          המקדם התהפך: $2\sin^2\frac x2$ חלקי $x^2$ הוא $\frac{2}{4}\cdot\left(\frac{\sin(x/2)}{x/2}\right)^2$.
+    hints:
+      - 'חזרו לשיעור 4.2: פרמטר שעושה פונקציה רציפה; ולשיעור 3.5: הגבול של סינוס x חלקי x.'
+
+  - id: Q-4-review-07
+    type: twotier
+    objectives: [OBJ-4.3-1, OBJ-1.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ רציפה ב-$[0,1]$ וכל הערכים שלה רציונליים. האם $f$ בהכרח קבועה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. רציפות על קטע לא מאפשרת "לדלג" על האי-רציונליים.
+      - text: 'לא, למשל $\lfloor 2x\rfloor$'
+        feedback: >-
+          $\lfloor 2x\rfloor$ אכן מקבלת רק ערכים רציונליים (0, 1, 2), אבל היא קופצת ב-$\frac12$ וב-1, ולכן אינה
+          רציפה.
+        misconception: MC-piecewise-pieces-continuous
+    reasons:
+      - text: 'אם $f(a)<f(b)$, לפי ערך הביניים $f$ מקבלת כל ערך ביניהם, ובפרט אי-רציונלי (שיעור 1.6)'
+        correct: true
+        feedback: >-
+          בדיוק. התמונה של קטע היא קטע; קטע עם יותר מנקודה אחת מכיל אי-רציונליים.
+      - text: הרציונליים "מעטים", ולכן הפונקציה אינה יכולה לזוז
+        feedback: >-
+          "מעטים" אינו נימוק. מה שעובד הוא ערך הביניים יחד עם הצפיפות של האי-רציונליים.
+      - text: פונקציה עם ערכים רציונליים בלבד אינה רציפה באף נקודה, כמו דיריכלה
+        feedback: >-
+          פונקציה קבועה רציונלית רציפה בכל נקודה. הטענה היא שזו האפשרות היחידה.
+        misconception: MC-dirichlet-cont-somewhere
+    hints:
+      - 'חזרו לשיעור 4.3 (משפט ערך הביניים) ולשיעור 1.6 (בין כל שני ממשיים יש אי-רציונלי).'
+
+  - id: Q-4-review-08
+    type: mc
+    objectives: [OBJ-4.1-2, OBJ-4.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=x^x$ ב-$(0,\infty)$. מהו הנימוק הנכון לרציפות של $f$?
+    choices:
+      - text: '$x^x=e^{x\ln x}$: המכפלה $x\ln x$ רציפה, ו-$e^t$ רציפה, ולכן ההרכבה רציפה'
+        correct: true
+        feedback: >-
+          נכון. כך מטפלים בכל חזקה שבה גם הבסיס וגם המעריך משתנים: $u(x)^{v(x)}=e^{v(x)\ln u(x)}$.
+      - text: '$x^x$ היא חזקה, וחזקות $x^r$ רציפות'
+        feedback: >-
+          $x^r$ עם $r$ **קבוע** רציפה. כאן המעריך משתנה עם $x$, וזו כבר לא אותה פונקציה.
+      - text: היא אינה רציפה, כי $0^0$ אינו מוגדר
+        feedback: >-
+          0 אינו בתחום $(0,\infty)$, ולכן אין שם שאלה של רציפות.
+        misconception: MC-cont-means-whole-line
+      - text: היא עולה, ולכן רציפה
+        feedback: >-
+          היא אינה מונוטונית: $(\frac14)^{1/4}=(\frac12)^{1/2}\approx0.707$. וגם פונקציה מונוטונית אינה בהכרח רציפה.
+        misconception: MC-monotone-is-continuous
+    hints:
+      - 'חזרו לשיעור 4.6 (המעריכית והלוגריתם) ולשיעור 4.1 (רציפות של מכפלה והרכבה).'
+
+  - id: Q-4-review-09
+    type: numeric
+    objectives: [OBJ-4.6-3, OBJ-2.7-3]
+    level: mid
+    prompt: >-
+      חשבו את $\lim_{n\to\infty}\left(\frac{n}{n+1}\right)^n$ ותנו את התשובה בארבע ספרות משמעותיות.
+    answer: 0.367879
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac1e\approx0.3679$: $\left(\frac{n}{n+1}\right)^n=\frac{1}{\left(1+\frac1n\right)^n}\to\frac1e$.
+    wrongFeedback: >-
+      הפכו את השבר: $\frac{n}{n+1}=\frac{1}{1+\frac1n}$, והשתמשו בהגדרת $e$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          הבסיס שואף ל-1 והמעריך לאינסוף: צורה לא מוגדרת, לא 1.
+        misconception: MC-one-power-infinity-is-one
+      - value: 2.718282
+        feedback: >-
+          זה $e$, הגבול של $\left(\frac{n+1}{n}\right)^n$. כאן השבר הפוך, ולכן הגבול $\frac1e$.
+    hints:
+      - 'חזרו לשיעור 2.7 (הגדרת $e$) ולשיעור 4.6 (גבולות עם חזקות).'
+
+  - id: Q-4-review-10
+    type: twotier
+    objectives: [OBJ-4.4-1, OBJ-4.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ רציפה ב-$[0,1]$ ו-$f(x)>0$ לכל $x\in[0,1]$. האם קיים $c>0$ כך ש-$f(x)\ge c$ לכל $x\in[0,1]$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון.
+      - text: 'לא, למשל $f(x)=x$'
+        feedback: >-
+          $f(x)=x$ אינה חיובית ב-0. על $(0,1]$ היא חיובית בלי חסם מלרע חיובי, אבל $(0,1]$ אינו קטע סגור.
+    reasons:
+      - text: '$f$ מקבלת מינימום בנקודה $x_1$ (ויירשטראס), ו-$c=f(x_1)>0$'
+        correct: true
+        feedback: >-
+          בדיוק. המינימום הוא אחד מהערכים של $f$, ולכן חיובי.
+      - text: האינפימום של קבוצת מספרים חיוביים תמיד חיובי
+        feedback: >-
+          לא נכון: $\inf\{\frac1n\}=0$. בלי ויירשטראס האינפימום יכול להיות 0, כמו אצל $x$ על $(0,1]$.
+        misconception: MC-positive-function-inf-positive
+      - text: '$f$ חסומה, ולכן חסומה מלרע במספר חיובי'
+        feedback: >-
+          חסומה פירושו שיש חסם מלרע כלשהו, אולי 0 או שלילי. כדי לקבל חסם **חיובי** צריך שהאינפימום יתקבל.
+        misconception: MC-positive-function-inf-positive
+    hints:
+      - 'חזרו לשיעור 4.4: משפט ויירשטראס השני, ומה משתבש בקטע שאינו סגור.'
+
+  - id: Q-4-review-11
+    type: rank
+    objectives: [OBJ-4.3-2, OBJ-4.1-2]
+    level: exam
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      הטענה: אם $f$ רציפה ב-$[0,2]$ ו-$f(0)=f(2)$, יש $x\in[0,1]$ עם $f(x)=f(x+1)$. סדרו את שלבי ההוכחה.
+    items:
+      - id: s1
+        label: 'נגדיר $g(x)=f(x+1)-f(x)$ על $[0,1]$; היא רציפה, כהפרש של רציפות (ו-$f(x+1)$ רציפה כהרכבה).'
+      - id: s2
+        label: '$g(0)+g(1)=\big(f(1)-f(0)\big)+\big(f(2)-f(1)\big)=f(2)-f(0)=0$.'
+      - id: s3
+        label: 'אם $g(0)=0$, אז $x=0$ מתאים. אחרת $g(1)=-g(0)$, ולשני הערכים סימנים הפוכים.'
+      - id: s4
+        label: 'לפי משפט ערך הביניים יש $c\in(0,1)$ עם $g(c)=0$, כלומר $f(c)=f(c+1)$.'
+    order: [s1, s2, s3, s4]
+    correctFeedback: >-
+      נכון. הדפוס חוזר בהרבה שאלות מבחן: מגדירים פונקציית עזר שהשורש שלה הוא מה שמחפשים, ומוצאים שני ערכים
+      שלה בסימנים הפוכים.
+    wrongFeedback: >-
+      התחילו מפונקציית העזר שהשורש שלה הוא $f(x)=f(x+1)$, ואז חשבו את הסכום של ערכיה בקצוות.
+    hints:
+      - 'חזרו לשיעור 4.3: נקודת שבת ופונקציית עזר. ולשיעור 4.1: רציפות של הרכבה.'
+
+  - id: Q-4-review-12
+    type: multi
+    objectives: [OBJ-4.5-1, OBJ-4.2-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ עולה (במובן החלש) בקטע $[0,1]$. אילו מהמצבים הבאים **אפשריים**? סמנו את כולם.
+    choices:
+      - text: $f$ קופצת בנקודה $\frac12$
+        correct: true
+        feedback: נכון, למשל $f=0$ ב-$[0,\frac12)$ ו-$f=1$ ב-$[\frac12,1]$.
+      - text: $f$ אינה רציפה גם ב-$\frac13$ וגם ב-$\frac12$
+        correct: true
+        feedback: 'נכון: פונקציית מדרגות עם שתי מדרגות, ב-$\frac13$ וב-$\frac12$.'
+      - text: $f$ רציפה והתמונה שלה $\{3\}$
+        correct: true
+        feedback: 'נכון: הפונקציה הקבועה 3 עולה במובן החלש.'
+      - text: ל-$f$ יש אי-רציפות סליקה ב-$\frac12$
+        feedback: >-
+          אצל פונקציה עולה $f(\frac12^-)\le f(\frac12)\le f(\frac12^+)$. אם שני הגבולות שווים, הערך שווה להם,
+          ו-$f$ רציפה שם.
+        misconception: MC-monotone-any-discontinuity
+      - text: ל-$f$ יש אי-רציפות מסוג שני ב-$\frac12$
+        feedback: >-
+          לפונקציה מונוטונית יש גבולות חד-צדדיים בכל נקודה (שיעור 3.6), ולכן אין לה אי-רציפות מסוג שני.
+        misconception: MC-monotone-any-discontinuity
+      - text: '$f([0,1])=[0,1]$ ו-$f$ אינה רציפה ב-$\frac12$'
+        feedback: >-
+          פונקציה מונוטונית שהתמונה שלה קטע רציפה (שיעור 4.5): קפיצה הייתה משאירה חור בתמונה.
+        misconception: MC-interval-image-implies-continuous
+    hints:
+      - 'חזרו לשיעור 4.5 (פונקציה מונוטונית שהתמונה שלה קטע) ולשיעור 4.2 (סוגי אי-רציפות).'
+
+  - id: Q-4-review-13
+    type: twotier
+    objectives: [OBJ-4.3-2, OBJ-3.6-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ רציפה ב-$\mathbb{R}$, $\lim_{x\to\infty}f(x)=\lim_{x\to-\infty}f(x)=\infty$, ו-$f(0)=-1$. האם למשוואה
+      $f(x)=0$ יש בהכרח לפחות שני פתרונות?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. אחד משמאל ל-0 ואחד מימינו.
+      - text: לא, משפט ערך הביניים נותן רק פתרון אחד
+        feedback: >-
+          המשפט נותן פתרון אחד **בכל קטע** שבקצותיו יש החלפת סימן. כאן יש שני קטעים זרים כאלה.
+        misconception: MC-ivt-unique-root
+    reasons:
+      - text: 'יש $R>0$ עם $f(R)>0$ ו-$f(-R)>0$; ערך הביניים ב-$[-R,0]$ וב-$[0,R]$ נותן שורשים ב-$(-R,0)$ וב-$(0,R)$'
+        correct: true
+        feedback: >-
+          בדיוק. הגבולות באינסוף נותנים את $R$ (עם "$M=1$" בהגדרת הגבול האינסופי), והקטעים הפתוחים זרים, כך
+          שהשורשים שונים.
+      - text: '$\mathbb{R}$ אינו קטע סגור, ולכן המשפט לא חל'
+        feedback: >-
+          המשפט חל על כל קטע סגור **בתוך** $\mathbb{R}$, וזה כל מה שצריך: בוחרים קטעים מתאימים.
+        misconception: MC-theorem-hypotheses-necessary
+      - text: יש בדיוק שני פתרונות
+        feedback: >-
+          "לפחות שניים" אינו "בדיוק שניים". $f(x)=\frac{(x^2-1)(x^2-4)(x^2-9)}{36}$ מקיימת את כל הנתונים
+          ($f(0)=-1$, ושואפת לאינסוף בשני הכיוונים), ויש לה שישה שורשים: $\pm1,\pm2,\pm3$.
+        misconception: MC-ivt-unique-root
+    hints:
+      - 'חזרו לשיעור 4.3 (קיום פתרון) ולשיעור 3.6 (גבול באינסוף): מצאו נקודה משמאל ונקודה מימין שבהן $f$ חיובית.'
+
+  - id: Q-4-review-14
+    type: twotier
+    objectives: [OBJ-4.6-1, OBJ-4.3-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם למשוואה $e^x=3-x$ יש פתרון ממשי **יחיד**?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. (הפתרון בערך $0.7921$.)
+      - text: לא, יש יותר מאחד
+        feedback: >-
+          $g(x)=e^x+x-3$ עולה ממש, ולכן לא יכולה להתאפס פעמיים.
+    reasons:
+      - text: '$g(x)=e^x+x-3$ רציפה, $g(0)=-2<0<e-2=g(1)$ (קיום), ו-$g$ עולה ממש כסכום של שתי פונקציות עולות ממש (יחידות)'
+        correct: true
+        feedback: >-
+          בדיוק: קיום מערך הביניים, יחידות ממונוטוניות ממש. שני חלקים נפרדים, ושניהם נחוצים.
+      - text: משפט ערך הביניים נותן פתרון יחיד ב-$(0,1)$
+        feedback: >-
+          המשפט נותן רק קיום. היחידות כאן באה מכך ש-$e^x$ עולה ממש (שיעור 4.6).
+        misconception: MC-ivt-unique-root
+      - text: '$g$ רציפה, ולכן יש לה לכל היותר שורש אחד'
+        feedback: >-
+          רציפות לא מגבילה את מספר השורשים: $\sin x$ רציפה ויש לה אינסוף שורשים. המונוטוניות היא שנותנת יחידות.
+        misconception: MC-ivt-unique-root
+    hints:
+      - 'חזרו לשיעור 4.6 (המעריכית עולה ממש) ולשיעור 4.3 (קיום פתרון).'

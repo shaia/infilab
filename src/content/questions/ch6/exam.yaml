@@ -1,0 +1,329 @@
+# Chapter 6 — exam questions in the style of an 80131 final (original questions, not from a real exam).
+# Each is worth 25 points in lettered parts, with at least one open part graded against a model solution.
+chapter: 6
+questions:
+  - id: Q-6-exam-1
+    type: exam
+    title: רציפות במידה שווה ומשפט קנטור
+    prompt: >-
+      לכל $\alpha\ge0$ נגדיר בקטע $(0,1]$ את הפונקציה $f_\alpha(x) = x^\alpha\sin\frac1x$.
+    parts:
+      - label: א
+        points: 10
+        type: open
+        objectives: [OBJ-6.2-3, OBJ-6.2-2]
+        prompt: >-
+          הוכיחו שלכל $\alpha>0$ הפונקציה $f_\alpha$ רציפה במידה שווה בקטע $(0,1]$.
+        solution:
+          - kind: given
+            text: '$\alpha>0$ ו-$f_\alpha(x) = x^\alpha\sin\frac1x$ לכל $x\in(0,1]$.'
+          - kind: goal
+            text: '$f_\alpha$ רציפה במידה שווה ב-$(0,1]$.'
+          - kind: idea
+            text: >-
+              הקטע אינו סגור, ולכן קנטור לא חל ישירות. נאריך את $f_\alpha$ לפונקציה רציפה בקטע הסגור $[0,1]$,
+              נשתמש בקנטור, ונחזור לקטע המקורי.
+          - kind: definition
+            text: 'נגדיר $g(x) = f_\alpha(x)$ לכל $x\in(0,1]$, ו-$g(0) = 0$.'
+          - kind: step
+            text: >-
+              $g$ רציפה בכל נקודה של $(0,1]$: היא מכפלה של $x^\alpha$ (רציפה ל-$x>0$, שיעור 4.6) ושל ההרכבה של
+              $\sin$ עם $\frac1x$ (רציפות, שיעור 4.1).
+          - kind: step
+            text: >-
+              $g$ רציפה מימין ב-$0$: $|g(x)-g(0)| = x^\alpha\left|\sin\frac1x\right| \le x^\alpha \to 0$ כש-$x\to0^+$,
+              כי $\alpha>0$. לפי כלל הסנדוויץ' $g(x)\to0 = g(0)$.
+          - kind: theorem
+            text: >-
+              $g$ רציפה בקטע הסגור והחסום $[0,1]$, ולכן לפי משפט קנטור היא רציפה בו במידה שווה.
+          - kind: step
+            text: >-
+              יהי $\varepsilon>0$ ויהי $\delta$ המתאים ל-$g$ ב-$[0,1]$. לכל $x,y\in(0,1]$ עם $|x-y|<\delta$:
+              $|f_\alpha(x)-f_\alpha(y)| = |g(x)-g(y)|<\varepsilon$. אותו $\delta$ מתאים ל-$f_\alpha$.
+          - kind: result
+            text: 'לכל $\alpha>0$ הפונקציה $f_\alpha$ רציפה במידה שווה ב-$(0,1]$.'
+        rubric:
+          - text: מאריכים את הפונקציה לנקודה 0 ומסבירים שזה נעשה כדי לקבל קטע סגור
+            weight: 2
+          - text: מוכיחים רציפות ב-0 בעזרת החסם על ערכה המוחלט ו-α חיובי
+            weight: 3
+          - text: מצטטים את משפט קנטור עם שתי ההנחות שלו (קטע סגור וחסום, רציפות בכולו)
+            weight: 3
+          - text: מסבירים למה אותה דלתא עובדת גם בקטע (0,1]
+            weight: 2
+
+      - label: ב
+        points: 9
+        type: open
+        objectives: [OBJ-6.2-2, OBJ-6.2-1]
+        prompt: >-
+          הוכיחו ש-$f_0(x) = \sin\frac1x$ **אינה** רציפה במידה שווה בקטע $(0,1]$.
+        solution:
+          - kind: goal
+            text: >-
+              השלילה של ההגדרה: קיים $\varepsilon_0>0$ כך שלכל $\delta>0$ יש $x,y\in(0,1]$ עם $|x-y|<\delta$
+              ו-$|f_0(x)-f_0(y)|\ge\varepsilon_0$.
+          - kind: idea
+            text: >-
+              ליד $0$ הפונקציה מגיעה לערך $1$ ולערך $0$ בנקודות קרובות כרצוננו. נבנה שתי סדרות של נקודות כאלה.
+          - kind: definition
+            text: >-
+              לכל $n\in\mathbb{N}$: $x_n = \frac{1}{2\pi n+\frac\pi2}$ ו-$y_n = \frac{1}{2\pi n}$. שתיהן בקטע $(0,1]$,
+              כי $2\pi n > 1$.
+          - kind: computation
+            text: >-
+              $f_0(x_n) = \sin\left(2\pi n+\frac\pi2\right) = 1$ ו-$f_0(y_n) = \sin(2\pi n) = 0$, ולכן
+              $|f_0(x_n)-f_0(y_n)| = 1$ לכל $n$.
+          - kind: computation
+            text: '$0<x_n<y_n$, ולכן $|x_n-y_n| < y_n = \frac{1}{2\pi n}$.'
+          - kind: step
+            text: >-
+              ניקח $\varepsilon_0 = 1$. יהי $\delta>0$. לפי תכונת ארכימדס יש $n$ עם $\frac{1}{2\pi n}<\delta$, ואז
+              $|x_n-y_n|<\delta$ ו-$|f_0(x_n)-f_0(y_n)| = 1\ge\varepsilon_0$.
+          - kind: result
+            text: '$f_0$ אינה רציפה במידה שווה ב-$(0,1]$.'
+        rubric:
+          - text: כותבים נכון את השלילה של רציפות במידה שווה (אפסילון אחד, לכל דלתא, זוג נקודות)
+            weight: 2
+          - text: בוחרים שתי סדרות בתחום שהמרחק ביניהן שואף לאפס, ומוכיחים זאת
+            weight: 3
+          - text: מחשבים את ערכי הפונקציה ומראים שההפרש אינו קטן מאפסילון אחד קבוע
+            weight: 3
+          - text: מסבירים שהזוג נמצא לכל דלתא, ולא רק לדלתא אחת
+            weight: 1
+
+      - label: ג
+        points: 6
+        type: twotier
+        standalone: false
+        objectives: [OBJ-6.2-2, OBJ-5.6-3]
+        prompt: >-
+          האם $f_1(x) = x\sin\frac1x$ רציפה במידה שווה בקרן $(0,\infty)$?
+        choices:
+          - text: כן
+            correct: true
+            feedback: >-
+              נכון. הקרן אינה חסומה, אבל אפשר לפצל אותה לחלק חסום ליד $0$ ולחלק שבו הנגזרת חסומה.
+          - text: לא, כי הקרן אינה חסומה ולכן משפט קנטור לא חל
+            feedback: >-
+              קנטור הוא תנאי מספיק. כשהוא לא חל צריך טיעון אחר, וכאן יש כזה.
+            misconception: MC-cantor-converse
+        reasons:
+          - text: 'ב-$(0,2]$ הטיעון של סעיף א נותן $\delta_1$; ב-$[1,\infty)$ מתקיים $|f_1''(x)| = \left|\sin\frac1x-\frac1x\cos\frac1x\right|\le2$, ליפשיץ נותן $\delta_2$; ו-$\delta = \min(\delta_1,\delta_2,1)$ מתאים לכל הקרן'
+            correct: true
+            feedback: >-
+              בדיוק. שתי נקודות שהמרחק ביניהן קטן מ-$1$ נמצאות שתיהן ב-$(0,2]$ או שתיהן ב-$[1,\infty)$, ולכן אחד
+              משני ה-$\delta$-ים חל עליהן.
+          - text: 'לפי סעיף א היא רציפה במידה שווה בכל קטע $(0,n]$, ולכן בכל הקרן'
+            feedback: >-
+              זה לא מספיק: $x^2$ רציפה במידה שווה בכל $(0,n]$ ולא בקרן. ה-$\delta$ של $(0,n]$ יכול לקטון כש-$n$
+              גדל; צריך $\delta$ אחד לכל הקרן.
+            misconception: MC-uc-is-pointwise
+          - text: '$f_1$ רציפה וחסומה בקרן, ולכן רציפה בה במידה שווה'
+            feedback: >-
+              רציפה וחסומה אינה מספיקה: $\sin\left(x^2\right)$ רציפה וחסומה על הישר ואינה רציפה בו במידה שווה.
+            misconception: MC-continuous-implies-uc
+
+  - id: Q-6-exam-2
+    type: exam
+    title: הערכת שגיאה בפולינום טיילור
+    prompt: >-
+      תהי $f(x) = \ln(1+x)$, ויהי $T_n$ פולינום טיילור מסדר $n$ שלה סביב $0$. רוצים לקרב את $\ln 1.2 = f(0.2)$.
+    parts:
+      - label: א
+        points: 5
+        type: numeric
+        objectives: [OBJ-6.4-1]
+        prompt: >-
+          חשבו את $T_3(0.2)$ (עד ארבע ספרות משמעותיות לפחות).
+        answer: 0.1826667
+        tolerance: 0.0005
+        correctFeedback: >-
+          נכון. $T_3(x) = x-\frac{x^2}{2}+\frac{x^3}{3}$, ולכן $T_3(0.2) = 0.2-0.02+\frac{0.008}{3}\approx0.182667$.
+        wrongFeedback: >-
+          המקדמים של $\ln(1+x)$ הם $\frac{(-1)^{k+1}}{k}$. כתבו את $T_3$ והציבו $x=0.2$.
+        commonWrong:
+          - value: 0.1813333
+            feedback: >-
+              חילקתם את $x^3$ ב-$3! = 6$. ב-$\ln(1+x)$ המקדם הוא $\frac{f'''(0)}{3!} = \frac{2}{6} = \frac13$.
+            misconception: MC-taylor-pattern-guess
+          - value: 0.176
+            feedback: >-
+              השתמשתם בנגזרות עצמן ($1$, $-1$, $2$) בתור מקדמים. צריך לחלק כל אחת ב-$k!$.
+            misconception: MC-taylor-forget-factorial
+          - value: 0.1823216
+            feedback: >-
+              זה $\ln 1.2$ עצמו, לא $T_3(0.2)$. השאלה מבקשת את הקירוב.
+
+      - label: ב
+        points: 12
+        type: open
+        objectives: [OBJ-6.5-1, OBJ-6.5-2]
+        prompt: >-
+          הוכיחו בעזרת צורת לגרנז' של השארית ש-$0 < T_3(0.2)-\ln 1.2 < 4\cdot10^{-4}$.
+        solution:
+          - kind: given
+            text: '$f(x) = \ln(1+x)$ גזירה אינסוף פעמים ב-$(-1,\infty)$, ובפרט ארבע פעמים ב-$[0,\,0.2]$.'
+          - kind: computation
+            text: >-
+              $f'(t) = \frac{1}{1+t}$, $f''(t) = -\frac{1}{(1+t)^2}$, $f'''(t) = \frac{2}{(1+t)^3}$,
+              $f^{(4)}(t) = -\frac{6}{(1+t)^4}$.
+          - kind: theorem
+            text: >-
+              לפי צורת לגרנז' יש $c\in(0,\,0.2)$ כך ש-$\ln 1.2 - T_3(0.2) = R_3(0.2) = \frac{f^{(4)}(c)}{4!}\cdot0.2^4$.
+          - kind: computation
+            text: >-
+              $R_3(0.2) = -\frac{6}{24(1+c)^4}\cdot0.0016 = -\frac{4\cdot10^{-4}}{(1+c)^4}$.
+          - kind: step
+            text: >-
+              $R_3(0.2)<0$, ולכן $T_3(0.2)-\ln1.2 = -R_3(0.2) > 0$.
+          - kind: step
+            text: >-
+              $c>0$, ולכן $(1+c)^4>1$ ו-$-R_3(0.2) = \frac{4\cdot10^{-4}}{(1+c)^4} < 4\cdot10^{-4}$.
+          - kind: check
+            text: >-
+              במספרים: $T_3(0.2)\approx0.182667$ ו-$\ln1.2\approx0.182322$, וההפרש כ-$3.45\cdot10^{-4}$, בין $0$
+              ל-$4\cdot10^{-4}$.
+          - kind: result
+            text: '$0 < T_3(0.2)-\ln 1.2 < 4\cdot10^{-4}$: הקירוב גדול מהערך האמיתי, בפחות מ-$4\cdot10^{-4}$.'
+        rubric:
+          - text: מחשבים נכון את הנגזרות עד הרביעית
+            weight: 2
+          - text: כותבים את השארית מהסדר הנכון (נגזרת רביעית, 4 עצרת, חזקה רביעית) עם נקודה c בין 0 ל-0.2
+            weight: 3
+          - text: חוסמים את הגורם שתלוי ב-c בעזרת c חיובי, בלי להציב ערך מסוים של c
+            weight: 3
+          - text: מסיקים את הסימן של ההפרש מהסימן של הנגזרת הרביעית
+            weight: 2
+
+      - label: ג
+        points: 8
+        type: numeric
+        objectives: [OBJ-6.5-2]
+        prompt: >-
+          ידוע ש-$f^{(n+1)}(t) = \frac{(-1)^n n!}{(1+t)^{n+1}}$. מהו ה-$n$ הקטן ביותר שעבורו החסם של לגרנז'
+          **מבטיח** $|\ln1.2 - T_n(0.2)| < 10^{-6}$?
+        answer: 7
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון. $|R_n(0.2)| = \frac{n!}{(n+1)!(1+c)^{n+1}}\cdot0.2^{n+1} \le \frac{0.2^{n+1}}{n+1}$. עם $n=6$:
+          $\frac{0.2^7}{7}\approx1.83\cdot10^{-6}$, גדול מדי; עם $n=7$: $\frac{0.2^8}{8} = 3.2\cdot10^{-7}$.
+        wrongFeedback: >-
+          הציבו את הנגזרת בצורת לגרנז', צמצמו את העצרות, חסמו את $\frac{1}{(1+c)^{n+1}}$ ב-$1$, ובדקו ערכים של
+          $n$ אחד אחרי השני.
+        commonWrong:
+          - value: 8
+            feedback: >-
+              $8$ מתקבל מהחסם $\frac{0.2^n}{n}$, כלומר מסדר השארית הלא נכון. אחרי $T_n$ השארית היא עם $0.2^{n+1}$.
+            misconception: MC-remainder-wrong-order
+          - value: 5
+            feedback: >-
+              $5$ מתקבל מהחסם $\frac{0.2^{n+1}}{(n+1)!}$, כלומר אם שוכחים את $n!$ שבמונה של הנגזרת. כאן הנגזרות
+              גדלות כמו עצרת.
+
+  - id: Q-6-exam-3
+    type: exam
+    title: גבולות בכלל לופיטל ובטיילור
+    prompt: >-
+      בשאלה זו כל הגבולות הם כש-$x\to0$.
+    parts:
+      - label: א
+        points: 12
+        type: open
+        objectives: [OBJ-6.3-1]
+        prompt: >-
+          חשבו בעזרת כלל לופיטל את $L = \lim_{x\to0}\frac{e^x-1-\sin x}{1-\cos x}$. בכל הפעלה של הכלל ציינו במפורש
+          איך מתקיימת כל אחת מההנחות שלו.
+        solution:
+          - kind: given
+            text: '$f(x) = e^x-1-\sin x$ ו-$g(x) = 1-\cos x$, שתיהן גזירות אינסוף פעמים בכל הישר.'
+          - kind: idea
+            text: >-
+              נפעיל את הכלל פעמיים. ההצדקה רצה מהסוף להתחלה: קיום הגבול של $\frac{f''}{g''}$ מצדיק את הגבול של
+              $\frac{f'}{g'}$, וזה מצדיק את הגבול של $\frac{f}{g}$.
+          - kind: step
+            text: >-
+              $f$ ו-$g$ רציפות ו-$f(0) = g(0) = 0$, ולכן $f(x),g(x)\to0$: צורה של אפס חלקי אפס.
+              $g'(x) = \sin x \ne 0$ לכל $0<|x|<\pi$.
+          - kind: computation
+            text: >-
+              $\frac{f'(x)}{g'(x)} = \frac{e^x-\cos x}{\sin x}$. שוב $e^x-\cos x\to0$ ו-$\sin x\to0$: אפס חלקי אפס.
+          - kind: step
+            text: >-
+              $f''(x) = e^x+\sin x$ ו-$g''(x) = \cos x \ne 0$ לכל $|x|<\frac\pi2$. מרציפות
+              $\frac{f''(x)}{g''(x)}\to\frac{1+0}{1} = 1$.
+          - kind: theorem
+            text: >-
+              כלל לופיטל על $f',g'$ בסביבה המנוקבת $0<|x|<\frac\pi2$ (שם $g''\ne0$, ו-$f',g'\to0$): הגבול של
+              $\frac{f'}{g'}$ קיים ושווה ל-$1$.
+          - kind: theorem
+            text: >-
+              כלל לופיטל על $f,g$ (שם $g'\ne0$, ו-$f,g\to0$): מכיוון שהגבול של $\frac{f'}{g'}$ קיים ושווה ל-$1$, גם
+              $L = 1$.
+          - kind: check
+            text: >-
+              בטיילור: המונה $\frac{x^2}{2}+\frac{x^3}{3}+o(x^3)$ והמכנה $\frac{x^2}{2}+o(x^3)$, והמנה שואפת ל-$1$.
+          - kind: result
+            text: '$L = 1$.'
+        rubric:
+          - text: בודקים שהצורה אפס חלקי אפס לפני כל אחת משתי ההפעלות
+            weight: 3
+          - text: בודקים שהנגזרת של המכנה שונה מאפס בסביבה מנוקבת, בכל הפעלה
+            weight: 3
+          - text: מחשבים נכון את הנגזרות הראשונות והשניות ואת הגבול האחרון
+            weight: 3
+          - text: מסבירים שקיום הגבול האחרון הוא שמצדיק את שתי ההפעלות, בסדר הפוך
+            weight: 3
+
+      - label: ב
+        points: 7
+        type: numeric
+        objectives: [OBJ-6.4-3]
+        prompt: >-
+          חשבו בעזרת פיתוחי טיילור את $M = \lim_{x\to0}\frac{e^x-1-\sin x-\frac{x^2}{2}}{x^3}$.
+        answer: 0.3333333333
+        tolerance: 0.001
+        correctFeedback: >-
+          נכון, $\frac13$. $e^x = 1+x+\frac{x^2}{2}+\frac{x^3}{6}+o(x^3)$ ו-$\sin x = x-\frac{x^3}{6}+o(x^3)$, ולכן
+          המונה $\left(\frac16+\frac16\right)x^3+o(x^3)$.
+        wrongFeedback: >-
+          פתחו את $e^x$ ואת $\sin x$ עד $x^3$, ושימו לב לסימן של האיבר של $\sin x$ אחרי ההחסרה.
+        commonWrong:
+          - value: 0.1666666667
+            feedback: >-
+              פיתחתם את $\sin x$ רק עד $x$. האיבר $-\frac{x^3}{6}$ שלו, אחרי ההחסרה, מוסיף עוד $\frac{x^3}{6}$.
+            misconception: MC-taylor-order-too-low
+          - value: 0
+            feedback: >-
+              פיתוח עד סדר $2$ בלבד נותן במונה רק $o(x^2)$, ואחרי חלוקה ב-$x^3$ לא נשאר מידע.
+            misconception: MC-taylor-order-too-low
+
+      - label: ג
+        points: 6
+        type: twotier
+        objectives: [OBJ-6.3-3, OBJ-3.5-2]
+        prompt: >-
+          סטודנט כתב: "$\lim_{x\to0}\frac{x^2\sin\frac1x}{\sin x}$ היא צורה של אפס חלקי אפס; מנת הנגזרות
+          $\frac{2x\sin\frac1x-\cos\frac1x}{\cos x}$ אינה מתכנסת, ולכן הגבול אינו קיים". מה נכון?
+        choices:
+          - text: הגבול קיים ושווה ל-$0$
+            correct: true
+            feedback: >-
+              נכון. $\frac{x^2\sin\frac1x}{\sin x} = \frac{x}{\sin x}\cdot x\sin\frac1x \to 1\cdot0 = 0$.
+          - text: הגבול אינו קיים
+            feedback: >-
+              מכך שמנת הנגזרות אינה מתכנסת לא נובע דבר. הגבול קיים: $1\cdot 0 = 0$.
+            misconception: MC-lhopital-converse
+        reasons:
+          - text: 'כלל לופיטל אומר רק "אם גבול מנת הנגזרות קיים אז..."; כאן הוא לא קיים, והכלל שותק. מחשבים ישירות'
+            correct: true
+            feedback: >-
+              בדיוק. $\frac{x}{\sin x}\to1$ (שיעור 3.5), ו-$\left|x\sin\frac1x\right|\le|x|\to0$.
+          - text: 'יש להפעיל את הכלל פעם נוספת'
+            feedback: >-
+              מנת הנגזרות אינה צורה של אפס חלקי אפס (המונה מתנודד ואינו שואף לאפס), ולכן אין על מה להפעיל שוב.
+            misconception: MC-lhopital-always-helps
+          - text: 'הכלל לא חל כי $x^2\sin\frac1x$ אינה מוגדרת ב-$0$'
+            feedback: >-
+              הכלל עוסק רק בסביבה מנוקבת, והערך ב-$0$ לא משנה. ההנחה שנכשלת היא קיום הגבול של מנת הנגזרות.
+            misconception: MC-lhopital-needs-value-at-point

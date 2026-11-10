@@ -1,0 +1,417 @@
+# Lesson 2.1 — sequences: boundedness and monotonicity.
+# Objectives (src/course.ts):
+#   OBJ-2.1-1  a sequence as a function on ℕ, given by a formula, a recursion or in words
+#   OBJ-2.1-2  prove that a sequence is bounded or unbounded, monotone or not
+#   OBJ-2.1-3  draw the terms on a line and as a graph, and read a conjecture off the drawing
+# No limits yet: the definition of a limit is lesson 2.2. "Increasing" means a_{n+1} ≥ a_n, "strictly" a_{n+1} > a_n.
+chapter: 2
+questions:
+  - id: Q-2.1-function
+    type: mc
+    objectives: [OBJ-2.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מהי סדרה של מספרים ממשיים?
+    choices:
+      - text: 'פונקציה $a:\mathbb{N}\to\mathbb{R}$. כותבים $a_n$ במקום $a(n)$.'
+        correct: true
+        feedback: >-
+          נכון. לכל מקום $n$ בסדרה מתאים מספר אחד $a_n$. הסדר נקבע על ידי $n$, ומותר שאותו מספר יופיע בכמה
+          מקומות.
+      - text: 'הקבוצה $\{a_1, a_2, a_3, \dots\}$'
+        feedback: >-
+          קבוצה שוכחת את הסדר ואת החזרות. הסדרה $1,-1,1,-1,\dots$ והסדרה $-1,1,-1,1,\dots$ הן שתי סדרות שונות
+          (האיבר הראשון שונה), אבל לשתיהן אותה קבוצת ערכים, $\{-1,1\}$.
+        misconception: MC-sequence-is-set
+      - text: רשימה אינסופית של מספרים שונים זה מזה
+        feedback: >-
+          אין דרישה שהאיברים יהיו שונים. הסדרה הקבועה $a_n = 5$ היא סדרה לגיטימית, וכל איבריה שווים.
+        misconception: MC-sequence-is-set
+      - text: 'פונקציה $f:\mathbb{R}\to\mathbb{R}$ שנתונה בנוסחה'
+        feedback: >-
+          לסדרה יש ערך רק במקומות $n = 1, 2, 3, \dots$, לא בכל ממשי. וגם אין צורך בנוסחה: מספיק כלל שקובע לכל
+          $n$ את $a_n$, ואפשר לנסח אותו במילים או ברקורסיה.
+        misconception: MC-sequence-needs-formula
+
+  - id: Q-2.1-recursion
+    type: numeric
+    objectives: [OBJ-2.1-1]
+    level: basic
+    prompt: >-
+      הסדרה מוגדרת ברקורסיה: $a_1 = 1$ ו-$a_{n+1} = 2a_n + 1$ לכל $n\in\mathbb{N}$. מהו $a_5$?
+    answer: 31
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $a_1=1$, $a_2=3$, $a_3=7$, $a_4=15$, $a_5=31$. (אפשר לנחש מכאן ש-$a_n = 2^n-1$ ולהוכיח באינדוקציה.)
+    wrongFeedback: >-
+      חשבו איבר אחר איבר: כל איבר הוא פעמיים הקודם ועוד אחד. התחילו מ-$a_1=1$ וספרו בזהירות עד המקום החמישי.
+    commonWrong:
+      - value: 15
+        feedback: >-
+          $15$ הוא $a_4$: עצרתם צעד אחד מוקדם מדי. הרקורסיה נותנת מ-$a_1$ את $a_2$, ולכן להגיע ל-$a_5$ צריך
+          ארבעה צעדים.
+        misconception: MC-sequence-index-shift
+      - value: 63
+        feedback: >-
+          $63$ הוא $a_6$: התחלתם לספור מ-$a_0=1$, אבל כאן הסדרה מתחילה ב-$a_1 = 1$.
+        misconception: MC-sequence-index-shift
+      - value: 11
+        feedback: >-
+          $11 = 2\cdot 5+1$: הצבתם את המקום $n$ במקום את האיבר הקודם. ברקורסיה $a_{n+1}=2a_n+1$ מכפילים את
+          **הערך** $a_n$, לא את $n$.
+
+  - id: Q-2.1-formula
+    type: mc
+    objectives: [OBJ-2.1-1]
+    level: mid
+    prompt: >-
+      הסדרה נתונה ברקורסיה $a_1 = 2$, $a_{n+1} = a_n + 3$. איזו נוסחה מפורשת מתארת אותה לכל $n\in\mathbb{N}$?
+    choices:
+      - text: '$a_n = 3n-1$'
+        correct: true
+        feedback: >-
+          נכון. $3\cdot 1-1 = 2 = a_1$, ואם $a_n = 3n-1$ אז $a_{n+1} = 3n-1+3 = 3(n+1)-1$: זו הוכחה באינדוקציה.
+      - text: '$a_n = 3n+2$'
+        feedback: >-
+          זו הנוסחה של הסדרה שמתחילה ב-$a_0 = 2$. כאן $a_1=2$, ואילו $3\cdot 1+2=5$: כל האיברים זזו מקום אחד.
+        misconception: MC-sequence-index-shift
+      - text: '$a_n = n+1$'
+        feedback: >-
+          היא מתאימה ל-$a_1 = 2$, אבל $a_2 = 5$ ואילו $2+1 = 3$. התאמה לאיבר הראשון לא מספיקה: צריך להוכיח
+          שהנוסחה מקיימת גם את כלל הרקורסיה.
+        misconception: MC-formula-from-first-terms
+      - text: '$a_n = 2\cdot 3^{\,n-1}$'
+        feedback: >-
+          זו סדרה שכל איבר בה **פי** 3 מהקודם. כאן מוסיפים 3: $a_2 = 5$, ואילו $2\cdot 3 = 6$. התאמה לאיבר
+          הראשון לבדה אינה בדיקה.
+        misconception: MC-formula-from-first-terms
+    hints:
+      - כתבו את ארבעת האיברים הראשונים, ובדקו כל נוסחה על כולם. אחר כך חשבו איך מוכיחים לכל $n$.
+
+  - id: Q-2.1-words
+    type: twotier
+    objectives: [OBJ-2.1-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $a_n$ היא הספרה ה-$n$-ית אחרי הנקודה העשרונית בפיתוח של $\pi$, כלומר $a_1 = 1$, $a_2 = 4$, $a_3 = 1$,
+      $a_4 = 5, \dots$. האם זו סדרה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. לכל $n\in\mathbb{N}$ הכלל קובע מספר אחד ויחיד $a_n$, וזו כל ההגדרה של סדרה.
+      - text: לא
+        feedback: >-
+          אין דרישה שלסדרה תהיה נוסחה, או שנדע לחשב את איבריה בקלות. מספיק שלכל $n$ מוגדר $a_n$ אחד.
+        misconception: MC-sequence-needs-formula
+    reasons:
+      - text: 'הכלל מתאים לכל טבעי $n$ מספר ממשי אחד, כלומר מגדיר פונקציה על $\mathbb{N}$'
+        correct: true
+        feedback: >-
+          בדיוק. סדרה היא פונקציה על הטבעיים, והיא יכולה להינתן בנוסחה, ברקורסיה או במילים, כמו כאן.
+      - text: אין לה נוסחה, ולכן היא אינה סדרה
+        feedback: >-
+          נוסחה היא רק דרך אחת לתאר סדרה. גם "$a_n$ הוא המספר הראשוני ה-$n$-י" מגדיר סדרה, בלי נוסחה.
+        misconception: MC-sequence-needs-formula
+      - text: הספרות חוזרות על עצמן (למשל 1 מופיע פעמיים), ובסדרה כל איבר מופיע פעם אחת
+        feedback: >-
+          בסדרה מותר לאותו ערך להופיע בכמה מקומות; הסדרה הקבועה היא דוגמה קיצונית. מה שאסור הוא שלמקום אחד
+          יתאימו שני ערכים.
+        misconception: MC-sequence-is-set
+
+  - id: Q-2.1-bdd-def
+    type: mc
+    objectives: [OBJ-2.1-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזה מהניסוחים הבאים אומר ש"הסדרה $a_n$ חסומה"?
+    choices:
+      - text: '$\exists M>0\ \forall n\in\mathbb{N}:\ |a_n|\le M$'
+        correct: true
+        feedback: >-
+          נכון. יש מספר אחד $M$ שחוסם את כל האיברים בערך מוחלט, כלומר $-M\le a_n\le M$ לכל $n$: הסדרה חסומה
+          מלעיל וגם מלרע.
+      - text: '$\forall n\in\mathbb{N}\ \exists M>0:\ |a_n|\le M$'
+        feedback: >-
+          כאן $M$ נבחר אחרי $n$ ורשאי להיות תלוי בו, וזה נכון לכל סדרה: קחו $M = |a_n|+1$. גם $a_n = n$, שאינה
+          חסומה, מקיימת את זה.
+        misconception: MC-bound-depends-on-n
+      - text: '$\exists M\ \forall n\in\mathbb{N}:\ a_n\le M$'
+        feedback: >-
+          זו חסימות מלעיל בלבד. הסדרה $a_n = -n$ מקיימת אותה עם $M=0$, ובכל זאת אינה חסומה: אין לה חסם מלרע.
+        misconception: MC-bounded-means-above
+      - text: '$\exists M>0\ \exists n\in\mathbb{N}:\ |a_n|\le M$'
+        feedback: >-
+          זה אומר רק שאיבר אחד לפחות חסום, וזה נכון לכל סדרה. חסימות היא תכונה של **כל** האיברים.
+        misconception: MC-bound-depends-on-n
+
+  - id: Q-2.1-mono
+    type: multi
+    objectives: [OBJ-2.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהסדרות הבאות מונוטוניות (עולות, $a_{n+1}\ge a_n$ לכל $n$, או יורדות, $a_{n+1}\le a_n$ לכל $n$)?
+      סמנו את כולן.
+    choices:
+      - text: '$a_n = \frac{n}{n+1}$'
+        correct: true
+        feedback: >-
+          נכון, היא עולה ממש: $a_n = 1-\frac{1}{n+1}$, ו-$\frac{1}{n+1}$ קטן כש-$n$ גדל.
+      - text: '$a_n = \frac{1}{n}$'
+        correct: true
+        feedback: 'נכון, היא יורדת ממש: $n+1>n>0$ גורר $\frac{1}{n+1}<\frac1n$.'
+      - text: '$a_n = \frac{(-1)^n}{n}$'
+        feedback: >-
+          לא מונוטונית: $a_1 = -1$, $a_2 = \frac12$, $a_3 = -\frac13$. היא עולה ויורדת לסירוגין. נכון ש-$|a_n|$
+          יורדת, אבל זו סדרה אחרת.
+        misconception: MC-monotone-by-absolute-value
+      - text: '$a_n = n^2-6n$'
+        feedback: >-
+          לא מונוטונית: $a_1=-5$, $a_2=-8$, $a_3=-9$, $a_4=-8$. היא יורדת עד $n=3$ ועולה משם. "עולה החל ממקום
+          מסוים" אינו "עולה": ההגדרה היא לכל $n$.
+        misconception: MC-monotone-eventually
+      - text: '$a_n = 5$ לכל $n$'
+        correct: true
+        feedback: >-
+          נכון. $a_{n+1}\ge a_n$ ו-$a_{n+1}\le a_n$ מתקיימים שניהם (בשוויון), ולכן הסדרה הקבועה עולה וגם יורדת.
+          היא לא עולה **ממש**.
+    explanation: >-
+      כדי להראות שסדרה אינה מונוטונית מספיקים שלושה איברים: $a_1>a_2$ (ולכן אינה עולה) ו-$a_2<a_3$ (ולכן
+      אינה יורדת). כדי להוכיח מונוטוניות צריך טיעון לכל $n$.
+
+  - id: Q-2.1-strict
+    type: twotier
+    objectives: [OBJ-2.1-2]
+    level: mid
+    prompt: >-
+      האם הסדרה $a_n = \frac{n}{2^n}$ יורדת **ממש**, כלומר $a_{n+1}<a_n$ לכל $n\in\mathbb{N}$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: 'נכון. $a_1 = \frac12$ ו-$a_2 = \frac{2}{4} = \frac12$: שני האיברים הראשונים שווים.'
+      - text: כן
+        feedback: >-
+          בדקו את שני האיברים הראשונים: $a_1 = a_2 = \frac12$. היא יורדת (במובן החלש), אבל לא ממש.
+        misconception: MC-monotone-weak-strict
+    reasons:
+      - text: '$\frac{a_{n+1}}{a_n} = \frac{n+1}{2n}\le 1$, עם שוויון כש-$n=1$'
+        correct: true
+        feedback: >-
+          בדיוק. כל האיברים חיוביים, ולכן מנה $\le 1$ פירושה $a_{n+1}\le a_n$. המנה קטנה ממש מ-1 רק כש-$n\ge2$,
+          ולכן הסדרה יורדת, ויורדת ממש רק החל מ-$n=2$.
+      - text: '$2^n$ גדל מהר יותר מ-$n$, ולכן המנה קטנה בכל צעד'
+        feedback: >-
+          "גדל מהר יותר" אינו הוכחה, וגם אינו נכון בכל צעד: מ-$n=1$ ל-$n=2$ המונה הוכפל בדיוק כמו המכנה.
+        misconception: MC-monotone-weak-strict
+      - text: 'יורדת ממש פירושו $a_{n+1}\le a_n$, ואת זה המנה מראה'
+        feedback: >-
+          $a_{n+1}\le a_n$ הוא "יורדת". "יורדת ממש" הוא $a_{n+1}<a_n$, וכאן הוא נכשל ב-$n=1$.
+        misconception: MC-monotone-weak-strict
+
+  - id: Q-2.1-unbounded
+    type: mc
+    objectives: [OBJ-2.1-2]
+    level: mid
+    prompt: >-
+      איזה מהטיעונים הבאים הוא הוכחה שהסדרה $a_n = \sqrt n$ **אינה** חסומה?
+    choices:
+      - text: 'יהי $M>0$. נבחר $n = \lfloor M^2\rfloor+1$. אז $n>M^2$, ולכן $a_n = \sqrt n>M$.'
+        correct: true
+        feedback: >-
+          נכון. השלילה של "חסומה" היא $\forall M>0\ \exists n:\ |a_n|>M$, וההוכחה מראה, לכל $M$, איבר שעובר אותו.
+      - text: 'הסדרה עולה ממש: $\sqrt{n+1}>\sqrt n$. סדרה שעולה כל הזמן אינה חסומה.'
+        feedback: >-
+          סדרה עולה יכולה להיות חסומה: $\frac{n}{n+1}$ עולה ממש וכל איבריה קטנים מ-1. עלייה לבדה לא מספיקה.
+        misconception: MC-increasing-means-unbounded
+      - text: '$a_{100} = 10$, $a_{10000} = 100$, $a_{10^6} = 1000$: האיברים גדלים בלי הגבלה.'
+        feedback: >-
+          שלוש דוגמאות אינן הוכחה. צריך להראות שלכל חסם $M$, גדול ככל שיהיה, יש איבר שעובר אותו.
+        misconception: MC-unbounded-from-samples
+      - text: 'עבור $M = 1000$ ניקח $n = 10^6+1$, ואז $a_n>1000$. לכן הסדרה אינה חסומה.'
+        feedback: >-
+          זה מראה רק ש-1000 אינו חסם. כדי שהסדרה לא תהיה חסומה צריך שאף $M$ לא יהיה חסם: הטיעון צריך לעבוד
+          לכל $M$.
+        misconception: MC-unbounded-from-samples
+
+  - id: Q-2.1-decbdd
+    type: twotier
+    objectives: [OBJ-2.1-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      נכון או לא נכון: כל סדרה יורדת שחסומה מלעיל היא חסומה.
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. $a_n = -n$ יורדת, וחסומה מלעיל (כל איבריה $\le -1$), אבל אינה חסומה מלרע.
+      - text: נכון
+        feedback: >-
+          דוגמה נגדית: $a_n = -n$. היא יורדת, וכל איבריה קטנים מ-0, ובכל זאת אין לה חסם מלרע.
+        misconception: MC-monotone-wrong-bound
+    reasons:
+      - text: 'סדרה יורדת חסומה מלעיל תמיד, על ידי $a_1$; ההנחה לא מוסיפה דבר, וחסם מלרע לא נובע ממנה'
+        correct: true
+        feedback: >-
+          בדיוק. $a_n\le a_{n-1}\le\dots\le a_1$, ולכן כל סדרה יורדת חסומה מלעיל. הטענה הנכונה היא: סדרה יורדת
+          חסומה אם ורק אם היא חסומה **מלרע**.
+      - text: 'סדרה יורדת מתקרבת לחסם שלה, ולכן היא לא יכולה לברוח'
+        feedback: >-
+          לסדרה יורדת יש תמיד חסם מלעיל, אבל היא יכולה לרדת בלי סוף. $-n$ יורדת ואין מספר שהיא לא עוברת כלפי
+          מטה.
+        misconception: MC-monotone-wrong-bound
+      - text: 'חסומה מלעיל או מלרע זה מספיק כדי להיקרא חסומה'
+        feedback: >-
+          "חסומה" פירושו חסומה מלעיל **וגם** מלרע: קיים $M$ עם $|a_n|\le M$ לכל $n$.
+        misconception: MC-bounded-means-above
+
+  - id: Q-2.1-rank
+    type: rank
+    objectives: [OBJ-2.1-2]
+    level: exam
+    prompt: >-
+      הסדרה מוגדרת ברקורסיה $a_1 = 3$, $a_{n+1} = \sqrt{2+a_n}$. מוכיחים שהיא יורדת ממש.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: induction
+        label: 'באינדוקציה $a_n>2$ לכל $n$: $a_1 = 3>2$, ואם $a_n>2$ אז $a_{n+1} = \sqrt{2+a_n}>\sqrt4 = 2$.'
+      - id: factor
+        label: 'לכן לכל $n$: $(a_n-2)(a_n+1)>0$, כי שני הגורמים חיוביים.'
+      - id: expand
+        label: 'פתיחת הסוגריים נותנת $a_n^2-a_n-2>0$, כלומר $a_n^2>a_n+2$.'
+      - id: root
+        label: 'שני האגפים חיוביים, ולכן אפשר להוציא שורש: $a_n>\sqrt{a_n+2} = a_{n+1}$.'
+      - id: conclude
+        label: 'לכן $a_{n+1}<a_n$ לכל $n\in\mathbb{N}$: הסדרה יורדת ממש.'
+    order: [induction, factor, expand, root, conclude]
+    correctFeedback: >-
+      נכון. קודם חסם מלרע באינדוקציה, ורק אחר כך משתמשים בו: האי-שוויון $a_n^2>a_n+2$ נכון בדיוק כש-$a_n>2$.
+    wrongFeedback: >-
+      שאלו את עצמכם באיזה שלב משתמשים בעובדה ש-$a_n>2$. היא חייבת להיות מוכחת לפני שמשתמשים בה.
+
+  - id: Q-2.1-samepic
+    type: twotier
+    objectives: [OBJ-2.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מסמנים על ציר המספרים את כל האיברים של $a_n = (-1)^n$, ובציור נפרד את כל האיברים של $b_n = (-1)^{n+1}$.
+      האם שני הציורים זהים?
+    choices:
+      - text: כן, ובכל זאת אלה שתי סדרות שונות
+        correct: true
+        feedback: >-
+          נכון. בשני הציורים יש בדיוק שתי נקודות, $-1$ ו-$1$. אבל $a_1 = -1$ ו-$b_1 = 1$, ולכן הסדרות שונות.
+      - text: כן, ולכן אלה אותה סדרה
+        feedback: >-
+          ציור על ציר מראה את קבוצת הערכים בלבד. שתי סדרות שוות כשהן שוות בכל מקום: $a_n = b_n$ לכל $n$, וכאן
+          $a_1\ne b_1$.
+        misconception: MC-sequence-is-set
+      - text: לא, הסדרות שונות ולכן הציורים שונים
+        feedback: >-
+          ציירו אותם: בשניהם מופיעות רק הנקודות $-1$ ו-$1$. הציור על הציר אינו מראה באיזה סדר מופיעים
+          האיברים.
+        misconception: MC-sequence-is-set
+    reasons:
+      - text: 'הציור על הציר מראה רק אילו ערכים מתקבלים, לא באיזה מקום; את הסדר רואים בגרף של הנקודות $(n, a_n)$'
+        correct: true
+        feedback: >-
+          בדיוק. בגרף רואים מיד את ההבדל: אצל $a_n$ הנקודה מעל $n=1$ נמצאת בגובה $-1$, ואצל $b_n$ בגובה $1$.
+      - text: 'סדרה נקבעת על ידי קבוצת הערכים שלה'
+        feedback: >-
+          סדרה היא פונקציה על $\mathbb{N}$, והיא נקבעת על ידי הערך בכל מקום. קבוצת הערכים מאבדת את הסדר.
+        misconception: MC-sequence-is-set
+      - text: 'לכל איבר יש נקודה משלו על הציר, ולכן לסדרה אינסופית יש אינסוף נקודות'
+        feedback: >-
+          כשערך חוזר, הנקודות נופלות זו על זו. לסדרה $(-1)^n$ יש אינסוף איברים, אבל רק שני ערכים.
+        misconception: MC-sequence-is-set
+
+  - id: Q-2.1-graph
+    type: mc
+    objectives: [OBJ-2.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בגרף של סדרה, כל הנקודות $(n, a_n)$ עבור $n = 1, \dots, 50$ נמצאות בין הישרים $y=1$ ו-$y=3$. מה אפשר
+      להסיק?
+    choices:
+      - text: 'רק השערה: אולי הסדרה חסומה. על האיברים שאחרי $a_{50}$ הגרף לא אומר כלום'
+        correct: true
+        feedback: >-
+          נכון. גרף מראה מספר סופי של איברים. הוא טוב לניחוש, וההוכחה צריכה לטפל בכל $n$.
+      - text: 'הסדרה חסומה, וכל איבריה בין 1 ל-3'
+        feedback: >-
+          הסדרה $a_n = 2+\frac{n^2}{10^6}$ נמצאת בין 1 ל-3 בכל 50 האיברים הראשונים, ואינה חסומה.
+        misconception: MC-plot-proves
+      - text: 'הסדרה חסומה, אבל אולי בחסם אחר'
+        feedback: >-
+          גם זה לא נובע: אין שום מידע על האיברים שאחרי $a_{50}$, והם יכולים לגדול בלי הגבלה. ראו
+          $a_n = 2+\frac{n^2}{10^6}$.
+        misconception: MC-plot-proves
+      - text: 'הסדרה אינה חסומה'
+        feedback: >-
+          גם זה לא נובע. הסדרה הקבועה 2 מתאימה לגרף וחסומה. הגרף לא מכריע לשום כיוון.
+        misconception: MC-plot-proves
+
+  - id: Q-2.1-conjecture
+    type: twotier
+    objectives: [OBJ-2.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      בגרף של עשרת האיברים הראשונים של $a_n = \frac{n^{10}}{2^n}$ הנקודות עולות בתלילות. מישהו משער: "הסדרה עולה
+      ואינה חסומה". האם ההשערה נכונה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. הסדרה עולה רק עד $n=14$ ומשם יורדת, ולכן כל איבריה קטנים או שווים ל-$a_{14}$: היא חסומה.
+      - text: כן
+        feedback: >-
+          עשרה איברים אינם הסדרה. $a_{15}\approx 1.760\cdot 10^7$ קטן מ-$a_{14}\approx 1.765\cdot 10^7$, ומשם
+          הסדרה יורדת.
+        misconception: MC-plot-proves
+    reasons:
+      - text: '$\frac{a_{n+1}}{a_n} = \frac{(1+\frac1n)^{10}}{2}$, וזה קטן מ-1 לכל $n\ge 14$'
+        correct: true
+        feedback: >-
+          בדיוק. $(1+\frac1n)^{10}$ יורד כש-$n$ גדל, והוא כבר קטן מ-2 ב-$n=14$ (כ-$1.994$) אבל לא ב-$n=13$
+          (כ-$2.098$). לכן $a_{14}$ הוא האיבר הגדול ביותר.
+      - text: גרף של עשרה איברים מספיק כשהמגמה ברורה
+        feedback: >-
+          מגמה בהתחלה אינה הוכחה. כאן היא אפילו מטעה: העלייה נעצרת אחרי $n=14$.
+        misconception: MC-plot-proves
+      - text: 'המונה $n^{10}$ אינו חסום, ולכן גם המנה אינה חסומה'
+        feedback: >-
+          גם המכנה $2^n$ אינו חסום. מה שקובע הוא היחס ביניהם, והמנה בין שני איברים עוקבים מראה שהסדרה יורדת
+          מ-$n=14$.
+        misconception: MC-increasing-means-unbounded
+
+  - id: Q-2.1-a10
+    type: numeric
+    objectives: [OBJ-2.1-1, OBJ-2.1-3]
+    level: mid
+    prompt: >-
+      $a_1 = 0$ ו-$a_{n+1} = \frac{a_n+2}{2}$. האיברים הראשונים הם $0, 1, 1.5, 1.75, 1.875$, ובשרטוט על ציר הם
+      מתקרבים ל-2 ומרחקם מ-2 קטן פי 2 בכל צעד. מכאן ההשערה $a_n = 2-2^{\,2-n}$, שמוכחת באינדוקציה. מהו
+      $a_{10}$? (אפשר לכתוב שבר.)
+    answer: 1.99609375
+    tolerance: 0.00001
+    correctFeedback: >-
+      נכון. $a_{10} = 2-2^{-8} = 2-\frac{1}{256} = \frac{511}{256}$. ההשערה נכונה: $a_1 = 2-2 = 0$, ואם
+      $a_n = 2-2^{2-n}$ אז $a_{n+1} = \frac{4-2^{2-n}}{2} = 2-2^{1-n}$.
+    wrongFeedback: >-
+      הציבו $n = 10$ בנוסחה $2-2^{\,2-n}$, או חשבו את האיברים ברקורסיה עד המקום העשירי.
+    commonWrong:
+      - value: 1.998046875
+        feedback: >-
+          זה $2-2^{-9} = a_{11}$: הציבו את המעריך $1-n$ במקום $2-n$, וזזתם מקום אחד.
+        misconception: MC-sequence-index-shift
+      - value: 1.9921875
+        feedback: >-
+          זה $2-2^{-7} = a_9$: זזתם מקום אחד אחורה. בדקו את הנוסחה על $n=1$: היא צריכה לתת $0$.
+        misconception: MC-sequence-index-shift

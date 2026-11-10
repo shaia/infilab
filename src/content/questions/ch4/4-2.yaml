@@ -1,0 +1,355 @@
+# Lesson 4.2 — points of discontinuity.
+# Objectives (src/course.ts):
+#   OBJ-4.2-1  classify a discontinuity as removable, jump or of the second kind, with a reason
+#   OBJ-4.2-2  check continuity of piecewise functions and find parameters that make them continuous
+#   OBJ-4.2-3  prove that Dirichlet's function is nowhere continuous and Riemann's is continuous exactly at the irrationals
+# The classification used throughout (x₀ in the domain, f not continuous at x₀):
+#   removable  — the limit at x₀ exists (finite) and differs from f(x₀)
+#   jump       — both one-sided limits exist (finite) and differ
+#   second kind — at least one one-sided limit does not exist as a finite number
+chapter: 4
+questions:
+  - id: Q-4.2-sinc
+    type: mc
+    objectives: [OBJ-4.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f(x)=\frac{\sin x}{x}$ לכל $x\ne0$, ו-$f(0)=0$. מה קורה בנקודה $0$?
+    choices:
+      - text: אי-רציפות סליקה
+        correct: true
+        feedback: >-
+          נכון. $\lim_{x\to0}\frac{\sin x}{x}=1$ (שיעור 3.5), והערך הוא $0\ne 1$. אם מגדירים מחדש $f(0)=1$,
+          הפונקציה רציפה ב-0: לכן "סליקה".
+      - text: אי-רציפות מסוג קפיצה
+        feedback: >-
+          בקפיצה שני הגבולות החד-צדדיים **שונים** זה מזה. כאן שניהם שווים ל-1; רק הערך בנקודה שונה מהם.
+        misconception: MC-jump-vs-removable
+      - text: אי-רציפות מסוג שני
+        feedback: >-
+          בסוג שני לפחות אחד הגבולות החד-צדדיים אינו קיים. כאן שניהם קיימים ושווים ל-1. העובדה שהביטוי
+          $\frac{\sin x}{x}$ אינו מוגדר ב-0 לא קובעת את הסוג.
+        misconception: MC-cont-judged-by-formula
+      - text: $f$ רציפה ב-0
+        feedback: >-
+          לגבול יש ערך, 1, אבל הוא אינו שווה ל-$f(0)=0$. רציפות דורשת שוויון.
+        misconception: MC-cont-limit-exists-enough
+    explanation: >-
+      הסיווג, כש-$x_0$ בתחום ו-$f$ אינה רציפה בו: **סליקה** אם הגבול ב-$x_0$ קיים (ושונה מהערך); **קפיצה** אם
+      שני הגבולות החד-צדדיים קיימים ושונים; **מסוג שני** אם לפחות אחד מהגבולות החד-צדדיים אינו קיים כמספר.
+      סליקה וקפיצה נקראות יחד אי-רציפות מסוג ראשון.
+
+  - id: Q-4.2-sign
+    type: mc
+    objectives: [OBJ-4.2-1]
+    level: basic
+    prompt: >-
+      $f(x)=\frac{|x|}{x}$ לכל $x\ne 0$, ו-$f(0)=0$. מה קורה בנקודה $0$?
+    choices:
+      - text: אי-רציפות מסוג קפיצה
+        correct: true
+        feedback: >-
+          נכון. $f(x)=1$ לכל $x>0$ ו-$f(x)=-1$ לכל $x<0$: הגבול מימין 1, הגבול משמאל $-1$, ושניהם קיימים.
+      - text: אי-רציפות סליקה
+        feedback: >-
+          סליקה פירושה שאפשר לתקן את הרציפות בשינוי ערך אחד. כאן אין ערך מתאים: כל ערך של $f(0)$ רחוק
+          לפחות 1 מאחד הגבולות החד-צדדיים.
+        misconception: MC-jump-vs-removable
+      - text: אי-רציפות מסוג שני
+        feedback: >-
+          בסוג שני לפחות אחד הגבולות החד-צדדיים אינו קיים. כאן שניהם קיימים: 1 מימין ו-$-1$ משמאל.
+      - text: $f$ רציפה ב-0, כי 0 נמצא באמצע בין $-1$ ל-1
+        feedback: >-
+          רציפות דורשת שהגבול יהיה קיים ושווה לערך. לגבול הדו-צדדי ב-0 אין ערך, ולכן שום ערך של $f(0)$ לא
+          יעשה את $f$ רציפה.
+        misconception: MC-redefine-fixes-any
+
+  - id: Q-4.2-sin1x
+    type: twotier
+    objectives: [OBJ-4.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=\sin\frac1x$ לכל $x\ne 0$, ו-$f(0)=0$. איזה סוג אי-רציפות יש ל-$f$ ב-0?
+    choices:
+      - text: מסוג שני
+        correct: true
+        feedback: נכון. הגבול מימין ב-0 אינו קיים (וכך גם משמאל).
+      - text: קפיצה
+        feedback: >-
+          בקפיצה שני הגבולות החד-צדדיים **קיימים**. כאן הערכים מתנודדים בין $-1$ ל-1 בכל סביבה ימנית של 0,
+          ואין גבול מימין בכלל.
+        misconception: MC-oscillation-is-jump
+      - text: סליקה
+        feedback: >-
+          סליקה דורשת שהגבול ב-0 יהיה קיים. כאן הוא לא קיים, ולכן שום הגדרה מחדש של $f(0)$ לא תעשה את $f$
+          רציפה.
+        misconception: MC-redefine-fixes-any
+    reasons:
+      - text: 'הסדרות $\frac{1}{2\pi n}$ ו-$\frac{1}{\frac\pi2+2\pi n}$ חיוביות ושואפות ל-0, ו-$f$ עליהן שווה ל-0 ול-1'
+        correct: true
+        feedback: >-
+          בדיוק. שתי סדרות מימין עם גבולות שונים של ערכי $f$: לפי היינה (שיעור 3.4) אין גבול מימין.
+      - text: הערכים קופצים בין $-1$ ל-1
+        feedback: >-
+          "קפיצה" היא מונח מדויק: שני גבולות חד-צדדיים קיימים ושונים. התנודה כאן היא בדיוק הסיבה שגבולות
+          חד-צדדיים **אינם** קיימים.
+        misconception: MC-oscillation-is-jump
+      - text: הערך $f(0)=0$ הוא הממוצע של $-1$ ו-1, ולכן אפשר לתקן אותו
+        feedback: >-
+          ממוצע של ערכים לא הופך לגבול. על הסדרה $\frac{1}{\frac\pi2+2\pi n}$ הערכים כולם 1, ועל אחרת כולם
+          $-1$: אין ערך אחד שכל הסדרות שואפות אליו.
+        misconception: MC-redefine-fixes-any
+
+  - id: Q-4.2-recip
+    type: mc
+    objectives: [OBJ-4.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=\frac1x$ לכל $x\ne 0$, ו-$f(0)=0$, כך ש-$f$ מוגדרת בכל $\mathbb{R}$. מה קורה בנקודה $0$?
+    choices:
+      - text: אי-רציפות מסוג שני
+        correct: true
+        feedback: >-
+          נכון. $\lim_{x\to0^+}\frac1x=\infty$: הגבול מימין אינו קיים כמספר, ולכן זו אי-רציפות מסוג שני.
+      - text: אי-רציפות מסוג קפיצה
+        feedback: >-
+          בקפיצה שני הגבולות החד-צדדיים הם **מספרים**. כאן הם $\infty$ ו-$-\infty$, כלומר אינם קיימים כמספרים
+          ממשיים.
+        misconception: MC-infinite-limit-is-jump
+      - text: אי-רציפות סליקה
+        feedback: >-
+          סליקה דורשת גבול סופי ב-0. כאן הערכים לא חסומים בשום סביבה של 0, ושום ערך של $f(0)$ לא יעזור.
+        misconception: MC-redefine-fixes-any
+      - text: אין אי-רציפות, כי $\frac1x$ רציפה בתחום הגדרתה
+        feedback: >-
+          $\frac1x$ רציפה בתחום $\mathbb{R}\setminus\{0\}$. כאן התחום הורחב וכולל את 0, ושם צריך לבדוק מחדש:
+          הגבול ב-0 אינו קיים, ולכן $f$ אינה רציפה ב-0.
+        misconception: MC-cont-judged-by-formula
+
+  - id: Q-4.2-removable
+    type: numeric
+    objectives: [OBJ-4.2-2]
+    level: basic
+    prompt: >-
+      $f(x)=\frac{x^2-9}{x-3}$ לכל $x\ne 3$, ו-$f(3)=a$. לאיזה ערך של $a$ הפונקציה רציפה ב-3?
+    answer: 6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. לכל $x\ne3$ מתקיים $f(x)=x+3$, ולכן $\lim_{x\to 3}f(x)=6$. רציפות דורשת $f(3)=6$.
+    wrongFeedback: >-
+      פרקו את המונה, $x^2-9=(x-3)(x+3)$, צמצמו (מותר, כי $x\ne3$) וחשבו את הגבול ב-3.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          הצבה ישירה נותנת $\frac00$, וזו צורה לא מוגדרת, לא אפס. צריך לחשב את הגבול.
+        misconception: MC-indeterminate-form-value
+      - value: 1
+        feedback: >-
+          $\frac00$ אינו 1: זו צורה לא מוגדרת. אחרי צמצום $f(x)=x+3$, והגבול ב-3 הוא 6.
+        misconception: MC-indeterminate-form-value
+      - value: 3
+        feedback: >-
+          זו הנקודה, לא הערך. רציפות ב-3 דורשת $f(3)=\lim_{x\to3}(x+3)$.
+
+  - id: Q-4.2-param-sin
+    type: numeric
+    objectives: [OBJ-4.2-2]
+    level: mid
+    prompt: >-
+      $f(x)=\frac{\sin 3x}{2x}$ לכל $x\ne 0$, ו-$f(0)=a$. לאיזה ערך של $a$ הפונקציה $f$ רציפה ב-0?
+    answer: 1.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\frac{\sin 3x}{2x}=\frac32\cdot\frac{\sin 3x}{3x}$, ו-$\frac{\sin 3x}{3x}\to1$ כש-$x\to0$ (הרכבה עם
+      $t=3x$). לכן $a=\frac32$.
+    wrongFeedback: >-
+      כדי להשתמש ב-$\frac{\sin t}{t}\to 1$ צריך שהמכנה יהיה בדיוק הארגומנט של הסינוס: כתבו
+      $\frac{\sin 3x}{2x}=\frac{3}{2}\cdot\frac{\sin 3x}{3x}$.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $\frac{\sin t}{t}\to 1$ רק כשהמכנה שווה לארגומנט של הסינוס. כאן הארגומנט $3x$ והמכנה $2x$.
+        misconception: MC-sin-kx-over-x-is-one
+      - value: 0.6666667
+        feedback: >-
+          זה $\frac23$: המקדמים התהפכו. $\frac{\sin 3x}{2x}=\frac{3}{2}\cdot\frac{\sin 3x}{3x}$.
+      - value: 3
+        feedback: >-
+          $\frac{\sin 3x}{x}\to 3$, אבל המכנה הוא $2x$, ולכן צריך עוד לחלק ב-2.
+
+  - id: Q-4.2-param-two
+    type: numeric
+    objectives: [OBJ-4.2-2]
+    level: exam
+    prompt: >-
+      $$f(x)=\begin{cases} x+2a & x<0\\ x^2+b & 0\le x\le 2\\ a x^2 & x>2 \end{cases}$$
+      מצאו את $a$ ואת $b$ כך ש-$f$ רציפה בכל $\mathbb{R}$, וכתבו את $b$.
+    answer: 4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. בכל קטע פתוח $f$ היא פולינום ולכן רציפה; נשארו נקודות התפר. ב-0: הגבול משמאל $2a$ והערך $b$,
+      ולכן $b=2a$. ב-2: הערך $4+b$ והגבול מימין $4a$, ולכן $4+b=4a$. מכאן $4+2a=4a$, כלומר $a=2$ ו-$b=4$.
+    wrongFeedback: >-
+      כתבו משוואה אחת לכל נקודת תפר (0 ו-2): הגבול החד-צדדי מהצד השני שווה לערך בנקודה. פתרו את שתי
+      המשוואות יחד.
+    commonWrong:
+      - value: 2
+        feedback: >-
+          2 הוא הערך של $a$. התבקשתם לכתוב את $b$, שמתקבל מ-$b=2a$.
+    hints:
+      - בנקודת התפר 0 הערך נלקח מהחלק האמצעי, כי $0\le x$ שם.
+
+  - id: Q-4.2-no-param
+    type: twotier
+    objectives: [OBJ-4.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=\sin\frac1x$ לכל $x\ne0$, ו-$f(0)=a$. האם יש ערך של $a$ שעושה את $f$ רציפה ב-0?
+    choices:
+      - text: לא, אין ערך כזה
+        correct: true
+        feedback: נכון. לא משנה מה $a$, הגבול ב-0 אינו קיים.
+      - text: כן, $a=0$
+        feedback: >-
+          עם $a=0$ הסדרה $x_n=\frac{1}{\frac\pi2+2\pi n}\to0$ נותנת $f(x_n)=1\not\to 0$, ולכן $f$ אינה רציפה ב-0.
+        misconception: MC-redefine-fixes-any
+    reasons:
+      - text: 'רציפות ב-0 דורשת $\lim_{x\to0} f(x)=a$, והגבול הזה אינו קיים לשום $a$'
+        correct: true
+        feedback: >-
+          בדיוק. אפשר לתקן רציפות בשינוי ערך רק באי-רציפות סליקה, כלומר כשהגבול קיים.
+      - text: עם $a=0$ הערך בנקודה נמצא באמצע הטווח של $f$
+        feedback: >-
+          הטווח לא משנה. מה שקובע הוא אם הערכים ליד 0 מתקרבים ל-$a$, והם אינם מתקרבים לשום מספר.
+        misconception: MC-redefine-fixes-any
+      - text: תמיד אפשר לבחור את הערך בנקודה כך שהפונקציה תהיה רציפה בה
+        feedback: >-
+          רק כשהגבול בנקודה קיים. בקפיצה (כמו $\frac{|x|}{x}$ ב-0) ובאי-רציפות מסוג שני שום ערך לא עוזר.
+        misconception: MC-redefine-fixes-any
+
+  - id: Q-4.2-dirichlet
+    type: twotier
+    objectives: [OBJ-4.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $D(x)=1$ לכל $x$ רציונלי ו-$D(x)=0$ לכל $x$ אי-רציונלי. האם יש נקודה שבה $D$ רציפה?
+    choices:
+      - text: לא, $D$ אינה רציפה באף נקודה
+        correct: true
+        feedback: נכון.
+      - text: כן, באי-הרציונליים
+        feedback: >-
+          ליד כל אי-רציונלי $x_0$ יש רציונליים קרובים כרצוננו. הסדרה $q_n\to x_0$ של רציונליים נותנת $D(q_n)=1$,
+          ואילו $D(x_0)=0$.
+        misconception: MC-dirichlet-cont-somewhere
+    reasons:
+      - text: 'בכל קטע יש רציונלי ואי-רציונלי (שיעור 1.6), ולכן לכל $x_0$ יש סדרה $x_n\to x_0$ שעליה $D(x_n)$ שווה תמיד לערך השני, $1-D(x_0)$'
+        correct: true
+        feedback: >-
+          בדיוק. $|D(x_n)-D(x_0)|=1$ לכל $n$, ולפי היינה $D$ אינה רציפה ב-$x_0$.
+      - text: הרציונליים "מעטים", ולכן ליד אי-רציונלי $D$ כמעט תמיד 0
+        feedback: >-
+          הרציונליים צפופים: בכל קטע, קטן ככל שיהיה, יש אינסוף מהם. "מעטים" במובן של מנייה לא אומר דבר על
+          רציפות.
+        misconception: MC-dirichlet-cont-somewhere
+      - text: ל-$D$ אין נוסחה, ולכן היא אינה רציפה
+        feedback: >-
+          רציפות לא תלויה בנוסחה. גם $x\cdot D(x)$ מוגדרת בלי נוסחה "רגילה", ובכל זאת רציפה ב-0.
+        misconception: MC-cont-judged-by-formula
+
+  - id: Q-4.2-xD
+    type: mc
+    objectives: [OBJ-4.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $D$ היא פונקציית דיריכלה ו-$g(x)=x\cdot D(x)$, כלומר $g(x)=x$ ברציונליים ו-$g(x)=0$ באי-רציונליים. היכן
+      $g$ רציפה?
+    choices:
+      - text: רק בנקודה 0
+        correct: true
+        feedback: >-
+          נכון. ב-0: $|g(x)-g(0)|\le|x|$, ולכן $\delta=\varepsilon$ מתאים. ב-$x_0\ne0$: על סדרה של אי-רציונליים
+          הערכים 0, ועל סדרה של רציונליים הערכים שואפים ל-$x_0\ne0$. שני הגבולות שונים, ולכן $g$ אינה רציפה שם.
+      - text: באף נקודה, כי $D$ אינה רציפה באף נקודה
+        feedback: >-
+          הגורם $x$ "מועך" את הקפיצות של $D$ ליד 0: $|x\,D(x)|\le|x|\to0$. מכפלה של פונקציה רציפה בפונקציה
+          לא רציפה יכולה להיות רציפה, כשהגורם הרציף מתאפס.
+        misconception: MC-times-dirichlet-nowhere
+      - text: בכל נקודה, כי $|g(x)|\le|x|$
+        feedback: >-
+          החסם $|g(x)|\le |x|$ מראה רציפות רק בנקודה שבה $|x|$ מתאפס, כלומר ב-0. ב-$x_0=1$, למשל, $g(1)=1$
+          אבל יש אי-רציונליים קרובים כרצוננו ל-1, שבהם $g=0$.
+        misconception: MC-cont-at-point-spreads
+      - text: בכל האי-רציונליים
+        feedback: >-
+          באי-רציונלי $x_0$ הערך הוא 0, אבל ברציונליים קרובים $g(q)=q\approx x_0\ne 0$. הסדרה $q_n\to x_0$ מראה
+          שאין רציפות.
+        misconception: MC-dirichlet-cont-somewhere
+
+  - id: Q-4.2-riemann
+    type: multi
+    objectives: [OBJ-4.2-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      פונקציית רימן: $R(x)=\frac1q$ כש-$x=\frac pq$ שבר מצומצם עם $q\in\mathbb{N}$ (בפרט $R(0)=1$, כי
+      $0=\frac01$), ו-$R(x)=0$ כש-$x$ אי-רציונלי. אילו מהטענות נכונות? סמנו את כולן.
+    choices:
+      - text: $R$ רציפה בנקודה $\sqrt2$
+        correct: true
+        feedback: >-
+          נכון. $R$ רציפה בכל אי-רציונלי: ליד $\sqrt2$ יש רק מספר סופי של שברים עם מכנה קטן.
+      - text: $R$ אינה רציפה בנקודה $\frac12$
+        correct: true
+        feedback: >-
+          נכון. $R(\frac12)=\frac12$, אבל על אי-רציונליים ששואפים ל-$\frac12$ הערכים 0.
+      - text: לכל $a$ ממשי, $\lim_{x\to a}R(x)=0$
+        correct: true
+        feedback: >-
+          נכון. לכל $\varepsilon$, בסביבה קטנה מספיק של $a$ (בלי $a$ עצמו) כל השברים הם בעלי מכנה גדול מ-$\frac1\varepsilon$.
+          זו בדיוק הסיבה ש-$R$ רציפה באי-רציונליים, שם הערך הוא 0.
+      - text: כל נקודות אי-הרציפות של $R$ סליקות
+        correct: true
+        feedback: >-
+          נכון. הגבול קיים בכל נקודה (והוא 0), ובנקודה רציונלית הוא שונה מהערך $\frac1q>0$.
+      - text: $R$ רציפה ב-0
+        feedback: >-
+          0 רציונלי: $R(0)=1$, ואילו הגבול ב-0 הוא 0. לכן ב-0 יש אי-רציפות (סליקה).
+        misconception: MC-riemann-wrong-points
+      - text: $R$ אינה רציפה באף נקודה, כמו פונקציית דיריכלה
+        feedback: >-
+          ההבדל מדיריכלה: ליד אי-רציונלי, הערכים ברציונליים **קטנים** (מכנה גדול), ולא 1. לכן $R$ רציפה בכל
+          אי-רציונלי.
+        misconception: MC-riemann-wrong-points
+
+  - id: Q-4.2-riemann-proof
+    type: rank
+    objectives: [OBJ-4.2-3]
+    level: exam
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      הטענה: פונקציית רימן $R$ רציפה בכל נקודה אי-רציונלית $a$ (שם $R(a)=0$). סדרו את שלבי ההוכחה.
+    items:
+      - id: s1
+        label: 'יהי $\varepsilon>0$. בוחרים $N\in\mathbb{N}$ עם $\frac1N<\varepsilon$ (ארכימדס).'
+      - id: s2
+        label: 'בקטע $(a-1,\ a+1)$ יש רק מספר סופי של רציונליים $\frac pq$ עם $q\le N$: לכל $q$ יש לכל היותר $2q$ מונים מתאימים.'
+      - id: s3
+        label: '$a$ אי-רציונלי, ולכן שונה מכל אחד מהם. בוחרים $\delta>0$ שקטן מ-1 ומהמרחק מ-$a$ לכל אחד מהם.'
+      - id: s4
+        label: 'אם $|x-a|<\delta$ ו-$x=\frac pq$ רציונלי (שבר מצומצם), אז $q>N$, ולכן $R(x)=\frac1q<\frac1N<\varepsilon$.'
+      - id: s5
+        label: 'ואם $x$ אי-רציונלי, $R(x)=0$. בכל מקרה $|R(x)-R(a)|<\varepsilon$.'
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. הלב של ההוכחה הוא שלב 2: יש רק מספר **סופי** של "שברים גרועים" (מכנה קטן) ליד $a$, ולכן אפשר להתרחק
+      מכולם. באי-רציונלי זה עובד כי $a$ עצמו אינו אחד מהם; ברציונלי $a$ הוא עצמו שבר עם מכנה קטן.
+    wrongFeedback: >-
+      את $\delta$ אפשר לבחור רק אחרי שיודעים מאילו נקודות צריך להתרחק, ואת הנקודות האלה קובע $N$, שנקבע לפי
+      $\varepsilon$.

@@ -1,0 +1,431 @@
+# Chapter 0 — review questions over the whole chapter, from easy to hard.
+# Every lesson 0.1–0.7 is touched; most questions combine two lessons.
+chapter: 0
+questions:
+  - id: Q-0-review-01
+    type: mc
+    objectives: [OBJ-0.1-1, OBJ-0.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בדף עבודה כתוב: "טענה: לכל $n$ טבעי, $n^2-n+11$ ראשוני. למשל, עבור $n=1,2,3$ מקבלים $11$, $13$, $17$." מה
+      נכון?
+    choices:
+      - text: 'הטענה שקרית: עבור $n=11$ מקבלים $121=11^2$'
+        correct: true
+        feedback: >-
+          נכון. $11^2-11+11=121$, שאינו ראשוני. הדוגמאות בדף רק המחישו את הטענה; מקרה אחד שבו היא נכשלת מפריך
+          אותה. (עבור $n=1,\dots,10$ באמת מתקבלים ראשוניים, ולכן קל להשתכנע בטעות.)
+      - text: הטענה הוכחה, כי שלוש הדוגמאות מתאימות
+        feedback: >-
+          דוגמאות בודקות מספר סופי של מקרים. הטענה מדברת על כל $n$, ו-$n=11$ מפריך אותה.
+        misconception: MC-examples-are-proof
+      - text: הטענה נכונה כמעט תמיד, ולכן היא נחשבת נכונה
+        feedback: >-
+          טענה "לכל $n$" שקרית ברגע שהיא נכשלת במקרה אחד. במתמטיקה אין "נכונה כמעט תמיד".
+        misconception: MC-one-counterexample-not-enough
+    hints:
+      - 'חזרו לשיעור 0.1: מה ההבדל בין טענה לבין דוגמה.'
+      - 'חזרו לשיעור 0.4: איך מפריכים טענה כללית. נסו $n$ שהופך את כל הביטוי לכפולה של מספר אחד.'
+
+  - id: Q-0-review-02
+    type: mc
+    objectives: [OBJ-0.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה ערך האמת של הפסוק "אם $\sqrt2>2$ אז $\pi=3$"?
+    choices:
+      - text: אמת
+        correct: true
+        feedback: >-
+          נכון. $\sqrt2\approx 1.41$, ולכן ההנחה שקרית, וגרירה עם הנחה שקרית היא אמת.
+      - text: שקר
+        feedback: >-
+          גרירה שקרית רק כשההנחה אמת והמסקנה שקר. כאן ההנחה $\sqrt2>2$ שקרית.
+        misconception: MC-false-premise-implication
+      - text: אין לו ערך אמת, כי אין קשר בין $\sqrt2$ ל-$\pi$
+        feedback: >-
+          ערך האמת של גרירה נקבע רק לפי ערכי האמת של חלקיה, לפי טבלת האמת, בלי קשר לתוכן.
+        misconception: MC-false-premise-implication
+    hints:
+      - 'חזרו לשיעור 0.2: טבלת האמת של גרירה. באיזו שורה בלבד גרירה שקרית?'
+
+  - id: Q-0-review-03
+    type: numeric
+    objectives: [OBJ-0.6-3]
+    level: basic
+    prompt: >-
+      יהיו $f(x)=x^2-1$ ו-$g(x)=x+3$, שתיהן מ-$\mathbb{R}$ אל $\mathbb{R}$. חשבו את $(g\circ f)(2)$.
+    answer: 6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $(g\circ f)(2)=g(f(2))=g(3)=6$.
+    wrongFeedback: >-
+      ב-$g\circ f$ מפעילים קודם את $f$ (הימנית) ואת התוצאה מציבים ב-$g$.
+    commonWrong:
+      - value: 24
+        feedback: >-
+          $24=f(g(2))=f(5)$: הפעלתם קודם את $g$. ב-$g\circ f$ הפונקציה הימנית, $f$, פועלת ראשונה.
+        misconception: MC-composition-order-swapped
+    hints:
+      - 'חזרו לשיעור 0.6: הרכבה של פונקציות. איזו פונקציה פועלת ראשונה?'
+
+  - id: Q-0-review-04
+    type: mc
+    objectives: [OBJ-0.7-1]
+    level: basic
+    prompt: >-
+      מהי קבוצת הפתרונות של $|x+1|<3$?
+    choices:
+      - text: '$(-4,2)$'
+        correct: true
+        feedback: >-
+          נכון. $-3<x+1<3$, כלומר $-4<x<2$: הנקודות שמרחקן מ-$-1$ קטן מ-$3$.
+      - text: '$(-2,4)$'
+        feedback: >-
+          זה הקטע סביב $1$. $|x+1|=|x-(-1)|$ הוא המרחק מ-$-1$, ולכן הקטע מרוכז ב-$-1$.
+        misconception: MC-abs-distance-sign
+      - text: '$(-\infty,2)$'
+        feedback: >-
+          זה רק התנאי $x+1<3$. $x=-10$ מקיים אותו, אבל $|{-10}+1|=9$. חסר התנאי $x+1>-3$.
+        misconception: MC-abs-one-side
+    hints:
+      - 'חזרו לשיעור 0.7: $|t|<r$ הוא שני אי-שוויונות, $-r<t<r$.'
+
+  - id: Q-0-review-05
+    type: mc
+    objectives: [OBJ-0.3-2, OBJ-0.2-1]
+    level: mid
+    prompt: >-
+      מהי השלילה של הטענה $\forall x>0:\ (x<1\Rightarrow x^2<x)$?
+    choices:
+      - text: '$\exists x>0:\ x<1\land x^2\ge x$'
+        correct: true
+        feedback: >-
+          נכון. "לכל" הופך ל"קיים", התחום $x>0$ נשאר, והשלילה של $P\Rightarrow Q$ היא $P\land\neg Q$. (הטענה
+          המקורית נכונה, ולכן השלילה שקרית.)
+      - text: '$\exists x>0:\ x<1\Rightarrow x^2\ge x$'
+        feedback: >-
+          שלילה של גרירה אינה גרירה. הטענה הזו נכונה בגלל כל $x\ge 1$, למשל $x=2$ (ההנחה $x<1$ שקרית), ולכן היא
+          לא יכולה להיות שלילה של טענה נכונה.
+        misconception: MC-implication-negation
+      - text: '$\exists x\le 0:\ x<1\land x^2\ge x$'
+        feedback: >-
+          התחום $x>0$ נשאר בשלילה. הטענה מדברת על מספרים חיוביים, והפרכה שלה צריכה מספר חיובי.
+        misconception: MC-negation-domain
+      - text: '$\forall x>0:\ x<1\land x^2\ge x$'
+        feedback: >-
+          את הכמת שכחו להפוך: שלילה של "לכל" היא "קיים".
+        misconception: MC-negation-partial
+    hints:
+      - 'חזרו לשיעור 0.3: שלילה של טענה עם כמת, ומה קורה לתחום של הכמת.'
+      - 'חזרו לשיעור 0.2: באיזו שורה של טבלת האמת גרירה שקרית?'
+
+  - id: Q-0-review-06
+    type: twotier
+    objectives: [OBJ-0.2-3, OBJ-0.6-3, OBJ-0.6-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      תהי $f:A\to B$. איזה תנאי הוא "$f$ חד-חד-ערכית" לכך של-$f$ יש פונקציה הפוכה $f^{-1}:B\to A$?
+    choices:
+      - text: הכרחי, ולא מספיק
+        correct: true
+        feedback: >-
+          נכון. לכל פונקציה הפיכה יש מקור יחיד לכל ערך, ולכן היא חד-חד-ערכית; אבל חד-חד-ערכיות לבדה לא מבטיחה
+          מקור לכל איבר של $B$.
+      - text: מספיק, ולא הכרחי
+        feedback: >-
+          הפוך. כל פונקציה הפיכה חד-חד-ערכית (כלומר התנאי הכרחי), ויש חד-חד-ערכיות בלי הפוכה (כלומר הוא לא
+          מספיק).
+        misconception: MC-necessary-sufficient-swap
+      - text: הכרחי ומספיק
+        feedback: >-
+          $f:\mathbb{N}\to\mathbb{N}$, $f(n)=2n$, חד-חד-ערכית, אבל ל-$3$ אין מקור, ולכן אין $f^{-1}$ שמוגדרת על
+          כל $\mathbb{N}$. צריך גם "על".
+        misconception: MC-inverse-without-onto
+    reasons:
+      - text: 'אם יש $f^{-1}$, אז $f(x_1)=f(x_2)$ גורר $x_1=f^{-1}(f(x_1))=f^{-1}(f(x_2))=x_2$; אבל $f(n)=2n$ על $\mathbb{N}$ חד-חד-ערכית בלי הפוכה'
+        correct: true
+        feedback: >-
+          בדיוק. כיוון אחד מוכיחים, ואת השני מפריכים בדוגמה נגדית. התנאי ההכרחי והמספיק הוא "חד-חד-ערכית ועל".
+      - text: לכל פונקציה חד-חד-ערכית יש הפוכה
+        feedback: >-
+          רק מהתמונה שלה. ההפוכה צריכה להיות מוגדרת על כל הטווח $B$, ולכן $f$ צריכה להיות גם על.
+        misconception: MC-inverse-without-onto
+      - text: הפיכה גוררת חד-חד-ערכית, ולכן גם חד-חד-ערכית גוררת הפיכה
+        feedback: >-
+          זו ההפוכה של הגרירה, והיא לא נובעת ממנה. $f(n)=2n$ על $\mathbb{N}$ מפריכה אותה.
+        misconception: MC-converse-equivalent
+    hints:
+      - 'חזרו לשיעור 0.2: "הכרחי" פירושו שבלעדיו אין, ו"מספיק" שבזכותו יש.'
+      - 'חזרו לשיעור 0.6: מתי יש לפונקציה פונקציה הפוכה.'
+
+  - id: Q-0-review-07
+    type: rank
+    objectives: [OBJ-0.5-1, OBJ-0.5-2, OBJ-0.7-3]
+    level: mid
+    prompt: >-
+      הוכיחו באינדוקציה: לכל $n$ טבעי, $n!\ge 2^{n-1}$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: base
+        label: 'בסיס: עבור $n=1$, $1!=1=2^0$.'
+      - id: hyp
+        label: 'נניח ש-$n!\ge 2^{n-1}$ עבור $n$ טבעי מסוים.'
+      - id: split
+        label: 'נכתוב $(n+1)!=(n+1)\cdot n!$, ולפי ההנחה (כי $n+1>0$) $(n+1)!\ge(n+1)\cdot 2^{n-1}$.'
+      - id: estimate
+        label: 'כיוון ש-$n\ge 1$, $n+1\ge 2$, ולכן $(n+1)\cdot 2^{n-1}\ge 2\cdot 2^{n-1}=2^n$.'
+      - id: conclude
+        label: 'קיבלנו $(n+1)!\ge 2^n$, הטענה עבור $n+1$, ולכן הטענה נכונה לכל $n$.'
+    order: [base, hyp, split, estimate, conclude]
+    correctFeedback: >-
+      נכון. השלב העדין הוא ההערכה $n+1\ge 2$: היא מקטינה את הביטוי, ולכן מותרת כשמחפשים חסם מלמטה.
+    wrongFeedback: >-
+      הבסיס ראשון. בצעד, קודם מפרקים את $(n+1)!$ כדי שההנחה תופיע בו, ורק אחר כך מעריכים את הגורם $n+1$.
+    hints:
+      - 'חזרו לשיעור 0.5: מבנה של הוכחת אי-שוויון באינדוקציה.'
+      - 'חזרו לשיעור 0.7: איך מקטינים ביטוי כדי לקבל חסם מלמטה.'
+
+  - id: Q-0-review-08
+    type: multi
+    objectives: [OBJ-0.3-1, OBJ-0.3-3, OBJ-0.7-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\mathbb{Z}$ היא קבוצת המספרים השלמים. אילו מהטענות הבאות נכונות? סמנו את כולן.
+    choices:
+      - text: '$\forall x\in\mathbb{R}\ \exists k\in\mathbb{Z}:\ |x-k|<1$'
+        correct: true
+        feedback: >-
+          נכון. לכל $x$ יש שלם $k\le x$ עם $x-k<1$ (השלם הגדול ביותר שאינו גדול מ-$x$), ו-$k$ תלוי ב-$x$.
+      - text: '$\exists k\in\mathbb{Z}\ \forall x\in\mathbb{R}:\ |x-k|<1$'
+        feedback: >-
+          זה אומר שיש שלם אחד שכל המספרים הממשיים במרחק פחות מ-$1$ ממנו, כלומר שכל $\mathbb{R}$ בתוך
+          $(k-1,k+1)$. $x=k+5$ מפריך את זה.
+        misconception: MC-quantifier-swap
+      - text: '$\forall x\in\mathbb{R}\ \exists k\in\mathbb{Z}:\ |x-k|\le\frac12$'
+        correct: true
+        feedback: >-
+          נכון. השלם הקרוב ביותר ל-$x$ נמצא במרחק לכל היותר $\frac12$ ממנו. במקרה הקיצוני, כמו $x=\frac12$, המרחק
+          שווה ל-$\frac12$ בדיוק.
+      - text: '$\forall x\in\mathbb{R}\ \exists k\in\mathbb{Z}:\ |x-k|<\frac12$'
+        feedback: >-
+          $x=\frac12$ נמצא במרחק $\frac12$ בדיוק מ-$0$ ומ-$1$, ומשאר השלמים במרחק גדול יותר. בדיקה של $x=0.3$ או
+          $x=0.7$ נראית טוב, אבל טענת "לכל" נופלת במקרה אחד.
+        misconception: MC-examples-are-proof
+    hints:
+      - 'חזרו לשיעור 0.3: מה משתנה כשמחליפים את סדר "לכל" ו"קיים".'
+      - 'חזרו לשיעור 0.7: $|x-k|$ הוא המרחק בין $x$ ל-$k$.'
+
+  - id: Q-0-review-09
+    type: twotier
+    objectives: [OBJ-0.6-1, OBJ-0.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם לכל שלוש קבוצות $A$, $B$, $C$ מתקיים $A\setminus(B\setminus C)=(A\setminus B)\setminus C$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. הפרש קבוצות אינו קיבוצי, ודוגמה נגדית אחת מספיקה כדי להראות זאת.
+      - text: כן
+        feedback: >-
+          נסו $A=B=C=\{1\}$: $B\setminus C=\emptyset$, ולכן אגף שמאל הוא $\{1\}$; אבל $A\setminus B=\emptyset$, ולכן
+          אגף ימין ריק.
+        misconception: MC-set-difference-rules
+    reasons:
+      - text: 'עבור $A=B=C=\{1\}$ אגף שמאל הוא $\{1\}$ ואגף ימין הוא הקבוצה הריקה'
+        correct: true
+        feedback: >-
+          בדיוק. (מה שכן נכון: $A\setminus(B\setminus C)=(A\setminus B)\cup(A\cap C)$.)
+      - text: 'בדקנו עם $A=\{1,2\}$, $B=\{3\}$, $C=\{4\}$, ושני האגפים שווים ל-$\{1,2\}$'
+        feedback: >-
+          דוגמה שבה שוויון מתקיים לא מוכיחה שהוא מתקיים תמיד. כאן הקבוצות זרות, ולכן ההפרש לא מוריד כלום; בדוגמה
+          אחרת השוויון נשבר.
+        misconception: MC-examples-are-proof
+      - text: 'זה כמו במספרים: $a-(b-c)=(a-b)-c$'
+        feedback: >-
+          גם במספרים זה לא נכון: $a-(b-c)=a-b+c$. עבור $a=b=c=1$ אגף שמאל $1$ ואגף ימין $-1$.
+        misconception: MC-set-difference-rules
+    hints:
+      - 'חזרו לשיעור 0.6: פעולות על קבוצות. נסו קבוצות קטנות מאוד, עם איבר אחד.'
+      - 'חזרו לשיעור 0.4: כדי להפריך טענת "לכל" מספיקה דוגמה נגדית אחת.'
+
+  - id: Q-0-review-10
+    type: mc
+    objectives: [OBJ-0.2-2, OBJ-0.4-1]
+    level: mid
+    prompt: >-
+      רוצים להוכיח: "לכל $n$ שלם, אם $3$ מחלק את $n^2$ אז $3$ מחלק את $n$". איזו דרך מוכיחה את הטענה?
+    choices:
+      - text: 'להוכיח שאם $3$ אינו מחלק את $n$, כלומר $n=3k+1$ או $n=3k+2$, אז $3$ אינו מחלק את $n^2$'
+        correct: true
+        feedback: >-
+          נכון. זה הקונטרפוזיטיב, ששקול לטענה. $(3k+1)^2=3(3k^2+2k)+1$ ו-$(3k+2)^2=3(3k^2+4k+1)+1$: בשני המקרים
+          השארית בחלוקה ב-$3$ היא $1$.
+      - text: 'להוכיח שאם $3$ מחלק את $n$ אז $3$ מחלק את $n^2$'
+        feedback: >-
+          זו ההפוכה. היא נכונה ($n=3k$ נותן $n^2=3\cdot 3k^2$), אבל אינה שקולה לטענה ולא מוכיחה אותה.
+        misconception: MC-converse-equivalent
+      - text: 'להוכיח שאם $3$ אינו מחלק את $n^2$ אז $3$ אינו מחלק את $n$'
+        feedback: >-
+          זו הנגדית, ששקולה להפוכה, לא לטענה. כדי להוכיח את הטענה דרך שלילות צריך להחליף גם את הסדר.
+        misconception: MC-inverse-equivalent
+      - text: 'לבדוק את $n=1,2,\dots,30$'
+        feedback: >-
+          בדיקה של מקרים לא מוכיחה טענה על כל השלמים.
+        misconception: MC-examples-are-proof
+    hints:
+      - 'חזרו לשיעור 0.2: איזו מבין ההפוכה, הנגדית והקונטרפוזיטיב שקולה לטענה?'
+      - 'חזרו לשיעור 0.4: הוכחה ישירה מתחילה ממה שקל לכתוב בנוסחה.'
+
+  - id: Q-0-review-11
+    type: numeric
+    objectives: [OBJ-0.5-2, OBJ-0.7-3]
+    level: mid
+    prompt: >-
+      אי-שוויון ברנולי נותן חסם מלמטה על $(1.01)^{100}$. מהו החסם?
+    answer: 2
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. עם $x=0.01\ge -1$ ו-$n=100$: $(1+0.01)^{100}\ge 1+100\cdot 0.01=2$. (הערך האמיתי הוא בערך $2.705$,
+      והחסם נכון אבל לא הדוק.)
+    wrongFeedback: >-
+      כתבו $1.01=1+x$ וזהו את $x$ ואת $n$; אחר כך הציבו ב-$1+nx$.
+    commonWrong:
+      - value: 102
+        feedback: >-
+          הצבתם $x=1.01$. בברנולי הבסיס הוא $1+x$, ולכן $x=0.01$.
+      - value: 2.7048
+        feedback: >-
+          זה הערך האמיתי של $(1.01)^{100}$ (בקירוב), לא החסם שברנולי נותן. ברנולי נותן מספר קטן ממנו בהרבה, $2$,
+          אבל בלי שום חישוב של חזקות.
+    hints:
+      - 'חזרו לשיעור 0.5: אי-שוויון ברנולי, $(1+x)^n\ge 1+nx$ עבור $x\ge -1$.'
+      - 'חזרו לשיעור 0.7: חסם מלמטה הוא מספר שהביטוי לא קטן ממנו.'
+
+  - id: Q-0-review-12
+    type: mc
+    objectives: [OBJ-0.5-3, OBJ-0.5-2, OBJ-0.7-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      נסמן $S_n=\frac{1}{1\cdot 2}+\frac{1}{2\cdot 3}+\dots+\frac{1}{n(n+1)}$. סטודנט מנסה להוכיח באינדוקציה
+      ש-$S_n<1$ לכל $n$: בסיס $S_1=\frac12<1$; בצעד הוא מניח $S_n<1$ ונתקע. מה נכון?
+    choices:
+      - text: 'מ-$S_n<1$ נובע רק $S_{n+1}<1+\frac{1}{(n+1)(n+2)}$; צריך להוכיח באינדוקציה את הטענה החזקה יותר $S_n=1-\frac{1}{n+1}$, וממנה $S_n<1$'
+        correct: true
+        feedback: >-
+          נכון. ההנחה $S_n<1$ חלשה מדי: היא לא אומרת כמה מקום נשאר עד $1$. עם השוויון המדויק הצעד עובד:
+          $1-\frac{1}{n+1}+\frac{1}{(n+1)(n+2)}=1-\frac{1}{n+2}$. לפעמים קל יותר להוכיח טענה חזקה יותר.
+      - text: 'הצעד דווקא עובד: $S_{n+1}=S_n+\frac{1}{(n+1)(n+2)}$, והאיבר שמוסיפים קטן מאוד, ולכן $S_{n+1}<1$'
+        feedback: >-
+          "קטן מאוד" אינו הצדקה. אם, למשל, $S_n=0.9999$, ואיבר קטן מוסיף $0.001$, הסכום כבר גדול מ-$1$. מההנחה
+          $S_n<1$ בלבד אי אפשר להסיק $S_{n+1}<1$.
+        misconception: MC-step-justification-vague
+      - text: הבעיה היא בבסיס, וצריך להתחיל מ-$n=2$
+        feedback: >-
+          הבסיס תקין: $S_1=\frac12<1$. הבעיה היא בצעד, וגם בסיס אחר לא יפתור אותה.
+        misconception: MC-induction-skip-base
+    hints:
+      - 'חזרו לשיעור 0.5: מה צעד האינדוקציה צריך להוכיח, ומה הנחת האינדוקציה נותנת.'
+      - 'חשבו את $S_1$, $S_2$, $S_3$ כשברים, ונחשו נוסחה מדויקת.'
+
+  - id: Q-0-review-13
+    type: twotier
+    objectives: [OBJ-0.6-2, OBJ-0.3-2, OBJ-0.4-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם $f:\mathbb{R}\to\mathbb{R}$, $f(x)=x^3-x$, חד-חד-ערכית?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. יש שתי נקודות שונות עם אותו ערך.
+      - text: כן
+        feedback: >-
+          $f(0)=0$ ו-$f(1)=1-1=0$: שתי נקודות שונות, אותו ערך. (גם $f(-1)=0$.)
+        misconception: MC-examples-are-proof
+    reasons:
+      - text: 'השלילה של חד-חד-ערכיות היא "קיימים $x_1\ne x_2$ עם $f(x_1)=f(x_2)$", ו-$x_1=0$, $x_2=1$ נותנים $0=0$'
+        correct: true
+        feedback: >-
+          בדיוק. שלילה מכנית של ההגדרה אומרת בדיוק מה צריך להראות, ודוגמה אחת מספיקה.
+      - text: '$f(1)=0$ ו-$f(2)=6$: נקודות שונות נותנות ערכים שונים'
+        feedback: >-
+          זוג אחד של נקודות עם ערכים שונים לא מוכיח דבר: חד-חד-ערכיות היא טענה על **כל** הזוגות. זוג אחד עם ערכים
+          שווים, כמו $0$ ו-$1$, מפריך אותה.
+        misconception: MC-examples-are-proof
+      - text: 'אם $x_1=x_2$ אז $x_1^3-x_1=x_2^3-x_2$, ולכן $f$ חד-חד-ערכית'
+        feedback: >-
+          זה נכון לכל פונקציה ואינו ההגדרה. חד-חד-ערכיות היא הכיוון ההפוך: $f(x_1)=f(x_2)\Rightarrow x_1=x_2$.
+        misconception: MC-injective-reversed
+    hints:
+      - 'חזרו לשיעור 0.3: שללו את ההגדרה "לכל $x_1,x_2$: אם $f(x_1)=f(x_2)$ אז $x_1=x_2$".'
+      - 'חזרו לשיעור 0.6: פרקו $x^3-x=x(x-1)(x+1)$ וחפשו שורשים.'
+
+  - id: Q-0-review-14
+    type: mc
+    objectives: [OBJ-0.7-1, OBJ-0.7-2]
+    level: exam
+    prompt: >-
+      לאילו $x$ ממשיים מתקיים $|x|+|x-2|=2$?
+    choices:
+      - text: 'לכל $x$ בקטע $[0,2]$'
+        correct: true
+        feedback: >-
+          נכון. לפי אי-שוויון המשולש $|x|+|2-x|\ge|x+(2-x)|=2$ לכל $x$, ושוויון יש בדיוק כש-$x$ ו-$2-x$ אי-שליליים
+          שניהם (או אי-חיוביים שניהם, מה שלא קורה כאן), כלומר $0\le x\le 2$. בבדיקה ישירה: בקטע הזה הסכום הוא
+          $x+(2-x)=2$.
+      - text: 'רק $x=0$ ו-$x=2$'
+        feedback: >-
+          זה מתקבל מ"$|x|+|x-2|=|2x-2|$", אבל ערך מוחלט אינו נפתח על סכום. למשל $x=1$: $1+1=2$, גם הוא פתרון.
+        misconception: MC-order-abs-additive
+      - text: לכל $x$ ממשי
+        feedback: >-
+          $x=3$: $3+1=4\ne 2$. אי-שוויון המשולש נותן רק $|x|+|x-2|\ge 2$, ושוויון בו אינו מובטח.
+        misconception: MC-order-abs-additive
+      - text: '$(-\infty,0]\cup[2,\infty)$'
+        feedback: >-
+          מחוץ לקטע $[0,2]$ הסכום גדול מ-$2$: עבור $x>2$ הוא $2x-2>2$, ועבור $x<0$ הוא $2-2x>2$. הפתרונות הם
+          דווקא הקטע שבין הנקודות.
+        misconception: MC-abs-union-intersection
+    hints:
+      - 'חזרו לשיעור 0.7: פצלו לפי הנקודות $0$ ו-$2$, או חשבו על סכום המרחקים מ-$0$ ומ-$2$.'
+
+  - id: Q-0-review-15
+    type: twotier
+    objectives: [OBJ-0.4-3, OBJ-0.6-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם לכל שתי קבוצות $A$ ו-$B$ מתקיים: $A\cap B=A$ אם ורק אם $A\subseteq B$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. שני הכיוונים נכונים, וכל אחד מהם צריך הוכחה.
+      - text: לא
+        feedback: >-
+          נסו להוכיח: אם $A\cap B=A$, כל $x\in A$ נמצא ב-$A\cap B$ ולכן ב-$B$; ואם $A\subseteq B$, כל $x\in A$ נמצא
+          גם ב-$B$ ולכן ב-$A\cap B$. אין דוגמה נגדית.
+        misconception: MC-iff-one-direction
+    reasons:
+      - text: '($\Rightarrow$) כל $x\in A$ נמצא ב-$A\cap B$, ולכן ב-$B$; ($\Leftarrow$) $A\cap B\subseteq A$ תמיד, ואם $A\subseteq B$ כל $x\in A$ נמצא בשתיהן, ולכן גם $A\subseteq A\cap B$'
+        correct: true
+        feedback: >-
+          בדיוק. בכיוון השני יש שוויון קבוצות, ולכן הוכחנו שתי הכלות: אחת טריוויאלית ואחת מההנחה.
+      - text: 'מספיק להראות ש-$A\cap B\subseteq A$, וזה נכון תמיד'
+        feedback: >-
+          זו רק הכלה אחת מתוך השוויון, והיא לא משתמשת בכלל בהנחה $A\subseteq B$. היא נכונה גם עבור $A=\{1\}$,
+          $B=\emptyset$, ששם $A\cap B\ne A$.
+        misconception: MC-set-equality-one-inclusion
+      - text: 'בדקנו עם $A=\{1\}$ ו-$B=\{1,2\}$: $A\cap B=\{1\}=A$ ו-$A\subseteq B$'
+        feedback: >-
+          דוגמה מתאימה לא מוכיחה טענה על כל הקבוצות. כאן צריך טיעון כללי לכל כיוון.
+        misconception: MC-examples-are-proof
+    hints:
+      - 'חזרו לשיעור 0.4: "אם ורק אם" מוכיחים בשני כיוונים.'
+      - 'חזרו לשיעור 0.6: שוויון קבוצות מוכיחים בהכלה דו-כיוונית.'

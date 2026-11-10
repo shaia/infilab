@@ -1,0 +1,7 @@
+---
+/** Lesson-0.4 figure: <Spread figure={CounterexampleHunt} figureProps={{…}}>. */
+import CounterexampleHunt, { type CounterexampleHuntProps } from './CounterexampleHunt';
+type Props = CounterexampleHuntProps;
+---
+
+<CounterexampleHunt client:visible {...Astro.props} />

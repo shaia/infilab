@@ -1,0 +1,31 @@
+# Terms first defined in lesson 5.10.
+- id: vertical-asymptote
+  term: אסימפטוטה אנכית
+  en: vertical asymptote
+  symbol: 'x=x_0'
+  definition: >-
+    הישר $x=x_0$ הוא אסימפטוטה אנכית של הגרף של $f$ אם לפחות אחד הגבולות החד-צדדיים של $f$ ב-$x_0$ הוא $\infty$ או $-\infty$.
+  reject: [אסימטוטה, אסימפתוטה]
+  lesson: '5.10'
+- id: horizontal-asymptote
+  term: אסימפטוטה אופקית
+  en: horizontal asymptote
+  symbol: 'y=L'
+  definition: >-
+    הישר $y=L$ הוא אסימפטוטה אופקית של הגרף של $f$ כש-$x\to\infty$ אם $\lim_{x\to\infty}f(x)=L$ (ובאופן דומה כש-$x\to-\infty$).
+  lesson: '5.10'
+- id: slant-asymptote
+  term: אסימפטוטה משופעת
+  en: oblique (slant) asymptote
+  symbol: 'y=mx+b'
+  definition: >-
+    הישר $y=mx+b$ הוא אסימפטוטה של הגרף של $f$ כש-$x\to\infty$ אם $\lim_{x\to\infty}\bigl(f(x)-mx-b\bigr)=0$. מוצאים אותו
+    כך: $m=\lim\frac{f(x)}{x}$, ואחר כך $b=\lim\bigl(f(x)-mx\bigr)$, כששני הגבולות סופיים. כל כיוון נבדק בנפרד.
+  lesson: '5.10'
+- id: function-analysis
+  term: חקירת פונקציה
+  en: curve sketching (analysis of a function)
+  definition: >-
+    תיאור מלא של פונקציה: תחום הגדרה, אסימפטוטות, קטעי עלייה וירידה ונקודות קיצון (לפי $f'$), קטעי קמירות ונקודות
+    פיתול (לפי $f''$), ושרטוט שמתאים לכל המידע.
+  lesson: '5.10'

@@ -1,0 +1,317 @@
+# Lesson 2.10 — Cauchy sequences.
+# Objectives (src/course.ts):
+#   OBJ-2.10-1  state the Cauchy condition and explain how it differs from the definition of a limit
+#   OBJ-2.10-2  prove that a sequence converges if and only if it is Cauchy
+#   OBJ-2.10-3  use the Cauchy condition to prove convergence or divergence without knowing the limit
+chapter: 2
+questions:
+  - id: Q-2.10-def
+    type: mc
+    objectives: [OBJ-2.10-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזה מהניסוחים הבאים הוא תנאי קושי לסדרה $a_n$?
+    choices:
+      - text: '$\forall\varepsilon>0\ \exists N\in\mathbb{N}\ \forall m,n>N:\ |a_m-a_n|<\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. מ-$N$ והלאה **כל שני** איברים קרובים זה לזה, בלי להזכיר שום גבול.
+      - text: '$\forall\varepsilon>0\ \exists N\in\mathbb{N}\ \forall n>N:\ |a_{n+1}-a_n|<\varepsilon$'
+        feedback: >-
+          זה אומר רק ש-$a_{n+1}-a_n\to0$, חלש בהרבה מקושי. $\sqrt n$ מקיימת אותו ושואפת לאינסוף.
+        misconception: MC-cauchy-consecutive-terms
+      - text: '$\forall\varepsilon>0\ \exists N\in\mathbb{N}\ \forall n>N:\ |a_n-L|<\varepsilon$'
+        feedback: >-
+          זו הגדרת הגבול. כל הרעיון של תנאי קושי הוא לא להזכיר את $L$, כדי שאפשר יהיה להשתמש בו בלי לדעת מהו הגבול.
+        misconception: MC-cauchy-mentions-limit
+      - text: '$\exists N\in\mathbb{N}\ \forall\varepsilon>0\ \forall m,n>N:\ |a_m-a_n|<\varepsilon$'
+        feedback: >-
+          כאן $N$ נבחר לפני $\varepsilon$, ולכן $|a_m-a_n|$ קטן מכל מספר חיובי, כלומר אפס: הסדרה קבועה מ-$N$ והלאה.
+        misconception: MC-limit-quantifier-order
+
+  - id: Q-2.10-sqrt
+    type: twotier
+    objectives: [OBJ-2.10-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      עבור $a_n=\sqrt n$ מתקיים $a_{n+1}-a_n=\frac{1}{\sqrt{n+1}+\sqrt n}\to0$. האם $a_n$ סדרת קושי?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. היא לא חסומה, וכל סדרת קושי חסומה. ההפרשים בין איברים **עוקבים** קטנים, אבל הם מצטברים.
+      - text: כן
+        feedback: >-
+          תנאי קושי מדבר על כל זוג $m,n>N$, לא רק על עוקבים. ראו את הזוג $m=4n$ בנימוק הנכון.
+        misconception: MC-cauchy-consecutive-terms
+    reasons:
+      - text: 'עבור $m=4n$: $|a_m-a_n|=2\sqrt n-\sqrt n=\sqrt n\ge1$, ולכן עם $\varepsilon=1$ אין $N$ מתאים'
+        correct: true
+        feedback: >-
+          בדיוק. לכל $N$ הזוג $n=N+1$, $m=4(N+1)$ נמצא אחרי $N$ ורחוק יותר מ-1. זו שלילת תנאי קושי.
+      - text: 'ההפרשים בין איברים עוקבים שואפים לאפס, וזה מה שתנאי קושי דורש'
+        feedback: >-
+          תנאי קושי דורש יותר: $|a_m-a_n|$ קטן גם כש-$m$ רחוק מאוד מ-$n$. בין $n$ ל-$4n$ יש $3n$ צעדים קטנים, וסכומם
+          $\sqrt n$.
+        misconception: MC-cauchy-consecutive-terms
+      - text: 'לכל $p$ קבוע $a_{n+p}-a_n\to0$, ולכן הסדרה קושי'
+        feedback: >-
+          גם זה נכון כאן ($a_{n+p}-a_n\le\frac{p}{2\sqrt n}$), ועדיין לא מספיק: בתנאי קושי $m$ ו-$n$ חופשיים, והמרחק
+          ביניהם לא קבוע.
+        misconception: MC-cauchy-consecutive-terms
+
+  - id: Q-2.10-vs-limit
+    type: mc
+    objectives: [OBJ-2.10-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בממשיים, סדרה מתכנסת אם ורק אם היא סדרת קושי. אז למה צריך את תנאי קושי בכלל?
+    choices:
+      - text: הוא לא מזכיר את הגבול, ולכן אפשר להוכיח בעזרתו התכנסות בלי לדעת מהו הגבול
+        correct: true
+        feedback: >-
+          נכון. כדי להשתמש בהגדרת הגבול צריך מועמד $L$. תנאי קושי משווה איברים זה לזה, ולכן מתאים לסדרות כמו
+          $\sum_{k=1}^n\frac1{k^2}$, שאת גבולן לא יודעים לכתוב בכלים של הקורס.
+      - text: הוא חלש יותר מהתכנסות, ולכן קל יותר לבדוק אותו
+        feedback: >-
+          בממשיים הוא **שקול** להתכנסות, לא חלש ממנה: כל סדרת קושי ממשית מתכנסת. היתרון אינו בחולשה אלא בכך שאין בו
+          $L$.
+        misconception: MC-cauchy-weaker-in-reals
+      - text: 'הוא שקול לכך ש-$a_{n+1}-a_n\to0$, תנאי שקל לבדוק'
+        feedback: >-
+          לא שקול: $\sqrt n$ מקיימת $a_{n+1}-a_n\to0$ ואינה סדרת קושי.
+        misconception: MC-cauchy-consecutive-terms
+      - text: הוא עובד בכל מערכת מספרים, גם ברציונליים, ולכן כללי יותר
+        feedback: >-
+          ברציונליים יש סדרות קושי בלי גבול רציונלי: $1,\ 1.4,\ 1.41,\ 1.414,\dots$ (הקירובים של $\sqrt2$). השקילות
+          "קושי אם ורק אם מתכנסת" נשענת על השלמות של הממשיים.
+        misconception: MC-cauchy-converges-in-rationals
+
+  - id: Q-2.10-conv-cauchy
+    type: rank
+    objectives: [OBJ-2.10-2]
+    level: mid
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      ההוכחה שכל סדרה מתכנסת היא סדרת קושי התפרקה לשלבים. סדרו אותם.
+    items:
+      - id: eps
+        label: 'נניח $a_n\to L$, ויהי $\varepsilon>0$.'
+      - id: N
+        label: 'לפי הגדרת הגבול עם $\frac\varepsilon2$: קיים $N$ כך ש-$|a_n-L|<\frac{\varepsilon}{2}$ לכל $n>N$.'
+      - id: tri
+        label: 'לכל $m,n>N$, לפי אי-שוויון המשולש: $|a_m-a_n|\le|a_m-L|+|L-a_n|$.'
+      - id: done
+        label: 'לכן $|a_m-a_n|<\frac\varepsilon2+\frac\varepsilon2=\varepsilon$, וזה תנאי קושי.'
+    order: [eps, N, tri, done]
+    correctFeedback: >-
+      נכון. זה הכיוון הקל: הוא לא משתמש בשלמות, ולכן נכון גם ברציונליים. החלוקה ל-$\frac\varepsilon2$ נבחרת מראש
+      כדי שבסוף יתקבל בדיוק $\varepsilon$.
+    wrongFeedback: >-
+      $N$ נבחר לפי $\varepsilon$, ואי-שוויון המשולש מופעל על $m,n>N$, ולכן הוא בא אחרי הבחירה.
+
+  - id: Q-2.10-bounded
+    type: mc
+    objectives: [OBJ-2.10-2]
+    level: mid
+    prompt: >-
+      השלב הראשון בהוכחה שסדרת קושי מתכנסת: היא חסומה. עם $\varepsilon=1$ יש $N$ כך ש-$|a_m-a_n|<1$ לכל $m,n>N$,
+      ובפרט $|a_n|<|a_{N+1}|+1$ לכל $n>N$. איזה $M$ מבטיח $|a_n|\le M$ לכל $n$?
+    choices:
+      - text: '$M=\max\left(|a_1|,\dots,|a_N|,\ |a_{N+1}|+1\right)$'
+        correct: true
+        feedback: >-
+          נכון. מספר סופי של איברים מתחילת הסדרה מטפלים במקסימום, ואת הזנב חוסם $|a_{N+1}|+1$.
+      - text: '$M=|a_{N+1}|+1$'
+        feedback: >-
+          זה חוסם רק את האיברים אחרי $N$. האיברים $a_1,\dots,a_N$ יכולים להיות גדולים כרצוננו, למשל $a_1=1000$.
+        misconception: MC-limit-all-terms
+      - text: '$M=\max_{n\in\mathbb{N}}|a_n|$'
+        feedback: >-
+          לאינסוף איברים אולי אין מקסימום ($1-\frac1n$), ולכן אי אפשר להשתמש בו. לוקחים מקסימום רק על מספר סופי
+          של איברים.
+        misconception: MC-sequence-max-exists
+      - text: 'אין $M$ כזה בהכרח: סדרת קושי יכולה להיות לא חסומה, כמו $\sqrt n$'
+        feedback: >-
+          $\sqrt n$ אינה סדרת קושי; רק ההפרשים בין העוקבים שלה קטנים. כל סדרת קושי חסומה, וזה בדיוק מה שמוכיחים כאן.
+        misconception: MC-cauchy-consecutive-terms
+
+  - id: Q-2.10-structure
+    type: mc
+    objectives: [OBJ-2.10-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      מהו המבנה של ההוכחה שכל סדרת קושי ממשית מתכנסת?
+    choices:
+      - text: 'היא חסומה; לפי בולצאנו-ויירשטראס יש לה תת-סדרה $a_{n_k}\to L$; ותנאי קושי עם אי-שוויון המשולש נותן $a_n\to L$'
+        correct: true
+        feedback: >-
+          נכון. בשלב האחרון: $|a_n-L|\le|a_n-a_{n_k}|+|a_{n_k}-L|$, ושני המחוברים קטנים כש-$n$ ו-$k$ גדולים. השלמות
+          נכנסת דרך בולצאנו-ויירשטראס.
+      - text: 'סדרת קושי מונוטונית מנקודה מסוימת, ולכן לפי המשפט על סדרה מונוטונית וחסומה היא מתכנסת'
+        feedback: >-
+          סדרת קושי לא חייבת להיות מונוטונית מאף נקודה: $\frac{(-1)^n}{n}$ היא סדרת קושי (כי היא מתכנסת) ומחליפה
+          סימן כל הזמן.
+        misconception: MC-convergent-implies-monotone
+      - text: 'רק אי-שוויון המשולש: אין צורך באקסיומת השלמות, ולכן הטענה נכונה גם ברציונליים'
+        feedback: >-
+          ברציונליים $1,\ 1.4,\ 1.41,\ 1.414,\dots$ היא סדרת קושי בלי גבול רציונלי. בלי שלמות אין מאיפה להביא את $L$.
+        misconception: MC-cauchy-converges-in-rationals
+
+  - id: Q-2.10-subseq
+    type: twotier
+    objectives: [OBJ-2.10-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $a_n$ סדרת קושי, ויש לה תת-סדרה $a_{n_k}\to L$. האם בהכרח $a_n\to L$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. זה בדיוק השלב האחרון בהוכחה שסדרת קושי מתכנסת.
+      - text: לא
+        feedback: >-
+          עבור סדרה כללית זה לא נכון ($(-1)^n$), אבל סדרת קושי לא יכולה "להתפצל": כל איבריה מ-$N$ והלאה קרובים זה
+          לזה, ולכן גם ל-$L$.
+        misconception: MC-cauchy-weaker-in-reals
+    reasons:
+      - text: 'לכל $n$ ו-$k$ גדולים: $|a_n-L|\le|a_n-a_{n_k}|+|a_{n_k}-L|$; הראשון קטן לפי קושי והשני לפי $a_{n_k}\to L$'
+        correct: true
+        feedback: >-
+          בדיוק. בוחרים $N$ מתנאי קושי עם $\frac\varepsilon2$, ואז $k$ אחד עם $n_k>N$ ו-$|a_{n_k}-L|<\frac\varepsilon2$.
+      - text: 'אם לסדרה יש תת-סדרה מתכנסת, הסדרה כולה מתכנסת לאותו גבול'
+        feedback: >-
+          המסקנה נכונה כאן, אבל הנימוק לא: $(-1)^n$ יש לה תת-סדרה מתכנסת והיא מתבדרת. מה שעובד כאן הוא תנאי קושי.
+        misconception: MC-convergent-subsequence-implies-convergent
+
+  - id: Q-2.10-gap
+    type: numeric
+    objectives: [OBJ-2.10-3]
+    level: basic
+    prompt: >-
+      נסמן $H_n=1+\frac12+\frac13+\dots+\frac1n$. בהפרש $H_{2n}-H_n=\frac{1}{n+1}+\dots+\frac{1}{2n}$ יש $n$ מחוברים,
+      וכל אחד מהם לפחות $\frac{1}{2n}$. איזה חסם מלרע, שאינו תלוי ב-$n$, מתקבל ל-$H_{2n}-H_n$?
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון: $H_{2n}-H_n\ge n\cdot\frac{1}{2n}=\frac12$ לכל $n$. לכן עם $\varepsilon=\frac12$ אין $N$ מתאים: הזוג
+      $m=2n$, $n>N$ תמיד רחוק לפחות $\frac12$.
+    wrongFeedback: >-
+      כפלו את מספר המחוברים בחסם המלרע של כל מחובר.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          כל מחובר הוא **לכל היותר** $\frac1{n+1}<\frac1n$, ולכן $n\cdot\frac1n=1$ הוא חסם מלעיל, לא מלרע. החסם
+          המלרע בא מהמחובר הקטן ביותר, $\frac1{2n}$.
+        misconception: MC-estimate-wrong-direction
+
+  - id: Q-2.10-harmonic
+    type: twotier
+    objectives: [OBJ-2.10-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם הסדרה $H_n=1+\frac12+\dots+\frac1n$ מתכנסת?
+    choices:
+      - text: לא, היא אינה סדרת קושי
+        correct: true
+        feedback: >-
+          נכון. והיא עולה, ולכן היא אף שואפת לאינסוף: סדרה עולה שאינה מתכנסת אינה חסומה מלעיל.
+      - text: כן, כי המחוברים $\frac1n$ שואפים לאפס
+        feedback: >-
+          המחוברים קטנים, אבל הם מצטברים: $H_{2n}-H_n\ge\frac12$ לכל $n$, ולכן $H_{2^k}\ge1+\frac k2$.
+        misconception: MC-cauchy-consecutive-terms
+    reasons:
+      - text: '$H_{2n}-H_n\ge\frac12$ לכל $n$, ולכן עם $\varepsilon=\frac12$ לכל $N$ יש $m,n>N$ עם $|H_m-H_n|\ge\varepsilon$'
+        correct: true
+        feedback: >-
+          בדיוק: זו שלילת תנאי קושי, ולא היה צורך לדעת דבר על גבול אפשרי.
+      - text: '$H_{n+1}-H_n=\frac{1}{n+1}\to0$, ולכן היא סדרת קושי ומתכנסת'
+        feedback: >-
+          הפרש בין עוקבים ששואף לאפס אינו תנאי קושי. בין $n$ ל-$2n$ יש $n$ הפרשים קטנים, וסכומם לפחות $\frac12$.
+        misconception: MC-cauchy-consecutive-terms
+      - text: 'אי אפשר לדעת בלי לנחש את הגבול ולבדוק אותו בהגדרה'
+        feedback: >-
+          תנאי קושי בדיוק חוסך את הניחוש: הוא משווה איברים של הסדרה זה לזה.
+        misconception: MC-cauchy-mentions-limit
+
+  - id: Q-2.10-negation
+    type: mc
+    objectives: [OBJ-2.10-3]
+    level: basic
+    prompt: >-
+      מה פירוש הטענה "$a_n$ **אינה** סדרת קושי"?
+    choices:
+      - text: '$\exists\varepsilon>0\ \forall N\in\mathbb{N}\ \exists m,n>N:\ |a_m-a_n|\ge\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. יש מרחק $\varepsilon$ אחד כך שבכל זנב יש שני איברים שרחוקים זה מזה לפחות $\varepsilon$.
+      - text: '$\forall\varepsilon>0\ \forall N\in\mathbb{N}\ \exists m,n>N:\ |a_m-a_n|\ge\varepsilon$'
+        feedback: >-
+          את הכמת הראשון שכחו להפוך. זה דורש זוגות רחוקים לכל מרחק, גם מיליון; $(-1)^n$ אינה קושי ואינה מקיימת זאת.
+        misconception: MC-negation-partial
+      - text: '$\exists\varepsilon>0\ \exists N\in\mathbb{N}\ \forall m,n>N:\ |a_m-a_n|\ge\varepsilon$'
+        feedback: >-
+          זה חזק מדי ואפילו לא אפשרי: עם $m=n$ מקבלים $0\ge\varepsilon$. שלילת "לכל $m,n$" היא "קיימים $m,n$".
+        misconception: MC-negation-partial
+      - text: '$\forall\varepsilon>0\ \exists N\in\mathbb{N}\ \forall m,n>N:\ |a_m-a_n|>\varepsilon$'
+        feedback: >-
+          כאן שללו רק את אי-השוויון והשאירו את הכמתים. שלילה הופכת כל כמת.
+        misconception: MC-negation-partial
+
+  - id: Q-2.10-squares
+    type: mc
+    objectives: [OBJ-2.10-3]
+    level: mid
+    prompt: >-
+      $S_n=\sum_{k=1}^{n}\frac{1}{k^2}$. איזו הערכה מוכיחה ש-$S_n$ היא סדרת קושי?
+    choices:
+      - text: 'לכל $m>n$: $S_m-S_n<\sum_{k=n+1}^{m}\left(\frac1{k-1}-\frac1k\right)=\frac1n-\frac1m<\frac1n$'
+        correct: true
+        feedback: >-
+          נכון. החסם $\frac1n$ לא תלוי ב-$m$, ולכן עם $N=\left\lceil\frac1\varepsilon\right\rceil$ לכל $m>n>N$
+          מתקיים $|S_m-S_n|<\frac1n<\varepsilon$.
+      - text: '$S_{n+1}-S_n=\frac{1}{(n+1)^2}\to0$'
+        feedback: >-
+          גם $H_n$ מקיימת $H_{n+1}-H_n\to0$ ואינה מתכנסת. הפרש בין עוקבים לא מספיק.
+        misconception: MC-cauchy-consecutive-terms
+      - text: 'לכל $m>n$: $S_m-S_n\le\frac{m-n}{(n+1)^2}$, וזה שואף ל-0 כש-$n\to\infty$'
+        feedback: >-
+          ההערכה נכונה, אבל לא שואפת ל-0 באופן שלא תלוי ב-$m$: עם $m=n^3$ היא גדולה. תנאי קושי צריך חסם שקטן לכל
+          $m>n$ בבת אחת.
+        misconception: MC-cauchy-consecutive-terms
+
+  - id: Q-2.10-geometric
+    type: twotier
+    objectives: [OBJ-2.10-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      הסדרה $a_n$ מקיימת $|a_{n+1}-a_n|\le\frac{1}{2^n}$ לכל $n$. על הסדרה לא ידוע דבר נוסף. האם היא מתכנסת בהכרח?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. ההפרשים קטנים מספיק מהר כדי שסכומם יהיה קטן, וזה נותן תנאי קושי.
+      - text: לא בהכרח
+        feedback: >-
+          אפשר להוכיח התכנסות בלי לדעת את הגבול, בעזרת תנאי קושי. ראו את הנימוק הנכון.
+        misconception: MC-cauchy-mentions-limit
+    reasons:
+      - text: 'לכל $m>n$: $|a_m-a_n|\le\sum_{k=n}^{m-1}|a_{k+1}-a_k|\le\sum_{k=n}^{m-1}\frac{1}{2^k}<\frac{2}{2^n}$, ולכן הסדרה קושי'
+        correct: true
+        feedback: >-
+          בדיוק: טלסקופ, אי-שוויון המשולש וסכום הנדסי. החסם $\frac{2}{2^n}$ לא תלוי ב-$m$, ושואף ל-0.
+      - text: 'ההפרשים בין עוקבים שואפים לאפס, וזה מספיק'
+        feedback: >-
+          המסקנה נכונה, הנימוק לא: ב-$\sqrt n$ ההפרשים שואפים לאפס, והיא מתבדרת. כאן מה שמציל הוא **קצב** הירידה
+          של ההפרשים, שמאפשר לסכם אותם.
+        misconception: MC-cauchy-consecutive-terms
+      - text: 'צריך קודם למצוא את הגבול, ואז להוכיח בהגדרה'
+        feedback: >-
+          את הגבול כאן אי אפשר למצוא: לא נתונה נוסחה. בשביל זה יש את תנאי קושי.
+        misconception: MC-cauchy-mentions-limit

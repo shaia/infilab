@@ -1,0 +1,25 @@
+# Terms first defined in lesson 6.4.
+- id: taylor-polynomial
+  term: פולינום טיילור
+  en: Taylor polynomial
+  symbol: 'T_n(x) = \sum_{k=0}^{n} \frac{f^{(k)}(a)}{k!}(x-a)^k'
+  definition: >-
+    פולינום טיילור מסדר $n$ של $f$ סביב $a$ הוא הפולינום ממעלה $n$ לכל היותר שערכו ו-$n$ הנגזרות הראשונות
+    שלו ב-$a$ שווים לאלה של $f$. סביב $a=0$ קוראים לו גם פולינום מקלורן.
+  reject: [פולינום טיילר]
+  lesson: '6.4'
+- id: little-o
+  term: o קטן
+  en: little-o notation
+  symbol: 'g(x) = o\left((x-a)^n\right)'
+  definition: >-
+    $g(x) = o\left((x-a)^n\right)$ כש-$x\to a$ אם $\frac{g(x)}{(x-a)^n}\to 0$: $g$ זניחה לעומת $(x-a)^n$
+    ליד $a$.
+  lesson: '6.4'
+- id: peano-remainder
+  term: שארית פאנו
+  en: Peano form of the remainder
+  definition: >-
+    אם $f$ גזירה $n$ פעמים ב-$a$, אז $f(x) - T_n(x) = o\left((x-a)^n\right)$ כש-$x\to a$. השארית קטנה ליד
+    $a$, אבל הצורה הזו אינה נותנת חסם מספרי בנקודה נתונה.
+  lesson: '6.4'

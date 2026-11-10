@@ -1,0 +1,374 @@
+# Lesson 1.7 — existence of roots and powers.
+# Objectives (src/course.ts):
+#   OBJ-1.7-1  prove with the supremum that every positive number has a positive square root
+#   OBJ-1.7-2  define a rational power of a positive number and prove the laws of exponents for it
+#   OBJ-1.7-3  explain how a power with an irrational exponent is defined through the supremum
+# No continuity yet (chapter 4): the existence of a root comes from sup, never from the intermediate value theorem.
+chapter: 1
+questions:
+  - id: Q-1.7-which-set
+    type: mc
+    objectives: [OBJ-1.7-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איך מוכיחים שקיים מספר ממשי חיובי שריבועו $2$?
+    choices:
+      - text: >-
+          מגדירים $S=\{x\ge0 : x^2<2\}$, שהיא לא ריקה ($0\in S$) וחסומה מלעיל ב-$2$; לוקחים $s=\sup S$ ומראים
+          ש-$s^2=2$
+        correct: true
+        feedback: >-
+          נכון. אקסיומת השלמות נותנת את $s$, והעבודה היא להראות ש-$s^2<2$ ו-$s^2>2$ שניהם בלתי אפשריים.
+      - text: 'לוקחים את הסופרמום של $\{x\in\mathbb{Q} : x^2<2\}$ בתוך $\mathbb{Q}$'
+        feedback: >-
+          בתוך $\mathbb{Q}$ לקבוצה הזו אין סופרמום: בדיוק זה הכשל של $\mathbb{Q}$ (שיעור 1.5). השלמות של
+          $\mathbb{R}$ היא שמספקת את $s$.
+        misconception: MC-dense-means-complete
+      - text: 'משרטטים את $y=x^2$ ורואים שהגרף חוצה את הקו $y=2$'
+        feedback: >-
+          השרטוט מניח שלגרף אין "חורים", וזה בדיוק מה שצריך להוכיח: בתוך $\mathbb{Q}$ הגרף "קופץ" מעל $y=2$
+          בלי לחצות אותו. שרטוט אינו הוכחה, ובקורס הזה עוד אין רציפות.
+        misconception: MC-sqrt-exists-by-picture
+      - text: '$\sqrt2=1.41421\ldots$ הוא שבר עשרוני אינסופי, וכל שבר כזה הוא מספר ממשי'
+        feedback: >-
+          ש"שבר עשרוני אינסופי הוא מספר" צריך הוכחה, והיא משתמשת בשלמות (הסופרמום של הקירובים). וגם צריך
+          להראות שריבוע המספר הזה הוא בדיוק $2$.
+        misconception: MC-sqrt-exists-by-picture
+
+  - id: Q-1.7-unique-root
+    type: mc
+    objectives: [OBJ-1.7-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $x,y>0$ ו-$x^2=y^2=2$. למה $x=y$?
+    choices:
+      - text: 'אילו $x<y$, אז $x\cdot x<x\cdot y<y\cdot y$, כלומר $x^2<y^2$; ובאותו אופן $y<x$ בלתי אפשרי'
+        correct: true
+        feedback: >-
+          נכון. כפל במספרים חיוביים שומר על הכיוון, ולכן $0<x<y$ גורר $x^2<y^2$. לפי הטריכוטומיה נשאר $x=y$.
+      - text: 'כי מוציאים שורש משני האגפים: $x=\sqrt{x^2}=\sqrt{y^2}=y$'
+        feedback: >-
+          הסימן $\sqrt{\ }$ מוגדר כ"השורש החיובי **היחיד**", ולכן השימוש בו מניח בדיוק את מה שצריך להוכיח.
+          היחידות באה מהסדר: $0<x<y$ גורר $x^2<y^2$.
+        misconception: MC-field-fact-taken-as-axiom
+      - text: 'כי שניהם שווים לסופרמום של $\{t\ge0 : t^2<2\}$, והסופרמום יחיד'
+        feedback: >-
+          ההוכחה בשיעור מראה שהסופרמום $s$ מקיים $s^2=2$, ולא שכל מספר חיובי שריבועו $2$ שווה לו. את זה יש עוד
+          להוכיח, והדרך הקצרה היא בעזרת הסדר.
+        misconception: MC-field-fact-taken-as-axiom
+
+  - id: Q-1.7-both-cases
+    type: twotier
+    objectives: [OBJ-1.7-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $s=\sup\{x\ge0 : x^2<2\}$. סטודנט הוכיח ש-$s^2<2$ בלתי אפשרי, והסיק ש-$s^2=2$. האם ההוכחה שלמה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. נשאר מקרה שלישי.
+      - text: כן
+        feedback: >-
+          לפי הטריכוטומיה יש שלוש אפשרויות: $s^2<2$, $s^2=2$ ו-$s^2>2$. שלילת אחת משאירה שתיים.
+        misconception: MC-sqrt-sup-one-case
+    reasons:
+      - text: 'שלילת $s^2<2$ משאירה $s^2\ge2$; צריך לשלול גם $s^2>2$, בעזרת חסם מלעיל קטן מ-$s$'
+        correct: true
+        feedback: >-
+          בדיוק. אם $s^2>2$, מוצאים $h>0$ עם $(s-h)^2>2$, ואז $s-h$ חסם מלעיל של הקבוצה וקטן מ-$s$: סתירה
+          להיותו החסם הקטן ביותר.
+      - text: 'כש-$s^2<2$ בלתי אפשרי, $s^2=2$ נובע מכך ש-$s$ הוא סופרמום'
+        feedback: >-
+          "נובע מכך שהוא סופרמום" הוא בדיוק החלק החסר. הצד ש-$s$ הוא החסם **הקטן ביותר** הוא שפוסל את
+          $s^2>2$, וצריך לכתוב את הטיעון.
+        misconception: MC-sqrt-sup-one-case
+      - text: 'כל איבר של הקבוצה מקיים $x^2<2$, ולכן גם הסופרמום מקיים $s^2\le2$'
+        feedback: >-
+          זה נכון בסוף, אבל אינו מיידי: ש"תכונה של האיברים עוברת לסופרמום" דורש הוכחה. ההוכחה היא בדיוק שלילת
+          המקרה $s^2>2$.
+        misconception: MC-sqrt-sup-one-case
+
+  - id: Q-1.7-estimate
+    type: mc
+    objectives: [OBJ-1.7-1]
+    level: mid
+    prompt: >-
+      במקרה $s^2<2$ מחפשים $h>0$ כך ש-$(s+h)^2<2$. איזו הערכה נכונה, ומאפשרת לבחור $h$?
+    choices:
+      - text: 'לכל $0<h<1$: $(s+h)^2<s^2+h(2s+1)$, כי $h^2<h$'
+        correct: true
+        feedback: >-
+          נכון. ההערכה חוסמת את $(s+h)^2$ **מלמעלה** בביטוי ליניארי ב-$h$; מספיק לבחור $h$ עם
+          $h(2s+1)<2-s^2$.
+      - text: '$(s+h)^2<s^2+2sh$, כי כש-$h$ קטן אפשר להזניח את $h^2$'
+        feedback: >-
+          $(s+h)^2=s^2+2sh+h^2$, ו-$h^2>0$, ולכן $(s+h)^2>s^2+2sh$. השמטה של מחובר חיובי מקטינה את הביטוי, ולכן
+          היא נותנת חסם מלרע, לא מלעיל.
+        misconception: MC-estimate-drop-term-wrong-direction
+      - text: '$(s+h)^2>s^2+2sh$, ולכן מספיק לבחור $h$ עם $s^2+2sh<2$'
+        feedback: >-
+          ההערכה נכונה, אבל בכיוון הלא שימושי: מ-$(s+h)^2>X$ ומ-$X<2$ לא נובע כלום על $(s+h)^2$ לעומת $2$.
+          כדי להוכיח ש"$\dots<2$" צריך חסם **מלעיל**.
+        misconception: MC-estimate-drop-term-wrong-direction
+
+  - id: Q-1.7-case-below
+    type: rank
+    objectives: [OBJ-1.7-1]
+    level: exam
+    prompt: >-
+      $S=\{x\ge0 : x^2<2\}$ ו-$s=\sup S$ (ידוע ש-$s\ge0$). הוכיחו ש-$s^2<2$ בלתי אפשרי.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: 'נניח בשלילה ש-$s^2<2$; נחפש $0<h<1$ עם $(s+h)^2<2$'
+      - id: s2
+        label: 'לכל $0<h<1$: $(s+h)^2=s^2+2sh+h^2<s^2+h(2s+1)$, כי $h^2<h$'
+      - id: s3
+        label: 'בוחרים $h=\min\left(\frac12,\ \frac{2-s^2}{2(2s+1)}\right)$; אז $0<h<1$ ו-$h(2s+1)<2-s^2$'
+      - id: s4
+        label: 'לכן $(s+h)^2<2$, ו-$s+h\ge0$, כלומר $s+h\in S$'
+      - id: s5
+        label: 'אבל $s+h>s$, בסתירה לכך ש-$s$ חסם מלעיל של $S$'
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. כך עובדים עם סופרמום: מראים שאם הטענה לא נכונה, אפשר "לדחוף" איבר מעבר לסופרמום, או חסם אל
+      מתחתיו.
+    wrongFeedback: >-
+      קודם ההנחה בשלילה, אחר כך ההערכה של $(s+h)^2$, ורק בעזרתה בוחרים $h$. הסתירה באה מאיבר של $S$ שגדול
+      מ-$s$.
+
+  - id: Q-1.7-power-value
+    type: numeric
+    objectives: [OBJ-1.7-2]
+    level: basic
+    prompt: >-
+      חשבו את $8^{-2/3}$.
+    answer: 0.25
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $8^{1/3}=2$, ולכן $8^{2/3}=2^2=4$ ו-$8^{-2/3}=\frac14$.
+    wrongFeedback: >-
+      $a^{-r}=\frac1{a^r}$, ו-$a^{m/n}=\left(a^{1/n}\right)^m$. התחילו מ-$8^{1/3}$.
+    commonWrong:
+      - value: 4
+        feedback: >-
+          $4=8^{2/3}$. המעריך שלילי, ולכן התוצאה היא ההופכי: $\frac14$.
+      - value: -4
+        feedback: >-
+          מעריך שלילי אינו הופך את התוצאה לשלילית: $a^{-r}=\frac1{a^r}$, ובסיס חיובי נותן תמיד חזקה חיובית.
+        misconception: MC-negative-exponent-negative
+
+  - id: Q-1.7-root-of-square
+    type: mc
+    objectives: [OBJ-1.7-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      לכל $x$ ממשי, $\sqrt{x^2}$ שווה ל-
+    choices:
+      - text: '$|x|$'
+        correct: true
+        feedback: >-
+          נכון. $\sqrt{y}$ הוא השורש **האי-שלילי** של $y$, ו-$|x|$ הוא המספר האי-שלילי היחיד שריבועו $x^2$.
+      - text: '$x$'
+        feedback: >-
+          עבור $x=-3$: $\sqrt{9}=3\neq-3$. הכלל $\left(a^m\right)^{1/n}=a^{m/n}$ הוכח רק לבסיס חיובי.
+        misconception: MC-sqrt-square-is-x
+      - text: '$\pm x$'
+        feedback: >-
+          $\sqrt{\ }$ מחזיר ערך אחד, האי-שלילי. נכון ש-$x^2=t^2$ גורר $t=\pm x$, אבל השורש עצמו הוא $|x|$.
+        misconception: MC-sqrt-square-is-x
+
+  - id: Q-1.7-well-defined
+    type: twotier
+    objectives: [OBJ-1.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      עבור $a>0$ מגדירים $a^{m/n}=\left(a^{1/n}\right)^m$ ($m$ שלם, $n$ טבעי). כי $\frac24=\frac12$, צריך שיתקיים
+      $\left(a^{1/4}\right)^2=a^{1/2}$. האם זה נכון?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. ובאופן כללי, ההגדרה אינה תלויה בהצגה של השבר.
+      - text: לא בהכרח
+        feedback: >-
+          זה נכון, וזה מה שהופך את ההגדרה ללגיטימית. אילו לא היה נכון, $a^{1/2}$ היה מקבל שני ערכים שונים.
+        misconception: MC-rational-power-representation
+    reasons:
+      - text: >-
+          $\left(a^{1/4}\right)^2$ חיובי, וריבועו $\left(a^{1/4}\right)^4=a$; לכן הוא שורש ריבועי חיובי של $a$, ולפי
+          היחידות הוא $a^{1/2}$
+        correct: true
+        feedback: >-
+          בדיוק. יחידות השורש החיובי היא הכלי שמוכיח שההגדרה טובה: שני מספרים חיוביים שאותה חזקה שלהם שווה הם
+          שווים.
+      - text: 'ברור ש-$\frac24=\frac12$, ולכן החזקות שוות'
+        feedback: >-
+          ההגדרה משתמשת ב-$m$ וב-$n$ עצמם, לא רק במספר $\frac mn$. ש-$(a^{1/4})^2$ ו-$(a^{1/2})^1$ שווים
+          דורש הוכחה, וזו בדיוק השאלה.
+        misconception: MC-rational-power-representation
+      - text: 'החזקה והשורש אינם מתחלפים, ולכן $\left(a^{1/4}\right)^2$ שונה מ-$a^{2/4}$'
+        feedback: >-
+          לבסיס חיובי הם כן מתחלפים: $\left(a^{1/n}\right)^m=\left(a^m\right)^{1/n}$, ושני הצדדים חיוביים ובעלי
+          אותה חזקה $n$-ית, $a^m$.
+        misconception: MC-rational-power-representation
+
+  - id: Q-1.7-negative-base
+    type: mc
+    objectives: [OBJ-1.7-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      למה מגדירים חזקה רציונלית $a^{m/n}$ רק לבסיס $a>0$?
+    choices:
+      - text: >-
+          כי לבסיס שלילי התוצאה הייתה תלויה בהצגת השבר: $(-8)^{1/3}=-2$, אבל $\frac13=\frac26$ ו-$\left((-8)^2\right)^{1/6}=2$
+        correct: true
+        feedback: >-
+          נכון. ובסיס שלילי שובר גם את חוקי החזקות: $-1=(-1)^{2/2}$, אבל $\left((-1)^2\right)^{1/2}=1$.
+      - text: 'כי למספר שלילי אין שורשים בכלל'
+        feedback: >-
+          למספר שלילי יש שורש **אי-זוגי**: $(-2)^3=-8$, ולכן $\sqrt[3]{-8}=-2$. הבעיה היא שהתוצאה תלויה בהצגת
+          השבר.
+        misconception: MC-rational-power-negative-base
+      - text: 'רק מטעמי נוחות; חוקי החזקות נכונים גם לבסיס שלילי'
+        feedback: >-
+          הם אינם נכונים: $(-1)^{2\cdot\frac12}=-1$, אבל $\left((-1)^2\right)^{1/2}=1$. ההגבלה $a>0$ היא מה
+          שמציל את ההגדרה ואת החוקים.
+        misconception: MC-rational-power-negative-base
+
+  - id: Q-1.7-product-law
+    type: rank
+    objectives: [OBJ-1.7-2]
+    level: exam
+    prompt: >-
+      $a>0$, ו-$r,t$ רציונליים. הוכיחו ש-$a^r\cdot a^t=a^{r+t}$, בעזרת חוקי החזקות למעריכים שלמים ובכך
+      שהחזקה הרציונלית אינה תלויה בהצגת השבר.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: 'כותבים את $r$ ו-$t$ עם מכנה משותף $N\in\mathbb{N}$: $r=\frac kN$, $t=\frac lN$, עם $k,l$ שלמים'
+      - id: s2
+        label: 'נסמן $b=a^{1/N}>0$; לפי ההגדרה, $a^r=b^k$ ו-$a^t=b^l$'
+      - id: s3
+        label: 'לפי חוקי החזקות השלמות, $b^k\cdot b^l=b^{k+l}$'
+      - id: s4
+        label: 'ולפי ההגדרה שוב, $b^{k+l}=a^{(k+l)/N}=a^{r+t}$'
+    order: [s1, s2, s3, s4]
+    correctFeedback: >-
+      נכון. הרעיון: מכנה משותף הופך את שתי החזקות לחזקות **שלמות** של אותו בסיס $b$, ושם החוק כבר ידוע.
+    wrongFeedback: >-
+      קודם מכנה משותף, אחר כך בסיס משותף $b=a^{1/N}$, אחר כך החוק למעריכים שלמים, ולבסוף חזרה לחזקה
+      רציונלית.
+
+  - id: Q-1.7-irrational-def
+    type: mc
+    objectives: [OBJ-1.7-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $a>1$ ו-$x$ אי-רציונלי. איך מגדירים את $a^x$?
+    choices:
+      - text: '$a^x=\sup\{a^r : r\in\mathbb{Q},\ r<x\}$'
+        correct: true
+        feedback: >-
+          נכון. עבור $a>1$ החזקה עולה ב-$r$, ולכן הקבוצה חסומה מלעיל (למשל ב-$a^q$ לכל רציונלי $q>x$), ויש לה
+          סופרמום.
+      - text: '$a^x=\inf\{a^r : r\in\mathbb{Q},\ r<x\}$'
+        feedback: >-
+          הקבוצה מכילה את $a^r$ גם ל-$r$ שלילי מאוד, ושם $a^r$ קרוב ל-$0$; האינפימום הוא $0$, לא $a^x$. מהקבוצה
+          של $r<x$ לוקחים את הקצה העליון.
+        misconception: MC-irrational-power-wrong-side
+      - text: '$a^x=\sup\{a^r : r\in\mathbb{Q},\ r>x\}$'
+        feedback: >-
+          ל-$r$ גדול מאוד $a^r$ גדול כרצוננו, ולכן לקבוצה הזו אין חסם מלעיל. מ-$r>x$ אפשר לקחת **אינפימום**,
+          ומ-$r<x$ סופרמום.
+        misconception: MC-irrational-power-wrong-side
+      - text: '$a^x=a^q$, כאשר $q$ הרציונלי הקרוב ביותר ל-$x$'
+        feedback: >-
+          אין רציונלי קרוב ביותר ל-$x$: לכל רציונלי יש רציונלי אחר קרוב עוד יותר (צפיפות). לכן משתמשים בכל
+          הרציונליים יחד, דרך סופרמום.
+        misconception: MC-next-rational
+
+  - id: Q-1.7-small-base
+    type: twotier
+    objectives: [OBJ-1.7-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $0<a<1$ ו-$x$ אי-רציונלי. האם $\sup\{a^r : r\in\mathbb{Q},\ r<x\}$ מגדיר את $a^x$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. לבסיס קטן מ-1 הכיוון מתהפך.
+      - text: כן
+        feedback: >-
+          עבור $a=\frac12$ ו-$r=-n$: $a^r=2^n$, וזה גדל בלי חסם. לקבוצה אין סופרמום.
+        misconception: MC-irrational-power-sup-small-base
+    reasons:
+      - text: >-
+          כש-$0<a<1$ החזקה $a^r$ **יורדת** ב-$r$, ולכן הקבוצה אינה חסומה מלעיל; מגדירים במקום זאת
+          $a^x=\left(\frac1a\right)^{-x}$
+        correct: true
+        feedback: >-
+          בדיוק. $\frac1a>1$, ולחזקה $\left(\frac1a\right)^{-x}$ יש כבר הגדרה בעזרת סופרמום. (שקול: אינפימום של
+          $a^r$ על $r<x$.)
+      - text: 'ההגדרה עובדת לכל $a>0$, כי הסופרמום תמיד קיים'
+        feedback: >-
+          הסופרמום קיים רק לקבוצה חסומה מלעיל. כאן $a^{-n}=\left(\frac1a\right)^n$ גדל בלי חסם.
+        misconception: MC-completeness-no-hypotheses
+      - text: 'חזקה אי-רציונלית של בסיס קטן מ-1 אינה מוגדרת בכלל'
+        feedback: >-
+          היא מוגדרת, דרך $\frac1a>1$: $a^x=\left(\frac1a\right)^{-x}$. רק הנוסחה עם הסופרמום על $r<x$ לא
+          מתאימה לבסיס כזה.
+        misconception: MC-irrational-power-sup-small-base
+
+  - id: Q-1.7-rational-agrees
+    type: numeric
+    objectives: [OBJ-1.7-3]
+    level: mid
+    prompt: >-
+      מהו $\sup\{2^r : r\in\mathbb{Q},\ r<3\}$?
+    answer: 8
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $2^r<2^3=8$ לכל רציונלי $r<3$, ורציונליים קרובים ל-3 נותנים חזקות קרובות ל-8. לכן ההגדרה בעזרת
+      סופרמום, כשמפעילים אותה על מעריך רציונלי, נותנת את מה שכבר הגדרנו.
+    wrongFeedback: >-
+      $2^r$ עולה ב-$r$. מה החסם הטבעי של $2^r$ כש-$r<3$, והאם אפשר להתקרב אליו?
+    commonWrong:
+      - value: 4
+        feedback: >-
+          $4=2^2$, כאילו $2$ הוא הרציונלי הגדול ביותר שקטן מ-3. אין רציונלי כזה: גם $2.9$, $2.99$, … קטנים
+          מ-3.
+        misconception: MC-next-rational
+    explanation: >-
+      שהחזקות מתקרבות ל-8 דורש הוכחה: $2^3-2^{3-1/n}=8\left(1-2^{-1/n}\right)$, ו-$2^{1/n}\le1+\frac1n$ לפי
+      אי-שוויון ברנולי, ולכן ההפרש קטן כרצוננו. זה בדיוק מה שהופך את ההגדרה לעקבית.
+
+  - id: Q-1.7-bounded-why
+    type: mc
+    objectives: [OBJ-1.7-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      בהגדרה $2^{\sqrt2}=\sup\{2^r : r\in\mathbb{Q},\ r<\sqrt2\}$ צריך לדעת שהקבוצה חסומה מלעיל. מה הנימוק?
+    choices:
+      - text: 'לרציונליים $r<q$ ובסיס $a>1$: $a^r<a^q$; וכל $r<\sqrt2$ מקיים $r<2$, ולכן $2^r<2^2=4$'
+        correct: true
+        feedback: >-
+          נכון. המונוטוניות עצמה מוכחת: $a^q=a^r\cdot a^{q-r}$, ו-$a^{q-r}>1$ כי $a^{1/n}>1$ (אחרת
+          $a=\left(a^{1/n}\right)^n\le1$).
+      - text: 'כי $2^r<2^{\sqrt2}$ לכל $r<\sqrt2$'
+        feedback: >-
+          זה מעגלי: $2^{\sqrt2}$ הוא בדיוק מה שמגדירים כאן, ולכן אסור להשתמש בו כחסם. צריך חסם שכבר מוגדר,
+          כמו $2^2$.
+        misconception: MC-irrational-power-circular
+      - text: 'כי כל קבוצה של מספרים חיוביים חסומה'
+        feedback: >-
+          $\mathbb{N}$ היא קבוצה של מספרים חיוביים ואינה חסומה. חיוביות נותנת חסם מלרע, לא מלעיל.
+        misconception: MC-completeness-no-hypotheses

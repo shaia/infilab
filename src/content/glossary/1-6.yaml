@@ -1,0 +1,24 @@
+# Terms first defined in lesson 1.6.
+- id: archimedean-property
+  term: תכונת ארכימדס
+  en: Archimedean property
+  definition: >-
+    $\mathbb{N}$ אינה חסומה מלעיל: לכל $x$ ממשי יש $n\in\mathbb{N}$ עם $n>x$. באופן שקול, לכל $\varepsilon>0$
+    יש $n$ עם $\frac1n<\varepsilon$. מוכיחים אותה מאקסיומת השלמות.
+  reject: [ארכימדיס]
+  lesson: '1.6'
+- id: dense-set
+  term: קבוצה צפופה
+  en: dense set
+  definition: >-
+    $D\subseteq\mathbb{R}$ צפופה אם בין כל שני ממשיים $a<b$ יש איבר של $D$. הרציונליים והאי-רציונליים צפופים
+    שניהם.
+  lesson: '1.6'
+- id: floor
+  term: ערך שלם
+  en: floor (integer part)
+  symbol: '\lfloor x\rfloor'
+  definition: >-
+    השלם היחיד $m$ שמקיים $m\le x<m+1$: השלם הגדול ביותר שאינו עולה על $x$. למשל $\lfloor2.5\rfloor=2$
+    ו-$\lfloor-2.5\rfloor=-3$. נקרא גם "רצפה".
+  lesson: '1.6'

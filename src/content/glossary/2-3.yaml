@@ -1,0 +1,15 @@
+# Terms first defined in lesson 2.3.
+- id: divergent-sequence
+  term: סדרה מתבדרת
+  en: divergent sequence
+  definition: >-
+    סדרה שאין לה גבול סופי: לכל $L\in\mathbb{R}$ קיים $\varepsilon>0$ כך שלכל $N$ יש $n>N$ עם
+    $|a_n-L|\ge\varepsilon$. למשל $(-1)^n$.
+  lesson: '2.3'
+- id: upper-estimate
+  term: הערכה מלמעלה
+  en: upper estimate
+  definition: >-
+    אי-שוויון $|a_n-L|\le b_n$ עם ביטוי פשוט $b_n$ ששואף לאפס, כמו $\frac{C}{n}$. בהוכחה מההגדרה בוחרים $N$
+    כך ש-$b_n<\varepsilon$ לכל $n>N$, ואז גם $|a_n-L|<\varepsilon$.
+  lesson: '2.3'

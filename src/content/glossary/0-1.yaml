@@ -1,0 +1,83 @@
+# Terms first defined in lesson 0.1 (how to study, how to read a proof).
+- id: definition
+  term: הגדרה
+  en: definition
+  definition: >-
+    משפט שנותן שם למושג וקובע בדיוק מה הוא אומר, למשל "מספר שלם $n$ נקרא זוגי אם קיים שלם $k$ כך ש-$n=2k$".
+    הגדרה אינה נכונה או שגויה, ואין מה להוכיח בה.
+  lesson: '0.1'
+- id: claim
+  term: טענה
+  en: claim (proposition)
+  definition: >-
+    משפט מתמטי שהוא נכון או לא נכון. טענה נכונה מוכיחים, וטענה לא נכונה מפריכים.
+  lesson: '0.1'
+- id: theorem
+  term: משפט
+  en: theorem
+  definition: >-
+    טענה חשובה שהוכחה. יש לו הנחות ומסקנה: "אם (הנחות) אז (מסקנה)".
+  lesson: '0.1'
+- id: lemma
+  term: למה
+  en: lemma
+  definition: טענת עזר שמוכיחים כדי להשתמש בה בהוכחה של משפט אחר.
+  lesson: '0.1'
+- id: corollary
+  term: מסקנה
+  en: corollary
+  definition: טענה שנובעת ממשפט שהוכח זה עתה, בהוכחה קצרה.
+  lesson: '0.1'
+- id: proof
+  term: הוכחה
+  en: proof
+  definition: >-
+    שרשרת של מעברים מההנחות אל הטענה, שכל אחד מהם מוצדק בהגדרה, בהנחה, בטענה שכבר הוכחה או בכלל לוגי.
+  lesson: '0.1'
+- id: hypothesis
+  term: הנחה
+  en: hypothesis (assumption)
+  definition: >-
+    מה שמותר להשתמש בו בהוכחה בלי להוכיח אותו: בטענה מהצורה "אם (הנחה) אז (מסקנה)", החלק שאחרי "אם". בטענה
+    "לכל $x$ ממשי, …" ההנחה היא ש-$x$ ממשי.
+  lesson: '0.1'
+- id: math-example
+  term: דוגמה
+  en: example
+  definition: >-
+    מקרה אחד מסוים שמראה מה הגדרה או טענה אומרות, למשל "$16=2\cdot 8$ זוגי". דוגמה עוזרת להבין ולבדוק שקראנו
+    נכון, אבל אינה מוכיחה טענה על כל המקרים.
+  lesson: '0.1'
+- id: justification
+  term: הצדקה
+  en: justification
+  definition: >-
+    הסיבה שמתירה לכתוב שורה בהוכחה: ההנחה של הטענה, הגדרה, כלל חשבון, או עובדה ידועה (עובדה מהרשימה של פרק 0
+    או טענה שכבר הוכחה). שורה יכולה לעמוד בפני עצמה (ההנחה, עובדה ידועה, זהות), או לצאת משורות קודמות.
+  lesson: '0.1'
+- id: proof-gap
+  term: פער בהוכחה
+  en: gap in a proof
+  definition: >-
+    מעבר בהוכחה שאין לו הצדקה: שורה שלא נובעת מההנחה, מהגדרה, מחשבון או מעובדה ידועה. הוכחה עם פער אינה
+    מוכיחה את הטענה, גם אם הטענה עצמה נכונה.
+  lesson: '0.1'
+- id: even-number
+  term: מספר זוגי
+  en: even number
+  definition: >-
+    מספר שלם $n$ שאפשר לכתוב בצורה $n=2k$, עם $k$ שלם. כל מספר שלם הוא זוגי או אי-זוגי, ולא שניהם.
+  lesson: '0.1'
+- id: odd-number
+  term: מספר אי-זוגי
+  en: odd number
+  definition: >-
+    מספר שלם $n$ שאפשר לכתוב בצורה $n=2k+1$, עם $k$ שלם.
+  lesson: '0.1'
+- id: divides
+  term: מחלק
+  en: divides
+  symbol: 'a\mid b'
+  definition: >-
+    השלם $a$ מחלק את השלם $b$, ונכתוב $a\mid b$, אם קיים שלם $k$ כך ש-$b=ak$. אומרים גם ש-$b$ מתחלק ב-$a$.
+  lesson: '0.1'

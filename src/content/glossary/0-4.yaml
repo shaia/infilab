@@ -1,0 +1,43 @@
+# Terms first defined in lesson 0.4 (direct proof, proof by contradiction, counterexample).
+- id: direct-proof
+  term: הוכחה ישירה
+  en: direct proof
+  definition: >-
+    הוכחה של "אם $P$ אז $Q$" שמניחה את $P$ ומגיעה ל-$Q$ בשרשרת של מעברים מוצדקים.
+  lesson: '0.4'
+- id: proof-by-contradiction
+  term: הוכחה בדרך השלילה
+  en: proof by contradiction
+  definition: >-
+    הוכחה שמניחה את שלילת הטענה ומגיעה לסתירה. מכיוון שמהנחה נכונה אי אפשר להגיע לסתירה, השלילה שקרית
+    והטענה נכונה.
+  reject: [הוכחה על דרך השלילה]
+  lesson: '0.4'
+- id: contradiction
+  term: סתירה
+  en: contradiction
+  definition: >-
+    פסוק שקרי תמיד, כמו "$P$ וגם לא $P$", למשל "$n$ זוגי וגם $n$ אי-זוגי".
+  lesson: '0.4'
+- id: counterexample
+  term: דוגמה נגדית
+  en: counterexample
+  definition: >-
+    מקרה אחד שבו טענה כללית נכשלת. לטענה "לכל $x$, אם $P(x)$ אז $Q(x)$" זה $x$ שמקיים את $P$ ולא את $Q$.
+    דוגמה נגדית אחת מספיקה כדי להפריך טענה כללית.
+  reject: [דוגמא נגדית]
+  lesson: '0.4'
+- id: prime-number
+  term: מספר ראשוני
+  en: prime number
+  definition: >-
+    מספר טבעי $p\ge 2$ שהמחלקים הטבעיים היחידים שלו הם $1$ ו-$p$. המספר $1$ אינו ראשוני. מספר טבעי $n\ge2$
+    שאינו ראשוני נקרא פריק.
+  lesson: '0.4'
+- id: proof-by-contrapositive
+  term: הוכחה דרך הקונטרפוזיטיב
+  en: proof by contrapositive
+  definition: >-
+    הוכחה של "אם $P$ אז $Q$" שמוכיחה במקומה, בהוכחה ישירה, את "אם לא $Q$ אז לא $P$". שתי הטענות שקולות, ולכן
+    זו הוכחה של הטענה המקורית.
+  lesson: '0.4'

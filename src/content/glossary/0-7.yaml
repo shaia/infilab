@@ -1,0 +1,62 @@
+# Terms first defined in lesson 0.7 (inequalities and absolute value).
+- id: absolute-value
+  term: ערך מוחלט
+  en: absolute value
+  symbol: '|x|'
+  definition: >-
+    $|x|=x$ כש-$x\ge 0$ ו-$|x|=-x$ כש-$x<0$. $|x-a|$ הוא המרחק בין $x$ ל-$a$ על ישר המספרים.
+  lesson: '0.7'
+- id: real-interval
+  term: קטע
+  en: interval
+  symbol: '(a,b),\ [a,b]'
+  definition: >-
+    קבוצת כל המספרים בין שני קצוות: הקטע הפתוח $(a,b)$ בלי הקצוות, הסגור $[a,b]$ איתם, וגם קטעים חצי-פתוחים
+    וקטעים אינסופיים כמו $[a,\infty)$.
+  lesson: '0.7'
+- id: triangle-inequality
+  term: אי-שוויון המשולש
+  en: triangle inequality
+  symbol: '|a+b|\le|a|+|b|'
+  definition: >-
+    לכל $a,b$ ממשיים, $|a+b|\le|a|+|b|$. בצורתו ההפוכה: $\big||a|-|b|\big|\le|a-b|$.
+  reject: [אי שוויון המשולש]
+  lesson: '0.7'
+- id: am-gm-inequality
+  term: אי-שוויון הממוצעים
+  en: AM-GM inequality
+  symbol: '\frac{a+b}{2}\ge\sqrt{ab}'
+  definition: >-
+    לכל $a,b\ge 0$, הממוצע החשבוני גדול או שווה לממוצע ההנדסי: $\frac{a+b}{2}\ge\sqrt{ab}$, ושוויון רק כש-$a=b$.
+  reject: [אי שוויון הממוצעים]
+  lesson: '0.7'
+- id: interval-centre-radius
+  term: מרכז ורדיוס של קטע
+  en: centre and radius of an interval
+  symbol: '|x-a|<r'
+  definition: >-
+    לקטע $(a-r,a+r)$, עם $r>0$, המרכז הוא $a$ והרדיוס הוא $r$. זו בדיוק קבוצת ה-$x$ שמקיימים $|x-a|<r$: המספרים
+    שמרחקם מ-$a$ קטן מ-$r$. לכל קטע פתוח $(p,q)$ המרכז הוא האמצע $\frac{p+q}{2}$ והרדיוס חצי האורך $\frac{q-p}{2}$.
+  lesson: '0.7'
+- id: arithmetic-mean
+  term: ממוצע חשבוני
+  en: arithmetic mean
+  symbol: '\frac{a+b}{2}'
+  definition: >-
+    הממוצע החשבוני של $a$ ו-$b$ הוא $\frac{a+b}{2}$: האמצע של הקטע שביניהם על ישר המספרים.
+  lesson: '0.7'
+- id: geometric-mean
+  term: ממוצע הנדסי
+  en: geometric mean
+  symbol: '\sqrt{ab}'
+  definition: >-
+    הממוצע ההנדסי של שני מספרים אי-שליליים $a,b$ הוא $\sqrt{ab}$. אי-שוויון הממוצעים משווה אותו לממוצע החשבוני,
+    ורק עבור $a,b\ge 0$.
+  lesson: '0.7'
+- id: add-and-subtract
+  term: הוספה והחסרה
+  en: adding and subtracting a term
+  definition: >-
+    כותבים ביטוי כסכום של חלקים שיודעים לחסום, בעזרת מחובר שמוסיפים ומחסירים: $x+1=(x-1)+2$, ואז אי-שוויון
+    המשולש נותן $|x+1|\le|x-1|+2$.
+  lesson: '0.7'

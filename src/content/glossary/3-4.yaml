@@ -1,0 +1,9 @@
+# Terms first defined in lesson 3.4.
+- id: heine-definition
+  term: הגדרת היינה
+  en: Heine's (sequential) definition of the limit
+  definition: >-
+    $\lim_{x\to a}f(x)=L$ אם לכל סדרה $x_n\to a$ עם $x_n\neq a$ (ואיבריה בתחום של $f$) מתקיים $f(x_n)\to L$. היא
+    שקולה להגדרת קושי, ונוחה במיוחד כדי להוכיח שגבול אינו קיים: שתי סדרות עם גבולות שונים של ערכי $f$.
+  reject: [הגדרת הייני]
+  lesson: '3.4'

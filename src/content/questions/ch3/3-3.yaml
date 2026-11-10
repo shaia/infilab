@@ -1,0 +1,334 @@
+# Lesson 3.3 — the limit of a function: Cauchy's ε-δ definition.
+# Objectives (src/course.ts):
+#   OBJ-3.3-1  state the ε-δ definition and explain it with a rectangle around the point
+#   OBJ-3.3-2  prove limits of simple functions from the definition, with δ depending on ε
+#   OBJ-3.3-3  explain why the value at the point does not affect the limit, and negate the definition
+# The definition used throughout: f is defined in a punctured neighbourhood of a, and lim_{x→a} f(x) = L
+# means ∀ε>0 ∃δ>0 ∀x: 0<|x−a|<δ ⇒ |f(x)−L|<ε.
+chapter: 3
+questions:
+  - id: Q-3.3-def
+    type: mc
+    objectives: [OBJ-3.3-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ מוגדרת בסביבה מנוקבת של $a$. איזה מהניסוחים הבאים הוא ההגדרה של $\lim_{x\to a}f(x)=L$?
+    choices:
+      - text: '$\forall\varepsilon>0\ \exists\delta>0\ \forall x:\ 0<|x-a|<\delta\Rightarrow|f(x)-L|<\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. קודם נבחר רוחב $\varepsilon$ סביב $L$, אחריו מבטיחים $\delta$ סביב $a$, והתנאי
+          $0<|x-a|$ מוציא את הנקודה $a$ עצמה.
+      - text: '$\exists\delta>0\ \forall\varepsilon>0\ \forall x:\ 0<|x-a|<\delta\Rightarrow|f(x)-L|<\varepsilon$'
+        feedback: >-
+          כאן אותו $\delta$ צריך להתאים לכל $\varepsilon$ בבת אחת. אז $|f(x)-L|$ קטן מכל מספר חיובי, כלומר
+          $f(x)=L$ לכל $x$ בסביבה המנוקבת: זו טענה על פונקציה קבועה ליד $a$, לא הגדרת גבול.
+        misconception: MC-limit-delta-before-epsilon
+      - text: '$\forall\varepsilon>0\ \exists\delta>0\ \forall x:\ |x-a|<\delta\Rightarrow|f(x)-L|<\varepsilon$'
+        feedback: >-
+          בלי התנאי $0<|x-a|$ גם $x=a$ נכלל, ואז ההגדרה דורשת $|f(a)-L|<\varepsilon$ לכל $\varepsilon$, כלומר
+          $f(a)=L$. ההגדרה הזו לא חלה כש-$f$ לא מוגדרת ב-$a$, ונכשלת כשמשנים את $f(a)$. (זו כמעט הגדרת הרציפות,
+          שיעור 4.1.)
+        misconception: MC-function-limit-is-value
+      - text: '$\forall\varepsilon>0\ \exists\delta>0\ \forall x:\ |f(x)-L|<\varepsilon\Rightarrow0<|x-a|<\delta$'
+        feedback: >-
+          כיוון הגרירה הפוך. ההגדרה אומרת ש-$x$ קרוב ל-$a$ מבטיח ש-$f(x)$ קרוב ל-$L$. לפונקציה קבועה $f\equiv L$
+          יש גבול $L$, אבל כל $x$ מקיים $|f(x)-L|<\varepsilon$, גם $x$ רחוק מאוד מ-$a$.
+        misconception: MC-limit-implication-reversed
+
+  - id: Q-3.3-rect
+    type: mc
+    objectives: [OBJ-3.3-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בציור של ההגדרה מסמנים רצועה אופקית ברוחב $\varepsilon$ סביב הישר $y=L$ ורצועה אנכית ברוחב $\delta$ סביב
+      הישר $x=a$. מה אומרת ההגדרה במונחי הציור?
+    choices:
+      - text: >-
+          לכל רצועה אופקית סביב $L$ יש רצועה אנכית סביב $a$, כך שהגרף מעל הרצועה האנכית, פרט אולי לנקודה שמעל
+          $a$, נמצא כולו בתוך הרצועה האופקית
+        correct: true
+        feedback: >-
+          נכון. ה"מלבן" שנוצר מחיתוך הרצועות מכיל את כל הגרף שמעל הרצועה האנכית. רצועה אופקית צרה יותר מחייבת
+          בדרך כלל רצועה אנכית צרה יותר.
+      - text: >-
+          לכל רצועה אנכית סביב $a$ יש רצועה אופקית סביב $L$ שמכילה את הגרף שמעל הרצועה האנכית
+        feedback: >-
+          התפקידים הפוכים. בטענה הזו מותר לבחור רצועה אופקית רחבה כרצוננו, ולכן היא מתקיימת לכל פונקציה חסומה
+          ליד $a$ ולכל $L$. למשל, עבור $\sin\frac1x$ ב-0 הרצועה האופקית ברוחב 5 סביב 0 מכילה את כל הגרף, ובכל
+          זאת אין לה גבול שם. הטענה לא אומרת ש-$f(x)$ מתקרב ל-$L$.
+        misconception: MC-limit-implication-reversed
+      - text: >-
+          לכל רצועה אופקית סביב $L$ יש רצועה אנכית סביב $a$, כך שהגרף מעל הרצועה האנכית, כולל הנקודה שמעל $a$,
+          נמצא בתוך הרצועה האופקית
+        feedback: >-
+          "כולל הנקודה שמעל $a$" הופך את ההגדרה לדרישה ש-$f(a)$ יהיה מוגדר וקרוב ל-$L$ כרצוננו, כלומר
+          $f(a)=L$. הגבול לא מסתכל על $a$ עצמה.
+        misconception: MC-function-limit-is-value
+
+  - id: Q-3.3-smaller-delta
+    type: twotier
+    objectives: [OBJ-3.3-1, OBJ-3.3-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בהוכחה ש-$\lim_{x\to a}f(x)=L$ מצאו שעבור $\varepsilon=0.1$ מתאים $\delta=0.02$. האם גם $\delta=0.01$ מתאים
+      לאותו $\varepsilon$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. כל $\delta$ קטן יותר מ-$\delta$ שמתאים גם מתאים.
+      - text: לא בהכרח
+        feedback: >-
+          הקטנת $\delta$ רק מקטינה את קבוצת ה-$x$ שצריך לבדוק. אם התנאי מתקיים לכל $x$ עם $0<|x-a|<0.02$, הוא
+          מתקיים בפרט לכל $x$ עם $0<|x-a|<0.01$.
+        misconception: MC-delta-must-be-optimal
+    reasons:
+      - text: 'כל $x$ עם $0<|x-a|<0.01$ מקיים גם $0<|x-a|<0.02$'
+        correct: true
+        feedback: >-
+          בדיוק. לכן מותר להקטין את $\delta$ כרצוננו, ובזה משתמשים כשבוחרים $\delta=\min(1,\dots)$.
+      - text: 'רצועה אנכית צרה יותר נותנת רצועה אופקית רחבה יותר'
+        feedback: >-
+          רוחב הרצועה האופקית הוא $\varepsilon$, והוא נתון. רצועה אנכית צרה יותר מכילה פחות נקודות של הגרף, ולכן
+          קל יותר, לא קשה יותר, שכולן יהיו בתוך הרצועה האופקית.
+        misconception: MC-delta-must-be-optimal
+      - text: 'ההגדרה מבקשת את ה-$\delta$ הגדול ביותר שמתאים'
+        feedback: >-
+          ההגדרה אומרת "קיים $\delta$". כל $\delta$ שמתאים מספיק; אין צורך במקסימלי, ובדרך כלל גם לא מוצאים אותו.
+        misconception: MC-delta-must-be-optimal
+
+  - id: Q-3.3-delta-linear
+    type: numeric
+    objectives: [OBJ-3.3-2]
+    level: basic
+    prompt: >-
+      עבור $f(x)=3x+1$, $a=2$, $L=7$ ו-$\varepsilon=0.06$: מהו ה-$\delta$ **הגדול ביותר** כך שלכל $x$ עם
+      $0<|x-2|<\delta$ מתקיים $|f(x)-7|<0.06$?
+    answer: 0.02
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $|f(x)-7|=|3x-6|=3|x-2|$, ו-$3|x-2|<0.06 \iff |x-2|<0.02$. באופן כללי $\delta=\frac{\varepsilon}{3}$ מתאים
+      לכל $\varepsilon$.
+    wrongFeedback: >-
+      כתבו את $|f(x)-7|$ כביטוי ב-$|x-2|$ ובודדו את $|x-2|$.
+    commonWrong:
+      - value: 0.06
+        feedback: >-
+          לקחתם $\delta=\varepsilon$. אבל $f$ משנה מרחקים פי 3: $|f(x)-7|=3|x-2|$. עם $x=2.05$ מקבלים
+          $|f(x)-7|=0.15>0.06$.
+      - value: 0.18
+        feedback: >-
+          כפלתם ב-3 במקום לחלק. $3|x-2|<0.06$ נותן $|x-2|<\frac{0.06}{3}$.
+
+  - id: Q-3.3-delta-square
+    type: mc
+    objectives: [OBJ-3.3-2]
+    level: mid
+    prompt: >-
+      בהוכחה ש-$\lim_{x\to3}x^2=9$ כותבים $|x^2-9|=|x-3|\cdot|x+3|$. איזו בחירה של $\delta$ עובדת **לכל**
+      $\varepsilon>0$?
+    choices:
+      - text: '$\delta=\min\left(1,\frac{\varepsilon}{7}\right)$'
+        correct: true
+        feedback: >-
+          נכון. $\delta\le1$ מבטיח $2<x<4$, ולכן $|x+3|<7$; ו-$\delta\le\frac{\varepsilon}{7}$ נותן
+          $|x^2-9|<\frac{\varepsilon}{7}\cdot7=\varepsilon$.
+      - text: '$\delta=\frac{\varepsilon}{7}$'
+        feedback: >-
+          החסם $|x+3|<7$ נכון רק כש-$|x-3|<1$, ו-$\frac{\varepsilon}{7}$ לבדו לא מבטיח זאת. עם $\varepsilon=70$
+          מקבלים $\delta=10$, ו-$x=12$ מקיים $|x-3|<10$ אבל $|x^2-9|=135>70$.
+        misconception: MC-delta-forgets-local-bound
+      - text: '$\delta=\frac{\varepsilon}{|x+3|}$'
+        feedback: >-
+          $\delta$ חייב להיבחר לפני $x$: ההגדרה אומרת "קיים $\delta$ כך שלכל $x$". דלתא שתלויה ב-$x$ אינה
+          מספר אחד, ולכן אין לה משמעות בהגדרה.
+        misconception: MC-delta-depends-on-x
+      - text: '$\delta=1$'
+        feedback: >-
+          $\delta=1$ נותן רק $|x^2-9|<1\cdot7=7$. עבור $\varepsilon=0.01$, למשל, $x=3.5$ מקיים $|x-3|<1$ אבל
+          $|x^2-9|=3.25$. $\delta$ חייב להיות תלוי ב-$\varepsilon$.
+        misconception: MC-limit-delta-before-epsilon
+
+  - id: Q-3.3-proof
+    type: rank
+    objectives: [OBJ-3.3-2]
+    level: exam
+    prompt: >-
+      הוכיחו מהגדרת קושי ש-$\lim_{x\to3}x^2=9$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: eps
+        label: 'יהי $\varepsilon>0$. נבחר $\delta=\min\left(1,\frac{\varepsilon}{7}\right)$, ואז $\delta>0$.'
+      - id: x
+        label: 'יהי $x$ עם $0<|x-3|<\delta$.'
+      - id: bound
+        label: 'כי $|x-3|<\delta\le1$, מתקיים $2<x<4$, ולכן $|x+3|<7$.'
+      - id: estimate
+        label: 'לכן $|x^2-9|=|x-3|\cdot|x+3|<\frac{\varepsilon}{7}\cdot7=\varepsilon$.'
+      - id: done
+        label: 'מצאנו לכל $\varepsilon>0$ מספר $\delta>0$ כנדרש, ולכן $\lim_{x\to3}x^2=9$.'
+    order: [eps, x, bound, estimate, done]
+    correctFeedback: >-
+      נכון. סדר השורות הוא סדר הכמתים בהגדרה: $\varepsilon$ נתון, $\delta$ נבחר, ורק אז $x$ כלשהו. את
+      הבחירה $\min(1,\frac{\varepsilon}{7})$ מוצאים בטיוטה, ובהוכחה עצמה היא מופיעה כבר בשורה הראשונה.
+    wrongFeedback: >-
+      עקבו אחרי הכמתים: "לכל $\varepsilon$", "קיים $\delta$", "לכל $x$". שורה שמשתמשת ב-$x$ לא יכולה לבוא לפני
+      שהוא נבחר, וחסם על $|x+3|$ צריך לבוא לפני השימוש בו.
+
+  - id: Q-3.3-largest-delta
+    type: numeric
+    objectives: [OBJ-3.3-2]
+    level: mid
+    prompt: >-
+      עבור $f(x)=x^2$, $a=3$ ו-$\varepsilon=0.61$: מהו ה-$\delta$ הגדול ביותר כך שלכל $x$ עם $0<|x-3|<\delta$
+      מתקיים $|x^2-9|<0.61$?
+    answer: 0.1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. ליד 3 (כש-$x>0$) התנאי הוא $8.39<x^2<9.61$, כלומר $\sqrt{8.39}<x<3.1$, ו-$\sqrt{8.39}\approx2.8966$.
+      המרחק מ-3 לקצה הימני הוא $0.1$ ולשמאלי בערך $0.1034$; $\delta$ צריך להתאים לשני הצדדים, ולכן
+      $\delta=0.1$. הנוסחה $\min(1,\frac{\varepsilon}{7})\approx0.087$ קטנה יותר, וזה בסדר.
+    wrongFeedback: >-
+      פתרו את $|x^2-9|<0.61$ כקטע סביב 3, ומדדו את המרחק מ-3 לכל אחד מקצותיו. $\delta$ הוא הקטן מבין שני
+      המרחקים.
+    commonWrong:
+      - value: 0.08714285714285715
+        feedback: >-
+          זה $\frac{\varepsilon}{7}$: הוא אכן מתאים, ובהוכחה הוא מספיק, אבל הוא לא הגדול ביותר. השאלה כאן
+          מבקשת את המקסימלי, ובשבילו צריך לפתור את אי-השוויון במדויק.
+      - value: 0.10166666666666667
+        feedback: >-
+          זה $\frac{\varepsilon}{6}$, הקירוב $|x+3|\approx6$. הוא קצת גדול מדי: ב-$x=3.1017$ מקבלים
+          $x^2\approx9.6203>9.61$. הקטע $|x^2-9|<0.61$ אינו סימטרי סביב 3, והצד הימני צר יותר.
+      - value: 0.10345
+        feedback: >-
+          זה המרחק לקצה השמאלי $\sqrt{8.39}$. אבל $\delta$ צריך להתאים גם מימין, ושם הקצה $3.1$ קרוב יותר.
+
+  - id: Q-3.3-value
+    type: twotier
+    objectives: [OBJ-3.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f(x)=x^2$ לכל $x\neq3$, ו-$f(3)=100$. האם $\lim_{x\to3}f(x)$ קיים?
+    choices:
+      - text: 'כן, והוא 9'
+        correct: true
+        feedback: >-
+          נכון. ההוכחה ש-$x^2\to9$ עובדת מילה במילה: היא לא בודקת אף פעם את $x=3$.
+      - text: 'כן, והוא 100'
+        feedback: >-
+          100 הוא הערך בנקודה, לא הגבול. עם $\varepsilon=1$: לכל $x\neq3$ קרוב ל-3 הערך $f(x)=x^2$ קרוב ל-9, רחוק
+          מאוד מ-100.
+        misconception: MC-function-limit-is-value
+      - text: 'לא'
+        feedback: >-
+          הערך המוזר ב-3 לא מפריע: הגבול נקבע רק לפי $x$ עם $0<|x-3|<\delta$, וכולם מקיימים $f(x)=x^2$.
+        misconception: MC-function-limit-is-value
+    reasons:
+      - text: 'ההגדרה בודקת רק $x$ עם $0<|x-3|<\delta$, ושם $f(x)=x^2$'
+        correct: true
+        feedback: >-
+          בדיוק. שינוי של $f$ בנקודה אחת, ואפילו מחיקה שלה מהתחום, לא משנה את הגבול באותה נקודה.
+      - text: 'הגבול בנקודה שווה תמיד לערך בה'
+        feedback: >-
+          זה נכון רק לפונקציות רציפות (שיעור 4.1), וזו בדיוק הנקודה: $f$ כאן אינה רציפה ב-3, ובכל זאת יש לה שם
+          גבול.
+        misconception: MC-function-limit-is-value
+      - text: 'כש-$f$ מוגדרת בשתי נוסחאות, הגבול קיים רק אם הן נותנות אותו ערך בנקודה'
+        feedback: >-
+          ב-3 עצמה יש ערך אחד, $f(3)=100$, אבל הוא לא משתתף בהגדרת הגבול. רק הערכים של $f$ ליד 3 קובעים.
+        misconception: MC-limit-needs-f-at-a
+
+  - id: Q-3.3-undefined
+    type: mc
+    objectives: [OBJ-3.3-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f(x)=\frac{x^2-4}{x-2}$, ו-$f$ אינה מוגדרת ב-2. מה אפשר לומר על $\lim_{x\to2}f(x)$?
+    choices:
+      - text: 'הגבול קיים ושווה ל-4'
+        correct: true
+        feedback: >-
+          נכון. לכל $x\neq2$ מתקיים $f(x)=x+2$, ולכן $|f(x)-4|=|x-2|$, ו-$\delta=\varepsilon$ מתאים. ההגדרה
+          דורשת ש-$f$ תהיה מוגדרת רק בסביבה **מנוקבת** של 2.
+      - text: 'הגבול אינו קיים, כי $f$ אינה מוגדרת ב-2'
+        feedback: >-
+          הגבול לא משתמש ב-$f(2)$ בכלל: ההגדרה בודקת רק $x$ עם $0<|x-2|<\delta$. רוב הגבולות החשובים בקורס הם
+          בנקודות כאלה, למשל $\frac{\sin x}{x}$ ב-0.
+        misconception: MC-limit-needs-f-at-a
+      - text: 'הגבול הוא 0, כי המונה שואף ל-0'
+        feedback: >-
+          גם המכנה שואף ל-0. "אפס חלקי אפס" אינו מספר, והצורה לבדה לא קובעת את הגבול: צריך לפשט. כאן
+          $\frac{x^2-4}{x-2}=x+2$ כש-$x\neq2$.
+        misconception: MC-indeterminate-form-value
+
+  - id: Q-3.3-negation
+    type: mc
+    objectives: [OBJ-3.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מהי השלילה של "$\lim_{x\to a}f(x)=L$"?
+    choices:
+      - text: '$\exists\varepsilon>0\ \forall\delta>0\ \exists x:\ 0<|x-a|<\delta\ \land\|f(x)-L|\ge\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון: כל כמת מתהפך, והגרירה $P\Rightarrow Q$ נשללת ל-"$P$ וגם לא $Q$". במילים: יש רצועה סביב $L$ כך
+          שבכל סביבה מנוקבת של $a$ יש נקודה שערכה מחוץ לרצועה.
+      - text: '$\forall\varepsilon>0\ \forall\delta>0\ \exists x:\ 0<|x-a|<\delta\ \land\|f(x)-L|\ge\varepsilon$'
+        feedback: >-
+          את הכמת הראשון לא הפכו. הטענה הזו דורשת שערכים יצאו מ**כל** רצועה, גם מרצועה ברוחב מיליון; פונקציה
+          חסומה לא מקיימת אותה אף פעם, גם כשאין לה גבול (למשל $\sin\frac1x$ ב-0).
+        misconception: MC-negation-partial
+      - text: '$\exists\varepsilon>0\ \exists\delta>0\ \forall x:\ 0<|x-a|<\delta\Rightarrow|f(x)-L|\ge\varepsilon$'
+        feedback: >-
+          זה חזק מדי: כל הערכים בסביבה מסוימת רחוקים מ-$L$. ל-$\sin\frac1x$ אין גבול ב-0, ובכל זאת בכל סביבה של
+          0 יש נקודות שבהן היא שווה ל-0.
+        misconception: MC-negation-partial
+      - text: '$\exists\varepsilon>0\ \forall\delta>0\ \exists x:\ 0<|x-a|<\delta\Rightarrow|f(x)-L|\ge\varepsilon$'
+        feedback: >-
+          הכמתים נכונים, אבל גרירה נשללת ל"וגם", לא לגרירה. הטענה הזו מתקיימת תמיד: בוחרים $x=a$, שעבורו
+          ההנחה $0<|x-a|$ שקרית, והגרירה נכונה באופן ריק.
+        misconception: MC-implication-negation
+    explanation: >-
+      הסימן $\land$ פירושו "וגם". שלילה של גבול היא תמיד "קיים $\varepsilon$ רע": מספר אחד
+      שאף $\delta$ לא מצליח לטפל בו.
+
+  - id: Q-3.3-step
+    type: twotier
+    objectives: [OBJ-3.3-3, OBJ-3.3-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $H(x)=1$ עבור $x>0$ ו-$H(x)=0$ עבור $x\le0$. האם $\lim_{x\to0}H(x)$ קיים?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. מימין ל-0 הערכים 1 ומשמאל 0, ושום $L$ לא קרוב לשניהם.
+      - text: 'כן, והוא $H(0)=0$'
+        feedback: >-
+          הערך $H(0)$ לא משתתף בגבול. ובכל סביבה של 0 יש נקודות חיוביות שבהן $H=1$, במרחק 1 מ-0.
+        misconception: MC-function-limit-is-value
+    reasons:
+      - text: >-
+          לכל $L$, עם $\varepsilon=\frac12$: בכל $(-\delta,\delta)$ יש $x=\frac{\delta}{2}$ עם $H=1$ ו-$x=-\frac{\delta}{2}$
+          עם $H=0$, ושניהם לא יכולים להיות במרחק פחות מ-$\frac12$ מ-$L$
+        correct: true
+        feedback: >-
+          בדיוק: אילו $|1-L|<\frac12$ וגם $|0-L|<\frac12$, אז לפי אי-השוויון המשולש $1=|1-0|\le|1-L|+|L-0|<1$,
+          סתירה. זו השלילה המדויקת: $\varepsilon$ אחד, ולכל $\delta$ נקודה רעה.
+      - text: 'עם $\varepsilon=\frac12$ ו-$\delta=\frac12$ התנאי נכשל, ולכן אין גבול'
+        feedback: >-
+          $\delta$ אחד שנכשל לא מספיק: השלילה דורשת שהתנאי ייכשל **לכל** $\delta>0$. אחרת אפשר היה "להפריך" כל
+          גבול בבחירת $\delta$ גדול מדי.
+        misconception: MC-negation-partial
+      - text: 'הגבול חייב להיות שווה ל-$H(0)=0$, ומימין הערכים 1'
+        feedback: >-
+          המסקנה נכונה, אבל הנימוק לא: הגבול לא חייב להיות שווה לערך בנקודה. ההוכחה צריכה לפסול **כל** $L$, לא
+          רק $L=0$.
+        misconception: MC-function-limit-is-value

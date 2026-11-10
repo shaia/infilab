@@ -1,0 +1,325 @@
+# Lesson 4.4 — Weierstrass's theorems.
+# Objectives (src/course.ts):
+#   OBJ-4.4-1  state and prove that a continuous function on a closed interval is bounded and attains a maximum and a minimum
+#   OBJ-4.4-2  show by examples what goes wrong on an open interval, an unbounded interval or without continuity
+#   OBJ-4.4-3  use the theorem together with the intermediate value theorem to describe the image of a closed interval
+chapter: 4
+questions:
+  - id: Q-4.4-statement
+    type: mc
+    objectives: [OBJ-4.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזו מהטענות הבאות היא משפט ויירשטראס (השני)?
+    choices:
+      - text: 'אם $f$ רציפה ב-$[a,b]$, יש $x_1,x_2\in[a,b]$ כך ש-$f(x_1)\le f(x)\le f(x_2)$ לכל $x\in[a,b]$'
+        correct: true
+        feedback: >-
+          נכון. $f$ מקבלת מינימום ב-$x_1$ ומקסימום ב-$x_2$. (משפט ויירשטראס הראשון: $f$ חסומה ב-$[a,b]$.)
+      - text: 'אם $f$ רציפה וחסומה ב-$(a,b)$, היא מקבלת בו מקסימום'
+        feedback: >-
+          $f(x)=x$ ב-$(0,1)$ רציפה וחסומה, והסופרמום שלה, 1, אינו מתקבל. חסימות אינה מבטיחה שהחסם מתקבל.
+        misconception: MC-bounded-attains-bounds
+      - text: 'אם $f$ רציפה ב-$[a,b]$, היא מקבלת את המקסימום שלה באחת מנקודות הקצה'
+        feedback: >-
+          המקסימום יכול להתקבל בפנים: $\sin x$ ב-$[0,\pi]$ מקבלת את המקסימום 1 ב-$\frac\pi2$, ובקצוות היא 0.
+        misconception: MC-image-endpoints
+      - text: 'אם $f$ חסומה ב-$[a,b]$, היא מקבלת בו מקסימום'
+        feedback: >-
+          בלי רציפות זה נכשל: $f(x)=x$ ל-$x\in[0,1)$ ו-$f(1)=0$ חסומה, הסופרמום שלה 1, ואין $x$ עם $f(x)=1$.
+        misconception: MC-bounded-attains-bounds
+
+  - id: Q-4.4-bounded-proof
+    type: rank
+    objectives: [OBJ-4.4-1]
+    level: exam
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    prompt: >-
+      הטענה: פונקציה רציפה $f$ בקטע $[a,b]$ חסומה בו. סדרו את שלבי ההוכחה.
+    items:
+      - id: s1
+        label: 'נניח בשלילה ש-$f$ אינה חסומה. אז לכל $n\in\mathbb{N}$ יש $x_n\in[a,b]$ עם $|f(x_n)|>n$.'
+      - id: s2
+        label: 'הסדרה $(x_n)$ חסומה, ולפי בולצאנו-ויירשטראס יש לה תת-סדרה מתכנסת $x_{n_k}\to c$.'
+      - id: s3
+        label: 'מ-$a\le x_{n_k}\le b$ נובע $a\le c\le b$, כי גבולות שומרים על אי-שוויון חלש.'
+      - id: s4
+        label: '$f$ רציפה ב-$c$, ולכן לפי היינה $f(x_{n_k})\to f(c)$; בפרט הסדרה $f(x_{n_k})$ חסומה.'
+      - id: s5
+        label: 'אבל $|f(x_{n_k})|>n_k\ge k$, ולכן $f(x_{n_k})$ אינה חסומה: סתירה.'
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. החסימות של הקטע נותנת תת-סדרה מתכנסת, הסגירות שלו שומרת את הגבול בתוך התחום, והרציפות בגבול
+      מביאה לסתירה.
+    wrongFeedback: >-
+      התחילו מההנחה בשלילה ומהסדרה שהיא נותנת. לפני שמשתמשים ברציפות ב-$c$ צריך לדעת ש-$c$ בכלל בתחום של $f$.
+
+  - id: Q-4.4-where-closed
+    type: mc
+    objectives: [OBJ-4.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחה ש-$f$ רציפה ב-$[a,b]$ חסומה בו (בעזרת בולצאנו-ויירשטראס), באיזה שלב משתמשים בכך שהקטע **סגור**?
+    choices:
+      - text: 'כשמסיקים שהגבול $c$ של תת-הסדרה נמצא ב-$[a,b]$, ולכן $f$ רציפה ב-$c$'
+        correct: true
+        feedback: >-
+          נכון. בקטע פתוח הגבול יכול להיות נקודת קצה שאינה בתחום: ב-$(0,1)$ עם $f(x)=\frac1x$ הנקודות
+          $x_n=\frac1n$ שואפות ל-0, ושם אין רציפות שתעזור.
+      - text: כשמפעילים את בולצאנו-ויירשטראס
+        feedback: >-
+          בולצאנו-ויירשטראס דורש רק שהסדרה תהיה חסומה, וזה נכון גם בקטע פתוח וחסום. מה שהסגירות נותנת הוא שהגבול
+          של תת-הסדרה נשאר בקטע.
+      - text: 'כשבוחרים $x_n$ עם $|f(x_n)|>n$'
+        feedback: >-
+          הבחירה נובעת רק מההנחה בשלילה ש-$f$ אינה חסומה; היא אפשרית בכל תחום.
+      - text: באף שלב, ההוכחה עובדת גם בקטע פתוח
+        feedback: >-
+          המשפט נכשל בקטע פתוח: $\frac1x$ רציפה ב-$(0,1)$ ואינה חסומה. לכן חייב להיות שלב שבו הסגירות הכרחית.
+        misconception: MC-continuous-is-bounded
+
+  - id: Q-4.4-max-proof
+    type: mc
+    objectives: [OBJ-4.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחה ש-$f$ רציפה ב-$[a,b]$ מקבלת מקסימום מגדירים $M=\sup f([a,b])$ (קיים, כי $f$ חסומה), ומניחים
+      בשלילה ש-$f(x)<M$ לכל $x$. אז מגדירים $g(x)=\frac{1}{M-f(x)}$. מאיפה באה הסתירה?
+    choices:
+      - text: '$g$ רציפה ב-$[a,b]$ ולכן חסומה; אבל $f$ מתקרבת ל-$M$ כרצוננו, ולכן $g$ אינה חסומה'
+        correct: true
+        feedback: >-
+          נכון. מאפיון הסופרמום, לכל $n$ יש $x$ עם $f(x)>M-\frac1n$, כלומר $g(x)>n$. זה סותר את משפט ויירשטראס
+          הראשון, שחל על $g$.
+      - text: '$g$ אינה מוגדרת בנקודה שבה $f=M$'
+        feedback: >-
+          ההנחה בשלילה היא בדיוק שאין נקודה כזו, ולכן $g$ מוגדרת בכל $[a,b]$. זה מה שמאפשר להפעיל עליה את
+          המשפט הראשון.
+      - text: '$g$ אינה רציפה, כי היא מנה'
+        feedback: >-
+          מנה של רציפות עם מכנה ששונה מאפס היא רציפה (שיעור 4.1). המכנה $M-f(x)$ חיובי בכל נקודה, לפי ההנחה.
+      - text: '$g$ חסומה, כי $f$ חסומה'
+        feedback: >-
+          $g$ אכן חסומה (לפי המשפט הראשון), אבל לא בגלל ש-$f$ חסומה. הסתירה היא שבו בזמן $g$ גם **אינה** חסומה,
+          כי המכנה מתקרב לאפס.
+
+  - id: Q-4.4-open
+    type: multi
+    objectives: [OBJ-4.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      כל הפונקציות הבאות רציפות בתחום שלידן. אילו מהן **אינן** מקבלות מקסימום בתחום הזה? סמנו את כולן.
+    choices:
+      - text: '$\frac1x$ ב-$(0,1)$'
+        correct: true
+        feedback: 'נכון. היא אינה חסומה מלעיל: $f(\frac1n)=n$.'
+      - text: '$x$ ב-$(0,1)$'
+        correct: true
+        feedback: נכון. היא חסומה, אבל הסופרמום 1 אינו מתקבל, כי $1\notin(0,1)$.
+      - text: '$x^2$ ב-$[0,\infty)$'
+        correct: true
+        feedback: נכון. הקטע אינו חסום, והפונקציה שואפת לאינסוף.
+      - text: '$\sin x$ ב-$\mathbb{R}$'
+        feedback: >-
+          $\sin\frac\pi2=1$ הוא מקסימום. כשהנחות המשפט לא מתקיימות, המשפט לא אומר כלום, וזה לא אומר שהמסקנה
+          נכשלת.
+        misconception: MC-theorem-hypotheses-necessary
+      - text: '$\frac{1}{1+x^2}$ ב-$\mathbb{R}$'
+        feedback: >-
+          $\frac{1}{1+x^2}\le 1$ ושוויון ב-$x=0$: זה מקסימום, אף ש-$\mathbb{R}$ אינו קטע סגור. (מינימום אין לה.)
+        misconception: MC-theorem-hypotheses-necessary
+
+  - id: Q-4.4-noncont
+    type: twotier
+    objectives: [OBJ-4.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      על הקטע הסגור $[0,1]$: $f(0)=0$ ו-$f(x)=\frac1x$ לכל $0<x\le1$. האם $f$ חסומה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. $f(\frac1n)=n$.
+      - text: כן, לפי משפט ויירשטראס
+        feedback: >-
+          משפט ויירשטראס דורש רציפות **בכל** נקודה של $[0,1]$. $f$ אינה רציפה ב-0, והמשפט לא חל.
+        misconception: MC-weierstrass-without-continuity
+    reasons:
+      - text: '$f(\frac1n)=n$, והמשפט לא חל כי $f$ אינה רציפה ב-0'
+        correct: true
+        feedback: >-
+          בדיוק. נקודה אחת של אי-רציפות מספיקה כדי שהמסקנה תיכשל.
+      - text: $f$ מוגדרת בקטע סגור, וזה מה שהמשפט דורש
+        feedback: >-
+          המשפט דורש שני דברים: קטע סגור **ורציפות** בכל נקודה שלו.
+        misconception: MC-weierstrass-without-continuity
+      - text: '$f$ רציפה ב-$(0,1]$, וזה מספיק'
+        feedback: >-
+          ב-$(0,1]$ היא רציפה, אבל $(0,1]$ אינו קטע סגור. על $[0,1]$ חסרה רציפות ב-0.
+        misconception: MC-weierstrass-without-continuity
+
+  - id: Q-4.4-bounded-noattain
+    type: mc
+    objectives: [OBJ-4.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      מצאו דוגמה נגדית: פונקציה על $[0,1]$ שהיא **חסומה** ואינה מקבלת מקסימום.
+    choices:
+      - text: '$f(x)=x$ לכל $x\in[0,1)$, ו-$f(1)=0$'
+        correct: true
+        feedback: >-
+          נכון. $\sup f=1$, אבל $f(x)<1$ לכל $x$. היא לא סותרת את ויירשטראס, כי היא אינה רציפה ב-1.
+      - text: '$f(x)=x^2$'
+        feedback: >-
+          היא רציפה ב-$[0,1]$, ולכן לפי המשפט מקבלת מקסימום: $f(1)=1$.
+      - text: '$f(x)=\frac1x$ ב-$(0,1]$'
+        feedback: >-
+          זו אינה חסומה, והתחום שלה אינו $[0,1]$. התבקשה פונקציה חסומה על $[0,1]$.
+      - text: אין כזו, כל פונקציה חסומה על קטע סגור מקבלת מקסימום
+        feedback: >-
+          חסימות לא מבטיחה שהסופרמום מתקבל. בלי רציפות, הפונקציה יכולה "לדלג" בדיוק על הסופרמום.
+        misconception: MC-bounded-attains-bounds
+
+  - id: Q-4.4-limits-infty
+    type: twotier
+    objectives: [OBJ-4.4-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $f$ רציפה ב-$\mathbb{R}$, $\lim_{x\to\infty}f(x)=\lim_{x\to-\infty}f(x)=0$, ו-$f(0)=1$. האם $f$ בהכרח
+      מקבלת מקסימום ב-$\mathbb{R}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. מצמצמים את הבעיה לקטע סגור.
+      - text: לא בהכרח
+        feedback: >-
+          המשפט לא חל ישירות על $\mathbb{R}$, אבל אפשר להפעיל אותו על קטע סגור מתאים. ראו את הנימוק הנכון.
+        misconception: MC-theorem-hypotheses-necessary
+    reasons:
+      - text: 'יש $R>0$ עם $f(x)<1$ לכל $|x|>R$; המקסימום של $f$ ב-$[-R,R]$ קיים, גדול או שווה ל-$f(0)=1$, ולכן גדול מכל ערך מחוץ לקטע'
+        correct: true
+        feedback: >-
+          בדיוק. מהגבולות באינסוף בוחרים את $R$ (עם $\varepsilon=1$ למשל), וויירשטראס על $[-R,R]$ נותן מקסימום
+          שהוא גם המקסימום בכל $\mathbb{R}$.
+      - text: '$\mathbb{R}$ אינו קטע סגור וחסום, ולכן משפט ויירשטראס לא חל ואין מקסימום'
+        feedback: >-
+          כשהנחה של משפט נכשלת, המשפט לא אומר כלום; זה לא אומר שהמסקנה שגויה. $\frac{1}{1+x^2}$ מקיימת את כל
+          הנתונים ומקבלת מקסימום ב-0.
+        misconception: MC-theorem-hypotheses-necessary
+      - text: '$f$ חסומה, ולכן מקבלת גם מקסימום וגם מינימום'
+        feedback: >-
+          מקסימום כן, מינימום לא בהכרח: $\frac{1}{1+x^2}$ חיובית, האינפימום שלה 0, והוא אינו מתקבל.
+        misconception: MC-bounded-attains-bounds
+
+  - id: Q-4.4-image
+    type: mc
+    objectives: [OBJ-4.4-3]
+    level: basic
+    prompt: >-
+      $f$ רציפה ב-$[0,3]$, $f(0)=2$, $f(3)=5$, הערך המינימלי של $f$ בקטע הוא $-1$ והמקסימלי $7$. מהי
+      התמונה $f([0,3])$?
+    choices:
+      - text: '$[-1,\ 7]$'
+        correct: true
+        feedback: >-
+          נכון. ויירשטראס: $-1$ ו-7 מתקבלים. ערך הביניים (בין נקודת המינימום לנקודת המקסימום): כל ערך ביניהם
+          מתקבל. ואין ערכים מחוץ ל-$[-1,7]$, כי אלה המינימום והמקסימום.
+      - text: '$[2,\ 5]$'
+        feedback: >-
+          $2$ ו-5 הם רק הערכים בקצוות. הפונקציה יורדת עד $-1$ ועולה עד 7 בתוך הקטע, ולכן התמונה גדולה יותר.
+        misconception: MC-image-endpoints
+      - text: '$(-1,\ 7)$'
+        feedback: >-
+          המינימום והמקסימום **מתקבלים** (זה משפט ויירשטראס), ולכן $-1$ ו-7 בתמונה.
+      - text: קבוצה שמכילה את $-1$, $2$, $5$ ו-$7$, אבל לא בהכרח את כל הערכים שביניהם
+        feedback: >-
+          לפי משפט ערך הביניים, על הקטע שבין נקודת המינימום לנקודת המקסימום $f$ מקבלת כל ערך בין $-1$ ל-7.
+
+  - id: Q-4.4-image-length
+    type: numeric
+    objectives: [OBJ-4.4-3]
+    level: mid
+    prompt: >-
+      $f(x)=x^2-2x$ בקטע $[-1,2]$. התמונה $f([-1,2])$ היא קטע סגור. מהו אורכו?
+    answer: 4
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $f(x)=(x-1)^2-1$, ולכן המינימום $-1$ (ב-$x=1$) והמקסימום $3$ (ב-$x=-1$, הנקודה הרחוקה ביותר מ-1).
+      התמונה $[-1,3]$, באורך 4.
+    wrongFeedback: >-
+      השלימו לריבוע: $x^2-2x=(x-1)^2-1$. מצאו את הערך הקטן ביותר ואת הגדול ביותר בקטע.
+    commonWrong:
+      - value: 3
+        feedback: >-
+          זה הקטע $[0,3]$ שבין הערכים בקצוות, $f(2)=0$ ו-$f(-1)=3$. אבל ב-$x=1$, בתוך הקטע, $f(1)=-1<0$.
+        misconception: MC-image-endpoints
+      - value: 2
+        feedback: >-
+          בדקו שוב את הקצה $x=-1$: $f(-1)=1+2=3$.
+
+  - id: Q-4.4-image-sets
+    type: multi
+    objectives: [OBJ-4.4-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      אילו מהקבוצות הבאות יכולות להיות התמונה $f([0,1])$ של פונקציה **רציפה** $f$ על $[0,1]$? סמנו את כולן.
+    choices:
+      - text: '$[0,1]$'
+        correct: true
+        feedback: נכון, למשל $f(x)=x$.
+      - text: '$\{5\}$'
+        correct: true
+        feedback: 'נכון, זו התמונה של הפונקציה הקבועה 5. זה קטע סגור "מנוון", $[5,5]$.'
+      - text: '$[-3,\ 10]$'
+        correct: true
+        feedback: נכון, למשל $f(x)=13x-3$.
+      - text: '$(0,1)$'
+        feedback: >-
+          לפי ויירשטראס המינימום והמקסימום מתקבלים, ולכן התמונה מכילה את הקצוות שלה: היא קטע **סגור**.
+        misconception: MC-image-of-closed-any-interval
+      - text: '$[0,\infty)$'
+        feedback: >-
+          לפי ויירשטראס $f$ חסומה ב-$[0,1]$, ולכן התמונה חסומה.
+        misconception: MC-image-of-closed-any-interval
+      - text: '$[0,1]\cup[2,3]$'
+        feedback: >-
+          לפי משפט ערך הביניים, אם 1 ו-2 בתמונה, גם כל מה שביניהם בתמונה. התמונה היא קטע.
+
+  - id: Q-4.4-open-to-closed
+    type: twotier
+    objectives: [OBJ-4.4-2, OBJ-4.4-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      האם יש פונקציה רציפה על הקטע **הפתוח** $(0,1)$ שהתמונה שלה היא הקטע **הסגור** $[0,1]$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. משפט ויירשטראס לא אוסר זאת; הוא פשוט לא מבטיח זאת.
+      - text: לא
+        feedback: >-
+          $g(x)=\frac{1+\sin 2\pi x}{2}$ רציפה ב-$(0,1)$, מקבלת 1 ב-$\frac14$ ו-0 ב-$\frac34$, ולפי ערך הביניים
+          את כל מה שביניהם. התמונה $[0,1]$.
+        misconception: MC-open-maps-to-open
+    reasons:
+      - text: '$g(x)=\frac{1+\sin 2\pi x}{2}$: $g(\frac14)=1$, $g(\frac34)=0$, ו-$0\le g\le1$'
+        correct: true
+        feedback: >-
+          בדיוק. פונקציה רציפה על קטע פתוח **יכולה** לקבל מקסימום ומינימום; רק אין לכך ערובה.
+      - text: התמונה של קטע פתוח תחת פונקציה רציפה היא קטע פתוח
+        feedback: >-
+          לא נכון: גם הפונקציה הקבועה על $(0,1)$ נותנת תמונה $\{c\}$, שאינה קטע פתוח. מה שנכון הוא רק שהתמונה
+          היא **קטע** (ערך הביניים).
+        misconception: MC-open-maps-to-open
+      - text: על קטע פתוח פונקציה רציפה לא מקבלת מקסימום
+        feedback: >-
+          זה נכון ל-$x$ על $(0,1)$, אבל לא באופן כללי. כשהנחה של ויירשטראס חסרה, המסקנה יכולה להתקיים ויכולה
+          שלא.
+        misconception: MC-theorem-hypotheses-necessary

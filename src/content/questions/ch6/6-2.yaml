@@ -1,0 +1,400 @@
+# Lesson 6.2 — uniform continuity.
+# Objectives (src/course.ts):
+#   OBJ-6.2-1  define uniform continuity and explain how it differs from continuity at every point
+#   OBJ-6.2-2  prove that a function is or is not uniformly continuous, e.g. x² on ℝ
+#   OBJ-6.2-3  state and prove Cantor's theorem: continuous on a closed interval ⇒ uniformly continuous there
+chapter: 6
+questions:
+  - id: Q-6.2-def
+    type: mc
+    objectives: [OBJ-6.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזה מהניסוחים הבאים הוא ההגדרה של "$f$ רציפה במידה שווה בקבוצה $D$"?
+    choices:
+      - text: '$\forall \varepsilon>0\ \exists \delta>0\ \forall x,y\in D:\ |x-y|<\delta \Rightarrow |f(x)-f(y)|<\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. $\delta$ נבחר אחרי $\varepsilon$ ולפני הנקודות, ולכן אותו $\delta$ חייב להתאים לכל זוג נקודות
+          בתחום.
+      - text: '$\forall x\in D\ \forall \varepsilon>0\ \exists \delta>0\ \forall y\in D:\ |x-y|<\delta \Rightarrow |f(x)-f(y)|<\varepsilon$'
+        feedback: >-
+          זו רציפות בכל נקודה של $D$: כאן $\delta$ נבחר אחרי $x$, ולכן רשאי להיות תלוי בו. $x^2$ על
+          $\mathbb{R}$ מקיימת את זה ואינה רציפה במידה שווה.
+        misconception: MC-uc-is-pointwise
+      - text: '$\exists \delta>0\ \forall \varepsilon>0\ \forall x,y\in D:\ |x-y|<\delta \Rightarrow |f(x)-f(y)|<\varepsilon$'
+        feedback: >-
+          כאן $\delta$ קודם ל-$\varepsilon$, ולכן $|f(x)-f(y)|$ קטן מכל מספר חיובי, כלומר $f(x)=f(y)$ לכל שתי
+          נקודות שמרחקן קטן מ-$\delta$. בקטע זו פונקציה קבועה.
+        misconception: MC-cont-delta-before-epsilon
+      - text: '$\forall \varepsilon>0\ \exists \delta>0\ \forall x,y\in D:\ |f(x)-f(y)|<\varepsilon \Rightarrow |x-y|<\delta$'
+        feedback: >-
+          הגרירה הפוכה. ההגדרה אומרת שנקודות קרובות נותנות ערכים קרובים. פונקציה קבועה רציפה במידה שווה, אבל
+          לא מקיימת את הניסוח הזה על $\mathbb{R}$: כל שתי נקודות נותנות ערכים שווים, גם רחוקות.
+        misconception: MC-cont-implication-reversed
+
+  - id: Q-6.2-pointwise
+    type: twotier
+    objectives: [OBJ-6.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $f$ רציפה בכל נקודה של הקטע $(0,1)$. האם $f$ בהכרח רציפה במידה שווה ב-$(0,1)$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $f(x) = \frac1x$ רציפה בכל נקודה של $(0,1)$ ואינה רציפה בו במידה שווה. הכיוון השני כן נכון:
+          רציפה במידה שווה גוררת רציפה בכל נקודה.
+      - text: כן
+        feedback: >-
+          הקטע $(0,1)$ חסום אבל אינו סגור, ומשפט קנטור לא חל. ב-$\frac1x$, ככל שמתקרבים ל-$0$ צריך $\delta$
+          קטן יותר, ואין $\delta$ אחד שמתאים לכל הנקודות.
+        misconception: MC-continuous-implies-uc
+    reasons:
+      - text: 'ברציפות בנקודה $\delta$ תלוי ב-$x$, ואם $\inf$ של ה-$\delta$-ים על פני הנקודות הוא $0$, אין $\delta$ משותף'
+        correct: true
+        feedback: >-
+          בדיוק. עבור $\frac1x$ ליד $x$, ה-$\delta$ הגדול ביותר שמתאים ל-$\varepsilon=1$ קטן מ-$x^2$, ושואף
+          לאפס כש-$x\to0$.
+      - text: 'בקטע חסום יש רק "מעט" נקודות, ולכן אפשר לקחת את ה-$\delta$ הקטן ביותר'
+        feedback: >-
+          בכל קטע יש אינסוף נקודות, ולאוסף אינסופי של מספרים חיוביים אין בהכרח מינימום חיובי: האינפימום יכול
+          להיות $0$.
+        misconception: MC-continuous-implies-uc
+      - text: רציפות במידה שווה היא רק ניסוח אחר של רציפות בכל נקודה
+        feedback: >-
+          ההבדל הוא סדר הכמתים: ברציפות במידה שווה $\delta$ נבחר לפני הנקודות.
+        misconception: MC-uc-is-pointwise
+
+  - id: Q-6.2-negation
+    type: mc
+    objectives: [OBJ-6.2-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה פירוש הטענה "$f$ **אינה** רציפה במידה שווה ב-$D$"?
+    choices:
+      - text: '$\exists \varepsilon>0\ \forall \delta>0\ \exists x,y\in D:\ |x-y|<\delta \ \wedge\|f(x)-f(y)|\ge\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. יש $\varepsilon$ אחד כך שלכל $\delta$, קטן ככל שיהיה, יש זוג נקודות קרובות מ-$\delta$ שהערכים
+          שלהן רחוקים לפחות $\varepsilon$.
+      - text: '$\forall \varepsilon>0\ \forall \delta>0\ \exists x,y\in D:\ |x-y|<\delta \ \wedge\|f(x)-f(y)|\ge\varepsilon$'
+        feedback: >-
+          את הכמת הראשון שכחו להפוך. הטענה הזו דורשת ערכים רחוקים זה מזה כרצוננו, ו-$\frac1x$ על $(0,1)$
+          כן מקיימת אותה, אבל $\sin\frac1x$, שערכיה בין $-1$ ל-$1$, לא, ובכל זאת אינה רציפה במידה שווה.
+        misconception: MC-negation-partial
+      - text: '$\exists x\in D$ שבה $f$ אינה רציפה'
+        feedback: >-
+          זו שלילת רציפות בכל נקודה, טענה חזקה יותר. $x^2$ רציפה בכל נקודה של $\mathbb{R}$, ובכל זאת אינה
+          רציפה במידה שווה.
+        misconception: MC-uc-is-pointwise
+      - text: '$\exists \varepsilon>0\ \forall \delta>0\ \exists x,y\in D:\ |x-y|\ge\delta \ \wedge\|f(x)-f(y)|\ge\varepsilon$'
+        feedback: >-
+          כאן שללו גם את $|x-y|<\delta$, אבל בשלילה של גרירה התנאי נשאר והמסקנה נשללת. הטענה הזו מתקיימת
+          כמעט לכל פונקציה לא קבועה, למשל ל-$f(x)=x$ על $\mathbb{R}$, שרציפה במידה שווה.
+        misconception: MC-negation-partial
+    explanation: >-
+      בשלילה, $p \Rightarrow q$ הופך ל-"$p$ וגם לא $q$": הנקודות **קרובות**, והערכים **רחוקים**.
+
+  - id: Q-6.2-square-pair
+    type: mc
+    objectives: [OBJ-6.2-2]
+    level: mid
+    prompt: >-
+      רוצים להוכיח ש-$f(x)=x^2$ אינה רציפה במידה שווה ב-$\mathbb{R}$ בעזרת זוג סדרות. איזה זוג מוכיח זאת?
+    choices:
+      - text: '$x_n = n+\frac1n$, $y_n = n$'
+        correct: true
+        feedback: >-
+          נכון. $x_n-y_n = \frac1n\to0$, ו-$x_n^2-y_n^2 = 2+\frac{1}{n^2} \ge 2$. לכן עם $\varepsilon=2$, לכל
+          $\delta$ יש זוג נקודות קרובות מ-$\delta$ שהערכים שלהן רחוקים לפחות $2$.
+      - text: '$x_n = n+1$, $y_n = n$'
+        feedback: >-
+          ההפרש בערכים $2n+1$ אכן גדול, אבל המרחק בין הנקודות קבוע, $1$, ולא שואף לאפס. זוג כזה יש גם
+          לפונקציה $2x$, שרציפה במידה שווה.
+        misconception: MC-uc-pairs-not-close
+      - text: '$x_n = \frac1n$, $y_n = 0$'
+        feedback: >-
+          המרחק שואף לאפס, אבל גם $x_n^2-y_n^2 = \frac{1}{n^2}\to0$. ליד $0$ הפונקציה $x^2$ מתנהגת יפה; הבעיה
+          היא באינסוף.
+        misconception: MC-uc-pairs-not-close
+      - text: '$x_n = \sqrt{n}+\frac1n$, $y_n = \sqrt{n}$'
+        feedback: >-
+          המרחק $\frac1n\to0$, אבל $x_n^2-y_n^2 = \frac{2}{\sqrt n}+\frac{1}{n^2}\to 0$: הנקודות לא רצות
+          לאינסוף מהר מספיק ביחס למרחק ביניהן. צריך גם הפרש בערכים שנשאר רחוק מאפס.
+        misconception: MC-uc-pairs-not-close
+    hints:
+      - בדקו לכל זוג שני דברים, המרחק בין הנקודות וההפרש בין הערכים.
+
+  - id: Q-6.2-sqrt-delta
+    type: numeric
+    objectives: [OBJ-6.2-2]
+    level: mid
+    prompt: >-
+      ידוע ש-$|\sqrt x-\sqrt y| \le \sqrt{|x-y|}$ לכל $x,y\ge0$. עבור $f(x)=\sqrt x$ על $[0,\infty)$
+      ו-$\varepsilon = 0.1$, מהו ה-$\delta$ **הגדול ביותר** כך שלכל $x,y\ge 0$ עם $|x-y|<\delta$ מתקיים
+      $|\sqrt x-\sqrt y|<\varepsilon$?
+    answer: 0.01
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\delta = \varepsilon^2 = 0.01$. אם $|x-y|<\varepsilon^2$ אז $|\sqrt x-\sqrt y| \le \sqrt{|x-y|} < \varepsilon$.
+      ואם $\delta > 0.01$, הזוג $x = 0.01$, $y = 0$ קרוב מ-$\delta$ ונותן הפרש $0.1$ בדיוק, לא קטן ממש. אותו
+      $\delta$ מתאים לכל הנקודות, ולכן $\sqrt x$ רציפה במידה שווה.
+    wrongFeedback: >-
+      דרשו $\sqrt{|x-y|}<\varepsilon$ ובודדו את $|x-y|$. אחר כך בדקו שאין $\delta$ גדול יותר, בזוג שאחת
+      הנקודות בו היא $0$.
+    commonWrong:
+      - value: 0.1
+        feedback: >-
+          $\delta = \varepsilon$ לא מספיק: $x = 0.09$, $y=0$ קרובים מ-$0.1$, ו-$\sqrt{0.09} = 0.3$.
+      - value: 0.316
+        feedback: >-
+          זה $\sqrt{\varepsilon}$. מ-$\sqrt{|x-y|}<\varepsilon$ מקבלים $|x-y|<\varepsilon^2$, בריבוע ולא בשורש.
+
+  - id: Q-6.2-which-uc
+    type: multi
+    objectives: [OBJ-6.2-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      אילו מהפונקציות הבאות רציפות במידה שווה בתחום הנתון? סמנו את כולן.
+    choices:
+      - text: '$x^2$ על $[0,1]$'
+        correct: true
+        feedback: >-
+          נכון. $|x^2-y^2| = |x+y|\,|x-y| \le 2|x-y|$, ולכן $\delta = \frac{\varepsilon}{2}$ מתאים. (וגם קנטור.)
+      - text: '$\sqrt x$ על $[0,\infty)$'
+        correct: true
+        feedback: >-
+          נכון. $|\sqrt x - \sqrt y| \le \sqrt{|x-y|}$, ולכן $\delta = \varepsilon^2$ מתאים לכל הנקודות, אף
+          שהשיפוע ליד $0$ אינו חסום.
+      - text: '$\sin x$ על $\mathbb{R}$'
+        correct: true
+        feedback: >-
+          נכון. לפי לגרנז', $|\sin x-\sin y| \le |x-y|$, ו-$\delta=\varepsilon$ מתאים, אף שהתחום אינו חסום.
+      - text: '$x^2$ על $\mathbb{R}$'
+        feedback: >-
+          לא. $x_n = n+\frac1n$, $y_n = n$ קרובים כרצוננו, ו-$x_n^2-y_n^2 > 2$. הפונקציה תלולה יותר ויותר.
+        misconception: MC-uc-is-pointwise
+      - text: '$\frac1x$ על $(0,1)$'
+        feedback: >-
+          לא. $x_n=\frac1n$, $y_n = \frac{1}{n+1}$: המרחק $\frac{1}{n(n+1)}\to0$ והפרש הערכים $1$. רציפה בקטע
+          חסום אינה מספיקה.
+        misconception: MC-continuous-implies-uc
+      - text: '$\sin\frac1x$ על $(0,1)$'
+        feedback: >-
+          לא. הפונקציה מתנודדת בין $-1$ ל-$1$ בקטעים שהולכים וקטנים ליד $0$, ולכן יש נקודות קרובות כרצוננו
+          שבאחת הערך $1$ ובשנייה $0$.
+        misconception: MC-continuous-implies-uc
+
+  - id: Q-6.2-lipschitz
+    type: twotier
+    objectives: [OBJ-6.2-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f$ מקיימת $|f(x)-f(y)| \le 5|x-y|$ לכל $x,y\in\mathbb{R}$ (תנאי ליפשיץ). האם $f$ רציפה במידה שווה
+      ב-$\mathbb{R}$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. ליפשיץ גורר רציפות במידה שווה, על כל תחום, חסום או לא.
+      - text: לא בהכרח, כי התחום אינו חסום
+        feedback: >-
+          חסימות התחום היא הנחה של משפט קנטור, אבל כאן לא צריך את קנטור: תנאי ליפשיץ נותן את $\delta$ ישירות.
+        misconception: MC-cantor-converse
+    reasons:
+      - text: '$\delta = \frac{\varepsilon}{5}$ מתאים לכל $x,y$: אם $|x-y|<\delta$ אז $|f(x)-f(y)| \le 5|x-y| < \varepsilon$'
+        correct: true
+        feedback: >-
+          בדיוק. ה-$\delta$ תלוי רק ב-$\varepsilon$ ובקבוע $5$, לא בנקודות.
+      - text: 'לפי לגרנז'' יש $c$ עם $f''(c) = 5$, ולכן $f$ גזירה ורציפה'
+        feedback: >-
+          תנאי ליפשיץ אינו גורר גזירות: $5|x|$ מקיימת אותו ואינה גזירה ב-$0$. וגם רציפות בכל נקודה לא
+          מספיקה כאן.
+        misconception: MC-lipschitz-implies-differentiable
+      - text: 'פונקציה רציפה בכל נקודה של $\mathbb{R}$ רציפה בו במידה שווה'
+        feedback: >-
+          לא: $x^2$. התכונה שעושה את העבודה כאן היא ליפשיץ, לא רציפות.
+        misconception: MC-continuous-implies-uc
+
+  - id: Q-6.2-sin-inv
+    type: mc
+    objectives: [OBJ-6.2-2]
+    level: exam
+    prompt: >-
+      רוצים להראות ש-$f(x) = \sin\frac1x$ אינה רציפה במידה שווה ב-$(0,1)$. איזה זוג סדרות מתאים, ועם איזה
+      $\varepsilon$?
+    choices:
+      - text: '$x_n = \frac{1}{2\pi n+\frac{\pi}{2}}$, $y_n = \frac{1}{2\pi n}$, עם $\varepsilon = 1$'
+        correct: true
+        feedback: >-
+          נכון. שתי הסדרות ב-$(0,1)$ ושואפות ל-$0$, ולכן $x_n - y_n \to 0$. ו-$f(x_n) = \sin\left(2\pi n+\frac\pi2\right) = 1$,
+          $f(y_n) = \sin(2\pi n) = 0$, כלומר $|f(x_n)-f(y_n)| = 1$ לכל $n$.
+      - text: '$x_n = \frac{1}{\pi n}$, $y_n = \frac{1}{\pi(n+1)}$, עם $\varepsilon = 1$'
+        feedback: >-
+          $f(x_n) = \sin(\pi n) = 0$ ו-$f(y_n) = 0$: ההפרש בערכים אפס. הזוג קרוב, אבל הערכים לא רחוקים.
+        misconception: MC-uc-pairs-not-close
+      - text: '$x_n = \frac{1}{2\pi n+\frac{\pi}{2}}$, $y_n = \frac12$, עם $\varepsilon = \frac12$'
+        feedback: >-
+          המרחק $|x_n - y_n|\to\frac12$, לא לאפס, ולכן הזוג לא אומר דבר על רציפות במידה שווה. (וגם הפרש הערכים
+          קטן: $1-\sin 2 \approx 0.09$.) הנקודות צריכות להתקרב זו לזו.
+        misconception: MC-uc-pairs-not-close
+      - text: 'אין צורך בסדרות: $f$ אינה מוגדרת ב-$0$, ולכן אינה רציפה במידה שווה'
+        feedback: >-
+          $x\sin\frac1x$ גם אינה מוגדרת ב-$0$, ובכל זאת רציפה במידה שווה ב-$(0,1)$, כי היא מתארכת ברציפות
+          לקטע $[0,1]$. צריך הוכחה.
+        misconception: MC-cantor-converse
+
+  - id: Q-6.2-reciprocal
+    type: twotier
+    objectives: [OBJ-6.2-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      סטודנט כתב: "$\frac1x$ אינה רציפה במידה שווה ב-$(0,1]$, כי הקטע אינו סגור ולכן משפט קנטור לא חל". האם
+      המסקנה נכונה, והאם הנימוק נכון?
+    choices:
+      - text: המסקנה נכונה, הנימוק שגוי
+        correct: true
+        feedback: >-
+          נכון. $\frac1x$ באמת אינה רציפה במידה שווה שם, אבל "המשפט לא חל" אינו הוכחה של דבר.
+      - text: המסקנה והנימוק נכונים
+        feedback: >-
+          משפט קנטור הוא תנאי מספיק. $x\sin\frac1x$ רציפה במידה שווה ב-$(0,1]$, אף שגם שם הקטע אינו סגור.
+        misconception: MC-cantor-converse
+      - text: המסקנה שגויה
+        feedback: >-
+          $\frac1x$ אינה רציפה במידה שווה ב-$(0,1]$: זוג הסדרות $\frac1n$, $\frac{1}{n+1}$ מראה זאת.
+        misconception: MC-continuous-implies-uc
+    reasons:
+      - text: 'הוכחה נכונה: $x_n=\frac1n$, $y_n=\frac{1}{n+1}$ מקיימות $x_n-y_n\to0$ ו-$|f(x_n)-f(y_n)| = 1$'
+        correct: true
+        feedback: >-
+          בדיוק. זו ההוכחה שחסרה לסטודנט: זוג נקודות קרובות כרצוננו עם ערכים במרחק $1$.
+      - text: 'הוכחה נכונה: $\frac1x$ אינה רציפה ב-$0$'
+        feedback: >-
+          $0$ אינו בתחום, ולכן אין משמעות לרציפות שם. הבעיה היא ההתנהגות ליד $0$, ואותה מראים בזוג סדרות.
+        misconception: MC-cantor-converse
+      - text: 'הוכחה נכונה: $\frac1x$ אינה מקיימת תנאי ליפשיץ ב-$(0,1]$'
+        feedback: >-
+          זה נכון, אבל אינו מוכיח דבר: גם $\sqrt x$ אינה מקיימת תנאי ליפשיץ ב-$(0,1]$, והיא רציפה בו במידה שווה.
+        misconception: MC-uc-implies-lipschitz
+
+  - id: Q-6.2-which-hyp
+    type: mc
+    objectives: [OBJ-6.2-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $x^2$ רציפה ב-$[0,\infty)$ ואינה רציפה בו במידה שווה. איזו הנחה של משפט קנטור אינה מתקיימת?
+    choices:
+      - text: הקטע אינו חסום
+        correct: true
+        feedback: >-
+          נכון. $[0,\infty)$ סגור (מכיל את נקודות הקצה שלו), אבל אינו חסום, וקנטור דורש קטע $[a,b]$ סגור וחסום.
+      - text: הקטע אינו סגור
+        feedback: >-
+          $[0,\infty)$ מכיל את $0$, וכל סדרה בו שמתכנסת, מתכנסת לנקודה בו. החסר הוא חסימות: בלי חסימות אין
+          בולצאנו-ויירשטראס, והסדרות בהוכחה יכולות לברוח לאינסוף.
+        misconception: MC-cantor-closed-enough
+      - text: הנגזרת אינה חסומה
+        feedback: >-
+          משפט קנטור לא מזכיר נגזרות בכלל. $\sqrt x$ ב-$[0,1]$ רציפה במידה שווה, אף שהנגזרת שלה אינה חסומה
+          שם.
+        misconception: MC-uc-implies-lipschitz
+
+  - id: Q-6.2-extend
+    type: twotier
+    objectives: [OBJ-6.2-3]
+    level: mid
+    prompt: >-
+      $f$ רציפה ב-$[0,1)$, ויש לה גבול סופי $\lim_{x\to1^-} f(x) = L$. האם $f$ רציפה במידה שווה ב-$[0,1)$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. הקטע אינו סגור, אבל הגבול הסופי בקצה החסר מאפשר לסגור אותו.
+      - text: לא בהכרח, כי הקטע אינו סגור
+        feedback: >-
+          הקטע אינו סגור, אבל אפשר לסגור אותו: הגבול הסופי ב-$1$ מאפשר להגדיר $f(1)=L$ ולקבל פונקציה רציפה
+          ב-$[0,1]$.
+        misconception: MC-cantor-converse
+    reasons:
+      - text: 'מגדירים $g = f$ ב-$[0,1)$ ו-$g(1) = L$; $g$ רציפה ב-$[0,1]$, לפי קנטור רציפה בו במידה שווה, ולכן גם $f$ ב-$[0,1)$'
+        correct: true
+        feedback: >-
+          בדיוק. רציפות במידה שווה עוברת לכל תת-קבוצה: אותו $\delta$ מתאים לזוגות שבתת-הקבוצה.
+      - text: פונקציה רציפה עם גבול סופי בקצה היא תמיד ליפשיץ
+        feedback: >-
+          לא: $\sqrt{1-x}$ רציפה ב-$[0,1)$ עם גבול $0$ ב-$1$, והשיפועים שלה ליד $1$ אינם חסומים. ובכל זאת
+          היא רציפה במידה שווה.
+        misconception: MC-uc-implies-lipschitz
+      - text: כל פונקציה רציפה בקטע חסום רציפה בו במידה שווה
+        feedback: >-
+          לא: $\frac{1}{1-x}$ רציפה ב-$[0,1)$ ואינה רציפה בו במידה שווה. כאן מה שעושה את העבודה הוא הגבול
+          הסופי ב-$1$.
+        misconception: MC-continuous-implies-uc
+
+  - id: Q-6.2-cantor-proof
+    type: rank
+    objectives: [OBJ-6.2-3]
+    level: exam
+    prompt: >-
+      הוכחת משפט קנטור: אם $f$ רציפה ב-$[a,b]$ אז היא רציפה בו במידה שווה.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: assume
+        label: 'נניח בשלילה ש-$f$ אינה רציפה במידה שווה: קיים $\varepsilon_0>0$ כך שלכל $\delta>0$ יש $x,y\in[a,b]$ עם $|x-y|<\delta$ ו-$|f(x)-f(y)|\ge\varepsilon_0$.'
+      - id: seq
+        label: 'עם $\delta = \frac1n$ מקבלים לכל $n$ נקודות $x_n,y_n\in[a,b]$ עם $|x_n-y_n|<\frac1n$ ו-$|f(x_n)-f(y_n)|\ge\varepsilon_0$.'
+      - id: bw
+        label: '$x_n$ חסומה, ולפי בולצאנו-ויירשטראס יש תת-סדרה $x_{n_k}\to c$; הקטע סגור, ולכן $c\in[a,b]$.'
+      - id: same
+        label: '$|y_{n_k}-c| \le |y_{n_k}-x_{n_k}| + |x_{n_k}-c| < \frac{1}{n_k} + |x_{n_k}-c|$, ולכן גם $y_{n_k}\to c$.'
+      - id: heine
+        label: '$f$ רציפה ב-$c$, ולפי היינה $f(x_{n_k})-f(y_{n_k}) \to f(c)-f(c) = 0$.'
+      - id: contra
+        label: 'זו סתירה ל-$|f(x_{n_k})-f(y_{n_k})|\ge\varepsilon_0$ לכל $k$.'
+    order: [assume, seq, bw, same, heine, contra]
+    correctFeedback: >-
+      נכון. שימו לב איפה כל הנחה נכנסת: חסימות הקטע בבולצאנו-ויירשטראס, סגירות הקטע כדי ש-$c$ יהיה בו,
+      ורציפות $f$ ב-$c$.
+    wrongFeedback: >-
+      התחילו מהשלילה של ההגדרה, הפכו אותה לשתי סדרות, ורק אז השתמשו בבולצאנו-ויירשטראס וברציפות.
+
+  - id: Q-6.2-closed-used
+    type: twotier
+    objectives: [OBJ-6.2-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      בהוכחת משפט קנטור מקבלים תת-סדרה $x_{n_k}\to c$. נניח שהקטע היה $(0,1]$ במקום $[0,1]$. באיזה שלב ההוכחה
+      נשברת?
+    choices:
+      - text: 'ייתכן ש-$c = 0$, ואז $f$ אינה מוגדרת ב-$c$ ואין רציפות להשתמש בה'
+        correct: true
+        feedback: >-
+          נכון. זה בדיוק מה שקורה ב-$\frac1x$: הסדרות הבעייתיות מתקרבות ל-$0$, הנקודה שהוצאה מהקטע.
+      - text: 'בולצאנו-ויירשטראס לא חל, כי הקטע אינו סגור'
+        feedback: >-
+          בולצאנו-ויירשטראס דורש רק סדרה **חסומה**, ו-$x_n\in(0,1]$ חסומה. תת-סדרה מתכנסת קיימת; הבעיה היא
+          איפה הגבול שלה.
+        misconception: MC-cantor-closed-enough
+      - text: 'ההוכחה לא נשברת: גם $(0,1]$ מספיק'
+        feedback: >-
+          $\frac1x$ רציפה ב-$(0,1]$ ואינה רציפה בו במידה שווה, ולכן ההוכחה חייבת להישבר איפשהו.
+        misconception: MC-continuous-implies-uc
+    reasons:
+      - text: 'השלב "$f$ רציפה ב-$c$" דורש $c$ בתחום, וזה מה שהסגירות מבטיחה'
+        correct: true
+        feedback: >-
+          בדיוק. סגירות: הגבול של סדרה בקטע נמצא בקטע. חסימות: יש תת-סדרה מתכנסת. רציפות: הערכים מתקרבים.
+      - text: 'השלב "$y_{n_k}\to c$" דורש קטע סגור'
+        feedback: >-
+          השלב הזה הוא רק אי-שוויון המשולש, $|y_{n_k}-c| \le \frac{1}{n_k} + |x_{n_k}-c|$, ואינו תלוי בקטע.
+        misconception: MC-cantor-closed-enough

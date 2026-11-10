@@ -1,0 +1,15 @@
+# Terms first defined in lesson 2.5.
+- id: squeeze-theorem
+  term: כלל הסנדוויץ'
+  en: squeeze theorem
+  definition: >-
+    אם $a_n\le b_n\le c_n$ לכל $n$ (או החל ממקום מסוים), ו-$a_n\to L$ וגם $c_n\to L$, אז $b_n\to L$. שני החסמים
+    חייבים לשאוף לאותו גבול.
+  reject: [סנדביץ']
+  lesson: '2.5'
+- id: null-sequence
+  term: סדרה אפסה
+  en: null sequence
+  definition: >-
+    סדרה ששואפת לאפס. סדרה אפסה כפול סדרה חסומה היא סדרה אפסה, למשל $\frac{\sin n}{n}$.
+  lesson: '2.5'

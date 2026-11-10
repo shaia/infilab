@@ -1,0 +1,355 @@
+# Lesson 2.4 — arithmetic of limits.
+# Objectives (src/course.ts):
+#   OBJ-2.4-1  prove the sum, product and quotient rules, and know what each rule needs
+#   OBJ-2.4-2  limits of quotients of polynomials and of expressions with roots, including the conjugate
+#   OBJ-2.4-3  recognise when the rules do not apply (a limit that does not exist, a denominator tending to 0)
+# Infinite limits are lesson 2.6: here an unbounded sequence is simply divergent (lesson 2.3).
+chapter: 2
+questions:
+  - id: Q-2.4-sum-N
+    type: multi
+    objectives: [OBJ-2.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      בהוכחת כלל הסכום ($a_n\to a$ ו-$b_n\to b$ גוררים $a_n+b_n\to a+b$) נתון $\varepsilon>0$. יש $N_1$ כך
+      ש-$|a_n-a|<\frac\varepsilon2$ לכל $n>N_1$, ו-$N_2$ כך ש-$|b_n-b|<\frac\varepsilon2$ לכל $n>N_2$. עם איזה
+      $N$ מתקיים $|(a_n+b_n)-(a+b)|<\varepsilon$ לכל $n>N$? סמנו את כולם.
+    choices:
+      - text: '$N = \max(N_1, N_2)$'
+        correct: true
+        feedback: >-
+          נכון. לכל $n>N$ שני אי-השוויונות מתקיימים, ולפי אי-שוויון המשולש
+          $|(a_n+b_n)-(a+b)|\le|a_n-a|+|b_n-b|<\frac\varepsilon2+\frac\varepsilon2 = \varepsilon$.
+      - text: '$N = N_1+N_2$'
+        correct: true
+        feedback: >-
+          נכון. $N_1+N_2\ge\max(N_1,N_2)$, וכל $N$ גדול מ-$N$ שעובד גם עובד. $\max$ הוא פשוט הבחירה הטבעית.
+      - text: '$N = \min(N_1, N_2)$'
+        feedback: >-
+          אם $N_1<n\le N_2$, ההבטחה על $b_n$ עוד לא תקפה. צריך $n$ שנמצא אחרי **שני** ה-$N$-ים.
+        misconception: MC-common-N-too-small
+      - text: '$N = N_1$'
+        feedback: >-
+          $N_1$ מבטיח רק את $a_n$. אם $N_2>N_1$, יש $n>N_1$ שבו $b_n$ עוד רחוק מ-$b$.
+        misconception: MC-common-N-too-small
+    explanation: >-
+      למה $\frac\varepsilon2$? כי בסוף מחברים שתי שגיאות. ההגדרה מתירה לבחור כל מספר חיובי במקום $\varepsilon$,
+      ולכן מבקשים מכל סדרה חצי מהשגיאה המותרת.
+
+  - id: Q-2.4-product-bdd
+    type: mc
+    objectives: [OBJ-2.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בהוכחת כלל המכפלה כותבים
+      $$|a_nb_n-ab|\le|a_n|\,|b_n-b|+|b|\,|a_n-a|.$$
+      בשלב הזה משתמשים בכך ש-$a_n$ חסומה. למה?
+    choices:
+      - text: 'כדי לחסום את $|a_n|\,|b_n-b|$ ב-$M|b_n-b|$, קבוע כפול גודל שאפשר לעשות קטן כרצוננו'
+        correct: true
+        feedback: >-
+          נכון. בלי חסם $M$ אחד, הגורם $|a_n|$ משתנה עם $n$ ואי אפשר לבחור מראש כמה קטן צריך להיות $|b_n-b|$.
+          $a_n$ חסומה כי היא מתכנסת (שיעור 2.3).
+      - text: 'בעצם לא צריך: $|b_n-b|$ שואף לאפס, ולכן כל מכפלה שלו שואפת לאפס'
+        feedback: >-
+          מכפלה של גורם ששואף לאפס בגורם לא חסום יכולה לא לשאוף לאפס: $\frac1n\cdot n^2 = n$. בשביל זה
+          צריך את החסם על $|a_n|$.
+        misconception: MC-null-times-anything
+      - text: 'כדי להחליף את $|a_n|$ ב-$|a|$: איברי סדרה מתכנסת קטנים בערכם המוחלט מהגבול'
+        feedback: >-
+          זה לא נכון: $1+\frac1n\to1$ וכל איבריה גדולים מ-1. החסם הוא $M = \max\{|a_1|,\dots,|a_N|,|a|+1\}$, לא
+          $|a|$.
+        misconception: MC-terms-bounded-by-limit
+
+  - id: Q-2.4-quotient-hyp
+    type: twotier
+    objectives: [OBJ-2.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      נכון או לא נכון: אם $a_n\to a$, $b_n\to b$ ו-$b_n\ne0$ לכל $n$, אז $\frac{a_n}{b_n}\to\frac ab$.
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. כלל המנה דורש גם $b\ne0$. עם $a_n = 1$ ו-$b_n = \frac1n$, הגבול $b$ הוא 0, $\frac ab$ אינו מוגדר,
+          והמנה $\frac{a_n}{b_n} = n$ אינה חסומה.
+      - text: נכון
+        feedback: >-
+          חסרה ההנחה $b\ne0$. דוגמה נגדית: $a_n = 1$, $b_n = \frac1n$. אז $\frac{a_n}{b_n} = n$, שאינה מתכנסת.
+        misconception: MC-quotient-rule-no-hypothesis
+    reasons:
+      - text: 'הכלל דורש שגבול המכנה יהיה שונה מאפס, ו-$a_n = 1$, $b_n = \frac1n$ מפריכה את הטענה בלעדיו'
+        correct: true
+        feedback: >-
+          בדיוק. $b_n\ne0$ רק מאפשר לכתוב את המנה; ההוכחה צריכה ש-$|b_n|$ יהיה רחוק מאפס, $|b_n|>\frac{|b|}{2}$,
+          וזה מגיע מ-$b\ne0$.
+      - text: '$b_n\ne0$ לכל $n$ מספיק כדי לחלק, ולכן הכלל חל'
+        feedback: >-
+          לחלק מותר, אבל אין לכלל מה לומר: $\frac ab$ אינו מוגדר כש-$b=0$, והמנה יכולה לעשות כל דבר.
+        misconception: MC-quotient-rule-no-hypothesis
+      - text: 'הטענה נכשלת רק כש-$a = 0$'
+        feedback: >-
+          $a = 0$ אינו בעיה: אם $b\ne0$ אז $\frac{a_n}{b_n}\to\frac0b = 0$. ההנחה החסרה היא על המכנה.
+        misconception: MC-quotient-rule-no-hypothesis
+
+  - id: Q-2.4-quotient-rank
+    type: rank
+    objectives: [OBJ-2.4-1]
+    level: exam
+    prompt: >-
+      הוכחה שאם $b_n\to b$, $b\ne0$ ו-$b_n\ne0$ לכל $n$, אז $\frac{1}{b_n}\to\frac1b$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: away
+        label: 'כי $b\ne0$, יש $N_1$ כך ש-$|b_n-b|<\frac{|b|}{2}$ לכל $n>N_1$, ולכן $|b_n|\ge|b|-|b-b_n|>\frac{|b|}{2}$.'
+      - id: bound
+        label: 'לכל $n>N_1$: $\left|\frac1{b_n}-\frac1b\right| = \frac{|b-b_n|}{|b_n|\,|b|}<\frac{2}{|b|^2}\,|b_n-b|$.'
+      - id: eps
+        label: 'יהי $\varepsilon>0$. יש $N_2$ כך ש-$|b_n-b|<\frac{\varepsilon|b|^2}{2}$ לכל $n>N_2$.'
+      - id: done
+        label: 'לכל $n>\max(N_1,N_2)$: $\left|\frac1{b_n}-\frac1b\right|<\frac{2}{|b|^2}\cdot\frac{\varepsilon|b|^2}{2} = \varepsilon$.'
+    order: [away, bound, eps, done]
+    correctFeedback: >-
+      נכון. השלב הראשון הוא לב ההוכחה: הוא מרחיק את $b_n$ מאפס, וזה הופך את $\frac1{|b_n|}$ לחסום ב-$\frac{2}{|b|}$.
+      כאן בדיוק משתמשים ב-$b\ne0$.
+    wrongFeedback: >-
+      חשבו מה צריך לדעת לפני כל שורה. ההערכה של $\left|\frac1{b_n}-\frac1b\right|$ צריכה חסם מלרע על $|b_n|$, ואת
+      $N_2$ בוחרים לפי ההערכה הזו.
+
+  - id: Q-2.4-rational1
+    type: numeric
+    objectives: [OBJ-2.4-2]
+    level: basic
+    prompt: >-
+      חשבו את $\displaystyle\lim_{n\to\infty}\frac{3n^2-2n+1}{5n^2+4}$. (אפשר לכתוב שבר.)
+    answer: 0.6
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. מחלקים מונה ומכנה ב-$n^2$: $\frac{3-\frac2n+\frac1{n^2}}{5+\frac4{n^2}}$. המונה שואף ל-3 והמכנה ל-5,
+      שאינו אפס, ולכן לפי כלל המנה הגבול $\frac35$.
+    wrongFeedback: >-
+      חלקו את המונה ואת המכנה בחזקה הגבוהה ביותר של $n$ שמופיעה במכנה, ואז השתמשו בכללי הגבול.
+    commonWrong:
+      - value: 0.25
+        feedback: >-
+          $\frac14$ הוא היחס בין המקדמים החופשיים. כש-$n$ גדול, האיברים $3n^2$ ו-$5n^2$ הם שקובעים: חלקו ב-$n^2$
+          ותראו שהאיברים החופשיים נעלמים.
+        misconception: MC-rational-wrong-terms
+      - value: 1
+        feedback: >-
+          המונה והמכנה גדלים שניהם בלי הגבלה, אבל אין לכך כלל "גדול חלקי גדול שווה 1": שניהם מתבדרים, וכלל
+          המנה לא חל עליהם כמו שהם. חלקו קודם ב-$n^2$.
+        misconception: MC-limit-rules-on-divergent
+
+  - id: Q-2.4-rational2
+    type: numeric
+    objectives: [OBJ-2.4-2]
+    level: mid
+    prompt: >-
+      חשבו את $\displaystyle\lim_{n\to\infty}\frac{2n^3+n}{n-4n^3}$. (אפשר לכתוב שבר.)
+    answer: -0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. אחרי חלוקה ב-$n^3$: $\frac{2+\frac1{n^2}}{\frac1{n^2}-4}\to\frac{2}{-4} = -\frac12$.
+    wrongFeedback: >-
+      חלקו ב-$n^3$, ושימו לב לסימן של המקדם המוביל במכנה.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          הסימן הלך לאיבוד: המקדם של $n^3$ במכנה הוא $-4$, ולכן הגבול $\frac{2}{-4}$.
+      - value: 1
+        feedback: >-
+          $1$ הוא היחס בין האיברים מהחזקה **הנמוכה** ביותר, $\frac nn$. כש-$n$ גדול קובעות החזקות הגבוהות.
+        misconception: MC-rational-wrong-terms
+      - value: -2
+        feedback: >-
+          הפכתם את השבר: $\frac{-4}{2} = -2$. אחרי החלוקה ב-$n^3$ המונה שואף ל-2 והמכנה ל-$-4$.
+
+  - id: Q-2.4-conj
+    type: numeric
+    objectives: [OBJ-2.4-2]
+    level: mid
+    prompt: >-
+      חשבו את $\displaystyle\lim_{n\to\infty}\left(\sqrt{n^2+3n}-n\right)$. (אפשר לכתוב שבר.)
+    answer: 1.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. כופלים ומחלקים בצמוד:
+      $$\sqrt{n^2+3n}-n = \frac{3n}{\sqrt{n^2+3n}+n} = \frac{3}{\sqrt{1+\frac3n}+1}\to\frac{3}{1+1} = \frac32.$$
+    wrongFeedback: >-
+      כפלו ב-$\frac{\sqrt{n^2+3n}+n}{\sqrt{n^2+3n}+n}$, חלקו מונה ומכנה ב-$n$, ורק אז השתמשו בכללי הגבול.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $\sqrt{n^2+3n}$ ו-$n$ גדלים שניהם בלי הגבלה, אבל ההפרש ביניהם אינו נעלם: כבר $n = 100$ נותן בערך
+          $1.489$. כללי הגבול לא חלים על שתי סדרות מתבדרות; הכפל בצמוד הופך את ההפרש למנה שכן אפשר לחשב.
+        misconception: MC-root-difference-zero
+      - value: 3
+        feedback: >-
+          איבדתם חצי מהמכנה: $\sqrt{n^2+3n}+n$ שווה בערך $2n$, לא $n$. אחרי חלוקה ב-$n$ המכנה שואף ל-$1+1 = 2$.
+
+  - id: Q-2.4-sqrt-diff
+    type: twotier
+    objectives: [OBJ-2.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם $\sqrt{n+1}-\sqrt n\to0$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: 'נכון. ההפרש קטן מ-$\frac{1}{\sqrt n}$, שהולך וקטן.'
+      - text: 'לא, ההפרש שווה ל-1 לכל $n$'
+        feedback: >-
+          $\sqrt{n+1}-\sqrt n\ne\sqrt{(n+1)-n}$: כבר $\sqrt2-\sqrt1\approx0.414$. שורש אינו פועל על הפרש איבר-איבר.
+        misconception: MC-root-of-difference
+    reasons:
+      - text: 'בכפל בצמוד $\sqrt{n+1}-\sqrt n = \frac{1}{\sqrt{n+1}+\sqrt n}<\frac1{\sqrt n}$, וזה קטן מ-$\varepsilon$ לכל $n>\frac{1}{\varepsilon^2}$'
+        correct: true
+        feedback: >-
+          בדיוק. הצמוד הופך הפרש של שני ביטויים גדולים לשבר עם מונה 1, ואת השבר קל לחסום מלמעלה.
+      - text: 'שני האיברים גדלים בלי הגבלה, ולכן ההפרש ביניהם שואף ל-0'
+        feedback: >-
+          זה לא נובע: גם $\sqrt{n^2+3n}$ ו-$n$ גדלים בלי הגבלה, וההפרש ביניהם שואף ל-$\frac32$. צריך לחשב.
+        misconception: MC-root-difference-zero
+      - text: 'לפי כלל ההפרש, $\lim\sqrt{n+1}-\lim\sqrt n = 0$'
+        feedback: >-
+          לשתי הסדרות אין גבול (הן לא חסומות), ולכן כלל ההפרש לא חל. הכללים דורשים ששני הגבולות יהיו קיימים.
+        misconception: MC-limit-rules-on-divergent
+
+  - id: Q-2.4-divide-highest
+    type: mc
+    objectives: [OBJ-2.4-2, OBJ-2.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      איזה מהנימוקים הבאים מצדיק נכון את $\displaystyle\lim_{n\to\infty}\frac{n+\sqrt n}{2n-1} = \frac12$?
+    choices:
+      - text: 'מחלקים ב-$n$: $\frac{1+\frac{1}{\sqrt n}}{2-\frac1n}$. המונה שואף ל-1 והמכנה ל-$2\ne0$, ולפי כלל המנה הגבול $\frac12$.'
+        correct: true
+        feedback: >-
+          נכון. אחרי החלוקה כל חלק הוא סדרה מתכנסת, וגבול המכנה שונה מאפס: כל ההנחות של כלל המנה מתקיימות.
+      - text: 'לפי כלל המנה, הגבול הוא $\frac{\lim(n+\sqrt n)}{\lim(2n-1)}$, ושני הגבולות "גדולים כמו $n$", כש-$\frac{n}{2n} = \frac12$'
+        feedback: >-
+          למונה ולמכנה כפי שהם אין גבול סופי (הם לא חסומים), ולכן כלל המנה לא חל עליהם. קודם משנים את הצורה כך
+          שכל חלק יתכנס.
+        misconception: MC-limit-rules-on-divergent
+      - text: '$\sqrt n$ זניח לעומת $n$ ו-$1$ זניח לעומת $2n$, ולכן הביטוי שווה בקירוב ל-$\frac{n}{2n} = \frac12$'
+        feedback: >-
+          התוצאה נכונה, אבל "זניח" ו"בקירוב" אינם נימוק. החלוקה ב-$n$ היא בדיוק מה שהופך את "זניח" לטענה
+          מדויקת: $\frac{1}{\sqrt n}\to0$ ו-$\frac1n\to0$.
+        misconception: MC-estimate-by-approximation
+
+  - id: Q-2.4-n-conj
+    type: numeric
+    objectives: [OBJ-2.4-2]
+    level: exam
+    prompt: >-
+      חשבו את $\displaystyle\lim_{n\to\infty} n\left(\sqrt{n^2+1}-n\right)$. (אפשר לכתוב שבר.)
+    answer: 0.5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. בכפל בצמוד:
+      $$n\left(\sqrt{n^2+1}-n\right) = \frac{n}{\sqrt{n^2+1}+n} = \frac{1}{\sqrt{1+\frac1{n^2}}+1}\to\frac12.$$
+    wrongFeedback: >-
+      כפלו בצמוד $\sqrt{n^2+1}+n$, חלקו מונה ומכנה ב-$n$, ורק אז השתמשו בכללי הגבול.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $\sqrt{n^2+1}-n\to0$ נכון, אבל הוא מוכפל ב-$n$, שאינו חסום. גורם ששואף לאפס כפול גורם לא חסום יכול לשאוף
+          לכל דבר; כאן ההפרש קטן בערך כמו $\frac{1}{2n}$, והמכפלה שואפת ל-$\frac12$.
+        misconception: MC-null-times-anything
+      - value: 1
+        feedback: >-
+          איבדתם את ה-$+n$ במכנה. $\sqrt{n^2+1}+n$ גדל בערך כמו $2n$, ולכן אחרי חלוקה ב-$n$ המכנה שואף ל-2.
+
+  - id: Q-2.4-sum-converse
+    type: twotier
+    objectives: [OBJ-2.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$a_n+b_n$ מתכנסת. האם מכאן ש-$a_n$ מתכנסת?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $a_n = (-1)^n$ ו-$b_n = -(-1)^n$: הסכום הוא 0 לכל $n$, ושתי הסדרות מתבדרות.
+      - text: כן
+        feedback: >-
+          כלל הסכום הולך בכיוון אחד בלבד. $(-1)^n+\left(-(-1)^n\right) = 0$ מתכנסת, ואף אחת מהשתיים אינה מתכנסת.
+        misconception: MC-sum-converges-parts-converge
+    reasons:
+      - text: 'דוגמה נגדית: $a_n = (-1)^n$, $b_n = -(-1)^n$'
+        correct: true
+        feedback: >-
+          בדיוק. ומה שכן נכון: אם $a_n+b_n$ **וגם** $a_n$ מתכנסות, אז $b_n = (a_n+b_n)-a_n$ מתכנסת לפי כלל ההפרש.
+      - text: 'כלל הסכום אומר $\lim(a_n+b_n) = \lim a_n+\lim b_n$, ולכן שני הגבולות קיימים'
+        feedback: >-
+          הכלל מניח ששני הגבולות קיימים ומסיק שגבול הסכום קיים. הכיוון ההפוך אינו חלק ממנו, והוא שקרי.
+        misconception: MC-sum-converges-parts-converge
+      - text: 'אם $a_n$ הייתה מתבדרת, גם הסכום היה מתבדר'
+        feedback: >-
+          זה נכון רק כש-$b_n$ מתכנסת. כששתיהן מתבדרות, ההתבדרויות יכולות לבטל זו את זו.
+        misconception: MC-sum-converges-parts-converge
+
+  - id: Q-2.4-zero-over-zero
+    type: multi
+    objectives: [OBJ-2.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $a_n\to0$, $b_n\to0$ ו-$b_n\ne0$ לכל $n$. מה יכולה המנה $\frac{a_n}{b_n}$ לעשות? סמנו את כל האפשרויות.
+    choices:
+      - text: 'להתכנס ל-5'
+        correct: true
+        feedback: 'נכון: $a_n = \frac5n$, $b_n = \frac1n$, והמנה היא 5 לכל $n$.'
+      - text: להיות לא חסומה
+        correct: true
+        feedback: 'נכון: $a_n = \frac1n$, $b_n = \frac1{n^2}$, והמנה היא $n$.'
+      - text: להיות חסומה ולהתבדר
+        correct: true
+        feedback: 'נכון: $a_n = \frac{(-1)^n}{n}$, $b_n = \frac1n$, והמנה היא $(-1)^n$.'
+      - text: 'להתכנס תמיד ל-1, כי "אפס חלקי אפס הוא 1"'
+        feedback: >-
+          כשגבול המכנה הוא 0, כלל המנה לא אומר כלום, ואין ל"אפס חלקי אפס" ערך. שלוש הדוגמאות האחרות נותנות 5,
+          מנה לא חסומה ומנה מתנודדת.
+        misconception: MC-quotient-rule-no-hypothesis
+      - text: 'להתכנס תמיד ל-0, כי המונה שואף ל-0'
+        feedback: >-
+          גם המכנה שואף ל-0, ומה שקובע הוא מי מהם קטן מהר יותר. $\frac{5/n}{1/n} = 5$.
+        misconception: MC-quotient-rule-no-hypothesis
+    explanation: >-
+      כשהכללים לא חלים, משנים את הצורה של הביטוי (מצמצמים, מחלקים בחזקה המובילה, כופלים בצמוד) עד שהם כן חלים.
+
+  - id: Q-2.4-which-follow
+    type: multi
+    objectives: [OBJ-2.4-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      אילו מהטענות הבאות נכונות לכל שתי סדרות $a_n$, $b_n$? סמנו את כולן.
+    choices:
+      - text: 'אם $a_n$ ו-$a_n+b_n$ מתכנסות, אז $b_n$ מתכנסת'
+        correct: true
+        feedback: 'נכון. $b_n = (a_n+b_n)-a_n$ היא הפרש של שתי סדרות מתכנסות.'
+      - text: 'אם $a_n$ מתכנסת ו-$b_n$ מתבדרת, אז $a_n+b_n$ מתבדרת'
+        correct: true
+        feedback: >-
+          נכון. זה הקונטרפוזיטיב של הטענה הקודמת: אם $a_n+b_n$ הייתה מתכנסת, גם $b_n$ הייתה מתכנסת.
+      - text: 'אם $a_n$ ו-$b_n$ מתבדרות, אז $a_n+b_n$ מתבדרת'
+        feedback: >-
+          $a_n = (-1)^n$ ו-$b_n = -(-1)^n$ מתבדרות, וסכומן 0. שתי התבדרויות יכולות לבטל זו את זו.
+        misconception: MC-sum-converges-parts-converge
+      - text: 'אם $a_nb_n$ מתכנסת ו-$b_n\to b\ne0$, אז $a_n$ מתכנסת'
+        correct: true
+        feedback: >-
+          נכון. מ-$b\ne0$ נובע $b_n\ne0$ מ-$N$ מסוים והלאה, ושם $a_n = \frac{a_nb_n}{b_n}$, מנה של מתכנסות עם גבול
+          מכנה שונה מאפס. מספר סופי של איברים בהתחלה לא משנה התכנסות.
+      - text: 'אם $a_nb_n$ מתכנסת, אז $a_n$ או $b_n$ מתכנסת'
+        feedback: >-
+          $a_n = b_n = (-1)^n$: המכפלה היא 1 לכל $n$, ושתיהן מתבדרות.
+        misconception: MC-product-converges-factor-converges

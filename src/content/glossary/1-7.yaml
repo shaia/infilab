@@ -1,0 +1,25 @@
+# Terms first defined in lesson 1.7.
+- id: nth-root
+  term: שורש n-י
+  en: n-th root
+  symbol: 'a^{1/n}=\sqrt[n]{a}'
+  definition: >-
+    עבור $a>0$ ו-$n\in\mathbb{N}$, המספר החיובי היחיד $b$ שמקיים $b^n=a$. קיומו נובע מאקסיומת השלמות:
+    $b=\sup\{x\ge0 : x^n<a\}$.
+  lesson: '1.7'
+- id: rational-power
+  term: חזקה רציונלית
+  en: rational power
+  symbol: 'a^{m/n}'
+  definition: >-
+    עבור $a>0$, $m$ שלם ו-$n$ טבעי: $a^{m/n}=\left(a^{1/n}\right)^m$. ההגדרה אינה תלויה בהצגת השבר, וחוקי
+    החזקות נשמרים.
+  lesson: '1.7'
+- id: real-power
+  term: חזקה ממשית
+  en: real power
+  symbol: 'a^x'
+  definition: >-
+    עבור $a>1$ ו-$x$ ממשי: $a^x=\sup\{a^r : r\in\mathbb{Q},\ r<x\}$; כש-$x$ רציונלי זו החזקה הרציונלית.
+    עבור $0<a<1$ מגדירים $a^x=\left(\frac1a\right)^{-x}$.
+  lesson: '1.7'

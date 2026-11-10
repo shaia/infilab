@@ -1,0 +1,16 @@
+# Terms first defined in lesson 5.7.
+- id: darboux-theorem
+  term: משפט דרבו
+  en: Darboux's theorem
+  definition: >-
+    אם $f$ גזירה ב-$[a,b]$ ו-$y$ נמצא ממש בין $f'(a)$ ל-$f'(b)$, קיימת $c\in(a,b)$ כך ש-$f'(c)=y$. כלומר לכל
+    נגזרת יש תכונת ערך הביניים, גם כשאינה רציפה.
+  reject: [משפט דארבו]
+  lesson: '5.7'
+- id: intermediate-value-property
+  term: תכונת ערך הביניים
+  en: intermediate value property
+  definition: >-
+    לפונקציה $g$ המוגדרת בקטע יש תכונת ערך הביניים אם לכל $a<b$ בקטע ולכל $y$ בין $g(a)$ ל-$g(b)$ קיימת $c\in[a,b]$
+    עם $g(c)=y$. לכל פונקציה רציפה יש אותה (משפט ערך הביניים), וגם לכל נגזרת (משפט דרבו).
+  lesson: '5.7'

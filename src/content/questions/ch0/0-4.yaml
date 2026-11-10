@@ -1,0 +1,278 @@
+# Lesson 0.4 — proof methods: direct, by contradiction, and the counterexample.
+# Objectives (src/course.ts):
+#   OBJ-0.4-1  prove a simple claim directly and by contradiction
+#   OBJ-0.4-2  disprove a general claim with one counterexample; explain why supporting examples are not a proof
+#   OBJ-0.4-3  prove an "if and only if" claim in both directions
+chapter: 0
+questions:
+  - id: Q-0.4-contradiction-start
+    type: mc
+    objectives: [OBJ-0.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      רוצים להוכיח בדרך השלילה: "אין מספר טבעי גדול ביותר". מה מניחים בשורה הראשונה?
+    choices:
+      - text: קיים מספר טבעי $N$ שגדול או שווה לכל מספר טבעי
+        correct: true
+        feedback: >-
+          נכון. זו שלילת הטענה. מכאן הסתירה מגיעה מיד: $N+1$ טבעי וגדול מ-$N$.
+      - text: אין מספר טבעי גדול ביותר
+        feedback: >-
+          זו הטענה עצמה. בהוכחה בדרך השלילה מניחים את ה**שלילה** שלה ומגיעים לסתירה; מי שמניח את הטענה מניח את
+          מה שצריך להוכיח.
+        misconception: MC-contradiction-wrong-assumption
+      - text: $N+1$ גדול מ-$N$ לכל $N$
+        feedback: >-
+          זו עובדה נכונה, והיא תשמש בהמשך כדי לקבל סתירה, אבל היא לא ההנחה של ההוכחה. ההנחה היא שלילת הטענה.
+        misconception: MC-contradiction-wrong-assumption
+      - text: כל מספר טבעי הוא הגדול ביותר
+        feedback: >-
+          זו לא השלילה של "אין מספר גדול ביותר". השלילה של "אין" ("לא קיים") היא "קיים": קיים מספר אחד כזה.
+        misconception: MC-negation-partial
+
+  - id: Q-0.4-direct-divides
+    type: rank
+    objectives: [OBJ-0.4-1]
+    level: mid
+    prompt: >-
+      אומרים ש-$a$ **מחלק** את $b$ אם קיים שלם $k$ כך ש-$b=ak$. הוכיחו בהוכחה ישירה: אם $a$ מחלק את $b$ ו-$b$
+      מחלק את $c$, אז $a$ מחלק את $c$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: assume
+        label: 'נניח ש-$a$ מחלק את $b$ ו-$b$ מחלק את $c$.'
+      - id: define
+        label: 'לפי ההגדרה קיימים שלמים $k$ ו-$m$ כך ש-$b=ak$ ו-$c=bm$.'
+      - id: substitute
+        label: 'נציב: $c=bm=(ak)m=a(km)$.'
+      - id: conclude
+        label: '$km$ שלם, ולכן לפי ההגדרה $a$ מחלק את $c$.'
+    order: [assume, define, substitute, conclude]
+    correctFeedback: >-
+      נכון. ההגדרה מופיעה פעמיים: בהתחלה כדי לתרגם את ההנחה לנוסחה, ובסוף כדי לקרוא מהנוסחה את המסקנה.
+    wrongFeedback: >-
+      הוכחה ישירה מתחילה מההנחה. כדי להציב צריך קודם לכתוב את $b$ ואת $c$ בעזרת ההגדרה.
+
+  - id: Q-0.4-log-irrational
+    type: rank
+    objectives: [OBJ-0.4-1]
+    level: exam
+    prompt: >-
+      הוכיחו בדרך השלילה ש-$\log_2 3$ אינו רציונלי. (מספר נקרא רציונלי אם הוא מנה של שני שלמים, עם מכנה שונה
+      מאפס.)
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: assume
+        label: 'נניח בשלילה ש-$\log_2 3$ רציונלי.'
+      - id: fraction
+        label: 'כיוון ש-$\log_2 3>0$, קיימים טבעיים $p$ ו-$q$ כך ש-$\log_2 3=\frac pq$.'
+      - id: exponent
+        label: 'לפי הגדרת הלוגריתם $2^{p/q}=3$, ובהעלאה בחזקת $q$: $2^p=3^q$.'
+      - id: parity
+        label: '$2^p$ זוגי (כי $p\ge 1$) ו-$3^q$ אי-זוגי, וזו סתירה.'
+      - id: conclude
+        label: 'לכן ההנחה שגויה, ו-$\log_2 3$ אינו רציונלי.'
+    order: [assume, fraction, exponent, parity, conclude]
+    correctFeedback: >-
+      נכון. זה מבנה של כל הוכחה בדרך השלילה: מניחים את השלילה, מתרגמים אותה לנוסחה, מגיעים לסתירה, ומסיקים
+      שהשלילה שקרית.
+    wrongFeedback: >-
+      ההנחה בשלילה באה ראשונה, והמסקנה אחרונה, אחרי הסתירה. בדקו גם למה אפשר לבחור את $p$ ו-$q$ טבעיים: זה דרוש
+      כדי ש-$2^p$ יהיה זוגי.
+
+  - id: Q-0.4-contrapositive-proof
+    type: twotier
+    objectives: [OBJ-0.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      כדי להוכיח "לכל $n$ שלם, אם $n^2$ זוגי אז $n$ זוגי", סטודנט הוכיח: "לכל $n$ שלם, אם $n$ אי-זוגי אז $n^2$
+      אי-זוגי". האם הוכיח את הטענה?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. הוא הוכיח את הקונטרפוזיטיב, ששקול לטענה. כאן זו הדרך הנוחה: קשה להתחיל מ-"$n^2$ זוגי", וקל
+          להתחיל מ-$n=2k+1$.
+      - text: לא
+        feedback: >-
+          "אם $n$ אי-זוגי אז $n^2$ אי-זוגי" הוא בדיוק $\neg Q\Rightarrow\neg P$ עבור הטענה $P\Rightarrow Q$, ויש
+          לשתיהן אותה טבלת אמת.
+        misconception: MC-contrapositive-doubted
+    reasons:
+      - text: זה הקונטרפוזיטיב של הטענה, והוא שקול לה
+        correct: true
+        feedback: >-
+          בדיוק. "אי-זוגי" הוא "לא זוגי", ולכן "אם לא ($n$ זוגי) אז לא ($n^2$ זוגי)" הוא הקונטרפוזיטיב.
+      - text: זו הטענה ההפוכה, והיא לא מוכיחה את הטענה
+        feedback: >-
+          ההפוכה הייתה "אם $n$ זוגי אז $n^2$ זוגי": מחליפים את הסדר בלי לשלול. כאן גם הסדר הוחלף וגם שני החלקים
+          נשללו, וזה הקונטרפוזיטיב.
+        misconception: MC-contrapositive-doubted
+      - text: זה מוכיח רק את המקרה ש-$n$ אי-זוגי, וחסר המקרה ש-$n$ זוגי
+        feedback: >-
+          אין מקרה חסר. הטענה אומרת משהו רק על $n$ ש-$n^2$ שלו זוגי, והקונטרפוזיטיב מראה שאף $n$ אי-זוגי אינו
+          כזה; לכן כל $n$ כזה זוגי.
+        misconception: MC-contrapositive-doubted
+
+  - id: Q-0.4-euler-polynomial
+    type: mc
+    objectives: [OBJ-0.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      הטענה "לכל $n$ טבעי, המספר $n^2+n+41$ ראשוני" נבדקה במחשב עבור $n=1,2,\dots,39$, ובכל המקרים התקבל מספר
+      ראשוני. מה נכון?
+    choices:
+      - text: 'הטענה שקרית: עבור $n=40$ מקבלים $40^2+40+41=1681=41^2$'
+        correct: true
+        feedback: >-
+          נכון. מקרה אחד שבו הטענה נכשלת מספיק כדי להפריך טענה "לכל". 39 מקרים טובים לא מוכיחים כלום.
+      - text: הטענה נכונה, כי 39 בדיקות הן מספיק ראיות
+        feedback: >-
+          בדיקות מכסות מספר סופי של מקרים ונותנות השערה בלבד. והשערה הזו אכן נופלת: $n=40$ נותן $41^2$.
+        misconception: MC-examples-are-proof
+      - text: הטענה "כמעט נכונה", כי מקרה אחד אינו מפריך טענה שנכונה ב-39 מקרים
+        feedback: >-
+          טענה "לכל $n$" שקרית ברגע שיש $n$ אחד שבו היא נכשלת. במתמטיקה אין "יוצא מן הכלל".
+        misconception: MC-one-counterexample-not-enough
+
+  - id: Q-0.4-squares-counterexample
+    type: multi
+    objectives: [OBJ-0.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      הטענה: "לכל $a$ ו-$b$ ממשיים, אם $a<b$ אז $a^2<b^2$". אילו מהזוגות הבאים הם דוגמה נגדית לטענה? סמנו את
+      כולם.
+    choices:
+      - text: '$a=-3$, $b=2$'
+        correct: true
+        feedback: נכון. $-3<2$, אבל $9<4$ שקר.
+      - text: '$a=-2$, $b=-1$'
+        correct: true
+        feedback: נכון. $-2<-1$, אבל $4<1$ שקר. גם שני מספרים שליליים מפריכים את הטענה.
+      - text: '$a=3$, $b=2$'
+        feedback: >-
+          כאן ההנחה $a<b$ לא מתקיימת, ולכן הזוג לא אומר דבר על הטענה: גרירה עם הנחה שקרית נכונה. דוגמה נגדית
+          צריכה לקיים את ההנחה ולא לקיים את המסקנה.
+        misconception: MC-counterexample-wrong-shape
+      - text: '$a=0$, $b=1$'
+        feedback: >-
+          $0<1$ וגם $0<1$: גם ההנחה וגם המסקנה מתקיימות. זו דוגמה **תומכת**, לא נגדית.
+        misconception: MC-counterexample-wrong-shape
+
+  - id: Q-0.4-exists-refute
+    type: twotier
+    objectives: [OBJ-0.4-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      הטענה: "קיים $x$ ממשי כך ש-$x^2=2x$". מישהו מציב $x=1$, מקבל $1\ne 2$, ואומר שמצא דוגמה נגדית שמפריכה את
+      הטענה. האם הוא צודק?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. טענת "קיים" לא מפריכים בדוגמה, ובמקרה הזה היא אפילו נכונה.
+      - text: כן
+        feedback: >-
+          $x=1$ רק מראה ש-$1$ אינו פתרון. הטענה אומרת שיש פתרון **כלשהו**, ו-$x=2$ הוא פתרון: $4=4$.
+        misconception: MC-counterexample-for-exists
+    reasons:
+      - text: 'השלילה של "קיים" היא "לכל": כדי להפריך צריך להראות שאף $x$ לא מקיים את השוויון; ובפועל $x=0$ ו-$x=2$ מקיימים'
+        correct: true
+        feedback: >-
+          בדיוק. דוגמה אחת **מוכיחה** טענת "קיים" ו**מפריכה** טענת "לכל". כאן $x=2$ מוכיח את הטענה.
+      - text: דוגמה נגדית אחת מפריכה כל טענה
+        feedback: >-
+          רק טענת "לכל". טענת "קיים" אומרת שיש לפחות מקרה אחד טוב, ומקרה רע אחד לא סותר את זה.
+        misconception: MC-counterexample-for-exists
+      - text: '$x=1$ אכן דוגמה נגדית, אבל צריך שתיים כדי להפריך'
+        feedback: >-
+          מספר הדוגמאות לא משנה כאן: גם מאה ערכים שאינם פתרון לא מפריכים "קיים פתרון". צריך טיעון שעובד לכל $x$.
+        misconception: MC-one-counterexample-not-enough
+
+  - id: Q-0.4-iff-plan
+    type: mc
+    objectives: [OBJ-0.4-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      כדי להוכיח "לכל $n$ שלם: $n$ זוגי אם ורק אם $n^2$ זוגי", מה צריך להוכיח?
+    choices:
+      - text: 'גם "אם $n$ זוגי אז $n^2$ זוגי", וגם "אם $n^2$ זוגי אז $n$ זוגי"'
+        correct: true
+        feedback: >-
+          נכון. "אם ורק אם" הוא שתי גרירות. את השנייה נוח להוכיח דרך הקונטרפוזיטיב: אם $n$ אי-זוגי אז $n^2$
+          אי-זוגי.
+      - text: רק "אם $n$ זוגי אז $n^2$ זוגי"
+        feedback: >-
+          זה כיוון אחד. "אם ורק אם" טוען גם את ההפוכה, וההפוכה צריכה הוכחה משלה.
+        misconception: MC-iff-one-direction
+      - text: '"אם $n$ זוגי אז $n^2$ זוגי", וגם את הקונטרפוזיטיב שלה'
+        feedback: >-
+          הקונטרפוזיטיב, "אם $n^2$ אי-זוגי אז $n$ אי-זוגי", שקול לאותו כיוון, ולכן לא מוסיף כלום. הכיוון השני
+          הוא ההפוכה: "אם $n^2$ זוגי אז $n$ זוגי".
+        misconception: MC-iff-one-direction
+      - text: לבדוק את השקילות עבור $n=1,\dots,20$
+        feedback: >-
+          בדיקה של מקרים לא מוכיחה טענה על כל השלמים. כל כיוון צריך טיעון כללי.
+        misconception: MC-examples-are-proof
+
+  - id: Q-0.4-iff-false
+    type: twotier
+    objectives: [OBJ-0.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם נכון ש"לכל $x$ ממשי: $x>1$ אם ורק אם $x^2>1$"?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. כיוון אחד נכון והשני לא, וזה מספיק כדי שה"אם ורק אם" יהיה שקרי.
+      - text: כן
+        feedback: >-
+          $x=-2$ מקיים $x^2=4>1$, אבל $x>1$ לא מתקיים. הכיוון "$x^2>1\Rightarrow x>1$" נכשל.
+        misconception: MC-iff-one-direction
+    reasons:
+      - text: 'הכיוון $x>1\Rightarrow x^2>1$ נכון, אבל $x=-2$ מקיים $x^2>1$ ולא $x>1$'
+        correct: true
+        feedback: >-
+          בדיוק. "אם ורק אם" נכון רק כששני הכיוונים נכונים, ודוגמה נגדית לאחד מהם מפריכה אותו.
+      - text: 'הכיוון $x>1\Rightarrow x^2>1$ נכון, וזה מספיק'
+        feedback: >-
+          זה מספיק רק לגרירה בכיוון אחד. "אם ורק אם" דורש גם את ההפוכה.
+        misconception: MC-iff-one-direction
+      - text: 'שני הכיוונים נכונים: מ-$x^2>1$ מוציאים שורש ומקבלים $x>1$'
+        feedback: >-
+          הוצאת שורש נותנת $|x|>1$, כלומר $x>1$ **או** $x<-1$. העלאה בריבוע והוצאת שורש שומרות על סדר רק
+          במספרים אי-שליליים.
+        misconception: MC-square-preserves-order
+
+  - id: Q-0.4-iff-eight
+    type: mc
+    objectives: [OBJ-0.4-3]
+    level: exam
+    prompt: >-
+      הטענה: "לכל $n$ שלם, $8$ מחלק את $n^2-1$ אם ורק אם $n$ אי-זוגי". הכיוון "אם $n$ אי-זוגי אז $8$ מחלק את
+      $n^2-1$" כבר הוכח. איזה טיעון מוכיח את הכיוון השני?
+    choices:
+      - text: 'אם $n$ זוגי אז $n^2$ זוגי, ולכן $n^2-1$ אי-זוגי ואינו מתחלק ב-$8$'
+        correct: true
+        feedback: >-
+          נכון. זה הקונטרפוזיטיב של "אם $8$ מחלק את $n^2-1$ אז $n$ אי-זוגי": מניחים ש-$n$ אינו אי-זוגי ומראים
+          ש-$8$ אינו מחלק. (מספר אי-זוגי אינו מתחלק ב-$2$, ולכן גם לא ב-$8$.)
+      - text: 'אם $n$ אי-זוגי אז $n^2-1=(n-1)(n+1)$, מכפלה של שני זוגיים עוקבים, ולכן מתחלק ב-$8$'
+        feedback: >-
+          זה טיעון נכון, אבל לכיוון שכבר הוכח. הכיוון השני מתחיל מ-"$8$ מחלק את $n^2-1$" (או, בקונטרפוזיטיב,
+          מ-"$n$ זוגי").
+        misconception: MC-iff-one-direction
+      - text: 'עבור $n=3$: $8$ מחלק את $8$, ו-$3$ אי-זוגי'
+        feedback: >-
+          מקרה אחד אינו הוכחה של טענה על כל השלמים.
+        misconception: MC-examples-are-proof
+      - text: הכיוון השני הוא הטענה ההפוכה של הראשון, ולכן הוא נובע ממנו
+        feedback: >-
+          ההפוכה של טענה נכונה לא נובעת ממנה. בגלל זה "אם ורק אם" דורש שתי הוכחות.
+        misconception: MC-converse-equivalent

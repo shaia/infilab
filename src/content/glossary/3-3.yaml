@@ -1,0 +1,17 @@
+# Terms first defined in lesson 3.3.
+- id: punctured-neighbourhood
+  term: סביבה מנוקבת
+  en: punctured neighbourhood
+  symbol: '(a-\delta,\ a)\cup(a,\ a+\delta)'
+  definition: >-
+    סביבה של $a$ בלי $a$ עצמה: כל ה-$x$ עם $0<|x-a|<\delta$. הגבול בנקודה $a$ דורש ש-$f$ תהיה מוגדרת בסביבה
+    מנוקבת של $a$, ולא מסתכל על $f(a)$.
+  lesson: '3.3'
+- id: limit-of-function
+  term: גבול של פונקציה
+  en: limit of a function
+  symbol: '\lim_{x\to a} f(x) = L'
+  definition: >-
+    $L$ הוא הגבול של $f$ בנקודה $a$ אם לכל $\varepsilon>0$ קיים $\delta>0$ כך שלכל $x$ עם $0<|x-a|<\delta$ מתקיים
+    $|f(x)-L|<\varepsilon$. זו הגדרת קושי; כותבים גם $f(x)\to L$ כש-$x\to a$.
+  lesson: '3.3'

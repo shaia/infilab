@@ -1,0 +1,23 @@
+# Terms first defined in lesson 5.6.
+- id: lagrange-mvt
+  term: משפט לגרנז'
+  en: mean value theorem (Lagrange)
+  definition: >-
+    אם $f$ רציפה ב-$[a,b]$ וגזירה ב-$(a,b)$, קיימת $c\in(a,b)$ כך ש-$f'(c)=\frac{f(b)-f(a)}{b-a}$. נקרא גם
+    משפט הערך הממוצע.
+  lesson: '5.6'
+- id: cauchy-mvt
+  term: משפט הערך הממוצע של קושי
+  en: Cauchy's mean value theorem
+  definition: >-
+    אם $f,g$ רציפות ב-$[a,b]$ וגזירות ב-$(a,b)$, קיימת $c\in(a,b)$ כך ש-$\bigl(f(b)-f(a)\bigr)g'(c)=\bigl(g(b)-g(a)\bigr)f'(c)$.
+    לגרנז' הוא המקרה $g(x)=x$.
+  lesson: '5.6'
+- id: lipschitz
+  term: תנאי ליפשיץ
+  en: Lipschitz condition
+  definition: >-
+    $f$ מקיימת תנאי ליפשיץ בקבוצה $A$ אם קיים $M\ge0$ כך ש-$|f(x)-f(y)|\le M|x-y|$ לכל $x,y\in A$. פונקציה
+    גזירה בקטע עם $|f'|\le M$ מקיימת אותו עם הקבוע $M$.
+  reject: [ליפשיטץ, ליפשיטס]
+  lesson: '5.6'

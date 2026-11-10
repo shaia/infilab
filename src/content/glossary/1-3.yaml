@@ -1,0 +1,23 @@
+# Terms first defined in lesson 1.3.
+- id: inductive-set
+  term: קבוצה אינדוקטיבית
+  en: inductive set
+  definition: >-
+    קבוצה $S\subseteq\mathbb{R}$ שמקיימת $1\in S$, ולכל $x\in S$ גם $x+1\in S$. הטבעיים $\mathbb{N}$ הם
+    הקבוצה האינדוקטיבית הקטנה ביותר: החיתוך של כל הקבוצות האינדוקטיביות.
+  lesson: '1.3'
+- id: rational-number
+  term: מספר רציונלי
+  en: rational number
+  symbol: '\mathbb{Q}'
+  definition: >-
+    מספר מהצורה $\frac pq$ עם $p,q$ שלמים ו-$q\neq0$. קבוצת הרציונליים מסומנת $\mathbb{Q}$, והיא שדה
+    סדור.
+  lesson: '1.3'
+- id: irrational-number
+  term: מספר אי-רציונלי
+  en: irrational number
+  definition: >-
+    מספר ממשי שאינו רציונלי, כמו $\sqrt2$. קבוצת האי-רציונליים היא $\mathbb{R}\setminus\mathbb{Q}$.
+  reject: [אירציונלי]
+  lesson: '1.3'

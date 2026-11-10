@@ -1,0 +1,22 @@
+# Terms first defined in lesson 4.3 (the intermediate value theorem).
+- id: intermediate-value-theorem
+  term: משפט ערך הביניים
+  en: intermediate value theorem
+  definition: >-
+    אם $f$ רציפה בקטע $[a,b]$, אז לכל $y$ שבין $f(a)$ ל-$f(b)$ יש $c\in[a,b]$ עם $f(c)=y$. בפרט, אם
+    $f(a)<0<f(b)$ יש $c\in(a,b)$ עם $f(c)=0$. המשפט נותן קיום, לא יחידות.
+  reject: [משפט ערך הבינים]
+  lesson: '4.3'
+- id: fixed-point
+  term: נקודת שבת
+  en: fixed point
+  definition: >-
+    נקודה $c$ שבה $f(c)=c$ (נקראת גם נקודה קבועה). לכל פונקציה רציפה $f:[0,1]\to[0,1]$ יש נקודת שבת.
+  lesson: '4.3'
+- id: bisection-method
+  term: שיטת החציה
+  en: bisection method
+  definition: >-
+    חוצים את הקטע $[a,b]$, שבקצותיו $f$ בסימנים הפוכים, ובוחרים את החצי שבקצותיו הסימנים עדיין הפוכים. אחרי $n$
+    שלבים הקטע באורך $\frac{b-a}{2^n}$, והקצוות שואפים לשורש של $f$.
+  lesson: '4.3'

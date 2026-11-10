@@ -1,0 +1,7 @@
+---
+/** Lesson-0.5 figure: <Spread figure={InductionChain} figureProps={{…}}>. */
+import InductionChain, { type InductionChainProps } from './InductionChain';
+type Props = InductionChainProps;
+---
+
+<InductionChain client:visible {...Astro.props} />

@@ -1,0 +1,332 @@
+# Lesson 6.4 — the Taylor polynomial.
+# Objectives (src/course.ts):
+#   OBJ-6.4-1  define the Taylor polynomial and compute it for the elementary functions
+#   OBJ-6.4-2  prove that it is the unique polynomial approximating f to order n
+#   OBJ-6.4-3  use Taylor polynomials to compute limits
+chapter: 6
+questions:
+  - id: Q-6.4-sin3
+    type: mc
+    objectives: [OBJ-6.4-1]
+    level: basic
+    prompt: >-
+      מהו פולינום טיילור מסדר $3$ של $\sin x$ סביב $0$?
+    choices:
+      - text: '$x-\frac{x^3}{6}$'
+        correct: true
+        feedback: >-
+          נכון. $\sin 0 = 0$, $\sin'(0) = \cos 0 = 1$, $\sin''(0) = -\sin 0 = 0$, $\sin'''(0) = -\cos 0 = -1$,
+          ולכן $T_3(x) = x + \frac{-1}{3!}x^3$.
+      - text: '$x-x^3$'
+        feedback: >-
+          המקדם של $x^3$ הוא $\frac{\sin'''(0)}{3!} = -\frac16$, לא $\sin'''(0) = -1$. שכחתם לחלק בעצרת.
+        misconception: MC-taylor-forget-factorial
+      - text: '$x-\frac{x^3}{3}$'
+        feedback: >-
+          המכנה $3$ מגיע מתבנית של פיתוח אחר (כמו $\ln(1+x)$). כאן המקדם הוא $\frac{-1}{3!} = -\frac16$.
+        misconception: MC-taylor-pattern-guess
+      - text: '$x+\frac{x^3}{6}$'
+        feedback: >-
+          הנגזרת השלישית של סינוס היא $-\cos x$, ולכן $\sin'''(0) = -1$ והמקדם שלילי.
+        misconception: MC-taylor-pattern-guess
+
+  - id: Q-6.4-even
+    type: twotier
+    objectives: [OBJ-6.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $f(x) = x^4+\cos x$ היא פונקציה זוגית. האם בפולינום טיילור מסדר $5$ שלה סביב $0$ יכול להופיע $x^3$ עם
+      מקדם שונה מאפס?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. כל החזקות האי-זוגיות נעלמות: $T_5(x) = 1-\frac{x^2}{2}+\left(1+\frac1{24}\right)x^4$.
+      - text: כן
+        feedback: >-
+          המקדם של $x^3$ הוא $\frac{f'''(0)}{3!}$, ו-$f'''(x) = 24x+\sin x$ מתאפסת ב-$0$.
+        misconception: MC-taylor-pattern-guess
+    reasons:
+      - text: 'הנגזרת של פונקציה זוגית היא אי-זוגית ולהפך, ולכן כל נגזרת מסדר אי-זוגי של $f$ אי-זוגית, ומתאפסת ב-$0$'
+        correct: true
+        feedback: >-
+          בדיוק. פונקציה אי-זוגית $h$ מקיימת $h(0) = -h(0)$, כלומר $h(0)=0$. לכן $f^{(k)}(0) = 0$ לכל $k$
+          אי-זוגי.
+      - text: 'בפיתוחים של קוסינוס הסימנים מתחלפים, ולכן כל איבר שני נעלם'
+        feedback: >-
+          סימנים מתחלפים אינם איברים שנעלמים. הסיבה היא הזוגיות: הנגזרות מסדר אי-זוגי מתאפסות ב-$0$.
+        misconception: MC-taylor-pattern-guess
+
+  - id: Q-6.4-sqrt4
+    type: numeric
+    objectives: [OBJ-6.4-1]
+    level: mid
+    prompt: >-
+      מהו המקדם של $(x-4)^2$ בפולינום טיילור מסדר $2$ של $f(x) = \sqrt x$ סביב $a=4$?
+    answer: -0.015625
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $-\frac{1}{64}$. $f''(x) = -\frac14 x^{-3/2}$, ולכן $f''(4) = -\frac14\cdot\frac18 = -\frac1{32}$, והמקדם
+      $\frac{f''(4)}{2!} = -\frac{1}{64}$. כל הפולינום: $T_2(x) = 2+\frac{x-4}{4}-\frac{(x-4)^2}{64}$.
+    wrongFeedback: >-
+      גזרו פעמיים, הציבו $x=4$ (שימו לב ש-$4^{3/2} = 8$) וחלקו ב-$2!$.
+    commonWrong:
+      - value: -0.03125
+        feedback: >-
+          זו $f''(4)$ עצמה. המקדם הוא $\frac{f''(4)}{2!}$.
+        misconception: MC-taylor-forget-factorial
+      - value: -0.0625
+        feedback: >-
+          $-\frac{1}{16}$ מתקבל מ-$4^{1/2}$ במקום $4^{3/2}$: הנגזרת השנייה כוללת $x^{-3/2}$.
+
+  - id: Q-6.4-ln
+    type: mc
+    objectives: [OBJ-6.4-1]
+    level: mid
+    prompt: >-
+      מהו פולינום טיילור מסדר $4$ של $\ln(1+x)$ סביב $0$?
+    choices:
+      - text: '$x-\frac{x^2}{2}+\frac{x^3}{3}-\frac{x^4}{4}$'
+        correct: true
+        feedback: >-
+          נכון. $f^{(k)}(x) = \frac{(-1)^{k+1}(k-1)!}{(1+x)^k}$, ולכן המקדם $\frac{f^{(k)}(0)}{k!} = \frac{(-1)^{k+1}(k-1)!}{k!} = \frac{(-1)^{k+1}}{k}$.
+      - text: '$x-\frac{x^2}{2!}+\frac{x^3}{3!}-\frac{x^4}{4!}$'
+        feedback: >-
+          העצרת במכנה מתבטלת חלקית עם $(k-1)!$ שבנגזרת. העתקתם את תבנית הפיתוח של $e^x$.
+        misconception: MC-taylor-pattern-guess
+      - text: '$1+x-\frac{x^2}{2}+\frac{x^3}{3}$'
+        feedback: >-
+          האיבר החופשי הוא $f(0) = \ln 1 = 0$, לא $1$.
+        misconception: MC-taylor-pattern-guess
+      - text: '$x-x^2+2x^3-6x^4$'
+        feedback: >-
+          אלה הנגזרות עצמן, $f^{(k)}(0) = (-1)^{k+1}(k-1)!$. המקדם הוא $\frac{f^{(k)}(0)}{k!}$.
+        misconception: MC-taylor-forget-factorial
+
+  - id: Q-6.4-binom
+    type: numeric
+    objectives: [OBJ-6.4-1]
+    level: mid
+    prompt: >-
+      מהו המקדם של $x^2$ בפולינום טיילור מסדר $2$ של $\frac{1}{\sqrt{1+x}} = (1+x)^{-1/2}$ סביב $0$?
+    answer: 0.375
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac38$. עבור $(1+x)^\alpha$: $T_2 = 1+\alpha x+\frac{\alpha(\alpha-1)}{2}x^2$, ועם $\alpha=-\frac12$
+      המקדם $\frac{(-1/2)(-3/2)}{2} = \frac38$.
+    wrongFeedback: >-
+      הנגזרת השנייה של $(1+x)^\alpha$ היא $\alpha(\alpha-1)(1+x)^{\alpha-2}$. הציבו $x=0$ וחלקו ב-$2!$.
+    commonWrong:
+      - value: 0.75
+        feedback: >-
+          $\frac34 = \alpha(\alpha-1)$ היא הנגזרת השנייה ב-$0$. המקדם הוא חצי ממנה.
+        misconception: MC-taylor-forget-factorial
+      - value: -0.375
+        feedback: >-
+          $\alpha(\alpha-1) = \left(-\frac12\right)\left(-\frac32\right)$ היא מכפלה של שני שליליים, ולכן חיובית.
+
+  - id: Q-6.4-little-o
+    type: multi
+    objectives: [OBJ-6.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      אילו מהפונקציות הבאות הן $o(x^2)$ כש-$x\to0$? סמנו את כולן.
+    choices:
+      - text: '$x^3$'
+        correct: true
+        feedback: 'נכון: $\frac{x^3}{x^2} = x\to0$.'
+      - text: '$x^2\sin x$'
+        correct: true
+        feedback: 'נכון: $\frac{x^2\sin x}{x^2} = \sin x\to0$.'
+      - text: '$|x|^{5/2}$'
+        correct: true
+        feedback: 'נכון: $\frac{|x|^{5/2}}{x^2} = |x|^{1/2}\to0$. החזקה לא חייבת להיות שלמה.'
+      - text: '$3x^2$'
+        feedback: >-
+          $\frac{3x^2}{x^2} = 3$ אינו שואף לאפס. $o(x^2)$ פירושו "זניח לעומת $x^2$", לא "בסדר גודל של $x^2$".
+        misconception: MC-little-o-is-big-o
+      - text: '$x\sin x$'
+        feedback: >-
+          $\frac{x\sin x}{x^2} = \frac{\sin x}{x}\to1$, לא $0$. ליד $0$ הפונקציה מתנהגת כמו $x^2$, ולכן אינה
+          זניחה לעומתו.
+        misconception: MC-little-o-is-big-o
+
+  - id: Q-6.4-extra-term
+    type: twotier
+    objectives: [OBJ-6.4-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $P(x) = 1+x+\frac{x^2}{2}+x^3$ מקיים $e^x - P(x) = o(x^2)$ כש-$x\to0$. האם $P$ הוא פולינום טיילור מסדר
+      $2$ של $e^x$ סביב $0$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: >-
+          נכון. $T_2(x) = 1+x+\frac{x^2}{2}$, ו-$P$ שונה ממנו.
+      - text: כן
+        feedback: >-
+          משפט היחידות מדבר על פולינומים ממעלה $2$ לכל היותר, ו-$P$ ממעלה $3$.
+        misconception: MC-taylor-uniqueness-any-degree
+    reasons:
+      - text: 'היחידות היא רק בין פולינומים ממעלה $\le 2$, ו-$x^3$ הוא בעצמו $o(x^2)$, כך שאפשר להוסיף אותו בלי לקלקל את הקירוב'
+        correct: true
+        feedback: >-
+          בדיוק. לכן $e^x - P(x) = \left(e^x - T_2(x)\right) - x^3 = o(x^2)$. ההגבלה על המעלה היא חלק מהמשפט.
+      - text: 'הקירוב $e^x - P(x) = o(x^2)$ אינו נכון, כי $x^3$ אינו זניח'
+        feedback: >-
+          $\frac{x^3}{x^2} = x\to 0$, ולכן $x^3 = o(x^2)$ והקירוב נכון. הבעיה היא במעלה של $P$.
+        misconception: MC-little-o-is-big-o
+      - text: 'כל פולינום שמקרב את $e^x$ עד $o(x^2)$ הוא פולינום טיילור, ולכן זה כן $T_2$'
+        feedback: >-
+          זה בדיוק המשפט בלי ההנחה על המעלה, והדוגמה הזו מראה שבלעדיה הוא לא נכון.
+        misconception: MC-taylor-uniqueness-any-degree
+
+  - id: Q-6.4-ex2-deriv
+    type: numeric
+    objectives: [OBJ-6.4-2]
+    level: mid
+    prompt: >-
+      מהצבת $u = x^2$ בפיתוח של $e^u$ מקבלים $e^{x^2} = 1+x^2+\frac{x^4}{2}+o(x^4)$. בעזרת משפט היחידות, מהו
+      $f^{(4)}(0)$ עבור $f(x) = e^{x^2}$?
+    answer: 12
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $1+x^2+\frac{x^4}{2}$ ממעלה $\le 4$ ומקרב את $f$ עד $o(x^4)$, ולכן לפי היחידות זה $T_4$. המקדם של
+      $x^4$ הוא $\frac{f^{(4)}(0)}{4!} = \frac12$, כלומר $f^{(4)}(0) = 12$, בלי לגזור ארבע פעמים.
+    wrongFeedback: >-
+      המקדם של $x^4$ בפולינום טיילור הוא $\frac{f^{(4)}(0)}{4!}$. השוו אותו ל-$\frac12$.
+    commonWrong:
+      - value: 0.5
+        feedback: >-
+          $\frac12$ הוא המקדם. הנגזרת היא המקדם כפול $4! = 24$.
+        misconception: MC-taylor-forget-factorial
+      - value: 2
+        feedback: >-
+          $2 = f''(0)$, מהמקדם $1$ של $x^2$ כפול $2!$. השאלה היא על הנגזרת הרביעית.
+
+  - id: Q-6.4-unique-proof
+    type: rank
+    objectives: [OBJ-6.4-2]
+    level: exam
+    prompt: >-
+      הוכחת היחידות: אם $P,Q$ פולינומים ממעלה $n$ לכל היותר, ו-$f-P$ וגם $f-Q$ הם $o\left((x-a)^n\right)$
+      כש-$x\to a$, אז $P = Q$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: diff
+        label: '$R = P-Q = (f-Q)-(f-P)$ הוא פולינום ממעלה $\le n$, ו-$R(x) = o\left((x-a)^n\right)$.'
+      - id: write
+        label: 'כותבים $R(x) = \sum_{k=0}^{n} c_k (x-a)^k$, ונניח בשלילה ש-$R\ne0$.'
+      - id: first
+        label: 'יהי $m\le n$ האינדקס הקטן ביותר עם $c_m\ne0$.'
+      - id: limit
+        label: '$\frac{R(x)}{(x-a)^m} = c_m + c_{m+1}(x-a)+\dots+c_n(x-a)^{n-m} \to c_m$ כש-$x\to a$.'
+      - id: zero
+        label: 'מצד שני $\frac{R(x)}{(x-a)^m} = \frac{R(x)}{(x-a)^n}\cdot(x-a)^{n-m}\to 0$, ולכן $c_m=0$: סתירה.'
+    order: [diff, write, first, limit, zero]
+    correctFeedback: >-
+      נכון. המעלה $\le n$ נכנסת בשלב האחרון: היא מבטיחה $m\le n$, כך ש-$(x-a)^{n-m}$ חסום ליד $a$.
+    wrongFeedback: >-
+      קודם מעבירים לפולינום אחד $R$ שהוא $o\left((x-a)^n\right)$, ואז מראים שהמקדם הראשון שלו שאינו אפס חייב
+      להיות אפס.
+
+  - id: Q-6.4-sin-lim
+    type: numeric
+    objectives: [OBJ-6.4-3]
+    level: basic
+    prompt: >-
+      חשבו בעזרת פיתוח טיילור את $\lim_{x\to0}\frac{\sin x - x}{x^3}$.
+    answer: -0.1666666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $-\frac16$. $\sin x = x-\frac{x^3}{6}+o(x^3)$, ולכן המונה $-\frac{x^3}{6}+o(x^3)$, ואחרי חלוקה
+      ב-$x^3$ נשאר $-\frac16 + \frac{o(x^3)}{x^3}\to-\frac16$.
+    wrongFeedback: >-
+      פתחו את $\sin x$ עד החזקה $x^3$ (כמו המכנה), ושימו לב לסימן.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          עם $\sin x \approx x$ המונה נראה כמו אפס, אבל $\sin x = x+o(x)$ נותן במונה רק $o(x)$, ומחלוקה
+          ב-$x^3$ לא נשאר מידע. צריך את האיבר של $x^3$.
+        misconception: MC-taylor-order-too-low
+      - value: 0.1666666667
+        feedback: >-
+          הסימן: $\sin'''(0) = -\cos0 = -1$, ולכן המקדם של $x^3$ בפיתוח הוא $-\frac16$.
+
+  - id: Q-6.4-order
+    type: mc
+    objectives: [OBJ-6.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בחישוב $\lim_{x\to0}\frac{\sin x - x}{x^3}$ בטיילור, מהו הסדר הנמוך ביותר שמספיק לפתח אליו את $\sin x$?
+    choices:
+      - text: 'סדר $3$: $\sin x = x-\frac{x^3}{6}+o(x^3)$'
+        correct: true
+        feedback: >-
+          נכון. אחרי ש-$x$ מתבטל, האיבר הראשון שנשאר במונה צריך להופיע במפורש, והשארית צריכה להיות $o(x^3)$,
+          כמו המכנה.
+      - text: 'סדר $1$: $\sin x = x+o(x)$'
+        feedback: >-
+          אז המונה הוא $o(x)$, ו-$\frac{o(x)}{x^3}$ יכול להיות כל דבר (למשל $\frac{x^2}{x^3}\to\infty$). השארית
+          בולעת את התשובה.
+        misconception: MC-taylor-order-too-low
+      - text: 'סדר $2$: $\sin x = x+o(x^2)$'
+        feedback: >-
+          $T_2 = T_1 = x$ לסינוס, והשארית $o(x^2)$ עדיין גדולה מדי ביחס ל-$x^3$. המונה יוצא $o(x^2)$, ומזה
+          אי אפשר להסיק דבר.
+        misconception: MC-taylor-order-too-low
+
+  - id: Q-6.4-cos-exp
+    type: numeric
+    objectives: [OBJ-6.4-3]
+    level: exam
+    prompt: >-
+      חשבו את $\lim_{x\to0}\frac{\cos x - e^{-x^2/2}}{x^4}$.
+    answer: -0.0833333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $-\frac1{12}$. $\cos x = 1-\frac{x^2}{2}+\frac{x^4}{24}+o(x^4)$, ומהצבת $u=-\frac{x^2}{2}$ ב-$e^u = 1+u+\frac{u^2}{2}+o(u^2)$:
+      $e^{-x^2/2} = 1-\frac{x^2}{2}+\frac{x^4}{8}+o(x^4)$. ההפרש $\left(\frac1{24}-\frac18\right)x^4+o(x^4) = -\frac{x^4}{12}+o(x^4)$.
+    wrongFeedback: >-
+      שני הפיתוחים מסכימים עד $x^2$, ולכן צריך את שניהם עד $x^4$. לפיתוח של $e^{-x^2/2}$ הציבו $u=-\frac{x^2}{2}$
+      ב-$e^u$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          עד סדר $2$ שני הפיתוחים זהים, $1-\frac{x^2}{2}$, אבל ההפרש $o(x^2)$ אינו מספיק לחלוקה ב-$x^4$.
+        misconception: MC-taylor-order-too-low
+      - value: 0.1666666667
+        feedback: >-
+          $\frac{u^2}{2}$ עם $u = -\frac{x^2}{2}$ הוא $+\frac{x^4}{8}$: ריבוע של שלילי חיובי. עם $-\frac{x^4}{8}$
+          מקבלים $\frac1{24}+\frac18 = \frac16$.
+      - value: 0.0833333333
+        feedback: >-
+          הסימן הפוך: $\frac{1}{24}-\frac{1}{8} = \frac{1-3}{24} = -\frac{1}{12}$.
+
+  - id: Q-6.4-sin2
+    type: numeric
+    objectives: [OBJ-6.4-3]
+    level: exam
+    prompt: >-
+      חשבו את $\lim_{x\to0}\left(\frac{1}{\sin^2 x}-\frac{1}{x^2}\right)$.
+    answer: 0.3333333333
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $\frac13$. במכנה משותף $\frac{x^2-\sin^2 x}{x^2\sin^2 x}$. מ-$\sin x = x-\frac{x^3}{6}+o(x^3)$:
+      $\sin^2x = x^2-\frac{x^4}{3}+o(x^4)$. המונה $\frac{x^4}{3}+o(x^4)$, המכנה $x^4+o(x^4)$, והמנה שואפת
+      ל-$\frac13$. בלופיטל זה דורש ארבע הפעלות.
+    wrongFeedback: >-
+      העבירו למכנה משותף, פתחו את $\sin^2 x$ עד $x^4$ (כפלו את הפיתוח של $\sin x$ בעצמו), וחלקו ב-$x^4$.
+    commonWrong:
+      - value: 0
+        feedback: >-
+          אינסוף פחות אינסוף אינו אפס. אחרי מכנה משותף זו צורה של אפס חלקי אפס.
+        misconception: MC-indeterminate-form-value
+      - value: 0.1666666667
+        feedback: >-
+          בריבוע של $x-\frac{x^3}{6}$ האיבר של $x^4$ מופיע פעמיים: $2\cdot x\cdot\left(-\frac{x^3}{6}\right) = -\frac{x^4}{3}$,
+          לא $-\frac{x^4}{6}$.

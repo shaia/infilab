@@ -1,0 +1,28 @@
+# Terms first defined in lesson 4.2 (points of discontinuity).
+- id: discontinuity-point
+  term: נקודת אי-רציפות
+  en: point of discontinuity
+  definition: >-
+    נקודה $x_0$ **בתחום** של $f$ שבה $f$ אינה רציפה. נקודת אי-רציפות היא סליקה, קפיצה או מסוג שני.
+  lesson: '4.2'
+- id: removable-discontinuity
+  term: אי-רציפות סליקה
+  en: removable discontinuity
+  definition: >-
+    הגבול $\lim_{x\to x_0}f(x)$ קיים (כמספר) ושונה מ-$f(x_0)$. שינוי הערך בנקודה אחת, לערך הגבול, הופך את $f$
+    לרציפה ב-$x_0$.
+  lesson: '4.2'
+- id: jump-discontinuity
+  term: אי-רציפות מסוג קפיצה
+  en: jump discontinuity
+  definition: >-
+    שני הגבולות החד-צדדיים ב-$x_0$ קיימים (כמספרים) ושונים זה מזה. סליקה וקפיצה נקראות יחד אי-רציפות מסוג
+    ראשון.
+  lesson: '4.2'
+- id: second-kind-discontinuity
+  term: אי-רציפות מסוג שני
+  en: discontinuity of the second kind
+  definition: >-
+    לפחות אחד מהגבולות החד-צדדיים ב-$x_0$ אינו קיים כמספר ממשי: למשל $\sin\frac1x$ ב-0 (תנודה), או $\frac1x$ ב-0
+    עם ערך כלשהו שם (גבול אינסופי).
+  lesson: '4.2'

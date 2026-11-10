@@ -1,0 +1,31 @@
+# Terms first defined in lesson 2.1.
+- id: sequence
+  term: סדרה
+  en: sequence
+  symbol: '(a_n)_{n=1}^{\infty}'
+  definition: >-
+    פונקציה $a:\mathbb{N}\to\mathbb{R}$. כותבים $a_n$ במקום $a(n)$; $n$ הוא המקום (האינדקס) ו-$a_n$ הוא האיבר
+    במקום ה-$n$. סדרה יכולה להינתן בנוסחה, ברקורסיה או במילים.
+  reject: [סידרה]
+  lesson: '2.1'
+- id: recursive-definition
+  term: הגדרה רקורסיבית
+  en: recursive definition
+  definition: >-
+    הגדרה של סדרה שנותנת את האיבר הראשון (או כמה ראשונים) וכלל שמחשב כל איבר מהקודמים לו, למשל $a_1 = 1$,
+    $a_{n+1} = 2a_n+1$. נקראת גם נוסחת נסיגה.
+  lesson: '2.1'
+- id: bounded-sequence
+  term: סדרה חסומה
+  en: bounded sequence
+  definition: >-
+    הסדרה $a_n$ חסומה מלעיל אם קיים $M$ כך ש-$a_n\le M$ לכל $n$, וחסומה מלרע אם קיים $m$ כך ש-$a_n\ge m$ לכל
+    $n$. היא חסומה אם היא חסומה מלעיל וגם מלרע, כלומר קיים $M>0$ כך ש-$|a_n|\le M$ לכל $n$.
+  lesson: '2.1'
+- id: monotone-sequence
+  term: סדרה מונוטונית
+  en: monotone sequence
+  definition: >-
+    סדרה עולה ($a_{n+1}\ge a_n$ לכל $n$) או יורדת ($a_{n+1}\le a_n$ לכל $n$). עם אי-שוויון חזק היא עולה ממש או
+    יורדת ממש. הסדרה הקבועה עולה וגם יורדת.
+  lesson: '2.1'

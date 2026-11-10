@@ -1,0 +1,106 @@
+# Terms first defined in lesson 0.2 (statements, connectives and implication).
+- id: statement
+  term: פסוק
+  en: statement (proposition)
+  definition: 'משפט שיש לו ערך אמת אחד: אמת או שקר.'
+  lesson: '0.2'
+- id: negation
+  term: שלילה
+  en: negation
+  symbol: '\neg P'
+  definition: >-
+    הפסוק "לא $P$", שהוא אמת בדיוק כש-$P$ שקר.
+  lesson: '0.2'
+- id: conjunction
+  term: וגם
+  en: conjunction (and)
+  symbol: 'P\land Q'
+  definition: >-
+    הפסוק "$P$ וגם $Q$", שהוא אמת בדיוק כששני הפסוקים אמת.
+  lesson: '0.2'
+- id: disjunction
+  term: או
+  en: disjunction (or)
+  symbol: 'P\lor Q'
+  definition: >-
+    הפסוק "$P$ או $Q$", שהוא אמת כשלפחות אחד מהם אמת (גם כששניהם אמת).
+  lesson: '0.2'
+- id: implication
+  term: גרירה
+  en: implication
+  symbol: 'P\Rightarrow Q'
+  definition: >-
+    הפסוק "אם $P$ אז $Q$". הוא שקר רק כש-$P$ אמת ו-$Q$ שקר; כש-$P$ שקר הוא אמת.
+  lesson: '0.2'
+- id: equivalence
+  term: שקילות
+  en: equivalence (if and only if)
+  symbol: 'P\iff Q'
+  definition: >-
+    הפסוק "$P$ אם ורק אם $Q$", שהוא אמת כש-$P$ ו-$Q$ מקבלים אותו ערך אמת. שני פסוקים נקראים שקולים אם יש להם
+    אותו ערך אמת בכל מקרה.
+  lesson: '0.2'
+- id: truth-table
+  term: טבלת אמת
+  en: truth table
+  definition: >-
+    טבלה שמראה את ערך האמת של פסוק מורכב לכל צירוף של ערכי האמת של חלקיו; לשני פסוקים יש ארבע שורות.
+  lesson: '0.2'
+- id: converse
+  term: הטענה ההפוכה
+  en: converse
+  definition: >-
+    ההפוכה של $P\Rightarrow Q$ היא $Q\Rightarrow P$. היא אינה שקולה לטענה המקורית.
+  lesson: '0.2'
+- id: inverse-statement
+  term: הטענה הנגדית
+  en: inverse
+  definition: >-
+    הנגדית של $P\Rightarrow Q$ היא $\neg P\Rightarrow\neg Q$. היא שקולה להפוכה, ולא לטענה המקורית.
+  lesson: '0.2'
+- id: contrapositive
+  term: קונטרפוזיטיב
+  en: contrapositive
+  definition: >-
+    הקונטרפוזיטיב של $P\Rightarrow Q$ הוא $\neg Q\Rightarrow\neg P$. הוא שקול לטענה המקורית.
+  lesson: '0.2'
+- id: sufficient-condition
+  term: תנאי מספיק
+  en: sufficient condition
+  definition: >-
+    $P$ הוא תנאי מספיק ל-$Q$ אם $P\Rightarrow Q$: כש-$P$ מתקיים, גם $Q$ מתקיים.
+  lesson: '0.2'
+- id: necessary-condition
+  term: תנאי הכרחי
+  en: necessary condition
+  definition: >-
+    $P$ הוא תנאי הכרחי ל-$Q$ אם $Q\Rightarrow P$: בלי $P$ אין $Q$. אומרים גם "$Q$ רק אם $P$".
+  lesson: '0.2'
+- id: truth-value
+  term: ערך אמת
+  en: truth value
+  definition: >-
+    אחד משני הערכים שיש לפסוק: אמת או שקר. בטבלאות אמת כותבים T לאמת ו-F לשקר.
+  lesson: '0.2'
+- id: vacuous-truth
+  term: אמת ריקה
+  en: vacuous truth
+  definition: >-
+    גרירה $P\Rightarrow Q$ שההנחה שלה $P$ שקרית. היא אמת, כי היא מבטיחה משהו רק כש-$P$ מתקיים, ולכן אין מקרה
+    שמפר אותה.
+  lesson: '0.2'
+- id: logically-equivalent
+  term: שקולים
+  en: logically equivalent
+  definition: >-
+    שני פסוקים מורכבים הם שקולים אם יש להם אותו ערך אמת בכל שורה של טבלת האמת המשותפת שלהם. אז מותר להחליף
+    אחד בשני בכל הוכחה.
+  lesson: '0.2'
+- id: de-morgan-logic
+  term: כללי דה-מורגן
+  en: De Morgan's laws
+  symbol: '\neg(P\land Q)\equiv\neg P\lor\neg Q'
+  definition: >-
+    השלילה של "וגם" היא "או" של השלילות, והשלילה של "או" היא "וגם" של השלילות:
+    $\neg(P\land Q)\equiv\neg P\lor\neg Q$ ו-$\neg(P\lor Q)\equiv\neg P\land\neg Q$.
+  lesson: '0.2'

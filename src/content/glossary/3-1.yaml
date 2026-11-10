@@ -1,0 +1,51 @@
+# Terms first defined in lesson 3.1 (function, domain, composition and inverse come from lesson 0.6).
+- id: natural-domain
+  term: תחום הגדרה טבעי
+  en: natural domain
+  definition: >-
+    כשפונקציה נתונה בנוסחה בלי תחום, התחום הוא קבוצת כל ה-$x$ שעבורם הנוסחה, כפי שנכתבה, מוגדרת: אין חלוקה
+    באפס ואין שורש זוגי של מספר שלילי. התחום נקבע לפני כל צמצום.
+  lesson: '3.1'
+- id: piecewise-function
+  term: פונקציה מוגדרת למקוטעין
+  en: piecewise-defined function
+  definition: >-
+    פונקציה שנוסחתה משתנה לפי תחומים, למשל $|x|$, ששווה ל-$x$ כש-$x\ge0$ ול-$(-x)$ כש-$x<0$. בכל נקודה חלה
+    הנוסחה של התחום שמכיל אותה.
+  reject: [פונקציה מוגדרת בחלקים]
+  lesson: '3.1'
+- id: monotone-function
+  term: פונקציה מונוטונית
+  en: monotone function
+  definition: >-
+    $f$ עולה בקבוצה $A$ אם לכל $x,y\in A$ עם $x<y$ מתקיים $f(x)\le f(y)$, ועולה ממש אם $f(x)<f(y)$; יורדת
+    ויורדת ממש באופן דומה. מונוטונית פירושו עולה או יורדת.
+  lesson: '3.1'
+- id: bounded-function
+  term: פונקציה חסומה
+  en: bounded function
+  definition: >-
+    $f$ חסומה מלעיל בקבוצה $A$ אם יש $M$ כך ש-$f(x)\le M$ לכל $x\in A$, חסומה מלרע אם יש $m$ עם $f(x)\ge m$,
+    וחסומה אם שני הדברים נכונים, כלומר יש $M$ עם $|f(x)|\le M$. החסם אינו חייב להתקבל.
+  lesson: '3.1'
+- id: even-function
+  term: פונקציה זוגית
+  en: even function
+  definition: >-
+    פונקציה על תחום סימטרי ($x$ בתחום גורר $-x$ בתחום) שמקיימת $f(-x)=f(x)$ לכל $x$. הגרף שלה סימטרי
+    לציר $y$.
+  lesson: '3.1'
+- id: odd-function
+  term: פונקציה אי-זוגית
+  en: odd function
+  definition: >-
+    פונקציה על תחום סימטרי שמקיימת $f(-x)=-f(x)$ לכל $x$. הגרף שלה סימטרי לראשית, ואם $0$ בתחום אז $f(0)=0$.
+  reject: [פונקציה אי זוגית]
+  lesson: '3.1'
+- id: periodic-function
+  term: פונקציה מחזורית
+  en: periodic function
+  definition: >-
+    $f$ מחזורית אם יש $T>0$, שנקרא מחזור, כך ש-$f(x+T)=f(x)$ לכל $x$ בתחום. אם $T$ מחזור, גם $2T$, $3T$ וכן
+    הלאה; מחזור חיובי קטן ביותר לא תמיד קיים.
+  lesson: '3.1'

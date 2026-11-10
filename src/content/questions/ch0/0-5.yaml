@@ -1,0 +1,305 @@
+# Lesson 0.5 — mathematical induction.
+# Objectives (src/course.ts):
+#   OBJ-0.5-1  state and carry out a proof by induction: base, induction hypothesis, step
+#   OBJ-0.5-2  prove sum formulas and inequalities by induction, Bernoulli's inequality included
+#   OBJ-0.5-3  spot a flawed induction proof (a missing base, or a step that does not work for every n)
+chapter: 0
+questions:
+  - id: Q-0.5-step-meaning
+    type: mc
+    objectives: [OBJ-0.5-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה עושים בצעד האינדוקציה?
+    choices:
+      - text: מניחים שהטענה נכונה עבור $n$ מסוים, ומוכיחים שהיא נכונה עבור $n+1$
+        correct: true
+        feedback: >-
+          נכון. הצעד הוא גרירה, "אם עבור $n$ אז עבור $n+1$", שמוכיחים לכל $n$. יחד עם הבסיס היא מעבירה את
+          הטענה מ-$1$ ל-$2$, מ-$2$ ל-$3$, וכן הלאה.
+      - text: מניחים שהטענה נכונה לכל $n$, ומוכיחים שהיא נכונה עבור $n+1$
+        feedback: >-
+          אם מניחים שהטענה נכונה לכל $n$, הנחנו את מה שרוצים להוכיח. מניחים אותה עבור $n$ **אחד**, ומסיקים אותה
+          עבור הבא אחריו.
+        misconception: MC-induction-hypothesis-circular
+      - text: בודקים את הטענה עבור $n=1$, $n=2$ ו-$n=3$, ומשם רואים שהיא ממשיכה
+        feedback: >-
+          בדיקה של כמה מקרים היא לא צעד: היא לא מראה למה מקרה גורר את הבא. צעד מוכיח את הגרירה לכל $n$ בטיעון
+          אחד.
+        misconception: MC-examples-are-proof
+      - text: מניחים שהטענה נכונה עבור $n+1$, ומוכיחים שהיא נכונה עבור $n$
+        feedback: >-
+          זה הכיוון ההפוך: כך יורדים מ-$n+1$ ל-$n$, ואף פעם לא עולים מהבסיס. צריך להתחיל ממה שכבר ידוע, $n$,
+          ולהגיע ל-$n+1$.
+        misconception: MC-proof-backwards
+
+  - id: Q-0.5-what-to-prove
+    type: mc
+    objectives: [OBJ-0.5-1]
+    level: basic
+    prompt: >-
+      מוכיחים באינדוקציה ש-$2^n>n$ לכל $n$ טבעי. מה בדיוק צריך להוכיח בצעד?
+    choices:
+      - text: 'לכל $n\ge 1$: אם $2^n>n$ אז $2^{n+1}>n+1$'
+        correct: true
+        feedback: >-
+          נכון. הצעד הוא גרירה, והיא צריכה לעבוד לכל $n$ מהבסיס והלאה. כאן:
+          $2^{n+1}=2\cdot 2^n>2n\ge n+1$, והאי-שוויון האחרון נכון לכל $n\ge 1$.
+      - text: 'עבור $n=1$: אם $2^1>1$ אז $2^2>2$'
+        feedback: >-
+          זה רק המעבר הראשון. הצעד צריך לכסות את כל המעברים: מ-$1$ ל-$2$, מ-$2$ ל-$3$, וכן הלאה, ולכן מוכיחים
+          אותו עבור $n$ כללי.
+        misconception: MC-induction-step-not-all-n
+      - text: 'לכל $n\ge 1$: אם $2^{n+1}>n+1$ אז $2^n>n$'
+        feedback: >-
+          זו הגרירה בכיוון ההפוך, והיא לא מעבירה את הטענה הלאה מהבסיס. צריך: מ-$n$ אל $n+1$.
+        misconception: MC-proof-backwards
+      - text: '$2^{n+1}>n+1$, בעזרת ההנחה ש-$2^{n+1}>n+1$'
+        feedback: >-
+          מותר להשתמש רק בטענה עבור $n$. להניח את הטענה עבור $n+1$ זה להניח את מה שצריך להוכיח בצעד.
+        misconception: MC-induction-hypothesis-circular
+
+  - id: Q-0.5-odd-sum
+    type: rank
+    objectives: [OBJ-0.5-1, OBJ-0.5-2]
+    level: mid
+    prompt: >-
+      הוכיחו באינדוקציה: לכל $n$ טבעי, $1+3+5+\dots+(2n-1)=n^2$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: base
+        label: 'בסיס: עבור $n=1$ שני האגפים שווים ל-$1$.'
+      - id: hyp
+        label: 'הנחת האינדוקציה: נניח ש-$1+3+\dots+(2n-1)=n^2$ עבור $n$ טבעי מסוים.'
+      - id: add
+        label: 'נוסיף לשני האגפים את האיבר הבא, $2(n+1)-1=2n+1$.'
+      - id: get
+        label: 'נקבל $1+3+\dots+(2n-1)+(2n+1)=n^2+2n+1$.'
+      - id: square
+        label: '$n^2+2n+1=(n+1)^2$, וזו בדיוק הטענה עבור $n+1$.'
+      - id: conclude
+        label: 'לפי עקרון האינדוקציה, הטענה נכונה לכל $n$ טבעי.'
+    order: [base, hyp, add, get, square, conclude]
+    correctFeedback: >-
+      נכון. שימו לב לשלב שבו מוסיפים את האיבר הבא: כך הנחת האינדוקציה, הסכום עד $2n-1$, מופיעה בתוך הסכום
+      עד $2n+1$.
+    wrongFeedback: >-
+      הבסיס בא ראשון והמסקנה אחרונה. בצעד: קודם ההנחה, אחר כך מה מוסיפים לה, ובסוף מראים שהתוצאה היא הטענה
+      עבור $n+1$.
+
+  - id: Q-0.5-start-point
+    type: numeric
+    objectives: [OBJ-0.5-2]
+    level: basic
+    prompt: >-
+      מהו המספר הטבעי הקטן ביותר $n_0$ כך שאי-השוויון $2^n>n^2$ מתקיים **לכל** $n\ge n_0$? (את זה מוכיחים אחר כך
+      באינדוקציה עם בסיס $n_0$.)
+    answer: 5
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. עבור $n=2$: $4=4$; עבור $n=3$: $8<9$; עבור $n=4$: $16=16$; ועבור $n=5$: $32>25$. מ-$5$ והלאה הצעד עובד, כי
+      $2^{n+1}=2\cdot 2^n>2n^2\ge(n+1)^2$ לכל $n\ge 3$.
+    wrongFeedback: >-
+      חשבו את שני האגפים עבור $n=1,2,3,4,5$. שימו לב שזה אי-שוויון ממש: שוויון לא מספיק.
+    commonWrong:
+      - value: 1
+        feedback: >-
+          עבור $n=1$ אכן $2>1$, אבל עבור $n=2,3,4$ אי-השוויון נכשל. השאלה היא על **כל** $n\ge n_0$, ולכן אחרי
+          $n_0$ אסור שיהיה כישלון.
+        misconception: MC-examples-are-proof
+      - value: 4
+        feedback: >-
+          עבור $n=4$ מקבלים $16=16$, שוויון ולא אי-שוויון ממש. הבסיס הראשון שעובד הוא $n=5$.
+
+  - id: Q-0.5-bernoulli-why
+    type: mc
+    objectives: [OBJ-0.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      בצעד של הוכחת אי-שוויון ברנולי, $(1+x)^n\ge 1+nx$ עבור $x\ge -1$, כותבים:
+      $$(1+x)^{n+1}=(1+x)^n(1+x)\ge(1+nx)(1+x).$$
+      מה מצדיק את אי-השוויון?
+    choices:
+      - text: 'הנחת האינדוקציה, יחד עם העובדה ש-$1+x\ge 0$'
+        correct: true
+        feedback: >-
+          נכון. כפל של אי-שוויון במספר אי-שלילי שומר עליו. בשביל זה ההנחה $x\ge -1$: עם $1+x<0$ הכפל היה הופך
+          את הכיוון.
+      - text: הנחת האינדוקציה בלבד
+        feedback: >-
+          הנחת האינדוקציה נותנת $(1+x)^n\ge 1+nx$, אבל כדי לכפול את שני האגפים ב-$1+x$ בלי להפוך את הכיוון צריך
+          $1+x\ge 0$. בלי זה הצעד נופל.
+        misconception: MC-bernoulli-any-x
+      - text: אי-שוויון ברנולי עבור $n+1$
+        feedback: >-
+          את אי-השוויון עבור $n+1$ אנחנו מוכיחים עכשיו, ולכן אסור להשתמש בו.
+        misconception: MC-induction-hypothesis-circular
+
+  - id: Q-0.5-bernoulli-proof
+    type: rank
+    objectives: [OBJ-0.5-2]
+    level: exam
+    prompt: >-
+      הוכיחו באינדוקציה את אי-שוויון ברנולי: לכל $x\ge -1$ ולכל $n$ טבעי, $(1+x)^n\ge 1+nx$.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: base
+        label: 'בסיס: עבור $n=1$ שני האגפים שווים ל-$1+x$.'
+      - id: hyp
+        label: 'נניח ש-$(1+x)^n\ge 1+nx$ עבור $n$ טבעי מסוים.'
+      - id: multiply
+        label: 'כיוון ש-$1+x\ge 0$, מותר לכפול את ההנחה ב-$1+x$: $(1+x)^{n+1}\ge(1+nx)(1+x)$.'
+      - id: expand
+        label: 'נפתח סוגריים: $(1+nx)(1+x)=1+(n+1)x+nx^2$.'
+      - id: drop
+        label: '$nx^2\ge 0$, ולכן $(1+x)^{n+1}\ge 1+(n+1)x$, וזו הטענה עבור $n+1$.'
+    order: [base, hyp, multiply, expand, drop]
+    correctFeedback: >-
+      נכון. שני מקומות דורשים הצדקה: הכפל ב-$1+x$ (כאן נכנס $x\ge -1$), והשמטת $nx^2$ (שהוא אי-שלילי).
+    wrongFeedback: >-
+      כדי להשמיט את $nx^2$ צריך קודם לקבל אותו, בפתיחת הסוגריים; וכדי לפתוח סוגריים צריך קודם את המכפלה
+      $(1+nx)(1+x)$, שבאה מהכפל בהנחה.
+
+  - id: Q-0.5-bernoulli-condition
+    type: twotier
+    objectives: [OBJ-0.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם $(1+x)^n\ge 1+nx$ לכל $x$ ממשי ולכל $n$ טבעי?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. בלי התנאי $x\ge -1$ אי-השוויון יכול להיכשל.
+      - text: כן
+        feedback: >-
+          נסו $x=-4$ ו-$n=3$: $(-3)^3=-27$, בעוד $1+3\cdot(-4)=-11$, ו-$-27<-11$.
+        misconception: MC-bernoulli-any-x
+    reasons:
+      - text: 'עבור $x=-4$ ו-$n=3$ אגף שמאל הוא $-27$ ואגף ימין $-11$'
+        correct: true
+        feedback: >-
+          בדיוק. דוגמה נגדית אחת מספיקה. ההוכחה נופלת בדיוק בצעד: כש-$1+x<0$, כפל בו הופך את כיוון אי-השוויון.
+      - text: ההוכחה באינדוקציה עובדת לכל $x$
+        feedback: >-
+          בצעד כופלים את הנחת האינדוקציה ב-$1+x$. אם $1+x<0$ הכפל הופך את הכיוון, וההוכחה לא עוברת.
+        misconception: MC-bernoulli-any-x
+      - text: בבסיס $n=1$ יש שוויון לכל $x$, ולכן אי-השוויון נכון לכל $x$
+        feedback: >-
+          הבסיס אכן נכון לכל $x$, אבל אינדוקציה צריכה גם צעד, והצעד דורש $x\ge -1$.
+        misconception: MC-bernoulli-any-x
+
+  - id: Q-0.5-no-base
+    type: twotier
+    objectives: [OBJ-0.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      "טענה": לכל $n$ טבעי, $n=n+1$. "צעד": נניח ש-$n=n+1$; נוסיף $1$ לשני האגפים ונקבל $n+1=n+2$, וזו הטענה
+      עבור $n+1$. האם הטענה הוכחה?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. הטענה שקרית לכל $n$, אף שהצעד תקין.
+      - text: כן
+        feedback: >-
+          הצעד תקין, אבל אין בסיס: עבור $n=1$ מקבלים $1=2$. בלי מקרה ראשון נכון, הצעד לא מעביר כלום.
+        misconception: MC-induction-skip-base
+    reasons:
+      - text: הצעד תקין, אבל אין בסיס, והטענה לא נכונה אף עבור $n=1$
+        correct: true
+        feedback: >-
+          בדיוק. הצעד אומר רק "אם נכון ל-$n$ אז נכון ל-$n+1$". כאן אף פעם אין $n$ שבו הטענה נכונה, ולכן הגרירה
+          לא נותנת דבר.
+      - text: הצעד תקין, ולכן הטענה נכונה לכל $n$
+        feedback: >-
+          הצעד לבדו לא מספיק: הוא תקין גם כאן, והטענה שקרית. צריך גם בסיס.
+        misconception: MC-induction-skip-base
+      - text: הצעד שגוי, כי הניחו ש-$n=n+1$, וזה שקר
+        feedback: >-
+          בצעד מוכיחים גרירה, ומותר שההנחה שלה תהיה שקרית: גרירה עם הנחה שקרית נכונה. הצעד כאן תקין; מה שחסר הוא
+          הבסיס.
+        misconception: MC-false-premise-implication
+
+  - id: Q-0.5-all-equal
+    type: mc
+    objectives: [OBJ-0.5-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      "טענה": בכל קבוצה של $n$ מספרים ממשיים, כל המספרים שווים. "הוכחה": עבור $n=1$ זה ברור. נניח שזה נכון
+      לכל קבוצה של $n$ מספרים, ותהי $a_1,\dots,a_{n+1}$ קבוצה של $n+1$ מספרים. לפי ההנחה
+      $a_1=\dots=a_n$ (בלי האחרון) ו-$a_2=\dots=a_{n+1}$ (בלי הראשון), ושתי הקבוצות חופפות, ולכן כולם שווים. איפה
+      הטעות?
+    choices:
+      - text: 'הצעד נכשל במעבר מ-$n=1$ ל-$n=2$: הקבוצות $\{a_1\}$ ו-$\{a_2\}$ אינן חופפות'
+        correct: true
+        feedback: >-
+          נכון. עבור $n+1=2$ אין איבר משותף לשתי הקבוצות, ולכן לא נובע $a_1=a_2$. עבור $n\ge 2$ הטיעון היה עובד,
+          אבל המעבר הראשון שבור, ולכן שום דבר לא עובר מהבסיס הלאה.
+      - text: אין טעות; הטענה נכונה
+        feedback: >-
+          הטענה שקרית: בקבוצה $\{1,2\}$ המספרים שונים. כשהוכחה "מוכיחה" טענה שקרית, צריך לבדוק את הצעד דווקא
+          ב-$n$ הקטנים, ושם הוא נשבר.
+        misconception: MC-induction-step-not-all-n
+      - text: הנחת האינדוקציה מניחה את מה שרוצים להוכיח
+        feedback: >-
+          הנחת האינדוקציה מניחה את הטענה עבור $n$ ומשתמשת בה כדי להגיע ל-$n+1$; זה חוקי. הבעיה היא שהמעבר לא
+          עובד לכל $n$.
+        misconception: MC-induction-hypothesis-circular
+
+  - id: Q-0.5-step-too-early
+    type: mc
+    objectives: [OBJ-0.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      "הוכחה" ש-$2^n\ge n^2$ לכל $n$ טבעי: בסיס $n=1$: $2\ge 1$. צעד: $2^{n+1}=2\cdot 2^n\ge 2n^2\ge(n+1)^2$. מה
+      הבעיה?
+    choices:
+      - text: 'האי-שוויון $2n^2\ge(n+1)^2$ נכון רק עבור $n\ge 3$, ואכן הטענה נכשלת ב-$n=3$'
+        correct: true
+        feedback: >-
+          נכון. $2n^2\ge(n+1)^2$ שקול ל-$n^2-2n-1\ge 0$, שנכשל עבור $n=1,2$. ואכן $2^3=8<9=3^2$. תיקון: בסיס
+          $n=4$ ($16\ge 16$), וצעד שעובד לכל $n\ge 4$.
+      - text: אין בעיה; הבסיס והצעד נכונים
+        feedback: >-
+          בדקו את הצעד עבור $n=1$: $2\cdot 1^2=2$ ו-$(1+1)^2=4$, ו-$2\ge 4$ שקר. וגם הטענה עצמה שקרית ב-$n=3$.
+        misconception: MC-induction-step-not-all-n
+      - text: 'המעבר $2\cdot 2^n\ge 2n^2$ שגוי'
+        feedback: >-
+          המעבר הזה הוא הנחת האינדוקציה, $2^n\ge n^2$, כפול $2$: מוצדק. השבר נמצא באי-השוויון שאחריו.
+        misconception: MC-step-justification-vague
+
+  - id: Q-0.5-strengthen
+    type: mc
+    objectives: [OBJ-0.5-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      רוצים להוכיח באינדוקציה ש-$\frac13+\frac19+\dots+\frac1{3^n}<\frac12$ לכל $n$ טבעי. הבסיס תקין
+      ($\frac13<\frac12$), אבל בצעד, מההנחה שהסכום עד $n$ קטן מ-$\frac12$, לא מצליחים להסיק את הטענה עבור $n+1$.
+      מה כדאי לעשות?
+    choices:
+      - text: 'להוכיח באינדוקציה את השוויון $\frac13+\dots+\frac1{3^n}=\frac12-\frac1{2\cdot 3^n}$, ולהסיק ממנו את אי-השוויון'
+        correct: true
+        feedback: >-
+          נכון. בסיס: $\frac13=\frac12-\frac16$. צעד:
+          $\frac12-\frac1{2\cdot3^n}+\frac1{3^{n+1}}=\frac12-\frac{3-2}{2\cdot3^{n+1}}=\frac12-\frac1{2\cdot3^{n+1}}$.
+          והשוויון נותן מיד סכום קטן מ-$\frac12$. הטענה החזקה נותנת הנחה חזקה, שאומרת בדיוק כמה מקום נשאר.
+      - text: 'לוותר על אינדוקציה: אם הצעד נתקע בטענה החלשה, בטענה חזקה יותר הוא בטוח ייתקע'
+        feedback: >-
+          להפך: בצעד הטענה עבור $n$ היא גם מה שמניחים. טענה חזקה יותר נותנת יותר לעבוד איתו, וכאן השוויון
+          המדויק סוגר את הצעד בשורה אחת.
+        misconception: MC-induction-stronger-is-harder
+      - text: 'הצעד דווקא עובד: $\frac1{3^{n+1}}$ קטן מאוד, ולכן הסכום נשאר מתחת ל-$\frac12$'
+        feedback: >-
+          "קטן מאוד" אינו הצדקה. אם הסכום עד $n$ היה $0.49999$, הוספה של מספר קטן עלולה לעבור את $\frac12$;
+          ההנחה לבדה לא שוללת את זה.
+        misconception: MC-step-justification-vague
+      - text: 'להתחיל מבסיס אחר, למשל $n=2$'
+        feedback: >-
+          הבסיס תקין, והבעיה בצעד: מבסיס אחר אותה הנחה חלשה עדיין לא נותנת את הטענה עבור $n+1$.
+        misconception: MC-induction-skip-base

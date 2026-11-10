@@ -1,0 +1,38 @@
+# Terms first defined in lesson 0.3 (quantifiers and negation).
+- id: quantifier
+  term: כמת
+  en: quantifier
+  definition: >-
+    מילה שאומרת על כמה עצמים טענה מדברת: "לכל" ($\forall$) או "קיים" ($\exists$). בטענה עם כמה כמתים, הסדר
+    שלהם משנה את המשמעות.
+  lesson: '0.3'
+- id: universal-quantifier
+  term: הכמת "לכל"
+  en: universal quantifier
+  symbol: '\forall'
+  definition: >-
+    $\forall x\in A:\ P(x)$ פירושו: כל איבר $x$ של $A$ מקיים את $P$. מפריכים טענה כזו בדוגמה נגדית אחת.
+  lesson: '0.3'
+- id: existential-quantifier
+  term: הכמת "קיים"
+  en: existential quantifier
+  symbol: '\exists'
+  definition: >-
+    $\exists x\in A:\ P(x)$ פירושו: יש לפחות איבר אחד $x$ של $A$ שמקיים את $P$ (אולי יותר מאחד). מוכיחים טענה
+    כזו בדוגמה אחת שמקיימת אותה.
+  lesson: '0.3'
+- id: quantifier-domain
+  term: תחום הכמת
+  en: domain of a quantifier
+  definition: >-
+    הקבוצה שהמשתנה של הכמת עובר עליה: ב-$\forall x\in A$ וב-$\exists x\in A$ זו הקבוצה $A$. אותה טענה יכולה
+    להיות נכונה בתחום אחד ושקרית באחר: $\exists x\in\mathbb{R}:\ 2x=3$ נכונה, ו-$\exists x\in\mathbb{N}:\ 2x=3$
+    שקרית. בשלילה התחום נשאר כמו שהוא.
+  lesson: '0.3'
+- id: nested-quantifiers
+  term: כמתים מקוננים
+  en: nested quantifiers
+  definition: >-
+    כמה כמתים זה אחרי זה בטענה אחת, כמו $\forall x\ \exists y:\ P(x,y)$. קוראים אותם משמאל לימין, וכל משתנה נבחר
+    אחרי אלה שלפניו ויכול להיות תלוי בהם. החלפת הסדר של "לכל" ו"קיים" משנה את משמעות הטענה.
+  lesson: '0.3'

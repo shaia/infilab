@@ -1,0 +1,75 @@
+# Misconceptions first detected in lesson 1.6 (the Archimedean property and density).
+- id: MC-archimedes-from-order
+  title: חושבים שתכונת ארכימדס ברורה או נובעת מהסדר לבדו
+  belief: >-
+    ברור ש-$\mathbb{N}$ אינה חסומה וש-$\frac1n$ נעשה קטן כרצוננו; זה נובע מאקסיומות השדה והסדר ואינו צריך
+    את השלמות.
+  truth: >-
+    יש שדות סדורים שבהם $\mathbb{N}$ חסומה. תכונת ארכימדס היא משפט שמוכיחים מאקסיומת השלמות: אילו
+    $\mathbb{N}$ הייתה חסומה, הסופרמום שלה פחות 1 כבר לא היה חסם.
+  remedy: { lesson: '1.6', label: 'הוכחת תכונת ארכימדס מהשלמות' }
+
+- id: MC-extremum-from-first-terms
+  title: קובעים סופרמום או אינפימום לפי האיברים הראשונים
+  belief: >-
+    כדי למצוא את הסופרמום או האינפימום מספיק לחשב כמה איברים ראשונים ולקחת את הגדול או הקטן שבהם.
+  truth: >-
+    האיברים הבאים יכולים להיות גדולים או קטנים יותר: ב-$\left\{(-1)^n+\frac1n\right\}$ הקטן מבין הראשונים
+    הוא $-\frac23$, והאינפימום הוא $-1$. מנתחים את הנוסחה כולה, למשל בפיצול לזוגיים ואי-זוגיים.
+  remedy: { lesson: '1.6', label: 'סופרמום ואינפימום של קבוצות שמוגדרות על הטבעיים' }
+
+- id: MC-irrationals-not-dense
+  title: חושבים שהאי-רציונליים נדירים ואינם צפופים
+  belief: >-
+    האי-רציונליים הם מקרים יוצאי דופן כמו $\sqrt2$, ובקטע קצר יש מעט מהם או אין בכלל.
+  truth: >-
+    בין כל שני ממשיים יש אי-רציונלי, ולכן בכל קטע יש אינסוף מהם: $q+\sqrt2$ לכל רציונלי $q$ מתאים.
+  remedy: { lesson: '1.6', label: 'צפיפות האי-רציונליים' }
+
+- id: MC-next-rational
+  title: חושבים שלכל רציונלי יש רציונלי הבא בתור
+  belief: >-
+    כמו בטבעיים, יש רציונלי חיובי קטן ביותר, ואחרי כל רציונלי בא "הבא בתור".
+  truth: >-
+    בין כל שני רציונליים שונים יש רציונלי נוסף (הממוצע), ולכן אין עוקב ואין רציונלי חיובי קטן ביותר: אם
+    $q>0$ אז $\frac q2$ קטן ממנו.
+  remedy: { lesson: '1.6', label: 'צפיפות הרציונליים' }
+
+- id: MC-density-construction-special-case
+  title: בונים מספר בקטע בשיטה שעובדת רק לקצוות נוחים
+  belief: >-
+    הממוצע $\frac{a+b}2$, או $a+\frac{b-a}{\sqrt2}$, הוא אי-רציונלי בין $a$ ל-$b$, כי כך זה בדוגמה שחשבתי
+    עליה.
+  truth: >-
+    $a,b$ הם ממשיים כלשהם, ובנייה צריכה לעבוד לכולם. $q+\sqrt2$, עם $q$ רציונלי בין $a-\sqrt2$ ל-$b-\sqrt2$,
+    עובדת תמיד; הממוצע של $0$ ו-$1$ רציונלי.
+  remedy: { lesson: '1.6', label: 'אי-רציונלי בין כל שני ממשיים' }
+
+- id: MC-floor-truncates-negatives
+  title: חושבים שהערך השלם מוחק את הספרות אחרי הנקודה גם בשליליים
+  belief: >-
+    $\lfloor-2.5\rfloor=-2$, ו-$\lfloor-x\rfloor=-\lfloor x\rfloor$.
+  truth: >-
+    $\lfloor x\rfloor$ הוא השלם הגדול ביותר שאינו עולה על $x$. $-2>-2.5$, ולכן $\lfloor-2.5\rfloor=-3$. עבור
+    $x$ שאינו שלם, $\lfloor-x\rfloor=-\lfloor x\rfloor-1$.
+  remedy: { lesson: '1.6', label: 'ערך שלם: ההגדרה' }
+
+- id: MC-floor-additive
+  title: חושבים שהערך השלם מתחלק על סכום ועל מכפלה
+  belief: >-
+    $\lfloor x+y\rfloor=\lfloor x\rfloor+\lfloor y\rfloor$ ו-$\lfloor xy\rfloor=\lfloor x\rfloor\lfloor y\rfloor$
+    לכל $x,y$.
+  truth: >-
+    החלקים השבריים יכולים להצטבר: $\lfloor\frac12+\frac12\rfloor=1\neq0$. בטוח רק
+    $\lfloor x\rfloor+\lfloor y\rfloor\le\lfloor x+y\rfloor\le\lfloor x\rfloor+\lfloor y\rfloor+1$, ושוויון
+    $\lfloor x+n\rfloor=\lfloor x\rfloor+n$ כש-$n$ שלם.
+  remedy: { lesson: '1.6', label: 'תכונות הערך השלם' }
+
+- id: MC-floor-is-rounding
+  title: חושבים שהערך השלם הוא עיגול לשלם הקרוב
+  belief: >-
+    $\lfloor x\rfloor$ הוא השלם הקרוב ביותר ל-$x$, ולכן $\left|x-\lfloor x\rfloor\right|\le\frac12$.
+  truth: >-
+    $\lfloor x\rfloor$ מעגל תמיד כלפי מטה: $\lfloor0.9\rfloor=0$, במרחק $0.9$. השלם הקרוב ביותר הוא
+    $\left\lfloor x+\frac12\right\rfloor$.
+  remedy: { lesson: '1.6', label: 'ערך שלם ועיגול' }

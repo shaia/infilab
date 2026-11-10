@@ -1,0 +1,16 @@
+# Terms first defined in lesson 2.8.
+- id: ratio-test-sequences
+  term: מבחן המנה לסדרות
+  en: ratio test for sequences
+  definition: >-
+    תהי $a_n>0$ ונניח ש-$\frac{a_{n+1}}{a_n}\to q$. אם $q<1$ אז $a_n\to0$, ואם $q>1$ אז $a_n\to\infty$. אם $q=1$
+    המבחן אינו מכריע.
+  lesson: '2.8'
+- id: grows-slower
+  term: גדלה לאט יותר
+  en: grows more slowly
+  symbol: 'a_n \ll b_n'
+  definition: >-
+    עבור סדרות חיוביות: $a_n$ גדלה לאט יותר מ-$b_n$ אם $\frac{a_n}{b_n}\to0$. סולם הגדילה:
+    $\ln n\ll n^\alpha\ll b^n\ll n!\ll n^n$ לכל $\alpha>0$ ו-$b>1$.
+  lesson: '2.8'

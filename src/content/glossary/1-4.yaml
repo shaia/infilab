@@ -1,0 +1,51 @@
+# Terms first defined in lesson 1.4.
+- id: upper-bound
+  term: חסם מלעיל
+  en: upper bound
+  definition: >-
+    $M$ הוא חסם מלעיל של $A$ אם $a\le M$ לכל $a\in A$. קבוצה שיש לה חסם מלעיל נקראת חסומה מלעיל.
+  lesson: '1.4'
+- id: lower-bound
+  term: חסם מלרע
+  en: lower bound
+  definition: >-
+    $m$ הוא חסם מלרע של $A$ אם $m\le a$ לכל $a\in A$. קבוצה שיש לה חסם מלרע נקראת חסומה מלרע.
+  lesson: '1.4'
+- id: bounded-set
+  term: קבוצה חסומה
+  en: bounded set
+  definition: >-
+    קבוצה שחסומה גם מלעיל וגם מלרע; באופן שקול, יש $M$ כך ש-$|a|\le M$ לכל $a\in A$.
+  lesson: '1.4'
+- id: maximum
+  term: מקסימום
+  en: maximum
+  symbol: '\max A'
+  definition: >-
+    איבר של $A$ שגדול או שווה לכל איבר של $A$. לא לכל קבוצה יש מקסימום: ל-$(0,1)$ אין.
+  lesson: '1.4'
+- id: minimum
+  term: מינימום
+  en: minimum
+  symbol: '\min A'
+  definition: >-
+    איבר של $A$ שקטן או שווה לכל איבר של $A$. ל-$\left\{\frac1n : n\in\mathbb{N}\right\}$ אין מינימום.
+  lesson: '1.4'
+- id: supremum
+  term: סופרמום
+  en: supremum
+  symbol: '\sup A'
+  definition: >-
+    החסם מלעיל הקטן ביותר של $A$: $s$ חסם מלעיל, ו-$s\le M$ לכל חסם מלעיל $M$. באופן שקול: $s$ חסם מלעיל,
+    ולכל $\varepsilon>0$ קיים $a\in A$ עם $a>s-\varepsilon$. הסופרמום אינו חייב להיות בקבוצה.
+  reject: [סופרימום, סופרמם]
+  lesson: '1.4'
+- id: infimum
+  term: אינפימום
+  en: infimum
+  symbol: '\inf A'
+  definition: >-
+    החסם מלרע הגדול ביותר של $A$. באופן שקול: $m$ חסם מלרע, ולכל $\varepsilon>0$ קיים $a\in A$ עם
+    $a<m+\varepsilon$.
+  reject: [אינפימם, אינפמום]
+  lesson: '1.4'

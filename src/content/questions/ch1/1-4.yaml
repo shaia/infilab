@@ -1,0 +1,327 @@
+# Lesson 1.4 — bounds, supremum and infimum.
+# Objectives (src/course.ts):
+#   OBJ-1.4-1  define upper and lower bounds, maximum and minimum, and find them for given sets
+#   OBJ-1.4-2  define sup and inf and tell them apart from max and min
+#   OBJ-1.4-3  use the ε-characterisation of the supremum
+# Archimedes comes only in 1.6, so the sets whose sup/inf is proved here are intervals and finite unions:
+# the {1/n}-type sets appear here only for max/min (no Archimedes needed) and return in 1.6 for sup/inf.
+chapter: 1
+questions:
+  - id: Q-1.4-bound-def
+    type: mc
+    objectives: [OBJ-1.4-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $A\subseteq\mathbb{R}$. מה פירוש "$M$ הוא חסם מלעיל של $A$"?
+    choices:
+      - text: '$\forall a\in A:\ a\le M$'
+        correct: true
+        feedback: >-
+          נכון. חסם מלעיל הוא כל מספר שאף איבר של $A$ אינו עולה עליו. אם $M$ חסם מלעיל, גם $M+1$ ו-$M+100$
+          חסמים מלעיל.
+      - text: '$M\in A$, וגם $\forall a\in A:\ a\le M$'
+        feedback: >-
+          זו ההגדרה של **מקסימום**. חסם מלעיל לא חייב להיות בקבוצה: $5$ הוא חסם מלעיל של $(0,1)$.
+        misconception: MC-upper-bound-in-set
+      - text: '$\forall a\in A:\ a\le M$, ו-$M$ הקטן ביותר שמקיים זאת'
+        feedback: >-
+          זו ההגדרה של **הסופרמום**, החסם מלעיל הקטן ביותר. לקבוצה חסומה יש הרבה חסמים מלעיל, ורק אחד מהם הוא
+          הסופרמום.
+        misconception: MC-sup-any-upper-bound
+
+  - id: Q-1.4-max-integers
+    type: numeric
+    objectives: [OBJ-1.4-1]
+    level: basic
+    prompt: >-
+      $A=\{x\in\mathbb{Z} : x^2<10\}$. מהו $\max A$?
+    answer: 3
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $A=\{-3,-2,\dots,3\}$: $3^2=9<10$ ו-$4^2=16\ge10$. המקסימום $3$ שייך לקבוצה, ולכן הוא באמת
+      מקסימום.
+    wrongFeedback: >-
+      איברי $A$ הם **שלמים**. רשמו את כל השלמים שריבועם קטן מ-10 ומצאו את הגדול שבהם.
+    commonWrong:
+      - value: 3.16228
+        feedback: >-
+          $\sqrt{10}$ אינו שלם, ולכן אינו איבר של $A$. מקסימום חייב להיות איבר של הקבוצה.
+        misconception: MC-sup-is-max
+      - value: 9
+        feedback: >-
+          $9$ הוא הריבוע של האיבר הגדול ביותר, לא האיבר עצמו. האיברים של $A$ הם ה-$x$, לא ה-$x^2$.
+
+  - id: Q-1.4-reciprocals
+    type: mc
+    objectives: [OBJ-1.4-1, OBJ-1.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $A=\left\{\frac1n : n\in\mathbb{N}\right\}=\left\{1,\frac12,\frac13,\dots\right\}$. מה נכון?
+    choices:
+      - text: 'ל-$A$ יש מקסימום, $1$, ואין מינימום'
+        correct: true
+        feedback: >-
+          נכון. $\frac1n\le1$ לכל $n$ ו-$1\in A$. מינימום אין: לכל איבר $\frac1n$, האיבר $\frac{1}{n+1}$ קטן
+          ממנו.
+      - text: 'ל-$A$ יש מקסימום, $1$, ומינימום, $0$'
+        feedback: >-
+          $0$ אינו איבר של $A$: אין $n$ עם $\frac1n=0$. הוא חסם מלרע (ובשיעור 1.6 נראה שהוא האינפימום), אבל
+          מינימום חייב להיות איבר של הקבוצה.
+        misconception: MC-sup-is-max
+      - text: 'ל-$A$ אין מקסימום ואין מינימום, כי היא אינסופית'
+        feedback: >-
+          לקבוצה אינסופית יכול בהחלט להיות מקסימום: כאן $1\in A$ וכל האיברים קטנים או שווים לו. מינימום אין,
+          אבל מסיבה אחרת: אין איבר "אחרון".
+        misconception: MC-infinite-means-unbounded
+
+  - id: Q-1.4-max-exists
+    type: twotier
+    objectives: [OBJ-1.4-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      האם לכל קבוצה לא ריקה וחסומה מלעיל יש מקסימום?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. חסימות מבטיחה שיש חסם, לא שיש איבר גדול ביותר.
+      - text: כן
+        feedback: >-
+          $(0,1)$ לא ריקה וחסומה מלעיל ב-1, ואין לה מקסימום: לכל $a\in(0,1)$ גם $\frac{a+1}{2}$ בקבוצה וגדול
+          מ-$a$.
+        misconception: MC-max-always-exists
+    reasons:
+      - text: 'ב-$(0,1)$, לכל איבר $a$ גם $\frac{a+1}2$ באותה קבוצה וגדול ממנו'
+        correct: true
+        feedback: >-
+          בדיוק. $a<\frac{a+1}2<1$, ולכן אף איבר אינו הגדול ביותר. הסופרמום $1$ קיים, אבל אינו בקבוצה.
+      - text: 'רק לקבוצות סופיות יש מקסימום'
+        feedback: >-
+          $[0,1]$ אינסופית ויש לה מקסימום, $1$. לקבוצה סופית ולא ריקה תמיד יש מקסימום, אבל גם לאינסופיות רבות
+          יש.
+        misconception: MC-infinite-means-unbounded
+      - text: '$1$ הוא המקסימום של $(0,1)$'
+        feedback: >-
+          $1\notin(0,1)$, ולכן אינו מקסימום שלה. הוא הסופרמום: חסם מלעיל, והקטן מכל החסמים.
+        misconception: MC-sup-is-max
+
+  - id: Q-1.4-sup-def
+    type: mc
+    objectives: [OBJ-1.4-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      מה פירוש "$s=\sup A$"?
+    choices:
+      - text: '$s$ חסם מלעיל של $A$, ו-$s\le M$ לכל חסם מלעיל $M$ של $A$'
+        correct: true
+        feedback: >-
+          נכון. הסופרמום הוא החסם מלעיל הקטן ביותר. הוא יכול להיות בקבוצה ($\sup[0,1]=1$) או מחוצה לה
+          ($\sup(0,1)=1$).
+      - text: '$s\in A$, ו-$s\ge a$ לכל $a\in A$'
+        feedback: >-
+          זה המקסימום. לסופרמום לא דרוש להיות בקבוצה: $\sup(0,1)=1$ אף ש-$1\notin(0,1)$.
+        misconception: MC-sup-is-max
+      - text: '$s$ חסם מלעיל של $A$'
+        feedback: >-
+          חסם מלעיל לבדו אינו מספיק: גם $7$ חסם מלעיל של $(0,1)$, אבל הסופרמום הוא $1$. צריך גם שאין חסם מלעיל
+          קטן יותר.
+        misconception: MC-sup-any-upper-bound
+      - text: '$s$ חסם מלעיל של $A$, ו-$s\notin A$'
+        feedback: >-
+          הסופרמום יכול להיות בקבוצה: $\sup[0,1]=1\in[0,1]$. וגם $7$ הוא חסם מלעיל של $(0,1)$ שאינו בקבוצה, ובכל
+          זאת אינו הסופרמום.
+        misconception: MC-sup-never-in-set
+
+  - id: Q-1.4-sup-in-set
+    type: twotier
+    objectives: [OBJ-1.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$s=\sup A$ וגם $s\in A$. האם $s=\max A$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: 'נכון. וגם להפך: אם ל-$A$ יש מקסימום, הוא הסופרמום.'
+      - text: לא
+        feedback: >-
+          $s\in A$ ו-$s$ גדול או שווה לכל איבר של $A$: זו בדיוק ההגדרה של מקסימום. למשל $\sup[0,1]=\max[0,1]=1$.
+        misconception: MC-sup-never-in-set
+    reasons:
+      - text: '$s$ חסם מלעיל של $A$ והוא איבר של $A$: זו ההגדרה של מקסימום'
+        correct: true
+        feedback: >-
+          בדיוק. ההבדל בין סופרמום למקסימום הוא רק השאלה אם הוא בקבוצה. כשהוא בקבוצה, שניהם אותו מספר.
+      - text: 'הסופרמום תמיד שווה למקסימום, ולכן זה נכון בלי קשר לנתון'
+        feedback: >-
+          לא תמיד: ל-$(0,1)$ יש סופרמום, $1$, ואין מקסימום. הנתון $s\in A$ הוא בדיוק מה שהופך את הסופרמום
+          למקסימום.
+        misconception: MC-sup-is-max
+      - text: 'הסופרמום הוא מספר שמתקרבים אליו ולא מגיעים, ולכן הוא לעולם אינו מקסימום'
+        feedback: >-
+          הסופרמום הוא החסם מלעיל הקטן ביותר, ותו לא. לפעמים הוא בקבוצה ולפעמים לא; כאן נתון שהוא בקבוצה.
+        misconception: MC-sup-never-in-set
+
+  - id: Q-1.4-union-point
+    type: multi
+    objectives: [OBJ-1.4-1, OBJ-1.4-2]
+    level: mid
+    prompt: >-
+      $A=(0,1)\cup\{2\}$. אילו מהטענות נכונות? סמנו את כולן.
+    choices:
+      - text: '$\sup A=2$'
+        correct: true
+        feedback: >-
+          נכון. $2$ חסם מלעיל ו-$2\in A$, ולכן אין חסם מלעיל קטן ממנו.
+      - text: '$\max A=2$'
+        correct: true
+        feedback: >-
+          נכון. $2\in A$ וכל איבר קטן או שווה לו.
+      - text: '$\inf A=0$'
+        correct: true
+        feedback: >-
+          נכון. $0$ חסם מלרע, ולכל $b>0$ המספר $\frac{\min(b,1)}2$ נמצא ב-$A$ וקטן מ-$b$, ולכן $b$ אינו חסם
+          מלרע.
+      - text: '$\sup A=1$'
+        feedback: >-
+          $2\in A$ גדול מ-1, ולכן $1$ אינו אפילו חסם מלעיל. הסופרמום אינו "המקום שאליו האיברים מתקרבים": הוא
+          החסם מלעיל הקטן ביותר.
+        misconception: MC-sup-never-in-set
+      - text: '$\min A=0$'
+        feedback: >-
+          $0\notin A$. הוא האינפימום, אבל ל-$A$ אין מינימום: לכל איבר $a\in(0,1)$ גם $\frac a2\in A$.
+        misconception: MC-sup-is-max
+
+  - id: Q-1.4-empty
+    type: mc
+    objectives: [OBJ-1.4-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      מה נכון לגבי הקבוצה הריקה $\varnothing$?
+    choices:
+      - text: 'כל מספר ממשי הוא חסם מלעיל שלה, ולכן אין לה סופרמום'
+        correct: true
+        feedback: >-
+          נכון. התנאי "$\forall a\in\varnothing:\ a\le M$" נכון באופן ריק לכל $M$. קבוצת החסמים מלעיל היא כל
+          $\mathbb{R}$, ואין בה איבר קטן ביותר. לכן אקסיומת השלמות דורשת קבוצה **לא ריקה**.
+      - text: '$\sup\varnothing=0$, כי אין בה שום דבר'
+        feedback: >-
+          גם $-5$ חסם מלעיל של $\varnothing$ (אין בה איבר גדול מ-$-5$), ולכן $0$ אינו החסם מלעיל הקטן ביותר.
+          ולמעשה אין חסם קטן ביותר בכלל.
+        misconception: MC-empty-set-sup-zero
+      - text: 'אין לה חסמים מלעיל, כי אין איברים להשוות אליהם'
+        feedback: >-
+          "כל איבר קטן או שווה ל-$M$" נכון כשאין איברים: אין איבר שמפר את התנאי. לכן כל מספר הוא חסם מלעיל.
+        misconception: MC-empty-set-sup-zero
+
+  - id: Q-1.4-eps-char
+    type: mc
+    objectives: [OBJ-1.4-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $s$ הוא חסם מלעיל של $A$. איזה תנאי שקול ל-$s=\sup A$?
+    choices:
+      - text: '$\forall\varepsilon>0\ \exists a\in A:\ a>s-\varepsilon$'
+        correct: true
+        feedback: >-
+          נכון. התנאי אומר שאף מספר $s-\varepsilon$ קטן מ-$s$ אינו חסם מלעיל, כלומר $s$ הוא החסם הקטן ביותר.
+      - text: '$\forall\varepsilon>0\ \exists a\in A:\ a>s+\varepsilon$'
+        feedback: >-
+          $s$ חסם מלעיל, ולכן אין ב-$A$ איבר גדול ממנו, ובוודאי לא גדול מ-$s+\varepsilon$. הצד הנכון הוא
+          $s-\varepsilon$: מתחת לסופרמום תמיד יש איברים קרובים.
+        misconception: MC-sup-epsilon-wrong-side
+      - text: '$\exists\varepsilon>0\ \exists a\in A:\ a>s-\varepsilon$'
+        feedback: >-
+          זה נכון לכל חסם מלעיל של קבוצה לא ריקה: עבור $A=(0,1)$ ו-$s=100$, קחו $\varepsilon=200$. התנאי צריך
+          להתקיים **לכל** $\varepsilon$.
+        misconception: MC-sup-epsilon-wrong-quantifier
+      - text: '$\forall\varepsilon>0\ \forall a\in A:\ a>s-\varepsilon$'
+        feedback: >-
+          זה דורש שכל האיברים יהיו קרובים כרצוננו ל-$s$, כלומר $A=\{s\}$. ל-$(0,1)$ יש סופרמום $1$, אבל
+          $\frac12$ רחוק ממנו. מספיק **איבר אחד** לכל $\varepsilon$.
+        misconception: MC-sup-epsilon-wrong-quantifier
+
+  - id: Q-1.4-eps-numeric
+    type: numeric
+    objectives: [OBJ-1.4-3]
+    level: mid
+    prompt: >-
+      $A=\left\{1-\frac{1}{2^k} : k\in\mathbb{N}\right\}$ ו-$\varepsilon=0.01$. מהו ה-$k$ **הקטן ביותר** כך
+      שהאיבר $1-\frac1{2^k}$ גדול מ-$1-\varepsilon$?
+    answer: 7
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $1-\frac1{2^k}>0.99 \iff 2^k>100$, ו-$2^6=64$, $2^7=128$. לכן $k=7$.
+    wrongFeedback: >-
+      כתבו את התנאי $1-\frac{1}{2^k}>1-0.01$, פשטו ל-$2^k>100$, ומצאו את החזקה הראשונה של 2 שעוברת את 100.
+    commonWrong:
+      - value: 6
+        feedback: >-
+          $2^6=64<100$, ולכן $1-\frac1{64}\approx0.984$, שאינו גדול מ-$0.99$.
+      - value: 101
+        feedback: >-
+          $101$ מתקבל מהתנאי $\frac1k<0.01$, כאילו האיברים הם $1-\frac1k$. כאן במכנה $2^k$, שגדל מהר בהרבה.
+    explanation: >-
+      כדי להוכיח ש-$\sup A=1$ צריך למצוא $k$ כזה לכל $\varepsilon>0$, כלומר לדעת ש-$2^k$ עובר כל מספר. זו
+      תכונת ארכימדס, שתוכח בשיעור 1.6.
+
+  - id: Q-1.4-eps-proof
+    type: rank
+    objectives: [OBJ-1.4-3]
+    level: exam
+    prompt: >-
+      הוכיחו ש-$\sup[0,1)=1$. ההוכחה בודקת קודם ש-$1$ חסם מלעיל, ואחר כך את תנאי האפסילון.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: '$1$ חסם מלעיל: כל $a\in[0,1)$ מקיים $a<1$'
+      - id: s2
+        label: 'יהי $\varepsilon>0$; צריך למצוא $a\in[0,1)$ עם $a>1-\varepsilon$'
+      - id: s3
+        label: 'בוחרים $a=\max\left(0,\ 1-\frac\varepsilon2\right)$'
+      - id: s4
+        label: '$a\in[0,1)$: הוא אינו שלילי, ושני המספרים $0$ ו-$1-\frac\varepsilon2$ קטנים מ-1'
+      - id: s5
+        label: '$a\ge1-\frac\varepsilon2>1-\varepsilon$, ולכן לפי אפיון האפסילון $\sup[0,1)=1$'
+    order: [s1, s2, s3, s4, s5]
+    correctFeedback: >-
+      נכון. שימו לב ל-$\max$: כש-$\varepsilon>2$ המספר $1-\frac\varepsilon2$ שלילי ואינו בקבוצה, ו-$0$ מציל את
+      המצב.
+    wrongFeedback: >-
+      אחרי שבודקים ש-1 חסם מלעיל, מקבעים $\varepsilon$ שרירותי, ורק אז בוחרים איבר שתלוי בו ובודקים שהוא
+      בקבוצה ושהוא גדול מ-$1-\varepsilon$.
+
+  - id: Q-1.4-eps-infinite
+    type: twotier
+    objectives: [OBJ-1.4-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $s=\sup A$ ו-$s\notin A$. האם לכל $\varepsilon>0$ יש בקטע $(s-\varepsilon,s)$ **אינסוף** איברים של $A$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. כשהסופרמום אינו בקבוצה, האיברים מצטופפים מתחתיו.
+      - text: לא בהכרח
+        feedback: >-
+          אפיון האפסילון נותן איבר אחד לכל $\varepsilon$, אבל כשמפעילים אותו שוב ושוב עם $\varepsilon$ קטנים
+          יותר מקבלים עוד ועוד איברים שונים. ההנחה $s\notin A$ חיונית: ב-$\{0,2\}$ הסופרמום $2$ שייך לקבוצה.
+        misconception: MC-sup-epsilon-one-element
+    reasons:
+      - text: >-
+          אילו היו בקטע רק מספר סופי של איברים, הגדול שבהם, $m$, היה קטן מ-$s$; ואז בקטע $(m,s)$ אין איבר של
+          $A$, בסתירה לאפיון עם $\varepsilon=s-m$
+        correct: true
+        feedback: >-
+          בדיוק. $m<s$ כי $s\notin A$, ו-$s-m<\varepsilon$ כי $m$ בקטע. כל איבר של $A$ מעל $s-(s-m)=m$ היה
+          חייב להיות בין האיברים הסופיים, אבל כולם קטנים או שווים ל-$m$.
+      - text: 'אפיון האפסילון מבטיח רק איבר אחד לכל $\varepsilon$, ולכן אי אפשר להסיק יותר'
+        feedback: >-
+          איבר אחד לכל $\varepsilon$, אבל לכל $\varepsilon$ **בנפרד**. האיבר שמתאים ל-$\varepsilon$ אחד נמצא
+          מתחת ל-$s$, ולכן $\varepsilon$ קטן יותר מחייב איבר חדש, קרוב יותר.
+        misconception: MC-sup-epsilon-one-element

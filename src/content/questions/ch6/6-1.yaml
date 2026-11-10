@@ -1,0 +1,345 @@
+# Lesson 6.1 — lim sup and lim inf.
+# Objectives (src/course.ts):
+#   OBJ-6.1-1  define lim sup / lim inf of a sequence and compute them for given sequences
+#   OBJ-6.1-2  prove: a sequence converges iff lim sup = lim inf and both are finite
+#   OBJ-6.1-3  characterise lim sup as the largest partial limit
+chapter: 6
+questions:
+  - id: Q-6.1-alt
+    type: numeric
+    objectives: [OBJ-6.1-1]
+    level: basic
+    prompt: >-
+      חשבו את $\limsup_{n\to\infty} a_n$ עבור $a_n = (-1)^n\left(1+\frac1n\right)$.
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. האיברים הזוגיים $1+\frac{1}{n}$ שואפים ל-$1$ והאי-זוגיים ל-$-1$, ולכן הגבולות החלקיים הם $\pm1$,
+      והגדול מהם הוא $1$.
+    wrongFeedback: >-
+      פצלו לאיברים זוגיים ואי-זוגיים, מצאו את הגבול של כל תת-סדרה, וקחו את הגדול מבין הגבולות החלקיים.
+    commonWrong:
+      - value: 1.5
+        feedback: >-
+          $\frac32 = a_2$ הוא הסופרמום של כל האיברים, לא הגבול העליון. הגבול העליון תלוי רק בזנבות:
+          $\sup_{k\ge n} a_k$ קטן מ-$\frac32$ לכל $n\ge3$ ושואף ל-$1$.
+        misconception: MC-limsup-is-sup
+      - value: -1
+        feedback: >-
+          $-1$ הוא הגבול **התחתון**, הגבול החלקי הקטן ביותר. השאלה שואלת על הגדול ביותר.
+
+  - id: Q-6.1-sin
+    type: mc
+    objectives: [OBJ-6.1-1]
+    level: basic
+    prompt: >-
+      מהם הגבול העליון והגבול התחתון של $a_n = \sin\left(\frac{n\pi}{3}\right)$?
+    choices:
+      - text: '$\limsup a_n = \frac{\sqrt3}{2}$, $\liminf a_n = -\frac{\sqrt3}{2}$'
+        correct: true
+        feedback: >-
+          נכון. הסדרה מחזורית עם מחזור $6$: $\frac{\sqrt3}{2}, \frac{\sqrt3}{2}, 0, -\frac{\sqrt3}{2},
+          -\frac{\sqrt3}{2}, 0, \dots$. כל אחד משלושת הערכים מתקבל אינסוף פעמים, ולכן הגבולות החלקיים הם
+          $0, \pm\frac{\sqrt3}{2}$.
+      - text: '$\limsup a_n = 1$, $\liminf a_n = -1$'
+        feedback: >-
+          סינוס מגיע ל-$1$ בנקודה $\frac\pi2$, אבל $\frac{n\pi}{3}$ אף פעם אינו מהצורה $\frac\pi2+2\pi k$. הסדרה
+          מקבלת רק את הערכים $0, \pm\frac{\sqrt3}{2}$, ואף איבר אינו קרוב ל-$1$.
+        misconception: MC-limsup-function-range
+      - text: לסדרה אין גבול עליון, כי היא אינה מתכנסת
+        feedback: >-
+          לכל סדרה חסומה יש גבול עליון ממשי, גם כשהיא מתבדרת. בדיוק לשם כך מגדירים אותו.
+        misconception: MC-limsup-may-not-exist
+      - text: '$\limsup a_n = \liminf a_n = 0$'
+        feedback: >-
+          התת-סדרה $a_{3n} = \sin(n\pi) = 0$ נותנת רק גבול חלקי אחד. אינסוף איברים שווים ל-$\frac{\sqrt3}{2}$,
+          ולכן גם הוא גבול חלקי, והגבול העליון הוא הגדול מבין כל הגבולות החלקיים.
+        misconception: MC-limsup-from-one-subsequence
+
+  - id: Q-6.1-power
+    type: mc
+    objectives: [OBJ-6.1-1]
+    level: mid
+    prompt: >-
+      תהי $a_n = n^{(-1)^n}$, כלומר $a_n = n$ ל-$n$ זוגי ו-$a_n = \frac1n$ ל-$n$ אי-זוגי. מה נכון?
+    choices:
+      - text: '$\limsup a_n = \infty$ ו-$\liminf a_n = 0$'
+        correct: true
+        feedback: >-
+          נכון. הסדרה אינה חסומה מלעיל, ולכן $\sup_{k\ge n} a_k = \infty$ לכל $n$. האינפימום של כל זנב הוא
+          $0$ (האיברים האי-זוגיים $\frac1k$ מתקרבים ל-$0$ ואינם מגיעים אליו), ולכן הגבול התחתון $0$.
+      - text: 'הסדרה שואפת ל-$\infty$, כי יש לה תת-סדרה ששואפת ל-$\infty$'
+        feedback: >-
+          תת-סדרה אחת אינה הסדרה. האיברים האי-זוגיים קטנים מ-$1$, ולכן אינסוף איברים נשארים מחוץ לכל
+          קרן $(M,\infty)$ עם $M\ge1$.
+        misconception: MC-limit-infinitely-often
+      - text: לסדרה אין גבול עליון, כי היא אינה חסומה מלעיל
+        feedback: >-
+          לכל סדרה יש גבול עליון במובן הרחב. לסדרה שאינה חסומה מלעיל הוא $\infty$: סדרת הסופרמומים של
+          הזנבות קבועה ושווה ל-$\infty$.
+        misconception: MC-limsup-may-not-exist
+      - text: '$\limsup a_n = \liminf a_n = \infty$'
+        feedback: >-
+          סדרה שאינה חסומה מלעיל אינה בהכרח שואפת לאינסוף. האיברים האי-זוגיים $\frac1n$ שואפים ל-$0$, ולכן
+          $0$ גבול חלקי, והגבול התחתון $0$.
+        misconception: MC-unbounded-implies-infinity
+
+  - id: Q-6.1-tailsup
+    type: numeric
+    objectives: [OBJ-6.1-1]
+    level: mid
+    prompt: >-
+      עבור $a_n = (-1)^n\left(1+\frac1n\right)$ נסמן $s_n = \sup_{k\ge n} a_k$. חשבו את $s_5$.
+    answer: 1.1666666667
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון, $s_5 = \frac76$. האיברים האי-זוגיים שליליים, והזוגיים $1+\frac1k$ יורדים, ולכן הסופרמום של
+      הזנב מ-$5$ הוא האיבר הזוגי הראשון בו, $a_6 = 1+\frac16$. סדרת ה-$s_n$ יורדת ושואפת ל-$1$, הגבול העליון.
+    wrongFeedback: >-
+      כתבו את האיברים $a_5, a_6, a_7, a_8, \dots$ וחפשו את הגדול ביותר. שימו לב לסימנים.
+    commonWrong:
+      - value: 1.2
+        feedback: >-
+          $\frac65$ הוא $|a_5|$, אבל $a_5 = -\frac65$ שלילי. הגדול ביותר בזנב הוא $a_6=\frac76$.
+      - value: -1.2
+        feedback: >-
+          $a_5$ הוא האיבר הראשון בזנב, לא הגדול ביותר בו. הסופרמום של $\{a_5, a_6, \dots\}$ הוא $a_6$.
+      - value: 1.5
+        feedback: >-
+          $\frac32 = a_2$ אינו בזנב שמתחיל ב-$5$. כאן לוקחים את הסופרמום של $a_k$ רק עבור $k\ge5$.
+        misconception: MC-limsup-is-sup
+    hints:
+      - האיברים הזוגיים יורדים, והאי-זוגיים כולם שליליים.
+
+  - id: Q-6.1-exists
+    type: twotier
+    objectives: [OBJ-6.1-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      האם לכל סדרה חסומה יש גבול עליון שהוא מספר ממשי?
+    choices:
+      - text: כן
+        correct: true
+        feedback: >-
+          נכון. זו בדיוק הסיבה שהמושג שימושי: הוא קיים גם כשהגבול אינו קיים.
+      - text: לא, רק לסדרה מתכנסת
+        feedback: >-
+          $(-1)^n$ חסומה ומתבדרת, והגבול העליון שלה $1$. לסדרה מתכנסת הגבול העליון הוא פשוט הגבול.
+        misconception: MC-limsup-may-not-exist
+    reasons:
+      - text: 'הסדרה $s_n = \sup_{k\ge n} a_k$ יורדת וחסומה מלרע, ולכן מתכנסת'
+        correct: true
+        feedback: >-
+          בדיוק. זנב קטן יותר מוכל בזנב הגדול, ולכן הסופרמום שלו קטן או שווה. כל $s_n$ גדול מחסם מלרע של
+          הסדרה, ולפי המשפט על סדרות מונוטוניות (שיעור 2.7) $s_n$ מתכנסת.
+      - text: לכל סדרה חסומה יש תת-סדרה מתכנסת
+        feedback: >-
+          זה בולצאנו-ויירשטראס, והוא נכון, אבל הוא אומר שיש גבול חלקי אחד, לא שיש גבול חלקי **גדול ביותר**.
+          את זה נותנת ההגדרה בעזרת הזנבות.
+        misconception: MC-limsup-from-one-subsequence
+      - text: הסופרמום של הסדרה קיים, והוא הגבול העליון
+        feedback: >-
+          הסופרמום קיים, אבל הוא לא הגבול העליון: ב-$(-1)^n\left(1+\frac1n\right)$ הסופרמום $\frac32$
+          והגבול העליון $1$.
+        misconception: MC-limsup-is-sup
+
+  - id: Q-6.1-squeeze
+    type: twotier
+    objectives: [OBJ-6.1-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$\limsup a_n = \liminf a_n = L$ עם $L$ ממשי. האם $a_n \to L$?
+    choices:
+      - text: כן
+        correct: true
+        feedback: נכון. זה הכיוון "שוויון גורר התכנסות" במשפט של השיעור.
+      - text: לא בהכרח
+        feedback: >-
+          כאן השוויון הוא של שני מספרים **סופיים**, וזה מספיק. הדוגמה $a_n = n$ (שבה שניהם $\infty$) אינה
+          מתאימה לשאלה.
+        misconception: MC-limsup-equal-enough
+    reasons:
+      - text: '$\inf_{k\ge n} a_k \le a_n \le \sup_{k\ge n} a_k$, ושני הצדדים שואפים ל-$L$'
+        correct: true
+        feedback: >-
+          בדיוק: כלל הסנדוויץ' (שיעור 2.5). $a_n$ שייך לזנב שמתחיל ב-$n$, ולכן הוא בין האינפימום לסופרמום
+          של הזנב.
+      - text: הגבול העליון הוא גבול חלקי, ולכן יש תת-סדרה ששואפת ל-$L$
+        feedback: >-
+          זה נכון, אבל תת-סדרה אחת ששואפת ל-$L$ לא מספיקה כדי שכל הסדרה תשאף ל-$L$. צריך לשלוט על כל
+          האיברים, וזה מה שהאינפימום והסופרמום של הזנבות עושים.
+        misconception: MC-limit-infinitely-often
+
+  - id: Q-6.1-finite
+    type: mc
+    objectives: [OBJ-6.1-2]
+    qualitative: true
+    level: basic
+    prompt: >-
+      איזה מהניסוחים הבאים הוא המשפט הנכון?
+    choices:
+      - text: סדרה מתכנסת אם ורק אם הגבול העליון והתחתון שלה שווים וסופיים
+        correct: true
+        feedback: >-
+          נכון. ואז הגבול שווה לערך המשותף.
+      - text: סדרה מתכנסת אם ורק אם הגבול העליון והתחתון שלה שווים
+        feedback: >-
+          חסרה המילה "סופיים". ל-$a_n = n$ גם הגבול העליון וגם התחתון הם $\infty$, והסדרה אינה מתכנסת: היא
+          שואפת לאינסוף.
+        misconception: MC-limsup-equal-enough
+      - text: סדרה מתכנסת אם ורק אם הגבול העליון שלה סופי
+        feedback: >-
+          $(-1)^n$ מקיימת $\limsup (-1)^n = 1$, סופי, ואינה מתכנסת. גבול עליון סופי אומר רק שהסדרה חסומה
+          מלעיל.
+        misconception: MC-limsup-may-not-exist
+      - text: סדרה מתכנסת אם ורק אם הגבול העליון שלה שווה לסופרמום שלה
+        feedback: >-
+          $\frac{1}{n}$ מתכנסת, אבל הסופרמום שלה $1$ והגבול העליון $0$. ו-$(-1)^n$ מקיימת $\sup = \limsup = 1$
+          ומתבדרת.
+        misconception: MC-limsup-is-sup
+
+  - id: Q-6.1-which-converge
+    type: multi
+    objectives: [OBJ-6.1-2]
+    level: mid
+    qualitative: true
+    prompt: >-
+      על סדרה $a_n$ ידוע רק הנתון שבכל סעיף. באילו סעיפים הנתון **מבטיח** ש-$a_n$ מתכנסת? סמנו את כולם.
+    choices:
+      - text: '$\limsup a_n = \liminf a_n = 3$'
+        correct: true
+        feedback: >-
+          נכון: שניהם שווים וסופיים, ולכן $a_n\to3$.
+      - text: '$\limsup |a_n| = 0$'
+        correct: true
+        feedback: >-
+          נכון. $0 \le \liminf |a_n| \le \limsup |a_n| = 0$, ולכן $|a_n|\to 0$, ומזה $a_n\to0$.
+      - text: '$\limsup a_n = \liminf a_n = \infty$'
+        feedback: >-
+          כך $a_n\to\infty$, וזו אינה התכנסות. התכנסות היא לגבול סופי.
+        misconception: MC-limsup-equal-enough
+      - text: '$\lim a_{2n}$ קיים וסופי'
+        feedback: >-
+          זה אומר משהו רק על האיברים הזוגיים. $(-1)^n$ מקיימת $a_{2n} = 1 \to 1$ ומתבדרת.
+        misconception: MC-limit-infinitely-often
+      - text: 'הסדרה חסומה, ו-$\limsup a_n = 1$'
+        feedback: >-
+          לסדרה חסומה יש תמיד גבול עליון סופי, ולכן הנתון לא מוסיף דבר. $(-1)^n$ מקיימת אותו ומתבדרת.
+        misconception: MC-limsup-may-not-exist
+
+  - id: Q-6.1-eventual
+    type: twotier
+    objectives: [OBJ-6.1-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      נכון או לא נכון: אם $\limsup a_n = L$ ממשי, אז קיים $N$ כך ש-$a_n \le L$ לכל $n>N$.
+    choices:
+      - text: לא נכון
+        correct: true
+        feedback: >-
+          נכון. $a_n = \frac1n$: הגבול העליון $0$, וכל האיברים חיוביים.
+      - text: נכון
+        feedback: >-
+          ייתכן שכל האיברים מעל $L$ ושואפים אליו מלמעלה, כמו $\frac1n$ מעל $0$.
+        misconception: MC-limsup-eventual-bound
+    reasons:
+      - text: 'האפיון אומר רק: לכל $\varepsilon>0$ מספר סופי של איברים גדולים מ-$L+\varepsilon$'
+        correct: true
+        feedback: >-
+          בדיוק. ובנוסף, לכל $\varepsilon>0$ יש אינסוף איברים גדולים מ-$L-\varepsilon$. שום דבר לא אוסר
+          איברים בין $L$ ל-$L+\varepsilon$.
+      - text: 'הגבול העליון הוא חסם מלעיל של הזנב מ-$N$ והלאה'
+        feedback: >-
+          חסם מלעיל של הזנב הוא $s_N = \sup_{k\ge N} a_k$, והגבול העליון הוא הגבול של $s_N$, שיכול להיות
+          קטן מכל $s_N$.
+        misconception: MC-limsup-eventual-bound
+      - text: הגבול העליון הוא הסופרמום של הסדרה
+        feedback: >-
+          לא: ב-$\frac1n$ הסופרמום $1$ והגבול העליון $0$.
+        misconception: MC-limsup-is-sup
+
+  - id: Q-6.1-attained
+    type: twotier
+    objectives: [OBJ-6.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      תהי $a_n$ סדרה חסומה ו-$L = \limsup a_n$. האם $L$ עצמו גבול חלקי של $a_n$?
+    choices:
+      - text: כן, תמיד
+        correct: true
+        feedback: >-
+          נכון. לכן "הגבול החלקי הגדול ביותר" מוגדר היטב: קבוצת הגבולות החלקיים של סדרה חסומה מכילה את
+          הסופרמום שלה.
+      - text: לא, רק כשיש איבר ששווה ל-$L$
+        feedback: >-
+          גבול חלקי לא צריך להיות ערך של הסדרה. ב-$(-1)^n\left(1+\frac1n\right)$ הגבול העליון $1$, ואף איבר
+          אינו שווה ל-$1$, ובכל זאת $a_{2n}\to1$.
+        misconception: MC-partial-limit-is-term
+    reasons:
+      - text: 'בוחרים $m_k = n_{k-1}+1$ ואינדקס $n_k\ge m_k$ עם $a_{n_k} > s_{m_k} - \frac1k$; אז $a_{n_k}\to L$'
+        correct: true
+        feedback: >-
+          בדיוק. אינדקס כזה קיים מהגדרת הסופרמום $s_{m_k} = \sup_{j\ge m_k} a_j$. מכיוון ש-$n_k \ge m_k$,
+          מתקיים $s_{m_k}-\frac1k < a_{n_k} \le s_{m_k}$, ושני הצדדים שואפים ל-$L$: סנדוויץ'.
+      - text: 'לפי בולצאנו-ויירשטראס יש תת-סדרה מתכנסת, וגבולה הוא $L$'
+        feedback: >-
+          בולצאנו-ויירשטראס נותן תת-סדרה מתכנסת כלשהי, ולא בהכרח לגבול העליון: ב-$(-1)^n$ התת-סדרה
+          $a_{2n+1}$ שואפת ל-$-1$. צריך לבנות את התת-סדרה כך שתתקרב דווקא ל-$L$.
+        misconception: MC-limsup-from-one-subsequence
+
+  - id: Q-6.1-proof-max
+    type: rank
+    objectives: [OBJ-6.1-3]
+    level: exam
+    prompt: >-
+      הוכחה שהגבול העליון $L = \lim_{n\to\infty} s_n$, כאשר $s_n = \sup_{k\ge n} a_k$, של סדרה חסומה גדול
+      מכל גבול חלקי שלה (ולכן, יחד עם השאלה הקודמת, הוא הגבול החלקי הגדול ביותר).
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: take
+        label: 'יהי $b$ גבול חלקי, כלומר $a_{n_k}\to b$ עבור תת-סדרה כלשהי.'
+      - id: bound
+        label: 'לכל $k$ מתקיים $a_{n_k} \le s_{n_k}$, כי $a_{n_k}$ שייך לזנב שמתחיל ב-$n_k$.'
+      - id: sub
+        label: '$s_{n_k}$ היא תת-סדרה של $s_n$, ולכן גם היא שואפת ל-$L$.'
+      - id: limit
+        label: 'גבולות שומרים על אי-שוויון חלש: $b = \lim a_{n_k} \le \lim s_{n_k} = L$.'
+      - id: done
+        label: 'מכיוון ש-$b$ היה גבול חלקי כלשהו, $L$ גדול מכל הגבולות החלקיים או שווה להם.'
+    order: [take, bound, sub, limit, done]
+    correctFeedback: >-
+      נכון. שימו לב לשלושת הכלים מפרק 2: תת-סדרה של סדרה מתכנסת (שיעור 2.9), שמירת אי-שוויון חלש
+      (שיעור 2.5) והגדרת הסופרמום.
+    wrongFeedback: >-
+      התחילו מהגבול החלקי שבוחרים, השוו כל איבר של התת-סדרה לסופרמום של הזנב שלו, ורק בסוף עברו לגבול.
+
+  - id: Q-6.1-sum
+    type: mc
+    objectives: [OBJ-6.1-1, OBJ-6.1-3]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $a_n,b_n$ סדרות חסומות. מה תמיד נכון?
+    choices:
+      - text: '$\limsup (a_n+b_n) \le \limsup a_n + \limsup b_n$, ויש דוגמאות עם אי-שוויון ממש'
+        correct: true
+        feedback: >-
+          נכון. $\sup_{k\ge n}(a_k+b_k) \le \sup_{k\ge n}a_k + \sup_{k\ge n} b_k$, ועוברים לגבול. עם
+          $a_n = (-1)^n$, $b_n = -(-1)^n$ האגף השמאלי $0$ והימני $2$.
+      - text: '$\limsup (a_n+b_n) = \limsup a_n + \limsup b_n$'
+        feedback: >-
+          $a_n = (-1)^n$ ו-$b_n = -(-1)^n$: הסכום אפס בכל מקום, ולכן גבולו העליון $0$, ואילו
+          $\limsup a_n + \limsup b_n = 2$. האיברים הגדולים של $a_n$ ושל $b_n$ לא מופיעים באותם אינדקסים.
+        misconception: MC-limsup-additive
+      - text: '$\limsup (a_n+b_n) \ge \limsup a_n + \limsup b_n$'
+        feedback: >-
+          הכיוון הפוך. באותה דוגמה, $0 \ge 2$ לא נכון.
+        misconception: MC-limsup-additive
+      - text: '$\limsup (a_n+b_n) = \sup_n (a_n+b_n)$'
+        feedback: >-
+          גבול עליון אינו סופרמום: עם $a_n = \frac1n$ ו-$b_n=0$ הסופרמום $1$ והגבול העליון $0$.
+        misconception: MC-limsup-is-sup

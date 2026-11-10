@@ -1,0 +1,378 @@
+# Chapter 1 review questions: the whole chapter, easy to hard; several combine lessons.
+chapter: 1
+questions:
+  - id: Q-1-review-01
+    type: mc
+    objectives: [OBJ-1.1-3]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $\mathbb{Q}^{+}$, קבוצת הרציונליים **החיוביים**, עם החיבור והכפל הרגילים, אינה שדה. מה הסיבה?
+    choices:
+      - text: 'אין בה איבר ניטרלי לחיבור, ולכן גם אין נגדיים'
+        correct: true
+        feedback: >-
+          נכון. $0\notin\mathbb{Q}^{+}$, ואין שום איבר $e>0$ עם $q+e=q$. בלי אפס גם המושג "נגדי" חסר משמעות.
+      - text: 'אין בה הופכיים'
+        feedback: >-
+          דווקא יש: ההופכי של $q>0$ רציונלי הוא $\frac1q$, שגם הוא רציונלי חיובי. מה שחסר שייך לחיבור.
+        misconception: MC-field-inverse-confusion
+      - text: 'היא שדה, כי סכום ומכפלה של רציונליים חיוביים הם רציונליים חיוביים'
+        feedback: >-
+          סגירות אינה מספיקה. שדה צריך איבר אפס ונגדי לכל איבר, ו-$\mathbb{Q}^{+}$ חסרה את שניהם.
+        misconception: MC-field-closure-enough
+    hints:
+      - 'חזרו לשיעור 1.1: עברו על אקסיומות החיבור אחת אחת.'
+
+  - id: Q-1-review-02
+    type: numeric
+    objectives: [OBJ-1.6-3]
+    level: basic
+    prompt: >-
+      חשבו את $\lfloor -3.2\rfloor+\lfloor 3.2\rfloor$.
+    answer: -1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\lfloor-3.2\rfloor=-4$ (כי $-4\le-3.2<-3$) ו-$\lfloor3.2\rfloor=3$. לכן הסכום $-1$.
+    wrongFeedback: >-
+      $\lfloor x\rfloor$ הוא השלם הגדול ביותר שאינו עולה על $x$. איזה שלם הוא כזה עבור $-3.2$?
+    commonWrong:
+      - value: 0
+        feedback: >-
+          $0$ מתקבל מ-$\lfloor-3.2\rfloor=-3$, אבל $-3>-3.2$. בשליליים הערך השלם אינו "מוחק את השבר".
+        misconception: MC-floor-truncates-negatives
+    hints:
+      - 'חזרו לשיעור 1.6: ההגדרה של הערך השלם, $m\le x<m+1$.'
+
+  - id: Q-1-review-03
+    type: mc
+    objectives: [OBJ-1.4-1, OBJ-1.4-2, OBJ-1.6-1]
+    qualitative: true
+    level: basic
+    prompt: >-
+      $A=\left\{\frac{n}{n+1} : n\in\mathbb{N}\right\}=\left\{\frac12,\frac23,\frac34,\dots\right\}$. מה נכון?
+    choices:
+      - text: '$\sup A=1$ ואין ל-$A$ מקסימום; $\min A=\frac12$'
+        correct: true
+        feedback: >-
+          נכון. $\frac{n}{n+1}=1-\frac{1}{n+1}$ עולה, קטן מ-1, ומתקרב ל-1 כרצוננו (ארכימדס). האיבר הראשון הוא
+          הקטן ביותר.
+      - text: '$\max A=1$ ו-$\min A=\frac12$'
+        feedback: >-
+          $1\notin A$: אין $n$ עם $\frac{n}{n+1}=1$. $1$ הוא הסופרמום, לא המקסימום.
+        misconception: MC-sup-is-max
+      - text: 'אין ל-$A$ מינימום, כי היא אינסופית'
+        feedback: >-
+          $\frac12\in A$ וכל האיברים גדולים או שווים לו, ולכן $\min A=\frac12$. אינסופיות אינה מונעת מינימום.
+        misconception: MC-infinite-means-unbounded
+    hints:
+      - 'חזרו לשיעור 1.4: ההבדל בין סופרמום למקסימום. ההוכחה ש-$\sup A=1$ משתמשת בתכונת ארכימדס (שיעור 1.6).'
+
+  - id: Q-1-review-04
+    type: numeric
+    objectives: [OBJ-1.2-1, OBJ-1.5-2]
+    level: basic
+    prompt: >-
+      מהו $\inf\{x^2 : x\in(-1,2)\}$?
+    answer: 0
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $x^2\ge0$ לכל $x$, ו-$0=0^2$ שייך לקבוצה כי $0\in(-1,2)$. לכן $0$ הוא אפילו המינימום.
+    wrongFeedback: >-
+      הקבוצה מכילה ריבועים של כל המספרים בקטע, גם של $0$. מה הריבוע הקטן ביותר?
+    commonWrong:
+      - value: 1
+        feedback: >-
+          $1=(-1)^2$ הוא ריבוע הקצה השמאלי, אבל הקטע עובר דרך $0$, ושם הריבוע הוא $0$. ריבוע אינו עולה עם $x$
+          כש-$x$ שלילי.
+      - value: 4
+        feedback: >-
+          $4=2^2$ הוא הסופרמום של הקבוצה (הקצה הימני, שאינו מתקבל). האינפימום הוא הקצה התחתון.
+    hints:
+      - 'חזרו לשיעור 1.2: ריבוע של כל מספר אינו שלילי. ובשיעור 1.5: חישוב אינפימום משני הכיוונים.'
+
+  - id: Q-1-review-05
+    type: twotier
+    objectives: [OBJ-1.5-1, OBJ-1.3-2, OBJ-1.6-2, OBJ-1.7-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $A$ היא קבוצה לא ריקה וחסומה מלעיל של מספרים **רציונליים**. האם $\sup A$ (בתוך $\mathbb{R}$) בהכרח
+      רציונלי?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. זו בדיוק הסיבה ש-$\mathbb{Q}$ אינה שלמה.
+      - text: כן
+        feedback: >-
+          $A=\{x\in\mathbb{Q} : x^2<2\}$ מורכבת מרציונליים, והסופרמום שלה הוא $\sqrt2$, שאינו רציונלי.
+        misconception: MC-dense-means-complete
+    reasons:
+      - text: '$\sup\{x\in\mathbb{Q} : x^2<2\}=\sqrt2$: הוא חוסם, ולפי צפיפות הרציונליים יש רציונלי בכל $(\sqrt2-\varepsilon,\sqrt2)$'
+        correct: true
+        feedback: >-
+          בדיוק. $\sqrt2$ קיים (שיעור 1.7), אינו רציונלי (שיעור 1.3), והוא החסם הקטן ביותר בזכות הצפיפות
+          (שיעור 1.6).
+      - text: 'בין כל שני רציונליים יש רציונלי, ולכן הסופרמום של רציונליים "נסגר" על רציונלי'
+        feedback: >-
+          הצפיפות לא סוגרת שום חור: היא רק אומרת שבכל קטע יש רציונלי. החסמים של $A$ מתקרבים ל-$\sqrt2$, שאינו
+          רציונלי.
+        misconception: MC-dense-means-complete
+      - text: 'הסופרמום הוא איבר של $A$, ו-$A\subseteq\mathbb{Q}$'
+        feedback: >-
+          הסופרמום אינו חייב להיות איבר של הקבוצה. אילו היה, היה זה מקסימום, ול-$\{x\in\mathbb{Q}: x^2<2\}$
+          אין מקסימום.
+        misconception: MC-sup-is-max
+    hints:
+      - 'חזרו לשיעור 1.5: למה הרציונליים אינם שלמים. בדקו מה הסופרמום של $\{x\in\mathbb{Q}: x^2<2\}$ בתוך $\mathbb{R}$.'
+
+  - id: Q-1-review-06
+    type: numeric
+    objectives: [OBJ-1.5-3, OBJ-1.6-1]
+    level: mid
+    prompt: >-
+      $A=\left\{(-1)^n+\frac1n : n\in\mathbb{N}\right\}$. מהו $\sup(-A)$, כאשר $-A=\{-a : a\in A\}$?
+    answer: 1
+    tolerance: 0.001
+    correctFeedback: >-
+      נכון. $\sup(-A)=-\inf A$, ו-$\inf A=-1$ (האיברים האי-זוגיים $-1+\frac1n$ יורדים אל $-1$ ואינם מגיעים
+      אליו). לכן $\sup(-A)=1$, ואינו מתקבל.
+    wrongFeedback: >-
+      היפוך סימן מחליף בין סופרמום לאינפימום. מצאו קודם את $\inf A$: פצלו לזוגיים ולאי-זוגיים.
+    commonWrong:
+      - value: -1.5
+        feedback: >-
+          $-1.5=-\sup A$, וזה דווקא $\inf(-A)$. היפוך סימן הופך את האיבר הגדול ביותר לקטן ביותר:
+          $\sup(-A)=-\inf A$.
+        misconception: MC-sup-negative-scalar
+      - value: -1
+        feedback: >-
+          $-1$ הוא $\inf A$ עצמו. $\sup(-A)$ הוא **מינוס** האינפימום של $A$.
+        misconception: MC-sup-negative-scalar
+    hints:
+      - 'חזרו לשיעור 1.5: סופרמום של כפל בקבוע שלילי. ולשיעור 1.6 בשביל האינפימום של $A$.'
+
+  - id: Q-1-review-07
+    type: multi
+    objectives: [OBJ-1.4-1, OBJ-1.6-1]
+    level: mid
+    prompt: >-
+      לאילו מהקבוצות הבאות יש **מקסימום**? סמנו את כולן.
+    choices:
+      - text: '$\left\{\frac1n : n\in\mathbb{N}\right\}$'
+        correct: true
+        feedback: נכון. $\max=1$, שמתקבל ב-$n=1$.
+      - text: '$\left\{\frac{(-1)^n}{n} : n\in\mathbb{N}\right\}$'
+        correct: true
+        feedback: >-
+          נכון. האיברים החיוביים הם $\frac1n$ עם $n$ זוגי, והגדול שבהם $\frac12$ ($n=2$); השליליים קטנים
+          ממנו. לכן $\max=\frac12$.
+      - text: '$(0,1]$'
+        correct: true
+        feedback: נכון. $1\in(0,1]$ וכל האיברים קטנים או שווים לו.
+      - text: '$\left\{1-\frac1n : n\in\mathbb{N}\right\}$'
+        feedback: >-
+          $\sup=1$, אבל $1-\frac1n<1$ לכל $n$: הסופרמום אינו בקבוצה, ואין מקסימום.
+        misconception: MC-sup-is-max
+      - text: '$\{x\in\mathbb{Q} : x^2<2\}$'
+        feedback: >-
+          הקבוצה חסומה, אבל אין בה איבר גדול ביותר: הסופרמום הוא $\sqrt2$, שאינו בקבוצה, ולכל רציונלי $q<\sqrt2$
+          יש רציונלי בין $q$ ל-$\sqrt2$.
+        misconception: MC-max-always-exists
+    hints:
+      - 'חזרו לשיעור 1.4: מקסימום חייב להיות איבר של הקבוצה. בכל קבוצה מצאו קודם את הסופרמום, ואז בדקו אם הוא מתקבל.'
+
+  - id: Q-1-review-08
+    type: mc
+    objectives: [OBJ-1.6-2, OBJ-1.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $S=\mathbb{Q}\cap(0,\sqrt2)$, הרציונליים שבין $0$ ל-$\sqrt2$. מהו $\sup S$?
+    choices:
+      - text: '$\sqrt2$'
+        correct: true
+        feedback: >-
+          נכון. $\sqrt2$ חוסם את $S$, ולכל $\varepsilon>0$ יש רציונלי בקטע $\left(\max(0,\sqrt2-\varepsilon),\sqrt2\right)$,
+          לפי צפיפות הרציונליים. הסופרמום אינו רציונלי, ואינו בקבוצה.
+      - text: 'אין ל-$S$ סופרמום, כי $\sqrt2\notin\mathbb{Q}$'
+        feedback: >-
+          הסופרמום נלקח ב-$\mathbb{R}$, ואינו צריך להיות בקבוצה, וגם לא רציונלי. $S$ לא ריקה וחסומה, ולכן יש
+          לה סופרמום.
+        misconception: MC-sup-is-max
+      - text: 'הרציונלי הגדול ביותר שקטן מ-$\sqrt2$'
+        feedback: >-
+          אין רציונלי כזה: לכל רציונלי $q<\sqrt2$ יש רציונלי בין $q$ ל-$\sqrt2$. לכן ל-$S$ אין מקסימום.
+        misconception: MC-next-rational
+    hints:
+      - 'חזרו לשיעור 1.6: בין כל שני ממשיים יש רציונלי. השתמשו בזה כדי לבדוק את אפיון האפסילון (שיעור 1.4).'
+
+  - id: Q-1-review-09
+    type: twotier
+    objectives: [OBJ-1.1-3, OBJ-1.2-1]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $\mathbb{Z}_7$ (חשבון מודולו 7) הוא שדה. האם אפשר להגדיר עליו סדר שמקיים את אקסיומות הסדר?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. אף שדה סופי אינו סדור.
+      - text: כן
+        feedback: >-
+          כל סדר כזה היה מחייב $1>0$, ואז סכום של שבעה אחדים חיובי; אבל ב-$\mathbb{Z}_7$ הוא $0$.
+        misconception: MC-order-just-a-ranking
+    reasons:
+      - text: 'בשדה סדור $1>0$, ולכן $1+1+\dots+1$ (שבע פעמים) חיובי; אבל ב-$\mathbb{Z}_7$ הסכום הזה הוא $0$'
+        correct: true
+        feedback: >-
+          בדיוק. אותו טיעון מראה שבשדה סדור $1+1+\dots+1\neq0$ לכל מספר של מחוברים, ולכן כל שדה סדור אינסופי.
+      - text: 'הדירוג $0<1<2<\dots<6$ הוא סדר כזה'
+        feedback: >-
+          הדירוג לא מתאים לחיבור: מ-$1<6$ אקסיומת החיבור נותנת $1+1<6+1$, כלומר $2<0$, בסתירה ל-$0<2$.
+        misconception: MC-order-just-a-ranking
+      - text: 'ב-$\mathbb{Z}_7$ אין מספרים שליליים, ולכן אין בו סדר'
+        feedback: >-
+          "שלילי" פירושו "קטן מאפס", וזה תלוי בסדר. ב-$\mathbb{Z}_7$ יש נגדיים ($-1=6$); מה שאין הוא סדר שמתאים
+          לפעולות.
+        misconception: MC-order-minus-x-negative
+    hints:
+      - 'חזרו לשיעור 1.2: בכל שדה סדור $1>0$. מה קורה כשמחברים את $1$ לעצמו שוב ושוב? ובשיעור 1.1: החשבון ב-$\mathbb{Z}_n$.'
+
+  - id: Q-1-review-10
+    type: mc
+    objectives: [OBJ-1.3-3, OBJ-1.7-2]
+    level: mid
+    prompt: >-
+      איזה נימוק מוכיח ש-$\sqrt2+\sqrt8$ אי-רציונלי?
+    choices:
+      - text: '$\sqrt8=2\sqrt2$, ולכן הסכום הוא $3\sqrt2$: מכפלה של רציונלי שונה מאפס באי-רציונלי'
+        correct: true
+        feedback: >-
+          נכון. $\sqrt8=\sqrt{4\cdot2}=\sqrt4\cdot\sqrt2$ לפי חוקי החזקות לבסיס חיובי, ו-$3\sqrt2$ אי-רציונלי
+          כי אחרת $\sqrt2=\frac{3\sqrt2}{3}$ היה רציונלי.
+      - text: 'שני המחוברים אי-רציונליים, ולכן הסכום אי-רציונלי'
+        feedback: >-
+          סכום של אי-רציונליים יכול להיות רציונלי: $\sqrt2+(-\sqrt2)=0$. המסקנה כאן נכונה, אבל הנימוק לא.
+        misconception: MC-irrational-closure-confused
+      - text: '$\sqrt2+\sqrt8=\sqrt{10}$, ו-$10$ אינו ריבוע של רציונלי'
+        feedback: >-
+          $\sqrt a+\sqrt b\neq\sqrt{a+b}$: למשל $\sqrt1+\sqrt1=2$, ואילו $\sqrt2\approx1.41$. בחישוב:
+          $\sqrt2+\sqrt8=3\sqrt2\approx4.24$, ואילו $\sqrt{10}\approx3.16$.
+        misconception: MC-root-of-sum
+    hints:
+      - 'חזרו לשיעור 1.7: חוקי החזקות לבסיס חיובי ($\sqrt{ab}=\sqrt a\sqrt b$), ולשיעור 1.3: סגירות.'
+
+  - id: Q-1-review-11
+    type: rank
+    objectives: [OBJ-1.5-2, OBJ-1.6-1]
+    level: exam
+    prompt: >-
+      הוכיחו ש-$\inf\left\{\frac1n+\frac1m : n,m\in\mathbb{N}\right\}=0$, ושאין לקבוצה מינימום.
+    help: 'סדרו את שלבי ההוכחה לפי הסדר הנכון.'
+    items:
+      - id: s1
+        label: 'כל איבר הוא סכום של שני חיוביים, ולכן חיובי; $0$ חסם מלרע'
+      - id: s2
+        label: 'יהי $\varepsilon>0$. לפי תכונת ארכימדס יש $n\in\mathbb{N}$ עם $n>\frac2\varepsilon$'
+      - id: s3
+        label: 'עם $m=n$: האיבר $\frac1n+\frac1n=\frac2n<\varepsilon$, ולכן $\varepsilon$ אינו חסם מלרע'
+      - id: s4
+        label: 'לכן $0$ הוא החסם מלרע הגדול ביותר; ו-$0$ אינו איבר (כל האיברים חיוביים), ולכן אין מינימום'
+    order: [s1, s2, s3, s4]
+    correctFeedback: >-
+      נכון. מספיק למצוא **איבר אחד** קטן מ-$\varepsilon$, ולכן מותר לבחור $m=n$ כדי לפשט.
+    wrongFeedback: >-
+      כמו בכל הוכחה של אינפימום: קודם חסם מלרע, אחר כך לכל $\varepsilon$ איבר מתחת ל-$\varepsilon$ (כאן
+      בעזרת ארכימדס), ובסוף המסקנה.
+    hints:
+      - 'חזרו לשיעור 1.6: תכונת ארכימדס בצורה $\frac1n<\varepsilon$. ולשיעור 1.5: הוכחת אינפימום משני הכיוונים.'
+
+  - id: Q-1-review-12
+    type: twotier
+    objectives: [OBJ-1.5-3, OBJ-1.2-2]
+    qualitative: true
+    level: exam
+    prompt: >-
+      $A,B$ לא ריקות וחסומות, ו-$AB=\{ab : a\in A,\ b\in B\}$. האם תמיד $\sup(AB)=\sup A\cdot\sup B$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. הכלל נכון לקבוצות של מספרים חיוביים, ונכשל כשיש שליליים.
+      - text: כן
+        feedback: >-
+          $A=B=\{-2,1\}$: $AB=\{4,-2,1\}$, ולכן $\sup(AB)=4$, ואילו $\sup A\cdot\sup B=1$.
+        misconception: MC-order-multiply-unsigned
+    reasons:
+      - text: '$A=B=\{-2,1\}$ נותנות $\sup(AB)=4\neq1$; מכפלה של שני שליליים גדולים בערכם יוצאת גדולה'
+        correct: true
+        feedback: >-
+          בדיוק. כשכל האיברים חיוביים הכלל נכון: מ-$0<a\le\sup A$ ו-$0<b\le\sup B$ נובע $ab\le\sup A\sup B$,
+          ואפיון האפסילון נותן את הכיוון השני.
+      - text: 'מ-$a\le\sup A$ ו-$b\le\sup B$ נובע $ab\le\sup A\cdot\sup B$, ולכן המכפלה חוסמת'
+        feedback: >-
+          כפל אי-שוויונות מותר רק כשהגורמים חיוביים. $-2\le1$ ו-$-2\le1$, אבל $(-2)(-2)=4>1$.
+        misconception: MC-order-multiply-unsigned
+      - text: 'כמו שהסופרמום של סכום הוא סכום הסופרמומים, כך הסופרמום של מכפלה הוא מכפלתם'
+        feedback: >-
+          ההוכחה לסכום משתמשת בחיבור אי-שוויונות, שמותר תמיד. במכפלה צריך לכפול אי-שוויונות, וזה דורש סימנים.
+        misconception: MC-order-multiply-unsigned
+    hints:
+      - 'חזרו לשיעור 1.2: מתי מותר לכפול אי-שוויונות. נסו קבוצות שיש בהן מספרים שליליים.'
+
+  - id: Q-1-review-13
+    type: mc
+    objectives: [OBJ-1.6-3, OBJ-1.6-2]
+    level: exam
+    prompt: >-
+      $x$ ממשי ו-$n\in\mathbb{N}$. איזו בחירה של שלם $m$ מבטיחה $\left|x-\frac mn\right|\le\frac1{2n}$?
+    choices:
+      - text: '$m=\left\lfloor nx+\frac12\right\rfloor$'
+        correct: true
+        feedback: >-
+          נכון. $m\le nx+\frac12<m+1$, כלומר $-\frac12<m-nx\le\frac12$, ולכן $|nx-m|\le\frac12$. מחלקים ב-$n$.
+      - text: '$m=\lfloor nx\rfloor$'
+        feedback: >-
+          $\lfloor\cdot\rfloor$ מעגל כלפי מטה, לא אל השלם הקרוב. עם $n=1$ ו-$x=0.9$: $m=0$ והשגיאה $0.9>\frac12$.
+          מובטח רק $\left|x-\frac mn\right|<\frac1n$.
+        misconception: MC-floor-is-rounding
+      - text: '$m=\lfloor nx\rfloor+1$'
+        feedback: >-
+          עם $n=1$ ו-$x=0.1$: $m=1$ והשגיאה $0.9>\frac12$. הוספת $1$ פותרת את הבעיה רק כשהחלק השברי גדול.
+        misconception: MC-floor-is-rounding
+    hints:
+      - 'חזרו לשיעור 1.6: הערך השלם מקיים $m\le y<m+1$. איזה $y$ כדאי לבחור כדי שהשגיאה תהיה סימטרית?'
+
+  - id: Q-1-review-14
+    type: twotier
+    objectives: [OBJ-1.7-1, OBJ-1.5-1]
+    qualitative: true
+    level: exam
+    prompt: >-
+      כדי להוכיח שקיים $\sqrt[3]{2}$ מגדירים $s=\sup\{x\ge0 : x^3<2\}$. האם ההוכחה של קיום $\sqrt2$ עוברת לכאן?
+    choices:
+      - text: 'כן, עם הערכות מתאימות לחזקה שלישית'
+        correct: true
+        feedback: נכון. המבנה זהה; רק ההערכה של $(s+h)^3$ ו-$(s-h)^3$ משתנה.
+      - text: 'לא; לשורש שלישי צריך את משפט ערך הביניים'
+        feedback: >-
+          משפט ערך הביניים יגיע רק עם הרציפות, ובעצמו מוכח בעזרת סופרמום. כאן הסופרמום מספיק ישירות, כמו
+          ל-$\sqrt2$.
+        misconception: MC-sqrt-exists-by-picture
+    reasons:
+      - text: 'אותם שני מקרים; למשל לכל $0<h<1$: $(s+h)^3<s^3+h(3s^2+3s+1)$, ומזה בוחרים $h$ אם $s^3<2$'
+        correct: true
+        feedback: >-
+          בדיוק. $(s+h)^3=s^3+3s^2h+3sh^2+h^3$, ו-$h^2<h$, $h^3<h$. במקרה $s^3>2$ מוצאים באופן דומה חסם מלעיל
+          $s-h$ קטן מ-$s$.
+      - text: 'מספיק לשלול $s^3<2$, כי $s$ הוא סופרמום'
+        feedback: >-
+          גם כאן יש שלושה מקרים. $s^3<2$ נשלל כי $s$ חסם מלעיל, ו-$s^3>2$ נשלל כי $s$ החסם הקטן ביותר; צריך
+          את שניהם.
+        misconception: MC-sqrt-sup-one-case
+      - text: 'הגרף של $x^3$ עולה וחוצה את $y=2$, ולכן השורש קיים'
+        feedback: >-
+          זה תיאור של התוצאה, לא הוכחה: בתוך $\mathbb{Q}$ הגרף "קופץ" מעל $y=2$. הקיום בא מהשלמות.
+        misconception: MC-sqrt-exists-by-picture
+    hints:
+      - 'חזרו לשיעור 1.7: קיום שורש ריבועי בעזרת סופרמום, ושני המקרים שצריך לשלול.'

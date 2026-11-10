@@ -1,0 +1,26 @@
+- id: v-0-6-injective
+  youtubeId: nC-BRdzhlgM
+  title: פונקציות וגרפים - 12 -  פונקציות חד-חד-ערכיות
+  channel: הטכניון - מכון טכנולוגי לישראל
+  lang: he
+  captions: []
+  start: 0
+  minutes: 23
+  why: >-
+    לפי תיאור הסרטון: קליפ 12 בפרק "פונקציות וגרפים" של קורס ההכנה במתמטיקה של הטכניון, עם ד"ר אביב צנזור,
+    על פונקציות חד-חד-ערכיות. בזמן הצפייה בדקו שההגדרה שלו היא הגרירה $f(x_1)=f(x_2)\Rightarrow x_1=x_2$, ולא
+    ההפוכה לה, ונסו לתרגם כל דוגמה שלו לחצים כמו באיור 0.6א.
+  verified: 2026-11-09
+- id: v-0-6-onto-injective
+  youtubeId: xKNX8BUWR0g
+  title: Surjective (onto) and injective (one-to-one) functions | Linear Algebra | Khan Academy
+  channel: Khan Academy
+  lang: en
+  captions: [en]
+  start: 0
+  minutes: 10
+  why: >-
+    לפי תיאור הסרטון: מבוא לפונקציות על ולפונקציות חד-חד-ערכיות. שימו לב למילים באנגלית: codomain הוא מה שבקורס
+    שלנו נקרא טווח, ו-image הוא התמונה; המילה range משמשת בספרים שונים לשתי המשמעויות, ממש כמו "טווח" בעברית.
+    "על" נבדק מול הטווח, וזו הסיבה שהטווח הוא חלק מהגדרת הפונקציה.
+  verified: 2026-11-09

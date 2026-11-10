@@ -1,0 +1,7 @@
+---
+/** Lesson-2.2 figure: <Spread figure={SequenceStrip} figureProps={{…}}>. */
+import SequenceStrip, { type SequenceStripProps } from './SequenceStrip';
+type Props = SequenceStripProps;
+---
+
+<SequenceStrip client:visible {...Astro.props} />
