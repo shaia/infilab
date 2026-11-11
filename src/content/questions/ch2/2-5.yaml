@@ -83,9 +83,9 @@ questions:
         label: 'לכן $|b_n-L|<\varepsilon$ לכל $n>\max(N_1,N_2)$, כלומר $b_n\to L$.'
     order: [eps, twoN, n, chain, conclude]
     correctFeedback: >-
-      נכון. מכל חסם צריך רק חצי מההגדרה: מ-$a_n$ את הצד התחתון של הרצועה, ומ-$c_n$ את הצד העליון.
+      נכון. מכל חסם צריך רק חצי מההגדרה: מ-$a_n$ את הצד התחתון של הסביבה, ומ-$c_n$ את הצד העליון.
     wrongFeedback: >-
-      קודם $\varepsilon$, אחריו ה-$N$-ים שתלויים בו, אחריהם $n$, ורק אז השרשרת שמכניסה את $b_n$ לרצועה.
+      קודם $\varepsilon$, אחריו ה-$N$-ים שתלויים בו, אחריהם $n$, ורק אז השרשרת שמכניסה את $b_n$ לסביבה.
 
   - id: Q-2.5-sum
     type: numeric
@@ -184,7 +184,7 @@ questions:
         feedback: 'נכון. $L+\frac{|L|}{2} = \frac L2<0$, ולכן $a_n<\frac L2<0$: סתירה.'
       - text: '$\varepsilon = 2|L|$'
         feedback: >-
-          $L+2|L| = |L|>0$, ולכן מקבלים רק $a_n<|L|$, שאינו סותר את $a_n\ge0$. הרצועה רחבה מדי ומגיעה אל מעבר ל-0.
+          $L+2|L| = |L|>0$, ולכן מקבלים רק $a_n<|L|$, שאינו סותר את $a_n\ge0$. הסביבה רחבה מדי ומגיעה אל מעבר ל-0.
         misconception: MC-epsilon-too-wide
       - text: '$\varepsilon = 1$'
         feedback: >-

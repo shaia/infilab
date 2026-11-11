@@ -172,7 +172,7 @@ questions:
         commonWrong:
           - value: 699
             feedback: >-
-              699 הוא האיבר הראשון בתוך הרצועה. ההגדרה אומרת "לכל $n>N$", ולכן $N=698$ כבר מבטיח $n\ge699$.
+              699 הוא האיבר הראשון בתוך הסביבה. ההגדרה אומרת "לכל $n>N$", ולכן $N=698$ כבר מבטיח $n\ge699$.
             misconception: MC-N-is-first-index
           - value: 700
             feedback: >-

@@ -190,7 +190,7 @@ questions:
       - text: '$\forall M\in\mathbb{R}\ \exists\delta>0\ \forall x:\ 0<|x-a|<\delta\Rightarrow f(x)>M$'
         correct: true
         feedback: >-
-          נכון. ה"רצועה" סביב $L$ מוחלפת בחצי-ישר $(M,\infty)$: לכל גובה $M$, קרוב מספיק ל-$a$ כל הערכים מעליו.
+          נכון. הסביבה של $L$ מוחלפת בחצי-ישר $(M,\infty)$: לכל גובה $M$, קרוב מספיק ל-$a$ כל הערכים מעליו.
       - text: '$\forall M\in\mathbb{R}\ \forall\delta>0\ \exists x:\ 0<|x-a|<\delta\ \land\ f(x)>M$'
         feedback: >-
           זה אומר רק ש-$f$ לא חסומה מלעיל ליד $a$. הפונקציה $\frac1x\sin\frac1x$ מקיימת את זה ב-0, אבל מתאפסת בכל

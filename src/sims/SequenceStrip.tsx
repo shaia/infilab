@@ -21,10 +21,10 @@ import { drawAxes, insetBox, makePlot, type Plot } from './core/plot';
 import SimShell, { Slider, Toggle, type TaskDef } from './core/SimShell';
 
 const TASK_LABEL: Record<string, string> = {
-  'find-N': 'בסדרה ⁦1/n⁩, עם ⁦ε = 0.1⁩ או קטן יותר, הזיזו את N אל ה-N הקטן ביותר שמתאים: מימינו אין אף איבר מחוץ לרצועה.',
-  narrow: 'צמצמו את הרצועה עד ⁦ε = 0.02⁩ או פחות, ומצאו שוב N שמתאים.',
+  'find-N': 'בסדרה ⁦1/n⁩, עם ⁦ε = 0.1⁩ או קטן יותר, הזיזו את N אל ה-N הקטן ביותר שמתאים: מימינו אין אף איבר מחוץ לסביבה.',
+  narrow: 'צמצמו את הסביבה עד ⁦ε = 0.02⁩ או פחות, ומצאו שוב N שמתאים.',
   wild: 'בסדרה עם ההתחלה הפרועה, עם ⁦ε = 0.1⁩ או פחות, מצאו N שמתאים.',
-  'no-N': 'בסדרה ⁦(−1)ⁿ⁩ נסו למצוא N שמתאים לרצועה סביב 1: הזיזו את N לפחות עד 30.',
+  'no-N': 'בסדרה ⁦(−1)ⁿ⁩ נסו למצוא N שמתאים לסביבה של 1: הזיזו את N לפחות עד 30.',
 };
 
 interface State {
@@ -135,8 +135,8 @@ export default function SequenceStrip(props: SequenceStripProps) {
 
   useEffect(() => {
     const id = setTimeout(() => {
-      const parts = [`${seq.formula}, רצועה סביב ${fmt(s.L)} עם ε = ${fmt(eps)}, N = ${s.N}.`];
-      parts.push(works ? 'כל האיברים אחרי N בחלון נמצאים בתוך הרצועה.' : `${outside.length} איברים אחרי N מחוץ לרצועה, הראשון ב-n = ${outside[0]}.`);
+      const parts = [`${seq.formula}, סביבה של ${fmt(s.L)} עם ε = ${fmt(eps)}, N = ${s.N}.`];
+      parts.push(works ? 'כל האיברים אחרי N בחלון נמצאים בתוך הסביבה.' : `${outside.length} איברים אחרי N מחוץ לסביבה, הראשון ב-n = ${outside[0]}.`);
       if (s.showMin) parts.push(minN === null ? 'אין N שמתאים.' : `ה-N הקטן ביותר שמתאים: ${minN}.`);
       setLive(parts.join(' '));
     }, 300);
@@ -296,7 +296,7 @@ export default function SequenceStrip(props: SequenceStripProps) {
   return (
     <SimShell
       fig={props.id}
-      label={`איור חי: איברי הסדרה ${seq.formula} כנקודות מעל n. קו הגבול L = ${fmt(s.L)}, ורצועה של המספרים שמרחקם ממנו קטן מ-ε = ${fmt(eps)}. קו אנכי מסמן את N = ${s.N}: איברים אחריו בתוך הרצועה מלאים, ואיברים אחריו מחוץ לרצועה חלולים ומוקפים בטבעת. ${works ? `כרגע כל האיברים מ-N + 1 עד ${upTo} בתוך הרצועה.` : `כרגע ${outside.length} איברים אחרי N, עד ${upTo}, מחוץ לרצועה.`} גררו את קו ה-N; במקלדת: חץ ימינה ושמאלה מזיז את N, חץ למטה מצמצם את הרצועה.`}
+      label={`איור חי: איברי הסדרה ${seq.formula} כנקודות מעל n. קו הגבול L = ${fmt(s.L)}, וסביבתו: המספרים שמרחקם ממנו קטן מ-ε = ${fmt(eps)}. קו אנכי מסמן את N = ${s.N}: איברים אחריו בתוך הסביבה מלאים, ואיברים אחריו מחוץ לסביבה חלולים ומוקפים בטבעת. ${works ? `כרגע כל האיברים מ-N + 1 עד ${upTo} בתוך הסביבה.` : `כרגע ${outside.length} איברים אחרי N, עד ${upTo}, מחוץ לסביבה.`} גררו את קו ה-N; במקלדת: חץ ימינה ושמאלה מזיז את N, חץ למטה מצמצם את הסביבה.`}
       canvasRef={canvasRef}
       aspect={1.5}
       live={live}
@@ -313,7 +313,7 @@ export default function SequenceStrip(props: SequenceStripProps) {
       readout={
         <>
           <span>
-            הרצועה: <b class="q" data-readout="eps">ε = {fmt(eps)}</b>
+            הסביבה: <b class="q" data-readout="eps">ε = {fmt(eps)}</b>
           </span>
           <span>
             <b class="q" data-readout="N">N = {s.N}</b>
@@ -321,17 +321,17 @@ export default function SequenceStrip(props: SequenceStripProps) {
           <span data-readout="verdict">
             {works ? (
               <>
-                כל האיברים אחרי N, עד <b class="q">n = {upTo}</b>, בתוך הרצועה: ה-N הזה מתאים (על הטווח שנבדק).
+                כל האיברים אחרי N, עד <b class="q">n = {upTo}</b>, בתוך הסביבה: ה-N הזה מתאים (על הטווח שנבדק).
               </>
             ) : (
               <>
-                אחרי N, עד <b class="q">n = {upTo}</b>, יש <b class="q">{outside.length}</b> איברים מחוץ לרצועה, הראשון ב-<b class="q">n = {outside[0]}</b>.
+                אחרי N, עד <b class="q">n = {upTo}</b>, יש <b class="q">{outside.length}</b> איברים מחוץ לסביבה, הראשון ב-<b class="q">n = {outside[0]}</b>.
               </>
             )}
           </span>
           {s.showMin && (
             <span data-readout="min">
-              {minN === null ? <>אין N שמתאים לרצועה הזו.</> : (
+              {minN === null ? <>אין N שמתאים לסביבה הזו.</> : (
                 <>
                   ה-N הקטן ביותר שמתאים: <b class="q">{minN}</b>
                 </>

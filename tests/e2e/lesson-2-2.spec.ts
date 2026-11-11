@@ -68,7 +68,7 @@ test.describe('lesson 2.2: the definition of the limit', () => {
     const N = fig.locator('input[type=range]').nth(1);
     for (const v of [5, 20, 40]) {
       await slide(N, v);
-      await expect(fig.locator('[data-readout="verdict"]')).toContainText('מחוץ לרצועה');
+      await expect(fig.locator('[data-readout="verdict"]')).toContainText('מחוץ לסביבה');
     }
     await expect.poll(async () => (await progress(page))?.tasks?.['fig-2-2b:no-N']).toBeTruthy();
   });

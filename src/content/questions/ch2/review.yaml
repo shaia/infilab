@@ -45,7 +45,7 @@ questions:
     commonWrong:
       - value: 18
         feedback: >-
-          18 הוא האיבר הראשון בתוך הרצועה. ההגדרה אומרת "לכל $n>N$", ולכן $N=17$ כבר מבטיח $n\ge18$.
+          18 הוא האיבר הראשון בתוך הסביבה. ההגדרה אומרת "לכל $n>N$", ולכן $N=17$ כבר מבטיח $n\ge18$.
         misconception: MC-N-is-first-index
       - value: 299
         feedback: >-
@@ -316,7 +316,7 @@ questions:
         feedback: >-
           סדרה מתכנסת לא חייבת להיות מונוטונית: $\frac{(-1)^n}{n}$ מתחלפת בסימן ושואפת ל-0.
         misconception: MC-convergent-implies-monotone
-      - text: 'עם $L=0$ ו-$\varepsilon=\frac12$: כל האיברים מחוץ לרצועה, ולכן אין גבול'
+      - text: 'עם $L=0$ ו-$\varepsilon=\frac12$: כל האיברים מחוץ לסביבה, ולכן אין גבול'
         feedback: >-
           זה מוכיח רק שהגבול אינו 0. כדי להוכיח התבדרות צריך לפסול **כל** $L$.
         misconception: MC-diverge-one-L

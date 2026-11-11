@@ -14,12 +14,13 @@
   reject: [סידרה מתכנסת]
   lesson: '2.2'
 - id: epsilon-band
-  term: רצועת אפסילון
+  term: סביבת אפסילון
   en: epsilon-neighbourhood
+  reject: [רצועת אפסילון]
   symbol: '(L-\varepsilon,\ L+\varepsilon)'
   definition: >-
     הקטע הפתוח $(L-\varepsilon, L+\varepsilon)$, כל המספרים שמרחקם מ-$L$ קטן מ-$\varepsilon$. בהגדרת הגבול,
-    מ-$N$ והלאה כל איברי הסדרה בתוך הרצועה.
+    מ-$N$ והלאה כל איברי הסדרה בתוך הסביבה.
   lesson: '2.2'
 - id: fitting-n
   term: N שמתאים לאפסילון
