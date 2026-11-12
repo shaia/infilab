@@ -359,6 +359,44 @@ for (const m of misconceptions) {
 
 /* -------------------------------------------------------------- lessons */
 
+/**
+ * KaTeX errors in an MDX body, found without a build: `$$` blocks and `$…$` on prose lines and in "…" attributes
+ * (captions). Only the build is final, but the edit hook runs this on every save. JSX expression props (`={…}`) are
+ * skipped: their strings double each backslash, and the build checks them.
+ */
+function mdxMathProblems(body: string): string[] {
+  const out: string[] = [];
+  const check = (src: string, line: number) => {
+    try {
+      tex(src, `body line ${line}`);
+    } catch (e) {
+      out.push((e as Error).message);
+    }
+  };
+  let block: string[] | null = null;
+  let start = 0;
+  body.split('\n').forEach((raw, i) => {
+    const line = raw.trimEnd();
+    if (block) {
+      if (line.trim() === '$$') {
+        check(`$$${block.join('\n')}$$`, start);
+        block = null;
+      } else block.push(raw);
+      return;
+    }
+    if (line.trim() === '$$') {
+      block = [];
+      start = i + 1;
+      return;
+    }
+    // drop JSX expression props, including nested braces one level deep
+    const text = line.replace(/=\{(?:[^{}]|\{[^{}]*\})*\}/g, '');
+    if (/\$\$/.test(text) && !/^\s*\$\$.*\$\$\s*$/.test(text)) return; // a display block opened mid-line: build-only
+    if (/\$/.test(text)) check(text.replace(/\*\*/g, ''), i + 1);
+  });
+  return out;
+}
+
 // No time cap on a lesson (2026-11-10): the course is "heavily mathematical, with rigorous proofs" (the user, pointing
 // at advinfi2lab), and a proof is never cut to fit a sitting. `minutes` is the honest estimate; the schema bounds it.
 /** A numbered result: **למה 0.5.3.**, **משפט 2.2.4 (יחידות).**, **מסקנה 0.6.7א.** */
@@ -384,6 +422,7 @@ for (const l of lessons) {
     const line = l.raw.slice(0, m.index).split('\n').length;
     fail(l.file, `line ${line}: control character U+${m[0].charCodeAt(0).toString(16).padStart(4, '0')} (a TeX backslash lost to an escape?)`);
   }
+  for (const problem of mdxMathProblems(l.body)) fail(l.file, problem);
   // Markdown joins consecutive lines, so a part "(ב)" right after a text line, or after a sentence on the same line,
   // renders inside the previous paragraph. Twenty lessons shipped that way before this check.
   let inMath = false;
