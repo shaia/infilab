@@ -6,10 +6,18 @@
     לכל קבוצה לא ריקה של ממשיים שחסומה מלעיל יש סופרמום ב-$\mathbb{R}$. זו האקסיומה שמבדילה את $\mathbb{R}$
     מ-$\mathbb{Q}$; ממנה נובעים קיום האינפימום, תכונת ארכימדס וקיום השורשים.
   lesson: '1.5'
+- id: complete-ordered-field
+  term: שדה סדור שלם
+  en: complete ordered field
+  definition: >-
+    שדה סדור שבו לכל קבוצה לא ריקה וחסומה מלעיל יש סופרמום (בתוך השדה). $\mathbb{R}$ הוא שדה סדור שלם;
+    $\mathbb{Q}$ הוא שדה סדור שאינו שלם.
+  lesson: '1.5'
 - id: sum-of-sets
   term: סכום קבוצות
   en: sum of sets
   symbol: 'A+B'
   definition: >-
-    הקבוצה $A+B=\{a+b : a\in A,\ b\in B\}$. באופן דומה $cA=\{ca : a\in A\}$ ו-$A-B=\{a-b : a\in A,\ b\in B\}$.
+    הקבוצה $A+B=\{a+b : a\in A,\ b\in B\}$. וכך גם $cA=\{ca : a\in A\}$ (כפל בקבוע) ו-$A-B=\{a-b : a\in A,\ b\in B\}$
+    (קבוצת ההפרשים).
   lesson: '1.5'

@@ -195,6 +195,33 @@ questions:
           $0\notin A$. הוא האינפימום, אבל ל-$A$ אין מינימום: לכל איבר $a\in(0,1)$ גם $\frac a2\in A$.
         misconception: MC-sup-is-max
 
+  - id: Q-1.4-strict-sup
+    type: mc
+    objectives: [OBJ-1.4-2]
+    qualitative: true
+    level: mid
+    prompt: >-
+      לקבוצה $A$ יש סופרמום, וכל איבר של $A$ קטן **ממש** מ-$1$. מה אפשר להסיק בוודאות?
+    choices:
+      - text: '$\sup A\le1$'
+        correct: true
+        feedback: >-
+          נכון. $1$ חסם מלעיל של $A$, והסופרמום קטן או שווה לכל חסם מלעיל. יותר מזה אי אפשר להסיק: ב-$[0,1)$
+          הסופרמום הוא בדיוק $1$, וב-$\{0\}$ הוא $0$.
+      - text: '$\sup A<1$'
+        feedback: >-
+          אי-שוויון חזק אינו עובר לסופרמום: כל איבר של $[0,1)$ קטן מ-1, ובכל זאת $\sup[0,1)=1$. הסופרמום שומר רק
+          על $\le$.
+        misconception: MC-sup-keeps-strict
+      - text: '$\sup A=1$'
+        feedback: >-
+          לא בהכרח: $A=\{0\}$ מקיימת את הנתון, ו-$\sup A=0$. הנתון אומר רק ש-1 הוא **אחד** החסמים מלעיל, לא שהוא
+          הקטן ביותר.
+        misconception: MC-sup-any-upper-bound
+      - text: 'אי אפשר להסיק דבר על $\sup A$'
+        feedback: >-
+          אפשר: $1$ חסם מלעיל, ולפי תנאי (2) בהגדרת הסופרמום, $\sup A\le1$.
+
   - id: Q-1.4-empty
     type: mc
     objectives: [OBJ-1.4-2]
@@ -242,7 +269,7 @@ questions:
         misconception: MC-sup-epsilon-wrong-quantifier
       - text: '$\forall\varepsilon>0\ \forall a\in A:\ a>s-\varepsilon$'
         feedback: >-
-          זה דורש שכל האיברים יהיו קרובים כרצוננו ל-$s$, כלומר $A=\{s\}$. ל-$(0,1)$ יש סופרמום $1$, אבל
+          זה דורש שכל האיברים יהיו קרובים כרצוננו ל-$s$, כלומר $A\subseteq\{s\}$. ל-$(0,1)$ יש סופרמום $1$, אבל
           $\frac12$ רחוק ממנו. מספיק **איבר אחד** לכל $\varepsilon$.
         misconception: MC-sup-epsilon-wrong-quantifier
 

@@ -1,0 +1,15 @@
+- id: v-1-2-ordered-fields
+  youtubeId: mlPLLXHZ8_U
+  title: 'Lecture 4: The Characterization of the Real Numbers'
+  channel: MIT OpenCourseWare
+  lang: en
+  captions: [en]
+  start: 1762
+  end: 3456
+  minutes: 28
+  why: >-
+    קטע מהרצאה בקורס האנליזה של MIT, לפי פרקי ההרצאה: שדות סדורים (29:22), שדות סופיים (40:33), ההוכחה שכפל באפס
+    נותן אפס (42:23), והוכחות של כללים מוכרים לאי-שוויונות (56:54). שימו לב שבהרצאה אקסיומת הכפל מנוסחת אחרת:
+    "אם $x>0$ ו-$y>0$ אז $xy>0$". השוו אותה לאקסיומה (ס4) שבשיעור, ונסו להוכיח שכל אחת מהן נובעת מהאחרת יחד
+    עם (ס1)–(ס3).
+  verified: 2026-11-12

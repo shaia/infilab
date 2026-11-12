@@ -49,3 +49,10 @@
     $a<m+\varepsilon$.
   reject: [אינפימם, אינפמום]
   lesson: '1.4'
+- id: attained-bound
+  term: סופרמום (אינפימום) מתקבל
+  en: attained supremum (infimum)
+  definition: >-
+    הסופרמום של $A$ מתקבל אם הוא שייך ל-$A$; אז הוא המקסימום של $A$ (טענה 1.4.7). כך גם אינפימום מתקבל ומינימום.
+    $\sup(0,1)=1$ אינו מתקבל, ו-$\sup[0,1]=1$ מתקבל.
+  lesson: '1.4'

@@ -1,0 +1,29 @@
+# Videos of lesson 1.4 (bounds, supremum and infimum). Both IDs verified by oEmbed on 2026-11-12 (200); the length
+# and the description were read from the watch page the same day.
+- id: v-1-4-sup-inf
+  youtubeId: 8UY3LQl529o
+  title: '04 - סופרמום ואינפימום'
+  channel: 'הטכניון - מכון טכנולוגי לישראל'
+  lang: he
+  captions: []
+  start: 0
+  minutes: 48
+  why: >-
+    הרצאה רביעית בקורס אינפי 1מ' של ד"ר אביב צנזור בטכניון (מספר הקורס 104031, לפי תיאור הסרטון), שכותרתה סופרמום
+    ואינפימום. זו הרצאה שלמה, בלי רשימת פרקים, ולכן היא מתחילה מההתחלה. השוו את ההגדרות שבהרצאה להגדרות 1.4.1 ו-1.4.5
+    של השיעור. שימו לב: בהרצאה ייתכן שימוש באקסיומת השלמות ובתכונת ארכימדס, שבקורס שלנו מגיעות רק בשיעורים 1.5 ו-1.6.
+  verified: 2026-11-12
+
+- id: v-1-4-epsilon
+  youtubeId: hy1dMYhwNEU
+  title: 'The Epsilon Criterion for Supremum and Infimum | Examples of Sup and Inf | Real Analysis | Lecture 4'
+  channel: Big Epsilon
+  lang: en
+  captions: []
+  start: 0
+  end: 398
+  minutes: 7
+  why: >-
+    לפי רשימת הפרקים של הסרטון: חזרה על ההגדרות של סופרמום ואינפימום (0:24), וניסוח אפיון האפסילון לשניהם (2:24). הקטע
+    נעצר לפני הדוגמה הראשונה (6:38), שמשתמשת בתכונת ארכימדס (שיעור 1.6). השוו את הניסוח למשפט 1.4.8.
+  verified: 2026-11-12

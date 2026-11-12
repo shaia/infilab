@@ -1,0 +1,7 @@
+---
+/** Lesson-1.1 figure: <Spread figure={FieldTable} figureProps={{…}}>. */
+import FieldTable, { type FieldTableProps } from './FieldTable';
+type Props = FieldTableProps;
+---
+
+<FieldTable client:visible {...Astro.props} />

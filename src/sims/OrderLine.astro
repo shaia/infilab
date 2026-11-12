@@ -1,0 +1,7 @@
+---
+/** Lesson-1.2 figure: <Spread figure={OrderLine} figureProps={{…}}>. */
+import OrderLine, { type OrderLineProps } from './OrderLine';
+type Props = OrderLineProps;
+---
+
+<OrderLine client:visible {...Astro.props} />

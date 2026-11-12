@@ -1,0 +1,553 @@
+# Workbook of lesson 1.4 — bounds, supremum and infimum.
+# Objectives (src/course.ts):
+#   OBJ-1.4-1  define upper and lower bounds, maximum and minimum, and find them for given sets
+#   OBJ-1.4-2  define sup and inf and tell them apart from max and min
+#   OBJ-1.4-3  use the ε-characterisation of the supremum
+# No completeness and no Archimedes (they come in 1.5 and 1.6): every sup/inf proved here is of a set whose witness is
+# an explicit real number (a midpoint, a min or max with a constant). Every witness below was recomputed for
+# ε in {5, 3, 2, 1, 0.5, 0.3, 0.1, 0.01, 1e-4, 1e-7} and every solution set on a grid (scratch script, npx tsx);
+# c2's two families were checked the same way and against 200000 random positive quadruples (all values in (1, 2)).
+lesson: '1.4'
+practice:
+  - id: W-1.4-01
+    level: basic
+    objectives: [OBJ-1.4-1]
+    prompt: >-
+      (א) כתבו את $A=\{x\in\mathbb{R}:\ |2x-1|\le 3\}$ כקטע, ומצאו את $\max A$ ואת $\min A$.
+
+
+      (ב) הוכיחו שלקבוצה $B=(-1,2]$ יש מקסימום, $2$, ואין לה מינימום.
+
+
+      (ג) אילו מהמספרים $-2,\ -1,\ 2,\ 3$ הם חסמים מלרע של $B$, ואילו הם חסמים מלעיל של $B$?
+    answer: >-
+      (א) $A=[-1,2]$, $\max A=2$, $\min A=-1$. (ב) $2\in B$ וחוסם אותה; לכל $b\in B$ גם $\frac{b-1}{2}\in B$ וקטן ממנו. (ג)
+      חסמים מלרע: $-2$ ו-$-1$. חסמים מלעיל: $2$ ו-$3$.
+    solution:
+      - kind: idea
+        text: >-
+          מקסימום הוא חסם מלעיל ששייך לקבוצה (הגדרה 1.4.2). את (א) פותרים כמו בשיעור 0.9, ואז קוראים את הקצוות. ב-(ב),
+          כדי להראות שאין מינימום, מראים שלכל איבר יש איבר קטן ממנו: האמצע בינו לבין הקצה החסר $-1$.
+      - kind: computation
+        text: >-
+          (א) לפי טענה 1.2.12 (עם $c=3\ge0$): $|2x-1|\le3\iff-3\le2x-1\le3\iff-2\le2x\le4\iff-1\le x\le2$. הוספנו 1 לכל
+          האגפים (ס3) וכפלנו ב-$\frac12>0$ (ס4). לכן $A=[-1,2]$. $2\in A$ ו-$x\le2$ לכל $x\in A$, ולכן $\max A=2$; $-1\in A$
+          ו-$-1\le x$ לכל $x\in A$, ולכן $\min A=-1$.
+      - kind: step
+        text: >-
+          (ב) $2\in B$ ו-$b\le2$ לכל $b\in B$: $\max B=2$. נניח בשלילה ש-$m=\min B$. אז $-1<m\le2$. נסמן $a=\frac{-1+m}{2}$.
+          לפי מסקנה 1.2.6 (אמצע), $-1<a<m$, ו-$a<m\le2$; לכן $a\in B$ ו-$a<m$, בסתירה לכך ש-$m$ חסם מלרע. אין ל-$B$
+          מינימום.
+      - kind: step
+        text: >-
+          (ג) כל $b\in B$ מקיים $-1<b$, ולכן $-1$ ו-$-2$ חסמים מלרע (טענה 1.4.4(ד)); $2$ ו-$3$ אינם חסמים מלרע, כי
+          $0\in B$ ו-$0<2$. כל $b\in B$ מקיים $b\le2\le3$, ולכן $2$ ו-$3$ חסמים מלעיל; $-1$ ו-$-2$ אינם, כי $0\in B$
+          גדול משניהם.
+      - kind: check
+        text: >-
+          $-1$ הוא חסם מלרע של $B$ ש**אינו** שייך לה, ולכן אינו מינימום; ב-$A$ אותו מספר שייך לקבוצה, והוא המינימום.
+          ההבדל בין שתי הקבוצות הוא נקודה אחת, וזה כל ההבדל בין חסם למינימום. בדיקה: $x=2$ נותן $|3|=3\le3$, ו-$x=-1$
+          נותן $|-3|=3$: שני הקצוות ב-$A$.
+      - kind: result
+        text: >-
+          (א) $A=[-1,2]$, $\max A=2$, $\min A=-1$. (ב) $\max B=2$, ואין מינימום. (ג) מלרע: $-2,-1$; מלעיל: $2,3$.
+
+  - id: W-1.4-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-1.4-1]
+    prompt: >-
+      יהיו $A,B\subseteq\mathbb{R}$. הוכיחו או הפריכו:
+
+
+      (א) אם $A\ne\varnothing$, אז כל חסם מלרע של $A$ קטן או שווה לכל חסם מלעיל של $A$.
+
+
+      (ב) כל חסם מלרע של $\varnothing$ קטן או שווה לכל חסם מלעיל של $\varnothing$.
+
+
+      (ג) אם $A\cup B$ חסומה מלעיל, אז $A$ ו-$B$ חסומות מלעיל.
+
+
+      (ד) אם $A\cap B$ חסומה, אז $A$ חסומה או $B$ חסומה.
+    answer: >-
+      (א) נכון. (ב) לא נכון: $1$ חסם מלרע ו-$0$ חסם מלעיל של $\varnothing$. (ג) נכון. (ד) לא נכון: $A=[0,\infty)$,
+      $B=(-\infty,0]$.
+    solution:
+      - kind: idea
+        text: >-
+          ב-(א) עוברים דרך איבר אחד של $A$: הוא מעל כל חסם מלרע ומתחת לכל חסם מלעיל. כשאין איבר כזה, כמו ב-(ב), אין
+          דרך לחבר את החסמים, וכל מספר הוא גם חסם מלעיל וגם חסם מלרע. (ג) היא טענה 1.4.4(ב).
+      - kind: step
+        text: >-
+          (א) נכון. יהי $m$ חסם מלרע ו-$M$ חסם מלעיל של $A$. $A\ne\varnothing$, ולכן יש $a\in A$. אז $m\le a$ ו-$a\le M$,
+          ולפי טענה 1.2.3 (מעבר של $\le$), $m\le M$.
+      - kind: step
+        text: >-
+          (ב) לא נכון. לפי טענה 1.4.4(ג), $1$ חסם מלרע של $\varnothing$ ו-$0$ חסם מלעיל של $\varnothing$, אבל $1>0$. ההנחה
+          $A\ne\varnothing$ ב-(א) נחוצה.
+      - kind: step
+        text: >-
+          (ג) נכון. $A\subseteq A\cup B$ ו-$B\subseteq A\cup B$, ולפי טענה 1.4.4(ב) כל חסם מלעיל של $A\cup B$ חוסם את $A$
+          ואת $B$.
+      - kind: step
+        text: >-
+          (ד) לא נכון. $A=[0,\infty)$ ו-$B=(-\infty,0]$; $A\cap B=\{0\}$ חסומה (ב-0 משני הצדדים). $A$ אינה חסומה
+          מלעיל: לכל $M$, המספר $|M|+1$ שייך ל-$A$ וגדול מ-$M$ (כמו בדוגמה של $(0,\infty)$ בשיעור). $B$ אינה חסומה
+          מלרע: לכל $m$, המספר $-|m|-1$ שייך ל-$B$ (הוא קטן מ-0) וקטן מ-$m$, כי $-|m|\le m$ (טענה 1.2.12) ו-$-1<0$.
+          לכן אף אחת מהן אינה חסומה.
+      - kind: check
+        text: >-
+          ב-(ד) הכיוון ההפוך כן נכון: אם $A$ חסומה, אז $A\cap B\subseteq A$ חסומה (טענה 1.4.4(ב)). המעבר הוא מקבוצה
+          לתת-קבוצה שלה, לא להפך.
+      - kind: result
+        text: '(א) נכון; (ב) לא נכון; (ג) נכון; (ד) לא נכון.'
+
+  - id: W-1.4-03
+    level: basic
+    objectives: [OBJ-1.4-2, OBJ-1.4-3]
+    prompt: >-
+      תהי $A=\{-4\}\cup[-1,2)$. מצאו את $\max A$, $\min A$, $\sup A$ ו-$\inf A$ (מה שקיים), והוכיחו.
+    answer: >-
+      $\min A=\inf A=-4$; $\sup A=2$; אין מקסימום.
+    solution:
+      - kind: idea
+        text: >-
+          המינימום הוא הנקודה המבודדת $-4$, ולכן הוא גם האינפימום (טענה 1.4.7(ג)). את הסופרמום מוכיחים באפיון האפסילון:
+          לכל $\varepsilon>0$, האמצע בין $\max(-1,2-\varepsilon)$ ל-2.
+      - kind: step
+        text: >-
+          מינימום: $-4\in A$, ו-$-4<-1\le x$ לכל $x\in[-1,2)$. לכן $\min A=-4$, ולפי טענה 1.4.7(ג), $\inf A=-4$.
+      - kind: step
+        text: >-
+          $2$ חסם מלעיל: $-4<2$, וכל $x\in[-1,2)$ מקיים $x<2$.
+      - kind: theorem
+        text: >-
+          תנאי האפסילון: יהי $\varepsilon>0$. נסמן $b=\max(-1,2-\varepsilon)$ ו-$a=\frac{b+2}{2}$. שני המספרים $-1$ ו-$2-\varepsilon$
+          קטנים מ-2, ולכן $-1\le b<2$. לפי מסקנה 1.2.6, $b<a<2$, ולכן $a\in[-1,2)\subseteq A$, ו-$a>b\ge2-\varepsilon$.
+          לפי משפט 1.4.8(א), $\sup A=2$.
+      - kind: step
+        text: >-
+          $2\notin A$, ולכן לפי טענה 1.4.7 אין ל-$A$ מקסימום: אילו היה, הוא היה שווה ל-$\sup A=2$ ושייך ל-$A$.
+      - kind: check
+        text: >-
+          $\varepsilon=0.1$: $b=1.9$, $a=1.95\in A$ ו-$1.95>1.9$. $\varepsilon=10$: $b=-1$, $a=0.5\in A$ ו-$0.5>-8$. בלי ה-$\max$
+          עם $-1$, עבור $\varepsilon=10$ היינו מקבלים $\frac{-8+2}{2}=-3\notin A$.
+      - kind: result
+        text: '$\min A=\inf A=-4$, $\sup A=2$, ול-$A$ אין מקסימום.'
+
+  - id: W-1.4-04
+    level: mid
+    objectives: [OBJ-1.4-2, OBJ-1.4-3]
+    prompt: >-
+      תהי $A=\{x\in\mathbb{R}:\ x^2<2x\}$.
+
+
+      (א) הוכיחו ש-$A=(0,2)$.
+
+
+      (ב) מצאו את $\sup A$ ואת $\inf A$, הוכיחו, וקבעו אם ל-$A$ יש מקסימום ומינימום.
+    answer: >-
+      (א) $x^2<2x\iff x(x-2)<0\iff 0<x<2$. (ב) $\sup A=2$, $\inf A=0$, ואין מקסימום ואין מינימום.
+    solution:
+      - kind: idea
+        text: >-
+          (א) מכפלה של שני מספרים שלילית בדיוק כשהם בסימנים מנוגדים (טענה 1.2.4). (ב) שני הקצוות אינם בקבוצה; לכל
+          $\varepsilon$ בוחרים איבר בתוך הקטע ובמרחק פחות מ-$\varepsilon$ מהקצה, בעזרת אמצע.
+      - kind: step
+        text: >-
+          (א) $x^2<2x\iff x^2-2x<0\iff x(x-2)<0$ (טענה 1.2.2 ו-(פ)). לפי טענה 1.2.4, אם $x$ ו-$x-2$ שניהם חיוביים או
+          שניהם שליליים, המכפלה חיובית, ואם אחד מהם אפס, היא אפס (טענה 1.1.7). לכן $x(x-2)<0$ בדיוק כשהם בסימנים
+          מנוגדים: $x>0$ ו-$x-2<0$, כלומר $0<x<2$; או $x<0$ ו-$x>2$, שאינו אפשרי. לכן $A=(0,2)$.
+      - kind: theorem
+        text: >-
+          (ב) $\sup A=2$: $2$ חסם מלעיל. יהי $\varepsilon>0$, $b=\max(0,2-\varepsilon)$ ו-$a=\frac{b+2}{2}$. $0\le b<2$, ולפי מסקנה
+          1.2.6, $b<a<2$; לכן $0<a<2$, $a\in A$, ו-$a>b\ge2-\varepsilon$. לפי משפט 1.4.8(א), $\sup A=2$.
+      - kind: theorem
+        text: >-
+          $\inf A=0$: $0$ חסם מלרע. יהי $\varepsilon>0$, $c=\min(\varepsilon,1)$ ו-$a=\frac c2$. לפי מסקנה 1.2.6, $0<a<c\le1<2$, ולכן
+          $a\in A$, ו-$a<c\le\varepsilon$. לפי משפט 1.4.8(ב), $\inf A=0$.
+      - kind: step
+        text: >-
+          $2\notin A$ ו-$0\notin A$ (ב-$x=0$ ו-$x=2$, $x^2=2x$). לפי טענה 1.4.7, אין ל-$A$ מקסימום ואין לה מינימום.
+      - kind: check
+        text: >-
+          $x=1$: $1<2$, ב-$A$. $x=2$: $4<4$ שקר. $x=-1$: $1<-2$ שקר. $\varepsilon=0.5$: $a=1.75$, ו-$1.75^2=3.0625<3.5$,
+          ו-$1.75>1.5$; $a=0.25$, ו-$0.0625<0.5$, ו-$0.25<0.5$.
+      - kind: result
+        text: '(א) $A=(0,2)$. (ב) $\sup A=2$, $\inf A=0$, ושניהם אינם מתקבלים: אין מקסימום ואין מינימום.'
+
+  - id: W-1.4-05
+    level: mid
+    objectives: [OBJ-1.4-2, OBJ-1.4-3]
+    prompt: >-
+      תהי $A=\{2x-x^2:\ 0<x<1\}$. הוכיחו ש-$\sup A=1$ ו-$\inf A=0$, ושאף אחד מהם אינו מתקבל.
+    answer: >-
+      $2x-x^2=1-(1-x)^2$, ולכן $0<2x-x^2<1$. לסופרמום: $x=1-\min\left(\varepsilon,\frac12\right)$. לאינפימום:
+      $x=\min\left(\frac12,\frac\varepsilon2\right)$.
+    solution:
+      - kind: idea
+        text: >-
+          השלמה לריבוע: $2x-x^2=1-(1-x)^2$. ליד 1 מגיעים כש-$1-x$ קטן, וליד 0 כש-$x$ קטן, כי $2x-x^2=x(2-x)<2x$. בוחרים
+          את המספרים כך שאי-שוויון פשוט מספיק, בלי שורשים.
+      - kind: computation
+        text: >-
+          $1-(1-x)^2=1-(1-2x+x^2)=2x-x^2$ (טענה 1.1.13). יהי $0<x<1$ ו-$y=1-x$. אז $0<y<1$, ולכן $0<y^2$ (טענה 1.2.5)
+          ו-$y^2<1$ (טענה 1.2.8). מכאן $0<1-y^2<1$: $1$ חסם מלעיל, $0$ חסם מלרע, ואף אחד מהם אינו איבר של $A$.
+      - kind: theorem
+        text: >-
+          $\sup A=1$: יהי $\varepsilon>0$, $y=\min\left(\varepsilon,\frac12\right)$ ו-$x=1-y$. אז $0<y\le\frac12$, ולכן
+          $\frac12\le x<1$, כלומר $x\in(0,1)$. כופלים את $y\le\frac12$ ב-$y>0$: $y^2\le\frac y2\le\frac\varepsilon2<\varepsilon$. לכן
+          $2x-x^2=1-y^2>1-\varepsilon$. לפי משפט 1.4.8(א), $\sup A=1$.
+      - kind: theorem
+        text: >-
+          $\inf A=0$: יהי $\varepsilon>0$ ו-$x=\min\left(\frac12,\frac\varepsilon2\right)$. אז $0<x\le\frac12$, ו-$2-x<2$, ולכן (ס4,
+          כפל ב-$x>0$) $2x-x^2=x(2-x)<2x\le\varepsilon$. לפי משפט 1.4.8(ב), $\inf A=0$.
+      - kind: step
+        text: >-
+          לפי החישוב הראשון, $0<a<1$ לכל $a\in A$, ולכן $0\notin A$ ו-$1\notin A$, ולפי טענה 1.4.7 אין מקסימום ואין
+          מינימום.
+      - kind: check
+        text: >-
+          $\varepsilon=0.01$: לסופרמום $x=0.99$ ו-$2x-x^2=0.9999>0.99$; לאינפימום $x=0.005$ ו-$2x-x^2=0.009975<0.01$.
+          ובלי ה-$\min$ עם $\frac12$, עבור $\varepsilon=3$ היינו בוחרים $x=-2\notin(0,1)$.
+      - kind: result
+        text: '$\sup A=1$ ו-$\inf A=0$, ואף אחד מהם אינו מתקבל.'
+
+  - id: W-1.4-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.4-2]
+    prompt: >-
+      לכל סעיף מצאו דוגמה, או הוכיחו שאין:
+
+
+      (א) קבוצה לא ריקה שהסופרמום שלה שייך לה והאינפימום שלה אינו שייך לה.
+
+
+      (ב) קבוצה לא ריקה $A$ שיש לה סופרמום ואינפימום, עם $\sup A<\inf A$.
+
+
+      (ג) קבוצה עם לפחות שני איברים, שיש לה סופרמום ואינפימום, עם $\sup A=\inf A$.
+
+
+      (ד) קבוצה סופית שיש לה סופרמום שאינו שייך לה.
+    answer: >-
+      (א) $(0,1]$. (ב) אין: $\inf A\le a\le\sup A$. (ג) אין: כל איבר שווה ל-$\inf A$. (ד) אין: לקבוצה סופית ולא ריקה
+      יש מקסימום, והוא הסופרמום.
+    solution:
+      - kind: idea
+        text: >-
+          כל איבר של קבוצה נמצא בין האינפימום לסופרמום, כי הם חסמים. רוב הסעיפים נשברים על זה. ב-(ד) משתמשים בכך
+          שלקבוצה סופית ולא ריקה יש מקסימום.
+      - kind: step
+        text: >-
+          (א) $A=(0,1]$. $1\in A$ וחוסם אותה, ולכן $\max A=\sup A=1$ (טענה 1.4.7(א)). $0$ חסם מלרע; לכל $\varepsilon>0$ האיבר
+          $a=\frac{\min(\varepsilon,1)}{2}$ מקיים $0<a\le\frac12$ ו-$a<\varepsilon$ (מסקנה 1.2.6), ולכן לפי משפט 1.4.8(ב), $\inf A=0\notin A$.
+      - kind: step
+        text: >-
+          (ב) אין. יהי $a\in A$ (יש, כי $A\ne\varnothing$). $\inf A$ חסם מלרע ו-$\sup A$ חסם מלעיל, ולכן
+          $\inf A\le a\le\sup A$, ולפי טענה 1.2.3, $\inf A\le\sup A$.
+      - kind: step
+        text: >-
+          (ג) אין. אם $\sup A=\inf A=c$, אז לכל $a\in A$: $c\le a\le c$, ולפי טענה 1.2.3, $a=c$. לכן לכל שני איברים
+          $a,a'$: $a=c=a'$, ואין ל-$A$ שני איברים שונים. (קבוצה עם איבר אחד, $\{c\}$, מקיימת $\sup=\inf=c$.)
+      - kind: step
+        text: >-
+          (ד) אין. אם ל-$A$ יש סופרמום, אז $A\ne\varnothing$ (לקבוצה הריקה אין סופרמום). $A$ סופית ולא ריקה, ולפי טענה
+          1.4.3(ב) יש לה מקסימום, ולפי טענה 1.4.7(א) הוא הסופרמום. לכן $\sup A=\max A\in A$.
+      - kind: check
+        text: >-
+          (ד) מתיישבת גם עם טענה 1.4.9: סופרמום שאינו בקבוצה מחייב אינסוף איברים מתחתיו. ב-(ב), בלי "לא ריקה" אין
+          דוגמה מסיבה אחרת: ל-$\varnothing$ אין סופרמום בכלל.
+      - kind: result
+        text: '(א) $(0,1]$; (ב), (ג), (ד): אין דוגמה, מהסיבות שהוכחו.'
+
+  - id: W-1.4-07
+    level: mid
+    objectives: [OBJ-1.4-1]
+    prompt: >-
+      יהיו $A,B\subseteq\mathbb{R}$.
+
+
+      (א) הוכיחו: אם $A$ ו-$B$ חסומות, אז $A\cup B$ ו-$A\cap B$ חסומות.
+
+
+      (ב) הוכיחו: אם ל-$A$ ול-$B$ יש מקסימום, אז ל-$A\cup B$ יש מקסימום, $\max(A\cup B)=\max(\max A,\max B)$.
+
+
+      (ג) הראו שבתנאי (ב) ייתכן שאין ל-$A\cap B$ מקסימום, גם כשהיא לא ריקה.
+    answer: >-
+      (א) $M=\max(M_A,M_B)$ חוסם את $|x|$ ב-$A\cup B$, ו-$A\cap B\subseteq A$. (ב) $r=\max(\max A,\max B)$ שייך לאיחוד
+      וחוסם אותו. (ג) $A=[0,1]$, $B=[0,1)\cup\{2\}$, $A\cap B=[0,1)$.
+    solution:
+      - kind: idea
+        text: >-
+          חסם של איחוד הוא הגדול מבין שני החסמים; מקסימום של איחוד הוא הגדול מבין שני המקסימומים, כי הוא גם שייך
+          לאיחוד. בחיתוך המקסימום של כל קבוצה יכול "ללכת לאיבוד", כי אינו שייך לשנייה.
+      - kind: step
+        text: >-
+          (א) לפי טענה 1.4.4(א) יש $M_A,M_B\ge0$ עם $|a|\le M_A$ לכל $a\in A$ ו-$|b|\le M_B$ לכל $b\in B$. נסמן
+          $M=\max(M_A,M_B)$; $M\ge M_A$ ו-$M\ge M_B$. יהי $x\in A\cup B$: אם $x\in A$ אז $|x|\le M_A\le M$, ואם $x\in B$
+          אז $|x|\le M_B\le M$. לפי טענה 1.4.4(א), $A\cup B$ חסומה. $A\cap B\subseteq A$, ולפי טענה 1.4.4(ב) היא חסומה.
+      - kind: step
+        text: >-
+          (ב) נסמן $p=\max A$, $q=\max B$, $r=\max(p,q)$. $r$ הוא $p$ או $q$, ולכן $r\in A\cup B$. יהי $x\in A\cup B$: אם
+          $x\in A$ אז $x\le p\le r$; אם $x\in B$ אז $x\le q\le r$. לכן $r$ חסם מלעיל ששייך ל-$A\cup B$: $r=\max(A\cup B)$.
+      - kind: step
+        text: >-
+          (ג) $A=[0,1]$ ($\max A=1$) ו-$B=[0,1)\cup\{2\}$ ($\max B=2$: $2\in B$ וכל איבר קטן או שווה לו). אז
+          $A\cap B=[0,1)$: $2\notin A$, ו-$1\notin B$. בשיעור הוכחנו שאין ל-$[0,1)$ מקסימום.
+      - kind: check
+        text: >-
+          ב-(ב), $A=\{1,5\}$ ו-$B=[0,3]$: $\max(A\cup B)=\max(5,3)=5$, ואכן $5\in A\cup B$. ב-(ג) החיתוך כן חסום (לפי
+          (א)), וכן יש לו סופרמום, 1; חסר רק המקסימום.
+      - kind: result
+        text: >-
+          (א) האיחוד והחיתוך חסומים. (ב) $\max(A\cup B)=\max(\max A,\max B)$. (ג) $[0,1]\cap\left([0,1)\cup\{2\}\right)=[0,1)$,
+          בלי מקסימום.
+
+  - id: W-1.4-08
+    level: exam
+    objectives: [OBJ-1.4-2, OBJ-1.4-3]
+    prompt: >-
+      תהי $A\subseteq\mathbb{R}$, יהי $c\in\mathbb{R}$, ונגדיר $A+c=\{a+c:\ a\in A\}$.
+
+
+      (א) הוכיחו: אם ל-$A$ יש סופרמום, אז גם ל-$A+c$, ו-$\sup(A+c)=\sup A+c$.
+
+
+      (ב) הוכיחו: $\sup(A+c)$ מתקבל אם ורק אם $\sup A$ מתקבל.
+
+
+      (ג) הוכיחו בעזרת טענה 1.4.10: אם ל-$A$ יש אינפימום, אז $\inf(A+c)=\inf A+c$.
+    answer: >-
+      (א) $s+c$ חסם, ותנאי האפסילון עובר עם אותו $\varepsilon$. (ב) $s+c\in A+c\iff s\in A$. (ג)
+      $-(A+c)=(-A)+(-c)$, ולכן $\inf(A+c)=-\sup\big((-A)+(-c)\big)=-(-\inf A-c)=\inf A+c$.
+    solution:
+      - kind: idea
+        text: >-
+          הזזה ב-$c$ שומרת על הסדר (ס3), ולכן מזיזה את כל החסמים ב-$c$, ואת הקטן ביותר שבהם. ב-(ג) לא מוכיחים מחדש:
+          משקפים ב-$-1$, משתמשים ב-(א), ומשקפים חזרה.
+      - kind: given
+        text: '$s=\sup A$. איברי $A+c$ הם בדיוק המספרים $a+c$ עם $a\in A$.'
+      - kind: step
+        text: >-
+          (א) חסם: לכל $a\in A$, $a\le s$, ולכן $a+c\le s+c$ (ס3, ובמקרה של שוויון שוויון). תנאי האפסילון: יהי
+          $\varepsilon>0$. לפי משפט 1.4.8(א) יש $a\in A$ עם $a>s-\varepsilon$, ואז $a+c\in A+c$ ו-$a+c>(s+c)-\varepsilon$. לפי משפט
+          1.4.8(א), $\sup(A+c)=s+c$.
+      - kind: step
+        text: >-
+          (ב) $s+c\in A+c$ אם ורק אם יש $a\in A$ עם $a+c=s+c$, כלומר (טענה 1.1.3, צמצום בחיבור) $a=s$, כלומר אם ורק
+          אם $s\in A$. לפי טענה 1.4.7, זה בדיוק: ל-$A+c$ יש מקסימום אם ורק אם ל-$A$ יש.
+      - kind: step
+        text: >-
+          (ג) נסמן $t=\inf A$. לפי טענה 1.4.10(ב), ל-$-A$ יש סופרמום, $-t$. לפי (א) עם $-c$, $\sup\big((-A)+(-c)\big)=-t-c$.
+          והקבוצה $(-A)+(-c)=\{-a-c:\ a\in A\}$ היא $-(A+c)=\{-(a+c):\ a\in A\}$, כי $-(a+c)=-a-c$ (טענה 1.1.8). לכן
+          ל-$-(A+c)$ יש סופרמום, $-t-c$. לפי טענה 1.4.10(ב), המופעלת על הקבוצה $A+c$, ל-$A+c$ יש אינפימום,
+          ו-$-\inf(A+c)=\sup\big(-(A+c)\big)=-t-c$, כלומר $\inf(A+c)=t+c$.
+      - kind: check
+        text: >-
+          $A=[0,1)$, $c=5$: $A+c=[5,6)$, $\sup=6=1+5$ ואינו מתקבל, כמו $\sup[0,1)=1$; $\inf=5=0+5$ ומתקבל.
+      - kind: result
+        text: '$\sup(A+c)=\sup A+c$, $\inf(A+c)=\inf A+c$, וההזזה שומרת על "מתקבל".'
+
+  - id: W-1.4-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.4-3]
+    prompt: >-
+      תהי $A\subseteq\mathbb{R}$ ויהי $s\in\mathbb{R}$. הוכיחו או הפריכו:
+
+
+      (א) אם $s=\sup A$ ו-$s\notin A$, אז לכל $\varepsilon>0$ יש בקטע $(s-\varepsilon,s)$ לפחות שני איברים שונים של $A$.
+
+
+      (ב) אם לכל $\varepsilon>0$ יש $a\in A$ עם $s-\varepsilon<a\le s$, אז $s=\sup A$.
+
+
+      (ג) אם $s=\sup A$, ויש $\varepsilon>0$ כך שבקטע $(s-\varepsilon,s)$ אין אף איבר של $A$, אז $s=\max A$.
+
+
+      (ד) אם $s=\max A$, אז יש $\varepsilon>0$ כך שבקטע $(s-\varepsilon,s)$ אין אף איבר של $A$.
+    answer: >-
+      (א) נכון (טענה 1.4.9). (ב) לא נכון: $A=(0,2)$, $s=1$. (ג) נכון. (ד) לא נכון: $A=[0,1]$, $s=1$.
+    solution:
+      - kind: idea
+        text: >-
+          (א) ו-(ג) הן טענה 1.4.9 ישירות ובקונטרפוזיטיב. ב-(ב) חסרה ההנחה ש-$s$ חסם מלעיל, וזו בדיוק ההנחה שמשפט 1.4.8
+          דורש. ב-(ד), מקסימום יכול להיות "מוקף" באיברים.
+      - kind: step
+        text: >-
+          (א) נכון. לפי טענה 1.4.9, $B=A\cap(s-\varepsilon,s)$ אינסופית. קבוצה עם 0 איברים או עם איבר אחד היא סופית
+          (הגדרה 0.8.16: $\varnothing$, ו-$\{a\}$ עם הפונקציה $1\mapsto a$ מ-$[1]$), ולכן ב-$B$ יש שני איברים שונים.
+      - kind: step
+        text: >-
+          (ב) לא נכון. $A=(0,2)$ ו-$s=1$: לכל $\varepsilon>0$, $a=1\in A$ ו-$1-\varepsilon<1\le1$. אבל $1$ אינו חסם מלעיל של $A$
+          ($1.5\in A$), ולכן אינו הסופרמום.
+      - kind: step
+        text: >-
+          (ג) נכון. אילו $s\notin A$, אז לפי טענה 1.4.9 הקבוצה $A\cap(s-\varepsilon,s)$ הייתה אינסופית, ובפרט לא ריקה, בסתירה
+          להנחה. לכן $s\in A$, ולפי טענה 1.4.7(ב), $s=\max A$.
+      - kind: step
+        text: >-
+          (ד) לא נכון. $A=[0,1]$, $s=1=\max A$. לכל $\varepsilon>0$, עם $b=\max(0,1-\varepsilon)$ ו-$a=\frac{b+1}{2}$: $b<a<1$
+          (מסקנה 1.2.6), ולכן $a\in[0,1]$ ו-$a\in(1-\varepsilon,1)$.
+      - kind: check
+        text: >-
+          (ג) ו-(ד) יחד: מקסימום יכול לעמוד לבד (כמו 2 ב-$(0,1)\cup\{2\}$) או להיות מוקף באיברים (כמו 1 ב-$[0,1]$); סופרמום
+          שאינו מקסימום תמיד מוקף.
+      - kind: result
+        text: '(א) נכון; (ב) לא נכון; (ג) נכון; (ד) לא נכון.'
+
+  - id: W-1.4-10
+    level: exam
+    objectives: [OBJ-1.4-2, OBJ-1.4-3]
+    prompt: >-
+      תהי $A\subseteq\mathbb{R}$ לא ריקה שיש לה סופרמום $s$ ואינפימום $t$, ותהי $D=\{|x-y|:\ x,y\in A\}$.
+
+
+      (א) הוכיחו ש-$\sup D=s-t$.
+
+
+      (ב) הוכיחו ש-$\sup D$ מתקבל אם ורק אם ל-$A$ יש מקסימום וגם מינימום.
+    answer: >-
+      (א) $|x-y|\le s-t$, ולכל $\varepsilon$: $x>s-\frac\varepsilon2$, $y<t+\frac\varepsilon2$. (ב) $|x-y|=s-t$ עם $x\ge y$ מחייב $x=s$
+      ו-$y=t$.
+    solution:
+      - kind: idea
+        text: >-
+          כל שני איברים נמצאים בין $t$ ל-$s$, ולכן המרחק ביניהם לכל היותר $s-t$. כדי להתקרב ל-$s-t$, לוקחים איבר קרוב
+          ל-$s$ ואיבר קרוב ל-$t$, כל אחד עם חצי מה-$\varepsilon$.
+      - kind: step
+        text: >-
+          (א) חסם: יהיו $x,y\in A$. $t\le x\le s$ ו-$t\le y\le s$, ולכן $x-y\le s-t$ ו-$y-x\le s-t$ (טענה 1.2.3). לפי
+          הכלל $a\le b\iff-b\le-a$ (טענות 1.2.2 ו-1.1.8), $-(s-t)\le x-y\le s-t$, ולפי טענה 1.2.12, $|x-y|\le s-t$.
+      - kind: theorem
+        text: >-
+          תנאי האפסילון: יהי $\varepsilon>0$. לפי משפט 1.4.8(א) עם $\frac\varepsilon2$, יש $x\in A$ עם $x>s-\frac\varepsilon2$; לפי
+          משפט 1.4.8(ב), יש $y\in A$ עם $y<t+\frac\varepsilon2$. אז $|x-y|\ge x-y>\left(s-\frac\varepsilon2\right)-\left(t+\frac\varepsilon2\right)=s-t-\varepsilon$.
+          $D\ne\varnothing$ (כי $A\ne\varnothing$), ולפי משפט 1.4.8(א), $\sup D=s-t$.
+      - kind: step
+        text: >-
+          (ב) אם יש $\max A=s$ ו-$\min A=t$, אז $s,t\in A$ ו-$t\le s$ (כי $t\le a\le s$ לכל $a\in A$), ולכן
+          $|s-t|=s-t\in D$ (טענה 1.2.12). להפך, נניח
+          ש-$|x-y|=s-t$ עבור $x,y\in A$. $|x-y|=|y-x|$, ולכן אפשר לקרוא לגדול מבין השניים $x$: $x\ge y$, ו-$x-y=s-t$.
+          אז $s-t=x-y\le s-y\le s-t$ (כי $x\le s$ ו-$y\ge t$), ולכן $x-y=s-y$ ו-$s-y=s-t$, כלומר $x=s$ ו-$y=t$
+          (צמצום בחיבור, טענה 1.1.3). לכן $s,t\in A$, ולפי טענה 1.4.7 הם המקסימום והמינימום.
+      - kind: check
+        text: >-
+          $A=[0,1)\cup\{3\}$: $s=3$, $t=0$, שניהם ב-$A$, ו-$|3-0|=3=\sup D$ מתקבל. $A=(0,1)$: $\sup D=1$, ואינו מתקבל, כי
+          $|x-y|<1$ לכל $x,y\in(0,1)$.
+      - kind: result
+        text: '(א) $\sup D=\sup A-\inf A$. (ב) הוא מתקבל בדיוק כשהסופרמום והאינפימום של $A$ שייכים ל-$A$.'
+
+challenge:
+  - id: W-1.4-c1
+    stars: 1
+    objectives: [OBJ-1.4-2]
+    prompt: >-
+      תהי $A\subseteq\mathbb{R}$ לא ריקה שיש לה סופרמום, ותהי $B\subseteq A$ עם התכונה: לכל $x\in A$ יש $y\in B$ כך
+      ש-$x\le y$.
+
+
+      (א) הוכיחו שגם ל-$B$ יש סופרמום, ו-$\sup B=\sup A$.
+
+
+      (ב) הראו שההפך אינו נכון: מצאו $B\subseteq A$ עם $\sup B=\sup A$, שאינה מקיימת את התכונה.
+    answer: >-
+      (א) $\sup A$ חוסם את $B$, וכל חסם של $B$ חוסם את $A$. (ב) $A=[0,1]$, $B=[0,1)$: לאיבר $1\in A$ אין $y\in B$ עם
+      $1\le y$.
+    solution:
+      - kind: idea
+        text: >-
+          התכונה אומרת שכל איבר של $A$ "מכוסה" על ידי איבר של $B$ שמעליו. לכן ל-$A$ ול-$B$ יש בדיוק אותם חסמים
+          מלעיל, ולכן אותו חסם קטן ביותר.
+      - kind: step
+        text: >-
+          (א) $B\ne\varnothing$: יש $x\in A$, ולפי התכונה יש $y\in B$. נסמן $s=\sup A$. לפי טענה 1.4.4(ב), $s$ חסם מלעיל
+          של $B$ (כי $B\subseteq A$).
+      - kind: step
+        text: >-
+          יהי $U$ חסם מלעיל של $B$. לכל $x\in A$ יש $y\in B$ עם $x\le y$, ו-$y\le U$; לפי טענה 1.2.3, $x\le U$. לכן $U$
+          חסם מלעיל של $A$, ולפי תנאי (2) של $s$, $s\le U$. לפי הגדרה 1.4.5, $s$ הוא הסופרמום של $B$.
+      - kind: step
+        text: >-
+          (ב) $A=[0,1]$ ו-$B=[0,1)$. $\sup A=\max A=1$, ו-$\sup B=1$ (הדוגמה שאחרי משפט 1.4.8). אבל $1\in A$, וכל
+          $y\in B$ מקיים $y<1$: אין $y\in B$ עם $1\le y$.
+      - kind: check
+        text: >-
+          (א) מכליל את דוגמה 5 בשיעור: שם $B=\{a\in A:\ a>c\}$ עם $c<s$, ולכל $x\in A$ עם $x\le c$ מכסה אותו כל איבר
+          של $B$. וב-(א) לא השתמשנו באקסיומת השלמות: הסופרמום של $A$ נתון, ושל $B$ נבנה ממנו.
+      - kind: result
+        text: >-
+          (א) $\sup B=\sup A$. (ב) $A=[0,1]$, $B=[0,1)$: אותו סופרמום, בלי התכונה.
+    source:
+      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Volume I (version 6.3)'
+      year: 2026
+      problem: 'Section 1.1, Exercise 1.1.9'
+      url: 'https://www.jirka.org/ra/realanal.pdf'
+      verified: '2026-11-12'
+      adapted: true
+
+  - id: W-1.4-c2
+    stars: 2
+    objectives: [OBJ-1.4-2, OBJ-1.4-3]
+    prompt: >-
+      לכל ארבעה מספרים חיוביים $a,b,c,d$ נגדיר
+
+      $$S(a,b,c,d)=\frac{a}{a+b+d}+\frac{b}{a+b+c}+\frac{c}{b+c+d}+\frac{d}{a+c+d},$$
+
+      ותהי $V$ קבוצת כל הערכים $S(a,b,c,d)$ עם $a,b,c,d>0$.
+
+
+      (א) הוכיחו ש-$1<S(a,b,c,d)<2$ לכל $a,b,c,d>0$.
+
+
+      (ב) הוכיחו ש-$\inf V=1$ ו-$\sup V=2$, ושאף אחד מהם אינו מתקבל.
+    answer: >-
+      (א) כל מכנה קטן מ-$a+b+c+d$; ובזוגות, $\frac a{a+b+d}+\frac b{a+b+c}<\frac{a+b}{a+b}=1$ ו-$\frac c{b+c+d}+\frac d{a+c+d}<1$.
+      (ב) $S(1,t,1,t)>2-4t$ ו-$S(1,u,u^2,u^2)<1+u+u^2$, עם $t=\frac\varepsilon4$ ו-$u=\min\left(\frac12,\frac\varepsilon2\right)$.
+    solution:
+      - kind: idea
+        text: >-
+          שבר עם מונה חיובי גדל כשמקטינים את המכנה (ומשאירים אותו חיובי). מחליפים כל מכנה בסכום כולו כדי לקבל חסם מלרע,
+          ובסכום של שני משתנים בלבד כדי לקבל חסם מלעיל. לסופרמום ולאינפימום בונים משפחות של רביעיות שמתקרבות לקצוות.
+      - kind: definition
+        text: >-
+          הכלי: אם $p>0$ ו-$0<Q<q$, אז $\frac pq<\frac pQ$. לפי טענה 1.2.7, $\frac1q<\frac1Q$, וכופלים ב-$p>0$ (ס4).
+      - kind: step
+        text: >-
+          (א) מלרע: נסמן $T=a+b+c+d$. $a+b+d<T$ (כי $c>0$), ולכן $\frac a{a+b+d}>\frac aT$; וכך כל אחד מארבעת המחוברים,
+          כל אחד עם המשתנה החסר במכנה שלו. לכן $S>\frac{a+b+c+d}{T}=1$.
+      - kind: step
+        text: >-
+          (א) מלעיל: $a+b<a+b+d$ ו-$a+b<a+b+c$, ולכן $\frac a{a+b+d}+\frac b{a+b+c}<\frac a{a+b}+\frac b{a+b}=1$. ו-$c+d<b+c+d$,
+          $c+d<a+c+d$, ולכן $\frac c{b+c+d}+\frac d{a+c+d}<\frac{c+d}{c+d}=1$. לכן $S<2$. בפרט $1$ חסם מלרע ו-$2$ חסם מלעיל
+          של $V$, ואף אחד מהם אינו ב-$V$.
+      - kind: computation
+        text: >-
+          (ב) ליד 2: יהי $\varepsilon>0$ ו-$t=\frac\varepsilon4>0$. אז $S(1,t,1,t)=\frac{2}{1+2t}+\frac{2t}{2+t}>\frac2{1+2t}$. ו-$(2-4t)(1+2t)=2-8t^2<2$, ולכן
+          (כפל ב-$\frac1{1+2t}>0$) $\frac2{1+2t}>2-4t=2-\varepsilon$. לפי משפט 1.4.8(א), $\sup V=2$.
+      - kind: computation
+        text: >-
+          ליד 1: יהי $\varepsilon>0$ ו-$u=\min\left(\frac12,\frac\varepsilon2\right)$. עם $a=1$, $b=u$, $c=d=u^2$:
+
+          $$S=\frac{1+u}{1+u+u^2}+\frac{u}{1+2u}+\frac{u^2}{1+2u^2}<1+u+u^2,$$
+
+          כי בכל שבר המכנה גדול מהמונה, או מ-1 (באחרונים). מ-$0<u\le\frac12$: $u^2\le\frac u2$, ולכן $1+u+u^2\le1+\frac{3u}{2}\le1+\frac{3\varepsilon}{4}<1+\varepsilon$.
+          לפי משפט 1.4.8(ב), $\inf V=1$.
+      - kind: check
+        text: >-
+          $S(1,1,1,1)=\frac43$. עבור $\varepsilon=0.1$: $S\left(1,0.025,1,0.025\right)\approx1.929>1.9$, ו-$S(1,0.05,0.0025,0.0025)\approx1.046<1.1$. לפי (א),
+          $1\notin V$ ו-$2\notin V$, ולכן לפי טענה 1.4.7 אין ל-$V$ מינימום ואין לה מקסימום. (הבעיה המקורית שואלת על
+          **כל** הערכים, והתשובה היא כל הקטע $(1,2)$; כדי להוכיח שכל ערך ביניהם מתקבל צריך רציפות, פרק 4.)
+      - kind: result
+        text: '(א) $1<S<2$. (ב) $\inf V=1$ ו-$\sup V=2$, ושניהם אינם מתקבלים.'
+    source:
+      name: '16th International Mathematical Olympiad (IMO 1974)'
+      year: 1974
+      problem: 'Problem 5 (listed as B2 on the page)'
+      url: 'https://webee.technion.ac.il/people/aditya/www.kalva.demon.co.uk/imo/imo74.html'
+      verified: '2026-11-12'
+      adapted: true

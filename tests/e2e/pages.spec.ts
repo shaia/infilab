@@ -61,6 +61,8 @@ test.describe('every page', () => {
     });
 
     test(`${path} has no dead internal links`, async ({ page, request }) => {
+      // the contents page and /me/ link every written lesson and workbook (~50 pages, some of them large)
+      test.setTimeout(120_000);
       await page.goto(path);
       // one request per page, not per link: the contents page links ~50 planned lessons to one practice page
       const urls = await page.$$eval('a[href]', (as) => [

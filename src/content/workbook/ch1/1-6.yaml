@@ -1,0 +1,490 @@
+# Workbook of lesson 1.6 — the Archimedean property, the floor, density.
+# Objectives (src/course.ts):
+#   OBJ-1.6-1  prove the Archimedean property from completeness and use it (e.g. inf 1/n = 0)
+#   OBJ-1.6-2  prove that between any two reals there is a rational and an irrational
+#   OBJ-1.6-3  define the integer part (floor) and use it in proofs
+# Every number below was recomputed with npx tsx (src/math/supsets.ts: archimedesN, density; Math.floor for floors):
+# W-03 (124/1001; the least denominator with a fraction in (0.123, 0.124) is 65, by search over n = 1..1001),
+# W-05 (200000 random x, n), W-06 (k = 5, m = 10), W-09 (|q√2 − p| for q = 1..10), c2 (20000 random x, n, both signs).
+# Solutions cite the numbered results of the lesson (1.6.1–1.6.10) and of lessons 1.2–1.5 by number.
+lesson: '1.6'
+practice:
+  - id: W-1.6-01
+    level: basic
+    objectives: [OBJ-1.6-3]
+    prompt: >-
+      (א) חשבו לפי ההגדרה את $\lfloor-0.01\rfloor$, את $\left\lfloor-\frac{17}{4}\right\rfloor$ ואת
+      $\left\lfloor\frac{100}{7}\right\rfloor$.
+
+
+      (ב) מצאו את כל ה-$x$ הממשיים שמקיימים $\lfloor 3-x\rfloor=1$.
+    answer: '(א) $-1$, $-5$, $14$. (ב) $(1,\ 2]$.'
+    solution:
+      - kind: idea
+        text: >-
+          לפי טענה 1.6.6(א), $\lfloor t\rfloor=k$ אם ורק אם $k$ שלם ו-$k\le t<k+1$. מנחשים את $k$ ובודקים את שני
+          אי-השוויונות; ב-(ב) הופכים את המשוואה לשרשרת אי-שוויונות ומבודדים את $x$.
+      - kind: computation
+        text: >-
+          (א) $-1\le-0.01<0$, ולכן $\lfloor-0.01\rfloor=-1$ (ולא $0$: $0>-0.01$). $-\frac{17}4=-4.25$ ו-$-5\le-4.25<-4$,
+          ולכן הערך השלם $-5$. $14\le\frac{100}7<15$, כי $98\le100<105$, ולכן הערך השלם $14$.
+      - kind: computation
+        text: >-
+          (ב) לפי טענה 1.6.6(א): $\lfloor3-x\rfloor=1$ אם ורק אם $1\le3-x<2$, אם ורק אם $-2\le-x<-1$ (הוספת $-3$,
+          ס3), אם ורק אם $1<x\le2$ (כפל ב-$-1$ הופך את הכיוונים, טענה 1.2.4).
+      - kind: check
+        text: >-
+          $x=2$: $\lfloor1\rfloor=1$, שייך. $x=1$: $\lfloor2\rfloor=2$, לא שייך. $x=1.5$: $\lfloor1.5\rfloor=1$, שייך. הקצה
+          השמאלי פתוח והימני סגור, הפוך מקטע של הצורה $\lfloor x\rfloor=k$, כי הכפל ב-$-1$ הפך את הכיוונים.
+      - kind: result
+        text: '(א) $-1$, $-5$, $14$. (ב) $(1,\ 2]$.'
+
+  - id: W-1.6-02
+    level: basic
+    objectives: [OBJ-1.6-1]
+    prompt: >-
+      $A=\left\{1-\frac3n:\ n\in\mathbb N\right\}$. הוכיחו ש-$\sup A=1$ ושאין ל-$A$ מקסימום, ומצאו את $\min A$.
+    answer: '$\sup A=1$, לא מתקבל; $\min A=-2$, ב-$n=1$.'
+    solution:
+      - kind: idea
+        text: >-
+          $1$ חסם כי $\frac3n>0$. כדי שאיבר יהיה גדול מ-$1-\varepsilon$ צריך $\frac3n<\varepsilon$, כלומר $n>\frac3\varepsilon$,
+          ואת $n$ הזה נותנת תכונת ארכימדס (מסקנה 1.6.2(א)).
+      - kind: step
+        text: >-
+          חסם מלעיל: לכל $n\in\mathbb N$, $\frac3n>0$ (טענה 1.2.7), ולכן $1-\frac3n<1$. בפרט $1\notin A$.
+      - kind: theorem
+        text: >-
+          יהי $\varepsilon>0$. לפי מסקנה 1.6.2(א) יש $n\in\mathbb N$ עם $n>\frac3\varepsilon$. כופלים ב-$\frac\varepsilon n>0$
+          (ס4): $\varepsilon>\frac3n$, ולכן האיבר $1-\frac3n>1-\varepsilon$. לפי משפט 1.4.8(א), $\sup A=1$, ולפי טענה
+          1.4.7 אין מקסימום, כי $1\notin A$.
+      - kind: step
+        text: >-
+          המינימום: לכל $n$, $n\ge1$ (טענה 1.3.5(א)), ולכן $\frac3n\le3$ ו-$1-\frac3n\ge-2$. האיבר של $n=1$ הוא $-2$, ולכן
+          $\min A=-2$.
+      - kind: check
+        text: >-
+          $\varepsilon=0.1$: צריך $n>30$, ו-$n=31$ נותן $1-\frac3{31}\approx0.9032>0.9$. עם $n=30$ מקבלים בדיוק $0.9$, שאינו
+          גדול ממש מ-$0.9$: לכן התנאי $n>\frac3\varepsilon$ חזק.
+      - kind: result
+        text: '$\sup A=1$ ואין מקסימום; $\min A=-2$.'
+
+  - id: W-1.6-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-1.6-2]
+    prompt: >-
+      (א) מצאו, לפי המתכון של ההוכחה של משפט 1.6.7, שבר $\frac mn$ בקטע $(0.123,\ 0.124)$.
+
+
+      (ב) מצאו מספר אי-רציונלי באותו קטע, ונמקו למה הוא אי-רציונלי.
+
+
+      (ג) נכון או לא נכון, ולמה: המכנה שהמתכון נותן הוא המכנה הקטן ביותר של שבר בקטע הזה.
+    answer: >-
+      (א) $\frac{124}{1001}$. (ב) למשל $0.123+\frac{\sqrt2}{10000}$. (ג) לא נכון: $\frac{8}{65}$ בקטע, עם מכנה $65<1001$.
+    solution:
+      - kind: idea
+        text: >-
+          המתכון: $n>\frac1{b-a}$ ו-$m=\lfloor na\rfloor+1$. לאי-רציונלי: מוסיפים ל-$a$ מספר אי-רציונלי קטן מאורך הקטע,
+          וטענה 1.3.18 שומרת על אי-הרציונליות. ב-(ג), התנאי $n>\frac1{b-a}$ מספיק, אבל אינו הכרחי.
+      - kind: computation
+        text: >-
+          (א) $b-a=0.001$ ו-$\frac1{b-a}=1000$, ולכן $n=1001$. $na=123.123$, ולכן $m=\lfloor123.123\rfloor+1=124$.
+          בדיקה: $0.123\cdot1001=123.123<124<124.124=0.124\cdot1001$, ובחלוקה ב-$1001$: $0.123<\frac{124}{1001}<0.124$.
+      - kind: computation
+        text: >-
+          (ב) $1<\sqrt2<2$ (טענה 1.2.8(ב), כי $1<2<4$), ולכן $0.0001<\frac{\sqrt2}{10000}<0.0002$, ו-$x=0.123+\frac{\sqrt2}{10000}$
+          מקיים $0.1231<x<0.1232$. לפי טענה 1.3.18(ד), $\frac{\sqrt2}{10000}\notin\mathbb Q$ (רציונלי שונה מאפס כפול
+          אי-רציונלי), ולפי טענה 1.3.18(א), גם $x\notin\mathbb Q$.
+      - kind: computation
+        text: >-
+          (ג) $0.123\cdot65=7.995<8<8.06=0.124\cdot65$, ולכן $0.123<\frac8{65}<0.124$. המכנה $65$ קטן בהרבה מ-$1001$.
+      - kind: check
+        text: >-
+          (חיפוש ממוחשב על כל המכנים מ-$1$ עד $64$ לא מצא שבר בקטע, כך ש-$65$ הוא המכנה הקטן ביותר; זו בדיקה, ולא חלק
+          מההוכחה.) ההוכחה של משפט 1.6.7 אינה מחפשת את המכנה הקטן ביותר: היא בוחרת מכנה שבוודאות מספיק, לכל קטע.
+      - kind: result
+        text: >-
+          (א) $\frac{124}{1001}$. (ב) $0.123+\frac{\sqrt2}{10000}$. (ג) לא נכון: $\frac8{65}$.
+
+  - id: W-1.6-04
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.6-1]
+    prompt: >-
+      (א) הוכיחו: אם $x\in\mathbb R$ ו-$x\le\frac1n$ לכל $n\in\mathbb N$, אז $x\le0$.
+
+
+      (ב) הסיקו: אם $a,b\in\mathbb R$ ו-$|a-b|<\frac1n$ לכל $n\in\mathbb N$, אז $a=b$.
+
+
+      (ג) הוכיחו או הפריכו: אם $x<\frac1n$ לכל $n\in\mathbb N$, אז $x<0$.
+    answer: '(א), (ב) הוכחות. (ג) לא נכון: $x=0$.'
+    solution:
+      - kind: idea
+        text: >-
+          (א) בשלילה: אם $x>0$, תכונת ארכימדס נותנת $n$ עם $\frac1n<x$. (ב) מפעילים את (א) על $|a-b|$. ב-(ג) המסקנה של
+          (א) היא אי-שוויון חלש, ואי אפשר לחזק אותה.
+      - kind: step
+        text: >-
+          (א) נניח בשלילה ש-$x>0$. לפי מסקנה 1.6.2(ב) עם $\varepsilon=x$ יש $n\in\mathbb N$ עם $\frac1n<x$, בסתירה להנחה
+          $x\le\frac1n$. לכן לא $x>0$, כלומר $x\le0$ (טענה 1.2.2(ד)).
+      - kind: step
+        text: >-
+          (ב) נסמן $t=|a-b|$. לפי טענה 1.2.12(א), $t\ge0$. לכל $n$, $t<\frac1n$ ובפרט $t\le\frac1n$, ולפי (א), $t\le0$. לפי
+          טענה 1.2.3(ה), $t=0$, ולפי טענה 1.2.12(א), $a-b=0$, כלומר $a=b$.
+      - kind: step
+        text: >-
+          (ג) הפרכה: $x=0$. לכל $n\in\mathbb N$, $0<\frac1n$ (טענה 1.2.7(א)), כך שההנחה מתקיימת, אבל $0<0$ שקרי.
+      - kind: check
+        text: >-
+          ב-(ב) זה הכלי שבו מוכיחים בפרק 2 ששני מספרים שווים: מראים שהמרחק ביניהם קטן מכל $\frac1n$. ב-(ג) הדוגמה מראה
+          שגם אי-שוויון חזק בהנחה נותן רק אי-שוויון חלש במסקנה.
+      - kind: result
+        text: '(א) $x\le0$. (ב) $a=b$. (ג) לא נכון; $x=0$ היא דוגמה נגדית.'
+
+  - id: W-1.6-05
+    level: mid
+    objectives: [OBJ-1.6-3]
+    prompt: >-
+      הוכיחו שלכל $x\in\mathbb R$ ולכל $n\in\mathbb N$:
+      $\left\lfloor\frac{\lfloor x\rfloor}{n}\right\rfloor=\left\lfloor\frac{x}{n}\right\rfloor$.
+    answer: >-
+      עם $k=\left\lfloor\frac xn\right\rfloor$: $nk\le\lfloor x\rfloor<nk+n$, ולכן $k\le\frac{\lfloor x\rfloor}n<k+1$.
+    solution:
+      - kind: idea
+        text: >-
+          מסמנים $k=\left\lfloor\frac xn\right\rfloor$ ומראים ש-$k$ מקיים את האפיון של טענה 1.6.6(א) עבור
+          $\frac{\lfloor x\rfloor}n$. הכלי: לפי טענה 1.6.6(ג), שלם שאינו גדול מ-$x$ אינו גדול מ-$\lfloor x\rfloor$.
+      - kind: definition
+        text: >-
+          $k=\left\lfloor\frac xn\right\rfloor\in\mathbb Z$, ולכן $k\le\frac xn<k+1$. כופלים ב-$n>0$ (ס4): $nk\le x<nk+n$.
+      - kind: step
+        text: >-
+          $nk$ שלם (טענה 1.3.8(ב)) ו-$nk\le x$, ולכן לפי טענה 1.6.6(ג), $nk\le\lfloor x\rfloor$.
+      - kind: step
+        text: >-
+          לפי טענה 1.6.6(ב), $\lfloor x\rfloor\le x<nk+n$, ולכן $\lfloor x\rfloor<nk+n$.
+      - kind: step
+        text: >-
+          משני השלבים: $nk\le\lfloor x\rfloor<nk+n$. כופלים ב-$\frac1n>0$: $k\le\frac{\lfloor x\rfloor}n<k+1$, ולפי טענה
+          1.6.6(א), $\left\lfloor\frac{\lfloor x\rfloor}n\right\rfloor=k$.
+      - kind: check
+        text: >-
+          $x=-7.5$, $n=2$: $\lfloor-7.5\rfloor=-8$ ו-$\lfloor-4\rfloor=-4$; ו-$\lfloor-3.75\rfloor=-4$. איפה השתמשנו בכך
+          ש-$n$ טבעי? בכך ש-$nk$ שלם. בלי זה הזהות נכשלת: עם $n=\frac12$ ו-$x=0.6$, $\left\lfloor\frac{0}{1/2}\right\rfloor=0$
+          אבל $\lfloor1.2\rfloor=1$.
+      - kind: result
+        text: '$\left\lfloor\frac{\lfloor x\rfloor}{n}\right\rfloor=\left\lfloor\frac{x}{n}\right\rfloor$ לכל $x\in\mathbb R$, $n\in\mathbb N$.'
+
+  - id: W-1.6-06
+    level: mid
+    objectives: [OBJ-1.6-2, OBJ-1.6-1]
+    prompt: >-
+      מספר מהצורה $\frac{m}{2^k}$, עם $m\in\mathbb Z$ ו-$k\in\mathbb N$, נקרא שבר דיאדי. הוכיחו שבין כל שני ממשיים
+      $a<b$ יש שבר דיאדי. (רמז: אי-שוויון ברנולי.)
+    answer: >-
+      בוחרים $k$ עם $2^k>\frac1{b-a}$ (ארכימדס וברנולי) ו-$m=\lfloor2^ka\rfloor+1$.
+    solution:
+      - kind: idea
+        text: >-
+          אותה הוכחה כמו של משפט 1.6.7, עם מכנה $2^k$ במקום $n$. צריך רק מכנה כזה שגדול מ-$\frac1{b-a}$: ארכימדס נותן
+          $k>\frac1{b-a}$, וברנולי נותן $2^k>k$.
+      - kind: theorem
+        text: >-
+          $\frac1{b-a}>0$. לפי מסקנה 1.6.2(א) יש $k\in\mathbb N$ עם $k>\frac1{b-a}$. לפי משפט 0.6.6 עם $x=1$:
+          $2^k\ge1+k>k$. לכן $N:=2^k>\frac1{b-a}$, וכפל ב-$b-a>0$ נותן $Na+1<Nb$.
+      - kind: definition
+        text: >-
+          $m=\lfloor Na\rfloor+1\in\mathbb Z$; לפי הגדרה 1.6.5, $m-1\le Na<m$.
+      - kind: step
+        text: >-
+          מ-$Na<m$: $a<\frac mN$. מ-$m-1\le Na$: $m\le Na+1<Nb$, ולכן $\frac mN<b$ (כפל ב-$\frac1N>0$). לכן $\frac{m}{2^k}\in(a,b)$.
+      - kind: check
+        text: >-
+          $a=0.31$, $b=0.36$: ההוכחה לוקחת $k=21$, אבל כבר $k=5$ מספיק, כי $2^5=32>20$: $m=\lfloor9.92\rfloor+1=10$ ו-$\frac{10}{32}=0.3125\in(0.31,\ 0.36)$.
+          ברנולי חוסם את $2^k$ מלמטה בגסות; זה מספיק להוכחה.
+      - kind: result
+        text: 'בין כל שני ממשיים יש שבר דיאדי $\frac{\lfloor2^ka\rfloor+1}{2^k}$, לכל $k$ עם $2^k>\frac1{b-a}$.'
+
+  - id: W-1.6-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.6-2]
+    prompt: >-
+      הוכיחו או הפריכו:
+
+
+      (א) כל קטע $(a,b)$ עם $a<b$ מכיל שבר $\frac mn$ עם $m\in\mathbb Z$ ו-$1\le n\le100$.
+
+
+      (ב) לקבוצת המספרים האי-רציונליים החיוביים אין מינימום.
+
+
+      (ג) לכל אי-רציונלי $x$, לקבוצה $\{q\in\mathbb Q:\ q<x\}$ יש מקסימום.
+    answer: '(א) לא נכון: $\left(0,\frac1{101}\right)$. (ב) נכון. (ג) לא נכון: אין לה מקסימום.'
+    solution:
+      - kind: idea
+        text: >-
+          ב-(א) המכנה במשפט 1.6.7 תלוי בקטע: קטע קצר מספיק אינו מכיל שבר עם מכנה חסום. ב-(ב) חוצים: $\frac x2$. ב-(ג)
+          צפיפות: בין רציונלי $q<x$ לבין $x$ יש רציונלי נוסף.
+      - kind: step
+        text: >-
+          (א) הפרכה: הקטע $\left(0,\frac1{101}\right)$. נניח $\frac mn$ בו, עם $1\le n\le100$. מ-$\frac mn>0$ ו-$n>0$: $m>0$,
+          ולכן $m\ge1$ (טענה 1.3.8(ג)). אז $\frac mn\ge\frac1n\ge\frac1{100}>\frac1{101}$ (טענה 1.2.7), סתירה.
+      - kind: step
+        text: >-
+          (ב) הוכחה: יהי $x>0$ אי-רציונלי. לפי טענה 1.3.18(ד) עם $r=\frac12$, $\frac x2$ אי-רציונלי, ולפי מסקנה 1.2.6(ד),
+          $0<\frac x2<x$. לכן אף איבר אינו הקטן ביותר.
+      - kind: step
+        text: >-
+          (ג) הפרכה: יהי $q\in\mathbb Q$ עם $q<x$. לפי משפט 1.6.7 יש רציונלי $r$ עם $q<r<x$; $r$ בקבוצה וגדול מ-$q$.
+          לכן אף איבר אינו המקסימום.
+      - kind: check
+        text: >-
+          ב-(ג) לא השתמשנו בכך ש-$x$ אי-רציונלי: גם ל-$\{q\in\mathbb Q:\ q<1\}$ אין מקסימום. ב-(א), לפי מסקנה 1.6.2, לכל
+          קטע יש מכנה מתאים; הכמתים "לכל קטע יש $n$" ו"יש $n$ לכל קטע" אינם שקולים.
+      - kind: result
+        text: '(א) לא נכון. (ב) נכון. (ג) לא נכון.'
+
+  - id: W-1.6-08
+    level: exam
+    objectives: [OBJ-1.6-1]
+    prompt: >-
+      $A=\left\{\frac1n-\frac1m:\ n,m\in\mathbb N\right\}$.
+
+
+      (א) הוכיחו ש-$\sup A=1$ ו-$\inf A=-1$, ושאף אחד מהם אינו מתקבל.
+
+
+      (ב) הוכיחו שלכל $\varepsilon>0$ יש איבר של $A$ בקטע $(0,\varepsilon)$, והסיקו מהו $\inf\big(A\cap(0,\infty)\big)$.
+    answer: '(א) $\sup A=1$, $\inf A=-1$, לא מתקבלים. (ב) $\frac1n-\frac1{n+1}=\frac1{n(n+1)}$; האינפימום $0$.'
+    solution:
+      - kind: idea
+        text: >-
+          כל איבר הוא הפרש של שני מספרים ב-$(0,1]$, ולכן ב-$(-1,1)$. כדי להתקרב ל-$1$ לוקחים $n=1$ ו-$m$ גדול; ל-$-1$,
+          $m=1$ ו-$n$ גדול. ב-(ב) לוקחים שני טבעיים עוקבים.
+      - kind: step
+        text: >-
+          חסמים: לכל $n,m$: $0<\frac1n\le1$ ו-$0<\frac1m\le1$ (טענות 1.3.5(א), 1.2.7). לכן $\frac1n-\frac1m<\frac1n\le1$
+          ו-$\frac1n-\frac1m>-\frac1m\ge-1$. כלומר $-1<a<1$ לכל $a\in A$: $1$ חסם מלעיל, $-1$ חסם מלרע, ושניהם אינם ב-$A$.
+      - kind: theorem
+        text: >-
+          יהי $\varepsilon>0$, ולפי מסקנה 1.6.2(ב) יהי $k\in\mathbb N$ עם $\frac1k<\varepsilon$. האיבר עם $n=1$, $m=k$ הוא
+          $1-\frac1k>1-\varepsilon$; האיבר עם $n=k$, $m=1$ הוא $\frac1k-1<-1+\varepsilon$. לפי משפט 1.4.8, $\sup A=1$ ו-$\inf A=-1$,
+          ולפי טענה 1.4.7 אין מקסימום ואין מינימום.
+      - kind: computation
+        text: >-
+          (ב) יהי $\varepsilon>0$ ו-$k$ עם $\frac1k<\varepsilon$. האיבר עם $n=k$, $m=k+1$ הוא
+          $\frac1k-\frac1{k+1}=\frac{1}{k(k+1)}$ (טענה 1.1.11). הוא חיובי, ו-$k(k+1)\ge k$ נותן $\frac1{k(k+1)}\le\frac1k<\varepsilon$.
+      - kind: step
+        text: >-
+          לכן $B=A\cap(0,\infty)$ אינה ריקה, $0$ חסם מלרע שלה, ולכל $\varepsilon>0$ יש בה איבר קטן מ-$0+\varepsilon$. לפי
+          משפט 1.4.8(ב), $\inf B=0$, ו-$0\notin B$.
+      - kind: check
+        text: >-
+          $\varepsilon=0.01$: $k=101$, והאיבר $\frac{1}{101\cdot102}\approx0.000097$. בכל המקרים מספיקה צורה (ב) של תכונת
+          ארכימדס, עם $\varepsilon$ עצמו.
+      - kind: result
+        text: '(א) $\sup A=1$ ו-$\inf A=-1$, ואינם מתקבלים. (ב) $\inf\big(A\cap(0,\infty)\big)=0$.'
+
+  - id: W-1.6-09
+    level: exam
+    objectives: [OBJ-1.6-3, OBJ-1.6-2]
+    prompt: >-
+      (קירוב בשברים עם מכנה קטן.) יהי $\alpha\in\mathbb R$ ויהי $N\in\mathbb N$. לכל $k\in\{0,1,\dots,N\}$ נסמן
+      $t_k=k\alpha-\lfloor k\alpha\rfloor$.
+
+
+      (א) הוכיחו שיש $0\le k<l\le N$ עם $|t_l-t_k|<\frac1N$. (רמז: עקרון שובך היונים, מסקנה 0.8.18א, על המספרים
+      $\lfloor Nt_k\rfloor$.)
+
+
+      (ב) הסיקו שיש שלמים $p,q$ עם $1\le q\le N$ ו-$|q\alpha-p|<\frac1N$.
+
+
+      (ג) עבור $\alpha=\sqrt2$ ו-$N=10$ מצאו $p,q$ כאלה, והוכיחו את אי-השוויון בלי מחשבון.
+    answer: '(ג) $q=5$, $p=7$: $0<5\sqrt2-7<0.1$.'
+    solution:
+      - kind: idea
+        text: >-
+          יש $N+1$ מספרים $t_k$ בקטע $[0,1)$ ו-$N$ "תאים" ברוחב $\frac1N$. לפי שובך היונים שניים נופלים באותו תא, ולכן הם
+          קרובים. ההפרש שלהם הוא $q\alpha-p$ עם $q=l-k$.
+      - kind: step
+        text: >-
+          לפי טענה 1.6.6(ב), $0\le t_k<1$, ולכן $0\le Nt_k<N$. נסמן $j_k=\lfloor Nt_k\rfloor$. לפי טענה 1.6.6(ג) (השלם $0$
+          אינו גדול מ-$Nt_k$), $j_k\ge0$; ו-$j_k\le Nt_k<N$, ולכן $j_k\le N-1$ (טענה 1.3.8(ג)).
+      - kind: theorem
+        text: >-
+          הפונקציה $k\mapsto j_k$ היא מ-$\{0,\dots,N\}$, שיש בה $N+1$ איברים, אל $\{0,\dots,N-1\}$, שיש בה $N$ איברים. לפי
+          מסקנה 0.8.18א היא אינה חד-חד-ערכית: יש $k<l$ עם $j_k=j_l=:j$.
+      - kind: step
+        text: >-
+          $j\le Nt_k<j+1$ ו-$j\le Nt_l<j+1$. מחסרים: $-1<Nt_l-Nt_k<1$, כלומר $|Nt_l-Nt_k|<1$ (טענה 1.2.12(ז)), ובחלוקה ב-$N$:
+          $|t_l-t_k|<\frac1N$. זה (א).
+      - kind: step
+        text: >-
+          (ב) $q=l-k$ ו-$p=\lfloor l\alpha\rfloor-\lfloor k\alpha\rfloor$ שלמים, $1\le q\le N$, ו-$t_l-t_k=q\alpha-p$. לפי (א),
+          $|q\alpha-p|<\frac1N$.
+      - kind: computation
+        text: >-
+          (ג) $q=5$, $p=7$. $5\sqrt2>7$ אם ורק אם $50>49$, ו-$5\sqrt2<7.1$ אם ורק אם $50<50.41$ (טענה 1.2.8(ב), כל המספרים
+          חיוביים). לכן $0<5\sqrt2-7<0.1=\frac1{10}$.
+      - kind: check
+        text: >-
+          חישוב של $|q\sqrt2-p|$, עם $p$ השלם הקרוב, לכל $q$ מ-$1$ עד $10$: רק $q=5$ נותן פחות מ-$0.1$ ($\approx0.0711$);
+          $q=7$ נותן $\approx0.1005$, קצת יותר. המשפט מבטיח שיש לפחות $q$ אחד כזה, ולא אומר איזה.
+      - kind: result
+        text: '(א), (ב) הוכחו. (ג) $q=5$, $p=7$.'
+
+  - id: W-1.6-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.6-3]
+    prompt: >-
+      תהי $A\subseteq\mathbb R$ לא ריקה וחסומה מלעיל, $s=\sup A$, ו-$B=\{\lfloor a\rfloor:\ a\in A\}$.
+
+
+      (א) הוכיחו או הפריכו: תמיד $\max B=\lfloor s\rfloor$.
+
+
+      (ב) הוכיחו: אם $s\notin\mathbb Z$ או $s\in A$, אז $\max B=\lfloor s\rfloor$; ואם $s\in\mathbb Z$ ו-$s\notin A$, אז
+      $\max B=s-1$.
+    answer: '(א) לא נכון: $A=(0,1)$ נותן $B=\{0\}$ ו-$\lfloor s\rfloor=1$. (ב) הוכחה במקרים.'
+    solution:
+      - kind: idea
+        text: >-
+          כל $\lfloor a\rfloor$ אינו גדול מ-$\lfloor s\rfloor$ (מונוטוניות). השאלה היא אם יש איבר של $A$ שמגיע עד
+          $\lfloor s\rfloor$: אפיון האפסילון נותן איבר קרוב ל-$s$, וזה מספיק, אלא אם $s$ עצמו שלם ואינו בקבוצה.
+      - kind: step
+        text: >-
+          לכל $a\in A$: $a\le s$, ולכן $\lfloor a\rfloor\le\lfloor s\rfloor$ (טענה 1.6.6(ה)).
+      - kind: step
+        text: >-
+          אם $s\in A$: $\lfloor s\rfloor\in B$, ולכן $\max B=\lfloor s\rfloor$.
+      - kind: step
+        text: >-
+          אם $s\notin\mathbb Z$: $\lfloor s\rfloor\ne s$, ולכן $\lfloor s\rfloor<s$ (טענה 1.6.6(ב)). עם
+          $\varepsilon=s-\lfloor s\rfloor>0$, לפי משפט 1.4.8(א) יש $a\in A$ עם $a>s-\varepsilon=\lfloor s\rfloor$. לפי טענה
+          1.6.6(ג), $\lfloor s\rfloor\le\lfloor a\rfloor$, ועם הצעד הראשון $\lfloor a\rfloor=\lfloor s\rfloor$, איבר של $B$.
+      - kind: step
+        text: >-
+          אם $s\in\mathbb Z$ ו-$s\notin A$: כל $a\in A$ מקיים $a<s$, ולכן $\lfloor a\rfloor\le a<s$ ו-$\lfloor a\rfloor\le s-1$
+          (טענה 1.3.8(ג)). עם $\varepsilon=1$ יש $a\in A$ עם $a>s-1$, ולפי טענה 1.6.6(ג), $s-1\le\lfloor a\rfloor$. לכן
+          $\lfloor a\rfloor=s-1$, ו-$\max B=s-1$.
+      - kind: step
+        text: >-
+          (א) הפרכה: $A=(0,1)$. $s=1$ (טענה 1.5.4), $1\notin A$, ולכל $a\in A$, $\lfloor a\rfloor=0$. לכן $\max B=0\ne1$.
+      - kind: check
+        text: >-
+          שלושת המקרים מכסים הכול: $s\in A$; או $s\notin A$ ו-$s\notin\mathbb Z$; או $s\notin A$ ו-$s\in\mathbb Z$. דוגמאות:
+          $A=[0,2.5)$ נותן $\max B=2=\lfloor2.5\rfloor$ (למשל $a=2.2$); $A=[0,1]$ נותן $\max B=1$.
+      - kind: result
+        text: '(א) לא נכון. (ב) $\max B=\lfloor s\rfloor$, חוץ מהמקרה $s\in\mathbb Z\setminus A$, שבו $\max B=s-1$.'
+
+challenge:
+  - id: W-1.6-c1
+    stars: 1
+    objectives: [OBJ-1.6-2]
+    prompt: >-
+      (א) הוכיחו שלכל $y\in\mathbb R$: $\sup\{x\in\mathbb Q:\ x<y\}=y$.
+
+
+      (ב) תהי $A\subseteq\mathbb Q$ לא ריקה וחסומה מלעיל, כך שלכל $x\in A$ ולכל $t\in\mathbb Q$ עם $t<x$ מתקיים $t\in A$,
+      ונניח ש-$\sup A\notin A$ (הסופרמום ב-$\mathbb R$). הוכיחו שיש $y\in\mathbb R$ עם $A=\{x\in\mathbb Q:\ x<y\}$. קבוצה
+      כזו נקראת חתך דדקינד.
+
+
+      (ג) הוכיחו שההתאמה $y\mapsto\{x\in\mathbb Q:\ x<y\}$ היא פונקציה חד-חד-ערכית ועל מ-$\mathbb R$ אל קבוצת חתכי
+      דדקינד.
+    answer: >-
+      (א) צפיפות הרציונליים ואפיון האפסילון. (ב) $y=\sup A$. (ג) חד-חד-ערכיות מצפיפות, "על" מ-(ב).
+    solution:
+      - kind: idea
+        text: >-
+          נסמן $C_y=\{x\in\mathbb Q:\ x<y\}$. (א) צפיפות שמה רציונלי בכל סביבה $(y-\varepsilon,y)$. (ב) המועמד היחיד הוא
+          $y=\sup A$, וההנחה "סגורה כלפי מטה" נותנת את ההכלה הקשה. (ג) בין שני ממשיים שונים יש רציונלי, והוא מבדיל
+          בין החתכים שלהם.
+      - kind: step
+        text: >-
+          (א) $C_y\ne\varnothing$: לפי משפט 1.6.7 יש רציונלי ב-$(y-1,y)$. $y$ חסם מלעיל של $C_y$. יהי $\varepsilon>0$; לפי
+          משפט 1.6.7 יש $x\in\mathbb Q$ עם $y-\varepsilon<x<y$, כלומר $x\in C_y$ ו-$x>y-\varepsilon$. לפי משפט 1.4.8(א),
+          $\sup C_y=y$.
+      - kind: step
+        text: >-
+          (ב) לפי (של) יש $s=\sup A\in\mathbb R$. נראה $A=C_s$. אם $x\in A$, אז $x\le s$ ו-$x\ne s$ (כי $s\notin A$), ולכן
+          $x<s$ ו-$x\in C_s$. להפך, יהי $x\in\mathbb Q$ עם $x<s$. עם $\varepsilon=s-x>0$, לפי משפט 1.4.8(א) יש $a\in A$ עם
+          $a>s-\varepsilon=x$. $x$ רציונלי וקטן מ-$a\in A$, ולכן לפי ההנחה $x\in A$.
+      - kind: step
+        text: >-
+          (ג) $C_y$ הוא חתך דדקינד: הוא תת-קבוצה לא ריקה של $\mathbb Q$ (לפי (א)), חסום מלעיל ב-$y$, סגור כלפי מטה (אם
+          $t<x<y$ אז $t<y$), ו-$\sup C_y=y\notin C_y$ (לפי (א), ו-$y<y$ שקרי).
+      - kind: step
+        text: >-
+          חד-חד-ערכיות: אם $y<y'$, לפי משפט 1.6.7 יש $q\in\mathbb Q$ עם $y<q<y'$. אז $q\in C_{y'}$ ו-$q\notin C_y$, ולכן
+          $C_y\ne C_{y'}$. "על": לפי (ב), כל חתך דדקינד $A$ שווה ל-$C_{\sup A}$.
+      - kind: check
+        text: >-
+          ההנחה $\sup A\notin A$ ב-(ב) נחוצה: $A=\{x\in\mathbb Q:\ x\le0\}$ לא ריקה, חסומה וסגורה כלפי מטה, ו-$\sup A=0\in A$.
+          אילו $A=C_y$, לפי (א) $y=\sup C_y=\sup A=0$, אבל $0\in A$ ו-$0\notin C_0$. סתירה. (דדקינד בנה את הממשיים
+          מחתכים כאלה; כאן ראינו שבשדה סדור שלם הם מתאימים בדיוק לממשיים.)
+      - kind: result
+        text: >-
+          (א) $\sup\{x\in\mathbb Q:\ x<y\}=y$. (ב) $A=\{x\in\mathbb Q:\ x<\sup A\}$. (ג) $y\mapsto\{x\in\mathbb Q:\ x<y\}$
+          חד-חד-ערכית ועל.
+    source:
+      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Volume I (version 6.3)'
+      year: 2026
+      problem: 'Section 1.2, Exercise 1.2.15'
+      url: 'https://www.jirka.org/ra/realanal.pdf'
+      verified: '2026-11-12'
+      adapted: true
+
+  - id: W-1.6-c2
+    stars: 2
+    objectives: [OBJ-1.6-3]
+    prompt: >-
+      הוכיחו שלכל $x>0$ ממשי ולכל $n\in\mathbb N$:
+
+      $$\lfloor nx\rfloor\ge\frac{\lfloor x\rfloor}{1}+\frac{\lfloor 2x\rfloor}{2}+\frac{\lfloor 3x\rfloor}{3}+\dots+\frac{\lfloor nx\rfloor}{n}.$$
+    answer: >-
+      באינדוקציה שלמה, בעזרת $\lfloor kx\rfloor+\lfloor(n-k)x\rfloor\le\lfloor nx\rfloor$ (טענה 1.6.6(ו)) והזהות
+      $nA_n=\sum_{k=1}^{n-1}A_k+\sum_{k=1}^{n}a_k$.
+    solution:
+      - kind: idea
+        text: >-
+          נסמן $a_k=\lfloor kx\rfloor$ ו-$A_n=\sum_{k=1}^{n}\frac{a_k}{k}$; צריך $A_n\le a_n$. אינדוקציה שלמה: הזהות
+          $nA_n=\sum_{k=1}^{n-1}A_k+\sum_{k=1}^{n}a_k$ מחליפה את $A_n$ ב-$A_k$ קטנים, שעליהם יודעים $A_k\le a_k$; ואז זוגות
+          $a_k+a_{n-k}$ נחסמים ב-$a_n$ לפי טענה 1.6.6(ו).
+      - kind: step
+        text: >-
+          הזהות, באינדוקציה על $n$. נסמן $D_n=nA_n-\sum_{k=1}^{n-1}A_k-\sum_{k=1}^{n}a_k$. $D_1=A_1-0-a_1=0$. ולכל $n$:
+          $D_{n+1}-D_n=(n+1)A_{n+1}-nA_n-A_n-a_{n+1}=(n+1)(A_{n+1}-A_n)-a_{n+1}=(n+1)\frac{a_{n+1}}{n+1}-a_{n+1}=0$
+          (הגדרה 0.5.5 ולמה 0.5.6). לכן $D_n=0$ לכל $n$.
+      - kind: step
+        text: >-
+          הטענה $A_n\le a_n$ באינדוקציה שלמה (משפט 0.6.1). $n=1$: $A_1=a_1$. יהי $n\ge2$, ונניח $A_k\le a_k$ לכל $k<n$. לפי
+          הזהות: $nA_n\le\sum_{k=1}^{n-1}a_k+\sum_{k=1}^{n}a_k=2\sum_{k=1}^{n-1}a_k+a_n$.
+      - kind: theorem
+        text: >-
+          כש-$k$ עובר על $1,\dots,n-1$, גם $n-k$ עובר על אותם ערכים, בסדר הפוך, ולכן $\sum_{k=1}^{n-1}a_{n-k}=\sum_{k=1}^{n-1}a_k$.
+          לפי טענה 1.6.6(ו) עם $kx$ ו-$(n-k)x$: $a_k+a_{n-k}\le\lfloor nx\rfloor=a_n$. לכן
+          $2\sum_{k=1}^{n-1}a_k=\sum_{k=1}^{n-1}(a_k+a_{n-k})\le(n-1)a_n$.
+      - kind: step
+        text: >-
+          משני השלבים: $nA_n\le(n-1)a_n+a_n=na_n$, ובחלוקה ב-$n>0$: $A_n\le a_n$.
+      - kind: check
+        text: >-
+          $x=\frac23$, $n=3$: $a_1=0$, $a_2=1$, $a_3=2$, ו-$A_3=0+\frac12+\frac23=\frac76\le2$. כש-$x$ שלם יש שוויון: $a_k=kx$
+          ו-$A_n=nx=a_n$. ההוכחה לא השתמשה ב-$x>0$, ולכן אי-השוויון נכון לכל $x$ ממשי (בדיקה מספרית על $20000$ זוגות
+          אקראיים של $x$ ו-$n$, עם שני הסימנים, לא מצאה הפרה).
+      - kind: result
+        text: '$\lfloor nx\rfloor\ge\sum_{k=1}^{n}\frac{\lfloor kx\rfloor}{k}$ לכל $x$ ממשי ולכל $n\in\mathbb N$.'
+    source:
+      name: '10th USA Mathematical Olympiad (USAMO)'
+      year: 1981
+      problem: 'Problem 5'
+      url: 'https://prase.cz/kalva/usa/usoln/usol815.html'
+      verified: '2026-11-12'
+      adapted: true

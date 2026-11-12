@@ -20,7 +20,7 @@ questions:
           נכון. שני התנאים, "לא ריקה" ו"חסומה מלעיל", הכרחיים, והמסקנה היא קיום **סופרמום**, לא מקסימום.
       - text: 'לכל קבוצה $A\subseteq\mathbb{R}$ יש סופרמום'
         feedback: >-
-          ל-$\mathbb{N}$ אין חסם מלעיל בכלל, ולכן אין לה סופרמום; וגם ל-$\varnothing$ אין (כל מספר חוסם אותה).
+          ל-$[0,\infty)$ אין חסם מלעיל בכלל, ולכן אין לה סופרמום; וגם ל-$\varnothing$ אין (כל מספר חוסם אותה).
           לכן האקסיומה דורשת קבוצה לא ריקה וחסומה מלעיל.
         misconception: MC-completeness-no-hypotheses
       - text: 'לכל קבוצה לא ריקה $A\subseteq\mathbb{R}$ שחסומה מלעיל יש מקסימום'
@@ -29,7 +29,7 @@ questions:
         misconception: MC-max-always-exists
       - text: 'לכל קבוצה לא ריקה $A\subseteq\mathbb{Q}$ שחסומה מלעיל יש סופרמום ב-$\mathbb{Q}$'
         feedback: >-
-          זה לא נכון: $\{x\in\mathbb{Q}: x^2<2\}$ חסומה ואין לה סופרמום רציונלי. זה בדיוק ההבדל בין $\mathbb{Q}$
+          זה לא נכון: $\{x\in\mathbb{Q}: x>0,\ x^2<2\}$ חסומה ואין לה סופרמום רציונלי (משפט 1.5.3). זה בדיוק ההבדל בין $\mathbb{Q}$
           ל-$\mathbb{R}$, ששניהם שדות סדורים.
         misconception: MC-dense-means-complete
 
@@ -328,6 +328,37 @@ questions:
     wrongFeedback: >-
       שני הצדדים של הוכחת סופרמום: קודם $s$ חסם מלעיל, אחר כך לכל $\varepsilon$ יש איבר מעל $s-\varepsilon$.
       ולפני הכול צריך לדעת ש-$\sup A$ ו-$\sup B$ קיימים.
+
+  - id: Q-1.5-strict-separation
+    type: twotier
+    objectives: [OBJ-1.5-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      $A,B$ לא ריקות, ו-$a<b$ לכל $a\in A$ ולכל $b\in B$. האם בהכרח $\sup A<\inf B$?
+    choices:
+      - text: לא
+        correct: true
+        feedback: נכון. בטוח רק $\sup A\le\inf B$ (טענה 1.5.6).
+      - text: כן
+        feedback: >-
+          $A=[0,1)$ ו-$B=[1,2]$: כל איבר של $A$ קטן ממש מכל איבר של $B$, ובכל זאת $\sup A=1=\inf B$.
+        misconception: MC-sup-strict-separation
+    reasons:
+      - text: '$A=[0,1)$, $B=[1,2]$: $a<1\le b$ תמיד, ו-$\sup A=\inf B=1$'
+        correct: true
+        feedback: >-
+          בדיוק. $\sup A$ אינו איבר של $A$, ולכן אי-השוויון הממש $a<b$ אינו חל עליו; מה שעובר לסופרמום הוא רק
+          $\le$.
+      - text: 'כל $b\in B$ חסם מלעיל של $A$, ולכן $\sup A<b$ לכל $b$'
+        feedback: >-
+          מכך ש-$b$ חסם מלעיל נובע $\sup A\le b$, לא $\sup A<b$: הסופרמום הוא החסם **הקטן ביותר**, והוא יכול
+          להיות שווה ל-$b$. בדוגמה $[0,1)$, $[1,2]$ זה קורה עם $b=1$.
+        misconception: MC-sup-strict-separation
+      - text: 'בין שתי הקבוצות יש תמיד רווח, כי $a\ne b$ לכל זוג'
+        feedback: >-
+          $a\ne b$ לכל זוג לא נותן רווח קבוע: האיברים של $[0,1)$ מתקרבים ל-1 כרצוננו, ו-1 הוא איבר של $B$.
+        misconception: MC-sup-strict-separation
 
   - id: Q-1.5-difference
     type: mc

@@ -3,14 +3,20 @@
   term: אקסיומות הסדר
   en: order axioms
   definition: >-
-    התכונות שמניחים על היחס $<$: טריכוטומיה, טרנזיטיביות ($a<b,\ b<c \Rightarrow a<c$), התאמה לחיבור ($a<b
-    \Rightarrow a+c<b+c$) והתאמה לכפל ($a<b,\ 0<c \Rightarrow ac<bc$).
+    התכונות שמניחים על היחס $<$ בשדה: (ס1) טריכוטומיה; (ס2) טרנזיטיביות ($a<b,\ b<c \Rightarrow a<c$); (ס3)
+    התאמה לחיבור ($a<b \Rightarrow a+c<b+c$); (ס4) התאמה לכפל ($a<b,\ 0<c \Rightarrow ac<bc$).
   lesson: '1.2'
 - id: trichotomy
   term: טריכוטומיה
   en: trichotomy
   definition: >-
-    אקסיומת הסדר שלפיה לכל $a,b$ מתקיים בדיוק אחד מהשלושה: $a<b$, $a=b$ או $b<a$.
+    אקסיומת הסדר (ס1), שנקראת גם חוק השלישייה: לכל $a,b$ מתקיים בדיוק אחד מהשלושה: $a<b$, $a=b$ או $b<a$.
+  lesson: '1.2'
+- id: transitivity
+  term: טרנזיטיביות
+  en: transitivity
+  definition: >-
+    אקסיומת הסדר (ס2), שנקראת גם חוק המעבר: אם $a<b$ ו-$b<c$, אז $a<c$.
   lesson: '1.2'
 - id: ordered-field
   term: שדה סדור
@@ -18,4 +24,19 @@
   definition: >-
     שדה עם יחס $<$ שמקיים את אקסיומות הסדר. $\mathbb{Q}$ ו-$\mathbb{R}$ הם שדות סדורים; $\mathbb{C}$ ו-$\mathbb{Z}_5$
     אינם יכולים להיות סדורים.
+  lesson: '1.2'
+- id: positive-negative
+  term: חיובי, שלילי
+  en: positive, negative
+  definition: >-
+    בשדה סדור, $a$ חיובי אם $a>0$ ושלילי אם $a<0$. לפי הטריכוטומיה כל איבר הוא חיובי, שלילי או אפס, ורק אחד מהם.
+    "אי-שלילי" פירושו $a\ge0$.
+  lesson: '1.2'
+- id: max-min-two
+  term: המקסימום והמינימום של שני איברים
+  en: maximum and minimum of two elements
+  symbol: '\max(a,b),\ \min(a,b)'
+  definition: >-
+    בשדה סדור, $\max(a,b)=a$ אם $a\ge b$, ו-$\max(a,b)=b$ אם $a<b$; ו-$\min(a,b)$ הוא האחר מביניהם: $b$ אם
+    $a\ge b$, ו-$a$ אם $a<b$.
   lesson: '1.2'

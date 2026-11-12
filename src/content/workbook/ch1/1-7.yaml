@@ -1,0 +1,509 @@
+# Workbook of lesson 1.7 — existence of roots and powers.
+# Objectives (src/course.ts):
+#   OBJ-1.7-1  prove with the supremum that every positive number has a positive square root
+#   OBJ-1.7-2  define a rational power of a positive number and prove the laws of exponents for it
+#   OBJ-1.7-3  explain how a power with an irrational exponent is defined through the supremum
+# Every number below was recomputed with npx tsx (powers, roots, the bounds of W-07, the nested radicals of c2 for
+# n ≤ 12). Solutions cite the numbered results of lesson 1.7 (1.7.1–1.7.13, with 1.7.5א–ב and 1.7.10א) and of
+# lessons 0.5–0.9, 1.1–1.6 by number. Laws of exponents for real exponents belong to lesson 4.6 and are not used,
+# except the special case of W-09(ב), which is proved there from the definition.
+lesson: '1.7'
+practice:
+  - id: W-1.7-01
+    level: basic
+    objectives: [OBJ-1.7-2]
+    prompt: >-
+      חשבו, ונמקו כל צעד בתוצאה ממוספרת מהשיעור:
+
+      (א) $32^{-3/5}$.
+
+      (ב) $\left(9^{3/2}\right)^{-1/3}$, בשתי דרכים.
+
+      (ג) $\dfrac{a^{2/3}\cdot a^{-1/6}}{a^{1/2}}$, לכל $a>0$.
+    answer: '(א) $\frac18$. (ב) $\frac13$. (ג) $1$.'
+    solution:
+      - kind: idea
+        text: >-
+          חזקה רציונלית מחשבים לפי ההגדרה: קודם השורש, אחר כך החזקה השלמה (הגדרה 1.7.6). מכפלות ומנות של חזקות
+          של אותו בסיס מצמצמים לחזקה אחת לפי משפט 1.7.8.
+      - kind: computation
+        text: >-
+          (א) $\sqrt[5]{32}=2$, כי $2>0$ ו-$2^5=32$ (היחידות במשפט 1.7.2). לפי הגדרה 1.7.6 ולמה 1.7.5ב(ב):
+          $32^{-3/5}=2^{-3}=\frac1{2^3}=\frac18$.
+      - kind: computation
+        text: >-
+          (ב) דרך ראשונה: $\sqrt9=3$, ולכן $9^{3/2}=3^3=27$, ו-$27^{-1/3}=\left(\sqrt[3]{27}\right)^{-1}=3^{-1}=\frac13$.
+          דרך שנייה, לפי משפט 1.7.8(ב): $\left(9^{3/2}\right)^{-1/3}=9^{\frac32\cdot\left(-\frac13\right)}=9^{-1/2}=\frac1{\sqrt9}=\frac13$.
+      - kind: computation
+        text: >-
+          (ג) לפי משפט 1.7.8(א),(ד): $a^{2/3}a^{-1/6}=a^{2/3-1/6}=a^{1/2}$, וחלוקה ב-$a^{1/2}$ היא כפל ב-$a^{-1/2}$, ולכן
+          המנה היא $a^{1/2-1/2}=a^0=1$.
+      - kind: check
+        text: >-
+          ב-(ג) עם $a=64$: $64^{2/3}=16$, $64^{-1/6}=\frac12$, $64^{1/2}=8$, ו-$\frac{16\cdot\frac12}{8}=1$. ב-(א) המעריך
+          שלילי והתוצאה **חיובית**: מעריך שלילי מעביר למכנה.
+      - kind: result
+        text: '(א) $\frac18$. (ב) $\frac13$. (ג) $1$.'
+
+  - id: W-1.7-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-1.7-1]
+    prompt: >-
+      הוכיחו או הפריכו:
+
+      (א) לכל $0\le a<b$: $\sqrt[4]a<\sqrt[4]b$.
+
+      (ב) לכל $a<b$ ממשיים: $a^2<b^2$.
+
+      (ג) לכל $a<b$ ממשיים: $a^3<b^3$.
+    answer: '(א) נכון. (ב) לא נכון: $a=-3$, $b=1$. (ג) נכון, לכל שני ממשיים.'
+    solution:
+      - kind: idea
+        text: >-
+          למה 1.7.1(א) עוסקת רק במספרים אי-שליליים. בחזקה זוגית הסימן "נמחק" ולכן הסדר יכול להתהפך; בחזקה
+          אי-זוגית הסימן נשמר (מסקנה 1.7.3, שלב 1), ולכן מפרקים למקרים לפי הסימנים.
+      - kind: theorem
+        text: '(א) נכון: זו טענה 1.7.5(ג) עם $k=4$.'
+      - kind: step
+        text: >-
+          (ב) לא נכון. דוגמה נגדית: $a=-3<1=b$, אבל $a^2=9>1=b^2$.
+      - kind: step
+        text: >-
+          (ג) נכון. שלושה מקרים לפי (ס1). אם $0\le a<b$: למה 1.7.1(א). אם $a<b<0$: אז $0<-b<-a$ (טענה 1.2.2), ולפי
+          למה 1.7.1(א) $(-b)^3<(-a)^3$, כלומר $-b^3<-a^3$ (כי $(-y)^3=-y^3$), ולפי טענה 1.2.2 $a^3<b^3$. אם $a<0\le b$:
+          אז $a^3=-(-a)^3<0$ ו-$b^3\ge0$, ולכן $a^3<b^3$.
+      - kind: check
+        text: >-
+          ב-(ג) עם $a=-2$, $b=-1$: $-8<-1$; ועם $a=-1$, $b=\frac12$: $-1<\frac18$. ב-(ב) הבעיה היא רק כש-$a<0$: עבור
+          $0\le a<b$ הטענה נכונה (למה 1.7.1(א)).
+      - kind: result
+        text: '(א) נכון. (ב) לא נכון. (ג) נכון.'
+
+  - id: W-1.7-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-1.7-3]
+    prompt: >-
+      לכל אחת מהקבוצות קבעו אם יש לה סופרמום, ואם כן מהו והאם הוא מקסימום. נמקו בקצרה בעזרת תוצאות מהשיעור.
+
+      (א) $\{3^r : r\in\mathbb Q,\ r<2\}$.
+
+      (ב) $\{3^r : r\in\mathbb Q,\ r>2\}$.
+
+      (ג) $\left\{\left(\frac13\right)^r : r\in\mathbb Q,\ r>2\right\}$.
+    answer: '(א) $9$, לא מקסימום. (ב) אין: הקבוצה אינה חסומה מלעיל. (ג) $\frac19$, לא מקסימום.'
+    solution:
+      - kind: idea
+        text: >-
+          לבסיס גדול מ-1 החזקה עולה במעריך (טענה 1.7.9), ולכן מ-$r<x$ מקבלים סופרמום שהוא $3^x$ (טענה 1.7.12), ואילו
+          מ-$r>x$ החזקות גדלות בלי חסם. בסיס $\frac13$ מעבירים לבסיס $3$.
+      - kind: theorem
+        text: >-
+          (א) לפי טענה 1.7.12(א) עם $a=3$, $x=2$: הסופרמום הוא $3^2=9$. הוא אינו בקבוצה, כי $3^r=9=3^2$ עם $r<2$
+          סותר את טענה 1.7.9(ב).
+      - kind: step
+        text: >-
+          (ב) לכל $n\in\mathbb N$ עם $n>2$, $3^n$ בקבוצה, ולפי אי-שוויון ברנולי (משפט 0.6.6, עם $x=2$)
+          $3^n\ge1+2n$. לכל $M$ יש לפי תכונת ארכימדס $n>\max\left(2,\frac{M-1}{2}\right)$, ואז $3^n>M$: אין חסם מלעיל.
+      - kind: step
+        text: >-
+          (ג) לפי משפט 1.7.8(ג),(ד), $\left(\frac13\right)^r=3^{-r}$, ו-$r>2$ אם ורק אם $-r<-2$. לכן הקבוצה היא
+          $\{3^s : s\in\mathbb Q,\ s<-2\}$, ולפי טענה 1.7.12(א) הסופרמום שלה $3^{-2}=\frac19$, ושוב אינו מתקבל.
+      - kind: check
+        text: >-
+          ב-(ג) החזקות **יורדות** ב-$r$: $\left(\frac13\right)^{3}=\frac1{27}<\frac19$. הקבוצה $\left\{\left(\frac13\right)^r : r<2\right\}$,
+          לעומת זאת, אינה חסומה מלעיל, כמו בדוגמה 5 בשיעור.
+      - kind: result
+        text: '(א) $\sup=9$. (ב) אין סופרמום. (ג) $\sup=\frac19$. בשום מקרה אין מקסימום.'
+
+  - id: W-1.7-04
+    level: mid
+    objectives: [OBJ-1.7-1]
+    prompt: >-
+      תהי $T=\{x\in\mathbb R : x>0,\ x^2>3\}$. הוכיחו של-$T$ יש אינפימום $t$, ושמתקיים $t^2=3$, בלי להשתמש במשפט
+      1.7.2. (זה "תמונת המראה" של ההוכחה בשיעור: אינפימום במקום סופרמום.)
+    answer: >-
+      $T\neq\emptyset$ וחסומה מלרע ב-$1$, ולכן יש $t=\inf T\ge1$. אם $t^2>3$, אז $t-h\in T$ עם $h=\frac{t^2-3}{4t}$;
+      אם $t^2<3$, אז $t+h$ חסם מלרע עם $h=\min\left(1,\frac{3-t^2}{4(t+1)}\right)$. שתי סתירות, ולכן $t^2=3$.
+    solution:
+      - kind: given
+        text: '$T=\{x>0 : x^2>3\}$.'
+      - kind: goal
+        text: '$t=\inf T$ קיים, ו-$t^2=3$.'
+      - kind: idea
+        text: >-
+          כמו במשפט 1.7.2, אבל עם הצדדים מוחלפים: אם $t^2>3$, אפשר להוריד מעט את $t$ ולהישאר ב-$T$, וזה סותר את
+          היות $t$ חסם מלרע. אם $t^2<3$, אפשר להעלות מעט את $t$ ולקבל חסם מלרע גדול יותר, וזה סותר את היותו החסם
+          הגדול ביותר. את $h$ בוחרים לפי למה 1.7.1(ג), (ד) עם $k=2$.
+      - kind: step
+        text: >-
+          $2\in T$ ($4>3$). אם $0<x\le1$ אז $x^2\le1<3$ (למה 1.7.1(א)), ולכן כל $x\in T$ מקיים $x>1$: $1$ חסם מלרע. לפי
+          משפט 1.5.2 יש $t=\inf T$, ו-$t\ge1>0$.
+      - kind: step
+        text: >-
+          **נניח $t^2>3$.** נבחר $h=\frac{t^2-3}{4t}>0$. אז $h<\frac{t^2}{4t}=\frac t4<t$. לפי למה 1.7.1(ד) עם $k=2$:
+          $t^2-(t-h)^2\le2th=\frac{t^2-3}{2}$, ולכן $(t-h)^2\ge t^2-\frac{t^2-3}{2}>t^2-(t^2-3)=3$ (מסקנה 1.2.6). גם
+          $t-h>0$, ולכן $t-h\in T$, ו-$t-h<t$: סתירה לכך ש-$t$ חסם מלרע של $T$.
+      - kind: step
+        text: >-
+          **נניח $t^2<3$.** נבחר $h=\min\left(1,\frac{3-t^2}{4(t+1)}\right)>0$. לפי למה 1.7.1(ג) עם $k=2$:
+          $(t+h)^2-t^2\le2h(t+1)\le\frac{3-t^2}{2}$, ולכן $(t+h)^2<3$. עכשיו $t+h$ חסם מלרע של $T$: אם $x\in T$ ו-$x\le t+h$,
+          אז לפי למה 1.7.1(א) (החלק החלש) $x^2\le(t+h)^2<3$, סתירה; לכן $x>t+h$. זה חסם מלרע גדול מ-$t$, בסתירה
+          לכך ש-$t$ הוא החסם המלרע הגדול ביותר.
+      - kind: step
+        text: 'לפי (ס1), $t^2=3$.'
+      - kind: check
+        text: >-
+          $t=\sqrt3\approx1.732$: $1.73^2=2.9929<3<3.0276=1.74^2$. ובשלב הראשון השתמשנו ב-$t>0$ (בלעדיו לא היה
+          מותר לחלק ב-$t$), ובשלב השני ב-$h\le1$ (התנאי של למה 1.7.1(ג)).
+      - kind: result
+        text: '$t=\inf T$ קיים ו-$t^2=3$, כלומר $\inf T=\sqrt3$.'
+
+  - id: W-1.7-05
+    level: mid
+    objectives: [OBJ-1.7-2]
+    prompt: >-
+      יהיו $a,b>0$ ו-$r\in\mathbb Q$.
+
+      (א) הוכיחו: אם $r>0$, אז $a<b$ אם ורק אם $a^r<b^r$.
+
+      (ב) הוכיחו: אם $r<0$, אז $a<b$ אם ורק אם $a^r>b^r$.
+    answer: >-
+      (א) עם $r=\frac mn$, $m,n\in\mathbb N$: שורש ואחר כך חזקה טבעית שומרים על הסדר. (ב) $a^r=\frac1{a^{-r}}$
+      ו-$-r>0$, והופכי הופך את הסדר.
+    solution:
+      - kind: idea
+        text: >-
+          חזקה רציונלית חיובית היא הרכבה של שתי פעולות ששומרות על הסדר בין חיוביים: שורש (טענה 1.7.5(ג)) וחזקה
+          טבעית (למה 1.7.1(א)). מעריך שלילי מוסיף הופכי, שהופך את הסדר (טענה 1.2.7).
+      - kind: step
+        text: >-
+          (א) נכתוב $r=\frac mn$ עם $m,n\in\mathbb N$ (המונה חיובי כי $r>0$). אם $a<b$: לפי טענה 1.7.5(ג)
+          $0<\sqrt[n]a<\sqrt[n]b$, ולפי למה 1.7.1(א) $\left(\sqrt[n]a\right)^m<\left(\sqrt[n]b\right)^m$, כלומר $a^r<b^r$.
+      - kind: step
+        text: >-
+          להפך, נניח $a^r<b^r$. אם $a=b$ אז $a^r=b^r$, ואם $b<a$ אז לפי הכיוון שהוכח $b^r<a^r$: שניהם סותרים את
+          ההנחה לפי (ס1). לכן $a<b$.
+      - kind: step
+        text: >-
+          (ב) $-r>0$, ולפי משפט 1.7.8(ד) $a^r=\frac1{a^{-r}}$ ו-$b^r=\frac1{b^{-r}}$. לפי (א), $a<b$ אם ורק אם
+          $0<a^{-r}<b^{-r}$, ולפי טענה 1.2.7 (הופכי של חיוביים הופך את הסדר, בשני הכיוונים) זה אם ורק אם
+          $\frac1{b^{-r}}<\frac1{a^{-r}}$, כלומר $b^r<a^r$.
+      - kind: check
+        text: >-
+          $a=4$, $b=9$: $4^{1/2}=2<3=9^{1/2}$, ו-$4^{-1/2}=\frac12>\frac13=9^{-1/2}$. ועם $r=0$ אין שום מידע: $a^0=b^0=1$.
+      - kind: result
+        text: 'ל-$r>0$ החזקה שומרת על הסדר בין חיוביים, ול-$r<0$ הופכת אותו.'
+
+  - id: W-1.7-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.7-2]
+    prompt: >-
+      הוכיחו או הפריכו:
+
+      (א) לכל $a>0$ ולכל $r,t\in\mathbb Q$: $\left(a^r\right)^t=\left(a^t\right)^r$.
+
+      (ב) לכל $a,b>0$: $(a+b)^{1/3}=a^{1/3}+b^{1/3}$.
+
+      (ג) לכל $a>0$ ולכל $r\in\mathbb Q$: אם $a^r=1$, אז $r=0$ או $a=1$.
+    answer: '(א) נכון. (ב) לא נכון ($a=b=1$). (ג) נכון.'
+    solution:
+      - kind: idea
+        text: >-
+          (א) ו-(ג) נובעות מהחוקים ומהמונוטוניות שהוכחו לבסיס חיובי. (ב) מנסה לחלק שורש על **סכום**, וחוקי החזקות
+          לא אומרים דבר על סכום של בסיסים.
+      - kind: theorem
+        text: >-
+          (א) נכון: לפי משפט 1.7.8(ב) פעמיים, שני האגפים שווים ל-$a^{rt}=a^{tr}$.
+      - kind: step
+        text: >-
+          (ב) לא נכון: עם $a=b=1$, אגף שמאל $2^{1/3}$ ואגף ימין $2$. אילו $2^{1/3}=2$, אז $2=\left(2^{1/3}\right)^3=2^3=8$,
+          סתירה.
+      - kind: step
+        text: >-
+          (ג) נכון, בקונטרפוזיטיב: נניח $r\neq0$ ו-$a\neq1$, ונראה $a^r\neq1=a^0$. אם $a>1$: לפי טענה 1.7.9(ב), מ-$r<0$
+          נובע $a^r<a^0$, ומ-$r>0$ נובע $a^r>a^0$. אם $0<a<1$: לפי טענה 1.7.9(ג) הכיוונים מתהפכים, ושוב $a^r\neq a^0$.
+      - kind: check
+        text: >-
+          ב-(ב), $2^{1/3}\approx1.26$, רחוק מ-$2$. ב-(ג) צריך $a>0$: עבור $a=-1$ ו-$r=2$ (חזקה שלמה), $(-1)^2=1$ עם
+          $r\neq0$ ו-$a\neq1$.
+      - kind: result
+        text: '(א) נכון. (ב) לא נכון. (ג) נכון.'
+
+  - id: W-1.7-07
+    level: mid
+    objectives: [OBJ-1.7-2]
+    prompt: >-
+      (א) הוכיחו שלכל $n\in\mathbb N$:
+
+      $$\frac{1}{2\sqrt{n+1}}<\sqrt{n+1}-\sqrt n<\frac1{2\sqrt n}.$$
+
+      (ב) מצאו $N\in\mathbb N$ כך שלכל $n\ge N$: $\sqrt{n+1}-\sqrt n<0.01$.
+    answer: >-
+      (א) $\sqrt{n+1}-\sqrt n=\frac1{\sqrt{n+1}+\sqrt n}$, והמכנה בין $2\sqrt n$ ל-$2\sqrt{n+1}$. (ב) $N=2500$ מתאים.
+    solution:
+      - kind: idea
+        text: >-
+          הפרש של שורשים קשה לחסום ישירות; כפל בצמוד הופך אותו לשבר שהמונה שלו $1$, ואת המכנה קל להשוות בעזרת
+          המונוטוניות של השורש.
+      - kind: computation
+        text: >-
+          לפי טענה 1.1.13 ($u^2-v^2=(u-v)(u+v)$) עם $u=\sqrt{n+1}$, $v=\sqrt n$:
+          $\left(\sqrt{n+1}-\sqrt n\right)\left(\sqrt{n+1}+\sqrt n\right)=(n+1)-n=1$. המכנה $\sqrt{n+1}+\sqrt n>0$, ולכן
+          $\sqrt{n+1}-\sqrt n=\frac{1}{\sqrt{n+1}+\sqrt n}$.
+      - kind: step
+        text: >-
+          לפי טענה 1.7.5(ג), $0<\sqrt n<\sqrt{n+1}$. לכן $2\sqrt n<\sqrt{n+1}+\sqrt n<2\sqrt{n+1}$ (טענה 1.2.3), ולפי טענה
+          1.2.7 (הופכי של חיוביים הופך את הסדר): $\frac1{2\sqrt{n+1}}<\frac1{\sqrt{n+1}+\sqrt n}<\frac1{2\sqrt n}$.
+      - kind: step
+        text: >-
+          (ב) אם $n\ge2500$, אז לפי טענה 1.7.5(ג) $\sqrt n\ge\sqrt{2500}=50$, ולכן $\frac1{2\sqrt n}\le\frac1{100}$, ולפי
+          (א) $\sqrt{n+1}-\sqrt n<0.01$.
+      - kind: check
+        text: >-
+          $n=1$: $\sqrt2-1\approx0.4142$, בין $\frac1{2\sqrt2}\approx0.3536$ ל-$\frac12$. ובחלק (ב), $N=2500$ אינו הקטן
+          ביותר שמתאים, אבל ההגדרה מבקשת $N$ אחד שמתאים, לא את הקטן ביותר.
+      - kind: result
+        text: '(א) $\frac{1}{2\sqrt{n+1}}<\sqrt{n+1}-\sqrt n<\frac1{2\sqrt n}$. (ב) $N=2500$.'
+
+  - id: W-1.7-08
+    level: exam
+    objectives: [OBJ-1.7-1]
+    prompt: >-
+      יהיו $a>0$ ו-$k\in\mathbb N$, ותהי $R=\{x\in\mathbb Q : x\ge0,\ x^k<a\}$. הוכיחו ש-$\sup R=\sqrt[k]a$. (בפרט, אף
+      שב-$\mathbb Q$ אין לקבוצה כזו סופרמום כש-$\sqrt[k]a\notin\mathbb Q$, בתוך $\mathbb R$ הסופרמום שלה הוא השורש.)
+    answer: >-
+      $\sqrt[k]a$ חסם מלעיל של $R$ (המונוטוניות של חזקות), ולכל $\varepsilon>0$ יש רציונלי
+      $q\in\left(\max\left(0,\sqrt[k]a-\varepsilon\right),\sqrt[k]a\right)$, והוא איבר של $R$. לפי אפיון האפסילון,
+      $\sup R=\sqrt[k]a$.
+    solution:
+      - kind: given
+        text: '$a>0$, $k\in\mathbb N$, $R=\{x\in\mathbb Q : x\ge0,\ x^k<a\}$. נסמן $s=\sqrt[k]a>0$.'
+      - kind: goal
+        text: '$s$ חסם מלעיל של $R$, ולכל $\varepsilon>0$ יש $x\in R$ עם $x>s-\varepsilon$ (משפט 1.4.8).'
+      - kind: idea
+        text: >-
+          החסם בא מהמונוטוניות: $x^k<a=s^k$ גורר $x<s$. ואיבר קרוב ל-$s$ נותנת צפיפות הרציונליים, כי כל רציונלי
+          אי-שלילי שקטן מ-$s$ שייך ל-$R$.
+      - kind: step
+        text: >-
+          **חסם.** יהי $x\in R$. אילו $x\ge s$, לפי החלק החלש של למה 1.7.1(א) (שניהם אי-שליליים) $x^k\ge s^k=a$, בסתירה
+          ל-$x^k<a$. לכן $x<s$. בפרט $R\neq\emptyset$ ($0\in R$) והיא חסומה מלעיל.
+      - kind: step
+        text: >-
+          **קרוב לחסם.** יהי $\varepsilon>0$, ונסמן $p=\max\left(0,s-\varepsilon\right)$. אז $p<s$ (כי $s>0$ ו-$s-\varepsilon<s$),
+          ולפי משפט 1.6.7 יש $q\in\mathbb Q$ עם $p<q<s$.
+      - kind: step
+        text: >-
+          $q>p\ge0$, ולפי למה 1.7.1(א) $q^k<s^k=a$. לכן $q\in R$, ו-$q>p\ge s-\varepsilon$.
+      - kind: theorem
+        text: 'לפי משפט 1.4.8 (אפיון האפסילון), $\sup R=s=\sqrt[k]a$.'
+      - kind: check
+        text: >-
+          עם $k=2$, $a=2$: לכל רציונלי $q$ עם $q^2<2$ ו-$q\ge0$, $q<\sqrt2\approx1.41421$, ו-$\frac{1414}{1000}\in R$ במרחק
+          פחות מ-$0.001$ מ-$\sqrt2$. השתמשנו ב-$a>0$ כדי ש-$s>0$, וכך הקטע $(p,s)$ אינו ריק גם כש-$\varepsilon$ גדול.
+      - kind: result
+        text: '$\sup\{x\in\mathbb Q : x\ge0,\ x^k<a\}=\sqrt[k]a$.'
+
+  - id: W-1.7-09
+    level: exam
+    objectives: [OBJ-1.7-3]
+    prompt: >-
+      יהי $a>1$.
+
+      (א) הוכיחו שלכל $x\in\mathbb R$: $a^x>1$ אם ורק אם $x>0$.
+
+      (ב) הוכיחו שלכל $x\in\mathbb R$ ולכל $q\in\mathbb Q$: $a^{x+q}=a^x\cdot a^q$, ישירות מטענה 1.7.12(ב), בעזרת
+      משפט 1.5.8 (כפל קבוצה בקבוע חיובי).
+    answer: >-
+      (א) $a^0=1$ ו-$a^x$ עולה ממש ב-$x$ (טענה 1.7.13). (ב) $r\mapsto r+q$ מעביר את הרציונליים שקטנים מ-$x$ בדיוק על
+      הרציונליים שקטנים מ-$x+q$, ולכן $\{a^s : s<x+q\}=a^q\cdot\{a^r : r<x\}$, וסופרמום של כפל בקבוע חיובי הוא הקבוע
+      כפול הסופרמום.
+    solution:
+      - kind: idea
+        text: >-
+          (א) היא המונוטוניות של חזקה ממשית סביב הנקודה $0$. ב-(ב) מזיזים את הרציונליים ב-$q$: הקבוצה של $x+q$ היא
+          הקבוצה של $x$, כפולה ב-$a^q$, והסופרמום מתנהג יפה תחת כפל בקבוע חיובי.
+      - kind: step
+        text: >-
+          (א) לפי טענה 1.7.12(ב), $a^0$ הוא החזקה הרציונלית $a^0=1$. אם $x>0$, לפי טענה 1.7.13(א) $a^x>a^0=1$. אם $x=0$,
+          $a^x=1$. אם $x<0$, לפי טענה 1.7.13(א) $a^x<a^0=1$. לכן $a^x>1$ בדיוק כש-$x>0$.
+      - kind: step
+        text: >-
+          (ב) נסמן $E=\{a^r : r\in\mathbb Q,\ r<x\}$ ו-$E'=\{a^s : s\in\mathbb Q,\ s<x+q\}$. נראה $E'=a^qE$, כאשר
+          $a^qE=\{a^q\,e : e\in E\}$. אם $s\in\mathbb Q$, $s<x+q$, אז $r=s-q\in\mathbb Q$ (טענה 1.3.14), $r<x$, ולפי משפט
+          1.7.8(א) $a^s=a^{r+q}=a^qa^r\in a^qE$. להפך, אם $r\in\mathbb Q$, $r<x$, אז $s=r+q\in\mathbb Q$, $s<x+q$, ו-$a^qa^r=a^s\in E'$.
+      - kind: theorem
+        text: >-
+          לפי טענה 1.7.12(ב), $a^{x+q}=\sup E'$ ו-$a^x=\sup E$. לפי משפט 1.5.8 עם $c=a^q>0$ (משפט 1.7.8(ה)):
+          $a^{x+q}=\sup(a^qE)=a^q\sup E=a^q\,a^x$.
+      - kind: check
+        text: >-
+          עם $q=1$: $2^{\sqrt2+1}=2\cdot2^{\sqrt2}\approx5.33$. החלק הזה הוא מקרה פרטי של $a^xa^y=a^{x+y}$, כש-$y$ רציונלי;
+          המקרה הכללי, עם $y$ ממשי, דורש עוד עבודה ומוכח בשיעור 4.6. ב-(א) צריך $a>1$: עבור $a=\frac12$ ו-$x=1$,
+          $a^x=\frac12<1$ אף ש-$x>0$.
+      - kind: result
+        text: '(א) $a^x>1\iff x>0$. (ב) $a^{x+q}=a^xa^q$ לכל $x$ ממשי ו-$q$ רציונלי.'
+
+  - id: W-1.7-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.7-3]
+    prompt: >-
+      יהי $a>1$. הוכיחו או הפריכו:
+
+      (א) לכל $x$ אי-רציונלי, ל-$\{a^r : r\in\mathbb Q,\ r<x\}$ יש מקסימום.
+
+      (ב) לכל $x\in\mathbb R$: $a^x=\sup\{a^r : r\in\mathbb Q,\ x-1<r<x\}$.
+
+      (ג) לכל $x<y$ ממשיים יש $r\in\mathbb Q$ עם $a^x<a^r<a^y$.
+    answer: '(א) לא נכון: אין מקסימום. (ב) נכון. (ג) נכון.'
+    solution:
+      - kind: idea
+        text: >-
+          הכול נובע מצפיפות הרציונליים ומהמונוטוניות: בין כל רציונלי $r<x$ ל-$x$ יש רציונלי נוסף, ולכן אין איבר אחרון;
+          ואיברים עם $r\le x-1$ לא משפיעים על הסופרמום, כי יש איברים גדולים מהם.
+      - kind: step
+        text: >-
+          (א) לא נכון, לאף $x$. יהי $a^r$ איבר, $r\in\mathbb Q$, $r<x$. לפי משפט 1.6.7 יש רציונלי $r'$ עם $r<r'<x$,
+          ולפי טענה 1.7.9(ב) $a^{r'}>a^r$, ו-$a^{r'}$ בקבוצה. לכן אף איבר אינו הגדול ביותר.
+      - kind: step
+        text: >-
+          (ב) נכון. נסמן $E=\{a^r : r<x\}$ ו-$E_1=\{a^r : x-1<r<x\}\subseteq E$ (תמיד רציונליים). $E_1\neq\emptyset$
+          (משפט 1.6.7), ולפי טענה 1.5.5 $\sup E_1\le\sup E=a^x$. להפך, $\sup E_1$ חסם מלעיל של $E$: אם $r<x$ ו-$r>x-1$,
+          אז $a^r\in E_1$; ואם $r\le x-1$, ניקח רציונלי $r_1\in(x-1,x)$, ואז $r<r_1$ ולכן $a^r<a^{r_1}\le\sup E_1$. לכן
+          $a^x=\sup E\le\sup E_1$.
+      - kind: step
+        text: >-
+          (ג) נכון. לפי משפט 1.6.7 פעמיים יש רציונליים $x<q_1<r<y$. כמו בהוכחת טענה 1.7.13: $a^x\le a^{q_1}<a^r$ (למה
+          1.7.10א, טענות 1.7.12(ב) ו-1.7.9(ב)), ו-$a^r<a^y$ לפי טענה 1.7.13(א).
+      - kind: check
+        text: >-
+          ב-(א), אם $x$ **רציונלי**, הקבוצה $\{a^r : r<x\}$ גם היא בלי מקסימום, אבל $\{a^r : r\le x\}$ מקבלת מקסימום $a^x$.
+          ב-(ג), עם $a=2$, $x=\sqrt2$, $y=1.5$: $r=1.45$ נותן $2^{\sqrt2}\approx2.665<2^{1.45}\approx2.732<2^{1.5}\approx2.828$.
+      - kind: result
+        text: '(א) לא נכון. (ב) נכון. (ג) נכון.'
+
+challenge:
+  - id: W-1.7-c1
+    stars: 1
+    objectives: [OBJ-1.7-3]
+    prompt: >-
+      יהיו $1<x<y$, ויהי $z>0$ ממשי. הוכיחו ש-$x^z<y^z$, כאשר החזקות מוגדרות לפי הגדרה 1.7.11 (ולפי טענה 1.7.12(ב):
+      $x^z=\sup\{x^r : r\in\mathbb Q,\ r<z\}$). הסיקו שלכל $u,v>1$: $u<v$ אם ורק אם $u^z<v^z$.
+    answer: >-
+      עם $c=\frac yx>1$ ורציונלי $0<q_0<z$: לכל רציונלי $q\in(q_0,z)$, $y^q=x^qc^q>c^{q_0}x^q$. מכאן $y^z\ge c^{q_0}x^z>x^z$.
+    solution:
+      - kind: idea
+        text: >-
+          כותבים $y=cx$ עם $c>1$. לכל מעריך רציונלי חיובי $q$, $y^q=x^qc^q$, והגורם $c^q$ גדול מ-$1$, ואפילו גדול
+          מ-$c^{q_0}$ קבוע אם $q>q_0$. מעבירים את זה לסופרמום בעזרת משפט 1.5.8, אחרי שמצמצמים את הקבוצה של $x^z$
+          למעריכים שבין $q_0$ ל-$z$.
+      - kind: step
+        text: >-
+          נסמן $c=\frac yx>1$ (כפל של $x<y$ ב-$\frac1x>0$: טענה 1.2.7(א), (ס4)). לפי משפט 1.6.7 יש רציונלי $q_0$ עם $0<q_0<z$. נסמן
+          $A=\{x^q : q\in\mathbb Q,\ q_0<q<z\}$, ו-$E=\{x^r : r\in\mathbb Q,\ r<z\}\supseteq A$.
+      - kind: step
+        text: >-
+          $\sup A=x^z$. לפי משפט 1.6.7 $A\neq\emptyset$, ולפי טענה 1.5.5 $\sup A\le\sup E=x^z$. להפך, $\sup A$ חסם מלעיל
+          של $E$: אם $x^r\in E$ עם $r>q_0$ אז $x^r\in A$; ואם $r\le q_0$, ניקח $q_1\in(q_0,z)$ רציונלי, ואז לפי טענה
+          1.7.9(ב) $x^r<x^{q_1}\le\sup A$. לכן $x^z=\sup E\le\sup A$.
+      - kind: step
+        text: >-
+          לכל $q\in\mathbb Q$ עם $q_0<q<z$: לפי משפט 1.7.8(ג) $y^q=(cx)^q=c^qx^q$, ולפי טענה 1.7.9(ב) $c^q>c^{q_0}$; לכן
+          $y^q>c^{q_0}x^q$. ו-$y^q\le y^z$, כי $y^q$ איבר של הקבוצה שהסופרמום שלה $y^z$ (טענה 1.7.12(ב)).
+      - kind: theorem
+        text: >-
+          לכן $y^z$ חסם מלעיל של $c^{q_0}A$, ולפי משפט 1.5.8 (עם הקבוע $c^{q_0}>0$): $c^{q_0}x^z=c^{q_0}\sup A=\sup\left(c^{q_0}A\right)\le y^z$.
+      - kind: step
+        text: >-
+          לפי טענה 1.7.9(א) $c^{q_0}>1$, ולפי טענה 1.7.12(ד) $x^z>0$. לכן $x^z<c^{q_0}x^z\le y^z$.
+      - kind: step
+        text: >-
+          המסקנה: אם $1<u<v$ אז $u^z<v^z$ לפי מה שהוכח. להפך, אם $u^z<v^z$: $u=v$ היה נותן שוויון, ו-$v<u$ היה נותן
+          $v^z<u^z$; לפי (ס1) נשאר $u<v$.
+      - kind: check
+        text: >-
+          עם $x=2$, $y=3$, $z=\sqrt2$: $2^{\sqrt2}\approx2.665<3^{\sqrt2}\approx4.729$. ההנחה $z>0$ נחוצה: עבור $z=-1$,
+          $2^{-1}=\frac12>\frac13=3^{-1}$. ואת $q_0>0$ צריך כדי ש-$c^{q_0}>1$; עם $q_0\le0$ השלב האחרון לא היה נותן
+          אי-שוויון ממש.
+      - kind: result
+        text: 'לכל $1<x<y$ ולכל $z>0$ ממשי: $x^z<y^z$; ולכל $u,v>1$: $u<v\iff u^z<v^z$.'
+    source:
+      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Volume I (version 6.3)'
+      year: 2026
+      problem: 'Section 1.2, Exercise 1.2.17(d)'
+      url: 'https://www.jirka.org/ra/realanal.pdf'
+      verified: '2026-11-12'
+      adapted: true
+
+  - id: W-1.7-c2
+    stars: 2
+    objectives: [OBJ-1.7-1, OBJ-1.7-2]
+    prompt: >-
+      נגדיר $x_2=\sqrt2$, $x_3=\sqrt{2+\sqrt[3]3}$, $x_4=\sqrt{2+\sqrt[3]{3+\sqrt[4]4}}$, ובאופן כללי, לכל $n\ge2$,
+
+      $$x_n=\sqrt{2+\sqrt[3]{3+\sqrt[4]{4+\dots+\sqrt[n]{n}}}}\,,$$
+
+      כשבכל שלב לוקחים את השורש האי-שלילי. הוכיחו שלכל $n\ge2$: $x_{n+1}-x_n<\frac1{n!}$.
+    answer: >-
+      משווים את השורשים המקוננים של $x_{n+1}$ ושל $x_n$ קומה אחר קומה. בקומה $k\ge3$ ההפרש קטן לפחות פי $k$
+      (מפרקים $u^k-v^k$ לפי למה 1.7.1(ב), כש-$u,v\ge1$), ובקומה $2$ לפחות פי $2\sqrt3$. לכן
+      $x_{n+1}-x_n\le\frac{\sqrt[n+1]{n+1}}{\sqrt3\,n!}<\frac1{n!}$, כי $(n+1)^2<3^{n+1}$; המקרה $n=2$ ישירות.
+    solution:
+      - kind: idea
+        text: >-
+          כש-$u\ge v\ge1$, $u^k-v^k=(u-v)\left(u^{k-1}+\dots+v^{k-1}\right)\ge k(u-v)$: הוצאת שורש $k$-י מקטינה הפרש
+          פי $k$ לפחות. בתוך $x_{n+1}$ ובתוך $x_n$ יש אותה "קומה" של שורשים, וההפרש היחיד נמצא בקומה העליונה:
+          $\sqrt[n+1]{n+1}$ מול $0$. כשיורדים קומה אחר קומה, ההפרש מתחלק ב-$n$, ב-$n-1$, …, ב-$3$, ובקומה האחרונה
+          ב-$x_{n+1}+x_n>2\sqrt3$.
+      - kind: definition
+        text: >-
+          נקבע $n\ge2$. נגדיר $B_{n+1}=0$ ו-$B_k=\sqrt[k]{k+B_{k+1}}$ עבור $k=n,n-1,\dots,2$; וגם $A_{n+2}=0$ ו-$A_k=\sqrt[k]{k+A_{k+1}}$
+          עבור $k=n+1,n,\dots,2$. כל השורשים מוגדרים (הרדיקנדים חיוביים, באינדוקציה יורדת), ו-$x_n=B_2$, $x_{n+1}=A_2$,
+          $A_{n+1}=\sqrt[n+1]{n+1}$.
+      - kind: step
+        text: >-
+          **$A_k\ge B_k\ge1$ לכל $2\le k\le n$, ו-$A_{n+1}>B_{n+1}=0$.** באינדוקציה יורדת: $A_{n+1}>0$. אם $A_{k+1}\ge B_{k+1}\ge0$,
+          אז $k+A_{k+1}\ge k+B_{k+1}\ge k\ge1$, ולפי טענה 1.7.5(ג) $A_k\ge B_k\ge\sqrt[k]1=1$.
+      - kind: step
+        text: >-
+          **קומה $k$ עם $3\le k\le n$.** נסמן $u=A_k$, $v=B_k$, כך ש-$u\ge v\ge1$. לפי למה 1.7.1(ב),
+          $u^k-v^k=(u-v)\sum_{j=0}^{k-1}u^{k-1-j}v^j$, ולפי טענה 0.9.19 כל אחד מ-$k$ המחוברים לפחות $1$; לכן
+          $A_{k+1}-B_{k+1}=u^k-v^k\ge k(u-v)$, כלומר $A_k-B_k\le\frac{A_{k+1}-B_{k+1}}{k}$.
+      - kind: step
+        text: >-
+          **המקרה $n\ge3$, קומה 2.** $A_2-B_2=\frac{A_2^2-B_2^2}{A_2+B_2}=\frac{A_3-B_3}{A_2+B_2}$ (טענה 1.1.13). כאן
+          $B_3=\sqrt[3]{3+B_4}\ge\sqrt[3]3>1$, ולכן $B_2=\sqrt{2+B_3}>\sqrt3$ ו-$A_2\ge B_2$, כלומר $A_2+B_2>2\sqrt3$.
+          לכן $A_2-B_2\le\frac{A_3-B_3}{2\sqrt3}$.
+      - kind: computation
+        text: >-
+          משרשרים את הקומות $3,4,\dots,n$, ומשתמשים ב-$3\cdot4\cdots n=\frac{n!}{2}$:
+
+          $$x_{n+1}-x_n\le\frac{A_{n+1}-B_{n+1}}{2\sqrt3\cdot3\cdot4\cdots n}=\frac{\sqrt[n+1]{n+1}}{\sqrt3\,n!}.$$
+      - kind: step
+        text: >-
+          **$\sqrt[n+1]{n+1}<\sqrt3$.** מספיק $(n+1)^2<3^{n+1}$, כי שני המספרים חיוביים ובחזקה $2(n+1)$ הם הופכים
+          ל-$(n+1)^2$ ול-$3^{n+1}$ (למה 1.7.1(א)). באינדוקציה, $m^2<3^m$ לכל $m\in\mathbb N$: $1<3$, $4<9$, ואם $m\ge2$
+          ו-$m^2<3^m$, אז $(m+1)^2=m^2+2m+1\le3m^2<3^{m+1}$, כי $2m^2-2m-1=2m(m-1)-1>0$. לכן $x_{n+1}-x_n<\frac1{n!}$.
+      - kind: step
+        text: >-
+          **המקרה $n=2$.** $x_3-x_2=\frac{\sqrt[3]3}{\sqrt{2+\sqrt[3]3}+\sqrt2}$, באותו חישוב. $\sqrt[3]3<\frac32$, כי
+          $\left(\frac32\right)^3=\frac{27}8>3$; ו-$\sqrt{2+\sqrt[3]3}>\sqrt3>1.7$, $\sqrt2>1.4$ (כי $1.7^2=2.89<3$,
+          $1.4^2=1.96<2$). לכן המכנה גדול מ-$3.1>3$, ו-$x_3-x_2<\frac{3/2}{3}=\frac12=\frac1{2!}$.
+      - kind: check
+        text: >-
+          חישוב מספרי (עדות בלבד): $x_3-x_2\approx0.4411<0.5$, $x_4-x_3\approx0.0527<\frac16$, $x_5-x_4\approx0.0035<\frac1{24}$,
+          והחסם $\frac{\sqrt[n+1]{n+1}}{\sqrt3\,n!}$ נותן $0.1361$ ו-$0.0332$. בקומה $2$ אי אפשר להסתפק בחלוקה ב-$2$:
+          אז החסם היה $\frac{\sqrt[n+1]{n+1}}{n!}>\frac1{n!}$.
+      - kind: result
+        text: 'לכל $n\ge2$: $x_{n+1}-x_n<\frac1{n!}$.'
+    source:
+      name: 'IMO Shortlist 1985 (26th IMO), problem and solution in John Scholes''s Kalva archive'
+      year: 1985
+      problem: 'Problem 16'
+      url: 'https://prase.cz/kalva/short/soln/sh8516.html'
+      verified: '2026-11-12'
+      adapted: false

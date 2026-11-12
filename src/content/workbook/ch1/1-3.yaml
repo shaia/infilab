@@ -1,0 +1,459 @@
+# Workbook of lesson 1.3 — naturals, integers and rationals.
+# Objectives (src/course.ts):
+#   OBJ-1.3-1  define ℕ as the smallest inductive set and link it to the principle of induction
+#   OBJ-1.3-2  prove that √2 is not rational, and generalise the proof
+#   OBJ-1.3-3  prove closure and non-closure: sums and products of rationals, rational plus irrational
+# Every number below was recomputed with npx tsx (src/math/rationals.ts: probe, isSquare, descentChain; decimal checks
+# of every irrational quoted). Solutions cite the numbered results of lesson 1.3 (1.3.1–1.3.18, 1.3.14א) and of
+# lessons 1.1–1.2 by number. √2, √3, √5, √6 exist by accepted fact (ה) (proved in lesson 1.7).
+lesson: '1.3'
+practice:
+  - id: W-1.3-01
+    level: basic
+    qualitative: true
+    objectives: [OBJ-1.3-1]
+    prompt: >-
+      הוכיחו או הפריכו: כל אחת מהקבוצות הבאות אינדוקטיבית.
+
+      (א) $\left(\frac12,\infty\right)=\left\{x\in\mathbb{R}:\ x>\frac12\right\}$.
+
+      (ב) $\mathbb{N}\setminus\{5\}$.
+
+      (ג) $\mathbb{N}\cup\{-1\}$.
+
+      (ד) $\left\{x\in\mathbb{R}:\ x\ge1,\ x\ne\frac52\right\}$.
+    answer: 'רק (א) אינדוקטיבית. (ב) נכשלת ב-$4$, (ג) ב-$-1$, (ד) ב-$\frac32$.'
+    solution:
+      - kind: definition
+        text: >-
+          לפי הגדרה 1.3.1, $S$ אינדוקטיבית אם $1\in S$ ולכל $x\in S$ גם $x+1\in S$. להפרכה מספיקה נקודה $x\in S$
+          עם $x+1\notin S$ (או $1\notin S$).
+      - kind: step
+        text: >-
+          (א) אינדוקטיבית. לפי מסקנה 1.2.6, $0<\frac12<1$, ולכן $1\in S$. אם $x>\frac12$, אז $x+1>x>\frac12$
+          (כי $x<x+1$, ו-(ס2)), ולכן $x+1\in S$.
+      - kind: step
+        text: >-
+          (ב) אינה אינדוקטיבית. $4=3+1\in\mathbb{N}$ ו-$4\ne5$, ולכן $4\in S$; אבל $4+1=5\notin S$.
+      - kind: step
+        text: >-
+          (ג) אינה אינדוקטיבית. $-1\in S$, ו-$-1+1=0$. $0\notin\mathbb{N}$, כי כל טבעי $\ge1$ (טענה 1.3.5(א)),
+          ו-$0\ne-1$. לכן $0\notin S$.
+      - kind: step
+        text: >-
+          (ד) אינה אינדוקטיבית. $\frac32\ge1$ ו-$\frac32\ne\frac52$, ולכן $\frac32\in S$; אבל
+          $\frac32+1=\frac52\notin S$.
+      - kind: check
+        text: >-
+          (ב)–(ד) מקיימות $1\in S$: הן נכשלות רק בצעד. ובכל אחת מהן הנקודה שמפילה היא איבר שהקפיצה ממנו
+          נוחתת "בחור". ב-(א) אין חור: כל הקרן מעל $\frac12$.
+      - kind: result
+        text: '(א) אינדוקטיבית; (ב), (ג), (ד) אינן.'
+
+  - id: W-1.3-02
+    level: basic
+    objectives: [OBJ-1.3-3]
+    prompt: >-
+      (א) הוכיחו ש-$\frac{1+\sqrt2}{3}$ אי-רציונלי.
+
+      (ב) הוכיחו ש-$\frac{1}{1+\sqrt2}$ אי-רציונלי, ומצאו שלמים $a,b$ עם $\frac{1}{1+\sqrt2}=a+b\sqrt2$.
+
+      (ג) הפריכו: אם $x^2\in\mathbb{Q}$, אז $x\in\mathbb{Q}$.
+    answer: '(א), (ב) לפי טענה 1.3.18; $\frac{1}{1+\sqrt2}=-1+\sqrt2$. (ג) $x=\sqrt2$.'
+    solution:
+      - kind: idea
+        text: >-
+          כל מספר נבנה מ-$\sqrt2$ בצעדים שטענה 1.3.18 שומרת: הוספת רציונלי, כפל ברציונלי ששונה מאפס, הופכי.
+      - kind: step
+        text: >-
+          (א) $\sqrt2\notin\mathbb{Q}$ (משפט 1.3.15). לפי 1.3.18(א) עם $r=1$, $1+\sqrt2\notin\mathbb{Q}$. לפי
+          1.3.18(ד) עם $r=3\ne0$, $\frac{1+\sqrt2}{3}\notin\mathbb{Q}$.
+      - kind: step
+        text: >-
+          (ב) לפי 1.3.18(ג), $\frac1{1+\sqrt2}\notin\mathbb{Q}$. ולפי טענה 1.1.13,
+          $(1+\sqrt2)(\sqrt2-1)=2-1=1$, ולכן $\frac1{1+\sqrt2}=\sqrt2-1$: $a=-1$, $b=1$.
+      - kind: step
+        text: >-
+          (ג) $x=\sqrt2$: $x^2=2\in\mathbb{Q}$, ו-$x\notin\mathbb{Q}$ לפי משפט 1.3.15.
+      - kind: check
+        text: >-
+          $\frac{1+1.41421}{3}\approx0.80474$ ו-$\frac1{2.41421}\approx0.41421=\sqrt2-1$. הבדיקה המספרית מאששת את
+          (ב); האי-רציונליות באה מההוכחה.
+      - kind: result
+        text: '(א) ו-(ב) אי-רציונליים, ו-$\frac1{1+\sqrt2}=-1+\sqrt2$. (ג) הטענה שקרית: $x=\sqrt2$.'
+
+  - id: W-1.3-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-1.3-2]
+    prompt: >-
+      לאילו מהמספרים הבאים יש שורש רציונלי (יש $x\in\mathbb{Q}$ שריבועו המספר)? נמקו בעזרת מסקנה 1.3.17, ולשברים
+      בעזרת דוגמה 6 של השיעור; כשיש שורש, מצאו אותו.
+
+      $6,\quad 49,\quad 50,\quad \frac{72}{2},\quad \frac{12}{27}.$
+    answer: 'ל-$49$ ($7$), ל-$\frac{72}2$ ($6$) ול-$\frac{12}{27}$ ($\frac23$); ל-$6$ ול-$50$ אין.'
+    solution:
+      - kind: theorem
+        text: >-
+          מסקנה 1.3.17: אם $k^2<n<(k+1)^2$ עם $k\ge0$ שלם, אין רציונלי שריבועו $n$. דוגמה 6: ל-$\frac mn$ יש
+          שורש רציונלי אם ורק אם $mn$ הוא ריבוע של שלם.
+      - kind: computation
+        text: >-
+          $6$: $2^2=4<6<9=3^2$, אין. $49=7^2$, השורש $7$. $50$: $7^2=49<50<64=8^2$, אין.
+      - kind: computation
+        text: >-
+          $\frac{72}2$: $72\cdot2=144=12^2$, ולכן יש; השורש $\frac{12}2=6$, ואכן $\frac{72}2=36$.
+          $\frac{12}{27}$: $12\cdot27=324=18^2$, ולכן יש; השורש $\frac{18}{27}=\frac23$, ואכן
+          $\frac49=\frac{12}{27}$.
+      - kind: check
+        text: >-
+          אם מצמצמים קודם, $\frac{12}{27}=\frac49$ ו-$4\cdot9=36=6^2$: אותה תשובה. השורש של שבר לא תלוי באיך
+          כותבים אותו.
+      - kind: result
+        text: 'יש: $49$, $\frac{72}2$, $\frac{12}{27}$ (שורשים $7$, $6$, $\frac23$). אין: $6$, $50$.'
+
+  - id: W-1.3-04
+    level: mid
+    objectives: [OBJ-1.3-1]
+    prompt: >-
+      הוכיחו, ישירות מעקרון האינדוקציה (מסקנה 1.3.4) ומטענה 1.3.5, שלכל $n\in\mathbb{N}$ המספר $\frac{n(n+1)}2$
+      טבעי. הסיקו ש-$n(n+1)$ זוגי, בלי להשתמש בזוגיות של $n$.
+    answer: 'הקבוצה $S=\{n\in\mathbb{N}:\ \frac{n(n+1)}2\in\mathbb{N}\}$ אינדוקטיבית, ו-$n(n+1)=2\cdot\frac{n(n+1)}2$.'
+    solution:
+      - kind: idea
+        text: >-
+          המעבר מ-$n$ ל-$n+1$ מוסיף $n+1$: $\frac{(n+1)(n+2)}2=\frac{n(n+1)}2+(n+1)$. סכום של שני טבעיים טבעי.
+      - kind: definition
+        text: >-
+          $S=\left\{n\in\mathbb{N}:\ \frac{n(n+1)}2\in\mathbb{N}\right\}\subseteq\mathbb{N}$.
+      - kind: step
+        text: >-
+          $1\in S$: $\frac{1\cdot2}2=1\in\mathbb{N}$.
+      - kind: computation
+        text: >-
+          יהי $n\in S$. לפי חוק הפילוג (פ):
+
+          $$\frac{(n+1)(n+2)}2=\frac{(n+1)n+(n+1)\cdot2}2=\frac{n(n+1)}2+(n+1).$$
+
+          $\frac{n(n+1)}2\in\mathbb{N}$ (כי $n\in S$) ו-$n+1\in\mathbb{N}$, ולפי טענה 1.3.5(ג) הסכום טבעי.
+          לכן $n+1\in S$.
+      - kind: theorem
+        text: >-
+          $S\subseteq\mathbb{N}$ אינדוקטיבית, ולפי מסקנה 1.3.4, $S=\mathbb{N}$.
+      - kind: step
+        text: >-
+          $n(n+1)=2\cdot\frac{n(n+1)}2$, עם $\frac{n(n+1)}2\in\mathbb{N}\subseteq\mathbb{Z}$: לפי הגדרה 0.1.1,
+          $n(n+1)$ זוגי.
+      - kind: check
+        text: >-
+          $n=4$: $\frac{4\cdot5}2=10$; $n=7$: $\frac{7\cdot8}2=28$. וזה בדיוק $1+2+\dots+n$ (טענה 0.5.8), סכום של
+          טבעיים.
+      - kind: result
+        text: '$\frac{n(n+1)}2\in\mathbb{N}$ לכל $n\in\mathbb{N}$, ולכן $n(n+1)$ זוגי.'
+
+  - id: W-1.3-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.3-1]
+    prompt: >-
+      תהי $A=\{n\in\mathbb{N}:\ n^2>40\}$.
+
+      (א) הוכיחו של-$A$ יש מינימום, ומצאו אותו.
+
+      (ב) הוכיחו או הפריכו: לכל קבוצה לא ריקה של מספרים טבעיים יש מקסימום.
+    answer: '(א) $\min A=7$. (ב) לא נכון: ל-$A$ עצמה אין מקסימום.'
+    solution:
+      - kind: idea
+        text: >-
+          קיום המינימום נובע מעקרון הסדר הטוב, אבל כדי למצוא אותו מראים ש-$7\in A$ ושכל טבעי קטן מ-7 אינו ב-$A$.
+          לחוסר המקסימום: מכל איבר אפשר לעלות ב-1.
+      - kind: step
+        text: >-
+          (א) $7^2=49>40$, ולכן $7\in A$, ו-$A\ne\emptyset$. לפי משפט 1.3.9 יש ל-$A$ מינימום.
+      - kind: step
+        text: >-
+          יהי $a\in A$. אילו $a\le6$, אז, כי $a\ge1>0$, לפי טענה 1.2.8 $a^2\le36\le40$, בסתירה ל-$a^2>40$. לכן
+          $a>6$, ולפי טענה 1.3.6(ב), $a\ge7$. מכאן $7\le a$ לכל $a\in A$, ו-$7\in A$: $\min A=7$.
+      - kind: step
+        text: >-
+          (ב) הפרכה. אם $n\in A$, אז $n+1\in\mathbb{N}$ ו-$(n+1)^2=n^2+2n+1>n^2>40$, ולכן $n+1\in A$, ו-$n+1>n$.
+          אילו $M$ היה מקסימום של $A$, אז $M+1\in A$ ו-$M+1>M$: סתירה.
+      - kind: check
+        text: >-
+          $6^2=36\le40<49=7^2$. ההבדל בין הסעיפים: עקרון הסדר הטוב נותן תמיד **מינימום**; מקסימום יש רק בתנאי
+          נוסף, למשל חסם עליון שלם (מסקנה 1.3.10(ב)) או קבוצה סופית (טענה 1.3.12).
+      - kind: result
+        text: '(א) $\min A=7$. (ב) הטענה שקרית: ל-$A$ אין מקסימום.'
+
+  - id: W-1.3-06
+    level: mid
+    objectives: [OBJ-1.3-2]
+    prompt: >-
+      הוכיחו שאין $x\in\mathbb{Q}$ עם $x^2=6$, בשתי דרכים:
+
+      (א) בעזרת מסקנה 1.3.17;
+
+      (ב) בעזרת זוגיות, כמו בהוכחה של משפט 1.3.15, בלי משפט 1.3.16.
+    answer: '(א) $4<6<9$. (ב) $a^2=6b^2$ נותן $a$ זוגי, ואז $2k^2=3b^2$ נותן $b$ זוגי.'
+    solution:
+      - kind: step
+        text: >-
+          (א) $2^2=4<6<9=3^2$, ולפי מסקנה 1.3.17 אין רציונלי שריבועו 6.
+      - kind: idea
+        text: >-
+          (ב) אותו מבנה כמו למשפט 1.3.15. ההבדל: אחרי $a=2k$ נשאר $2k^2=3b^2$, ושם צריך את טענה 0.1.7 כדי לקבל
+          ש-$b^2$ זוגי, כי 3 אי-זוגי.
+      - kind: step
+        text: >-
+          נניח בשלילה ש-$x^2=6$ עם $x\in\mathbb{Q}$. לפי למה 1.3.14א, $x=\frac ab$ עם $a\in\mathbb{Z}$,
+          $b\in\mathbb{N}$, לא שניהם זוגיים, ו-$a^2=b^2x^2=6b^2=2\cdot(3b^2)$. לכן $a^2$ זוגי, ולפי טענה 0.1.6
+          $a=2k$ עם $k\in\mathbb{Z}$.
+      - kind: step
+        text: >-
+          $4k^2=6b^2$, ואחרי צמצום ב-2: $2k^2=3b^2$. לכן $3b^2$ זוגי. לפי טענה 0.1.7, $3$ זוגי או $b^2$ זוגי;
+          $3=2\cdot1+1$ אי-זוגי (למה 0.1.3), ולכן $b^2$ זוגי, ולפי טענה 0.1.6 $b$ זוגי.
+      - kind: step
+        text: >-
+          $a$ ו-$b$ שניהם זוגיים, בסתירה ללמה 1.3.14א(ב).
+      - kind: check
+        text: >-
+          איפה השתמשנו ב-6? בכך ש-$6=2\cdot3$ עם 3 אי-זוגי. עם 4 במקום 6 ההוכחה נשברת: $4k^2=4b^2$ אינו אומר
+          דבר על הזוגיות של $b$, ובצדק, כי $2^2=4$.
+      - kind: result
+        text: 'אין רציונלי שריבועו 6.'
+
+  - id: W-1.3-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-1.3-3]
+    prompt: >-
+      הוכיחו או הפריכו, לכל $x,y$ ממשיים:
+
+      (א) אם $x$ ו-$y$ אי-רציונליים, אז לפחות אחד מ-$x+y$, $x-y$ אי-רציונלי.
+
+      (ב) אם $x$ אי-רציונלי, אז לפחות אחד מ-$x^2$, $x^3$ אי-רציונלי.
+
+      (ג) אם $xy\in\mathbb{Q}$ ו-$x\notin\mathbb{Q}$, אז $y\notin\mathbb{Q}$.
+    answer: '(א) נכון. (ב) נכון. (ג) לא נכון: $y=0$.'
+    solution:
+      - kind: idea
+        text: >-
+          ב-(א) וב-(ב) מניחים בשלילה ששני המספרים רציונליים, ומבטאים מהם את $x$ בפעולות של $\mathbb{Q}$ (טענה
+          1.3.14(ב)). ב-(ג) המקרה $y=0$.
+      - kind: step
+        text: >-
+          (א) נניח ש-$x+y\in\mathbb{Q}$ ו-$x-y\in\mathbb{Q}$. אז
+          $x=\frac12\big((x+y)+(x-y)\big)\in\mathbb{Q}$, בסתירה להנחה. (את $y$ לא היינו צריכים.)
+      - kind: step
+        text: >-
+          (ב) $x\ne0$, כי $0\in\mathbb{Q}$, ולכן $x^2\ne0$ (טענה 1.1.9). נניח ש-$x^2,x^3\in\mathbb{Q}$. אז
+          $x=\frac{x^3}{x^2}\in\mathbb{Q}$ (חילוק במספר ששונה מאפס), סתירה.
+      - kind: step
+        text: >-
+          (ג) הפרכה: $x=\sqrt2$, $y=0$. $xy=0\in\mathbb{Q}$, $x\notin\mathbb{Q}$ (משפט 1.3.15), ו-$y=0\in\mathbb{Q}$.
+          טענה 1.3.18(ד) דורשת $r\ne0$, ובדיוק המקרה הזה חסר.
+      - kind: check
+        text: >-
+          ב-(א), דוגמה ששני הצדדים קורים: $x=y=\sqrt2$ נותן $x+y=2\sqrt2\notin\mathbb{Q}$ ו-$x-y=0\in\mathbb{Q}$.
+          ב-(ב), עם $x=\sqrt2$: $x^2=2$ רציונלי, ו-$x^3=2\sqrt2$ אי-רציונלי.
+      - kind: result
+        text: '(א) נכון. (ב) נכון. (ג) לא נכון: $x=\sqrt2$, $y=0$.'
+
+  - id: W-1.3-08
+    level: exam
+    objectives: [OBJ-1.3-2]
+    prompt: >-
+      (א) הוכיחו: אם $x\in\mathbb{Q}$ ו-$x^2+x\in\mathbb{Z}$, אז $x\in\mathbb{Z}$.
+
+      (ב) הסיקו ש-$\varphi=\frac{1+\sqrt5}{2}$ אי-רציונלי. (רמז: חשבו את $\varphi^2-\varphi$, והפעילו את (א) על
+      $-\varphi$.)
+    answer: '(א) כמו משפט 1.3.16, עם המכנה הקטן ביותר. (ב) $(-\varphi)^2+(-\varphi)=1$, ו-$-2<-\varphi<-1$.'
+    solution:
+      - kind: idea
+        text: >-
+          (א) ההוכחה של משפט 1.3.16 עוברת כמעט מילה במילה: כותבים $x=\frac ab$ עם המכנה הקטן ביותר, מחלקים
+          $a=mb+r$, ומראים ש-$rx$ שלם. אם $r\ne0$, זה מכנה קטן יותר.
+      - kind: step
+        text: >-
+          (א) יהי $N=x^2+x\in\mathbb{Z}$. לפי למה 1.3.14א, $b=\min D_x$ ו-$a=bx\in\mathbb{Z}$. לפי משפט 1.3.11,
+          $a=mb+r$ עם $m,r\in\mathbb{Z}$, $0\le r<b$.
+      - kind: computation
+        text: >-
+          $ax=(bx)x=bx^2=b(N-x)=bN-a$. לכן
+
+          $$rx=(a-mb)x=ax-m(bx)=bN-a-ma\in\mathbb{Z}.$$
+      - kind: step
+        text: >-
+          אילו $r\ne0$, אז $r\in\mathbb{N}$ (טענה 1.3.8(א)) ו-$rx\in\mathbb{Z}$, כלומר $r\in D_x$, עם $r<b$: סתירה
+          למינימליות. לכן $r=0$, $a=mb$ ו-$x=m\in\mathbb{Z}$.
+      - kind: computation
+        text: >-
+          (ב) $\varphi^2=\frac{1+2\sqrt5+5}{4}=\frac{3+\sqrt5}{2}=\varphi+1$, ולכן עם $y=-\varphi$:
+          $y^2+y=\varphi^2-\varphi=1\in\mathbb{Z}$.
+      - kind: step
+        text: >-
+          אילו $\varphi\in\mathbb{Q}$, גם $y=-\varphi\in\mathbb{Q}$, ולפי (א) $y\in\mathbb{Z}$. אבל $2^2<5<3^2$, ולכן
+          לפי טענה 1.2.8 (למספרים אי-שליליים) $2<\sqrt5<3$, ומכאן $\frac32<\varphi<2$ ו-$-2<y<-\frac32<-1$. אין שלם
+          בין $-2$ ל-$-1$ (טענה 1.3.8(ג)): סתירה.
+      - kind: check
+        text: >-
+          $\varphi\approx1.61803$, ו-$\varphi^2\approx2.61803=\varphi+1$. ההנחה ש-$x^2+x$ **שלם** נחוצה:
+          $x=\frac12$ נותן $x^2+x=\frac34$, ו-$\frac12\notin\mathbb{Z}$.
+      - kind: result
+        text: '(א) הוכח. (ב) $\frac{1+\sqrt5}2\notin\mathbb{Q}$.'
+
+  - id: W-1.3-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-1.3-3]
+    prompt: >-
+      (א) הוכיחו ש-$\sqrt6-\sqrt2$ אי-רציונלי.
+
+      (ב) מצאו שני מספרים אי-רציונליים $a,b$ כך ש-$a+b$ ו-$ab$ שניהם רציונליים, והוכיחו את כל הטענות.
+    answer: '(א) מבודדים $\sqrt6$, מעלים בריבוע, ומקבלים $\sqrt2$ רציונלי. (ב) $a=1+\sqrt2$, $b=1-\sqrt2$.'
+    solution:
+      - kind: idea
+        text: >-
+          (א) כמו ב-$\sqrt2+\sqrt3$ (דוגמה 5): מעבירים את $\sqrt2$ לצד של $r$, מעלים בריבוע, ו-$\sqrt6$ נעלם.
+      - kind: step
+        text: >-
+          (א) נניח בשלילה ש-$r=\sqrt6-\sqrt2\in\mathbb{Q}$. $2<6$, ולפי טענה 1.2.8 (לאי-שליליים) $\sqrt2<\sqrt6$,
+          ולכן $r>0$ ו-$r\ne0$.
+      - kind: computation
+        text: >-
+          $r+\sqrt2=\sqrt6$; בריבוע (טענה 1.1.13): $r^2+2r\sqrt2+2=6$, ולכן
+          $\sqrt2=\frac{4-r^2}{2r}$.
+      - kind: step
+        text: >-
+          אגף ימין רציונלי (טענה 1.3.14(ב); $2r\ne0$), בסתירה למשפט 1.3.15.
+      - kind: step
+        text: >-
+          (ב) $a=1+\sqrt2$ ו-$b=1-\sqrt2$ אי-רציונליים לפי טענה 1.3.18(א),(ב). $a+b=2\in\mathbb{Q}$, ולפי טענה
+          1.1.13 $ab=1^2-(\sqrt2)^2=-1\in\mathbb{Q}$.
+      - kind: check
+        text: >-
+          $\sqrt6-\sqrt2\approx2.44949-1.41421=1.03528$, ו-$\frac{4-1.03528^2}{2\cdot1.03528}\approx\frac{2.92820}{2.07055}
+          \approx1.41421$. ב-(ב): $a$ ו-$b$ הם שני הפתרונות של $t^2-2t-1=0$; כך מוצאים זוגות כאלה.
+      - kind: result
+        text: '(א) $\sqrt6-\sqrt2\notin\mathbb{Q}$. (ב) $a=1+\sqrt2$, $b=1-\sqrt2$: $a+b=2$, $ab=-1$.'
+
+  - id: W-1.3-10
+    level: exam
+    objectives: [OBJ-1.3-1]
+    prompt: >-
+      תהי $S\subseteq\mathbb{N}$ קבוצה עם שלוש תכונות: $1\in S$; לכל $n\in S$ גם $2n\in S$; ולכל $n\in S$ עם
+      $n\ge2$ גם $n-1\in S$. הוכיחו ש-$S=\mathbb{N}$.
+    answer: 'כל חזקה $2^k$ ב-$S$; מכל איבר של $S$ "יורדים" לכל טבעי קטן ממנו (מקסימום של מה שחסר); ו-$n<2^n$.'
+    solution:
+      - kind: idea
+        text: >-
+          $S$ אינה צריכה להיות אינדוקטיבית מראש, ולכן מראים שלושה דברים: החזקות של 2 נמצאות בה; אם $N\in S$, אז כל
+          הטבעיים עד $N$ בה; וכל טבעי קטן מחזקה כלשהי של 2.
+      - kind: step
+        text: >-
+          (1) $T=\{k\in\mathbb{N}:\ 2^k\in S\}$. $2^1=2\cdot1\in S$, ואם $2^k\in S$ אז $2^{k+1}=2\cdot2^k\in S$.
+          לפי מסקנה 1.3.4, $T=\mathbb{N}$: $2^k\in S$ לכל $k\in\mathbb{N}$.
+      - kind: step
+        text: >-
+          (2) יהי $N\in S$. נניח בשלילה ש-$B=\{n\in\mathbb{N}:\ n\le N,\ n\notin S\}$ לא ריקה. $B\subseteq\mathbb{Z}$
+          חסומה מלמעלה בשלם $N$, ולפי מסקנה 1.3.10(ב) יש לה מקסימום $n_0$.
+      - kind: step
+        text: >-
+          $n_0\ne N$ (כי $N\in S$), ולכן $n_0<N$, ולפי טענה 1.3.6(ב) $n_0+1\le N$. $n_0+1>n_0$, ולכן
+          $n_0+1\notin B$; הוא טבעי ו-$\le N$, ולכן $n_0+1\in S$. וגם $n_0+1\ge2$, ולפי התכונה השלישית
+          $(n_0+1)-1=n_0\in S$, בסתירה ל-$n_0\in B$. לכן $B=\emptyset$.
+      - kind: step
+        text: >-
+          (3) $n<2^n$ לכל $n\in\mathbb{N}$, באינדוקציה: $1<2$; ואם $n<2^n$, אז $1\le n<2^n$, ולכן
+          $n+1<2^n+1\le2^n+2^n=2^{n+1}$.
+      - kind: step
+        text: >-
+          יהי $n\in\mathbb{N}$. לפי (1), $2^n\in S$, ולפי (3), $n\le2^n$. לפי (2) עם $N=2^n$, $n\in S$. לכן
+          $\mathbb{N}\subseteq S$, ועם $S\subseteq\mathbb{N}$, $S=\mathbb{N}$.
+      - kind: check
+        text: >-
+          כל אחת משלוש התכונות נחוצה: בלי $1\in S$, $S=\emptyset$ מקיימת את השתיים האחרות; בלי הכפלה, $S=\{1\}$;
+          ובלי הירידה, $S=\{1,2,4,8,\dots\}$.
+      - kind: result
+        text: '$S=\mathbb{N}$.'
+
+challenge:
+  - id: W-1.3-c1
+    stars: 1
+    objectives: [OBJ-1.3-2]
+    prompt: >-
+      (א) הוכיחו שאין $x\in\mathbb{Q}$ עם $x^3=2$. (כלומר, $\sqrt[3]2$ אי-רציונלי; הקיום שלו מוכח בשיעור 1.7.)
+
+      (ב) הוכיחו שאין $x\in\mathbb{Q}$ עם $x^3=4$.
+    answer: '(א) $a^3=2b^3$ נותן $a$ זוגי, ואז $b^3=4k^3$ נותן $b$ זוגי. (ב) $a^3=4b^3$ נותן $a=2k$, ואז $b^3=2k^3$.'
+    solution:
+      - kind: idea
+        text: >-
+          המבנה של משפט 1.3.15, עם חזקה שלישית. צריך רק "אם $c^3$ זוגי אז $c$ זוגי", וזה נובע מטענה 0.1.7 פעמיים.
+      - kind: step
+        text: >-
+          **למת עזר.** אם $c\in\mathbb{Z}$ ו-$c^3=c\cdot c^2$ זוגי, אז לפי טענה 0.1.7 $c$ זוגי או $c^2$ זוגי, ובמקרה
+          השני $c$ זוגי לפי טענה 0.1.6. בשני המקרים $c$ זוגי.
+      - kind: step
+        text: >-
+          (א) נניח בשלילה ש-$x^3=2$ עם $x\in\mathbb{Q}$. לפי למה 1.3.14א, $x=\frac ab$ עם $a\in\mathbb{Z}$,
+          $b\in\mathbb{N}$, לא שניהם זוגיים, ו-$a^3=b^3x^3=2b^3$. לפי למת העזר $a=2k$, ואז $8k^3=2b^3$, כלומר
+          $b^3=4k^3=2(2k^3)$ זוגי, ולכן $b$ זוגי: סתירה.
+      - kind: step
+        text: >-
+          (ב) אותו דבר: $a^3=4b^3=2(2b^3)$ זוגי, ולכן $a=2k$; $8k^3=4b^3$ נותן $b^3=2k^3$, ולכן $b$ זוגי: סתירה.
+      - kind: check
+        text: >-
+          ההוכחה לא עוברת ל-$x^3=8$, ובצדק: $2^3=8$. שם $a^3=8b^3$ נותן $a=2k$ ואז $k^3=b^3$, שאינו אומר דבר על
+          הזוגיות של $b$. ומספרית: $\sqrt[3]2\approx1.25992$, ו-$1.25992^3\approx2.00000$.
+      - kind: result
+        text: 'אין רציונלי שהחזקה השלישית שלו $2$, ואין כזה עם $4$.'
+    source:
+      name: 'Ted Sundstrom, Mathematical Reasoning: Writing and Proof (PreTeXt Edition)'
+      year: 2022
+      problem: 'Section 3.3, Exercise 4 (Proof by Contradiction)'
+      url: 'https://gvsuoer.github.io/sundstrom-textbook/S_contradiction.html'
+      verified: '2026-11-12'
+      adapted: true
+
+  - id: W-1.3-c2
+    stars: 2
+    objectives: [OBJ-1.3-2, OBJ-1.3-3]
+    prompt: >-
+      הוכיחו: אם $a,b,c$ שלמים ו-$a\sqrt2+b\sqrt3+c=0$, אז $a=b=c=0$.
+    answer: 'מעבירים את $c$ ומעלים בריבוע: $2ab\sqrt6$ רציונלי, ולכן $ab=0$; כל מקרה נותן $\sqrt2$ או $\sqrt3$ רציונלי, אלא אם הכול אפס.'
+    solution:
+      - kind: idea
+        text: >-
+          העלאה בריבוע של $a\sqrt2+b\sqrt3=-c$ משאירה שורש אחד, $\sqrt6$, עם המקדם $2ab$. כיוון ש-$\sqrt6$
+          אי-רציונלי (מסקנה 1.3.17, $4<6<9$), המקדם חייב להיות אפס, ואז נשאר שורש אחד בלבד.
+      - kind: step
+        text: >-
+          $\sqrt2\cdot\sqrt3=\sqrt6$: המכפלה אי-שלילית והריבוע שלה $2\cdot3=6$, ולפי היחידות בעובדה מקובלת (ה)
+          היא $\sqrt6$.
+      - kind: computation
+        text: >-
+          $a\sqrt2+b\sqrt3=-c$. בריבוע (טענה 1.1.13): $2a^2+2ab\sqrt6+3b^2=c^2$, כלומר
+          $2ab\sqrt6=c^2-2a^2-3b^2\in\mathbb{Z}$.
+      - kind: step
+        text: >-
+          אילו $ab\ne0$, אז $\sqrt6=\frac{c^2-2a^2-3b^2}{2ab}\in\mathbb{Q}$ (טענה 1.3.14(ב)), בסתירה למסקנה 1.3.17.
+          לכן $ab=0$, ולפי טענה 1.1.9 $a=0$ או $b=0$.
+      - kind: step
+        text: >-
+          אם $a=0$: $b\sqrt3=-c$. אילו $b\ne0$, אז $\sqrt3=-\frac cb\in\mathbb{Q}$, בסתירה למסקנה 1.3.17 ($1<3<4$).
+          לכן $b=0$, ואז $c=0$. אם $b=0$: $a\sqrt2=-c$, ואילו $a\ne0$, אז $\sqrt2=-\frac ca\in\mathbb{Q}$, בסתירה
+          למשפט 1.3.15. לכן $a=0$ ו-$c=0$.
+      - kind: check
+        text: >-
+          ההנחה ש-$a,b,c$ שלמים (או רציונליים) נחוצה: עם $a=\sqrt3$, $b=-\sqrt2$ ו-$c=0$ הסכום הוא אפס. ובניסוח
+          של טענה 1.3.18: השיוויון אומר ש-$\sqrt2$, $\sqrt3$ ו-$1$ "בלתי תלויים" מעל $\mathbb{Q}$.
+      - kind: result
+        text: '$a=b=c=0$.'
+    source:
+      name: '15th William Lowell Putnam Mathematical Competition'
+      year: 1955
+      problem: 'A1'
+      url: 'https://prase.cz/kalva/putnam/psoln/psol551.html'
+      verified: '2026-11-12'
+      adapted: true

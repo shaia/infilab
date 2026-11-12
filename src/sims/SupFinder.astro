@@ -1,0 +1,7 @@
+---
+/** Lessons 1.4-1.7 figure: <Spread figure={SupFinder} figureProps={{…}}>. The API is in the header of SupFinder.tsx. */
+import SupFinder, { type SupFinderProps } from './SupFinder';
+type Props = SupFinderProps;
+---
+
+<SupFinder client:visible {...Astro.props} />

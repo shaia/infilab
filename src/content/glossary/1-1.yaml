@@ -34,3 +34,60 @@
   definition: >-
     האקסיומה $a(b+c)=ab+ac$, היחידה שמקשרת בין החיבור לכפל. ממנה נובע, למשל, ש-$a\cdot0=0$.
   lesson: '1.1'
+- id: axiom
+  term: אקסיומה
+  en: axiom
+  definition: >-
+    טענה שמניחים בלי הוכחה, כנקודת מוצא. מפרק 1 והלאה המספרים הממשיים מוגדרים על ידי רשימה סגורה של
+    אקסיומות (השדה, הסדר והשלמות), וכל טענה אחרת עליהם היא משפט שמוכיחים מהן.
+  lesson: '1.1'
+- id: binary-operation
+  term: פעולה
+  en: binary operation
+  symbol: '\ast: F\times F\to F'
+  definition: >-
+    פעולה (בינארית) על קבוצה $F$ היא פונקציה $F\times F\to F$, שמתאימה לכל זוג סדור $(a,b)$ של איברי $F$
+    איבר אחד $a\ast b$ של $F$. בפרט התוצאה תמיד ב-$F$: הקבוצה **סגורה** לפעולה.
+  lesson: '1.1'
+- id: identity-element
+  term: איבר ניטרלי
+  en: identity element
+  definition: >-
+    איבר $e$ שהפעולה איתו לא משנה דבר: $a\ast e=a$ לכל $a$. בשדה האיבר הניטרלי לחיבור הוא $0$ והאיבר
+    הניטרלי לכפל (איבר היחידה) הוא $1$, וכל אחד מהם יחיד.
+  lesson: '1.1'
+- id: commutative-law
+  term: חוק החילוף
+  en: commutative law
+  symbol: 'a+b=b+a,\ ab=ba'
+  definition: >-
+    האקסיומה שסדר האיברים בפעולה אינו משנה את התוצאה. נקראת גם חילופיות.
+  lesson: '1.1'
+- id: associative-law
+  term: חוק הקיבוץ
+  en: associative law
+  symbol: '(a+b)+c=a+(b+c)'
+  definition: >-
+    האקסיומה שמיקום הסוגריים בפעולה על שלושה איברים אינו משנה את התוצאה. נקראת גם קיבוציות.
+  lesson: '1.1'
+- id: cancellation-law
+  term: חוק הצמצום
+  en: cancellation law
+  definition: >-
+    בשדה, אם $a+b=a+c$ אז $b=c$; ואם $a\neq0$ ו-$ab=ac$ אז $b=c$ (טענות 1.1.3 ו-1.1.5). זו טענה שמוכיחים
+    מהאקסיומות, לא אקסיומה.
+  lesson: '1.1'
+- id: zero-divisor
+  term: מחלקי אפס
+  en: zero divisors
+  definition: >-
+    שני איברים ששונים מאפס ומכפלתם אפס, כמו $2$ ו-$3$ ב-$\mathbb Z_6$. בשדה אין מחלקי אפס (טענה 1.1.9).
+  lesson: '1.1'
+- id: integers-mod-n
+  term: השאריות מודולו n
+  en: integers modulo n
+  symbol: '\mathbb Z_n'
+  definition: >-
+    לכל $n\in\mathbb N$ עם $n\ge2$, הקבוצה $\mathbb Z_n=\{0,1,\dots,n-1\}$ עם החיבור והכפל מודולו $n$: מחברים
+    או כופלים כרגיל ולוקחים את השארית בחלוקה ב-$n$. $\mathbb Z_n$ שדה בדיוק כש-$n$ ראשוני (משפט 1.1.17).
+  lesson: '1.1'

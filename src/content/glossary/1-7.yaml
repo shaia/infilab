@@ -4,8 +4,31 @@
   en: n-th root
   symbol: 'a^{1/n}=\sqrt[n]{a}'
   definition: >-
-    עבור $a>0$ ו-$n\in\mathbb{N}$, המספר החיובי היחיד $b$ שמקיים $b^n=a$. קיומו נובע מאקסיומת השלמות:
-    $b=\sup\{x\ge0 : x^n<a\}$.
+    עבור $a\ge0$ ו-$n\in\mathbb{N}$, המספר האי-שלילי היחיד $b$ שמקיים $b^n=a$ (משפט 1.7.2). קיומו נובע מאקסיומת
+    השלמות: עבור $a>0$, $b=\sup\{x\ge0 : x^n<a\}$. כש-$n$ אי-זוגי, לכל $a$ ממשי יש ממשי יחיד שחזקתו ה-$n$ היא
+    $a$, וגם אותו מסמנים $\sqrt[n]{a}$.
+  lesson: '1.7'
+- id: square-root
+  term: שורש ריבועי
+  en: square root
+  symbol: '\sqrt{a}'
+  definition: >-
+    עבור $a\ge0$, המספר האי-שלילי היחיד שריבועו $a$; השורש ה-$n$-י עם $n=2$. לכל $x$ ממשי
+    $\sqrt{x^2}=|x|$.
+  lesson: '1.7'
+- id: integer-power
+  term: חזקה עם מעריך שלם
+  en: integer power
+  symbol: 'a^{-n}=\frac{1}{a^n}'
+  definition: >-
+    עבור $a\neq0$ ו-$n\in\mathbb{N}$: $a^{-n}=\frac1{a^n}$; יחד עם $a^0=1$ ו-$a^n$ הרגיל, $a^m$ מוגדר לכל $m$ שלם.
+  lesson: '1.7'
+- id: well-defined
+  term: הגדרה תקינה
+  en: well-defined
+  definition: >-
+    הגדרה שמשתמשת בהצגה מסוימת של עצם (למשל במונה ובמכנה של שבר) היא תקינה, או "מוגדרת היטב", אם הצגות שונות
+    של אותו עצם נותנות אותה תוצאה. את זה מוכיחים, לא מניחים.
   lesson: '1.7'
 - id: rational-power
   term: חזקה רציונלית
@@ -21,5 +44,5 @@
   symbol: 'a^x'
   definition: >-
     עבור $a>1$ ו-$x$ ממשי: $a^x=\sup\{a^r : r\in\mathbb{Q},\ r<x\}$; כש-$x$ רציונלי זו החזקה הרציונלית.
-    עבור $0<a<1$ מגדירים $a^x=\left(\frac1a\right)^{-x}$.
+    עבור $0<a<1$ מגדירים $a^x=\left(\frac1a\right)^{-x}$, ו-$1^x=1$.
   lesson: '1.7'
