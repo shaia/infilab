@@ -6,7 +6,7 @@
   truth: >-
     כדי להסיק $|a_n-L|<\varepsilon$ צריך חסם **מלמעלה**: $|a_n-L|\le b_n$ ו-$b_n<\varepsilon$. חסם מלמטה לא
     אומר כמה גדול $|a_n-L|$ יכול להיות.
-  remedy: { lesson: '2.3', label: 'הערכה מלמעלה של המרחק לגבול' }
+  remedy: { lesson: '2.3', anchor: 'estimate', label: 'הערכה מלמעלה של המרחק לגבול' }
 
 - id: MC-estimate-not-small
   title: חוסמים את המרחק לגבול בביטוי שאינו שואף לאפס
@@ -15,7 +15,7 @@
   truth: >-
     החסם צריך להיות קטן מ-$\varepsilon$ מ-$N$ והלאה לכל $\varepsilon>0$, כלומר ביטוי כמו $\frac Cn$ ששואף לאפס.
     חסם כמו $\frac53$ או $\frac{n+1}{4}$ נכון אבל לא מוכיח דבר.
-  remedy: { lesson: '2.3', label: 'הערכה מלמעלה של המרחק לגבול' }
+  remedy: { lesson: '2.3', anchor: 'estimate', label: 'הערכה מלמעלה של המרחק לגבול' }
 
 - id: MC-estimate-wrong-direction
   title: מגדילים שבר בכיוון הלא נכון
@@ -24,16 +24,16 @@
   truth: >-
     הגדלת המכנה **מקטינה** שבר חיובי. כדי לחסום מלמעלה מגדילים את המונה או מקטינים את המכנה, למשל
     $n^2-5\ge\frac{n^2}{2}$ לכל $n\ge4$. כל אי-שוויון בשרשרת נבדק.
-  remedy: { lesson: '2.3', label: 'הגדלה והקטנה של שברים' }
+  remedy: { lesson: '2.3', anchor: 'fractions', label: 'הגדלה והקטנה של שברים' }
 
 - id: MC-estimate-by-approximation
   title: מחליפים אי-שוויון ב"בערך"
   belief: >-
     למספרים גדולים $a_n\approx\frac1n$, ולכן $N$ שמתאים ל-$\frac1n$ מתאים גם ל-$a_n$.
   truth: >-
-    הוכחה מההגדרה היא שרשרת של אי-שוויונות נכונים. "בערך" אינו אי-שוויון: $\frac{n+1}{n^2-5}$ גדול מ-$\frac1n$,
+    הוכחה מההגדרה היא שרשרת של אי-שוויונות נכונים. "בערך" אינו אי-שוויון: $\frac{n+1}{n^2-5}$ גדול מ-$\frac1n$ לכל $n\ge3$,
     וה-$N$ של $\frac1n$ לא מתאים לו.
-  remedy: { lesson: '2.3', label: 'הערכה מלמעלה של המרחק לגבול' }
+  remedy: { lesson: '2.3', anchor: 'estimate', label: 'הערכה מלמעלה של המרחק לגבול' }
 
 - id: MC-epsilon-too-wide
   title: בוחרים אפסילון רחב מדי בהוכחה בשלילה
@@ -43,7 +43,7 @@
   truth: >-
     הסתירה נובעת רק כשהסביבה צרה מספיק כדי להפריד: בין שני גבולות צריך $\varepsilon\le\frac{|L_1-L_2|}{2}$,
     ובהוכחה ש-$(-1)^n$ מתבדרת צריך $\varepsilon\le1$. סביבה רחבה מדי מכילה את שני הצדדים, ואין סתירה.
-  remedy: { lesson: '2.3', label: 'יחידות הגבול: סביבות זרות' }
+  remedy: { lesson: '2.3', anchor: 'uniqueness', label: 'יחידות הגבול: סביבות זרות' }
 
 - id: MC-epsilon-depends-on-n
   title: בוחרים אפסילון שתלוי ב-n
@@ -52,7 +52,7 @@
   truth: >-
     בהגדרה $\varepsilon$ נבחר ראשון, לפני $N$ ולפני $n$, ולכן הוא מספר קבוע. רק $N$ רשאי להיות תלוי בו, ו-$n$
     הוא כל מספר אחרי $N$.
-  remedy: { lesson: '2.3', label: 'סדר הבחירות בהוכחה' }
+  remedy: { lesson: '2.3', anchor: 'proof-template', label: 'סדר הבחירות בהוכחה' }
 
 - id: MC-bounded-implies-convergent
   title: מבלבלים בין "מתכנסת גוררת חסומה" לבין הכיוון ההפוך
@@ -61,7 +61,7 @@
   truth: >-
     כל סדרה מתכנסת חסומה, אבל לא להפך: $(-1)^n$ חסומה ומתבדרת. מה שכן נובע הוא הקונטרפוזיטיב: סדרה שאינה
     חסומה אינה מתכנסת.
-  remedy: { lesson: '2.3', label: 'סדרה מתכנסת חסומה' }
+  remedy: { lesson: '2.3', anchor: 'bounded', label: 'סדרה מתכנסת חסומה' }
 
 - id: MC-sequence-max-exists
   title: מניחים שלסדרה יש איבר גדול ביותר
@@ -70,7 +70,7 @@
   truth: >-
     למספר סופי של איברים יש מקסימום; לאינסוף איברים אולי אין: $1-\frac1n$ חסומה ואין לה איבר גדול ביותר.
     לכן בהוכחה שסדרה מתכנסת חסומה לוקחים מקסימום של $a_1,\dots,a_N$ בלבד.
-  remedy: { lesson: '2.3', label: 'סדרה מתכנסת חסומה' }
+  remedy: { lesson: '2.3', anchor: 'bounded', label: 'סדרה מתכנסת חסומה' }
 
 - id: MC-terms-bounded-by-limit
   title: חושבים שאיברי סדרה מתכנסת חסומים בגבול שלה
@@ -79,7 +79,7 @@
   truth: >-
     האיברים יכולים להיות רחוקים מאפס יותר מהגבול: $1+\frac1n\to1$ וכל איבריה גדולים מ-1. מה שנכון הוא
     $|a_n|<|L|+\varepsilon$ מ-$N$ והלאה, לכל $\varepsilon>0$.
-  remedy: { lesson: '2.3', label: 'סדרה מתכנסת חסומה' }
+  remedy: { lesson: '2.3', anchor: 'bounded', label: 'סדרה מתכנסת חסומה' }
 
 - id: MC-diverge-one-L
   title: מוכיחים התבדרות בפסילת גבול אחד
@@ -91,4 +91,13 @@
     $$\forall L\in\mathbb{R}\ \exists\varepsilon>0\ \forall N\ \exists n>N:\ |a_n-L|\ge\varepsilon$$
 
     לכן ההוכחה מתחילה מ-$L$ כללי.
-  remedy: { lesson: '2.3', label: 'הוכחה שסדרה מתבדרת' }
+  remedy: { lesson: '2.3', anchor: 'divergent-def', label: 'הוכחה שסדרה מתבדרת' }
+
+- id: MC-abs-converges-implies-converges
+  title: מסיקים מהתכנסות של הערך המוחלט שהסדרה עצמה מתכנסת
+  belief: >-
+    אם $|a_n|$ מתכנסת (למשל $|a_n|\to1$), אז גם $a_n$ מתכנסת, ל-$1$ או ל-$-1$.
+  truth: >-
+    הכיוון שנכון הוא $a_n\to L\Rightarrow|a_n|\to|L|$ (טענה 2.3.6). ההפך נכשל: $|(-1)^n|=1\to1$, ו-$(-1)^n$
+    מתבדרת. רק עם הגבול $0$ ההפך נכון: $|a_n|\to0$ גורר $a_n\to0$.
+  remedy: { lesson: '2.3', anchor: 'abs-value', label: 'הערך המוחלט של סדרה מתכנסת' }

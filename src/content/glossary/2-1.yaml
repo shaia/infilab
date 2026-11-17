@@ -29,3 +29,17 @@
     סדרה עולה ($a_{n+1}\ge a_n$ לכל $n$) או יורדת ($a_{n+1}\le a_n$ לכל $n$). עם אי-שוויון חזק היא עולה ממש או
     יורדת ממש. הסדרה הקבועה עולה וגם יורדת.
   lesson: '2.1'
+- id: set-of-values
+  term: קבוצת הערכים של סדרה
+  en: set of values (range) of a sequence
+  definition: >-
+    הקבוצה $\{a_n:\ n\in\mathbb{N}\}$, כלומר התמונה של הפונקציה $a:\mathbb{N}\to\mathbb{R}$. היא שוכחת את הסדר
+    ואת החזרות: לסדרות $(-1)^n$ ו-$(-1)^{n+1}$ אותה קבוצת ערכים $\{-1,1\}$, והן שתי סדרות שונות.
+  lesson: '2.1'
+- id: eventually-monotone
+  term: מונוטונית החל ממקום מסוים
+  en: eventually monotone
+  definition: >-
+    יש $n_0\in\mathbb{N}$ כך ש-$a_n\le a_{n+1}$ לכל $n\ge n_0$ (עולה החל מ-$n_0$), או $a_n\ge a_{n+1}$ לכל
+    $n\ge n_0$ (יורדת החל מ-$n_0$). למשל $n^2-10n$ עולה ממש החל מ-$n_0=5$, ואינה מונוטונית.
+  lesson: '2.1'

@@ -1,0 +1,7 @@
+---
+/** Lesson-2.8 figure: <Spread figure={GrowthLadder} figureProps={{…}}>. */
+import GrowthLadder, { type GrowthLadderProps } from './GrowthLadder';
+type Props = GrowthLadderProps;
+---
+
+<GrowthLadder client:visible {...Astro.props} />

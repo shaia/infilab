@@ -27,13 +27,13 @@ questions:
             text: 'בסיס: $0<a_1=1<3$.'
           - kind: step
             text: >-
-              צעד: נניח $0<a_n<3$. אז $3<3+2a_n<9$, ולכן $\sqrt3<a_{n+1}<3$; בפרט $0<a_{n+1}<3$. לפי עקרון
-              האינדוקציה $0<a_n<3$ לכל $n$.
+              צעד: נניח $0<a_n<3$. אז $3<3+2a_n<9$, והשורש שומר על הסדר (טענה 1.7.5), ולכן $\sqrt3<a_{n+1}<3$;
+              בפרט $0<a_{n+1}<3$. לפי עקרון האינדוקציה $0<a_n<3$ לכל $n$.
           - kind: computation
             text: '$a_{n+1}^2-a_n^2=3+2a_n-a_n^2=(3-a_n)(1+a_n)$.'
           - kind: step
             text: >-
-              כי $0<a_n<3$, שני הגורמים חיוביים, ולכן $a_{n+1}^2>a_n^2$. שני המספרים חיוביים, ולכן
+              כי $0<a_n<3$, שני הגורמים חיוביים, ולכן $a_{n+1}^2>a_n^2$. שני המספרים חיוביים, ולכן לפי טענה 1.2.8
               $a_{n+1}>a_n$.
           - kind: result
             text: 'לכל $n$: $0<a_n<3$ ו-$a_{n+1}>a_n$. הסדרה עולה ממש וחסומה מלעיל על ידי 3.'
@@ -141,7 +141,7 @@ questions:
             text: >-
               מספיק לחסום את המרחק מלמעלה בביטוי פשוט ששואף לאפס: $\frac{7}{n+2}<\frac7n$. לא צריך את ה-$N$ הקטן ביותר.
           - kind: step
-            text: 'יהי $\varepsilon>0$. נבחר $N=\left\lceil\frac{7}{\varepsilon}\right\rceil$ (קיים לפי תכונת ארכימדס).'
+            text: 'יהי $\varepsilon>0$. נבחר $N=\left\lceil\frac{7}{\varepsilon}\right\rceil$: לפי למה 2.2.17 זה מספר טבעי, ו-$N\ge\frac7\varepsilon$.'
           - kind: check
             text: 'לכל $n>N$: $|a_n-3|=\frac{7}{n+2}<\frac7n<\frac7N\le\varepsilon$.'
           - kind: result
@@ -260,15 +260,16 @@ questions:
           - kind: computation
             text: >-
               לכל $m>n$, לפי אי-שוויון המשולש:
-              $$|a_m-a_n|\le\sum_{k=n}^{m-1}|a_{k+1}-a_k|\le d\sum_{k=n}^{m-1}\frac{1}{2^{k-1}}<\frac{d}{2^{n-1}}\left(1+\frac12+\frac14+\dots\right)=\frac{4d}{2^n}.$$
+              $$|a_m-a_n|\le\sum_{k=n}^{m-1}|a_{k+1}-a_k|\le d\sum_{k=n}^{m-1}\frac{1}{2^{k-1}}=\frac{d}{2^{n-1}}\left(2-\frac{1}{2^{m-n-1}}\right)\le\frac{4d}{2^n},$$
+              לפי הנוסחה לסכום הנדסי סופי.
           - kind: step
             text: >-
-              יהי $\varepsilon>0$. כי $\frac{4d}{2^N}\to0$, יש $N$ כך ש-$\frac{4d}{2^N}<\varepsilon$ (אם $d=0$ הסדרה
-              קבועה).
+              יהי $\varepsilon>0$. לפי טענה 2.8.1 $\frac1{2^N}\to0$, ולכן $\frac{4d}{2^N}\to0$ (משפט 2.4.1), ויש $N$ כך
+              ש-$\frac{4d}{2^N}<\varepsilon$.
           - kind: check
-            text: 'לכל $m>n>N$: $|a_m-a_n|<\frac{4d}{2^n}<\frac{4d}{2^N}<\varepsilon$. לכן $a_n$ סדרת קושי.'
+            text: 'לכל $m>n>N$: $|a_m-a_n|\le\frac{4d}{2^n}\le\frac{4d}{2^N}<\varepsilon$. לכן $a_n$ סדרת קושי.'
           - kind: theorem
-            text: 'בממשיים כל סדרת קושי מתכנסת.'
+            text: 'משפט 2.10.5 (קריטריון קושי): בממשיים כל סדרת קושי מתכנסת.'
           - kind: result
             text: '$a_n$ סדרת קושי, ולכן מתכנסת.'
         rubric:
@@ -348,15 +349,18 @@ questions:
               מתכנסת, שגבולה רחוק מ-0, בסתירה להנחה.
           - kind: step
             text: >-
-              נניח ש-$b_n$ אינה שואפת ל-0. לפי שלילת ההגדרה יש $\varepsilon>0$ כך שלכל $N$ יש $n>N$ עם
-              $|b_n|\ge\varepsilon$. כך בוחרים, אחד אחרי השני, $n_1<n_2<n_3<\dots$ עם $|b_{n_k}|\ge\varepsilon$ לכל $k$.
+              נניח ש-$b_n$ אינה שואפת ל-0. לפי שלילת ההגדרה (משפט 2.2.8 ומסקנה 2.2.9) יש $\varepsilon>0$ כך שהקבוצה
+              $\{n:\ |b_n|\ge\varepsilon\}$ אינה סופית. לפי למה 2.9.2 (ג) יש $n_1<n_2<n_3<\dots$ בקבוצה הזו, כלומר
+              $|b_{n_k}|\ge\varepsilon$ לכל $k$.
           - kind: theorem
             text: >-
-              $b_{n_k}$ חסומה, כי $b_n$ חסומה. לפי בולצאנו-ויירשטראס יש לה תת-סדרה מתכנסת $b_{n_{k_j}}\to L$.
+              $b_{n_k}$ חסומה, כי $b_n$ חסומה. לפי בולצאנו-ויירשטראס (משפט 2.9.8) יש לה תת-סדרה מתכנסת
+              $b_{n_{k_j}}\to L$.
           - kind: step
             text: >-
-              $b_{n_{k_j}}$ היא גם תת-סדרה של $b_n$, ולכן לפי ההנחה $L=0$. מצד שני $|b_{n_{k_j}}|\ge\varepsilon$ לכל $j$,
-              ואי-שוויון חלש עובר לגבול: $|L|\ge\varepsilon>0$. סתירה.
+              $b_{n_{k_j}}$ היא גם תת-סדרה של $b_n$ (למה 2.9.2 (ב)), ולכן לפי ההנחה $L=0$. מצד שני
+              $|b_{n_{k_j}}|\ge\varepsilon$ לכל $j$, ו-$|b_{n_{k_j}}|\to|L|$ (טענה 2.3.6), ולכן לפי מסקנה 2.5.2
+              $|L|\ge\varepsilon>0$. סתירה.
           - kind: result
             text: '$b_n\to0$.'
         rubric:

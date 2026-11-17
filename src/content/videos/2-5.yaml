@@ -1,0 +1,26 @@
+- id: v-2-5-squeeze
+  youtubeId: AVvOiLm5COA
+  title: ארז שיינר מציג - משפט הסנדוויץ' (כלל הסנדביץ')
+  channel: Erez Sheiner
+  lang: he
+  captions: [he]
+  start: 0
+  end: 282
+  minutes: 5
+  why: >-
+    לפי פרקי הסרטון: המחשה של משפט הסנדוויץ' לסדרות (0:00), ניסוח (1:08) והוכחה (1:47). הקטע נעצר ב-4:42, לפני
+    הגרסה לשאיפה לאינסוף, שהיא נושא של שיעור 2.6. השוו את ההוכחה למשפט 2.5.3: מאיזו סדרה לוקחים את הצד התחתון של
+    הסביבה ומאיזו את העליון.
+  verified: 2026-11-17
+- id: v-2-5-squeeze-proof
+  youtubeId: hYY9piVkB6g
+  title: 'Proof: Sequence Squeeze Theorem | Real Analysis'
+  channel: Wrath of Math
+  lang: en
+  captions: []
+  start: 0
+  minutes: 8
+  why: >-
+    לפי תיאור הסרטון: הוכחה של כלל הסנדוויץ' לסדרות מהגדרת הגבול, בעזרת הפירוק של אי-שוויון עם ערך מוחלט לשני
+    אי-שוויונות, ממש כמו בהוכחה של משפט 2.5.3. באנגלית.
+  verified: 2026-11-17

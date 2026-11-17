@@ -1,0 +1,26 @@
+- id: v-2-10-completeness
+  youtubeId: 0_w-R_g5lRA
+  title: 'Lecture 10: The Completeness of the Real Numbers and Basic Properties of Infinite Series'
+  channel: MIT OpenCourseWare
+  lang: en
+  captions: []
+  start: 15
+  end: 2073
+  minutes: 35
+  why: >-
+    הרצאה מקורס האנליזה הממשית של MIT (18.100A, סתיו 2020). לפי תיאור ההרצאה באתר הקורס היא מציגה סדרות קושי
+    ומוכיחה שכל סדרת קושי ממשית מתכנסת, ולפי רשימת הפרקים החלק הזה הוא מהדקה הראשונה עד 34:33. השוו את ההוכחה
+    להוכחה של משפט 2.10.5, ושימו לב איפה היא משתמשת בשלמות. החלק שאחריו עוסק בטורים, נושא של אינפי 2.
+  verified: 2026-11-17
+- id: v-2-10-harmonic
+  youtubeId: 4yyLfrsSXQQ
+  title: 'Proof: harmonic series diverges | Series | AP Calculus BC | Khan Academy'
+  channel: Khan Academy
+  lang: en
+  captions: []
+  start: 0
+  minutes: 8
+  why: >-
+    לפי הכותרת: הוכחה שהטור ההרמוני מתבדר, כלומר שהסכומים $1+\frac12+\dots+\frac1n$ אינם מתכנסים. השוו את
+    ההוכחה בסרטון לחסם $H_{2n}-H_n\ge\frac12$ ולחסם $H_{2^k}\ge1+\frac k2$ שאחרי טענה 2.10.6.
+  verified: 2026-11-17

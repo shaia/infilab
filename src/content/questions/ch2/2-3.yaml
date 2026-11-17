@@ -388,3 +388,59 @@ questions:
         feedback: >-
           הסדרה הקבועה 1 אינה שואפת ל-0 ומתכנסת. "אינה שואפת ל-$L$" אינו "מתבדרת".
         misconception: MC-diverge-one-L
+
+  - id: Q-2.3-differences
+    type: mc
+    objectives: [OBJ-2.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      על סדרה $a_n$ ידוע רק ש-$a_{n+1}-a_n\to0$. מה אפשר להסיק מזה על התכנסות הסדרה?
+    choices:
+      - text: 'שום דבר: $\frac1n$ מקיימת את ההנחה ומתכנסת, ו-$\sqrt n$ מקיימת אותה ומתבדרת'
+        correct: true
+        feedback: >-
+          נכון. לפי טענה 2.3.4 כל סדרה מתכנסת מקיימת $a_{n+1}-a_n\to0$, אבל זה תנאי הכרחי בלבד:
+          $\sqrt{n+1}-\sqrt n=\frac{1}{\sqrt{n+1}+\sqrt n}\to0$, ו-$\sqrt n$ אינה חסומה ולכן מתבדרת.
+      - text: '$a_n$ מתכנסת: הצעדים בין איברים עוקבים נעשים קטנים כרצוננו'
+        feedback: >-
+          זה הכיוון ההפוך של טענה 2.3.4, והוא לא נכון. ב-$\sqrt n$ הצעדים שואפים לאפס, אבל הם מצטברים: אחרי
+          $10^6$ צעדים הגענו ל-1000.
+        misconception: MC-cauchy-consecutive-terms
+      - text: '$a_n$ חסומה, גם אם אולי אינה מתכנסת'
+        feedback: >-
+          גם זה לא נובע. $\sqrt n$ מקיימת את ההנחה, ולכל $M\ge0$ האיבר במקום $n>M^2$ גדול מ-$M$.
+        misconception: MC-cauchy-consecutive-terms
+      - text: '$a_n$ מתכנסת אם היא גם עולה'
+        feedback: >-
+          $\sqrt n$ עולה, וההפרשים שלה שואפים לאפס, והיא מתבדרת כי אינה חסומה. עלייה לבדה אינה מבטיחה גבול.
+        misconception: MC-monotone-alone-converges
+
+  - id: Q-2.3-abs-converse
+    type: twotier
+    objectives: [OBJ-2.3-3]
+    qualitative: true
+    level: mid
+    prompt: >-
+      ידוע ש-$|a_n|\to1$. האם בהכרח $a_n$ מתכנסת?
+    choices:
+      - text: לא
+        correct: true
+        feedback: 'נכון. $a_n=(-1)^n$ מקיימת $|a_n|=1\to1$, והיא מתבדרת (מסקנה 2.3.5).'
+      - text: כן
+        feedback: >-
+          טענה 2.3.6 עוברת רק מ-$a_n$ אל $|a_n|$. $(-1)^n$ מקיימת $|a_n|\to1$ ומתבדרת.
+        misconception: MC-abs-converges-implies-converges
+    reasons:
+      - text: 'הסדרה יכולה לקפוץ בין $1$ ל-$-1$: הערך המוחלט "שוכח" את הסימן'
+        correct: true
+        feedback: >-
+          בדיוק. רק כשהגבול של $|a_n|$ הוא $0$ אין סימן לשכוח: $|a_n|\to0$ גורר $a_n\to0$ (טענה 2.2.10).
+      - text: 'לפי טענה 2.3.6, $a_n\to1$ או $a_n\to-1$'
+        feedback: >-
+          טענה 2.3.6 אומרת: אם $a_n\to L$ אז $|a_n|\to|L|$. היא לא אומרת שיש $L$. ב-$(-1)^n$ אין.
+        misconception: MC-abs-converges-implies-converges
+      - text: 'סדרה חסומה שהערך המוחלט שלה מתכנס היא מתכנסת'
+        feedback: >-
+          $(-1)^n$ חסומה, הערך המוחלט שלה קבוע, והיא מתבדרת. חסימות לא מוסיפה כאן דבר.
+        misconception: MC-bounded-implies-convergent

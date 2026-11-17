@@ -14,6 +14,13 @@
   definition: >-
     $a_n \to -\infty$ אם לכל $M$ קיים $N$ כך שלכל $n>N$ מתקיים $a_n<M$. שקול לכך ש-$-a_n \to \infty$.
   lesson: '2.6'
+- id: merely-divergent
+  term: מתבדרת סתם
+  en: divergent with no infinite limit (oscillating divergence)
+  definition: >-
+    סדרה מתבדרת שאינה שואפת לאינסוף ואינה שואפת למינוס אינסוף: אין לה גבול סופי ואין לה גבול אינסופי. למשל
+    $(-1)^n$, שהיא חסומה, ו-$(-1)^n n$, שאינה חסומה.
+  lesson: '2.6'
 - id: indeterminate-form
   term: צורה לא מוגדרת
   en: indeterminate form

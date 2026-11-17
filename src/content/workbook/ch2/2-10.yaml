@@ -1,0 +1,487 @@
+# Workbook of lesson 2.10 — Cauchy sequences.
+# Objectives (src/course.ts):
+#   OBJ-2.10-1  state the Cauchy condition and explain how it differs from the definition of a limit
+#   OBJ-2.10-2  prove that a sequence converges if and only if it is Cauchy
+#   OBJ-2.10-3  use the Cauchy condition to prove convergence or divergence without knowing the limit
+# Every number below was recomputed with npx tsx (smallest N, partial sums, the jumps of ⌊Hₙ⌋).
+lesson: '2.10'
+practice:
+  - id: W-2.10-01
+    level: basic
+    qualitative: true
+    objectives: [OBJ-2.10-1]
+    prompt: >-
+      תהי $(a_n)$ סדרת קושי.
+
+      (א) כתבו במלואה, עם כל הכמתים, מה אומר תנאי קושי עבור $\varepsilon=0.1$ בלבד, והסבירו במה הוא שונה ממה
+      שאומרת הגדרת הגבול עבור $\varepsilon=0.1$.
+
+      (ב) הוכיחו: אם $N$ מתאים ל-$\varepsilon$ בתנאי קושי, אז כל האיברים $a_n$ עם $n>N$ נמצאים בקטע
+      $(a_{N+1}-\varepsilon,\ a_{N+1}+\varepsilon)$.
+
+      (ג) הוכיחו: אם יש $c\in\mathbb{R}$ ו-$N$ כך שכל האיברים $a_n$ עם $n>N$ נמצאים בקטע
+      $\left(c-\frac\varepsilon2,\ c+\frac\varepsilon2\right)$, אז $|a_m-a_n|<\varepsilon$ לכל $m,n>N$.
+    answer: >-
+      (א) קיים $N\in\mathbb{N}$ כך ש-$|a_m-a_n|<0.1$ לכל $m,n>N$: כל שני איברים בזנב קרובים זה לזה, בלי להזכיר
+      גבול. (ב) מההגדרה עם $m=N+1$ ומסקנה 0.9.6. (ג) מאי-שוויון המשולש דרך $c$.
+    solution:
+      - kind: definition
+        text: >-
+          תנאי קושי: לכל $\varepsilon>0$ קיים $N\in\mathbb{N}$ כך שלכל $m,n>N$ מתקיים $|a_m-a_n|<\varepsilon$
+          (הגדרה 2.10.1).
+      - kind: step
+        text: >-
+          (א) עבור $\varepsilon=0.1$ בלבד: קיים $N\in\mathbb{N}$ כך שלכל $m,n\in\mathbb{N}$ עם $m>N$ ו-$n>N$,
+          $|a_m-a_n|<0.1$. הגדרת הגבול עבור $\varepsilon=0.1$ אומרת משהו אחר: יש מספר **נתון** $L$, ו-$N$ כך
+          ש-$|a_n-L|<0.1$ לכל $n>N$. בתנאי קושי אין $L$: משווים את האיברים זה לזה.
+      - kind: step
+        text: >-
+          (ב) יהי $n>N$. גם $N+1>N$, ולכן לפי תנאי קושי עם $m=N+1$: $|a_n-a_{N+1}|<\varepsilon$. לפי מסקנה
+          0.9.6 (קטע סביב נקודה, עם המרכז $a_{N+1}$ והרדיוס $\varepsilon$), זה שקול ל-$a_{N+1}-\varepsilon<a_n<a_{N+1}+\varepsilon$.
+      - kind: step
+        text: >-
+          (ג) יהיו $m,n>N$. לפי ההנחה ומסקנה 0.9.6, $|a_m-c|<\frac\varepsilon2$ ו-$|a_n-c|<\frac\varepsilon2$.
+          לפי אי-שוויון המשולש בצורת המרחק (מסקנה 0.9.8):
+          $$|a_m-a_n|\le|a_m-c|+|c-a_n|<\frac\varepsilon2+\frac\varepsilon2=\varepsilon .$$
+      - kind: check
+        text: >-
+          (ב) ו-(ג) יחד אומרים: תנאי קושי עם $\varepsilon$ שם את הזנב בקטע ברוחב $2\varepsilon$, וזנב שנמצא בקטע
+          ברוחב $\varepsilon$ מקיים את תנאי קושי עם $\varepsilon$. בשני המקרים מרכז הקטע הוא מספר שתלוי ב-$N$,
+          ולא גבול שנבחר מראש.
+      - kind: result
+        text: >-
+          תנאי קושי עם $\varepsilon$ פירושו שהזנב שאחרי $N$ "צר": כל שני איברים בו קרובים זה לזה, והוא כולו בקטע
+          ברדיוס $\varepsilon$ סביב $a_{N+1}$. אין בו שום גבול.
+
+  - id: W-2.10-02
+    level: basic
+    objectives: [OBJ-2.10-1, OBJ-2.10-3]
+    prompt: >-
+      תהי $a_n=3-\frac2n$. הוכיחו ישירות מהגדרה 2.10.1 ש-$(a_n)$ סדרת קושי, ומצאו את ה-$N$ **הקטן ביותר** שמתאים
+      ל-$\varepsilon=0.01$ בתנאי קושי.
+    answer: '$|a_m-a_n|<\frac{2}{N+1}$ לכל $m,n>N$, ולכן $N=\left\lceil\frac2\varepsilon\right\rceil$ מתאים. עבור $\varepsilon=0.01$ ה-$N$ הקטן ביותר הוא $199$.'
+    solution:
+      - kind: given
+        text: '$a_n=3-\frac2n$, ולכן $a_m-a_n=\frac2n-\frac2m$.'
+      - kind: idea
+        text: >-
+          בזנב שאחרי $N$ האיבר הקטן ביותר הוא $a_{N+1}$, והאיברים עולים לעבר $3$ בלי להגיע אליו. לכן המרחקים בזנב
+          קטנים מ-$3-a_{N+1}=\frac2{N+1}$, ומתקרבים אליו כרצוננו.
+      - kind: computation
+        text: >-
+          יהיו $m,n>N$, ובלי הגבלת הכלליות $m\ge n$ (כי $|a_m-a_n|=|a_n-a_m|$). אז $\frac2m\le\frac2n$, ולכן
+          $|a_m-a_n|=\frac2n-\frac2m<\frac2n\le\frac2{N+1}$, כי $\frac2m>0$ ו-$n\ge N+1$.
+      - kind: step
+        text: >-
+          יהי $\varepsilon>0$, ו-$N=\left\lceil\frac2\varepsilon\right\rceil$, טבעי ו-$N\ge\frac2\varepsilon$ (למה 2.2.17).
+          אז $\frac2{N+1}<\frac2N\le\varepsilon$, ולכל $m,n>N$, $|a_m-a_n|<\varepsilon$. זה תנאי קושי.
+      - kind: step
+        text: >-
+          ה-$N$ הקטן ביותר עבור $\varepsilon=0.01$. אם $\frac2{N+1}\le0.01$, כלומר $N+1\ge200$, אז לפי החישוב כל
+          המרחקים בזנב קטנים ממש מ-$0.01$, ו-$N$ מתאים. לכן $N=199$ מתאים: $\frac2{200}=0.01$.
+      - kind: step
+        text: >-
+          $N=198$ אינו מתאים. ניקח $n=199$; לכל $m>199$, $|a_m-a_{199}|=\frac2{199}-\frac2m$. כיוון ש-$\frac2{199}>0.01$,
+          המספר $\delta=\frac2{199}-0.01$ חיובי, ולפי תכונת ארכימדס יש $m>199$ עם $\frac2m<\delta$. עבורו
+          $|a_m-a_{199}|>0.01$. ו-$N<198$ גם אינו מתאים, כי כל זוג שאחרי $198$ נמצא גם אחרי $N$.
+      - kind: check
+        text: >-
+          $\frac2{199}\approx0.01005>0.01$, ולכן עם $N=198$ הזוג $n=199$, $m=1000$ נותן $\frac2{199}-\frac2{1000}\approx0.00805$,
+          שעוד קטן מ-$0.01$; אבל $m=10000$ כבר נותן $\approx0.00985$, ו-$m=100000$ נותן $\approx0.010030>0.01$.
+          הזוג הרע מופיע רק רחוק מאוד, ולכן חלון קטן לא היה מוצא אותו.
+      - kind: result
+        text: '$(a_n)$ סדרת קושי עם $N=\left\lceil\frac2\varepsilon\right\rceil$; עבור $\varepsilon=0.01$ ה-$N$ הקטן ביותר הוא $199$.'
+
+  - id: W-2.10-03
+    level: basic
+    objectives: [OBJ-2.10-3]
+    prompt: >-
+      תהי $a_n=(-1)^n+\frac1n$.
+
+      (א) כתבו מה פירוש הטענה "$(a_n)$ אינה סדרת קושי", עם כל הכמתים.
+
+      (ב) הוכיחו ש-$|a_{n+1}-a_n|\ge\frac32$ לכל $n$, והסיקו ש-$(a_n)$ אינה סדרת קושי ולכן מתבדרת.
+    answer: >-
+      (א) $\exists\varepsilon>0\ \forall N\in\mathbb{N}\ \exists m,n>N:\ |a_m-a_n|\ge\varepsilon$. (ב) עם
+      $\varepsilon=1$ והזוג $n=N+1$, $m=N+2$.
+    solution:
+      - kind: theorem
+        text: >-
+          (א) לפי טענה 2.10.6: $(a_n)$ אינה סדרת קושי אם ורק אם
+          $\exists\varepsilon>0\ \forall N\in\mathbb{N}\ \exists m,n>N:\ |a_m-a_n|\ge\varepsilon$.
+      - kind: computation
+        text: >-
+          (ב) לכל $n$: $(-1)^{n+1}-(-1)^n=2(-1)^{n+1}$, ולכן
+          $$a_{n+1}-a_n=2(-1)^{n+1}-\Big(\frac1n-\frac1{n+1}\Big)=2(-1)^{n+1}-\frac1{n(n+1)} .$$
+      - kind: step
+        text: >-
+          לפי הצורה ההפוכה של אי-שוויון המשולש (מסקנה 0.9.9),
+          $|a_{n+1}-a_n|\ge\big|2(-1)^{n+1}\big|-\frac1{n(n+1)}=2-\frac1{n(n+1)}\ge2-\frac12=\frac32$,
+          כי $n(n+1)\ge2$.
+      - kind: step
+        text: >-
+          נבחר $\varepsilon=1$. יהי $N\in\mathbb{N}$; הזוג $n=N+1$, $m=N+2$ נמצא אחרי $N$, ו-$|a_m-a_n|\ge\frac32\ge1$.
+          לפי (א), $(a_n)$ אינה סדרת קושי.
+      - kind: theorem
+        text: 'לפי טענה 2.10.2, כל סדרה מתכנסת היא סדרת קושי. בקונטרפוזיטיב: $(a_n)$ מתבדרת.'
+      - kind: check
+        text: '$a_1=0$, $a_2=1.5$, $a_3\approx-0.667$, $a_4=1.25$: ההפרשים $1.5$, $2.167$, $1.917$, כולם לפחות $\frac32$.'
+      - kind: result
+        text: '$(a_n)$ אינה סדרת קושי, ולכן מתבדרת. לא היה צורך לפסול כל $L$ בנפרד.'
+
+  - id: W-2.10-04
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.10-1, OBJ-2.10-2]
+    prompt: >-
+      הוכיחו או הפריכו:
+
+      (א) כל תת-סדרה של סדרת קושי היא סדרת קושי.
+
+      (ב) אם לסדרה $(a_n)$ יש תת-סדרה שהיא סדרת קושי, אז $(a_n)$ סדרת קושי.
+
+      (ג) אם $(a_{2n})$ ו-$(a_{2n-1})$ שתיהן סדרות קושי, אז $(a_n)$ סדרת קושי.
+    answer: '(א) נכון. (ב) לא נכון: $(-1)^n$. (ג) לא נכון: $(-1)^n$.'
+    solution:
+      - kind: idea
+        text: >-
+          ב-(א) כל מקום של תת-הסדרה אחרי $N$ הוא מקום של הסדרה אחרי $N$, כי $n_k\ge k$. ב-(ב) ו-(ג) תת-סדרה רואה רק
+          חלק מהאיברים, והחלק האחר יכול ללכת למקום אחר.
+      - kind: step
+        text: >-
+          (א) תהי $(a_n)$ סדרת קושי ו-$b_k=a_{n_k}$ תת-סדרה. יהי $\varepsilon>0$ ו-$N$ שמתאים לו עבור $(a_n)$. יהיו
+          $k,j>N$. לפי למה 2.9.2 (א), $n_k\ge k>N$ ו-$n_j\ge j>N$, ולכן $|b_k-b_j|=|a_{n_k}-a_{n_j}|<\varepsilon$.
+      - kind: step
+        text: >-
+          (ב) $a_n=(-1)^n$. התת-סדרה $a_{2k}=1$ קבועה, ולכן סדרת קושי (כל ההפרשים $0$). אבל $(a_n)$ אינה סדרת קושי:
+          $|a_{n+1}-a_n|=2$ לכל $n$, ולפי טענה 2.10.6 עם $\varepsilon=1$ אין $N$ מתאים.
+      - kind: step
+        text: >-
+          (ג) אותה סדרה: $a_{2n}=1$ ו-$a_{2n-1}=-1$, שתיהן קבועות ולכן סדרות קושי, ו-$(-1)^n$ אינה סדרת קושי.
+      - kind: check
+        text: >-
+          ב-(ג) שתי התת-סדרות מתכנסות, אבל לגבולות שונים, $1$ ו-$-1$. אילו הגבולות היו שווים, לפי דוגמה 6 של שיעור
+          2.2 (ex-2-2-6 (ב)) הסדרה הייתה מתכנסת, ולכן סדרת קושי. זו הסיבה שב-(ג) חסר תנאי.
+      - kind: result
+        text: '(א) נכון; (ב) ו-(ג) לא נכונים, ו-$(-1)^n$ היא דוגמה נגדית לשניהם.'
+
+  - id: W-2.10-05
+    level: mid
+    objectives: [OBJ-2.10-3]
+    prompt: >-
+      הסדרה $(a_n)$ מקיימת $|a_{n+1}-a_n|\le\frac{n}{2^n}$ לכל $n\in\mathbb{N}$. על הסדרה לא ידוע דבר נוסף.
+      הוכיחו ש-$(a_n)$ מתכנסת.
+    answer: '$\frac n{2^n}<2\left(\frac34\right)^n$, ולפי טענה 2.10.7 (א) עם $C=2$ ו-$q=\frac34$ הסדרה סדרת קושי ומתכנסת.'
+    solution:
+      - kind: given
+        text: '$|a_{n+1}-a_n|\le\frac n{2^n}$ לכל $n$. אין נוסחה ל-$a_n$, ולכן אין מועמד לגבול.'
+      - kind: idea
+        text: >-
+          טענה 2.10.7 (א) צריכה חסם $C\,q^n$ עם $q<1$. הגורם $n$ במונה גדל, אבל לאט יותר מכל חזקה: מוציאים מ-$2^n$
+          חלק, $(3/2)^n$, שבולע את $n$, ונשאר $\left(\frac34\right)^n$.
+      - kind: theorem
+        text: >-
+          לפי אי-שוויון ברנולי (משפט 0.6.6) עם $x=\frac12$: $\left(\frac32\right)^n\ge1+\frac n2>\frac n2$, כלומר
+          $n<2\left(\frac32\right)^n$ לכל $n\in\mathbb{N}$.
+      - kind: computation
+        text: >-
+          כופלים ב-$\frac1{2^n}>0$ ומשתמשים בחוקי החזקות (מסקנה 0.5.7):
+          $$\frac n{2^n}<\frac{2\cdot3^n}{2^n\cdot2^n}=2\left(\frac34\right)^n .$$
+      - kind: step
+        text: >-
+          לכן $|a_{n+1}-a_n|\le2\left(\frac34\right)^n$ לכל $n$. לפי טענה 2.10.7 (א) עם $C=2$, $q=\frac34$ ו-$n_0=1$,
+          $(a_n)$ סדרת קושי, ולפי משפט 2.10.5 היא מתכנסת.
+      - kind: check
+        text: >-
+          $n=1$: $\frac12<1.5$; $n=4$: $0.25<0.633$; $n=10$: $0.00977<0.113$. ההערכה גסה, וזה מותר: צריך רק $q<1$.
+          לעומת זאת, החסם $|a_{n+1}-a_n|\le\frac1n$ לא היה מספיק ($H_n$ מקיימת אותו ומתבדרת).
+      - kind: result
+        text: '$(a_n)$ מתכנסת, אף שאיננו יודעים את גבולה.'
+
+  - id: W-2.10-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.10-1]
+    prompt: >-
+      תהי $(a_n)$ סדרה. הוכיחו או הפריכו:
+
+      (א) אם $(a_n)$ סדרת קושי, אז $(|a_n|)$ סדרת קושי.
+
+      (ב) אם $(|a_n|)$ סדרת קושי, אז $(a_n)$ סדרת קושי.
+
+      (ג) אם $(a_n)$ סדרת קושי, אז $(a_n^2)$ סדרת קושי. הוכיחו ישירות מההגדרה, בלי משפט 2.10.5.
+    answer: '(א) נכון, לפי מסקנה 0.9.9. (ב) לא נכון: $(-1)^n$. (ג) נכון: $|a_m^2-a_n^2|\le2M|a_m-a_n|$ עם $M$ חסם של $|a_n|$.'
+    solution:
+      - kind: step
+        text: >-
+          (א) יהי $\varepsilon>0$ ו-$N$ שמתאים לו עבור $(a_n)$. לכל $m,n>N$, לפי הצורה ההפוכה של אי-שוויון המשולש
+          (מסקנה 0.9.9), $\big||a_m|-|a_n|\big|\le|a_m-a_n|<\varepsilon$. אותו $N$ מתאים עבור $(|a_n|)$.
+      - kind: step
+        text: >-
+          (ב) $a_n=(-1)^n$: $|a_n|=1$ לכל $n$, סדרה קבועה ולכן סדרת קושי. אבל $|a_{n+1}-a_n|=2$, ו-$(a_n)$ אינה סדרת
+          קושי (טענה 2.10.6 עם $\varepsilon=1$).
+      - kind: idea
+        text: >-
+          (ג) $a_m^2-a_n^2=(a_m-a_n)(a_m+a_n)$. הגורם הראשון קטן לפי תנאי קושי, והשני חסום, כי סדרת קושי חסומה.
+      - kind: step
+        text: >-
+          לפי טענה 2.10.3 יש $M>0$ עם $|a_n|\le M$ לכל $n$ (אם החסם שמצאנו הוא $0$, מחליפים אותו ב-$1$). לכן
+          $|a_m+a_n|\le|a_m|+|a_n|\le2M$ ו-$|a_m^2-a_n^2|\le2M\,|a_m-a_n|$.
+      - kind: step
+        text: >-
+          יהי $\varepsilon>0$. תנאי קושי עם $\frac{\varepsilon}{2M}>0$ נותן $N$ כך ש-$|a_m-a_n|<\frac\varepsilon{2M}$
+          לכל $m,n>N$. אז $|a_m^2-a_n^2|<2M\cdot\frac\varepsilon{2M}=\varepsilon$.
+      - kind: check
+        text: >-
+          ב-(ג) השתמשנו בחסימות: בלעדיה $2M$ לא היה קבוע. זו לא הוכחה מעגלית: טענה 2.10.3 מוכחת מתנאי קושי בלבד.
+          ההוכחה ב-(ג) נכונה גם ברציונליים, שם משפט 2.10.5 נכשל.
+      - kind: result
+        text: '(א) ו-(ג) נכונים; (ב) לא נכון: $(-1)^n$.'
+
+  - id: W-2.10-07
+    level: mid
+    objectives: [OBJ-2.10-2]
+    prompt: >-
+      תהי $(a_n)$ סדרת קושי, ו-$(b_n)$ סדרה כך ש-$b_n-a_n\to0$.
+
+      (א) הוכיחו ישירות מההגדרה ש-$(b_n)$ סדרת קושי.
+
+      (ב) הוכיחו ש-$(a_n)$ ו-$(b_n)$ מתכנסות לאותו גבול.
+    answer: '(א) $|b_m-b_n|\le|b_m-a_m|+|a_m-a_n|+|a_n-b_n|<3\cdot\frac\varepsilon3$. (ב) לפי משפט 2.10.5 $a_n\to L$, ו-$b_n=a_n+(b_n-a_n)\to L$.'
+    solution:
+      - kind: idea
+        text: >-
+          כדי לעבור מ-$b_m$ ל-$b_n$ עוברים דרך $a_m$ ו-$a_n$: שלושה מרחקים קטנים, ולכן מחלקים את $\varepsilon$
+          לשלושה.
+      - kind: step
+        text: >-
+          (א) יהי $\varepsilon>0$. לפי תנאי קושי עם $\frac\varepsilon3$ יש $N_1$ כך ש-$|a_m-a_n|<\frac\varepsilon3$
+          לכל $m,n>N_1$. כיוון ש-$b_n-a_n\to0$, יש $N_2$ כך ש-$|b_n-a_n|<\frac\varepsilon3$ לכל $n>N_2$.
+          נגדיר $N=\max(N_1,N_2)$ (טענה 2.2.3 (ג)).
+      - kind: computation
+        text: >-
+          לכל $m,n>N$, לפי אי-שוויון המשולש לשלושה מחוברים (טענה 0.9.10):
+          $$|b_m-b_n|\le|b_m-a_m|+|a_m-a_n|+|a_n-b_n|<\frac\varepsilon3+\frac\varepsilon3+\frac\varepsilon3=\varepsilon .$$
+      - kind: theorem
+        text: >-
+          (ב) לפי משפט 2.10.5, $(a_n)$ מתכנסת: $a_n\to L$ לאיזה $L\in\mathbb{R}$. לפי משפט 2.4.1 (סכום),
+          $b_n=a_n+(b_n-a_n)\to L+0=L$.
+      - kind: check
+        text: >-
+          דוגמה: $a_n=\sum_{k=1}^n\frac1{k^2}$ ו-$b_n=a_n+\frac{(-1)^n}{n}$. לפי טענה 2.10.7, $(a_n)$ סדרת קושי, ו-$b_n-a_n=\frac{(-1)^n}n\to0$
+          (כי $\left|\frac{(-1)^n}n\right|=\frac1n\to0$, וטענה 2.2.10). לכן $(b_n)$ מתכנסת, אף שאינה מונוטונית ואיננו יודעים את הגבול.
+      - kind: result
+        text: '$(b_n)$ סדרת קושי, ולשתי הסדרות אותו גבול.'
+
+  - id: W-2.10-08
+    level: exam
+    qualitative: true
+    objectives: [OBJ-2.10-2, OBJ-2.10-3]
+    prompt: >-
+      תהי $(a_n)$ סדרה.
+
+      (א) הפריכו: אם $(a_{2n})$ ו-$(a_{2n-1})$ שתיהן סדרות קושי, אז $(a_n)$ מתכנסת.
+
+      (ב) הוכיחו: אם $(a_{2n})$, $(a_{2n-1})$ ו-$(a_{3n})$ שלושתן סדרות קושי, אז $(a_n)$ מתכנסת.
+    answer: >-
+      (א) $(-1)^n$. (ב) לשלוש התת-סדרות יש גבולות $L_1,L_2,L_3$; $a_{6k}$ משותפת לזוגיים ולכפולות של 3, ו-$a_{6k-3}$
+      משותפת לאי-זוגיים ולכפולות של 3, ולכן $L_1=L_3=L_2$, והזוגיים והאי-זוגיים שואפים לאותו גבול.
+    solution:
+      - kind: step
+        text: >-
+          (א) $a_n=(-1)^n$: $a_{2n}=1$ ו-$a_{2n-1}=-1$ קבועות, ולכן סדרות קושי, ו-$(-1)^n$ מתבדרת (מסקנה 2.3.5).
+      - kind: idea
+        text: >-
+          (ב) לפי משפט 2.10.5 לכל אחת משלוש התת-סדרות יש גבול. הכפולות של 3 נפגשות גם עם הזוגיים (במקומות $6k$)
+          וגם עם האי-זוגיים (במקומות $6k-3$), ולכן הן "מגשרות" בין שני הגבולות.
+      - kind: theorem
+        text: >-
+          לפי משפט 2.10.5: $a_{2n}\to L_1$, $a_{2n-1}\to L_2$, $a_{3n}\to L_3$ לאיזה $L_1,L_2,L_3\in\mathbb{R}$.
+      - kind: step
+        text: >-
+          הסדרה $c_k=a_{6k}$ היא תת-סדרה של $(a_{2n})$ (המקומות $n=3k$, עולים ממש) וגם של $(a_{3n})$ (המקומות
+          $n=2k$). לפי משפט 2.9.3, $c_k\to L_1$ וגם $c_k\to L_3$, ולפי יחידות הגבול (משפט 2.3.1) $L_1=L_3$.
+      - kind: step
+        text: >-
+          הסדרה $d_k=a_{6k-3}$: מתקיים $6k-3=2(3k-1)-1$, ולכן היא תת-סדרה של $(a_{2n-1})$ (המקומות $n=3k-1$),
+          וגם $6k-3=3(2k-1)$, ולכן תת-סדרה של $(a_{3n})$ (המקומות $n=2k-1$). כמו בצעד הקודם, $L_2=L_3$.
+      - kind: theorem
+        text: >-
+          לכן $a_{2n}\to L$ ו-$a_{2n-1}\to L$ עם $L=L_1=L_2$, ולפי דוגמה 6 של שיעור 2.2 (ex-2-2-6 (ב)), $a_n\to L$.
+      - kind: check
+        text: >-
+          כל אחת משלוש ההנחות נחוצה: בלי $(a_{3n})$ יש את $(-1)^n$ של (א). בלי $(a_{2n-1})$: $a_n=1$ כש-$n$ זוגי או
+          כפולה של 3, ו-$a_n=n$ אחרת (למשל $a_1=1$, $a_5=5$, $a_7=7$); הזוגיים והכפולות של 3 קבועים, והסדרה אינה
+          חסומה ולכן מתבדרת (משפט 2.3.3). ובלי $(a_{2n})$: $a_n=1$ כש-$n$ אי-זוגי או כפולה של 3, ו-$a_n=n$ אחרת
+          (למשל $a_2=2$, $a_4=4$, $a_8=8$); האי-זוגיים והכפולות של 3 קבועים, והסדרה אינה חסומה.
+      - kind: result
+        text: '(א) לא נכון. (ב) נכון: $(a_n)$ מתכנסת, לגבול המשותף של שלוש התת-סדרות.'
+
+  - id: W-2.10-09
+    level: exam
+    objectives: [OBJ-2.10-3]
+    prompt: >-
+      נגדיר $B_n=\sum_{k=1}^{n}\frac{(-1)^{k+1}}{\sqrt k}=1-\frac1{\sqrt2}+\frac1{\sqrt3}-\dots\pm\frac1{\sqrt n}$.
+
+      (א) הוכיחו שלכל $n,p\in\mathbb{N}$, $|B_{n+p}-B_n|\le\frac1{\sqrt{n+1}}$. מותר להשתמש בסעיף (א) של דוגמה 5
+      בשיעור.
+
+      (ב) הוכיחו ש-$(B_n)$ מתכנסת, עם $N$ מפורש לכל $\varepsilon>0$, וחשבו אותו עבור $\varepsilon=0.1$.
+
+      (ג) הסבירו מדוע הטענה לא נובעת מהתכנסות הסכום של הערכים המוחלטים, $\sum_{k=1}^{n}\frac1{\sqrt k}$.
+    answer: '(א) ההפרש הוא סכום מתחלף של מספרים יורדים, כפול סימן. (ב) $N=\left\lceil\frac1{\varepsilon^2}\right\rceil$; עבור $\varepsilon=0.1$, $N=100$. (ג) הסכום הזה מתבדר (דוגמה 3).'
+    solution:
+      - kind: computation
+        text: >-
+          (א) לפי למה 0.5.6 (ג), עם $k=n+j$ ו-$(-1)^{n+j+1}=(-1)^n(-1)^{j+1}$:
+          $$B_{n+p}-B_n=\sum_{k=n+1}^{n+p}\frac{(-1)^{k+1}}{\sqrt k}=(-1)^n\sum_{j=1}^{p}\frac{(-1)^{j+1}}{\sqrt{n+j}} .$$
+      - kind: step
+        text: >-
+          המספרים $b_j=\frac1{\sqrt{n+j}}$ חיוביים ויורדים ב-$j$, כי השורש עולה ממש (מסקנה 0.1.11). לפי דוגמה 5 (א)
+          בשיעור, $0\le\sum_{j=1}^{p}(-1)^{j+1}b_j\le b_1=\frac1{\sqrt{n+1}}$, ולכן $|B_{n+p}-B_n|\le\frac1{\sqrt{n+1}}$.
+      - kind: step
+        text: >-
+          (ב) יהי $\varepsilon>0$, ו-$N=\left\lceil\frac1{\varepsilon^2}\right\rceil$ (למה 2.2.17). לכל $n>N$,
+          $n+1>\frac1{\varepsilon^2}$, ולכן $\sqrt{n+1}>\frac1\varepsilon$ (השורש עולה ממש) ו-$\frac1{\sqrt{n+1}}<\varepsilon$.
+          לפי (א), $|B_{n+p}-B_n|<\varepsilon$ לכל $n>N$ ולכל $p$: זה תנאי קושי בניסוח עם $p$ (הגדרה 2.10.1).
+      - kind: theorem
+        text: 'לפי משפט 2.10.5, $(B_n)$ מתכנסת. עבור $\varepsilon=0.1$: $N=\left\lceil\frac1{0.01}\right\rceil=100$.'
+      - kind: step
+        text: >-
+          (ג) אין "התכנסות בערך מוחלט" לסמוך עליה: לפי דוגמה 3 בשיעור, $\sum_{k=1}^{n}\frac1{\sqrt k}\to\infty$. מה שמציל
+          את $B_n$ הוא הביטול בין מחוברים חיוביים ושליליים, שסעיף (א) מודד במדויק.
+      - kind: check
+        text: >-
+          $B_1=1$, $B_2\approx0.2929$, $B_3\approx0.8702$, $B_4\approx0.3702$: הסדרה קופצת ואינה מונוטונית. עבור $n=100$
+          החסם הוא $\frac1{\sqrt{101}}\approx0.0995<0.1$, כמו שצריך.
+      - kind: result
+        text: '$(B_n)$ סדרת קושי ומתכנסת; $N=\left\lceil\frac1{\varepsilon^2}\right\rceil$, ו-$N=100$ עבור $\varepsilon=0.1$.'
+
+  - id: W-2.10-10
+    level: exam
+    objectives: [OBJ-2.10-3]
+    prompt: >-
+      (א) הוכיחו: סדרת קושי שכל איבריה מספרים שלמים קבועה מאיזה מקום.
+
+      (ב) נסמן $H_n=1+\frac12+\dots+\frac1n$, ו-$b_n=(-1)^{\lfloor H_n\rfloor}$. הוכיחו שלכל $j\in\mathbb{N}$ יש
+      $n$ עם $\lfloor H_n\rfloor=j$, והסיקו ש-$(b_n)$ מתבדרת.
+    answer: >-
+      (א) עם $\varepsilon=\frac12$, ההפרש בין שני שלמים בזנב הוא שלם בקטע $\left(-\frac12,\frac12\right)$, כלומר
+      $0$. (ב) המקום הראשון $n_j$ שבו $H_n\ge j$ מקיים $j\le H_{n_j}<j+1$; לכן $\lfloor H_n\rfloor$ עובר בכל
+      שלם, $b_n$ מחליפה סימן אינסוף פעמים, ואינה קבועה מאיזה מקום.
+    solution:
+      - kind: step
+        text: >-
+          (א) תהי $(a_n)$ סדרת קושי של שלמים. לפי תנאי קושי עם $\varepsilon=\frac12$ יש $N$ כך ש-$|a_m-a_n|<\frac12$
+          לכל $m,n>N$. ההפרש $a_m-a_n$ שלם, והשלם היחיד בקטע $\left(-\frac12,\frac12\right)$ הוא $0$ (אין שלם ממש בין
+          $0$ ל-$1$, שיעור 1.3). לכן $a_n=a_{N+1}$ לכל $n>N$.
+      - kind: idea
+        text: >-
+          (ב) $H_n$ עולה בצעדים קטנים מ-$1$ ושואפת לאינסוף, ולכן היא לא יכולה "לדלג" על שלם: בפעם הראשונה שהיא
+          עוברת את $j$, היא עוד לא הגיעה ל-$j+1$.
+      - kind: step
+        text: >-
+          יהי $j\in\mathbb{N}$. כי $H_n\to\infty$ (שיעור 2.10, אחרי טענה 2.10.6), הקבוצה $\{n\in\mathbb{N}:\ H_n\ge j\}$
+          לא ריקה, ויש לה איבר קטן ביותר $n_j$ (עקרון הסדר הטוב, שיעור 0.6). אם $j=1$, $n_1=1$ ו-$H_1=1$. אם $j\ge2$,
+          אז $n_j\ge2$ (כי $H_1=1<j$) ו-$H_{n_j-1}<j$ לפי המינימליות, ולכן
+          $H_{n_j}=H_{n_j-1}+\frac1{n_j}<j+\frac12<j+1$.
+      - kind: step
+        text: >-
+          בשני המקרים $j\le H_{n_j}<j+1$, ולכן $\lfloor H_{n_j}\rfloor=j$ (הגדרה 1.6.5), ו-$b_{n_j}=(-1)^j$. כמו כן
+          $n_j\ge j$, כי $H_n\le n$ (כל מחובר לכל היותר $1$), ולכן $H_n\ge j$ גורר $n\ge j$.
+      - kind: step
+        text: >-
+          נניח בשלילה ש-$(b_n)$ מתכנסת. לפי טענה 2.10.2 היא סדרת קושי, ואיבריה שלמים ($\pm1$), ולכן לפי (א) יש $N$
+          כך ש-$b_n=b_{N+1}$ לכל $n>N$. אבל $n_{N+1}\ge N+1>N$ ו-$n_{N+2}\ge N+2>N$, ו-$b_{n_{N+1}}=(-1)^{N+1}\ne(-1)^{N+2}=b_{n_{N+2}}$.
+          סתירה.
+      - kind: check
+        text: >-
+          המקומות הראשונים: $n_2=4$ ($H_4\approx2.083$), $n_3=11$, $n_4=31$, $n_5=83$. הסימן של $b_n$ מתחלף
+          לעתים רחוקות יותר ויותר, ובכל זאת אינסוף פעמים: הסדרה מתבדרת, אף ש-$b_{n+1}=b_n$ ברוב המקומות.
+      - kind: result
+        text: '(א) סדרת קושי של שלמים קבועה מאיזה מקום. (ב) $\lfloor H_n\rfloor$ מקבל כל ערך טבעי, ולכן $(b_n)$ מתבדרת.'
+
+challenge:
+  - id: W-2.10-c1
+    stars: 1
+    objectives: [OBJ-2.10-1, OBJ-2.10-3]
+    prompt: >-
+      הסדרה $(x_n)$ מקיימת $|x_n-x_k|\le\frac{n}{k^2}$ לכל $n,k\in\mathbb{N}$.
+
+      (א) הוכיחו ש-$(x_n)$ סדרת קושי.
+
+      (ב) הוכיחו ש-$(x_n)$ קבועה.
+    answer: '(א) לכל $k\ge n>N$: $|x_n-x_k|\le\frac n{k^2}\le\frac1k<\frac1N$. (ב) דרך $x_m$ עם $m$ גדול: $|x_n-x_k|\le\frac{n+k}{m}$ לכל $m$, ולכן $0$.'
+    solution:
+      - kind: idea
+        text: >-
+          ההנחה חלה על כל זוג בשני הסדרים, ולכן תמיד אפשר לשים את המקום **הגדול** במכנה, בריבוע. ב-(ב) עוברים דרך
+          איבר שלישי $x_m$ רחוק מאוד, ששני המרחקים אליו קטנים כרצוננו.
+      - kind: step
+        text: >-
+          (א) יהי $\varepsilon>0$, ו-$N=\left\lceil\frac1\varepsilon\right\rceil$. יהיו $m,n>N$; בלי הגבלת הכלליות
+          $m\ge n$ (ההנחה עם התפקידים המוחלפים נותנת את המקרה השני). לפי ההנחה עם $k=m$:
+          $|x_n-x_m|\le\frac n{m^2}\le\frac m{m^2}=\frac1m<\frac1N\le\varepsilon$.
+      - kind: step
+        text: >-
+          (ב) יהיו $n,k\in\mathbb{N}$, ויהי $m\in\mathbb{N}$ כלשהו. לפי אי-שוויון המשולש (מסקנה 0.9.8) וההנחה פעמיים,
+          עם הזוגות $(n,m)$ ו-$(k,m)$:
+          $$|x_n-x_k|\le|x_n-x_m|+|x_m-x_k|\le\frac n{m^2}+\frac k{m^2}\le\frac{n+k}m ,$$
+          כי $m^2\ge m$.
+      - kind: step
+        text: >-
+          נסמן $d=|x_n-x_k|\ge0$, ונניח בשלילה ש-$d>0$. לפי תכונת ארכימדס יש $m\in\mathbb{N}$ עם $m>\frac{n+k}d$, ועבורו
+          $\frac{n+k}m<d$, בסתירה לחישוב. לכן $d=0$, כלומר $x_n=x_k$ לכל $n,k$.
+      - kind: check
+        text: >-
+          יש סדרות שמקיימות את ההנחה: כל סדרה קבועה, כי אז $|x_n-x_k|=0$. לפי (ב) אלה הן **היחידות**. ההנחה נראית
+          כמו חסם על ההפרשים, אבל היא כל כך חזקה שהיא כופה סדרה קבועה.
+      - kind: result
+        text: '(א) $(x_n)$ סדרת קושי, עם $N=\left\lceil\frac1\varepsilon\right\rceil$. (ב) $(x_n)$ קבועה.'
+    source:
+      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Volume I (version 6.3)'
+      year: 2026
+      problem: 'Section 2.4, Exercise 2.4.6'
+      url: 'https://www.jirka.org/ra/realanal.pdf'
+      verified: '2026-11-17'
+      adapted: true
+
+  - id: W-2.10-c2
+    stars: 1
+    objectives: [OBJ-2.10-1, OBJ-2.10-2]
+    prompt: >-
+      תהי $(x_n)$ סדרת קושי, כך שלכל $M\in\mathbb{N}$ יש $k\ge M$ ו-$n\ge M$ עם $x_k<0$ ו-$x_n>0$: הסדרה מקבלת ערכים
+      חיוביים וערכים שליליים רחוק ככל שרוצים. הוכיחו, **רק** מהגדרת סדרת קושי ומהגדרת הגבול (בלי משפט 2.10.5 ובלי
+      משפטים על גבולות), ש-$x_n\to0$.
+    answer: 'לכל $n>N$: $x_n<x_k+\varepsilon<\varepsilon$ עם $x_k<0$, ו-$x_n>x_j-\varepsilon>-\varepsilon$ עם $x_j>0$, שניהם אחרי $N$.'
+    solution:
+      - kind: idea
+        text: >-
+          כל איבר בזנב קרוב עד $\varepsilon$ לכל איבר אחר בזנב. בזנב יש איבר שלילי, ולכן כל איבר קטן מ-$\varepsilon$;
+          ויש איבר חיובי, ולכן כל איבר גדול מ-$-\varepsilon$.
+      - kind: step
+        text: >-
+          יהי $\varepsilon>0$, ו-$N$ שמתאים לו בתנאי קושי: $|x_m-x_n|<\varepsilon$ לכל $m,n>N$.
+      - kind: step
+        text: >-
+          לפי ההנחה עם $M=N+1$ יש $k\ge N+1$ עם $x_k<0$, ויש $j\ge N+1$ עם $x_j>0$. שניהם גדולים מ-$N$.
+      - kind: step
+        text: >-
+          יהי $n>N$. לפי תנאי קושי עם הזוג $n,k$ ומסקנה 0.9.6: $x_n<x_k+\varepsilon<0+\varepsilon=\varepsilon$. ועם הזוג
+          $n,j$: $x_n>x_j-\varepsilon>0-\varepsilon=-\varepsilon$.
+      - kind: step
+        text: >-
+          לכן $-\varepsilon<x_n<\varepsilon$, כלומר $|x_n-0|<\varepsilon$ לכל $n>N$. לפי הגדרה 2.2.1, $x_n\to0$.
+      - kind: check
+        text: >-
+          ההנחה "קושי" נחוצה: $(-1)^n$ מחליפה סימן תמיד ואינה שואפת ל-$0$. ההוכחה לא השתמשה בשלמות, ולכן נכונה גם
+          ברציונליים. דוגמה שמקיימת את ההנחות: $\frac{(-1)^n}{n}$.
+      - kind: result
+        text: '$x_n\to0$.'
+    source:
+      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Volume I (version 6.3)'
+      year: 2026
+      problem: 'Section 2.4, Exercise 2.4.5'
+      url: 'https://www.jirka.org/ra/realanal.pdf'
+      verified: '2026-11-17'
+      adapted: true

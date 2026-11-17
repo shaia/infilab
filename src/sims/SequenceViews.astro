@@ -1,0 +1,7 @@
+---
+/** Lesson-2.1 figure: <Spread figure={SequenceViews} figureProps={{…}}>. The API is in the header of SequenceViews.tsx. */
+import SequenceViews, { type SequenceViewsProps } from './SequenceViews';
+type Props = SequenceViewsProps;
+---
+
+<SequenceViews client:visible {...Astro.props} />

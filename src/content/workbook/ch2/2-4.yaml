@@ -1,0 +1,461 @@
+# Workbook of lesson 2.4 — arithmetic of limits.
+# Objectives (src/course.ts):
+#   OBJ-2.4-1  prove the sum, product and quotient rules, and know what each rule needs
+#   OBJ-2.4-2  limits of quotients of polynomials and of expressions with roots, including the conjugate
+#   OBJ-2.4-3  recognise when the rules do not apply (a limit that does not exist, a denominator tending to 0)
+# Infinite limits are lesson 2.6 and qⁿ → 0 is lesson 2.8: neither is used here. Every number below was
+# recomputed with a command (npx tsx, src/math/sequences.ts smallestN for the N values).
+lesson: '2.4'
+practice:
+  - id: W-2.4-01
+    level: basic
+    objectives: [OBJ-2.4-2]
+    prompt: >-
+      חשבו את $\displaystyle\lim_{n\to\infty}\frac{4n^3-n+7}{2n^3+5n^2}$, ונמקו כל צעד בכלל של חשבון גבולות.
+    answer: '$2$'
+    solution:
+      - kind: idea
+        text: >-
+          המונה והמכנה כמו שהם אינם חסומים, ולכן אינם מתכנסים, וכלל המנה לא חל עליהם. מחלקים מונה ומכנה ב-$n^3$,
+          החזקה הגבוהה ביותר במכנה.
+      - kind: computation
+        text: >-
+          לכל $n$, $n^3>0$, ולכן
+
+          $$\frac{4n^3-n+7}{2n^3+5n^2}=\frac{4-\frac1{n^2}+\frac7{n^3}}{2+\frac5n}.$$
+      - kind: theorem
+        text: >-
+          $\frac1n\to0$, ולפי מסקנה 2.4.5 (א) $\frac1{n^2}=\left(\frac1n\right)^2\to0$ ו-$\frac1{n^3}\to0$. לפי משפט
+          2.4.1 (קבוע כפול סדרה, סכום והפרש) המונה שואף ל-$4-0+7\cdot0=4$, והמכנה שואף ל-$2+5\cdot0=2$.
+      - kind: theorem
+        text: >-
+          גבול המכנה הוא $2\neq0$, ו-$2+\frac5n>0$ לכל $n$. לפי משפט 2.4.4 (ב) המנה שואפת ל-$\frac42=2$.
+      - kind: check
+        text: >-
+          לפי מסקנה 2.4.7 (ב): מעלות שוות ($3$), מקדמים מובילים $4$ ו-$2$, והגבול $\frac42$. ומספרית: עבור
+          $n=1000$ הערך בערך $1.995$.
+      - kind: result
+        text: '$\lim\frac{4n^3-n+7}{2n^3+5n^2}=2$.'
+
+  - id: W-2.4-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-2.4-3]
+    prompt: >-
+      הוכיחו או הפריכו:
+
+      (א) אם $a_n$ ו-$b_n$ מתבדרות ו-$b_n\neq0$ לכל $n$, אז $\frac{a_n}{b_n}$ מתבדרת.
+
+      (ב) אם $a_n$ מתכנסת ו-$b_n$ מתבדרת, אז $a_n-b_n$ מתבדרת.
+    answer: >-
+      (א) לא נכון: $a_n=n$, $b_n=n+1$, והמנה שואפת ל-$1$.
+
+      (ב) נכון: אחרת $b_n=a_n-(a_n-b_n)$ הייתה מתכנסת.
+    solution:
+      - kind: idea
+        text: >-
+          כללי החשבון מדברים רק על סדרות מתכנסות. ב-(א) מחפשים שתי סדרות מתבדרות שהיחס ביניהן מתייצב. ב-(ב)
+          מבודדים את $b_n$ ומקבלים סתירה מכלל ההפרש.
+      - kind: step
+        text: >-
+          (א) $a_n=n$ ו-$b_n=n+1\neq0$. שתיהן אינן חסומות (טענה 2.1.6; $n+1>n$), ולכן לפי משפט 2.3.3 שתיהן
+          מתבדרות.
+      - kind: computation
+        text: >-
+          $\frac{a_n}{b_n}=\frac{n}{n+1}=\frac{1}{1+\frac1n}$. המכנה שואף ל-$1\neq0$ (משפט 2.4.1), ולפי משפט 2.4.4
+          המנה שואפת ל-$1$. לכן היא מתכנסת, והטענה לא נכונה.
+      - kind: step
+        text: >-
+          (ב) נניח בשלילה ש-$d_n=a_n-b_n$ מתכנסת. אז $b_n=a_n-d_n$ הוא הפרש של שתי סדרות מתכנסות, ולפי משפט 2.4.1
+          (ג) $b_n$ מתכנסת, בסתירה להנחה. לכן $a_n-b_n$ מתבדרת.
+      - kind: check
+        text: >-
+          (ב) הוא טענה 2.4.8 (א) עם הסדרה $(-b_n)$ במקום $b_n$: גם $(-b_n)$ מתבדרת, כי אילו $(-b_n)$ הייתה מתכנסת, גם
+          $b_n=(-1)\cdot(-b_n)$ הייתה מתכנסת (משפט 2.4.1 (ב)).
+      - kind: result
+        text: '(א) לא נכון. (ב) נכון.'
+
+  - id: W-2.4-03
+    level: basic
+    objectives: [OBJ-2.4-1]
+    prompt: >-
+      ידוע ש-$a_n\to2$ ו-$b_n\to-3$. הוכיחו שהסדרה
+      $$c_n=\frac{a_n^2b_n-5a_n}{b_n^2+a_n}$$
+      מוגדרת מ-$N$ מסוים והלאה ומתכנסת, ומצאו את גבולה. ציינו איזה כלל משמש בכל צעד.
+    answer: '$c_n\to-2$'
+    solution:
+      - kind: idea
+        text: >-
+          מחשבים בנפרד את גבול המונה ואת גבול המכנה בכללי הסכום, ההפרש והמכפלה. אם גבול המכנה שונה מאפס, למה
+          2.4.3 נותנת את ה-$N$ שממנו המנה מוגדרת, ומשפט 2.4.4 נותן את הגבול.
+      - kind: computation
+        text: >-
+          המונה: $a_n^2\to4$ (מסקנה 2.4.5 (א)), $a_n^2b_n\to4\cdot(-3)=-12$ (משפט 2.4.2), $5a_n\to10$ (משפט 2.4.1
+          (ב)), ולכן $a_n^2b_n-5a_n\to-12-10=-22$ (משפט 2.4.1 (ג)).
+      - kind: computation
+        text: >-
+          המכנה: $b_n^2\to9$ (מסקנה 2.4.5 (א)), ולכן $b_n^2+a_n\to9+2=11$ (משפט 2.4.1 (א)).
+      - kind: theorem
+        text: >-
+          $11\neq0$, ולפי למה 2.4.3 יש $N$ כך ש-$b_n^2+a_n\neq0$ לכל $n>N$: שם $c_n$ מוגדרת. לפי משפט 2.4.4 (ב),
+          $c_n\to\frac{-22}{11}=-2$.
+      - kind: check
+        text: >-
+          לפני $N$ המכנה יכול להתאפס, למשל אם $a_1=-9$ ו-$b_1=3$; זה לא משנה את הגבול (המוסכמה של השיעור). הצבה של
+          $a_n=2+10^{-6}$, $b_n=-3+10^{-6}$ נותנת $c_n\approx-2.000002$.
+      - kind: result
+        text: '$\lim c_n=-2$.'
+
+  - id: W-2.4-04
+    level: mid
+    objectives: [OBJ-2.4-2]
+    prompt: >-
+      הוכיחו ש-$\sqrt{4n^2+3n}-2n\to\frac34$.
+    answer: '$\frac34$'
+    solution:
+      - kind: idea
+        text: >-
+          הפרש של שני ביטויים שגדלים בלי הגבלה: כופלים בצמוד, ואז מחלקים מונה ומכנה ב-$n$, הגודל המוביל במכנה.
+      - kind: computation
+        text: >-
+          כפל בצמוד עם $x=4n^2+3n$ ו-$y=4n^2$ ($\sqrt{4n^2}=2n$ כי $2n>0$):
+
+          $$\sqrt{4n^2+3n}-2n=\frac{(4n^2+3n)-4n^2}{\sqrt{4n^2+3n}+2n}=\frac{3n}{\sqrt{4n^2+3n}+2n}.$$
+      - kind: computation
+        text: >-
+          לפי טענה 1.7.5 (ב), $\sqrt{4n^2+3n}=\sqrt{n^2}\sqrt{4+\frac3n}=n\sqrt{4+\frac3n}$. מחלקים מונה ומכנה ב-$n$:
+
+          $$\sqrt{4n^2+3n}-2n=\frac{3}{\sqrt{4+\frac3n}+2}.$$
+      - kind: theorem
+        text: >-
+          $4+\frac3n\to4$ (מסקנה 2.2.14 (א), משפט 2.4.1), והאיברים חיוביים; לפי טענה 2.4.6 $\sqrt{4+\frac3n}\to2$.
+          המכנה שואף ל-$4\neq0$, ולפי משפט 2.4.4 הביטוי שואף ל-$\frac34$.
+      - kind: check
+        text: >-
+          עבור $n=100$ הערך בערך $0.7486$, ועבור $n=10^6$ בערך $0.75$. טעות נפוצה: לחלק ב-$n^2$ במקום ב-$n$; אז
+          המכנה שואף ל-$0$ וכלל המנה לא חל.
+      - kind: result
+        text: '$\lim\left(\sqrt{4n^2+3n}-2n\right)=\frac34$.'
+
+  - id: W-2.4-05
+    level: mid
+    objectives: [OBJ-2.4-2]
+    prompt: >-
+      הוכיחו ש-$n\left(\sqrt{n^2+1}-\sqrt{n^2-1}\right)\to1$.
+    answer: '$1$'
+    solution:
+      - kind: idea
+        text: >-
+          ההפרש $\sqrt{n^2+1}-\sqrt{n^2-1}$ שואף לאפס, אבל הוא מוכפל ב-$n$, שאינו חסום, ולכן אי אפשר לומר "אפס כפול
+          משהו". כופלים בצמוד, ואז מחלקים ב-$n$.
+      - kind: computation
+        text: >-
+          $n^2-1\ge0$ לכל $n\in\mathbb{N}$, ולכן השורש מוגדר. כפל בצמוד:
+
+          $$n\left(\sqrt{n^2+1}-\sqrt{n^2-1}\right)=\frac{n\left((n^2+1)-(n^2-1)\right)}{\sqrt{n^2+1}+\sqrt{n^2-1}}=\frac{2n}{\sqrt{n^2+1}+\sqrt{n^2-1}}.$$
+      - kind: computation
+        text: >-
+          לפי טענה 1.7.5 (ב), $\sqrt{n^2\pm1}=n\sqrt{1\pm\frac1{n^2}}$ (כאן $1-\frac1{n^2}\ge0$). מחלקים ב-$n$:
+
+          $$\frac{2}{\sqrt{1+\frac1{n^2}}+\sqrt{1-\frac1{n^2}}}.$$
+      - kind: theorem
+        text: >-
+          $1\pm\frac1{n^2}\to1$ (מסקנה 2.2.14 (ב), משפט 2.4.1), האיברים אי-שליליים, ולפי טענה 2.4.6 שני השורשים
+          שואפים ל-$1$. המכנה שואף ל-$2\neq0$, ולפי משפט 2.4.4 הביטוי שואף ל-$\frac22=1$.
+      - kind: check
+        text: 'עבור $n=100$ הערך בערך $1.00000000125$, קרוב מאוד ל-1.'
+      - kind: result
+        text: '$\lim n\left(\sqrt{n^2+1}-\sqrt{n^2-1}\right)=1$.'
+
+  - id: W-2.4-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.4-3, OBJ-2.4-1]
+    prompt: >-
+      תהי $a_n\to2$ עם $a_n\neq2$ לכל $n$. הוכיחו או הפריכו:
+
+      (א) $\frac{a_n^2-4}{a_n-2}\to4$.
+
+      (ב) קיימת סדרה כזו שעבורה $\frac1{a_n-2}$ מתכנסת.
+
+      (ג) $\frac{a_n^3-8}{a_n^2-4}\to3$ (המנה מוגדרת מ-$N$ מסוים והלאה).
+    answer: >-
+      (א) נכון: המנה שווה ל-$a_n+2$. (ב) לא נכון: לכל סדרה כזו $\frac1{a_n-2}$ אינה חסומה. (ג) נכון: אחרי צמצום
+      המנה היא $\frac{a_n^2+2a_n+4}{a_n+2}\to\frac{12}4$.
+    solution:
+      - kind: idea
+        text: >-
+          בכל שלושת הסעיפים המכנה שואף ל-$0$, ולכן כלל המנה לא חל כמו שהביטוי כתוב. ב-(א) וב-(ג) מצמצמים את הגורם
+          $a_n-2\neq0$ וכך מקבלים מכנה עם גבול שונה מאפס. ב-(ב) אין מה לצמצם: המונה קבוע.
+      - kind: computation
+        text: >-
+          (א) לכל $n$, $a_n-2\neq0$ ו-$a_n^2-4=(a_n-2)(a_n+2)$, ולכן $\frac{a_n^2-4}{a_n-2}=a_n+2\to4$ (משפט 2.4.1).
+      - kind: step
+        text: >-
+          (ב) $1\to1\neq0$, $a_n-2\to0$ (משפט 2.4.1) ו-$a_n-2\neq0$ לכל $n$. לפי טענה 2.4.8 (ג), $\frac1{a_n-2}$ אינה
+          חסומה, ולכן מתבדרת. זה נכון לכל סדרה שמקיימת את ההנחות, ולכן סדרה כזו לא קיימת.
+      - kind: computation
+        text: >-
+          (ג) $a_n+2\to4\neq0$, ולפי למה 2.4.3 יש $N$ כך ש-$a_n+2\neq0$ לכל $n>N$; שם גם $a_n-2\neq0$, ולכן
+          $a_n^2-4=(a_n-2)(a_n+2)\neq0$. לפי למה 1.7.1 (ב) עם $k=3$, $a_n^3-8=(a_n-2)(a_n^2+2a_n+4)$. לכל $n>N$:
+
+          $$\frac{a_n^3-8}{a_n^2-4}=\frac{a_n^2+2a_n+4}{a_n+2}.$$
+      - kind: theorem
+        text: >-
+          לפי מסקנה 2.4.5 (ג) עם $p(x)=x^2+2x+4$ ו-$q(x)=x+2$, $q(2)=4\neq0$: המנה שואפת ל-$\frac{4+4+4}{4}=3$.
+      - kind: check
+        text: >-
+          (ב) לדוגמה: $a_n=2+\frac1n$ נותנת $\frac1{a_n-2}=n$. (ג) עם $a_n=2+\frac1n$ ו-$n=1000$ הערך בערך $3.00075$
+          (חשבו: $\frac{a^2+2a+4}{a+2}$ ב-$a=2.001$).
+      - kind: result
+        text: '(א) נכון. (ב) לא נכון. (ג) נכון.'
+
+  - id: W-2.4-07
+    level: mid
+    objectives: [OBJ-2.4-1]
+    prompt: >-
+      נניח $a_n\to a$ ו-$b_n\to b$. הוכיחו **מההגדרה**, בלי משפט 2.4.1, ש-$2a_n-3b_n\to2a-3b$: לכל $\varepsilon>0$
+      תנו $N$ מפורש בעזרת $N$-ים שמתאימים ל-$a_n$ ול-$b_n$.
+    answer: >-
+      $N=\max(N_1,N_2)$, כש-$N_1$ מתאים ל-$\frac\varepsilon4$ עבור $a_n$ ו-$N_2$ מתאים ל-$\frac\varepsilon6$ עבור
+      $b_n$.
+    solution:
+      - kind: goal
+        text: 'לכל $\varepsilon>0$ קיים $N$ כך ש-$|(2a_n-3b_n)-(2a-3b)|<\varepsilon$ לכל $n>N$.'
+      - kind: idea
+        text: >-
+          לפי אי-שוויון המשולש המרחק קטן או שווה ל-$2|a_n-a|+3|b_n-b|$. מחלקים את $\varepsilon$ לשני חצאים: כל
+          מחובר צריך להיות קטן מ-$\frac\varepsilon2$, ולכן $|a_n-a|<\frac\varepsilon4$ ו-$|b_n-b|<\frac\varepsilon6$.
+      - kind: step
+        text: >-
+          לכל $n$, לפי משפט 0.9.7 ולמה 0.9.2 (ו):
+
+          $$|(2a_n-3b_n)-(2a-3b)|=|2(a_n-a)-3(b_n-b)|\le2|a_n-a|+3|b_n-b|.$$
+      - kind: step
+        text: >-
+          יהי $\varepsilon>0$. יש $N_1$ שמתאים ל-$\frac\varepsilon4>0$ עבור $a_n$ ו-$a$, ו-$N_2$ שמתאים
+          ל-$\frac\varepsilon6>0$ עבור $b_n$ ו-$b$. נגדיר $N=\max(N_1,N_2)$; לפי טענה 2.2.3 (ג) הוא מתאים לשני
+          התנאים.
+      - kind: computation
+        text: 'לכל $n>N$: $2|a_n-a|+3|b_n-b|<2\cdot\frac\varepsilon4+3\cdot\frac\varepsilon6=\frac\varepsilon2+\frac\varepsilon2=\varepsilon$.'
+      - kind: result
+        text: '$2a_n-3b_n\to2a-3b$, עם $N=\max(N_1,N_2)$.'
+
+  - id: W-2.4-08
+    level: exam
+    objectives: [OBJ-2.4-2, OBJ-2.4-3]
+    prompt: >-
+      תהי $(a_n)$ סדרה עם $a_n\ge0$ ו-$a_n\neq a$ לכל $n$, ו-$a_n\to a$.
+
+      (א) הוכיחו: אם $a>0$, אז $\displaystyle\frac{\sqrt{a_n}-\sqrt a}{a_n-a}\to\frac{1}{2\sqrt a}$.
+
+      (ב) הפריכו את (א) כש-$a=0$: הראו שאז המנה $\frac{\sqrt{a_n}-\sqrt a}{a_n-a}$ אינה חסומה, ולכן מתבדרת.
+    answer: >-
+      (א) המנה שווה ל-$\frac1{\sqrt{a_n}+\sqrt a}$, והמכנה שואף ל-$2\sqrt a\neq0$. (ב) כש-$a=0$ המנה היא
+      $\frac1{\sqrt{a_n}}$, ו-$\sqrt{a_n}\to0$.
+    solution:
+      - kind: idea
+        text: >-
+          המונה והמכנה שואפים שניהם ל-$0$, ולכן כלל המנה לא חל כמו שהביטוי כתוב. כפל בצמוד מראה שהמכנה הוא מכפלה
+          שאחד מגורמיה הוא המונה, ואחרי צמצום נשאר מכנה עם גבול שונה מאפס, אם $a>0$.
+      - kind: computation
+        text: >-
+          לכל $n$, $a_n-a=(\sqrt{a_n})^2-(\sqrt a)^2=(\sqrt{a_n}-\sqrt a)(\sqrt{a_n}+\sqrt a)$. כיוון ש-$a_n\neq a$,
+          המכפלה שונה מאפס, ולכן גם $\sqrt{a_n}+\sqrt a\neq0$, ו-
+          $$\frac{\sqrt{a_n}-\sqrt a}{a_n-a}=\frac{1}{\sqrt{a_n}+\sqrt a}.$$
+      - kind: theorem
+        text: >-
+          (א) לפי טענה 2.4.6, $\sqrt{a_n}\to\sqrt a$, ולפי משפט 2.4.1 $\sqrt{a_n}+\sqrt a\to2\sqrt a$. כאן $a>0$,
+          ולכן $2\sqrt a>0$, וכל איברי המכנה שונים מאפס. לפי משפט 2.4.4 (א) המנה שואפת ל-$\frac1{2\sqrt a}$.
+      - kind: step
+        text: >-
+          (ב) כש-$a=0$, $a_n>0$ לכל $n$ (כי $a_n\ge0$ ו-$a_n\neq0$), והמנה היא $\frac{\sqrt{a_n}}{a_n}=\frac1{\sqrt{a_n}}$.
+          לפי טענה 2.4.6 (עם $a=0$) $\sqrt{a_n}\to0$, ו-$\sqrt{a_n}\neq0$. לפי טענה 2.4.8 (ג), עם המונה הקבוע $1$,
+          המנה אינה חסומה, ולכן מתבדרת.
+      - kind: check
+        text: >-
+          (א) עם $a_n=4+\frac1n$: עבור $n=1000$ המנה בערך $0.249984$, ו-$\frac1{2\sqrt4}=0.25$. (ב) עם $a_n=\frac1{n^2}$
+          המנה היא $\frac{1/n}{1/n^2}=n$. כש-$a=0$ הנוסחה מ-(א) הייתה דורשת לחלק ב-$0$, וזה בדיוק המקום שבו כלל
+          המנה מפסיק לחול.
+      - kind: result
+        text: '(א) $\frac1{2\sqrt a}$. (ב) כש-$a=0$ המנה אינה חסומה ומתבדרת.'
+
+  - id: W-2.4-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-2.4-2, OBJ-2.4-3]
+    prompt: >-
+      יהיו $a,b\in\mathbb{R}$, ונגדיר $c_n=\frac{an^2+bn+1}{2n+3}$. מצאו את כל הזוגות $(a,b)$ שעבורם $c_n$ מתכנסת,
+      ואת הגבול בכל מקרה; עבור כל שאר הזוגות הוכיחו ש-$c_n$ מתבדרת.
+    answer: '$c_n$ מתכנסת אם ורק אם $a=0$, ואז $c_n\to\frac b2$. אם $a\neq0$, $c_n$ אינה חסומה ומתבדרת.'
+    solution:
+      - kind: idea
+        text: >-
+          המעלה של המונה תלויה ב-$a$ וב-$b$: $2$ אם $a\neq0$, $1$ אם $a=0\neq b$, ו-$0$ אם $a=b=0$. המכנה ממעלה $1$
+          עם מקדם מוביל $2$. מסקנה 2.4.7 מטפלת בכל מקרה. המכנה חיובי לכל $n$, ולכן $c_n$ מוגדרת לכל $n$.
+      - kind: step
+        text: >-
+          $a\neq0$: מעלת המונה $2>1$, ולפי מסקנה 2.4.7 (ג) $c_n$ אינה חסומה, ולכן מתבדרת.
+      - kind: step
+        text: >-
+          $a=0$, $b\neq0$: מעלות שוות ($1$), מקדמים מובילים $b$ ו-$2$, ולפי מסקנה 2.4.7 (ב) $c_n\to\frac b2$.
+      - kind: step
+        text: >-
+          $a=b=0$: $c_n=\frac1{2n+3}$, מעלה $0<1$, ולפי מסקנה 2.4.7 (א) $c_n\to0=\frac02$.
+      - kind: check
+        text: >-
+          המקרה $a=0$, $b=4$: $c_n=\frac{4n+1}{2n+3}$, ו-$c_{1000}=\frac{4001}{2003}\approx1.9975$, קרוב ל-$2=\frac42$.
+          המקרה $a=1$, $b=0$: $c_{1000}=\frac{1000001}{2003}\approx499.3$, וגדל עם $n$.
+      - kind: result
+        text: '$c_n$ מתכנסת בדיוק כש-$a=0$, ואז $\lim c_n=\frac b2$.'
+
+  - id: W-2.4-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-2.4-1, OBJ-2.4-3]
+    prompt: >-
+      הוכיחו או הפריכו, לכל שתי סדרות $(a_n)$, $(b_n)$:
+
+      (א) אם $a_nb_n\to0$ ו-$b_n\to b\neq0$, אז $a_n\to0$.
+
+      (ב) אם $a_n+b_n$ ו-$a_n-b_n$ מתכנסות, אז $a_n$ ו-$b_n$ מתכנסות.
+
+      (ג) אם $a_n^2+b_n^2\to0$, אז $a_n\to0$.
+
+      (ד) אם $b_n\neq0$ לכל $n$, ו-$a_nb_n$ ו-$\frac{a_n}{b_n}$ מתכנסות, אז $a_n$ מתכנסת.
+    answer: '(א), (ב), (ג) נכונים; (ד) לא נכון: $a_n=b_n=(-1)^n$.'
+    solution:
+      - kind: idea
+        text: >-
+          בכל סעיף מנסים לכתוב את $a_n$ כצירוף של סדרות שידוע שהן מתכנסות, ולבדוק את ההנחות של הכלל שמפעילים. כשזה
+          נכשל, מחפשים דוגמה נגדית בין הסדרות המתנודדות.
+      - kind: step
+        text: >-
+          (א) לפי למה 2.4.3 יש $N$ עם $b_n\neq0$ לכל $n>N$, ושם $a_n=\frac{a_nb_n}{b_n}$. לפי משפט 2.4.4 (ב) הסדרה הזו
+          שואפת ל-$\frac0b=0$, ולפי המוסכמה של השיעור ומסקנה 2.2.12 (ב) $a_n\to0$.
+      - kind: step
+        text: >-
+          (ב) נסמן $s_n=a_n+b_n\to s$ ו-$d_n=a_n-b_n\to d$. אז $a_n=\frac12(s_n+d_n)$ ו-$b_n=\frac12(s_n-d_n)$, ולפי
+          משפט 2.4.1 $a_n\to\frac{s+d}2$ ו-$b_n\to\frac{s-d}2$.
+      - kind: step
+        text: >-
+          (ג) $0\le a_n^2\le a_n^2+b_n^2$, ולפי טענה 1.7.5 (א) ו-(ג), $|a_n|=\sqrt{a_n^2}\le\sqrt{a_n^2+b_n^2}$. לפי
+          טענה 2.4.6 (עם $a=0$) $\sqrt{a_n^2+b_n^2}\to0$. טענה 2.2.13 עם $C=1$ נותנת $a_n\to0$.
+      - kind: step
+        text: >-
+          (ד) $a_n=b_n=(-1)^n\neq0$: $a_nb_n=1$ ו-$\frac{a_n}{b_n}=1$ לכל $n$, ושתיהן מתכנסות, אבל $a_n=(-1)^n$
+          מתבדרת (מסקנה 2.3.5).
+      - kind: check
+        text: >-
+          מה כן נובע ב-(ד): $a_n^2=(a_nb_n)\cdot\frac{a_n}{b_n}$ מתכנסת (משפט 2.4.2). כאן $a_n^2=1$. מהתכנסות של
+          $a_n^2$ לא נובעת התכנסות של $a_n$, והסימן הוא מה שהולך לאיבוד.
+      - kind: result
+        text: '(א) נכון. (ב) נכון. (ג) נכון. (ד) לא נכון.'
+
+challenge:
+  - id: W-2.4-c1
+    stars: 1
+    objectives: [OBJ-2.4-1, OBJ-2.4-3]
+    prompt: >-
+      תהי $(x_n)$ סדרה.
+
+      (א) הפריכו: אם $x_n^2$ מתכנסת, אז $x_n$ מתכנסת.
+
+      (ב) הוכיחו: אם $x_n^2$ מתכנסת ו-$x_n\ge0$ לכל $n$, אז $x_n$ מתכנסת.
+
+      (ג) הוכיחו: אם $x_n^3$ מתכנסת, אז $x_n$ מתכנסת.
+    answer: >-
+      (א) $x_n=(-1)^n$. (ב) $x_n=\sqrt{x_n^2}\to\sqrt c$. (ג) נכון: מפרידים לפי הסימן של הגבול $c$ של $x_n^3$,
+      ובכל מקרה $x_n\to\sqrt[3]c$ (עם $\sqrt[3]{c}=-\sqrt[3]{-c}$ כש-$c<0$).
+    solution:
+      - kind: idea
+        text: >-
+          ריבוע מוחק את הסימן, ולכן ב-(א) הדוגמה הנגדית מתנודדת בסימן. כשהסימן ידוע, השורש (טענה 2.4.6) מחזיר את
+          $x_n$. בחזקה שלישית הסימן לא נמחק: סימן הגבול $c$ קובע את סימן הזנב.
+      - kind: step
+        text: '(א) $x_n=(-1)^n$: $x_n^2=1$ לכל $n$, מתכנסת; ו-$(-1)^n$ מתבדרת (מסקנה 2.3.5).'
+      - kind: step
+        text: >-
+          (ב) נניח $x_n^2\to c$. כל $x_n^2\ge0$, ולפי טענה 2.4.6 (עם $k=2$) $c\ge0$ ו-$\sqrt{x_n^2}\to\sqrt c$. כיוון
+          ש-$x_n\ge0$, $\sqrt{x_n^2}=x_n$ (הגדרה 1.7.4), ולכן $x_n\to\sqrt c$.
+      - kind: step
+        text: >-
+          (ג) נניח $x_n^3\to c$. עובדה: אם $x\le0$ אז $x^3=x\cdot x^2\le0$ (טענות 1.2.4 ו-1.2.5). המקרה $c>0$: לפי
+          טענה 2.2.15 (ג) יש $N$ עם $x_n^3>\frac c2>0$ לכל $n>N$, ולפי העובדה $x_n>0$ שם. לכל $n>N$,
+          $x_n=\sqrt[3]{x_n^3}$, ולפי טענה 2.4.6 על הזנב (המוסכמה של השיעור) $x_n\to\sqrt[3]c$.
+      - kind: step
+        text: >-
+          המקרה $c<0$: $(-x_n)^3=-x_n^3\to-c>0$ (משפט 2.4.1 (ב)), ולפי המקרה הקודם $(-x_n)\to\sqrt[3]{-c}$, ולכן
+          $x_n\to-\sqrt[3]{-c}$.
+      - kind: step
+        text: >-
+          המקרה $c=0$: לפי טענה 2.2.10 $|x_n^3|\to0$, ו-$|x_n^3|=|x_n|^3$ (למה 0.9.2 (ו)). לפי טענה 2.4.6 עם $k=3$ ו-$a=0$,
+          $|x_n|=\sqrt[3]{|x_n|^3}\to0$, ולפי טענה 2.2.10 $x_n\to0$.
+      - kind: check
+        text: >-
+          למה (ב) צריך $x_n\ge0$ ו-(ג) לא: $\sqrt{x^2}=|x|$, אבל $\sqrt[3]{x^3}=x$ לכל $x$, כי השורש השלישי מוגדר גם
+          למספרים שליליים (מסקנה 1.7.3). דוגמה ל-(ג): $x_n=-2+\frac1n$, $x_n^3\to-8$, ו-$(-1)\cdot\sqrt[3]{8}=-2$.
+      - kind: result
+        text: '(א) לא נכון. (ב) נכון, והגבול $\sqrt c$. (ג) נכון.'
+    source:
+      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Section 2.2 (Facts about limits of sequences)'
+      year: 2026
+      problem: 'Exercise 2.2.7'
+      url: 'https://www.jirka.org/ra/html/sec_factslimsseqs.html'
+      verified: '2026-11-17'
+      adapted: true
+
+  - id: W-2.4-c2
+    stars: 1
+    objectives: [OBJ-2.4-2, OBJ-2.4-1]
+    prompt: >-
+      יהיו $a,b\ge0$, ונגדיר $x_n=\sqrt[3]{n^3+an^2}-\sqrt{n^2+bn}$.
+
+      (א) הוכיחו ש-$x_n$ מתכנסת, ומצאו את גבולה כפונקציה של $a$ ו-$b$.
+
+      (ב) מצאו את כל הזוגות $(a,b)$ שעבורם $x_n\to0$. מה הגבול כש-$a=3$ ו-$b=1$?
+    answer: >-
+      (א) $x_n\to\frac a3-\frac b2$. (ב) $x_n\to0$ בדיוק כש-$2a=3b$; עבור $a=3$, $b=1$ הגבול $\frac12$.
+    solution:
+      - kind: idea
+        text: >-
+          אין צמוד אחד שמטפל בשורש שלישי ובשורש ריבועי יחד. מוסיפים ומחסירים $n$, ומפרקים להפרש של שני ביטויים,
+          שלכל אחד מהם צמוד משלו:
+          $$x_n=\left(\sqrt[3]{n^3+an^2}-n\right)-\left(\sqrt{n^2+bn}-n\right).$$
+          אם שני החלקים מתכנסים, כלל ההפרש נותן את התשובה.
+      - kind: computation
+        text: >-
+          החלק הראשון. נסמן $u_n=\sqrt[3]{n^3+an^2}$; כיוון ש-$a\ge0$, $n^3+an^2>0$ ו-$u_n>0$. לפי למה 1.7.1 (ב) עם
+          $k=3$, $u_n^3-n^3=(u_n-n)(u_n^2+u_nn+n^2)$, והגורם השני חיובי. כאן $u_n^3-n^3=an^2$, ולכן
+          $$u_n-n=\frac{an^2}{u_n^2+u_nn+n^2}.$$
+      - kind: computation
+        text: >-
+          לפי טענה 1.7.5 (ב), $u_n=n\,w_n$ עם $w_n=\sqrt[3]{1+\frac an}$. מחלקים מונה ומכנה ב-$n^2$:
+          $u_n-n=\frac{a}{w_n^2+w_n+1}$. $1+\frac an\to1$ והאיברים חיוביים, ולפי טענה 2.4.6 $w_n\to1$. לפי מסקנה
+          2.4.5 (ב) המכנה שואף ל-$3\neq0$, ולפי משפט 2.4.4 $u_n-n\to\frac a3$.
+      - kind: computation
+        text: >-
+          החלק השני. כפל בצמוד ($\sqrt{n^2}=n$): $\sqrt{n^2+bn}-n=\frac{bn}{\sqrt{n^2+bn}+n}=\frac{b}{\sqrt{1+\frac bn}+1}$,
+          אחרי חלוקה ב-$n$ ולפי טענה 1.7.5 (ב). לפי טענה 2.4.6 ומשפט 2.4.4 הוא שואף ל-$\frac b2$.
+      - kind: theorem
+        text: >-
+          (א) שני החלקים מתכנסים, ולפי משפט 2.4.1 (ג) $x_n\to\frac a3-\frac b2$.
+      - kind: step
+        text: >-
+          (ב) $\frac a3-\frac b2=0$ אם ורק אם $2a=3b$ (כפל ב-$6$). למשל $a=3$, $b=2$. עבור $a=3$, $b=1$ הגבול
+          $1-\frac12=\frac12$.
+      - kind: check
+        text: >-
+          מספרית: עבור $a=3$, $b=1$ ו-$n=10^5$, $x_n\approx0.499991$; עבור $a=3$, $b=2$ ו-$n=10^5$,
+          $x_n\approx-0.000005$; עבור $a=6$, $b=1$ ו-$n=10^5$, $x_n\approx1.49996$, ו-$\frac63-\frac12=\frac32$. טעות
+          נפוצה: "שני השורשים בערך $n$, ולכן ההפרש שואף ל-$0$". ההוספה וההחסרה של $n$ מראות שכל אחד מהם רחוק
+          מ-$n$ בקבוע, והקבועים מתבטלים רק כש-$2a=3b$.
+      - kind: result
+        text: '(א) $\lim x_n=\frac a3-\frac b2$. (ב) $2a=3b$; עבור $a=3$, $b=1$ הגבול $\frac12$.'
+    source:
+      name: 'Lafferriere, Lafferriere and Nguyen, Introduction to Mathematical Analysis I (2e, LibreTexts), Section 2.2 Limit Theorems'
+      year: 2021
+      problem: 'Exercise 2.2.3 (part 3)'
+      url: 'https://math.libretexts.org/Bookshelves/Analysis/Introduction_to_Mathematical_Analysis_I_(Lafferriere_Lafferriere_and_Nguyen)/02%3A_Sequences/2.2%3A_Limit_Theorems'
+      verified: '2026-11-17'
+      adapted: true

@@ -1,0 +1,534 @@
+# Workbook of lesson 2.6 — infinite limits.
+# Objectives (src/course.ts):
+#   OBJ-2.6-1  define aₙ → ∞ / −∞ precisely and prove it for given sequences
+#   OBJ-2.6-2  state the extended arithmetic of limits and recognise the indeterminate forms
+#   OBJ-2.6-3  tell apart an unbounded sequence, a sequence tending to ∞, and a merely divergent one
+# Every number below was recomputed with npx tsx (smallest N = last place with aₙ ≤ M).
+lesson: '2.6'
+practice:
+  - id: W-2.6-01
+    level: basic
+    objectives: [OBJ-2.6-1]
+    prompt: >-
+      נגדיר $a_n=\sqrt{4n+1}$.
+
+      (א) הוכיחו מההגדרה ש-$a_n\to\infty$: לכל $M>0$ תנו $N$ מפורש, והראו שהוא מתאים.
+
+      (ב) מצאו את ה-$N$ הקטן ביותר שמתאים לסף $M=9$.
+    answer: >-
+      (א) למשל $N=\left\lceil\frac{M^2}{4}\right\rceil$. (ב) $N=20$.
+    solution:
+      - kind: idea
+        text: >-
+          לפי טענה 2.6.1א (א) מספיק לטפל בספים חיוביים. בשביל $M>0$ שני הצדדים של $\sqrt{4n+1}>M$ חיוביים, ולכן
+          אפשר להעלות בריבוע בלי לשנות את הכיוון (טענה 1.7.5 (ג)).
+      - kind: step
+        text: >-
+          (א) יהי $M>0$, ונבחר $N=\left\lceil\frac{M^2}{4}\right\rceil$, טבעי לפי למה 2.2.17 (ג). יהי $n>N$. אז
+          $n>\frac{M^2}{4}$, ולכן $4n+1>4n>M^2$.
+      - kind: step
+        text: >-
+          לפי טענה 1.7.5 (ג), $\sqrt{4n+1}>\sqrt{M^2}$, ולפי טענה 1.7.5 (א) $\sqrt{M^2}=|M|=M$. לכן $a_n>M$ לכל
+          $n>N$, ו-$a_n\to\infty$.
+      - kind: computation
+        text: >-
+          (ב) לכל $n\in\mathbb{N}$: $\sqrt{4n+1}\le9$ שקול ל-$4n+1\le81$, כלומר ל-$n\le20$. המקום האחרון שבו
+          $a_n\le9$ הוא $20$, ולכן ה-$N$ הקטן ביותר הוא $20$.
+      - kind: check
+        text: >-
+          $a_{20}=\sqrt{81}=9$, שאינו גדול ממש מ-9; $a_{21}=\sqrt{85}\approx9.22>9$. הנוסחה מ-(א) נותנת
+          $\left\lceil\frac{81}{4}\right\rceil=21$, שמתאים גם הוא.
+      - kind: result
+        text: '(א) $N=\left\lceil\frac{M^2}{4}\right\rceil$ לכל $M>0$. (ב) $N=20$.'
+
+  - id: W-2.6-02
+    level: basic
+    objectives: [OBJ-2.6-1]
+    prompt: >-
+      (א) כתבו במלואה, עם כל הכמתים, את הטענה $\lim_{n\to\infty}\left(5-n^2\right)=-\infty$, והוכיחו אותה
+      מההגדרה.
+
+      (ב) מצאו את ה-$N$ הקטן ביותר כך ש-$5-n^2<-100$ לכל $n>N$.
+    answer: >-
+      (א) $\forall M\in\mathbb{R}\ \exists N\in\mathbb{N}\ \forall n>N:\ 5-n^2<M$; למשל $N=\max\left(1,\ \lceil 5-M\rceil\right)$.
+      (ב) $N=10$.
+    solution:
+      - kind: definition
+        text: >-
+          לפי הגדרה 2.6.1 (ג):
+
+          $$\forall M\in\mathbb{R}\ \ \exists N\in\mathbb{N}\ \ \forall n>N:\quad 5-n^2<M$$
+      - kind: idea
+        text: >-
+          חוסמים את $5-n^2$ מלמעלה בביטוי פשוט: לכל $n\in\mathbb{N}$, $n^2\ge n$ (טענה 0.9.19), ולכן
+          $5-n^2\le5-n$. מספיק ש-$5-n<M$, כלומר $n>5-M$.
+      - kind: step
+        text: >-
+          יהי $M\in\mathbb{R}$, ונבחר $N=\max\left(1,\ \lceil5-M\rceil\right)\in\mathbb{N}$ (המקסימום הוא שלם
+          שגדול או שווה ל-1). יהי $n>N$. אז $n>\lceil5-M\rceil\ge5-M$, כלומר $5-n<M$, ולכן
+          $5-n^2\le5-n<M$.
+      - kind: computation
+        text: >-
+          (ב) $5-n^2<-100$ שקול ל-$n^2>105$. $10^2=100\le105$ ו-$11^2=121>105$, ו-$n^2$ עולה עם $n$; לכן התנאי
+          מתקיים בדיוק עבור $n\ge11$, והמקום האחרון שבו הוא נכשל הוא $10$.
+      - kind: check
+        text: >-
+          $5-10^2=-95\ge-100$ ו-$5-11^2=-116<-100$. הנוסחה מ-(א) נותנת $\lceil105\rceil=105$: מתאים, אבל רחוק
+          מה-$N$ הקטן ביותר, כי ההערכה $n^2\ge n$ גסה.
+      - kind: result
+        text: '(א) $N=\max\left(1,\ \lceil5-M\rceil\right)$. (ב) $N=10$.'
+
+  - id: W-2.6-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-2.6-3]
+    prompt: >-
+      לכל אחת מהסדרות הבאות קבעו לאיזו מארבע המחלקות היא שייכת: מתכנסת, שואפת לאינסוף, שואפת למינוס אינסוף,
+      מתבדרת סתם. נמקו כל תשובה בטענה מהשיעור.
+
+      (א) $a_n=(-1)^n+\frac1n$
+
+      (ב) $b_n=n\left(1-(-1)^n\right)$
+
+      (ג) $c_n=-\sqrt n$
+
+      (ד) $d_n=\frac{n^2+1}{n^2}$
+    answer: >-
+      (א) מתבדרת סתם (חסומה). (ב) מתבדרת סתם (לא חסומה). (ג) שואפת למינוס אינסוף. (ד) מתכנסת ל-1.
+    solution:
+      - kind: step
+        text: >-
+          (א) $|a_n|\le1+1=2$, כלומר $(a_n)$ חסומה, ולכן לפי טענה 2.6.2 (ב) אינה שואפת לאינסוף או למינוס
+          אינסוף. אילו הייתה מתכנסת, גם $(-1)^n=a_n-\frac1n$ הייתה מתכנסת (משפט 2.4.1 וטענה 2.2.2 (ב)), בסתירה
+          למסקנה 2.3.5. לכן היא מתבדרת סתם.
+      - kind: step
+        text: >-
+          (ב) $b_n=0$ כש-$n$ זוגי ו-$b_n=2n$ כש-$n$ אי-זוגי. היא אינה שואפת לאינסוף: לפי טענה 2.6.2 (ג) עם
+          $M=0$, לכל $N$ המקום $2N>N$ זוגי ו-$b_{2N}=0\le0$. היא אינה שואפת למינוס אינסוף: $b_n\ge0$ לכל $n$,
+          ולכן אף $N$ אינו מתאים לסף $0$. והיא אינה מתכנסת, כי אינה חסומה מלעיל (לכל $K$, תכונת ארכימדס נותנת
+          $k>K$, ו-$b_{2k-1}=2(2k-1)\ge2k>K$) ומשפט 2.3.3. מתבדרת סתם.
+      - kind: step
+        text: >-
+          (ג) $\sqrt n\to\infty$ (הדוגמה אחרי טענה 2.6.1א), ולפי טענה 2.6.2 (א) $-\sqrt n\to-\infty$.
+      - kind: step
+        text: >-
+          (ד) $d_n=1+\frac{1}{n^2}$, ו-$\frac1{n^2}\to0$ (מסקנה 2.2.14 (ב)). לפי משפט 2.4.1, $d_n\to1$.
+      - kind: check
+        text: >-
+          (א) ו-(ב) שתיהן מתבדרות סתם, אבל אחת חסומה והשנייה לא: "מתבדרת סתם" אינה אומרת דבר על חסימות. ב-(ב)
+          הסדרה חסומה מלרע ולא מלעיל, בדיוק כמו $z_n$ של השיעור, ובכל זאת אינה שואפת לאינסוף.
+      - kind: result
+        text: >-
+          (א) מתבדרת סתם וחסומה; (ב) מתבדרת סתם ולא חסומה; (ג) $-\infty$; (ד) מתכנסת ל-1.
+
+  - id: W-2.6-04
+    level: mid
+    objectives: [OBJ-2.6-2]
+    prompt: >-
+      מצאו את הגבול (סופי או אינסופי) של כל סדרה, והוכיחו אותו בעזרת חשבון הגבולות המורחב. ציינו בכל שלב את
+      המשפט שבו השתמשתם.
+
+      (א) $\frac{n^3-2n^2}{4n^2+7}$
+
+      (ב) $n^2-10n\sqrt n$
+
+      (ג) $\frac{\left(2+(-1)^n\right)n^2}{n+1}$
+    answer: >-
+      שלושתן שואפות לאינסוף.
+    solution:
+      - kind: step
+        text: >-
+          (א) מנת פולינומים ממעלות $3>2$, עם מקדמים מובילים $1$ ו-$4$; המכנה חיובי לכל $n$. $\frac14>0$, ולפי
+          מסקנה 2.6.6 (ג) המנה שואפת לאינסוף.
+      - kind: idea
+        text: >-
+          ב-(ב) הצורה היא $\infty-\infty$, צורה לא מוגדרת (טענה 2.6.5 (א)), ולכן אסור להכריע לפי הגבולות של
+          המחוברים. מוציאים גורם משותף ומקבלים מכפלה.
+      - kind: step
+        text: >-
+          (ב) $n^2-10n\sqrt n=n\sqrt n\left(\sqrt n-10\right)$, כי $n=\sqrt n\cdot\sqrt n$. $n\sqrt n\ge n$ (כי
+          $\sqrt n\ge1$), ולכן $n\sqrt n\to\infty$ לפי משפט 2.6.4 (ג). לכל $n>121$, $\sqrt n>11$ (טענה 1.7.5 (ג)),
+          כלומר $\sqrt n-10>1$. לפי משפט 2.6.4 (ב) עם $c=1$ ו-$n_0=121$, המכפלה שואפת לאינסוף.
+      - kind: step
+        text: >-
+          (ג) $\frac{n^2}{n+1}\to\infty$ לפי מסקנה 2.6.6 (ג) (מעלות $2>1$, $\frac\alpha\beta=1$). הגורם
+          $2+(-1)^n$ אינו מתכנס, אבל $2+(-1)^n\ge1$ לכל $n$, ולפי משפט 2.6.4 (ב) עם $c=1$ המכפלה שואפת לאינסוף.
+      - kind: check
+        text: >-
+          ב-(ב), $n=10$: $100-100\sqrt{10}\approx-216.2$, ו-$n=100$: $10000-10000=0$, ו-$n=400$: $160000-80000=80000$.
+          האיברים הראשונים שליליים: רק הזנב קובע.
+      - kind: result
+        text: '(א) $\infty$; (ב) $\infty$; (ג) $\infty$.'
+
+  - id: W-2.6-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.6-2]
+    prompt: >-
+      (א) הוכיחו: אם $a_n\to\infty$, $b_n\to\infty$ ו-$a_n-b_n\to L\in\mathbb{R}$, אז $\frac{a_n}{b_n}\to1$.
+
+      (ב) הפריכו את ההפך: מצאו $a_n,b_n\to\infty$ עם $\frac{a_n}{b_n}\to1$ ש-$a_n-b_n$ אינה מתכנסת.
+
+      (ג) "$\frac{\infty}{\infty}=1$" – האם (א) מוכיח את זה? הסבירו.
+    answer: >-
+      (א) $\frac{a_n}{b_n}=1+\frac{a_n-b_n}{b_n}$, והשבר שואף ל-0. (ב) $a_n=n+\sqrt n$, $b_n=n$. (ג) לא: (א)
+      דורש הנחה נוספת, ש-$a_n-b_n$ מתכנסת.
+    solution:
+      - kind: idea
+        text: >-
+          כותבים את המנה כ-1 ועוד תיקון: $\frac{a_n}{b_n}=1+\frac{a_n-b_n}{b_n}$. במונה של התיקון יש סדרה מתכנסת,
+          ובמכנה סדרה ששואפת לאינסוף: הצורה $\frac{c}{\infty}$, שהיא $0$ לפי משפט 2.6.4 (ד).
+      - kind: step
+        text: >-
+          (א) לפי ההגדרה עם הסף $0$, יש $n_0$ כך ש-$b_n>0$ לכל $n>n_0$, ושם
+          $\frac{a_n}{b_n}=\frac{b_n+(a_n-b_n)}{b_n}=1+\frac{a_n-b_n}{b_n}$.
+      - kind: step
+        text: >-
+          $a_n-b_n$ מתכנסת, ולכן חסומה (משפט 2.3.3). לפי משפט 2.6.4 (ד), $\frac{a_n-b_n}{b_n}\to0$, ולפי משפט
+          2.4.1 $\frac{a_n}{b_n}\to1+0=1$.
+      - kind: step
+        text: >-
+          (ב) $a_n=n+\sqrt n$ ו-$b_n=n$. $a_n\to\infty$ לפי משפט 2.6.4 (א) ($\sqrt n\ge0$). המנה
+          $1+\frac{\sqrt n}{n}=1+\frac1{\sqrt n}\to1$ (מסקנה 2.2.14 (ג)), אבל $a_n-b_n=\sqrt n\to\infty$, ולפי
+          טענה 2.6.2 (ב) אינה מתכנסת.
+      - kind: step
+        text: >-
+          (ג) לא. $\frac\infty\infty$ היא צורה לא מוגדרת (טענה 2.6.5 (ג)): $\frac{n^2}{n}\to\infty$ ו-$\frac{n}{n^2}\to0$.
+          (א) מוסיף מידע שאינו בצורה, $a_n-b_n\to L$, ורק בזכותו המנה שואפת ל-1.
+      - kind: check
+        text: >-
+          דוגמה ל-(א): $a_n=n+7$, $b_n=n$: $a_n-b_n=7$ ו-$\frac{a_n}{b_n}=1+\frac7n$, ב-$n=100$ בערך $1.07$,
+          ושואפת ל-1.
+      - kind: result
+        text: >-
+          (א) נכון: $\frac{a_n}{b_n}\to1$. (ב) $n+\sqrt n$ ו-$n$. (ג) $\frac\infty\infty$ נשארת צורה לא מוגדרת;
+          ההנחה הנוספת היא שמכריעה.
+
+  - id: W-2.6-06
+    level: mid
+    objectives: [OBJ-2.6-1]
+    prompt: >-
+      הוכיחו ש-$\frac{1}{\sqrt{n+1}-\sqrt n}\to\infty$ בשתי דרכים: (1) בעזרת טענה 2.6.3; (2) בכפל בצמוד
+      ובהשוואה.
+    answer: >-
+      (1) $\sqrt{n+1}-\sqrt n\to0$ והוא חיובי, ולכן ההופכי שואף לאינסוף. (2) הסדרה שווה ל-$\sqrt{n+1}+\sqrt n\ge2\sqrt n$.
+    solution:
+      - kind: idea
+        text: >-
+          ההופכי של סדרה חיובית ששואפת לאפס שואף לאינסוף; ובדרך השנייה, הצמוד מעביר את ההפרש הקטן למכנה וחושף
+          סכום של שני שורשים.
+      - kind: step
+        text: >-
+          (1) לכל $n$, $n+1>n$, ולכן $\sqrt{n+1}>\sqrt n$ (טענה 1.7.5 (ג)): $d_n=\sqrt{n+1}-\sqrt n>0$. בכפל
+          בצמוד, $d_n=\frac{1}{\sqrt{n+1}+\sqrt n}\le\frac{1}{\sqrt n}$, ולפי טענה 2.2.13 עם
+          $b_n=\frac1{\sqrt n}\to0$ (מסקנה 2.2.14 (ג)), $d_n\to0$. לפי טענה 2.6.3 (ב), $\frac1{d_n}\to\infty$.
+      - kind: computation
+        text: >-
+          (2) $(\sqrt{n+1}-\sqrt n)(\sqrt{n+1}+\sqrt n)=(n+1)-n=1$, ולכן
+          $\frac{1}{\sqrt{n+1}-\sqrt n}=\sqrt{n+1}+\sqrt n$.
+      - kind: step
+        text: >-
+          $\sqrt{n+1}+\sqrt n\ge2\sqrt n\ge\sqrt n$, ו-$\sqrt n\to\infty$. לפי משפט 2.6.4 (ג), הסדרה שואפת
+          לאינסוף.
+      - kind: check
+        text: >-
+          $n=1$: $\frac1{\sqrt2-1}\approx2.414=\sqrt2+1$. $n=3$: $\frac1{2-\sqrt3}\approx3.732=2+\sqrt3$.
+      - kind: result
+        text: 'הסדרה שואפת לאינסוף; בשתי הדרכים.'
+
+  - id: W-2.6-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.6-1, OBJ-2.6-3]
+    prompt: >-
+      הוכיחו או הפריכו, לכל סדרה $(a_n)$:
+
+      (א) אם $a_n\to\infty$ ו-$(b_n)$ חסומה, אז $a_nb_n\to\infty$.
+
+      (ב) אם $a_n\to\infty$, אז $a_{n+1}-a_n$ אינה שואפת ל-0.
+
+      (ג) אם $a_n\to\infty$, אז $a_n^2-a_n\to\infty$.
+
+      (ד) אם $|a_n|\to\infty$ ו-$a_n>0$ לאינסוף ערכים של $n$, אז $a_n\to\infty$.
+
+      (ה) אם $|a_n|\to\infty$ ויש $N$ כך ש-$a_n>0$ לכל $n>N$, אז $a_n\to\infty$.
+    answer: >-
+      (א) לא ($a_n=n$, $b_n=\frac1n$). (ב) לא ($\sqrt n$). (ג) כן. (ד) לא ($(-1)^n n$). (ה) כן.
+    solution:
+      - kind: step
+        text: >-
+          (א) הפרכה: $a_n=n$, $b_n=\frac1n$, חסומה ב-1. $a_nb_n=1$ לכל $n$. משפט 2.6.4 (ב) דורש חסם מלרע
+          **חיובי**, ו-$\frac1n$ אין לה כזה.
+      - kind: step
+        text: >-
+          (ב) הפרכה: $a_n=\sqrt n\to\infty$, ו-$\sqrt{n+1}-\sqrt n=\frac1{\sqrt{n+1}+\sqrt n}\le\frac1{\sqrt n}$,
+          ולכן לפי טענה 2.2.13 $a_{n+1}-a_n\to0$. צעדים קטנים יכולים להצטבר לשאיפה לאינסוף.
+      - kind: step
+        text: >-
+          (ג) הוכחה: $a_n^2-a_n=a_n(a_n-1)$. $a_n-1\to\infty$ (משפט 2.6.4 (א)), ולכן יש $n_0$ עם $a_n-1>1$
+          לכל $n>n_0$. לפי משפט 2.6.4 (ב) עם $c=1$, $a_n(a_n-1)\to\infty$. (הצורה $\infty-\infty$ הוכרעה
+          כאן אחרי הוצאת גורם משותף.)
+      - kind: step
+        text: >-
+          (ד) הפרכה: $a_n=(-1)^n n$. $|a_n|=n\to\infty$, ו-$a_n>0$ בכל מקום זוגי. אבל לפי טענה 2.6.2 (ג) עם
+          $M=0$, לכל $N$ המקום $2N+1$ נותן $a_n<0$, ולכן $a_n$ אינה שואפת לאינסוף.
+      - kind: step
+        text: >-
+          (ה) הוכחה: יהי $M\in\mathbb{R}$, ו-$N_1$ שמתאים לסף $M$ עבור $|a_n|$. לכל $n>\max(N,N_1)$:
+          $a_n>0$, ולכן $a_n=|a_n|>M$.
+      - kind: check
+        text: >-
+          ההבדל בין (ד) ל-(ה) הוא בדיוק ההבדל בין "אינסוף מקומות" ל"כל המקומות מ-$N$": אותו הבדל שבין אי-חסימות
+          לשאיפה לאינסוף.
+      - kind: result
+        text: '(א) לא; (ב) לא; (ג) כן; (ד) לא; (ה) כן.'
+
+  - id: W-2.6-08
+    level: exam
+    objectives: [OBJ-2.6-1, OBJ-2.6-3]
+    prompt: >-
+      נגדיר $a_n=\sum_{k=1}^{n}\frac{1}{\sqrt k}=1+\frac1{\sqrt2}+\dots+\frac1{\sqrt n}$.
+
+      (א) הוכיחו ש-$a_n\to\infty$.
+
+      (ב) הוכיחו שלכל $n\in\mathbb{N}$: $2\left(\sqrt{n+1}-1\right)<a_n\le2\sqrt n$.
+
+      (ג) הוכיחו ש-$\frac{a_n}{\sqrt n}\to2$.
+    answer: >-
+      (א) $a_n\ge n\cdot\frac1{\sqrt n}=\sqrt n$. (ב) $2(\sqrt{k+1}-\sqrt k)<\frac1{\sqrt k}\le2(\sqrt k-\sqrt{k-1})$
+      וסכום טלסקופי. (ג) סנדוויץ'.
+    solution:
+      - kind: idea
+        text: >-
+          כל מחובר הוא לפחות $\frac1{\sqrt n}$, ויש $n$ מחוברים: זה מספיק ל-(א). ל-(ב) חוסמים כל
+          $\frac1{\sqrt k}$ בין שני הפרשים של שורשים, שסכומם מתקפל (טלסקופי).
+      - kind: step
+        text: >-
+          (א) לכל $1\le k\le n$, $\sqrt k\le\sqrt n$ (טענה 1.7.5 (ג)), ולכן $\frac1{\sqrt k}\ge\frac1{\sqrt n}$ (טענה
+          1.2.7 (ב)). לכן $a_n\ge n\cdot\frac1{\sqrt n}=\sqrt n$. $\sqrt n\to\infty$, ולפי משפט 2.6.4 (ג)
+          $a_n\to\infty$.
+      - kind: computation
+        text: >-
+          (ב) בכפל בצמוד, לכל $k\in\mathbb{N}$:
+
+          $$2\left(\sqrt{k+1}-\sqrt k\right)=\frac{2}{\sqrt{k+1}+\sqrt k}<\frac{2}{2\sqrt k}=\frac1{\sqrt k},\qquad
+          2\left(\sqrt k-\sqrt{k-1}\right)=\frac{2}{\sqrt k+\sqrt{k-1}}\ge\frac{2}{2\sqrt k}=\frac1{\sqrt k}$$
+
+          כי $\sqrt{k+1}+\sqrt k>2\sqrt k$ ו-$\sqrt k+\sqrt{k-1}\le2\sqrt k$.
+      - kind: step
+        text: >-
+          מסכמים מ-$k=1$ עד $n$. הסכומים מתקפלים: $\sum_{k=1}^n\left(\sqrt{k+1}-\sqrt k\right)=\sqrt{n+1}-1$
+          ו-$\sum_{k=1}^n\left(\sqrt k-\sqrt{k-1}\right)=\sqrt n-0$ (באינדוקציה על $n$ לפי ההגדרה הרקורסיבית של
+          הסכום, הגדרה 0.5.5 (א): בצעד, המחובר החדש מבטל את האיבר האחרון של הסכום הקודם). לכן
+          $2\left(\sqrt{n+1}-1\right)<a_n\le2\sqrt n$.
+      - kind: step
+        text: >-
+          (ג) נחלק ב-$\sqrt n>0$:
+          $2\sqrt{1+\frac1n}-\frac{2}{\sqrt n}<\frac{a_n}{\sqrt n}\le2$. לפי טענה 2.4.6, $\sqrt{1+\frac1n}\to1$;
+          לפי מסקנה 2.2.14 (ג), $\frac2{\sqrt n}\to0$; ולפי משפט 2.4.1 החסם התחתון שואף ל-2. לפי כלל הסנדוויץ'
+          (משפט 2.5.3), $\frac{a_n}{\sqrt n}\to2$.
+      - kind: check
+        text: >-
+          $n=100$: $a_{100}\approx18.590$, בין $2(\sqrt{101}-1)\approx18.100$ ל-$20$; $\frac{a_{100}}{10}\approx1.859$.
+          $n=10^4$: $\frac{a_n}{\sqrt n}\approx1.985$. הסדרה עולה (כל מחובר חיובי) ולא חסומה מלעיל: גם טענה 2.6.7
+          נותנת את (א), אחרי שמוכיחים את אי-החסימות.
+      - kind: result
+        text: >-
+          (א) $a_n\to\infty$. (ב) $2(\sqrt{n+1}-1)<a_n\le2\sqrt n$. (ג) $\frac{a_n}{\sqrt n}\to2$: הסדרה שואפת
+          לאינסוף בקצב של $2\sqrt n$.
+
+  - id: W-2.6-09
+    level: exam
+    objectives: [OBJ-2.6-2]
+    prompt: >-
+      לכל $c\in\mathbb{R}$ נגדיר $a_n=\sqrt{n^2+n}-cn$. מצאו, לכל $c$, את הגבול של $a_n$ (סופי או אינסופי), והוכיחו.
+      לאילו ערכים של $c$ זו צורה לא מוגדרת?
+    answer: >-
+      $c<1$: $\infty$. $c=1$: $\frac12$. $c>1$: $-\infty$. הצורה $\infty-\infty$ מופיעה כש-$c>0$.
+    solution:
+      - kind: idea
+        text: >-
+          $\sqrt{n^2+n}$ קרוב ל-$n$: הוא בין $n$ ל-$n+\frac12$. לכן $a_n$ בערך $(1-c)n$, והסימן של $1-c$ מכריע;
+          רק כש-$c=1$ המחובר $(1-c)n$ נעלם, ואז צריך את הכפל בצמוד.
+      - kind: step
+        text: >-
+          לכל $n$: $n^2\le n^2+n<\left(n+\frac12\right)^2=n^2+n+\frac14$, ולפי טענה 1.7.5 (ג)
+          $n\le\sqrt{n^2+n}<n+\frac12$. לכן $(1-c)n\le a_n<(1-c)n+\frac12$.
+      - kind: step
+        text: >-
+          $c<1$: $(1-c)n\to\infty$ לפי משפט 2.6.4 (ב) עם הקבוע $1-c>0$, ולפי משפט 2.6.4 (ג) $a_n\to\infty$.
+      - kind: step
+        text: >-
+          $c>1$: $(1-c)n\to-\infty$ (משפט 2.6.4 (ב) עם קבוע שלילי), ולכן $(1-c)n+\frac12\to-\infty$ (טענה
+          2.6.2 (א) ומשפט 2.6.4 (א)). $a_n$ קטנה ממנה, ולפי החלק השני של משפט 2.6.4 (ג), $a_n\to-\infty$.
+      - kind: computation
+        text: >-
+          $c=1$: בכפל בצמוד,
+          $\sqrt{n^2+n}-n=\frac{n}{\sqrt{n^2+n}+n}=\frac{1}{\sqrt{1+\frac1n}+1}$. לפי טענה 2.4.6
+          $\sqrt{1+\frac1n}\to1$, ולפי משפט 2.4.4 הגבול $\frac12$.
+      - kind: step
+        text: >-
+          כש-$c>0$, $cn\to\infty$ ו-$\sqrt{n^2+n}\ge n\to\infty$, וההפרש הוא הצורה $\infty-\infty$: שלוש תוצאות
+          שונות לפי $c$, וזו בדיוק המשמעות של צורה לא מוגדרת. כש-$c\le0$ זה סכום של סדרה ששואפת לאינסוף וסדרה
+          אי-שלילית, $\infty+$ חסומה מלרע, שמוכרע תמיד.
+      - kind: check
+        text: >-
+          $n=1000$: $c=\frac12$ נותן $\approx500.5$, $c=1$ נותן $\approx0.49988$, $c=2$ נותן $\approx-999.5$.
+      - kind: result
+        text: '$c<1$: $\infty$; $c=1$: $\frac12$; $c>1$: $-\infty$.'
+
+  - id: W-2.6-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-2.6-1, OBJ-2.6-3]
+    prompt: >-
+      (א) הוכיחו: אם $a_{n+1}-a_n\to L$ ו-$L>0$, אז $a_n\to\infty$.
+
+      (ב) הפריכו: אם $a_{n+1}-a_n\to0$ אז $a_n$ מתכנסת. ומנגד הפריכו: אם $a_{n+1}-a_n\to0$ אז $a_n$
+      שואפת לאינסוף.
+
+      (ג) מה קורה כש-$L<0$?
+    answer: >-
+      (א) מ-$N$ מסוים $a_{n+1}-a_n>\frac L2$, ולכן $a_n$ גדלה לפחות כמו $\frac{L}{2}n$. (ב) $\sqrt n$ ו-$\frac1n$.
+      (ג) $a_n\to-\infty$.
+    solution:
+      - kind: idea
+        text: >-
+          אם הצעדים מתייצבים סביב $L>0$, אז מאיזה מקום כל צעד הוא לפחות $\frac L2$, ואחרי $m$ צעדים עלינו לפחות
+          $m\frac L2$: חסם מלרע לינארי.
+      - kind: step
+        text: >-
+          (א) לפי טענה 2.2.15 (א) עם $q=\frac L2<L$, יש $N\in\mathbb{N}$ כך ש-$a_{n+1}-a_n>\frac L2$ לכל $n>N$.
+      - kind: step
+        text: >-
+          באינדוקציה על $n\ge N+1$: $a_n\ge a_{N+1}+(n-N-1)\frac L2$. בבסיס, $n=N+1$, יש שוויון. בצעד, אם זה
+          נכון ל-$n\ge N+1$, אז $n>N$, ולכן $a_{n+1}>a_n+\frac L2\ge a_{N+1}+(n+1-N-1)\frac L2$.
+      - kind: step
+        text: >-
+          $b_n=a_{N+1}+(n-N-1)\frac L2=\frac L2\,n+\left(a_{N+1}-(N+1)\frac L2\right)$ שואפת לאינסוף לפי משפט
+          2.6.4 (ב) (עם הקבוע $\frac L2>0$) ו-(א) (עם קבוע). כיוון ש-$a_n\ge b_n$ לכל $n>N$, לפי משפט 2.6.4
+          (ג) $a_n\to\infty$.
+      - kind: step
+        text: >-
+          (ב) $a_n=\sqrt n$: $a_{n+1}-a_n=\frac{1}{\sqrt{n+1}+\sqrt n}\to0$, ו-$\sqrt n\to\infty$, ולכן אינה
+          מתכנסת (טענה 2.6.2 (ב)). $a_n=\frac1n$: $a_{n+1}-a_n=-\frac{1}{n(n+1)}\to0$, ו-$\frac1n\to0$, ולכן
+          אינה שואפת לאינסוף. כש-$L=0$ אפשרות אחת לא מוכרעת: הסדרה יכולה להתכנס או לשאוף לאינסוף.
+      - kind: step
+        text: >-
+          (ג) $(-a_{n+1})-(-a_n)\to-L>0$ (משפט 2.4.1), ולפי (א) $(-a_n)\to\infty$; לפי טענה 2.6.2 (א)
+          $a_n\to-\infty$.
+      - kind: check
+        text: >-
+          דוגמה ל-(א): $a_n=3n+\frac1n$, שבה $a_{n+1}-a_n=3-\frac{1}{n(n+1)}\to3$, ואכן $a_n\ge3n\to\infty$.
+      - kind: result
+        text: >-
+          (א) $L>0$ גורר $a_n\to\infty$. (ב) $L=0$ אינו מכריע: $\sqrt n$ שואפת לאינסוף ו-$\frac1n$ מתכנסת. (ג)
+          $L<0$ גורר $a_n\to-\infty$.
+challenge:
+  - id: W-2.6-c1
+    stars: 1
+    objectives: [OBJ-2.6-1]
+    prompt: >-
+      נגדיר $x_1=1$ ו-$x_{n+1}=x_n+\frac{1}{x_n}$ לכל $n\in\mathbb{N}$.
+
+      (א) הוכיחו ש-$x_n\ge1$ לכל $n$, ושהסדרה עולה ממש.
+
+      (ב) הוכיחו שלכל $n\in\mathbb{N}$: $2n-1\le x_n^2\le3n-2$.
+
+      (ג) הוכיחו ש-$x_n\to\infty$, אבל $\frac{x_n}{n}\to0$.
+    answer: >-
+      (ב) $x_{n+1}^2=x_n^2+2+\frac1{x_n^2}$ ו-$0<\frac1{x_n^2}\le1$, ואינדוקציה. (ג) $x_n\ge\sqrt{2n-1}\ge\sqrt n$
+      ו-$0<\frac{x_n}{n}\le\frac{\sqrt3}{\sqrt n}$.
+    solution:
+      - kind: idea
+        text: >-
+          הצעדים $\frac1{x_n}$ הולכים וקטנים, ולכן לא ברור אם הסדרה בורחת. המפתח: בריבועים הצעד כמעט קבוע,
+          $x_{n+1}^2-x_n^2=2+\frac1{x_n^2}$, כלומר $x_n^2$ גדלה בערך כמו $2n$.
+      - kind: step
+        text: >-
+          (א) באינדוקציה: $x_1=1\ge1$. אם $x_n\ge1$, אז $\frac1{x_n}>0$ ו-$x_{n+1}=x_n+\frac1{x_n}>x_n\ge1$.
+          זה מוכיח גם $x_{n+1}>x_n$ לכל $n$.
+      - kind: computation
+        text: >-
+          (ב) מעלים בריבוע: $x_{n+1}^2=x_n^2+2+\frac1{x_n^2}$. לפי (א), $x_n^2\ge1$, ולכן $0<\frac1{x_n^2}\le1$, ו-
+
+          $$x_n^2+2<x_{n+1}^2\le x_n^2+3$$
+      - kind: step
+        text: >-
+          באינדוקציה: עבור $n=1$, $2\cdot1-1=1=x_1^2=3\cdot1-2$. אם $2n-1\le x_n^2\le3n-2$, אז
+          $x_{n+1}^2>x_n^2+2\ge2n+1=2(n+1)-1$ ו-$x_{n+1}^2\le x_n^2+3\le3n+1=3(n+1)-2$.
+      - kind: step
+        text: >-
+          (ג) $2n-1\ge n$, ולכן $x_n\ge\sqrt{2n-1}\ge\sqrt n$ (טענה 1.7.5 (ג)). $\sqrt n\to\infty$, ולפי משפט 2.6.4
+          (ג) $x_n\to\infty$.
+      - kind: step
+        text: >-
+          מנגד $x_n\le\sqrt{3n-2}<\sqrt{3n}=\sqrt3\sqrt n$, ולכן $0<\frac{x_n}{n}<\sqrt3\cdot\frac1{\sqrt n}$. לפי
+          טענה 2.2.13 עם $C=\sqrt3$ ו-$b_n=\frac1{\sqrt n}\to0$, $\frac{x_n}{n}\to0$.
+      - kind: check
+        text: >-
+          $x_2=2$, $x_3=2.5$, $x_4=2.9$: $x_4^2=8.41$, בין $7$ ל-$10$. $x_{100}\approx14.21$ ו-$x_{100}^2\approx202.0$,
+          קרוב ל-$2\cdot100$. ההוכחה במקור (בעזרת התכנסות מונוטונית: "אילו $x_n\to L$, אז $L=L+\frac1L$")
+          מראה רק שהסדרה מתבדרת; כאן הוכחנו יותר, שהיא שואפת לאינסוף ובאיזה קצב, בלי משפט 2.7.1.
+      - kind: result
+        text: >-
+          $2n-1\le x_n^2\le3n-2$; לכן $x_n\to\infty$, אבל לאט: $\frac{x_n}{n}\to0$.
+    source:
+      name: 'Stony Brook MAT319 (Fall 2008), Solutions to Homework 6 (Bartle and Sherbert, Introduction to Real Analysis)'
+      year: 2008
+      problem: 'Section 3.3, Exercise 7'
+      url: 'https://www.math.stonybrook.edu/~scott/mat319.fall08/homework/mat319hw6.pdf'
+      verified: '2026-11-17'
+      adapted: true
+
+  - id: W-2.6-c2
+    stars: 1
+    objectives: [OBJ-2.6-2, OBJ-2.6-3]
+    prompt: >-
+      יהיו $(x_n)$ ו-$(y_n)$ סדרות של מספרים חיוביים, ונניח ש-$\frac{x_n}{y_n}\to0$.
+
+      (א) הוכיחו: אם $x_n\to\infty$, אז $y_n\to\infty$.
+
+      (ב) הוכיחו: אם $(y_n)$ חסומה, אז $x_n\to0$.
+
+      (ג) נניח עכשיו ש-$y_n\to\infty$. הראו בדוגמאות (עם $y_n=n^2$) ש-$(x_n)$ יכולה להתכנס, יכולה לשאוף
+      לאינסוף, ויכולה להיות מתבדרת סתם.
+    answer: >-
+      (א) מ-$N$ מסוים $\frac{x_n}{y_n}<\frac12$, כלומר $y_n>2x_n$. (ב) $x_n=\frac{x_n}{y_n}\cdot y_n$, אפסה כפול
+      חסומה. (ג) $x_n=1$; $x_n=n$; $x_n=n$ בזוגיים ו-$1$ באי-זוגיים.
+    solution:
+      - kind: idea
+        text: >-
+          $\frac{x_n}{y_n}\to0$ אומר ש-$x_n$ "קטנה בהרבה" מ-$y_n$. מכאן: אם הקטנה בורחת לאינסוף, גם הגדולה; ואם
+          הגדולה חסומה, הקטנה נמחצת לאפס. אבל כשהגדולה בורחת, הקטנה חופשית.
+      - kind: step
+        text: >-
+          (א) לפי ההגדרה עם $\varepsilon=\frac12$, יש $N$ כך ש-$0<\frac{x_n}{y_n}<\frac12$ לכל $n>N$. כופלים ב-$2y_n>0$:
+          $2x_n<y_n$. $2x_n\to\infty$ (משפט 2.6.4 (ב) עם הקבוע 2), ולפי משפט 2.6.4 (ג) $y_n\to\infty$.
+      - kind: step
+        text: >-
+          (ב) $x_n=\frac{x_n}{y_n}\cdot y_n$: סדרה ששואפת לאפס כפול סדרה חסומה. לפי משפט 2.5.4, $x_n\to0$.
+      - kind: step
+        text: >-
+          (ג) עם $y_n=n^2\to\infty$ (מסקנה 2.6.6 (א)): $x_n=1$ נותן $\frac{x_n}{y_n}=\frac1{n^2}\to0$, ו-$x_n\to1$.
+          $x_n=n$ נותן $\frac1n\to0$, ו-$x_n\to\infty$.
+      - kind: step
+        text: >-
+          $x_n=n$ כש-$n$ זוגי ו-$x_n=1$ כש-$n$ אי-זוגי: חיובית, ו-$0<\frac{x_n}{y_n}\le\frac{n}{n^2}=\frac1n$,
+          ולכן לפי טענה 2.2.13 $\frac{x_n}{y_n}\to0$. היא אינה חסומה מלעיל ($x_{2k}=2k$), ולכן אינה מתכנסת; אינה
+          שואפת לאינסוף (טענה 2.6.2 (ג) עם $M=1$ והמקום $2N+1$); ואינה שואפת למינוס אינסוף, כי $x_n>0$. מתבדרת
+          סתם.
+      - kind: check
+        text: >-
+          (א) הוא סוג של "השוואה": $y_n$ גדולה מ-$2x_n$ מאיזה מקום. ב-(ב) צריך את החסימות: עם $y_n=n^2$ ו-$x_n=n$
+          המנה שואפת לאפס אבל $x_n$ לא.
+      - kind: result
+        text: >-
+          (א) $y_n\to\infty$. (ב) $x_n\to0$. (ג) $1$, $n$, ו-$n$/$1$ לסירוגין: מתכנסת, שואפת לאינסוף, מתבדרת סתם.
+    source:
+      name: 'UMBC MATH 301 (Spring 2013, Kogan), Solutions 9 (Bartle and Sherbert, Introduction to Real Analysis)'
+      year: 2013
+      problem: 'Section 3.6, Exercise 7'
+      url: 'https://userpages.cs.umbc.edu/kogan/teaching/m301/13spring/hw9_solutions.pdf'
+      verified: '2026-11-17'
+      adapted: true

@@ -1,132 +1,263 @@
 /**
- * Lesson 2.2's figure: the definition of a limit, drawn. The terms aₙ of a sequence as points over n, the
- * candidate limit L as a line, the ε-band (L − ε, L + ε) around it, and an N line the student drags. The
- * definition asks for every term after N to lie inside the band: such terms are drawn filled, terms after N
- * outside the band hollow with a ring (shape, not only colour), and the terms up to N small and grey, since
- * the definition ignores them. Narrowing the band (a smaller ε) shows that N has to move right: N depends on ε.
+ * SequenceStrip: the shared live figure of lessons 2.2–2.6 and 2.10. The terms aₙ of a sequence as points over n,
+ * and per mode what the definition or theorem asks of them: the ε-band around a limit (2.2), a bound ±M (2.3), the
+ * sum / product / quotient of two sequences (2.4), a sandwich of three (2.5), a level M that the terms must pass
+ * (2.6), or the spread of the tail against ε (2.10). An N line the student drags; terms the definition ignores
+ * (n ≤ N) are small and grey, terms that meet the condition are filled, terms that fail it are hollow with a ring
+ * (shape, not only colour).
  *
- * Every count comes from src/math/sequences.ts (`smallestN`, `outsideAfter`, `inBand`) over the visible window:
- * the figure gathers evidence for a proof's N(ε); it proves nothing about the terms beyond the window, and the
- * caption says so.
+ * Every number comes from src/math/sequences.ts (via ./strip/model.ts) over a finite window: the figure gathers
+ * evidence for a proof's N; it proves nothing about the terms beyond the window, and the caption must say so.
+ *
+ * Use:   <Spread figure={SequenceStrip} figureProps={{ mode: 'combine', seq: 'pair-sum', seqs: ['pair-sum', 'pair-cancel'],
+ *                                                       op: 'sum', eps: 0.1, N: 0, tasks: ['sum-N', 'cancel'] }}>
+ *        <Step fig="fig-2-4a" set={{ op: 'product', eps: 0.05, N: 0, showMin: true }}>
+ *
+ * ---------------------------------------------------------------------------------------------------------------
+ * PROPS (all optional except `id`, which the .astro wrapper takes from the Spread)
+ *   id       figure id (task ids are stored as `${id}:${task}`)
+ *   mode     'limit' | 'bound' | 'combine' | 'sandwich' | 'infinite' | 'cauchy'. Default 'limit'.
+ *   modes    the modes offered in a picker (none or one: no picker). Not needed when steps switch the mode.
+ *   seq      the preset: a sequence id (modes limit, bound, infinite, cauchy), a pair id (combine) or a triple id
+ *            (sandwich). One that does not fit the mode is replaced by the first of `seqs` that does, else the
+ *            mode's default: limit 'recip', bound 'ratio3', combine 'pair-sum', sandwich 'floor-x',
+ *            infinite 'sqrt-n', cauchy 'inv-sq-sum'.
+ *   seqs     the presets offered as chips; only those that fit the current mode are shown (none or one: no chips).
+ *   op       mode combine: 'sum' | 'product' | 'quotient'. Default 'sum'. 'quotient' is not defined on
+ *            'pair-cancel' (bₙ = 0 at even n): there it falls back to 'sum' and the chip is not offered.
+ *   eps      ε, snapped to the ladder 0.5, 0.3, 0.2, 0.1, 0.05, 0.03, 0.02, 0.01, 0.005. Default 0.1.
+ *   N        0..500. Default 0.
+ *   M        mode bound: the bound (0 .. 1.1·max|y| of the preset's value window, step 0.05; step 1 when that
+ *            exceeds 10); mode infinite: the level
+ *            (per preset, see below). Default: about 0.6 of the window (bound), the preset's start (infinite).
+ *   showMin  the mode's helper (one toggle per mode, the same key in every mode), default false:
+ *              limit, infinite, cauchy: the smallest N on the window, in the readout;
+ *              bound:    the proof's bound B = max(|a₁|, …, |a_N|, |L| + 1) of 2.3.3 as dashed lines ±B, with the
+ *                        band L ± 1 (the N of the proof is the N slider; the readout says whether it fits ε = 1);
+ *              combine:  the tolerances the proofs of 2.4 put on aₙ and bₙ (sum: ε/2 each; product: ε/(2(|b|+1))
+ *                        and ε/(2K) with K = 2 ≥ |aₙ|; quotient: ε|b|/4 and min(|b|/2, εb²/(4(|a|+1)))) as dotted
+ *                        bands, their N₁, N₂ as lines, and N = max(N₁, N₂) in the readout;
+ *              sandwich: N₁ (lower) and N₂ (upper) where each outer sequence enters the band, as lines.
+ *   tasks    task ids (below), listed under the figure with check marks.
+ *
+ * STEP-SETTABLE KEYS (<Step fig set={{…}}>): mode, seq, op, eps, N, L, M, showMin. A new mode keeps the preset if it
+ * fits, else takes the first fitting one of `seqs`; naming a preset or mode resets L to its limit (or candidate) and
+ * M to its default unless the same step gives them; naming an op resets L. Unknown keys and values that do not fit
+ * are ignored. A step never ticks a task.
+ *
+ * CONTROLS, in this order (range inputs in brackets, for tests): preset chips, mode chips, then
+ *   limit    [ε] [N] [L, only when the preset has no limit]   toggle "הראו את ה-N הקטן ביותר"
+ *   bound    [M] [N]                                          toggle "הראו את החסם מההוכחה"
+ *   combine  op chips, [ε] [N] [L, only when cₙ has no limit] toggle "הראו את N₁, N₂ מההוכחה"
+ *   sandwich [ε] [N] [L, only for 'outer-differ']            toggle "הראו את N₁, N₂ של הסדרות החיצוניות"
+ *   infinite [M] [N]                                          toggle "הראו את ה-N הקטן ביותר"
+ *   cauchy   [ε] [N]                                          toggle "הראו את ה-N הקטן ביותר"
+ * Keyboard on the canvas: ← → move N; ↓ ↑ narrow / widen ε, or lower / raise M in modes bound and infinite. The canvas
+ * can be dragged to move N. Readouts carry data-readout="eps" | "N" | "M" | "op" | "verdict" | "min" | "legend" |
+ * "proof" | "note".
+ *
+ * MODES
+ *   limit     The ε-band (L − ε, L + ε) and the line L (the claimed limit, or a candidate L slider). Terms after N
+ *             inside the band filled, outside hollow with a ring. Verdict over N < n ≤ max(2000, 4N + 100).
+ *   bound     Lines y = ±M with the region between them; every term (N is not used for the verdict) filled when
+ *             |aₙ| ≤ M, hollow with a ring when |aₙ| > M. The verdict is over the drawn window.
+ *   combine   aₙ (small squares) and bₙ (small diamonds) in two ink tones, cₙ = aₙ + bₙ, aₙ·bₙ or aₙ/bₙ as the main
+ *             points, with the band around the limit of cₙ.
+ *   sandwich  lower (small ▲) ≤ middle (main points) ≤ upper (small ▼), the band around the common limit L. The verdict
+ *             is about the middle; the readout also says whether N fits each outer sequence.
+ *   infinite  No band: the line y = M and the region beyond it (above for → ∞ and for sequences without a claimed
+ *             infinite limit; below for 'neg-quad', → −∞). Terms after N beyond M filled, the others hollow.
+ *   cauchy    After N, the band from the smallest to the largest term of the tail N < n ≤ max(2000, 4N + 100),
+ *             filled when its width (the largest |aₘ − aₙ|, m, n > N, on that range) is < ε, dashed otherwise; an ε
+ *             ruler beside it. Tail points filled when the width is < ε, hollow otherwise.
+ *
+ * PRESETS (src/math/sequences.ts; limit = the claimed one, "—" none)
+ *   sequences  recip 1/n → 0 · shifted (2n+1)/n → 2 · alternating 1 + (−1)ⁿ/n → 1 · bumpy (2 + (−1)ⁿ)/n → 0 ·
+ *              slow 1/√n → 0 · wild-start ten terms ±3 then 1/n → 0 · sign (−1)ⁿ — (candidate 1) ·
+ *              ratio3 (3n+1)/(n+2) → 3 (|aₙ − 3| = 5/(n+2), N(ε) = ⌊5/ε − 2⌋, 498 at ε = 0.01) ·
+ *              quad3 (3n² + n)/(n² + 1) → 3 (largest term a₆ = 114/37) · root-diff √(n+1) − √n → 0 ·
+ *              sqrt-n √n — (→ ∞; M 0..20 step 0.5, start 4; N(M) = ⌊M²⌋) · alt-ratio (−1)ⁿ n/(n+1) — ·
+ *              lin n — (→ ∞; M 0..300 step 5, start 20) · zigzag n at even n, 0 at odd n — (M 0..300 step 5,
+ *              start 10; no N for M ≥ 0) · neg-quad 10n − n² — (→ −∞; M −3000..0 step 50, start −500;
+ *              N(M) = ⌊5 + √(25 − M)⌋) · alt-lin (−1)ⁿ n — (M 0..300 step 5, start 10) ·
+ *              inv-sq-sum 1 + 1/4 + … + 1/n² — (value not claimed; Cauchy N at ε = 0.05 is 19) ·
+ *              harmonic Hₙ — (→ ∞, not Cauchy; M 0..6 step 0.25, start 3) · alt-harmonic 1 − 1/2 + … — (value not
+ *              claimed). Partial sums are cached running sums.
+ *   pairs      pair-sum aₙ = 1 + 1/n, bₙ = 2 − 1/√n (sum → 3, product → 2, quotient → 1/2) ·
+ *              pair-cancel aₙ = (−1)ⁿ, bₙ = 1 − (−1)ⁿ (sum ≡ 1; product 0, −2, … diverges, candidate L; no quotient)
+ *   triples    floor-x √2 − 1/n ≤ ⌊n√2⌋/n ≤ √2 → √2 · osc-squeeze (n−1)/n ≤ (n + (−1)ⁿ)/n ≤ (n+1)/n → 1 ·
+ *              zero-bounded −1/n ≤ sin(n)/n ≤ 1/n → 0 · outer-differ −1 ≤ (−1)ⁿ ≤ 1 (outer limits differ; candidate
+ *              L slider, start 0)
+ *
+ * TASKS (ticked only by the learner's own move of the control the task is about; never by a text step; never in the
+ * exact state the last text step produced, except 2.2's four tasks, which keep their original rule; never by picking
+ * a preset or mode. "Fits" means no term after N fails, up to n = max(2000, 4N + 100).)
+ *   find-N          limit, 'recip', ε ≤ 0.1, N moved to the smallest N (2.2)
+ *   narrow          limit, a convergent preset, ε ≤ 0.02, N or ε moved and N fits (2.2)
+ *   wild            limit, 'wild-start', ε ≤ 0.1, N or ε moved and N fits (2.2)
+ *   no-N            limit, 'sign', L = 1, N moved to ≥ 30 (2.2)
+ *   estimate        limit, 'ratio3', ε ≤ 0.01, N or ε moved and N equals the smallest N (498 at ε = 0.01; at 0.005
+ *                   it is 998, past the slider)
+ *   no-limit        limit, 'sign' or 'alt-ratio', ε ≤ 0.5, N ≥ 30, no N fits: each such state reached by moving N, ε
+ *                   or L records its L; ticks when 3 different L have been recorded for the same preset
+ *   bound-all       bound, a convergent preset, M moved so that max|aₙ| (n in the drawn window) ≤ M ≤ that + 0.05
+ *   sum-N           combine, op sum, both aₙ and bₙ convergent ('pair-sum'), ε ≤ 0.05, N or ε moved and N fits cₙ
+ *                   (smallest N 358 at ε = 0.05)
+ *   product-N       the same with op product (smallest N 317 at ε = 0.05)
+ *   cancel          combine, 'pair-cancel', op sum, ε ≤ 0.1, N moved and N fits cₙ ≡ 1 (any N does)
+ *   squeeze         sandwich, a triple with a common limit, ε ≤ 0.05, N or ε moved and N fits both outer sequences
+ *   outer-differ    sandwich, 'outer-differ', ε ≤ 0.2, N ≥ 30, N, ε or L moved and no N fits the middle
+ *   find-N-M        infinite, 'sqrt-n', M ≥ 10, N or M moved and N equals the smallest N (⌊M²⌋, 100 at M = 10)
+ *   no-N-M          infinite, 'zigzag', M ≥ 5, N ≥ 30, N or M moved and no N fits
+ *   cauchy-N        cauchy, 'inv-sq-sum', ε ≤ 0.05, N or ε moved and N equals the smallest N whose tail width < ε
+ *                   (19 at ε = 0.05)
+ *   harmonic-grows  cauchy, 'harmonic', ε ≤ 0.5, N moved to ≥ 100 and the tail width is still ≥ ε (it always is:
+ *                   > ln 4 on the checked range); the readout notes that the window is evidence and 2.10.6 the proof
+ * Reset (↺) restores the props' state and forgets the last step's state and the L values tried.
+ * ---------------------------------------------------------------------------------------------------------------
  */
 
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { EPSILONS, SEQUENCES, inBand, outsideAfter, smallestN, type SequenceId } from '~/math/sequences';
+import { EPSILONS, opsOf, type CombineOp } from '~/math/sequences';
 import { markTask } from '~/progress/store';
 import { subscribeSteps } from '~/ui/steps';
 import { useFigureCanvas, type FrameInfo } from './core/canvas';
-import { sci } from './core/format';
-import { withAlpha } from './core/ink';
-import { drawAxes, insetBox, makePlot, type Plot } from './core/plot';
+import type { Plot } from './core/plot';
 import SimShell, { Slider, Toggle, type TaskDef } from './core/SimShell';
+import { drawStrip, fmt } from './strip/draw';
+import {
+  MODE_NAME,
+  N_MAX,
+  OP_FORMULA,
+  OP_NAME,
+  STRIP_MODES,
+  TASK_LABEL,
+  analyse,
+  applyStep,
+  defaultM,
+  defaultSeq,
+  fitsMode,
+  fresh,
+  limitOf,
+  lRangeOf,
+  mRangeOf,
+  opFor,
+  pair,
+  single,
+  snapTo,
+  taskKey,
+  tasksFor,
+  triple,
+  type Analysis,
+  type SequenceStripProps,
+  type StripId,
+  type StripMode,
+  type StripState,
+} from './strip/model';
 
-const TASK_LABEL: Record<string, string> = {
-  'find-N': 'בסדרה ⁦1/n⁩, עם ⁦ε = 0.1⁩ או קטן יותר, הזיזו את N אל ה-N הקטן ביותר שמתאים: מימינו אין אף איבר מחוץ לסביבה.',
-  narrow: 'צמצמו את הסביבה עד ⁦ε = 0.02⁩ או פחות, ומצאו שוב N שמתאים.',
-  wild: 'בסדרה עם ההתחלה הפרועה, עם ⁦ε = 0.1⁩ או פחות, מצאו N שמתאים.',
-  'no-N': 'בסדרה ⁦(−1)ⁿ⁩ נסו למצוא N שמתאים לסביבה של 1: הזיזו את N לפחות עד 30.',
+export type { SequenceStripProps } from './strip/model';
+
+const TOGGLE_LABEL: Record<StripMode, string> = {
+  limit: 'הראו את ה-N הקטן ביותר',
+  bound: 'הראו את החסם מההוכחה',
+  combine: 'הראו את N₁, N₂ מההוכחה',
+  sandwich: 'הראו את N₁, N₂ של הסדרות החיצוניות',
+  infinite: 'הראו את ה-N הקטן ביותר',
+  cauchy: 'הראו את ה-N הקטן ביותר',
 };
 
-interface State {
-  seq: SequenceId;
-  /** index into EPSILONS */
-  ei: number;
-  N: number;
-  /** the candidate limit (the preset's limit, or the student's choice for a divergent sequence) */
-  L: number;
-  showMin: boolean;
-}
+const OP_EXPR: Record<CombineOp, string> = { sum: 'aₙ + bₙ', product: 'aₙ·bₙ', quotient: 'aₙ/bₙ' };
 
-export interface SequenceStripProps {
-  id: string;
-  seq?: SequenceId;
-  /** the sequences offered in the picker (none or one: no picker) */
-  seqs?: SequenceId[];
-  eps?: number;
-  N?: number;
-  showMin?: boolean;
-  tasks?: string[];
-}
+const nameOf = (mode: StripMode, id: StripId) => {
+  const k = mode === 'combine' ? pair(id) : mode === 'sandwich' ? triple(id) : single(id);
+  return k.name;
+};
 
-const N_MAX = 500;
-/** where the smallest N is searched: 1/√n at ε = 0.005 needs N = 40 000, and smallestN wants it in the first half */
-const SEARCH = 200_000;
-/**
- * The terms the verdict checks, N < n ≤ checkUpTo(N): always far past N and past the drawn window, so N at the window's
- * edge is never "fitting" because nothing after it was looked at. Evidence on a finite range, as the caption says.
- */
-const checkUpTo = (N: number, win: number) => Math.max(2_000, win, 4 * N + 100);
-const nearestEps = (e: number) =>
-  EPSILONS.reduce((best, v, i) => (Math.abs(Math.log(v / e)) < Math.abs(Math.log(EPSILONS[best] / e)) ? i : best), 0);
-const limitOf = (seq: SequenceId) => SEQUENCES[seq].limit ?? SEQUENCES[seq].candidate ?? 0;
-/** a typographic minus sign in front of negative numbers */
-const minus = (t: string) => t.replace(/^-/, '−');
-const fmt = (v: number) => minus(sci(v, 3));
-
-function fresh(p: SequenceStripProps): State {
-  const seq = p.seq ?? 'recip';
-  return { seq, ei: nearestEps(p.eps ?? 0.1), N: p.N ?? 0, L: limitOf(seq), showMin: p.showMin ?? false };
-}
-
-/** The n-window: the preset's, widened so that both the student's N and the smallest N fit with room after them. */
-function windowOf(s: State, minN: number | null): number {
-  const base = SEQUENCES[s.seq].window;
-  const need = Math.ceil(Math.max(s.N, minN ?? 0) * 1.35) + 5;
-  return Math.min(N_MAX, Math.max(base, need));
+/** the sentence a screen reader hears after a change, also the end of the canvas label */
+function describe(s: StripState, an: Analysis): string {
+  const e = fmt(an.eps);
+  if (s.mode === 'bound') {
+    const b = an.bound!;
+    const head = `M = ${fmt(s.M)}. `;
+    const v = an.works ? `כל האיברים בחלון, עד n = ${an.win}, בערכם המוחלט קטנים מ-M או שווים לו.` : `${an.bad.length} איברים בחלון גדולים מ-M בערכם המוחלט, הראשון ב-n = ${an.bad[0]}.`;
+    const pr = s.showMin && b.proof !== null ? ` החסם מההוכחה: B = ${fmt(b.proof)}, עם N = ${s.N}${b.fits1 ? ', שמתאים ל-ε = 1' : ', שאינו מתאים ל-ε = 1'}.` : '';
+    return head + v + pr;
+  }
+  if (s.mode === 'infinite') {
+    const dir = an.infinite!.dir > 0 ? 'גדולים מ-M' : 'קטנים מ-M';
+    const v = an.works ? `כל האיברים אחרי N, עד n = ${an.upTo}, ${dir}.` : `${an.bad.length} איברים אחרי N, עד n = ${an.upTo}, אינם ${dir}, הראשון ב-n = ${an.bad[0]}.`;
+    const m = s.showMin ? (an.minN === null ? ' אין N שמתאים.' : ` ה-N הקטן ביותר שמתאים: ${an.minN}.`) : '';
+    return `M = ${fmt(s.M)}, N = ${s.N}. ${v}${m}`;
+  }
+  if (s.mode === 'cauchy') {
+    const c = an.cauchy!;
+    const v = `רוחב הזנב אחרי N, עד n = ${an.upTo}: ${fmt(c.spread)}, ${c.below ? 'קטן מ-ε' : 'אינו קטן מ-ε'}.`;
+    const m = s.showMin ? (an.minN === null ? ' אין N עד 500 שבו הרוחב קטן מ-ε.' : ` ה-N הקטן ביותר שבו הרוחב קטן מ-ε: ${an.minN}.`) : '';
+    return `ε = ${e}, N = ${s.N}. ${v}${m}`;
+  }
+  if (s.mode === 'limit') {
+    // lesson 2.2's sentence, word for word
+    const parts = [`${an.formula}, סביבה של ${fmt(an.L)} עם ε = ${e}, N = ${s.N}.`];
+    parts.push(an.works ? 'כל האיברים אחרי N בחלון נמצאים בתוך הסביבה.' : `${an.bad.length} איברים אחרי N מחוץ לסביבה, הראשון ב-n = ${an.bad[0]}.`);
+    if (s.showMin) parts.push(an.minN === null ? 'אין N שמתאים.' : `ה-N הקטן ביותר שמתאים: ${an.minN}.`);
+    return parts.join(' ');
+  }
+  const what = s.mode === 'combine' ? 'cₙ' : 'הסדרה האמצעית';
+  const v = an.works ? `כל האיברים של ${what} אחרי N, עד n = ${an.upTo}, בתוך הסביבה.` : `${an.bad.length} איברים של ${what} אחרי N מחוץ לסביבה, הראשון ב-n = ${an.bad[0]}.`;
+  let m = '';
+  if (s.showMin && s.mode === 'combine' && an.combine?.tol && an.combine.N1 !== null && an.combine.N2 !== null)
+    m = ` מההוכחה: N₁ = ${an.combine.N1}, N₂ = ${an.combine.N2}, N = ${Math.max(an.combine.N1, an.combine.N2)}.`;
+  if (s.showMin && s.mode === 'sandwich' && an.sandwich) m = ` הסדרה התחתונה: N₁ = ${an.sandwich.Nlow ?? 'אין'}, העליונה: N₂ = ${an.sandwich.Nup ?? 'אין'}.`;
+  return `סביבה של ${fmt(an.L)} עם ε = ${e}, N = ${s.N}. ${v}${m}`;
 }
 
 export default function SequenceStrip(props: SequenceStripProps) {
-  const [s, setS] = useState<State>(() => fresh(props));
+  const [s, setS] = useState<StripState>(() => fresh(props));
   const [live, setLive] = useState('');
   const tasks: TaskDef[] = (props.tasks ?? []).map((id) => ({ id, label: TASK_LABEL[id] ?? id }));
   const dragging = useRef(false);
   const plotRef = useRef<Plot | null>(null);
+  const cache = useRef(new Map<string, number | null>());
+  const stepKey = useRef<string | null>(null);
+  const triedL = useRef(new Map<string, Set<string>>());
 
-  const seq = SEQUENCES[s.seq];
-  const eps = EPSILONS[s.ei];
-  // the smallest N is searched on a long window, independent of what is drawn
-  const minN = smallestN(seq.a, s.L, eps, SEARCH);
-  const win = windowOf(s, minN);
-  const upTo = checkUpTo(s.N, win);
-  const outside = outsideAfter(seq.a, s.L, eps, s.N, upTo);
-  const works = outside.length === 0;
+  const an = analyse(s, cache.current);
+  const eps = an.eps;
 
-  /**
-   * The student's own change. A text step sets state through subscribeSteps and never ticks a task, and a task ticks
-   * only when this change moves the control it is about (N or ε): a step may already have put the figure in the goal
-   * state (2.2's second step sets N = 10 for 1/n), and toggling an unrelated control must not count as finding it.
-   */
-  const userSet = (patch: Partial<State>) => {
+  /** The student's own change: the only path that can tick a task (strip/model.ts, `tasksFor`). */
+  const userSet = (patch: Partial<StripState>) => {
     const next = { ...s, ...patch };
     setS(next);
-    const has = (t: string) => props.tasks?.includes(t);
-    const movedN = patch.N !== undefined;
-    const movedNorEps = movedN || patch.ei !== undefined;
-    const e = EPSILONS[next.ei];
-    const p = SEQUENCES[next.seq];
-    const nMin = smallestN(p.a, next.L, e, SEARCH);
-    const ok = outsideAfter(p.a, next.L, e, next.N, checkUpTo(next.N, windowOf(next, nMin))).length === 0;
-    if (has('find-N') && movedN && next.seq === 'recip' && e <= 0.1 && nMin !== null && next.N === nMin) markTask(`${props.id}:find-N`);
-    if (has('narrow') && movedNorEps && p.limit !== null && e <= 0.02 && ok) markTask(`${props.id}:narrow`);
-    if (has('wild') && movedNorEps && next.seq === 'wild-start' && e <= 0.1 && ok) markTask(`${props.id}:wild`);
-    if (has('no-N') && movedN && next.seq === 'sign' && Math.abs(next.L - 1) < 1e-9 && next.N >= 30) markTask(`${props.id}:no-N`);
+    const done = tasksFor(s, patch, next, analyse(next, cache.current), {
+      tasks: props.tasks ?? [],
+      stepKey: stepKey.current,
+      triedL: triedL.current,
+    });
+    for (const t of done) markTask(`${props.id}:${t}`);
   };
 
-  const pickSeq = (id: SequenceId) => userSet({ seq: id, L: limitOf(id), N: 0 });
+  // as in lesson 2.2: picking a preset starts over at N = 0 with its limit
+  const pickSeq = (id: StripId) => {
+    const op = opFor(id, s.op);
+    userSet({ seq: id, L: limitOf(s.mode, id, op), N: 0, op, M: defaultM(s.mode, id) });
+  };
+  const pickMode = (mode: StripMode) => {
+    if (mode === s.mode) return;
+    const seq = fitsMode(s.seq, mode) ? s.seq : defaultSeq(mode, props.seqs);
+    const op = opFor(seq, s.op);
+    setS({ ...s, mode, seq, op, L: limitOf(mode, seq, op), M: defaultM(mode, seq), N: 0 });
+  };
+  const pickOp = (op: CombineOp) => {
+    if (op === s.op) return;
+    setS({ ...s, op, L: limitOf(s.mode, s.seq, op) });
+  };
 
   useEffect(
     () =>
       subscribeSteps(props.id, (st) => {
         setS((prev) => {
-          const next = { ...prev };
-          if (typeof st.seq === 'string' && st.seq in SEQUENCES) {
-            next.seq = st.seq as SequenceId;
-            next.L = limitOf(next.seq);
-          }
-          if (typeof st.eps === 'number') next.ei = nearestEps(st.eps);
-          if (typeof st.N === 'number') next.N = Math.max(0, Math.min(N_MAX, Math.round(st.N)));
-          if (typeof st.L === 'number') next.L = st.L;
-          if (typeof st.showMin === 'boolean') next.showMin = st.showMin;
+          const next = applyStep(prev, st, props);
+          stepKey.current = taskKey(next);
           return next;
         });
       }),
@@ -134,128 +265,12 @@ export default function SequenceStrip(props: SequenceStripProps) {
   );
 
   useEffect(() => {
-    const id = setTimeout(() => {
-      const parts = [`${seq.formula}, סביבה של ${fmt(s.L)} עם ε = ${fmt(eps)}, N = ${s.N}.`];
-      parts.push(works ? 'כל האיברים אחרי N בחלון נמצאים בתוך הסביבה.' : `${outside.length} איברים אחרי N מחוץ לסביבה, הראשון ב-n = ${outside[0]}.`);
-      if (s.showMin) parts.push(minN === null ? 'אין N שמתאים.' : `ה-N הקטן ביותר שמתאים: ${minN}.`);
-      setLive(parts.join(' '));
-    }, 300);
+    const id = setTimeout(() => setLive(describe(s, an)), 300);
     return () => clearTimeout(id);
   }, [s]);
 
   const draw = ({ ctx, view, palette: p }: FrameInfo) => {
-    const narrow = view.w < 420;
-    // the right margin holds the L and L ± ε labels, so they never sit on top of the terms
-    const box = insetBox({ x: 0, y: 0, w: view.w, h: view.h }, { l: narrow ? 46 : 56, r: narrow ? 40 : 50, t: 24, b: 46 });
-    const plot = makePlot(box, { min: 0, max: win + 1, label: 'n' }, { min: seq.y[0], max: seq.y[1], label: 'aₙ' });
-    plotRef.current = plot;
-
-    // the ignored terms: everything up to N
-    const xN = plot.px(s.N + 0.5);
-    if (s.N > 0) {
-      ctx.save();
-      ctx.fillStyle = withAlpha(p.ink3, 0.1);
-      ctx.fillRect(box.x, box.y, Math.max(0, Math.min(xN, box.x + box.w) - box.x), box.h);
-      ctx.restore();
-    }
-
-    // the ε-band and the candidate limit
-    const yTop = plot.py(s.L + eps);
-    const yBot = plot.py(s.L - eps);
-    ctx.save();
-    ctx.fillStyle = p.epsBand;
-    ctx.fillRect(box.x, yTop, box.w, yBot - yTop);
-    ctx.strokeStyle = p.eps;
-    ctx.lineWidth = 1;
-    ctx.setLineDash([5, 4]);
-    for (const y of [yTop, yBot]) {
-      ctx.beginPath();
-      ctx.moveTo(box.x, y);
-      ctx.lineTo(box.x + box.w, y);
-      ctx.stroke();
-    }
-    ctx.setLineDash([]);
-    ctx.strokeStyle = p.limit;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(box.x, plot.py(s.L));
-    ctx.lineTo(box.x + box.w, plot.py(s.L));
-    ctx.stroke();
-    ctx.restore();
-
-    drawAxes(ctx, plot, p);
-
-    // labels in the right margin: L on its line, the band edges beside them when there is room
-    ctx.save();
-    ctx.font = `600 ${narrow ? 12 : 13}px ${p.fontUi}`;
-    ctx.direction = 'ltr';
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'middle';
-    const lx = box.x + box.w + 5;
-    ctx.fillStyle = p.limit;
-    ctx.fillText('L', lx, plot.py(s.L));
-    if (yBot - yTop > 30) {
-      ctx.fillStyle = p.eps;
-      ctx.fillText('L+ε', lx, yTop);
-      ctx.fillText('L−ε', lx, yBot);
-    }
-    ctx.restore();
-
-    // the terms
-    // a point never takes more than about a third of the space one term gets, so rings do not merge on a phone
-    const r = Math.max(1.8, Math.min(4.6, (box.w / win) * 0.3));
-    for (let n = 1; n <= win; n++) {
-      const v = seq.a(n);
-      const x = plot.px(n);
-      const y = Math.max(box.y - 4, Math.min(box.y + box.h + 4, plot.py(v)));
-      ctx.save();
-      if (n <= s.N) {
-        ctx.fillStyle = p.ink3;
-        ctx.beginPath();
-        ctx.arc(x, y, Math.max(1.6, r * 0.6), 0, 2 * Math.PI);
-        ctx.fill();
-      } else if (inBand(v, s.L, eps)) {
-        ctx.fillStyle = p.pointIn;
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, 2 * Math.PI);
-        ctx.fill();
-      } else {
-        ctx.fillStyle = p.paper;
-        ctx.strokeStyle = p.pointOut;
-        ctx.lineWidth = Math.max(1.6, r * 0.45);
-        ctx.beginPath();
-        ctx.arc(x, y, r + 0.6, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.stroke();
-        // the ring: an outside term is told by shape, not only by colour
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.arc(x, y, r * 1.8 + 1, 0, 2 * Math.PI);
-        ctx.stroke();
-      }
-      ctx.restore();
-    }
-
-    // the N line
-    if (xN >= box.x && xN <= box.x + box.w) {
-      ctx.save();
-      ctx.strokeStyle = p.ink;
-      ctx.lineWidth = 1.6;
-      ctx.setLineDash([7, 5]);
-      ctx.beginPath();
-      ctx.moveTo(xN, box.y);
-      ctx.lineTo(xN, box.y + box.h);
-      ctx.stroke();
-      ctx.setLineDash([]);
-      // above the plot, to the right of the line, clear of the y-axis ticks
-      ctx.fillStyle = p.ink;
-      ctx.font = `700 14px ${p.fontUi}`;
-      ctx.direction = 'ltr';
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'bottom';
-      ctx.fillText(`N = ${s.N}`, Math.min(xN + 5, box.x + box.w - 50), box.y - 4);
-      ctx.restore();
-    }
+    plotRef.current = drawStrip(ctx, view, p, s, an);
   };
 
   const { canvasRef, invalidate } = useFigureCanvas(draw, { worldWidth: 1.5, worldHeight: 1, animate: false });
@@ -264,7 +279,7 @@ export default function SequenceStrip(props: SequenceStripProps) {
   const nFromPointer = (e: PointerEvent) => {
     const plot = plotRef.current;
     if (!plot) return null;
-    const n = ((e.offsetX - plot.box.x) / plot.box.w) * (win + 1) - 0.5;
+    const n = ((e.offsetX - plot.box.x) / plot.box.w) * (an.win + 1) - 0.5;
     return Math.max(0, Math.min(N_MAX, Math.round(n)));
   };
   const onPointerDown = (e: PointerEvent) => {
@@ -282,21 +297,273 @@ export default function SequenceStrip(props: SequenceStripProps) {
   const onPointerUp = () => {
     dragging.current = false;
   };
+  const usesM = s.mode === 'bound' || s.mode === 'infinite';
+  const mRange = mRangeOf(s.mode, s.seq);
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
       e.preventDefault();
       userSet({ N: Math.max(0, Math.min(N_MAX, s.N + (e.key === 'ArrowRight' ? 1 : -1))) });
     } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
-      userSet({ ei: Math.max(0, Math.min(EPSILONS.length - 1, s.ei + (e.key === 'ArrowDown' ? 1 : -1))) });
+      const up = e.key === 'ArrowUp';
+      if (usesM) userSet({ M: snapTo(s.M + (up ? 1 : -1) * mRange[2], mRange) });
+      else userSet({ ei: Math.max(0, Math.min(EPSILONS.length - 1, s.ei + (up ? -1 : 1))) });
     }
   };
 
-  const offered = props.seqs ?? [];
+  const offered = (props.seqs ?? []).filter((id) => fitsMode(id, s.mode));
+  const modes = (props.modes ?? []).filter((m) => STRIP_MODES.includes(m));
+  const ops = s.mode === 'combine' ? opsOf(pair(s.seq)) : [];
+  const showL = (s.mode === 'limit' || s.mode === 'combine' || s.mode === 'sandwich') && !an.claimed;
+  const lRange = lRangeOf(s.mode, s.seq);
+  const N = <b class="q">n = {an.upTo}</b>;
+
+  const epsSlider = (
+    <Slider
+      label={s.mode === 'cauchy' ? 'ε: הרוחב המותר' : 'ε: המרחק המותר מ-L'}
+      // forward narrows the band, like the arrow-down key: the lesson's move is "shrink ε"
+      value={s.ei}
+      min={0}
+      max={EPSILONS.length - 1}
+      step={1}
+      format={(v) => fmt(EPSILONS[Math.round(v)])}
+      onChange={(v) => userSet({ ei: Math.round(v) })}
+    />
+  );
+  const nSlider = (
+    <Slider label="N" value={s.N} min={0} max={Math.min(N_MAX, Math.max(60, an.win))} step={1} format={(v) => String(Math.round(v))} onChange={(v) => userSet({ N: Math.round(v) })} />
+  );
+  const mSlider = (
+    <Slider
+      label={s.mode === 'bound' ? 'M: החסם' : 'M: הרמה'}
+      value={s.M}
+      min={mRange[0]}
+      max={mRange[1]}
+      step={mRange[2]}
+      format={fmt}
+      onChange={(v) => userSet({ M: snapTo(v, mRange) })}
+    />
+  );
+
+  const bandVerdict = (what: string) =>
+    an.works ? (
+      <>
+        כל האיברים {what}אחרי N, עד {N}, בתוך הסביבה: ה-N הזה מתאים (על הטווח שנבדק).
+      </>
+    ) : (
+      <>
+        אחרי N, עד {N}, יש <b class="q">{an.bad.length}</b> איברים {what}מחוץ לסביבה, הראשון ב-<b class="q">n = {an.bad[0]}</b>.
+      </>
+    );
+
+  const minLine = (none: string, some: string) =>
+    s.showMin && (
+      <span data-readout="min">
+        {an.minN === null ? <>{none}</> : (
+          <>
+            {some} <b class="q">{an.minN}</b>
+          </>
+        )}
+      </span>
+    );
+
+  const readout = () => {
+    const epsRead = (
+      <span>
+        {s.mode === 'cauchy' ? 'הרוחב המותר' : 'הסביבה'}: <b class="q" data-readout="eps">ε = {fmt(eps)}</b>
+      </span>
+    );
+    const nRead = (
+      <span>
+        <b class="q" data-readout="N">N = {s.N}</b>
+      </span>
+    );
+    const mRead = (
+      <span>
+        <b class="q" data-readout="M">M = {fmt(s.M)}</b>
+      </span>
+    );
+    if (s.mode === 'bound') {
+      const b = an.bound!;
+      return (
+        <>
+          {mRead}
+          {nRead}
+          <span data-readout="verdict">
+            {an.works ? (
+              <>
+                כל האיברים בחלון, עד <b class="q">n = {an.win}</b>, נמצאים בין ⁦−M⁩ ל-M: ה-M הזה חוסם אותם.
+              </>
+            ) : (
+              <>
+                בחלון יש <b class="q">{an.bad.length}</b> איברים שערכם המוחלט גדול מ-M, הראשון ב-<b class="q">n = {an.bad[0]}</b>.
+              </>
+            )}{' '}
+            הערך המוחלט הגדול ביותר בחלון: <b class="q">{fmt(b.max)}</b>.
+          </span>
+          {s.showMin && (
+            <span data-readout="proof">
+              {b.proof === null ? (
+                <>הסדרה הזו אינה מתכנסת, ולכן אין לה חסם מההוכחה.</>
+              ) : (
+                <>
+                  <b class="q">B = max(|a₁|, …, |a_N|, |L| + 1) = {fmt(b.proof)}</b>.{' '}
+                  {b.fits1 ? (
+                    <>ה-N הזה מתאים ל-⁦ε = 1⁩, ולכן כל האיברים אחריו קרובים ל-L עד כדי 1, ו-B חוסם את כולם.</>
+                  ) : (
+                    <>
+                      ה-N הזה אינו מתאים ל-⁦ε = 1⁩, ולכן B אינו מובטח לחסום. ה-N הקטן ביותר שמתאים ל-⁦ε = 1⁩: <b class="q">{an.minN}</b>.
+                    </>
+                  )}
+                </>
+              )}
+            </span>
+          )}
+        </>
+      );
+    }
+    if (s.mode === 'infinite') {
+      const beyondText = an.infinite!.dir > 0 ? 'גדולים מ-M' : 'קטנים מ-M';
+      return (
+        <>
+          {mRead}
+          {nRead}
+          <span data-readout="verdict">
+            {an.works ? (
+              <>
+                כל האיברים אחרי N, עד {N}, {beyondText}: ה-N הזה מתאים (על הטווח שנבדק).
+              </>
+            ) : (
+              <>
+                אחרי N, עד {N}, יש <b class="q">{an.bad.length}</b> איברים שאינם {beyondText}, הראשון ב-<b class="q">n = {an.bad[0]}</b>.
+              </>
+            )}
+          </span>
+          {minLine('אין N שמתאים ל-M הזה.', 'ה-N הקטן ביותר שמתאים:')}
+        </>
+      );
+    }
+    if (s.mode === 'cauchy') {
+      const c = an.cauchy!;
+      return (
+        <>
+          {epsRead}
+          {nRead}
+          <span data-readout="verdict">
+            רוחב הזנב אחרי N, עד {N}: <b class="q">{fmt(c.max)} − {fmt(c.min)} = {fmt(c.spread)}</b>,{' '}
+            {c.below ? <>קטן מ-ε: כל שני איברים אחרי N רחוקים זה מזה פחות מ-ε (על הטווח שנבדק).</> : <>אינו קטן מ-ε.</>}
+          </span>
+          {minLine('אין N עד 500 שבו רוחב הזנב קטן מ-ε.', 'ה-N הקטן ביותר שבו רוחב הזנב קטן מ-ε:')}
+          {s.seq === 'harmonic' && (
+            <span data-readout="note">החלון הוא ראיה בלבד. ההוכחה היא טענה 2.10.6: ⁦H₂ₙ − Hₙ ≥ 1/2⁩ לכל n.</span>
+          )}
+        </>
+      );
+    }
+    if (s.mode === 'combine') {
+      const cb = an.combine!;
+      return (
+        <>
+          {epsRead}
+          {nRead}
+          <span data-readout="op">
+            <b class="q">{OP_FORMULA[cb.op]}</b>
+            {an.claimed ? <>, ושואפת ל-<b class="q">{fmt(an.L)}</b></> : <>; מועמד לגבול: <b class="q">L = {fmt(an.L)}</b></>}
+          </span>
+          <span data-readout="legend">■ aₙ · ◆ bₙ · ● cₙ</span>
+          <span data-readout="verdict">{bandVerdict('של cₙ ')}</span>
+          {s.showMin && (
+            <span data-readout="proof">
+              {cb.tol === null || cb.N1 === null || cb.N2 === null ? (
+                <>אחת הסדרות aₙ, bₙ אינה מתכנסת: המשפט אינו אומר דבר על cₙ.</>
+              ) : (
+                <>
+                  מההוכחה: <b class="q">N₁ = {cb.N1}</b> (אחריו ⁦|aₙ − a| &lt; {fmt(cb.tol.epsA)}⁩), <b class="q">N₂ = {cb.N2}</b> (אחריו ⁦|bₙ − b| &lt; {fmt(cb.tol.epsB)}⁩), ולכן{' '}
+                  <b class="q">N = max(N₁, N₂) = {Math.max(cb.N1, cb.N2)}</b> מתאים ל-cₙ.{' '}
+                  {an.minN !== null && (
+                    <>
+                      ה-N הקטן ביותר שמתאים ל-cₙ: <b class="q">{an.minN}</b>.
+                    </>
+                  )}
+                </>
+              )}
+            </span>
+          )}
+        </>
+      );
+    }
+    if (s.mode === 'sandwich') {
+      const sw = an.sandwich!;
+      return (
+        <>
+          {epsRead}
+          {nRead}
+          <span data-readout="legend">▲ aₙ ≤ ● bₙ ≤ ▼ cₙ</span>
+          <span data-readout="verdict">
+            {bandVerdict('של הסדרה האמצעית ')} ה-N הזה {sw.lowerOk ? 'מתאים' : 'אינו מתאים'} לסדרה התחתונה ו{sw.upperOk ? 'מתאים' : 'אינו מתאים'} לעליונה.
+          </span>
+          {s.showMin && (
+            <span data-readout="min">
+              הסדרה התחתונה: <b class="q">N₁ = {sw.Nlow ?? 'אין'}</b>, העליונה: <b class="q">N₂ = {sw.Nup ?? 'אין'}</b>
+              {sw.Nlow !== null && sw.Nup !== null && (
+                <>
+                  , ולכן <b class="q">N = max(N₁, N₂) = {Math.max(sw.Nlow, sw.Nup)}</b> מתאים לשלושתן
+                </>
+              )}
+              .
+            </span>
+          )}
+        </>
+      );
+    }
+    // limit: lesson 2.2's readout
+    return (
+      <>
+        {epsRead}
+        {nRead}
+        <span data-readout="verdict">
+          {an.works ? (
+            <>
+              כל האיברים אחרי N, עד <b class="q">n = {an.upTo}</b>, בתוך הסביבה: ה-N הזה מתאים (על הטווח שנבדק).
+            </>
+          ) : (
+            <>
+              אחרי N, עד <b class="q">n = {an.upTo}</b>, יש <b class="q">{an.bad.length}</b> איברים מחוץ לסביבה, הראשון ב-<b class="q">n = {an.bad[0]}</b>.
+            </>
+          )}
+        </span>
+        {s.showMin && (
+          <span data-readout="min">
+            {an.minN === null ? <>אין N שמתאים לסביבה הזו.</> : (
+              <>
+                ה-N הקטן ביותר שמתאים: <b class="q">{an.minN}</b>
+              </>
+            )}
+          </span>
+        )}
+      </>
+    );
+  };
+
+  const label = (() => {
+    const keys = 'גררו את קו ה-N; במקלדת: חץ ימינה ושמאלה מזיז את N';
+    if (s.mode === 'bound')
+      return `איור חי: איברי הסדרה ${an.formula} כנקודות מעל n, והקווים M ו-⁦−M⁩. איבר שערכו המוחלט קטן מ-M או שווה לו מלא, ואיבר מחוץ לתחום חלול ומוקף בטבעת. ${describe(s, an)} ${keys}, חץ למעלה ולמטה משנה את M. החלון הוא ראיה ולא הוכחה.`;
+    if (s.mode === 'infinite')
+      return `איור חי: איברי הסדרה ${an.formula} כנקודות מעל n, וקו אופקי בגובה M. איברים אחרי N ש${an.infinite!.dir > 0 ? 'מעל' : 'מתחת ל'}-M מלאים, והאחרים חלולים ומוקפים בטבעת. ${describe(s, an)} ${keys}, חץ למעלה ולמטה משנה את M. החלון הוא ראיה ולא הוכחה.`;
+    if (s.mode === 'cauchy')
+      return `איור חי: איברי הסדרה ${an.formula} כנקודות מעל n. אחרי N מסומן הזנב: רצועה מהאיבר הקטן ביותר עד הגדול ביותר, מלאה כשרוחבה קטן מ-ε, ולידה סרגל באורך ε. ${describe(s, an)} ${keys}, חץ למטה מצמצם את ε. החלון הוא ראיה ולא הוכחה.`;
+    if (s.mode === 'combine')
+      return `איור חי: ${an.formula}. aₙ בריבועים קטנים, bₙ במעוינים קטנים, ו-cₙ בנקודות. סביבה סביב הגבול של cₙ: איברי cₙ אחרי N בתוכה מלאים, ומחוצה לה חלולים ומוקפים בטבעת. ${describe(s, an)} ${keys}, חץ למטה מצמצם את הסביבה. החלון הוא ראיה ולא הוכחה.`;
+    if (s.mode === 'sandwich')
+      return `איור חי: שלוש סדרות, ${an.formula}: התחתונה במשולשים קטנים כלפי מעלה, העליונה במשולשים קטנים כלפי מטה, והאמצעית בנקודות. סביבה סביב L: איברי האמצעית אחרי N בתוכה מלאים, ומחוצה לה חלולים ומוקפים בטבעת. ${describe(s, an)} ${keys}, חץ למטה מצמצם את הסביבה. החלון הוא ראיה ולא הוכחה.`;
+    return `איור חי: איברי הסדרה ${an.formula} כנקודות מעל n. קו הגבול L = ${fmt(an.L)}, וסביבתו: המספרים שמרחקם ממנו קטן מ-ε = ${fmt(eps)}. קו אנכי מסמן את N = ${s.N}: איברים אחריו בתוך הסביבה מלאים, ואיברים אחריו מחוץ לסביבה חלולים ומוקפים בטבעת. ${an.works ? `כרגע כל האיברים מ-N + 1 עד ${an.upTo} בתוך הסביבה.` : `כרגע ${an.bad.length} איברים אחרי N, עד ${an.upTo}, מחוץ לסביבה.`} גררו את קו ה-N; במקלדת: חץ ימינה ושמאלה מזיז את N, חץ למטה מצמצם את הסביבה.`;
+  })();
+
   return (
     <SimShell
       fig={props.id}
-      label={`איור חי: איברי הסדרה ${seq.formula} כנקודות מעל n. קו הגבול L = ${fmt(s.L)}, וסביבתו: המספרים שמרחקם ממנו קטן מ-ε = ${fmt(eps)}. קו אנכי מסמן את N = ${s.N}: איברים אחריו בתוך הסביבה מלאים, ואיברים אחריו מחוץ לסביבה חלולים ומוקפים בטבעת. ${works ? `כרגע כל האיברים מ-N + 1 עד ${upTo} בתוך הסביבה.` : `כרגע ${outside.length} איברים אחרי N, עד ${upTo}, מחוץ לסביבה.`} גררו את קו ה-N; במקלדת: חץ ימינה ושמאלה מזיז את N, חץ למטה מצמצם את הסביבה.`}
+      label={label}
       canvasRef={canvasRef}
       aspect={1.5}
       live={live}
@@ -308,63 +575,41 @@ export default function SequenceStrip(props: SequenceStripProps) {
       onPointerUp={onPointerUp}
       onReset={() => {
         setS(fresh(props));
+        stepKey.current = null;
+        triedL.current = new Map();
         setLive('האיור אופס.');
       }}
-      readout={
-        <>
-          <span>
-            הסביבה: <b class="q" data-readout="eps">ε = {fmt(eps)}</b>
-          </span>
-          <span>
-            <b class="q" data-readout="N">N = {s.N}</b>
-          </span>
-          <span data-readout="verdict">
-            {works ? (
-              <>
-                כל האיברים אחרי N, עד <b class="q">n = {upTo}</b>, בתוך הסביבה: ה-N הזה מתאים (על הטווח שנבדק).
-              </>
-            ) : (
-              <>
-                אחרי N, עד <b class="q">n = {upTo}</b>, יש <b class="q">{outside.length}</b> איברים מחוץ לסביבה, הראשון ב-<b class="q">n = {outside[0]}</b>.
-              </>
-            )}
-          </span>
-          {s.showMin && (
-            <span data-readout="min">
-              {minN === null ? <>אין N שמתאים לסביבה הזו.</> : (
-                <>
-                  ה-N הקטן ביותר שמתאים: <b class="q">{minN}</b>
-                </>
-              )}
-            </span>
-          )}
-        </>
-      }
+      readout={readout()}
       controls={
         <>
           {offered.length > 1 && (
-            <div class="group" role="group" aria-label="הסדרה">
+            <div class="group" role="group" aria-label={s.mode === 'combine' ? 'זוג הסדרות' : s.mode === 'sandwich' ? 'שלשת הסדרות' : 'הסדרה'}>
               {offered.map((id) => (
-                <Toggle key={id} label={SEQUENCES[id].name} on={s.seq === id} onChange={() => pickSeq(id)} />
+                <Toggle key={id} label={nameOf(s.mode, id)} on={s.seq === id} onChange={() => pickSeq(id)} />
               ))}
             </div>
           )}
-          <Slider
-            label="ε: המרחק המותר מ-L"
-            // forward narrows the band, like the arrow-down key: the lesson's move is "shrink ε"
-            value={s.ei}
-            min={0}
-            max={EPSILONS.length - 1}
-            step={1}
-            format={(v) => fmt(EPSILONS[Math.round(v)])}
-            onChange={(v) => userSet({ ei: Math.round(v) })}
-          />
-          <Slider label="N" value={s.N} min={0} max={Math.min(N_MAX, Math.max(60, win))} step={1} format={(v) => String(Math.round(v))} onChange={(v) => userSet({ N: Math.round(v) })} />
-          {seq.limit === null && (
-            <Slider label="הגבול המועמד L" value={s.L} min={-1.5} max={1.5} step={0.1} format={fmt} onChange={(v) => userSet({ L: Math.round(v * 10) / 10 })} />
+          {modes.length > 1 && (
+            <div class="group" role="group" aria-label="התצוגה">
+              {modes.map((m) => (
+                <Toggle key={m} label={MODE_NAME[m]} on={s.mode === m} onChange={() => pickMode(m)} />
+              ))}
+            </div>
+          )}
+          {ops.length > 1 && (
+            <div class="group" role="group" aria-label="הפעולה">
+              {ops.map((op) => (
+                <Toggle key={op} label={`${OP_NAME[op]} ⁦${OP_EXPR[op]}⁩`} on={s.op === op} onChange={() => pickOp(op)} />
+              ))}
+            </div>
+          )}
+          {usesM ? mSlider : epsSlider}
+          {nSlider}
+          {showL && (
+            <Slider label="הגבול המועמד L" value={s.L} min={lRange[0]} max={lRange[1]} step={lRange[2]} format={fmt} onChange={(v) => userSet({ L: snapTo(v, lRange) })} />
           )}
           <div class="group">
-            <Toggle label="הראו את ה-N הקטן ביותר" on={s.showMin} onChange={(on) => userSet({ showMin: on })} />
+            <Toggle label={TOGGLE_LABEL[s.mode]} on={s.showMin} onChange={(on) => userSet({ showMin: on })} />
           </div>
         </>
       }

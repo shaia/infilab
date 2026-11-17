@@ -100,7 +100,7 @@ questions:
       - id: term
         label: 'עכשיו נחסום מלעיל. לכל $k\ge 2$: $\frac1{k^2}<\frac{1}{k(k-1)}=\frac{1}{k-1}-\frac1k$.'
       - id: sum
-        label: 'נסכם את אי-השוויון הזה מ-$k=2$ עד $k=n$; הסכום מימין מתקפל: $a_n<1+\left(1-\frac1n\right)<2$.'
+        label: 'נסכם את אי-השוויון הזה מ-$k=2$ עד $k=n$; הסכום מימין מתקפל: $a_n\le1+\left(1-\frac1n\right)<2$.'
       - id: thm
         label: 'הסדרה עולה וחסומה מלעיל על ידי 2, ולכן מתכנסת, לגבול שאינו גדול מ-2.'
     order: [up, term, sum, thm]

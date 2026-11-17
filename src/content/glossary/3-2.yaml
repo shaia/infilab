@@ -1,4 +1,4 @@
-# Terms first defined in lesson 3.2.
+# Terms first defined in lesson 3.2 (polynomial and rational function are first used in 2.4).
 - id: polynomial
   term: פולינום
   en: polynomial
@@ -6,14 +6,14 @@
     פונקציה מהצורה $p(x)=a_nx^n+\dots+a_1x+a_0$ עם מקדמים ממשיים. אם $a_n\neq0$, המעלה של $p$ היא $n$, ולפולינום
     ממעלה $n\ge1$ יש לכל היותר $n$ שורשים ממשיים.
   reject: [פולינם]
-  lesson: '3.2'
+  lesson: '2.4'
 - id: rational-function
   term: פונקציה רציונלית
   en: rational function
   definition: >-
     מנה $\frac{p(x)}{q(x)}$ של שני פולינומים, כש-$q$ אינו פולינום האפס. תחום ההגדרה הטבעי שלה הוא כל
     הנקודות שבהן $q(x)\neq0$.
-  lesson: '3.2'
+  lesson: '2.4'
 - id: inverse-trig-function
   term: פונקציה טריגונומטרית הפוכה
   en: inverse trigonometric function

@@ -1,0 +1,516 @@
+# Workbook of lesson 2.3 — proving a limit from the definition, and first properties.
+# Objectives (src/course.ts):
+#   OBJ-2.3-1  prove from the definition that a sequence tends to a limit, with an upper estimate of |aₙ − L|
+#   OBJ-2.3-2  prove that the limit is unique and that every convergent sequence is bounded
+#   OBJ-2.3-3  prove from the definition that a sequence diverges, e.g. (−1)ⁿ
+# Every number below was recomputed with smallestN of src/math/sequences.ts (2026-11-17).
+lesson: '2.3'
+practice:
+  - id: W-2.3-01
+    level: basic
+    objectives: [OBJ-2.3-1]
+    prompt: >-
+      הוכיחו מההגדרה ש-$a_n=\frac{4n-3}{2n+5}\to2$, עם $N$ מפורש לכל $\varepsilon>0$. מה ה-$N$ שנותנת ההוכחה
+      שלכם עבור $\varepsilon=0.01$, ומה ה-$N$ הקטן ביותר?
+    answer: >-
+      $|a_n-2|=\frac{13}{2n+5}<\frac{13}{2n}$, ולכן $N=\left\lceil\frac{13}{2\varepsilon}\right\rceil$ מתאים. עבור
+      $\varepsilon=0.01$ זה $650$; ה-$N$ הקטן ביותר הוא $647$.
+    solution:
+      - kind: computation
+        text: >-
+          $$a_n-2=\frac{4n-3-2(2n+5)}{2n+5}=\frac{-13}{2n+5},\qquad |a_n-2|=\frac{13}{2n+5}.$$
+      - kind: idea
+        text: >-
+          הערכה מלמעלה: המכנה $2n+5$ גדול מ-$2n>0$, ולפי למה 0.9.18 הקטנת המכנה מגדילה את השבר. מקבלים
+          $|a_n-2|<\frac{13}{2n}$, ביטוי ששואף לאפס.
+      - kind: step
+        text: >-
+          יהי $\varepsilon>0$, ונבחר $N=\left\lceil\frac{13}{2\varepsilon}\right\rceil$, טבעי לפי למה 2.2.17 (ג).
+          יהי $n>N$. אז $n>\frac{13}{2\varepsilon}$, כלומר $\frac{13}{2n}<\varepsilon$, ולכן
+          $|a_n-2|<\frac{13}{2n}<\varepsilon$.
+      - kind: computation
+        text: >-
+          עבור $\varepsilon=0.01$: $\frac{13}{0.02}=650$, ולכן $N=650$. ה-$N$ הקטן ביותר: $\frac{13}{2n+5}<0.01$
+          שקול ל-$2n+5>1300$, כלומר ל-$n>647.5$. לכן $S_{0.01}=\{1,\dots,647\}$, וה-$N$ הקטן ביותר הוא $647$.
+      - kind: check
+        text: >-
+          $n=647$: $\frac{13}{1299}\approx0.010008\ge0.01$, בחוץ. $n=648$: $\frac{13}{1301}\approx0.009992<0.01$.
+      - kind: result
+        text: >-
+          $a_n\to2$ עם $N=\left\lceil\frac{13}{2\varepsilon}\right\rceil$; עבור $\varepsilon=0.01$ ההוכחה נותנת
+          $650$ והקטן ביותר הוא $647$. שניהם מתאימים.
+
+  - id: W-2.3-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-2.3-2]
+    prompt: >-
+      נתון ש-$a_n=\frac{n^2+20}{n^2+1}\to1$.
+
+      (א) הסבירו למה $M=|1|+1=2$ אינו חסם של $|a_n|$, אף שהוא מופיע בהוכחת משפט 2.3.3.
+
+      (ב) מצאו את ה-$N$ הקטן ביותר שמתאים ל-$\varepsilon=1$, וחשבו את החסם $M$ שבונה ההוכחה של משפט 2.3.3.
+
+      (ג) האם יש חסם קטן מה-$M$ של (ב)?
+    answer: >-
+      (א) $|L|+1$ חוסם רק את האיברים אחרי $N$; $a_1=10.5>2$. (ב) $N=4$, $M=10.5$. (ג) לא: $a_1=10.5$ הוא איבר,
+      ולכן כל חסם גדול או שווה לו.
+    solution:
+      - kind: computation
+        text: >-
+          $a_n-1=\frac{19}{n^2+1}>0$. האיברים הראשונים: $a_1=\frac{21}{2}=10.5$, $a_2=\frac{24}{5}=4.8$,
+          $a_3=\frac{29}{10}=2.9$, $a_4=\frac{36}{17}\approx2.118$, $a_5=\frac{45}{26}\approx1.731$.
+      - kind: step
+        text: >-
+          (א) בהוכחה, $|a_n|<|L|+1$ רק לכל $n>N$, כאשר $N$ מתאים ל-$\varepsilon=1$. האיברים $a_1,\dots,a_N$ לא
+          מכוסים בחסם הזה, ולכן ההוכחה לוקחת מקסימום שכולל אותם. כאן $a_1=10.5>2$.
+      - kind: computation
+        text: >-
+          (ב) $|a_n-1|<1$ שקול ל-$19<n^2+1$, כלומר ל-$n^2>18$, כלומר ל-$n\ge5$ (כי $4^2=16$ ו-$5^2=25$). לכן
+          $S_1=\{1,2,3,4\}$, וה-$N$ הקטן ביותר הוא $4$.
+      - kind: computation
+        text: >-
+          $$M=\max\{|a_1|,|a_2|,|a_3|,|a_4|,\ |1|+1\}=\max\{10.5,\ 4.8,\ 2.9,\ 2.118\ldots,\ 2\}=10.5 .$$
+      - kind: step
+        text: >-
+          (ג) כל חסם $M'$ של $|a_n|$ מקיים בפרט $M'\ge|a_1|=10.5$. לכן $10.5$ הוא החסם הקטן ביותר. (הסדרה יורדת,
+          כי $n^2+1$ עולה, ולכן האיבר הראשון הוא הגדול ביותר; אבל לתשובה מספיק ש-$a_1$ הוא איבר.)
+      - kind: check
+        text: >-
+          בסדרה $\frac{3n^2+n}{n^2+1}$ של השיעור החסם מההוכחה ($4$) גדול מהחסם הקטן ביותר ($\frac{114}{37}$). כאן
+          הם יוצאים שווים. ההוכחה לא מבטיחה את החסם הקטן ביותר, רק חסם.
+      - kind: result
+        text: >-
+          (א) $2$ חוסם רק את הזנב. (ב) $N=4$, $M=10.5$. (ג) אין חסם קטן מ-$10.5$.
+
+  - id: W-2.3-03
+    level: basic
+    objectives: [OBJ-2.3-3]
+    prompt: >-
+      הוכיחו שהסדרה $a_n=(-1)^n+\frac1n$ מתבדרת.
+    answer: >-
+      $|a_{n+1}-a_n|\ge2-\frac{1}{n(n+1)}\ge\frac32$ לכל $n$, ולכן $a_{n+1}-a_n$ אינה שואפת ל-$0$, ולפי טענה 2.3.4
+      הסדרה אינה מתכנסת.
+    solution:
+      - kind: idea
+        text: >-
+          איברים עוקבים רחוקים זה מזה בערך $2$. לפי טענה 2.3.4, בסדרה מתכנסת ההפרשים העוקבים שואפים לאפס.
+      - kind: computation
+        text: >-
+          $$a_{n+1}-a_n=(-1)^{n+1}-(-1)^n+\frac1{n+1}-\frac1n=-2(-1)^n-\frac{1}{n(n+1)}.$$
+      - kind: step
+        text: >-
+          לפי אי-שוויון המשולש ההפוך (מסקנה 0.9.9), $|u+v|\ge|u|-|v|$. עם $u=-2(-1)^n$ ו-$v=-\frac1{n(n+1)}$:
+          $|a_{n+1}-a_n|\ge2-\frac{1}{n(n+1)}\ge2-\frac12=\frac32$, כי $n(n+1)\ge2$.
+      - kind: step
+        text: >-
+          לכן $a_{n+1}-a_n$ אינה שואפת ל-$0$: לפי משפט 2.2.8 עם $\varepsilon=1$, לכל $N$ המקום $N+1$ נותן
+          $|a_{N+2}-a_{N+1}|\ge\frac32\ge1$.
+      - kind: theorem
+        text: >-
+          אילו $a_n\to L$ לאיזה $L$, לפי טענה 2.3.4 היה $a_{n+1}-a_n\to0$. סתירה, ולכן אין $L$ כזה.
+      - kind: check
+        text: >-
+          $a_1=0$, $a_2=1.5$: ההפרש $1.5$ בדיוק, והחישוב על $10^5$ המקומות הראשונים מראה שזה ההפרש הקטן ביותר.
+      - kind: result
+        text: '$(-1)^n+\frac1n$ מתבדרת.'
+
+  - id: W-2.3-04
+    level: mid
+    objectives: [OBJ-2.3-1]
+    prompt: >-
+      הוכיחו מההגדרה ש-$a_n=\frac{n+3\sqrt n}{n+1}\to1$. מה ה-$N$ שנותנת ההוכחה שלכם עבור $\varepsilon=0.1$?
+    answer: >-
+      $0<a_n-1=\frac{3\sqrt n-1}{n+1}<\frac{3}{\sqrt n}$, ולכן $N=\left\lceil\frac{9}{\varepsilon^2}\right\rceil$
+      מתאים; עבור $\varepsilon=0.1$ זה $900$ (ה-$N$ הקטן ביותר הוא $877$).
+    solution:
+      - kind: computation
+        text: >-
+          $$a_n-1=\frac{n+3\sqrt n-(n+1)}{n+1}=\frac{3\sqrt n-1}{n+1}.$$
+
+          כיוון ש-$\sqrt n\ge1$ (טענה 1.7.5 (ג)), המונה $3\sqrt n-1\ge2>0$, ולכן $|a_n-1|=\frac{3\sqrt n-1}{n+1}$.
+      - kind: idea
+        text: >-
+          מגדילים את המונה ל-$3\sqrt n$ ומקטינים את המכנה ל-$n$ (למה 0.9.18), ומקבלים $\frac{3\sqrt n}{n}=\frac{3}{\sqrt n}$,
+          כי $n=\sqrt n\cdot\sqrt n$. זו הערכה עם $\frac{C}{\sqrt n}$, $C=3$.
+      - kind: step
+        text: >-
+          יהי $\varepsilon>0$, ונבחר $N=\left\lceil\frac9{\varepsilon^2}\right\rceil$. יהי $n>N$. אז
+          $n>\frac9{\varepsilon^2}=\left(\frac3\varepsilon\right)^2$, ולפי טענה 1.7.5 (ג) ו-(א)
+          $\sqrt n>\frac3\varepsilon$, כלומר $\frac3{\sqrt n}<\varepsilon$.
+      - kind: step
+        text: >-
+          לכן $|a_n-1|=\frac{3\sqrt n-1}{n+1}<\frac{3\sqrt n}{n}=\frac3{\sqrt n}<\varepsilon$. (האי-שוויון הראשון חזק,
+          כי גם המונה גדל וגם המכנה קטן.)
+      - kind: computation
+        text: '$\varepsilon=0.1$: $\frac{9}{0.01}=900$, ולכן $N=900$.'
+      - kind: check
+        text: >-
+          ה-$N$ הקטן ביותר, בחישוב: $877$. $n=877$: $\frac{3\sqrt{877}-1}{878}\approx0.10005$, בחוץ; $n=878$:
+          $\approx0.09999$, בפנים. ההערכה עלתה $23$ מקומות.
+      - kind: result
+        text: '$a_n\to1$, עם $N=\left\lceil\frac{9}{\varepsilon^2}\right\rceil$; עבור $\varepsilon=0.1$, $N=900$.'
+
+  - id: W-2.3-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.3-2, OBJ-2.3-3]
+    prompt: >-
+      הוכיחו או הפריכו:
+
+      (א) אם $a_{2n}\to L$ ו-$a_{2n-1}\to M$ עם $L\ne M$, אז $(a_n)$ מתבדרת.
+
+      (ב) אם $(a_n)$ מתבדרת, אז $(a_{2n})$ ו-$(a_{2n-1})$ מתכנסות לשני גבולות שונים.
+    answer: >-
+      (א) נכון: אילו $a_n\to K$, לפי דוגמה 6 של שיעור 2.2 גם $a_{2n}\to K$ ו-$a_{2n-1}\to K$, ולפי יחידות הגבול
+      $L=K=M$. (ב) לא נכון: $a_n=n$.
+    solution:
+      - kind: idea
+        text: >-
+          ב-(א) מניחים בשלילה שהסדרה מתכנסת, ומקבלים לכל אחת משתי הסדרות החלקיות שני גבולות: את הנתון ואת הגבול
+          של $a_n$. יחידות הגבול סוגרת את הוויכוח.
+      - kind: step
+        text: >-
+          (א) נניח בשלילה ש-$a_n\to K$ לאיזה $K\in\mathbb{R}$. לפי דוגמה 6 (א) של שיעור 2.2, $a_{2n}\to K$ וגם
+          $a_{2n-1}\to K$.
+      - kind: theorem
+        text: >-
+          הסדרה $(a_{2n})$ שואפת ל-$L$ ול-$K$, ולפי משפט 2.3.1 $L=K$. הסדרה $(a_{2n-1})$ שואפת ל-$M$ ול-$K$, ולכן
+          $M=K$. אז $L=M$, בסתירה לנתון. לכן $(a_n)$ מתבדרת.
+      - kind: step
+        text: >-
+          (ב) הפרכה: $a_n=n$ מתבדרת (אינה חסומה, משפט 2.3.3). גם $a_{2n}=2n$ אינה חסומה, ולכן מתבדרת, כך שאין לה
+          גבול בכלל, ובוודאי שלא "גבול שונה".
+      - kind: check
+        text: >-
+          (א) נותן דרך קצרה ל-$(-1)^n$: $a_{2n}=1\to1$ ו-$a_{2n-1}=-1\to-1$, ו-$1\ne-1$. בשיעור 2.9 זה יהיה מקרה
+          פרטי של משפט על תת-סדרות.
+      - kind: result
+        text: '(א) נכון; (ב) לא נכון.'
+
+  - id: W-2.3-06
+    level: mid
+    objectives: [OBJ-2.3-3]
+    prompt: >-
+      נגדיר $a_n=\left\lfloor\frac n3\right\rfloor-\left\lfloor\frac{n-1}3\right\rfloor$. חשבו את $a_n$ לפי השארית של $n$
+      בחלוקה ב-$3$, והוכיחו שהסדרה מתבדרת.
+    answer: >-
+      $a_n=1$ כש-$3\mid n$, ו-$a_n=0$ אחרת. זו סדרת שלמים שאינה קבועה החל ממקום מסוים, ולכן לפי טענה 2.3.7
+      היא מתבדרת.
+    solution:
+      - kind: computation
+        text: >-
+          לפי חילוק עם שארית (משפט 1.3.11), כל $n\in\mathbb{N}$ הוא $3k$, $3k+1$ או $3k+2$, עם $k$ שלם. לפי טענה
+          1.6.6 (א) ו-(ד): אם $n=3k$, אז $a_n=k-\left\lfloor k-\frac13\right\rfloor=k-(k-1)=1$. אם $n=3k+1$, אז
+          $a_n=\left\lfloor k+\frac13\right\rfloor-k=0$. אם $n=3k+2$, אז
+          $a_n=\left\lfloor k+\frac23\right\rfloor-\left\lfloor k+\frac13\right\rfloor=k-k=0$.
+      - kind: idea
+        text: >-
+          כל $a_n$ שלם. לפי טענה 2.3.7, אילו הסדרה הייתה מתכנסת, היא הייתה קבועה החל ממקום מסוים. מספיק למצוא
+          אחרי כל $N$ שני מקומות עם ערכים שונים.
+      - kind: step
+        text: >-
+          יהי $N\in\mathbb{N}$. המקומות $3N$ ו-$3N+1$ גדולים מ-$N$, ו-$a_{3N}=1\ne0=a_{3N+1}$. לכן אין $N$ שאחריו
+          הסדרה קבועה.
+      - kind: theorem
+        text: >-
+          לפי טענה 2.3.7 (בקונטרפוזיטיב), הסדרה אינה מתכנסת.
+      - kind: check
+        text: 'החישוב נותן $a_1,\dots,a_7=0,0,1,0,0,1,0$.'
+      - kind: result
+        text: '$a_n=1$ כש-$3$ מחלק את $n$ ו-$0$ אחרת; הסדרה מתבדרת.'
+
+  - id: W-2.3-07
+    level: mid
+    objectives: [OBJ-2.3-1, OBJ-2.3-2]
+    prompt: >-
+      נגדיר $a_n=\frac{5n^2-2}{n^2+n}$.
+
+      (א) הוכיחו מההגדרה ש-$a_n\to5$.
+
+      (ב) מצאו את ה-$N$ הקטן ביותר שמתאים ל-$\varepsilon=1$, ואת החסם $M$ שבונה ממנו ההוכחה של משפט 2.3.3.
+
+      (ג) הוכיחו ש-$0<a_n<5$ לכל $n$, ושאף מספר $q<5$ אינו חוסם את הסדרה מלעיל.
+    answer: >-
+      (א) $|a_n-5|=\frac{5n+2}{n(n+1)}\le\frac7n$. (ב) $N=4$, $M=6$. (ג) $a_n-5<0$ ו-$5n^2-2>0$; לכל $q<5$, לפי טענה
+      2.2.15 (א) יש איברים גדולים מ-$q$.
+    solution:
+      - kind: computation
+        text: >-
+          $$a_n-5=\frac{5n^2-2-5(n^2+n)}{n^2+n}=\frac{-(5n+2)}{n(n+1)},\qquad |a_n-5|=\frac{5n+2}{n(n+1)}.$$
+      - kind: step
+        text: >-
+          (א) המונה: $2\le2n$, ולכן $5n+2\le7n$. המכנה: $n(n+1)\ge n^2>0$. לפי למה 0.9.18, $|a_n-5|\le\frac{7n}{n^2}=\frac7n$.
+          יהי $\varepsilon>0$, $N=\left\lceil\frac7\varepsilon\right\rceil$, ו-$n>N$: אז $\frac7n<\varepsilon$, ולכן
+          $|a_n-5|<\varepsilon$.
+      - kind: computation
+        text: >-
+          (ב) $|a_n-5|<1$ שקול ל-$5n+2<n^2+n$, כלומר ל-$n^2-4n-2>0$. ב-$n=4$: $16-16-2=-2<0$, בחוץ. לכל $n\ge5$:
+          $n^2-4n-2=n(n-4)-2\ge5-2>0$, בפנים. ($n=1,2,3$ בחוץ: $-5,-6,-5<0$.) לכן $S_1=\{1,2,3,4\}$ ו-$N=4$.
+      - kind: computation
+        text: >-
+          $a_1=\frac32$, $a_2=3$, $a_3=\frac{43}{12}\approx3.583$, $a_4=\frac{78}{20}=3.9$, ולכן
+          $M=\max\{1.5,\ 3,\ 3.583\ldots,\ 3.9,\ |5|+1\}=6$.
+      - kind: step
+        text: >-
+          (ג) $a_n-5=\frac{-(5n+2)}{n(n+1)}<0$, ולכן $a_n<5$. ו-$5n^2-2\ge3>0$, ולכן $a_n>0$. לכן $|a_n|<5$ לכל $n$:
+          החסם $5$ טוב יותר מ-$6$ של ההוכחה.
+      - kind: theorem
+        text: >-
+          יהי $q<5$. כיוון ש-$a_n\to5$ ו-$q<5$, לפי טענה 2.2.15 (א) יש $N'$ כך ש-$a_n>q$ לכל $n>N'$; בפרט
+          $a_{N'+1}>q$, ו-$q$ אינו חסם מלעיל.
+      - kind: check
+        text: >-
+          לפי (ג), $5$ הוא הסופרמום של קבוצת הערכים, והוא אינו מתקבל: אין איבר ששווה ל-$5$, ואין איבר גדול ביותר.
+          ה-$N$ הקטן ביותר עבור $\varepsilon=0.01$, בחישוב, הוא $499$; הנוסחה של (א) נותנת $700$.
+      - kind: result
+        text: '(א) $N=\left\lceil\frac7\varepsilon\right\rceil$. (ב) $N=4$, $M=6$. (ג) $0<a_n<5$, ו-$5$ הוא החסם מלעיל הקטן ביותר.'
+
+  - id: W-2.3-08
+    level: exam
+    objectives: [OBJ-2.3-2]
+    prompt: >-
+      תהי $(a_n)$ סדרה עם $a_n\ne0$ לכל $n$, ונניח ש-$a_n\to L$ ו-$L\ne0$.
+
+      (א) הוכיחו שהסדרה $\left(\frac1{a_n}\right)$ חסומה.
+
+      (ב) הראו שההנחה $L\ne0$ נחוצה.
+    answer: >-
+      (א) מ-$N$ מסוים $|a_n|>\frac{|L|}2$ (דוגמה 5 של שיעור 2.2), ולכן $\frac1{|a_n|}<\frac2{|L|}$; החסם הוא
+      $\max\left\{\frac1{|a_1|},\dots,\frac1{|a_N|},\ \frac2{|L|}\right\}$. (ב) $a_n=\frac1n\to0$, ו-$\frac1{a_n}=n$
+      אינה חסומה.
+    solution:
+      - kind: idea
+        text: >-
+          כמו בהוכחת משפט 2.3.3: את הזנב חוסמים בעזרת הגבול, ואת המספר הסופי של האיברים הראשונים במקסימום. כאן
+          הזנב רחוק מאפס, ולכן ההופכיים שלו חסומים.
+      - kind: theorem
+        text: >-
+          לפי דוגמה 5 (א) של שיעור 2.2 (גבול שונה מאפס מרחיק את הזנב מאפס), יש $N\in\mathbb{N}$ כך ש-$|a_n|>\frac{|L|}2>0$
+          לכל $n>N$.
+      - kind: step
+        text: >-
+          יהי $n>N$. מ-$|a_n|>\frac{|L|}2>0$, כפל ב-$\frac{2}{|a_n|\,|L|}>0$ נותן $\frac{2}{|L|}>\frac1{|a_n|}$. כלומר
+          $\left|\frac1{a_n}\right|<\frac2{|L|}$.
+      - kind: step
+        text: >-
+          הקבוצה $\left\{\frac1{|a_1|},\dots,\frac1{|a_N|},\ \frac2{|L|}\right\}$ סופית ולא ריקה (כל האיברים מוגדרים כי
+          $a_n\ne0$), ולפי טענה 1.3.12 יש לה מקסימום $M$. לכל $n\le N$, $\left|\frac1{a_n}\right|\le M$ כי הוא איבר
+          בקבוצה; לכל $n>N$, $\left|\frac1{a_n}\right|<\frac2{|L|}\le M$. לפי טענה 2.1.5 (א) הסדרה חסומה.
+      - kind: step
+        text: >-
+          (ב) $a_n=\frac1n\ne0$ ו-$a_n\to0$ (טענה 2.2.2 (ב)), אבל $\frac1{a_n}=n$, שאינה חסומה מלעיל לפי תכונת ארכימדס.
+      - kind: check
+        text: >-
+          איפה השתמשנו בכל הנחה: $a_n\ne0$ כדי ש-$\frac1{a_n}$ תהיה מוגדרת לכל $n$; $L\ne0$ כדי שהסביבה
+          ברדיוס $\frac{|L|}2$ לא תכיל את $0$. דוגמה: $a_n=1+\frac{(-1)^n}{n}$, $a_1=0$, אינה מקיימת את ההנחה הראשונה.
+      - kind: result
+        text: '(א) $\left|\frac1{a_n}\right|\le\max\left\{\frac1{|a_1|},\dots,\frac1{|a_N|},\frac2{|L|}\right\}$. (ב) $\frac1n$.'
+
+  - id: W-2.3-09
+    level: exam
+    qualitative: true
+    objectives: [OBJ-2.3-3]
+    prompt: >-
+      הוכיחו או הפריכו:
+
+      (א) אם $(a_n)$ מתבדרת, אז גם $(|a_n|)$ מתבדרת.
+
+      (ב) אם $(|a_n|)$ מתבדרת, אז גם $(a_n)$ מתבדרת.
+
+      (ג) אם $a_n+a_{n+1}\to0$, אז $a_n\to0$.
+
+      (ד) אם $a_n\to0$, אז $a_n+a_{n+1}\to0$.
+    answer: >-
+      (א) לא נכון: $(-1)^n$. (ב) נכון: הקונטרפוזיטיב של טענה 2.3.6. (ג) לא נכון: $(-1)^n$. (ד) נכון, עם
+      $\frac\varepsilon2$ כמו בטענה 2.3.4.
+    solution:
+      - kind: step
+        text: >-
+          (א) הפרכה: $a_n=(-1)^n$ מתבדרת (מסקנה 2.3.5), ו-$|a_n|=1$ קבועה, ולכן מתכנסת ל-$1$ (טענה 2.2.2 (א)).
+      - kind: theorem
+        text: >-
+          (ב) טענה 2.3.6: אם $(a_n)$ מתכנסת, ל-$L$, אז $|a_n|\to|L|$, כלומר $(|a_n|)$ מתכנסת. בקונטרפוזיטיב (טענה
+          0.4.6): אם $(|a_n|)$ אינה מתכנסת, אז $(a_n)$ אינה מתכנסת.
+      - kind: step
+        text: >-
+          (ג) הפרכה: $a_n=(-1)^n$. לכל $n$, $a_n+a_{n+1}=(-1)^n(1-1)=0$, ולכן $a_n+a_{n+1}\to0$; אבל $(-1)^n$
+          מתבדרת, ובפרט אינה שואפת ל-$0$.
+      - kind: step
+        text: >-
+          (ד) יהי $\varepsilon>0$ ו-$N$ שמתאים ל-$\frac\varepsilon2$ עבור $a_n\to0$. יהי $n>N$; אז גם $n+1>N$, ולפי
+          אי-שוויון המשולש $|a_n+a_{n+1}|\le|a_n|+|a_{n+1}|<\frac\varepsilon2+\frac\varepsilon2=\varepsilon$.
+      - kind: check
+        text: >-
+          (ג) ו-(ד) הם שני הכיוונים של אותה גרירה, ורק אחד מהם נכון, כמו בטענות 2.3.4 ו-2.3.6: תנאי שסדרה
+          מתכנסת מקיימת אינו בהכרח תנאי שמבטיח התכנסות.
+      - kind: result
+        text: '(א) לא נכון; (ב) נכון; (ג) לא נכון; (ד) נכון.'
+
+  - id: W-2.3-10
+    level: exam
+    objectives: [OBJ-2.3-1, OBJ-2.3-3]
+    prompt: >-
+      תהי $(a_n)$ סדרה עם $a_n\to L$, ונגדיר $b_n=(-1)^na_n$. הוכיחו: $(b_n)$ מתכנסת אם ורק אם $L=0$. הסיקו
+      ש-$(-1)^n\frac{n}{n+1}$ מתבדרת ו-$\frac{(-1)^n}{n}\to0$.
+    answer: >-
+      אם $L=0$: $|b_n-0|=|a_n-0|$, ולכן $b_n\to0$. אם $L\ne0$: מ-$N$ מסוים $|b_{n+1}-b_n|=|a_{n+1}+a_n|>|L|$, ולכן
+      ההפרשים העוקבים אינם שואפים ל-$0$, ולפי טענה 2.3.4 $(b_n)$ מתבדרת.
+    solution:
+      - kind: idea
+        text: >-
+          כשהגבול $0$, הסימן לא משנה את המרחק לאפס. כשהגבול אינו $0$, איברים עוקבים של $b_n$ קרובים ל-$L$ ול-$-L$
+          בהתאמה, ולכן רחוקים זה מזה בערך $2|L|$; ההפרשים העוקבים לא שואפים לאפס.
+      - kind: step
+        text: >-
+          ($\Leftarrow$) נניח $L=0$. לכל $n$, $|b_n-0|=|(-1)^n|\,|a_n|=|a_n-0|$. לכן כל $N$ שמתאים ל-$\varepsilon$ עבור
+          $a_n\to0$ מתאים גם עבור $b_n\to0$.
+      - kind: computation
+        text: >-
+          ($\Rightarrow$, בקונטרפוזיטיב) נניח $L\ne0$, ונראה ש-$(b_n)$ מתבדרת. לכל $n$:
+
+          $$b_{n+1}-b_n=(-1)^{n+1}a_{n+1}-(-1)^na_n=(-1)^{n+1}(a_{n+1}+a_n),\qquad |b_{n+1}-b_n|=|a_{n+1}+a_n|.$$
+      - kind: step
+        text: >-
+          יהי $N$ שמתאים ל-$\varepsilon=\frac{|L|}2>0$ עבור $a_n\to L$, ויהי $n>N$. נכתוב
+          $a_{n+1}+a_n=2L+(a_{n+1}-L)+(a_n-L)$. לפי מסקנה 0.9.9 ומשפט 0.9.7:
+
+          $$|a_{n+1}+a_n|\ge2|L|-|a_{n+1}-L|-|a_n-L|>2|L|-\frac{|L|}2-\frac{|L|}2=|L| .$$
+      - kind: step
+        text: >-
+          לכן $b_{n+1}-b_n$ אינה שואפת ל-$0$: עם $\varepsilon=|L|$, לכל $N'$ המקום $n=\max(N,N')+1>N'$ נותן
+          $|b_{n+1}-b_n|>|L|$ (משפט 2.2.8). אילו $(b_n)$ הייתה מתכנסת, טענה 2.3.4 הייתה נותנת $b_{n+1}-b_n\to0$.
+          לכן $(b_n)$ מתבדרת.
+      - kind: step
+        text: >-
+          מסקנות: $\frac{n}{n+1}\to1$, כי $\left|\frac n{n+1}-1\right|=\frac1{n+1}<\frac1n$ (טענה 2.2.13); $1\ne0$, ולכן
+          $(-1)^n\frac{n}{n+1}$ מתבדרת. ו-$\frac1n\to0$, ולכן $\frac{(-1)^n}n\to0$.
+      - kind: check
+        text: >-
+          עם $a_n=\frac n{n+1}$, $L=1$: $|b_2-b_1|=\frac23+\frac12=\frac76>1=|L|$, בהתאם לחסם. הכיוון ($\Rightarrow$)
+          נותן את דוגמה 4 של השיעור כמקרה פרטי.
+      - kind: result
+        text: '$(b_n)$ מתכנסת אם ורק אם $L=0$, ואז $b_n\to0$.'
+
+challenge:
+  - id: W-2.3-c1
+    stars: 1
+    objectives: [OBJ-2.3-1, OBJ-2.3-3]
+    prompt: >-
+      (א) הוכיחו מההגדרה ש-$a_n=\sqrt{4n^2+n}-2n\to\frac14$, עם $N$ מפורש לכל $\varepsilon>0$. מה ה-$N$ שנותנת
+      ההוכחה שלכם עבור $\varepsilon=0.001$?
+
+      (ב) הוכיחו שהסדרה $b_n=\sqrt{4n^2+n}-n$ מתבדרת.
+    answer: >-
+      (א) $a_n-\frac14=\frac{-n}{4\left(\sqrt{4n^2+n}+2n\right)^2}$, ולכן $\left|a_n-\frac14\right|\le\frac{1}{64n}$
+      ו-$N=\left\lceil\frac{1}{64\varepsilon}\right\rceil$ מתאים; עבור $\varepsilon=0.001$ זה $16$ (ה-$N$ הקטן ביותר
+      הוא $15$). (ב) $b_n>n$, ולכן $(b_n)$ אינה חסומה, ולפי משפט 2.3.3 היא מתבדרת.
+    solution:
+      - kind: idea
+        text: >-
+          (א) כפל בצמוד פעמיים: פעם כדי לכתוב את $a_n$ כשבר בלי הפרש של שני גדלים קרובים, ופעם כדי לכתוב כך את
+          המרחק ל-$\frac14$. אחר כך מקטינים את המכנה (למה 0.9.18) ומקבלים הערכה $\frac Cn$. ב-(ב) מחסירים רק $n$,
+          והשורש גדול מ-$2n$, ולכן נשאר יותר מ-$n$.
+      - kind: computation
+        text: >-
+          נסמן $S_n=\sqrt{4n^2+n}$. מהגדרת השורש (שיעור 1.7) $S_n^2=4n^2+n$, ולפי טענה 1.7.5 (ג) ו-(א)
+          $S_n>\sqrt{4n^2}=|2n|=2n>0$, כי $4n^2+n>4n^2$. לכן $S_n+2n>0$, וכפל וחילוק בצמוד נותנים
+
+          $$a_n=S_n-2n=\frac{(S_n-2n)(S_n+2n)}{S_n+2n}=\frac{S_n^2-4n^2}{S_n+2n}=\frac{n}{S_n+2n}.$$
+      - kind: computation
+        text: >-
+          המרחק ל-$\frac14$, עם השוויון $S_n-2n=\frac{n}{S_n+2n}$ מהשורה הקודמת:
+
+          $$a_n-\frac14=\frac{4n-(S_n+2n)}{4(S_n+2n)}=\frac{-(S_n-2n)}{4(S_n+2n)}=\frac{-n}{4(S_n+2n)^2}.$$
+      - kind: step
+        text: >-
+          הערכה: $S_n+2n>2n+2n=4n>0$, ולכן $(S_n+2n)^2>16n^2>0$ (כפל אי-שוויונות בין מספרים חיוביים, שיעור 1.2).
+          לפי למה 0.9.18, עם המונה $n\ge0$ והמכנה $4(S_n+2n)^2\ge64n^2>0$, לכל $n\in\mathbb{N}$:
+
+          $$\left|a_n-\frac14\right|=\frac{n}{4(S_n+2n)^2}\le\frac{n}{64n^2}=\frac{1}{64n}.$$
+      - kind: step
+        text: >-
+          יהי $\varepsilon>0$, ונבחר $N=\left\lceil\frac{1}{64\varepsilon}\right\rceil$, טבעי לפי למה 2.2.17 (ג). יהי
+          $n>N$. אז $n>\frac{1}{64\varepsilon}$ (למה 2.2.17 (א)), כלומר $\frac{1}{64n}<\varepsilon$, ולכן
+          $\left|a_n-\frac14\right|\le\frac{1}{64n}<\varepsilon$. לכן $a_n\to\frac14$.
+      - kind: computation
+        text: >-
+          עבור $\varepsilon=0.001$: $\frac{1}{0.064}=15.625$, ולכן $N=16$. בחישוב, ה-$N$ הקטן ביותר הוא $15$:
+          $n=15$ נותן $\left|a_{15}-\frac14\right|\approx0.001033$, בחוץ, ו-$n=16$ נותן $\approx0.000969$, בפנים. ההערכה
+          כמעט הדוקה: $(S_n+2n)^2$ קרוב ל-$16n^2$.
+      - kind: step
+        text: >-
+          (ב) לפי החישוב של (א), $S_n>2n$, ולכן $b_n=S_n-n>n$ לכל $n$. יהי $M\in\mathbb{R}$. לפי תכונת ארכימדס (מסקנה
+          1.6.2) יש $n\in\mathbb{N}$ עם $n>M$, ואז $b_n>n>M$. לפי טענה 2.1.6 $(b_n)$ אינה חסומה מלעיל, ולכן אינה
+          חסומה.
+      - kind: theorem
+        text: >-
+          לפי משפט 2.3.3 כל סדרה מתכנסת חסומה; בקונטרפוזיטיב (טענה 0.4.6), $(b_n)$ אינה מתכנסת, כלומר מתבדרת.
+      - kind: check
+        text: >-
+          $a_1=\sqrt5-2\approx0.23607$, ו-$\left|a_1-\frac14\right|\approx0.01393\le\frac1{64}=0.015625$. השוויון של
+          השורה השנייה ב-$n=1$: $\frac{-1}{4(\sqrt5+2)^2}\approx-0.01393$. ב-(ב): $b_1=\sqrt5-1\approx1.236>1$.
+      - kind: result
+        text: >-
+          (א) $a_n\to\frac14$, עם $N=\left\lceil\frac{1}{64\varepsilon}\right\rceil$; עבור $\varepsilon=0.001$,
+          $N=16$. (ב) $b_n>n$, ולכן $(b_n)$ מתבדרת.
+    source:
+      name: 'Kenneth A. Ross, Elementary Analysis: The Theory of Calculus, as assigned in Stephen G. Simpson, Math 312 Intro. to Real Analysis, Homework #3 Solutions'
+      year: 2009
+      problem: 'Exercise 8.8 (c)'
+      url: 'https://sgslogic.net/t20/courses/math312/s090216.pdf'
+      verified: '2026-11-17'
+      adapted: true
+
+  - id: W-2.3-c2
+    stars: 2
+    objectives: [OBJ-2.3-1, OBJ-2.3-2]
+    prompt: >-
+      הוכיחו שיש סדרה $(x_k)$ שכל איבר שלה הוא מהצורה $\sqrt[3]n-\sqrt[3]m$, עם $n,m$ שלמים אי-שליליים, ו-$x_k\to\sqrt2$.
+
+      הדרכה: הראו קודם ש-$0<\sqrt[3]{p+1}-\sqrt[3]p<\frac{1}{3k^2}$ לכל שלם $p\ge k^3$, ואז "טפסו" מ-$\sqrt[3]{k^3}=k$
+      בצעדים קטנים.
+    answer: >-
+      לכל $k$ יהי $j_k$ השלם הקטן ביותר עם $\sqrt[3]{k^3+j_k}-k\ge\sqrt2$, ו-$x_k=\sqrt[3]{k^3+j_k}-\sqrt[3]{k^3}$.
+      אז $0\le x_k-\sqrt2<\frac{1}{3k^2}\le\frac1k$, ולכן $x_k\to\sqrt2$.
+    solution:
+      - kind: idea
+        text: >-
+          ההפרשים העוקבים של $\sqrt[3]p$ שואפים לאפס (כמו ב-$\sqrt n$ בשיעור), אבל $\sqrt[3]p$ אינה חסומה. לכן, אם
+          מתחילים ב-$k$ ומטפסים בצעדים קטנים מ-$\frac{1}{3k^2}$, עוברים את $k+\sqrt2$, והצעד הראשון שעובר אותו נוחת
+          קרוב אליו עד כדי צעד אחד.
+      - kind: step
+        text: >-
+          **1.** יהיו $k\in\mathbb{N}$ ו-$p\ge k^3$ שלם. נסמן $A=\sqrt[3]{p+1}$, $B=\sqrt[3]p$. לפי טענה 1.7.5 (ג), $A>B\ge k>0$.
+          לפי הזהות $(A-B)(A^2+AB+B^2)=A^3-B^3=1$, ו-$A^2+AB+B^2>3k^2$ (כל מחובר גדול או שווה ל-$k^2$, והראשון גדול
+          ממש), ולכן $0<A-B=\frac{1}{A^2+AB+B^2}<\frac{1}{3k^2}$.
+      - kind: step
+        text: >-
+          **2.** קבוע $k$, ונגדיר $d_j=\sqrt[3]{k^3+j}-k$ לכל שלם $j\ge0$. אז $d_0=0<\sqrt2$, ועבור
+          $J=(k+2)^3-k^3$ (שלם חיובי), $d_J=(k+2)-k=2>\sqrt2$. לכן הקבוצה $\{j\in\mathbb{N}:\ d_j\ge\sqrt2\}$ אינה ריקה, ולפי
+          עקרון הסדר הטוב (משפט 1.3.9) יש לה איבר קטן ביותר $j_k\ge1$. כיוון ש-$d_0<\sqrt2$, אין גם $j\ge0$ קטן
+          מ-$j_k$ עם $d_j\ge\sqrt2$.
+      - kind: step
+        text: >-
+          **3.** מהמינימליות $d_{j_k-1}<\sqrt2\le d_{j_k}$. לפי שלב 1 עם $p=k^3+j_k-1\ge k^3$:
+          $d_{j_k}-d_{j_k-1}=\sqrt[3]{p+1}-\sqrt[3]p<\frac{1}{3k^2}$. לכן
+          $0\le d_{j_k}-\sqrt2<d_{j_k}-d_{j_k-1}<\frac{1}{3k^2}\le\frac1k$.
+      - kind: step
+        text: >-
+          **4.** נגדיר $x_k=d_{j_k}=\sqrt[3]{k^3+j_k}-\sqrt[3]{k^3}$: מהצורה הנדרשת, עם $n=k^3+j_k$ ו-$m=k^3$. לפי שלב 3
+          $|x_k-\sqrt2|\le1\cdot\frac1k$ לכל $k$, ולפי טענה 2.2.13 (עם $b_k=\frac1k\to0$) $x_k\to\sqrt2$.
+      - kind: check
+        text: >-
+          מ-$\sqrt2$ השתמשנו רק ב-$0<\sqrt2<2$. אותה הוכחה (עם $k+t$ במקום $k+2$, כש-$t>x$ שלם) נותנת לכל $x\ge0$
+          סדרה כזו ששואפת ל-$x$, ועם $m$ ו-$n$ מוחלפים, לכל $x<0$. בחישוב: עבור $k=1$, $j_1=14$ ו-$x_1=\sqrt[3]{15}-1\approx1.4662$;
+          עבור $k=10$, $j_{10}=488$ ו-$x_{10}\approx1.41653$, במרחק $\approx0.0023<\frac1{300}$ מ-$\sqrt2$.
+      - kind: result
+        text: >-
+          $x_k=\sqrt[3]{k^3+j_k}-k$, עם $j_k$ הקטן ביותר שמקיים $x_k\ge\sqrt2$, שואפת ל-$\sqrt2$.
+    source:
+      name: '51st William Lowell Putnam Mathematical Competition (John Scholes archive)'
+      year: 1990
+      problem: 'Problem A2'
+      url: 'https://prase.cz/kalva/putnam/psoln/psol902.html'
+      verified: '2026-11-17'
+      adapted: true

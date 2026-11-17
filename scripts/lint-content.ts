@@ -191,6 +191,20 @@ for (const g of glossary as unknown as { file: string; id: string; definition: s
   texCheck(`${g.file} ${g.id}`, g.definition, `${g.id}.definition`);
   if (g.symbol) texCheck(`${g.file} ${g.id}`, `$${g.symbol}$`, `${g.id}.symbol`);
 }
+/**
+ * A control character in a parsed YAML string is a TeX command that lost its backslash: "\to" in a double-quoted
+ * string becomes a tab and "o". Lessons are checked on their raw text below; YAML must be checked after parsing.
+ */
+const controlChars = (where: string, x: unknown, path = ''): void => {
+  if (typeof x === 'string') {
+    const m = x.match(/[\x00-\x09\x0b-\x1f]/);
+    if (m) fail(where, `${path || 'a string'}: control character U+${m[0].charCodeAt(0).toString(16).padStart(4, '0')} (a TeX backslash lost to an escape? use '…' or >- for TeX)`);
+  } else if (Array.isArray(x)) x.forEach((v, i) => controlChars(where, v, `${path}[${i}]`));
+  else if (x && typeof x === 'object') for (const [k, v] of Object.entries(x)) controlChars(where, v, path ? `${path}.${k}` : k);
+};
+for (const e of [...misconceptions, ...glossary, ...videos] as unknown as { file: string; id: string }[]) controlChars(`${e.file} ${e.id}`, e);
+for (const b of banks) controlChars(b.file, b.data);
+for (const w of workbooks) controlChars(w.file, w.data);
 for (const [name, list] of [['misconceptions', misconceptions], ['glossary', glossary], ['videos', videos]] as const) {
   const seen = new Map<string, string>();
   for (const e of list) {
@@ -490,6 +504,10 @@ for (const l of lessons) {
   for (const m of l.body.matchAll(/<Example\s+id="([^"]+)"[\s\S]*?<\/Example>/g)) {
     if (!/\*\*רעיון:?\*\*/.test(m[0])) fail(l.file, `${m[1]}: a worked example states its **רעיון** before the solution`);
   }
+  // An anchor (a remedy, a LessonLink, a Step) must name one element: 2.6 once had a Step and an Explain both id="forms".
+  const ids = new Map<string, number>();
+  for (const m of l.body.matchAll(/<(?!Term\b|Watch\b|Predict\b|Revisit\b)[A-Z]\w*\b[^>]*?\sid="([^"]+)"/g)) ids.set(m[1], (ids.get(m[1]) ?? 0) + 1);
+  for (const [id, k] of ids) if (k > 1) fail(l.file, `id="${id}" is used ${k} times: an anchor must name one element`);
   for (const m of l.body.matchAll(/<Term\s+id="([^"]+)"/g)) {
     if (!glossaryIds.has(m[1])) fail(l.file, `<Term id="${m[1]}"> is not in glossary.yaml`);
   }
@@ -564,6 +582,11 @@ for (const { file, data } of workbooks) {
       // also key on the competition, the year and the question number
       const exam = item.source.name.toLowerCase().replace(/[^a-z0-9]/g, '');
       for (const n of numbers) keys.push(`#${exam} ${item.source.year} ${n}`);
+      // a book is cited as its PDF and as its HTML edition, under longer or shorter names (lessons 2.3 and 2.4 once
+      // both used Lebl's Exercise 2.2.7): a dotted exercise number names one exercise of one book, so key it on the
+      // author (the name up to its first comma) and the year
+      const author = item.source.name.split(',')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
+      for (const m of item.source.problem.matchAll(/\bexercises?\s+(\d+(?:\.\d+)+[a-z]?)/gi)) keys.push(`%${author} ${item.source.year} ${m[1].toLowerCase()}`);
       // a web page usually holds one problem, so a shared page URL is the same problem; a PDF holds a whole paper
       if (!/\.pdf$/i.test(item.source.url)) keys.push(`@${item.source.url}`);
       const other = keys.map((k) => seenSource.get(k)).find(Boolean);

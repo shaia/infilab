@@ -1,0 +1,315 @@
+---
+chapter: 2
+title: 'סיכום פרק 2: סדרות וגבולות של סדרות'
+---
+
+## הרעיון הגדול
+
+סדרה היא פונקציה $a:\mathbb N\to\mathbb R$ (שיעור 2.1), ולא קבוצת הערכים שלה. הפרק שואל עליה שאלה אחת: לאן היא הולכת. התשובה המדויקת היא הגדרת הגבול (שיעור 2.2): $a_n\to L$ אם **לכל** סביבה של $L$ **יש** מקום $N$ שממנו **כל** האיברים בתוך הסביבה. שלושה כמתים, בסדר הזה; החלפת הסדר משנה את המשמעות, והשלילה נבנית מהם באופן מכני (משפט 2.2.8). זה אותו "לכל $\varepsilon>0$ קיים" של אפיון הסופרמום (משפט 1.4.8), ותכונת ארכימדס היא מה שמוצא את ה-$N$.
+
+הפרק בונה מעל ההגדרה ארגז כלים, כך שכמעט אף גבול לא צריך להוכיח מאפס:
+
+- **הערכה מלמעלה** של $|a_n-L|$ בביטוי כמו $\frac Cn$, ו-$N$ מפורש (שיעור 2.3); וגם התכונות הראשונות: הגבול יחיד, סדרה מתכנסת חסומה, ו-$(-1)^n$ מתבדרת.
+- **חשבון גבולות** (שיעור 2.4): סכום, מכפלה, מנה ושורש של סדרות מתכנסות. הכללים הם תנאים מספיקים: כשההנחות אינן מתקיימות, הם לא אומרים כלום.
+- **אי-שוויונות** (שיעור 2.5): גבול שומר על אי-שוויון חלש, כלל הסנדוויץ', ואפסה כפול חסומה.
+- **גבולות אינסופיים** (שיעור 2.6): $a_n\to\infty$ היא סוג מיוחד של התבדרות, עם חשבון מורחב וארבע צורות לא מוגדרות.
+- **גבולות שימושיים** (שיעור 2.8): $q^n$, $\sqrt[n]a$, $\sqrt[n]n$, מבחן המנה, מבחן השורש וסולם קצבי הגדילה.
+
+החצי השני של הפרק עונה על שאלה אחרת: איך יודעים שסדרה מתכנסת **בלי לדעת את הגבול**. כאן נכנסת אקסיומת השלמות (של) של פרק 1, שלוש פעמים, בשרשרת:
+
+| המשפט | מה הוא נותן | מאיפה השלמות |
+|---|---|---|
+| משפט 2.7.1 (התכנסות מונוטונית) | מונוטונית וחסומה מתכנסת, לסופרמום או לאינפימום של ערכיה | ישירות מ-(של) ומאפיון האפסילון |
+| למה 2.9.7 (קנטור), משפט 2.9.8 (בולצאנו-ויירשטראס) | לכל סדרה חסומה יש תת-סדרה מתכנסת | הקצוות של הקטעים מונוטוניים: משפט 2.7.1 |
+| משפט 2.10.5 (קריטריון קושי) | מתכנסת אם ורק אם סדרת קושי | סדרת קושי חסומה, ובולצאנו-ויירשטראס |
+
+ב-$\mathbb Q$ שלושתם נכשלים: הקיצוצים העשרוניים של $\sqrt2$ הם סדרה עולה, חסומה ושל קושי, בלי גבול רציונלי. מכאן גם המספר $e$: הסדרה $\left(1+\frac1n\right)^n$ עולה וחסומה, ו-$e$ **מוגדר** כגבול שלה (שיעור 2.7).
+
+בפרק 3 הסדרות הן הכלי: הגדרת היינה לגבול של פונקציה (שיעור 3.4) מדברת על כל הסדרות ששואפות לנקודה, וכל מה שהוכח כאן על סדרות עובר דרכה לפונקציות.
+
+## מה חייבים לזכור
+
+### סדרות: חסימות ומונוטוניות (<LessonLink id="2.1">שיעור 2.1</LessonLink>)
+
+- **הגדרה 2.1.1 (סדרה):** פונקציה $a:\mathbb N\to\mathbb R$, עם $a_n:=a(n)$. שתי סדרות שוות אם $a_n=b_n$ לכל $n$. קבוצת הערכים $\{a_n:\ n\in\mathbb N\}$ אינה הסדרה: ל-$(-1)^n$ ול-$(-1)^{n+1}$ אותה קבוצת ערכים, והן שונות; ערכים חוזרים מותרים (<LessonLink id="2.1" anchor="def">סדרה היא פונקציה</LessonLink>).
+- **הגדרה 2.1.2 וטענה 2.1.3:** סדרה נתונה בנוסחה, ברקורסיה ($a_1$ וכלל $a_{n+1}=f(n,a_n)$) או במילים; נדרש רק שלכל $n$ ייקבע מספר אחד. אם $c\in A$ ו-$f:\mathbb N\times A\to A$, יש סדרה אחת ויחידה עם $a_1=c$ ו-$a_{n+1}=f(n,a_n)$, וכל איבריה ב-$A$. בלי תחום כזה הכלל יכול להיתקע: $a_{n+1}=\frac1{a_n-1}$ עם $a_1=2$ (<LessonLink id="2.1" anchor="recursion">רקורסיה עם תחום</LessonLink>).
+- **הגדרה 2.1.4 וטענה 2.1.5:** חסומה מלעיל: $\exists M\ \forall n:\ a_n\le M$; מלרע: $\exists m\ \forall n:\ m\le a_n$; חסומה: שתיהן. (א) חסומה אם ורק אם יש $M\ge0$ עם $|a_n|\le M$ לכל $n$; (ב) רק הזנב קובע: מספיק חסם לכל $n>n_0$; (ג) סכום, מכפלה וכפל בקבוע של חסומות חסומים (<LessonLink id="2.1" anchor="bounded-def">חסימות</LessonLink>, <LessonLink id="2.1" anchor="bounded-props">תכונות</LessonLink>).
+- **טענה 2.1.6:** אינה חסומה מלעיל אם ורק אם $\forall M\ \exists n:\ a_n>M$, אם ורק אם $\forall M\ \forall N\ \exists n>N:\ a_n>M$. אינה חסומה אם ורק אם $\forall M\ge0\ \exists n:\ |a_n|>M$. דוגמאות: $n$, $2^n$, $n^{(-1)^n}$ (<LessonLink id="2.1" anchor="unbounded">סדרה שאינה חסומה</LessonLink>).
+- **הגדרה 2.1.7:** **עולה**: $a_n\le a_{n+1}$ לכל $n$ (שוויון מותר); **עולה ממש**: $a_n<a_{n+1}$; יורדת, יורדת ממש; מונוטונית; ומונוטונית החל מ-$n_0$ כשאי-השוויון מתקיים לכל $n\ge n_0$. הסדרה הקבועה עולה וגם יורדת (<LessonLink id="2.1" anchor="monotone-def">מונוטוניות</LessonLink>).
+- **טענות 2.1.8 ו-2.1.9:** עולה אם ורק אם $a_m\le a_n$ לכל $m<n$. מבחנים: סימן ההפרש $a_{n+1}-a_n$; המנה $\frac{a_{n+1}}{a_n}$ לעומת $1$, **רק לאיברים חיוביים**; ו-$a_n=f(n)$ עם $f$ עולה על $[1,\infty)$ עולה, וההפך לא נכון (<LessonLink id="2.1" anchor="tests">מבחנים למונוטוניות</LessonLink>).
+- **טענה 2.1.10:** סדרה עולה חסומה מלרע על ידי $a_1$, ולכן היא חסומה אם ורק אם היא חסומה **מלעיל**; יורדת חסומה מלעיל על ידי $a_1$, וחסומה אם ורק אם היא חסומה מלרע (<LessonLink id="2.1" anchor="monotone-bounded">מונוטונית וחסומה</LessonLink>).
+- **טענה 2.1.11:** סכום של עולות עולה; $(-a_n)$ הופכת כיוון; מכפלה של עולות **חיוביות** עולה; וההופכי של עולה **חיובית** יורד (<LessonLink id="2.1" anchor="operations">פעולות ומונוטוניות</LessonLink>).
+
+<Formula tex="\exists M\ge0\ \ \forall n\in\mathbb{N}:\ |a_n|\le M \qquad\qquad \forall M\in\mathbb{R}\ \ \exists n\in\mathbb{N}:\ a_n>M" label="טענה 2.1.5 (א): חסומה; טענה 2.1.6: אינה חסומה מלעיל" />
+
+### הגדרת הגבול (<LessonLink id="2.2">שיעור 2.2</LessonLink>)
+
+- **הגדרה 2.2.1:** $N\in\mathbb N$ **מתאים ל-$\varepsilon$** אם $|a_n-L|<\varepsilon$ לכל $n>N$; $a_n\to L$ אם לכל $\varepsilon>0$ יש $N$ שמתאים לו; הסדרה **מתכנסת** אם יש $L\in\mathbb R$ כזה. $|a_n-L|<\varepsilon$ פירושו שהאיבר בסביבה $(L-\varepsilon,L+\varepsilon)$ (<LessonLink id="2.2" anchor="def">ההגדרה</LessonLink>).
+- **טענה 2.2.2:** סדרה קבועה $c$ שואפת ל-$c$, ו-$\frac1n\to0$ (תכונת ארכימדס).
+- **טענות 2.2.3 ו-2.2.4:** אם $N$ מתאים ל-$\varepsilon$, כל $N'\ge N$ מתאים לו, ו-$N$ מתאים לכל $\varepsilon'\ge\varepsilon$; המקסימום של שני $N$-ים מתאים לשני התנאים. סדר הכמתים ההפוך, $\exists N\ \forall\varepsilon>0\ \forall n>N$, פירושו $a_n=L$ מ-$N$ והלאה (<LessonLink id="2.2" anchor="larger">כל N גדול יותר</LessonLink>, <LessonLink id="2.2" anchor="order">סדר הכמתים</LessonLink>).
+- **טענה 2.2.5 (ניסוחים שקולים):** $\le\varepsilon$ במקום $<\varepsilon$; $n\ge N$; $N$ ממשי; $c\,\varepsilon$ עם $c>0$ קבוע; או $\varepsilon=\frac1k$ עם $k\in\mathbb N$ (<LessonLink id="2.2" anchor="forms">ניסוחים שקולים</LessonLink>).
+- **למה 2.2.6 וטענה 2.2.7:** $S\subseteq\mathbb N$ סופית אם ורק אם היא חסומה מלעיל. $S_\varepsilon=\{n:\ |a_n-L|\ge\varepsilon\}$ היא קבוצת המקומות מחוץ לסביבה: $N$ מתאים ל-$\varepsilon$ אם ורק אם כל המקומות ב-$S_\varepsilon$ הם עד $N$; $a_n\to L$ אם ורק אם כל $S_\varepsilon$ סופית; וה-$N$ הקטן ביותר הוא המקום האחרון ב-$S_\varepsilon$ (<LessonLink id="2.2" anchor="outside">מקומות מחוץ לסביבה</LessonLink>).
+- **משפט 2.2.8 ומסקנה 2.2.9 (השלילה):** $a_n\not\to L$ אם ורק אם $\exists\varepsilon>0\ \forall N\ \exists n>N:\ |a_n-L|\ge\varepsilon$, אם ורק אם יש $\varepsilon>0$ עם אינסוף מקומות מחוץ לסביבה (<LessonLink id="2.2" anchor="negation-theorem">שלילת ההגדרה</LessonLink>).
+- **טענה 2.2.10, טענה 2.2.11 ומסקנה 2.2.12:** $a_n\to L$ אם ורק אם $a_n-L\to0$ אם ורק אם $|a_n-L|\to0$. אם $b_n=a_{n+k}$ מ-$n_0$ והלאה, לשתי הסדרות אותו גבול; לכן הזזה, שינוי, מחיקה או הוספה של מספר סופי של איברים לא משנים התכנסות וגבול (<LessonLink id="2.2" anchor="tails">זנבות</LessonLink>).
+- **טענה 2.2.13 (השוואה):** אם $|a_n-L|\le C\,b_n$ לכל $n>n_0$, עם $C>0$ ו-$b_n\to0$, אז $a_n\to L$. **מסקנה 2.2.14:** $\frac cn\to0$ לכל $c\in\mathbb R$, $\frac1{n^2}\to0$, $\frac1{\sqrt n}\to0$ (<LessonLink id="2.2" anchor="comparison">השוואה לסדרה ששואפת לאפס</LessonLink>).
+- **טענה 2.2.15 (צד הזנב):** אם $a_n\to L$ ו-$q<L$, אז מאיזה $N$ כל האיברים גדולים מ-$q$; ואם $q>L$, קטנים מ-$q$. בפרט $L>0$ גורר $a_n>\frac L2$ מאיזה $N$. לא כל האיברים, ולא עם $L=0$ (<LessonLink id="2.2" anchor="sign-theorem">הגבול קובע את צד הזנב</LessonLink>).
+- **הגדרה 2.2.16 ולמה 2.2.17:** $\lceil x\rceil=-\lfloor -x\rfloor$ הוא השלם הקטן ביותר שגדול או שווה ל-$x$, והוא טבעי כש-$x>0$; לכן $N=\left\lceil\frac C\varepsilon\right\rceil$ טבעי, ו-$n>N$ גורר $\frac Cn<\varepsilon$ (<LessonLink id="2.2" anchor="recipe">המתכון</LessonLink>).
+
+<Formula tex="a_n\to L\iff\forall \varepsilon>0\ \ \exists N\in\mathbb{N}\ \ \forall n>N:\ |a_n-L|<\varepsilon" label="הגדרה 2.2.1" />
+
+<Formula tex="a_n\not\to L\iff\exists \varepsilon>0\ \ \forall N\in\mathbb{N}\ \ \exists n>N:\ |a_n-L|\ge\varepsilon" label="משפט 2.2.8" />
+
+### הוכחת גבול מההגדרה ותכונות ראשונות (<LessonLink id="2.3">שיעור 2.3</LessonLink>)
+
+- **הערכה מלמעלה:** אם $|a_n-L|\le\frac Cn$ לכל $n>n_0$, אז $N=\max\left(n_0,\left\lceil\frac C\varepsilon\right\rceil\right)$ מתאים ל-$\varepsilon$; ועם $\frac C{\sqrt n}$, $N=\max\left(n_0,\left\lceil\frac{C^2}{\varepsilon^2}\right\rceil\right)$. מגדילים מונה ומקטינים מכנה, וכל חוליה בשרשרת היא אי-שוויון מוכח, עם המקום שממנו הוא נכון (<LessonLink id="2.3" anchor="estimate">הערכה מלמעלה</LessonLink>, <LessonLink id="2.3" anchor="fractions">הגדלה והקטנה של שברים</LessonLink>).
+- **משפט 2.3.1 (יחידות הגבול):** אם $a_n\to L$ וגם $a_n\to M$, אז $L=M$ (<LessonLink id="2.3" anchor="uniqueness">יחידות הגבול</LessonLink>).
+- **הגדרה 2.3.2:** לסדרה מתכנסת, $\lim_{n\to\infty}a_n$ הוא הגבול היחיד שלה; סדרה שאינה מתכנסת היא **מתבדרת**. להוכיח התבדרות פירושו לפסול **כל** $L\in\mathbb R$: $\forall L\ \exists\varepsilon>0\ \forall N\ \exists n>N:\ |a_n-L|\ge\varepsilon$ (<LessonLink id="2.3" anchor="divergent-def">סדרה מתבדרת</LessonLink>).
+- **משפט 2.3.3:** סדרה מתכנסת חסומה, עם החסם $\max\{|a_1|,\dots,|a_N|,\ |L|+1\}$, כאשר $N$ מתאים ל-$\varepsilon=1$. ההפך לא נכון ($(-1)^n$); בקונטרפוזיטיב, סדרה שאינה חסומה מתבדרת ($n$, $\sqrt n$, $n^{(-1)^n}$) (<LessonLink id="2.3" anchor="bounded">סדרה מתכנסת חסומה</LessonLink>).
+- **טענה 2.3.4:** אם $a_n\to L$, אז $a_{n+1}-a_n\to0$. ההפך לא נכון: $\sqrt{n+1}-\sqrt n\to0$, ו-$\sqrt n$ מתבדרת. **מסקנה 2.3.5:** $(-1)^n$ אינה שואפת לאף $L\in\mathbb R$ (<LessonLink id="2.3" anchor="differences">הפרשים עוקבים</LessonLink>, <LessonLink id="2.3" anchor="sign-diverges">מינוס אחד בחזקת n</LessonLink>).
+- **טענה 2.3.6:** אם $a_n\to L$, אז $|a_n|\to|L|$. ההפך לא נכון ($(-1)^n$), חוץ מ-$L=0$ (<LessonLink id="2.3" anchor="abs-value">ערך מוחלט</LessonLink>).
+- **טענה 2.3.7:** סדרה מתכנסת של שלמים קבועה החל ממקום מסוים, והגבול שלה שלם (<LessonLink id="2.3" anchor="integers">סדרה של שלמים</LessonLink>).
+
+<Formula tex="|a_n-L|\le\frac{C}{n}\ \ (n>n_0)\ \Longrightarrow\ N=\max\Big(n_0,\ \Big\lceil\frac{C}{\varepsilon}\Big\rceil\Big)" label="הערכה מלמעלה" />
+
+<Formula tex="a_n\to L\ \Longrightarrow\ |a_n|\le\max\{|a_1|,\dots,|a_N|,\ |L|+1\}" label="משפט 2.3.3, כש-N מתאים ל-1" />
+
+### חשבון גבולות (<LessonLink id="2.4">שיעור 2.4</LessonLink>)
+
+- **משפטים 2.4.1 ו-2.4.2:** אם $a_n\to a$ ו-$b_n\to b$, אז $a_n+b_n\to a+b$, $c\,a_n\to c\,a$ לכל $c\in\mathbb R$, $a_n-b_n\to a-b$ ו-$a_nb_n\to ab$. בסכום: $\frac\varepsilon2$ לכל סדרה ו-$N=\max(N_1,N_2)$; במכפלה: הוספה והחסרה של $a_nb$, וחסם על $|a_n|$ ממשפט 2.3.3 (<LessonLink id="2.4" anchor="sum-theorem">סכום</LessonLink>, <LessonLink id="2.4" anchor="product-theorem">מכפלה</LessonLink>).
+- **למה 2.4.3 ומשפט 2.4.4:** אם $b_n\to b\ne0$, יש $N$ כך ש-$|b_n|>\frac{|b|}2$ לכל $n>N$. אז $\frac1{b_n}\to\frac1b$ ו-$\frac{a_n}{b_n}\to\frac ab$, כשהמנה מוגדרת מ-$N$ מסוים והלאה. בלי $b\ne0$ המשפט לא אומר דבר, גם כש-$b_n\ne0$ לכל $n$ (<LessonLink id="2.4" anchor="quotient-theorem">מנה</LessonLink>).
+- **מסקנה 2.4.5:** אם $a_n\to a$, אז $a_n^k\to a^k$, $p(a_n)\to p(a)$ לכל פולינום $p$, ו-$\frac{p(a_n)}{q(a_n)}\to\frac{p(a)}{q(a)}$ כש-$q(a)\ne0$.
+- **טענה 2.4.6 (שורשים):** אם $a_n\ge0$ לכל $n$ ו-$a_n\to a$, אז $a\ge0$ ו-$\sqrt[k]{a_n}\to\sqrt[k]a$ לכל $k\in\mathbb N$. ההוכחה בלי רציפות: הערכה מפירוק הפרש חזקות כש-$a>0$, ומונוטוניות השורש כש-$a=0$ (<LessonLink id="2.4" anchor="roots">שורשים</LessonLink>).
+- **מסקנה 2.4.7 (מנת פולינומים):** ל-$\frac{p(n)}{q(n)}$ עם מעלות $d,e$ ומקדמים מובילים $\alpha,\beta$: אם $d<e$ הגבול $0$; אם $d=e$ הגבול $\frac\alpha\beta$; אם $d>e$ הסדרה אינה חסומה ומתבדרת (לאן: מסקנה 2.6.6) (<LessonLink id="2.4" anchor="rational-limits">מנת פולינומים</LessonLink>).
+- **טענה 2.4.8 (מתי הכללים לא עוזרים):** מתכנסת ועוד מתבדרת מתבדרת; גבול שונה מאפס כפול מתבדרת מתבדרת; גבול שונה מאפס חלקי סדרה ששואפת לאפס (ושונה מאפס) אינה חסומה. שתי מתבדרות יכולות לתת סכום ומכפלה מתכנסים, וסדרה ששואפת לאפס כפול מתבדרת יכולה להתכנס או להתבדר (<LessonLink id="2.4" anchor="rules-fail">מתי הכללים לא אומרים כלום</LessonLink>).
+- **כפל בצמוד:** $\sqrt x-\sqrt y=\frac{x-y}{\sqrt x+\sqrt y}$, ובשורש שלישי $u-v=\frac{u^3-v^3}{u^2+uv+v^2}$; אחר כך מחלקים בגודל המוביל של המכנה (<LessonLink id="2.4" anchor="conjugate-method">כפל בצמוד</LessonLink>).
+
+<Formula tex="a_n\to a,\ \ b_n\to b\ \Longrightarrow\ a_n\pm b_n\to a\pm b,\quad a_nb_n\to ab,\quad \frac{a_n}{b_n}\to\frac ab\ \ (b\ne0)" label="משפטים 2.4.1, 2.4.2 ו-2.4.4" />
+
+<Formula tex="\sqrt{x}-\sqrt{y}=\frac{x-y}{\sqrt{x}+\sqrt{y}}" label="כפל בצמוד" />
+
+### גבולות ואי-שוויונות (<LessonLink id="2.5">שיעור 2.5</LessonLink>)
+
+- **משפט 2.5.1:** (א) אם $a_n\to a$, $b_n\to b$ ו-$a_n\le b_n$ לכל $n>n_0$, אז $a\le b$. (ב) אם $a<b$, אז $a_n<b_n$ לכל $n$ מאיזה $N$. אי-שוויון חזק בין האיברים אינו נשמר ($0<\frac1n$), ואי-שוויון חלש בין הגבולות אינו עובר לאיברים (<LessonLink id="2.5" anchor="preserve">שמירה על אי-שוויון חלש</LessonLink>).
+- **מסקנה 2.5.2:** אם $a_n\to a$ ו-$a_n\ge c$ (או $\le c$, או $a_n\in[\alpha,\beta]$) לכל $n>n_0$, אז $a\ge c$ (או $\le c$, או $a\in[\alpha,\beta]$). בפרט $a_n>0$ גורר $a\ge0$. קטע פתוח אינו נשמר: $\frac1{n+1}\in(0,1)$ ושואפת ל-$0$ (<LessonLink id="2.5" anchor="constants">חסם קבוע</LessonLink>).
+- **משפט 2.5.3 (כלל הסנדוויץ'):** אם $a_n\le b_n\le c_n$ לכל $n>n_0$, $a_n\to L$ ו-$c_n\to L$, אז $b_n\to L$. ההתכנסות של $b_n$ היא **מסקנה**, לא הנחה. עם גבולות שונים לחסמים, או חסם מצד אחד, או אי-שוויונות רק באינסוף מקומות, לא (<LessonLink id="2.5" anchor="squeeze-theorem">כלל הסנדוויץ'</LessonLink>, <LessonLink id="2.5" anchor="squeeze-needs">מה כל הנחה עושה</LessonLink>).
+- **משפט 2.5.4 (אפסה כפול חסומה):** אם $a_n\to0$ ו-$(b_n)$ חסומה, אז $a_nb_n\to0$. לא צריך ש-$b_n$ תתכנס; צריך את שתי ההנחות: $1\cdot(-1)^n$ ו-$\frac1n\cdot n^2$ (<LessonLink id="2.5" anchor="null-times-bounded">אפסה כפול חסומה</LessonLink>).
+- **טענה 2.5.5:** אם $a_n\to a$ ו-$b_n\to b$, אז $\max(a_n,b_n)\to\max(a,b)$ ו-$\min(a_n,b_n)\to\min(a,b)$, דרך $\max(x,y)=\frac{x+y+|x-y|}2$ (<LessonLink id="2.5" anchor="max-min">מקסימום ומינימום</LessonLink>).
+- **טענה 2.5.6:** לכל $x\in\mathbb R$, $x-\frac1n<\frac{\lfloor nx\rfloor}n\le x$, ולכן $\frac{\lfloor nx\rfloor}n\to x$; יש סדרה של רציונליים, וגם של אי-רציונליים, ששואפת ל-$x$ (<LessonLink id="2.5" anchor="floor-sandwich">סנדוויץ' עם ערך שלם</LessonLink>).
+
+<Formula tex="a_n\le b_n\le c_n\ (n>n_0),\ \ a_n\to L,\ \ c_n\to L\ \Longrightarrow\ b_n\to L" label="משפט 2.5.3: כלל הסנדוויץ'" />
+
+<Formula tex="a_n\to0,\ \ |b_n|\le M\ \Longrightarrow\ a_nb_n\to0" label="משפט 2.5.4" />
+
+### גבולות אינסופיים (<LessonLink id="2.6">שיעור 2.6</LessonLink>)
+
+- **הגדרה 2.6.1 וטענה 2.6.1א:** $a_n\to\infty$ אם לכל $M\in\mathbb R$ יש $N\in\mathbb N$ כך ש-$a_n>M$ לכל $n>N$; $a_n\to-\infty$ אם לכל $M$ יש $N$ כך ש-$a_n<M$ לכל $n>N$. סדרה כזו **מתבדרת**: היא אינה מתכנסת. שקולים להגדרה: רק $M>0$; $a_n\ge M$; $N$ ממשי (<LessonLink id="2.6" anchor="def">ההגדרה</LessonLink>).
+- **טענה 2.6.2:** (א) $a_n\to\infty$ אם ורק אם $(-a_n)\to-\infty$; (ב) שאיפה לאינסוף גוררת "לא חסומה מלעיל וחסומה מלרע", ולא להפך; (ג) השלילה: $\exists M\ \forall N\ \exists n>N:\ a_n\le M$; (ד) רק הזנב קובע (<LessonLink id="2.6" anchor="basic-properties">תכונות יסוד</LessonLink>).
+- **טענה 2.6.3 (הופכי):** אם $a_n\to\pm\infty$, אז $\frac1{a_n}\to0$; אם $a_n\to0$ ו-$a_n>0$ מאיזה מקום, אז $\frac1{a_n}\to\infty$ (ועם $a_n<0$, למינוס אינסוף). בלי תנאי הסימן, לא: $\frac{(-1)^n}n$ (<LessonLink id="2.6" anchor="reciprocal-step">ההופכי</LessonLink>).
+- **משפט 2.6.4 (חשבון מורחב):** נניח $a_n\to\infty$. (א) אם $(b_n)$ חסומה מלרע מאיזה מקום, $a_n+b_n\to\infty$; (ב) אם $b_n\ge c>0$ מאיזה מקום, $a_nb_n\to\infty$, ואם $b_n\to b<0$, $a_nb_n\to-\infty$; (ג) אם $a_n\le b_n$ מאיזה מקום, $b_n\to\infty$; (ד) אם $(b_n)$ חסומה, $\frac{b_n}{a_n}\to0$; (ה) אם $b_n\to b>0$, $d_n\to0$ ו-$d_n>0$ מאיזה מקום, $\frac{b_n}{d_n}\to\infty$ (<LessonLink id="2.6" anchor="arithmetic">חשבון מורחב</LessonLink>).
+- **טענה 2.6.5 (צורות לא מוגדרות):** $\infty-\infty$, $0\cdot\infty$, $\frac\infty\infty$ ו-$\frac00$: לכל אחת יש זוגות סדרות עם כל גבול סופי, עם גבול אינסופי, ובלי גבול. ב-$\frac\infty\infty$ הגבול הסופי הוא $L\ge0$ בלבד, ומינוס אינסוף אינו אפשרי. "לא מוגדרת" פירושו שהצורה לבדה לא מכריעה (<LessonLink id="2.6" anchor="indeterminate">הצורות הלא-מוגדרות</LessonLink>).
+- **מסקנה 2.6.6:** $n^k\to\infty$ ו-$\sqrt[k]n\to\infty$ לכל $k\in\mathbb N$; אם $\deg p>\deg q$, אז $\frac{p(n)}{q(n)}\to\infty$ כש-$\frac\alpha\beta>0$, ולמינוס אינסוף כש-$\frac\alpha\beta<0$ (<LessonLink id="2.6" anchor="powers">חזקות, שורשים ומנות</LessonLink>).
+- **טענה 2.6.7:** סדרה עולה שאינה חסומה מלעיל שואפת לאינסוף; יורדת שאינה חסומה מלרע שואפת למינוס אינסוף; די במונוטוניות החל ממקום מסוים (<LessonLink id="2.6" anchor="monotone-step">מונוטונית ולא חסומה</LessonLink>).
+- **המיון:** כל סדרה היא בדיוק אחד מהארבעה: מתכנסת, שואפת לאינסוף, שואפת למינוס אינסוף, **מתבדרת סתם**. לא חסומה אינה שואפת לאינסוף ($n^{(-1)^n}$, $(-1)^nn$), ושואפת לאינסוף אינה חייבת להיות עולה ($n+2(-1)^n$) (<LessonLink id="2.6" anchor="taxonomy-step">הטבלה</LessonLink>).
+
+<Formula tex="a_n\to\infty\iff\forall M\in\mathbb{R}\ \ \exists N\in\mathbb{N}\ \ \forall n>N:\ a_n>M" label="הגדרה 2.6.1" />
+
+<Formula tex="\infty-\infty,\quad 0\cdot\infty,\quad \frac{\infty}{\infty},\quad \frac{0}{0}" label="טענה 2.6.5: הצורות הלא-מוגדרות" />
+
+### סדרות מונוטוניות והמספר e (<LessonLink id="2.7">שיעור 2.7</LessonLink>)
+
+- **משפט 2.7.1 (משפט ההתכנסות המונוטונית):** (א) סדרה עולה וחסומה מלעיל מתכנסת, וגבולה $\sup\{a_n\}$; (ב) יורדת וחסומה מלרע מתכנסת ל-$\inf\{a_n\}$; (ג) מונוטונית מתכנסת אם ורק אם היא חסומה, ולכל סדרה מונוטונית יש גבול, ממשי או $\pm\infty$; (ד) די במונוטוניות החל מ-$n_0$, ואז הגבול הוא הסופרמום (האינפימום) של הזנב $\{a_n:\ n\ge n_0\}$. ההוכחה משתמשת באקסיומת השלמות, וב-$\mathbb Q$ המשפט נכשל (<LessonLink id="2.7" anchor="mct">ההתכנסות המונוטונית</LessonLink>).
+- **מסקנה 2.7.2:** סדרה עולה ששואפת ל-$L$ מקיימת $a_n\le L$ לכל $n$, ו-$a_n<L$ אם היא עולה ממש; ליורדת $a_n\ge L$, ו-$a_n>L$ אם היא יורדת ממש. לכן הגבול של עולה ממש אינו אף אחד מאיבריה (<LessonLink id="2.7" anchor="mct-cor">האיברים בצד אחד של הגבול</LessonLink>).
+- **טענה 2.7.3 (מעבר לגבול ברקורסיה):** אם $a_{n+1}=f(a_n)$ ו-$a_n\to L$, אז $a_{n+1}\to L$; אם $f=\frac pq$ מנה של פולינומים עם $q(L)\ne0$, אז $L=f(L)$; ל-$f(x)=\sqrt{2+x}$ עוברים לגבול בצורה $a_{n+1}^2=2+a_n$ ומקבלים $L^2=2+L$ ו-$L\ge0$ (רציפות של השורש תגיע רק בפרק 4). פתרון של $L=f(L)$ הוא **מועמד בלבד**: ל-$a_{n+1}=2a_n$, $a_1=1$, הפתרון $L=0$, והסדרה מתבדרת (<LessonLink id="2.7" anchor="fixed">קודם התכנסות, אחר כך משוואה</LessonLink>).
+- **משפט 2.7.4:** $e_n=\left(1+\frac1n\right)^n$ עולה ממש (אי-שוויון הממוצעים), ו-$e_n<3$ לכל $n$ (הבינום, $k!\ge2^{k-1}$, סכום הנדסי) (<LessonLink id="2.7" anchor="e-increasing">עולה וחסומה</LessonLink>).
+- **הגדרה 2.7.5 (המספר e):** $e=\lim\left(1+\frac1n\right)^n$, ו-$2<e\le3$. שזה הבסיס של $e^x$ ושל $\ln$ מבית הספר יוכח רק בשיעור 4.6 (<LessonLink id="2.7" anchor="e-def">ההגדרה</LessonLink>).
+- **טענה 2.7.6:** $f_n=\left(1+\frac1n\right)^{n+1}$ יורדת ממש (אי-שוויון ברנולי), $f_n-e_n=\frac{e_n}n\to0$, ולכן $e_n<e<f_n$ לכל $n$; בפרט $e<f_5=2.985984<3$ (<LessonLink id="2.7" anchor="e-squeeze">סנדוויץ' ל-e</LessonLink>).
+- **מסקנה 2.7.7:** $\left(1+\frac1n\right)^{n+k}\to e$ לכל $k\in\mathbb Z$ קבוע; $\left(1-\frac1n\right)^n\to\frac1e$; $\left(1+\frac1n\right)^{2n}\to e^2$ ו-$\left(1+\frac1{2n}\right)^{2n}\to e$ (<LessonLink id="2.7" anchor="e-variants">קרובי משפחה של e</LessonLink>).
+
+<Formula tex="a_n\uparrow,\ \ a_n\le M\ \Longrightarrow\ a_n\to\sup\{a_n\};\qquad a_n\downarrow,\ \ a_n\ge m\ \Longrightarrow\ a_n\to\inf\{a_n\}" label="משפט 2.7.1" />
+
+<Formula tex="e=\lim_{n\to\infty}\left(1+\frac1n\right)^n,\qquad \left(1+\frac1n\right)^n<e<\left(1+\frac1n\right)^{n+1}" label="הגדרה 2.7.5 וטענה 2.7.6" />
+
+### גבולות שימושיים (<LessonLink id="2.8">שיעור 2.8</LessonLink>)
+
+- **טענה 2.8.1:** $|q|<1$ גורר $q^n\to0$; $q>1$ גורר $q^n\to\infty$; $q=1$ גורר $q^n\to1$; $q=-1$: מתבדרת; $q<-1$: לא חסומה, ולא שואפת ל-$\pm\infty$. ההוכחה: ברנולי, $\frac1{|q|}=1+h$ ו-$(1+h)^n\ge1+nh$ (<LessonLink id="2.8" anchor="qn">q בחזקת n</LessonLink>).
+- **טענות 2.8.2 ו-2.8.3:** לכל $a>0$, $\sqrt[n]a\to1$, ול-$a\ge1$, $0\le\sqrt[n]a-1\le\frac{a-1}n$. וגם $\sqrt[n]n\to1$, עם $0\le\sqrt[n]n-1\le\frac2{\sqrt n}$ (מהמחובר הריבועי של הבינום) (<LessonLink id="2.8" anchor="roots">השורש ה-n-י</LessonLink>).
+- **משפט 2.8.4 (מבחן המנה לסדרות):** $a_n>0$ לכל $n$ ו-$\frac{a_{n+1}}{a_n}\to q$: אם $q<1$, $a_n\to0$; אם $q>1$ (או שהמנה שואפת לאינסוף), $a_n\to\infty$; אם $q=1$, אין מסקנה. צורת אי-השוויון: אם $\frac{a_{n+1}}{a_n}\le r<1$ לכל $n>n_0$, אז $a_n\le C\,r^n$ ו-$a_n\to0$ (<LessonLink id="2.8" anchor="ratio-theorem">מבחן המנה</LessonLink>).
+- **מסקנה 2.8.5:** לכל $k\in\mathbb N$ ו-$a>1$: $\frac{n^k}{a^n}\to0$; $\frac{a^n}{n!}\to0$, ואפילו לכל $a>0$; $\frac{n!}{n^n}\to0$; ו-$n^kq^n\to0$ כש-$|q|<1$ (<LessonLink id="2.8" anchor="ratio-corollary">מסקנות</LessonLink>).
+- **טענה 2.8.6 (מבחן השורש לסדרות):** $a_n\ge0$ ו-$\sqrt[n]{a_n}\to q$: אם $q<1$, $a_n\to0$; אם $q>1$, $a_n\to\infty$; אם $q=1$, אין מסקנה (<LessonLink id="2.8" anchor="root-theorem">מבחן השורש</LessonLink>).
+- **מסקנה 2.8.7 (סולם קצבי הגדילה):** $x_n\ll y_n$ פירושו $\frac{x_n}{y_n}\to0$. לכל $k\ge2$ ו-$a>1$ (וגם $\ln n\ll n$):
+
+  $$\ln n\ll\sqrt[k]n\ll n\ll n^k\ll a^n\ll n!\ll n^n$$
+
+  השלב של $\ln$ משתמש בעובדות מבית הספר על $\ln$, שיוכחו בשיעור 4.6 (<LessonLink id="2.8" anchor="ladder-theorem">הסולם</LessonLink>).
+
+<Formula tex="a_n>0,\ \ \frac{a_{n+1}}{a_n}\to q<1\ \Longrightarrow\ a_n\to0;\qquad q>1\ \Longrightarrow\ a_n\to\infty" label="משפט 2.8.4 (מבחן המנה)" />
+
+<Formula tex="\ln n\ \ll\ \sqrt[k]{n}\ \ll\ n\ \ll\ n^k\ \ll\ a^n\ \ll\ n!\ \ll\ n^n\qquad(k\ge2,\ a>1)" label="מסקנה 2.8.7" />
+
+### תת-סדרות ומשפט בולצאנו-ויירשטראס (<LessonLink id="2.9">שיעור 2.9</LessonLink>)
+
+- **הגדרה 2.9.1 ולמה 2.9.2:** תת-סדרה של $(a_n)$ היא $(a_{n_k})_{k=1}^\infty$ עם $n_1<n_2<\cdots$ טבעיים: אסור לחזור על מקום או לשנות סדר. $n_k\ge k$; תת-סדרה של תת-סדרה היא תת-סדרה; ולכל קבוצה אינסופית של מקומות יש תת-סדרה שכל מקומותיה בה (<LessonLink id="2.9" anchor="def-subsequence">תת-סדרה</LessonLink>, <LessonLink id="2.9" anchor="lemma-indices">האינדקסים</LessonLink>).
+- **משפט 2.9.3 ומסקנה 2.9.3א:** אם $a_n\to L$ ($L$ ממשי או $\pm\infty$), כל תת-סדרה שואפת ל-$L$. לכן שתי תת-סדרות עם גבולות שונים, או תת-סדרה אחת שאינה מתכנסת, מוכיחות שהסדרה מתבדרת. תת-סדרה מתכנסת אחת לא מוכיחה דבר, ושתיים עם אותו גבול מספיקות רק כשהן מכסות את כל המקומות (<LessonLink id="2.9" anchor="subsequence-limit">תת-סדרה של מתכנסת</LessonLink>, <LessonLink id="2.9" anchor="cover">תת-סדרות שמכסות</LessonLink>).
+- **הגדרה 2.9.4:** $L\in\mathbb R$ הוא **גבול חלקי** של $(a_n)$ אם יש תת-סדרה ששואפת ל-$L$. בפרק הזה $\pm\infty$ אינם גבולות חלקיים. ערך של איבר וגבול חלקי הם דברים שונים (<LessonLink id="2.9" anchor="def-partial-limit">גבול חלקי</LessonLink>).
+- **משפט 2.9.5 (אפיון):** $L$ גבול חלקי אם ורק אם לכל $\varepsilon>0$ יש **אינסוף** מקומות $n$ עם $|a_n-L|<\varepsilon$, אם ורק אם לכל $\varepsilon>0$ ולכל $N$ יש $n>N$ עם $|a_n-L|<\varepsilon$. לעומת גבול: שם **כל** המקומות חוץ ממספר סופי (<LessonLink id="2.9" anchor="characterisation">האפיון</LessonLink>).
+- **מסקנה 2.9.6:** לסדרה מתכנסת הגבול הוא הגבול החלקי היחיד. ההפך לא נכון בלי חסימות: $a_n=n$ במקומות האי-זוגיים ו-$0$ בזוגיים (<LessonLink id="2.9" anchor="one-partial-limit">גבול חלקי יחיד</LessonLink>).
+- **למה 2.9.7 (הקטעים המקוננים, קנטור):** אם $a_n\le a_{n+1}\le b_{n+1}\le b_n$ לכל $n$ ו-$b_n-a_n\to0$, יש $c$ אחד ויחיד בכל הקטעים $[a_n,b_n]$, ו-$a_n\to c$, $b_n\to c$. צריך קטעים סגורים ($\left(0,\frac1n\right)$) ואורכים ששואפים לאפס, בשביל היחידות (<LessonLink id="2.9" anchor="cantor">קנטור</LessonLink>).
+- **משפט 2.9.8 (בולצאנו-ויירשטראס):** לכל סדרה חסומה יש תת-סדרה מתכנסת, כלומר לפחות גבול חלקי אחד. הוכחה בחציה: שומרים חצי שבו האיברים נמצאים באינסוף מקומות. החסימות נחוצה: $a_n=n$ (<LessonLink id="2.9" anchor="bw">בולצאנו-ויירשטראס</LessonLink>).
+- **למה 2.9.9 (פסגות):** לכל סדרה יש תת-סדרה מונוטונית; עם משפט 2.7.1 זו הוכחה שנייה של משפט 2.9.8 (<LessonLink id="2.9" anchor="peaks">פסגות</LessonLink>).
+- **מסקנה 2.9.10 וטענה 2.9.11:** סדרה **חסומה** מתכנסת אם ורק אם יש לה גבול חלקי אחד בדיוק. סדרה שאינה חסומה מלעיל (מלרע) יש לה תת-סדרה ששואפת לאינסוף (למינוס אינסוף) (<LessonLink id="2.9" anchor="one-partial-limit-bounded">גבול חלקי יחיד וחסימות</LessonLink>, <LessonLink id="2.9" anchor="unbounded">סדרה לא חסומה</LessonLink>).
+
+<Formula tex="\exists\,n_1<n_2<\cdots:\ a_{n_k}\to L\iff\forall\varepsilon>0\ \ \forall N\in\mathbb{N}\ \ \exists n>N:\ |a_n-L|<\varepsilon" label="משפט 2.9.5: L גבול חלקי" />
+
+<Formula tex="\exists M\ \forall n:\ |a_n|\le M\ \Longrightarrow\ \exists\,n_1<n_2<\cdots\ \ \exists L\in\mathbb{R}:\ a_{n_k}\to L" label="משפט 2.9.8 (בולצאנו-ויירשטראס)" />
+
+### סדרות קושי (<LessonLink id="2.10">שיעור 2.10</LessonLink>)
+
+- **הגדרה 2.10.1:** $(a_n)$ **סדרת קושי** אם לכל $\varepsilon>0$ יש $N$ כך ש-$|a_m-a_n|<\varepsilon$ לכל $m,n>N$; שקול: $|a_{n+p}-a_n|<\varepsilon$ לכל $n>N$ ולכל $p\in\mathbb N$. אין בה גבול: זו כל הנקודה (<LessonLink id="2.10" anchor="def">תנאי קושי</LessonLink>).
+- **טענה 2.10.2, טענה 2.10.3 ולמה 2.10.4:** כל סדרה מתכנסת היא סדרת קושי ($\frac\varepsilon2$ ואי-שוויון המשולש); כל סדרת קושי חסומה, וההפך לא נכון ($(-1)^n$); וסדרת קושי עם תת-סדרה ששואפת ל-$L$ שואפת ל-$L$ (<LessonLink id="2.10" anchor="conv-cauchy">מתכנסת גוררת קושי</LessonLink>, <LessonLink id="2.10" anchor="subsequence">תת-סדרה מושכת</LessonLink>).
+- **משפט 2.10.5 (קריטריון קושי):** בממשיים, סדרה מתכנסת אם ורק אם היא סדרת קושי. השלמות נכנסת דרך בולצאנו-ויירשטראס; ברציונליים הקיצוצים העשרוניים של $\sqrt2$ הם סדרת קושי בלי גבול רציונלי (<LessonLink id="2.10" anchor="cauchy-criterion">קריטריון קושי</LessonLink>, <LessonLink id="2.10" anchor="rationals">קושי ושלמות</LessonLink>).
+- **טענה 2.10.6 (השלילה):** $(a_n)$ אינה סדרת קושי אם ורק אם $\exists\varepsilon>0\ \forall N\ \exists m,n>N:\ |a_m-a_n|\ge\varepsilon$, ואז היא מתבדרת. הסכומים ההרמוניים $H_n=1+\frac12+\dots+\frac1n$: $H_{2n}-H_n\ge\frac12$, ולכן $(H_n)$ מתבדרת, ושואפת לאינסוף כי היא עולה. הפרשים עוקבים ששואפים לאפס, ואפילו $a_{n+p}-a_n\to0$ לכל $p$ קבוע, אינם מספיקים ($H_n$, $\sqrt n$) (<LessonLink id="2.10" anchor="negation-theorem">השלילה</LessonLink>, <LessonLink id="2.10" anchor="harmonic">הסכומים ההרמוניים</LessonLink>).
+- **טענה 2.10.7:** אם, לכל $k\ge n_0$, $|a_{k+1}-a_k|\le C\,q^k$ עם $C\ge0$ ו-$0<q<1$, או $|a_{k+1}-a_k|\le c_{k+1}-c_k$ עם $(c_n)$ מתכנסת, אז $(a_n)$ סדרת קושי ומתכנסת. הכלי: $|a_m-a_n|\le\sum_{k=n}^{m-1}|a_{k+1}-a_k|$. למשל $\sum_{k=1}^n\frac1{k^2}$ מתכנסת, כי $\frac1{k^2}\le\frac1{k-1}-\frac1k$ לכל $k\ge2$ (<LessonLink id="2.10" anchor="telescoping">חסם על הפרשים עוקבים</LessonLink>, <LessonLink id="2.10" anchor="inverse-squares">סכום ההופכיים של הריבועים</LessonLink>).
+- **מסקנה 2.10.8 (סדרה מכווצת):** אם יש $0<q<1$ קבוע עם $|a_{n+2}-a_{n+1}|\le q\,|a_{n+1}-a_n|$ לכל $n\ge n_0$, אז $(a_n)$ מתכנסת (<LessonLink id="2.10" anchor="contraction">סדרה מכווצת</LessonLink>).
+
+<Formula tex="\exists L\in\mathbb{R}:\ a_n\to L\quad\iff\quad\forall\varepsilon>0\ \exists N\ \forall m,n>N:\ |a_m-a_n|<\varepsilon" label="משפט 2.10.5: קריטריון קושי (בממשיים)" />
+
+<Formula tex="H_{2n}-H_n=\sum_{k=n+1}^{2n}\frac1k\ \ge\ \frac12" label="טענה 2.10.6: הסכומים ההרמוניים אינם סדרת קושי" />
+
+## טעויות נפוצות
+
+- **מזהים סדרה עם קבוצת הערכים שלה.** סדרה היא פונקציה: ל-$(-1)^n$ ול-$(-1)^{n+1}$ אותה קבוצת ערכים, והן שונות. התיקון: <LessonLink id="2.1" anchor="def">סדרה היא פונקציה</LessonLink>.
+- **בוחרים חסם שתלוי במקום בסדרה.** חסימות היא $\exists M\ \forall n$: קודם $M$ אחד, אחר כך כל האיברים; $\forall n\ \exists M$ נכון לכל סדרה. התיקון: <LessonLink id="2.1" anchor="bounded-def">הגדרת סדרה חסומה</LessonLink>.
+- **מוכיחים אי-חסימות, או מסיקים נוסחה או מונוטוניות, מכמה איברים ראשונים או משרטוט.** שרטוט נותן השערה; את ההשערה מוכיחים, למשל באינדוקציה. התיקון: <LessonLink id="2.1" anchor="unbounded">הוכחה שסדרה אינה חסומה</LessonLink>, <LessonLink id="2.1" anchor="ex-2-1-4">שיעור 2.1, דוגמה 4</LessonLink>.
+- **מבלבלים בין עולה לעולה ממש, או מסיקים מונוטוניות מהערך המוחלט.** "עולה" מרשה שוויון; ו-$\frac{(-1)^n}n$ אינה מונוטונית, אף ש-$\frac1n$ יורדת. התיקון: <LessonLink id="2.1" anchor="monotone-def">הגדרת סדרה מונוטונית</LessonLink>, <LessonLink id="2.1" anchor="tests">מבחנים למונוטוניות</LessonLink>.
+- **חושבים שסדרה עולה אינה חסומה, או מחפשים לה את החסם הלא נכון.** סדרה עולה תמיד חסומה מלרע על ידי $a_1$; השאלה היא רק אם היא חסומה **מלעיל** ($\frac n{n+1}$ כן). התיקון: <LessonLink id="2.1" anchor="monotone-bounded">מונוטונית וחסומה</LessonLink>.
+- **מחליפים את סדר הכמתים בהגדרת הגבול, או חושבים ש-N לא תלוי באפסילון.** $N$ נבחר **אחרי** $\varepsilon$ ותלוי בו; $\exists N\ \forall\varepsilon$ פירושו שהסדרה קבועה מ-$N$. התיקון: <LessonLink id="2.2" anchor="def">ההגדרה</LessonLink>, <LessonLink id="2.2" anchor="order">סדר הכמתים</LessonLink>.
+- **"אינסוף איברים קרובים" במקום "כל האיברים מ-N והלאה".** ב-$(-1)^n$ אינסוף איברים שווים ל-$1$, והיא אינה שואפת ל-$1$; זה התנאי של גבול **חלקי**. התיקון: <LessonLink id="2.2" anchor="outside">מקומות מחוץ לסביבה</LessonLink>, <LessonLink id="2.9" anchor="characterisation">אפיון הגבול החלקי</LessonLink>.
+- **בודקים כמה ערכים של אפסילון ומסיקים התכנסות.** הוכחה צריכה $N$ לכל $\varepsilon>0$, בדרך כלל בנוסחה כמו $\left\lceil\frac C\varepsilon\right\rceil$. התיקון: <LessonLink id="2.2" anchor="recipe">המתכון</LessonLink>.
+- **חושבים שבהוכחה צריך את ה-N הקטן ביותר, או מבלבלים בין N לאיבר הראשון שנכנס לסביבה.** כל $N$ שמתאים מספיק, וכל $N'\ge N$ מתאים; ה-$N$ הקטן ביותר הוא המקום **האחרון** מחוץ לסביבה. התיקון: <LessonLink id="2.2" anchor="larger">כל N גדול יותר</LessonLink>, <LessonLink id="2.2" anchor="find-n">מציאת N</LessonLink>.
+- **חוסמים את המרחק לגבול מלמטה, בביטוי שאינו שואף לאפס, או בכיוון הלא נכון.** צריך $|a_n-L|\le b_n$ עם $b_n\to0$; הגדלת מכנה **מקטינה** שבר, ולכן במכנה מחליפים $n^2-5$ ב-$\frac{n^2}2$ (לכל $n\ge4$), לא ב-$n^2$. התיקון: <LessonLink id="2.3" anchor="estimate">הערכה מלמעלה</LessonLink>, <LessonLink id="2.3" anchor="fractions">הגדלה והקטנה של שברים</LessonLink>.
+- **בוחרים אפסילון שתלוי ב-n.** $\varepsilon$ נבחר ראשון, לפני $N$ ולפני $n$. התיקון: <LessonLink id="2.3" anchor="proof-template">סדר הבחירות בהוכחה</LessonLink>.
+- **מוכיחים התבדרות בפסילת גבול אחד.** צריך לפסול **כל** $L\in\mathbb R$, למשל בשתי תת-סדרות עם גבולות שונים. התיקון: <LessonLink id="2.3" anchor="divergent-def">הוכחה שסדרה מתבדרת</LessonLink>.
+- **מבלבלים בין "מתכנסת גוררת חסומה" לבין הכיוון ההפוך, או חושבים שהאיברים חסומים בגבול.** $(-1)^n$ חסומה ומתבדרת; ו-$1+\frac1n\to1$ עם כל איבריה מעל $1$. התיקון: <LessonLink id="2.3" anchor="bounded">סדרה מתכנסת חסומה</LessonLink>.
+- **מסיקים מהתכנסות של הערך המוחלט שהסדרה מתכנסת.** $|(-1)^n|\to1$; ההסקה נכונה רק כש-$|a_n|\to0$. התיקון: <LessonLink id="2.3" anchor="abs-value">ערך מוחלט</LessonLink>.
+- **משתמשים בכלל המנה כשגבול המכנה אפס, או בכללי החשבון על סדרות שאין להן גבול.** $\lim(a_nb_n)=\lim a_n\cdot\lim b_n$ רק כששני הגבולות קיימים, ו-$\frac{a_n}{b_n}$ רק כש-$b\ne0$. התיקון: <LessonLink id="2.4" anchor="quotient-theorem">מנה</LessonLink>, <LessonLink id="2.4" anchor="rules-fail">מתי הכללים לא אומרים כלום</LessonLink>.
+- **חושבים שאם סכום או מכפלה מתכנסים, כל גורם מתכנס.** $(-1)^n+\left(-(-1)^n\right)=0$ ו-$(-1)^n\cdot(-1)^n=1$. התיקון: <LessonLink id="2.4" anchor="rules-fail">מתי הכללים לא אומרים כלום</LessonLink>.
+- **חושבים שגורם ששואף לאפס מאפס כל מכפלה.** $\frac1n\cdot n=1$; צריך שהגורם השני יהיה **חסום** (משפט 2.5.4). התיקון: <LessonLink id="2.4" anchor="product-theorem">מכפלה</LessonLink>, <LessonLink id="2.5" anchor="null-times-bounded">אפסה כפול חסומה</LessonLink>.
+- **חושבים שהפרש של שני ביטויים גדולים שואף לאפס, או מוציאים שורש מהפרש איבר-איבר.** $\sqrt{n^2+n}-n\to\frac12$; כופלים בצמוד. התיקון: <LessonLink id="2.4" anchor="conjugate-method">כפל בצמוד</LessonLink>.
+- **מפעילים את כלל הסנדוויץ' עם חסמים שגבולותיהם שונים, או עם חסם מצד אחד.** הסדרה $(-1)^n$ כלואה בין הסדרות הקבועות $\pm1$, ומתבדרת. התיקון: <LessonLink id="2.5" anchor="squeeze-needs">מה כל הנחה עושה</LessonLink>.
+- **חושבים שסכום של מחוברים ששואפים לאפס שואף לאפס, גם כשמספרם גדל.** $\sum_{k=1}^n\frac1{\sqrt{n^2+k}}\to1$; משפט 2.4.1 מדבר על מספר **קבוע** של סדרות. התיקון: <LessonLink id="2.5" anchor="sums">סנדוויץ' לסכומים</LessonLink>.
+- **חושבים שגבול שומר על אי-שוויון חזק.** $\frac1n>0$ והגבול $0$; מ-$a_n<b_n$ נובע רק $a\le b$. התיקון: <LessonLink id="2.5" anchor="preserve">שמירה על אי-שוויון חלש</LessonLink>.
+- **חושבים שסדרה לא חסומה מלעיל, או מתבדרת, שואפת לאינסוף.** $n^{(-1)^n}$ אינה חסומה ואינה שואפת לאינסוף; $(-1)^n$ מתבדרת סתם. התיקון: <LessonLink id="2.6" anchor="taxonomy">לא חסומה, שואפת לאינסוף, מתבדרת סתם</LessonLink>.
+- **חושבים שאם סדרה שואפת לאפס, ההופכית שלה שואפת לאינסוף.** צריך סימן קבוע מאיזה מקום: $\frac n{(-1)^n}$ אינה שואפת ל-$\pm\infty$. התיקון: <LessonLink id="2.6" anchor="reciprocal">ההופכי</LessonLink>.
+- **מבלבלים בין צורה לא מוגדרת לצורה שיש לה ערך.** $\infty-\infty$ אינו $0$ ו-$\frac\infty\infty$ אינו $1$: הצורה לבדה לא מכריעה, וצריך לפשט. התיקון: <LessonLink id="2.6" anchor="indeterminate">הצורות הלא-מוגדרות</LessonLink>.
+- **חושבים שכל סדרה מונוטונית מתכנסת, או שמתכנסת חייבת להיות מונוטונית.** $n$ עולה ומתבדרת; $\frac{(-1)^n}n$ מתכנסת ואינה מונוטונית. התיקון: <LessonLink id="2.7" anchor="mct">ההתכנסות המונוטונית</LessonLink>.
+- **חושבים שמונוטונית וחסומה שואפת לחסם שנתון, או שהגבול הוא אחד מאיבריה.** הגבול הוא **הסופרמום** (החסם הקטן ביותר), ובעולה ממש הוא אינו איבר. התיקון: <LessonLink id="2.7" anchor="mct">ההתכנסות המונוטונית</LessonLink>, <LessonLink id="2.7" anchor="mct-cor">האיברים בצד אחד של הגבול</LessonLink>.
+- **פותרים את משוואת הנקודה הקבועה לפני שמוכיחים התכנסות, או לא בודקים איזה פתרון הוא הגבול.** $a_{n+1}=2a_n$ "נותנת" $L=0$ ומתבדרת; כשיש שני פתרונות, החסמים (מסקנה 2.5.2) בוחרים ביניהם. התיקון: <LessonLink id="2.7" anchor="candidate">קודם התכנסות, אחר כך משוואה</LessonLink>, <LessonLink id="2.7" anchor="sqrt-example">בחירת הפתרון</LessonLink>.
+- **חושבים שכלל הרקורסיה לבדו קובע אם הסדרה עולה או יורדת.** אותו כלל $\sqrt{2+x}$ עולה מ-$a_1=0$ ויורד מ-$a_1=3$. התיקון: <LessonLink id="2.7" anchor="start">התפקיד של האיבר הראשון</LessonLink>.
+- **מכריעים את הצורה אחד בחזקת אינסוף לפי הבסיס או לפי המעריך לבד.** $\left(1+\frac1n\right)^n\to e$, לא $1$ ולא $\infty$. התיקון: <LessonLink id="2.7" anchor="e-def">המספר e</LessonLink>.
+- **חושבים ש-q בחזקת n שואף לאפס לכל q קטן מ-1.** צריך $|q|<1$; $(-2)^n$ אינה חסומה. התיקון: <LessonLink id="2.8" anchor="geometric">q בחזקת n</LessonLink>.
+- **חושבים שהשורש ה-n-י של כל סדרה חיובית שואף ל-1.** $\sqrt[n]{2^n+3^n}\to3$. התיקון: <LessonLink id="2.8" anchor="ex-2-8-1">שיעור 2.8, דוגמה 1</LessonLink>.
+- **מסיקים משהו ממבחן המנה כשהמנה שואפת ל-1, או מבלבלים בין גבול המנה לגבול הסדרה.** $n$, $\frac1n$ ו-$1$ כולן עם מנה ששואפת ל-$1$; ו-$\frac{a_{n+1}}{a_n}\to\frac12$ אומר $a_n\to0$, לא $a_n\to\frac12$. התיקון: <LessonLink id="2.8" anchor="ratio-test">מבחן המנה</LessonLink>, <LessonLink id="2.8" anchor="ratio-hypotheses">מה כל הנחה עושה</LessonLink>.
+- **חושבים שמנה קטנה מ-1 בכל צעד מבטיחה שאיפה לאפס.** $1+\frac1n$ יורדת ממש ושואפת ל-$1$; צריך מנה $\le r<1$ קבוע. התיקון: <LessonLink id="2.8" anchor="ratio-hypotheses">מה כל הנחה עושה</LessonLink>.
+- **משווים קצבי גדילה לפי האיברים הראשונים.** $n^{10}>2^n$ לכל $2\le n\le58$, ובכל זאת $n^{10}\ll2^n$. התיקון: <LessonLink id="2.8" anchor="ladder">סולם קצבי הגדילה</LessonLink>.
+- **חושבים שתת-סדרה יכולה לחזור על איברים או לשנות את הסדר.** המקומות עולים ממש: $n_1<n_2<\cdots$. התיקון: <LessonLink id="2.9" anchor="def-subsequence">הגדרת תת-סדרה</LessonLink>.
+- **מסיקים מתת-סדרה מתכנסת, או משתי תת-סדרות עם אותו גבול, שהסדרה מתכנסת.** $a_{2k}$ של $(-1)^n$ מתכנסת; $a_{2k}$ ו-$a_{3k}$ אינן מכסות את המקומות $6k+1$. התיקון: <LessonLink id="2.9" anchor="subsequence-limit">תת-סדרה של מתכנסת</LessonLink>, <LessonLink id="2.9" anchor="cover">תת-סדרות שמכסות</LessonLink>.
+- **מבלבלים בין גבול חלקי לערך של איבר, או חושבים שגבול חלקי יחיד מבטיח התכנסות.** ל-$\frac1n$ הגבול החלקי $0$ אינו ערך; ובלי חסימות גבול חלקי יחיד אינו מספיק. התיקון: <LessonLink id="2.9" anchor="def-partial-limit">גבול חלקי</LessonLink>, <LessonLink id="2.9" anchor="one-partial-limit">גבול חלקי יחיד</LessonLink>.
+- **שוכחים את החסימות במשפט בולצאנו-ויירשטראס.** ל-$a_n=n$ אין תת-סדרה מתכנסת. התיקון: <LessonLink id="2.9" anchor="bw">בולצאנו-ויירשטראס</LessonLink>.
+- **חושבים שמספיק שהפרש בין איברים עוקבים ישאף לאפס.** תנאי קושי הוא על **כל** זוג מקומות אחרי $N$: $H_{n+1}-H_n\to0$, ו-$H_n\to\infty$. התיקון: <LessonLink id="2.10" anchor="harmonic">הסכומים ההרמוניים</LessonLink>.
+- **חושבים שכדי להשתמש בתנאי קושי צריך לדעת את הגבול, או שסדרת קושי מתכנסת בכל מערכת מספרים.** בתנאי אין $L$; וההתכנסות שלו היא תכונה של $\mathbb R$, שנכשלת ב-$\mathbb Q$. התיקון: <LessonLink id="2.10" anchor="def">תנאי קושי</LessonLink>, <LessonLink id="2.10" anchor="rationals">קושי ושלמות</LessonLink>.
+
+## איך פותרים
+
+### להוכיח גבול מההגדרה, עם N מפורש
+
+- **איך מזהים:** "הוכיחו מההגדרה", "מצאו $N$ לכל $\varepsilon>0$", "מהו ה-$N$ הקטן ביותר ל-$\varepsilon=0.01$".
+- **המתכון:** מפשטים את $|a_n-L|$; חוסמים אותו מלמעלה ב-$\frac Cn$ (או $\frac C{\sqrt n}$) לכל $n>n_0$: מגדילים מונה, מקטינים מכנה, ומוכיחים כל חוליה; בוחרים $N=\max\left(n_0,\left\lceil\frac C\varepsilon\right\rceil\right)$; כותבים בסדר הכמתים: יהי $\varepsilon>0$, נבחר $N$, יהי $n>N$, שרשרת. ל-$N$ הקטן ביותר: פותרים $|a_n-L|\ge\varepsilon$ בדיוק, והתשובה היא המקום האחרון בקבוצה (טענה 2.2.7).
+- **המלכודת:** חסם מלמטה, או חסם שאינו שואף לאפס; מכנה שמוחלף ב"כמעט שווה" לו; $\varepsilon$ שתלוי ב-$n$; לשכוח את $n_0$ כשהמכנה מתנהג יפה רק מאיזה מקום.
+- **דוגמאות פתורות:** <LessonLink id="2.2" anchor="ex-2-2-4">שיעור 2.2, דוגמה 4</LessonLink>, <LessonLink id="2.3" anchor="ex-2-3-1">שיעור 2.3, דוגמה 1</LessonLink>, <LessonLink id="2.3" anchor="ex-2-3-3">שיעור 2.3, דוגמה 3</LessonLink>.
+
+### להוכיח שסדרה מתבדרת, או שאינה שואפת ל-L
+
+- **איך מזהים:** "הוכיחו שאין לסדרה גבול", "הוכיחו ש-$a_n$ אינה שואפת ל-$L$", סימן מתחלף כמו $(-1)^n$, סדרה שגדלה.
+- **המתכון:** לגבול אחד: השלילה, משפט 2.2.8, עם $\varepsilon$ מפורש ואינסוף מקומות מחוץ לסביבה. להתבדרות: (1) לא חסומה, ולכן מתבדרת (משפט 2.3.3); (2) שתי תת-סדרות עם גבולות שונים (מסקנה 2.9.3א), ולפני שיעור 2.9, המקומות הזוגיים והאי-זוגיים; (3) $a_{n+1}-a_n\not\to0$ (טענה 2.3.4); (4) אינה סדרת קושי (טענה 2.10.6); (5) מתכנסת ועוד מתבדרת (טענה 2.4.8).
+- **המלכודת:** לפסול רק את ה-$L$ ה"מתבקש"; להסיק מתת-סדרה מתכנסת אחת; לחשוב ש"מתבדרת" פירושו "שואפת לאינסוף".
+- **דוגמאות פתורות:** <LessonLink id="2.2" anchor="ex-2-2-3">שיעור 2.2, דוגמה 3</LessonLink>, <LessonLink id="2.3" anchor="ex-2-3-4">שיעור 2.3, דוגמה 4</LessonLink>, <LessonLink id="2.9" anchor="ex-2-9-3">שיעור 2.9, דוגמה 3</LessonLink>.
+
+### חסימות ומונוטוניות של סדרה נתונה
+
+- **איך מזהים:** "הוכיחו שהסדרה עולה (יורדת) וחסומה", "מצאו את החסם מלעיל הקטן ביותר", "האם יש איבר גדול ביותר".
+- **המתכון:** מונוטוניות: סימן ההפרש $a_{n+1}-a_n$ (לפעמים אחרי כפל בצמוד), או המנה לעומת $1$ כשכל האיברים חיוביים. חסימות: אי-שוויון לכל $n$, או באינדוקציה ברקורסיה; לסדרה עולה מספיק חסם מלעיל (טענה 2.1.10). החסם הקטן ביותר: אפיון הסופרמום (משפט 1.4.8), או הגבול לפי משפט 2.7.1.
+- **המלכודת:** מבחן המנה עם איברים שליליים; להסיק מונוטוניות מהערך המוחלט; להראות "לא עולה" במקום "לא מונוטונית" (צריך שני צעדים בכיוונים הפוכים).
+- **דוגמאות פתורות:** <LessonLink id="2.1" anchor="ex-2-1-1">שיעור 2.1, דוגמה 1</LessonLink>, <LessonLink id="2.1" anchor="ex-2-1-3">שיעור 2.1, דוגמה 3</LessonLink>, <LessonLink id="2.1" anchor="ex-2-1-6">שיעור 2.1, דוגמה 6</LessonLink>.
+
+### לחשב גבול בחשבון גבולות
+
+- **איך מזהים:** מנה של פולינומים ב-$n$, הפרש של שורשים, צירוף של סדרות שהגבולות שלהן ידועים.
+- **המתכון:** מנת פולינומים: מחלקים בחזקה הגבוהה של המכנה (מסקנה 2.4.7). הפרש של שורשים: כופלים בצמוד, ובשורש שלישי ב-$u^2+uv+v^2$, ואז מחלקים בגודל המוביל. בכל צעד מציינים את הכלל (2.4.1, 2.4.2, 2.4.4, 2.4.6) ובודקים את ההנחות: שני הגבולות קיימים, וגבול המכנה שונה מאפס.
+- **המלכודת:** לפצל גבול של מכפלה כשגורם אחד מתבדר; כלל המנה כשהמכנה שואף לאפס; "$\infty-\infty=0$".
+- **דוגמאות פתורות:** <LessonLink id="2.4" anchor="ex-2-4-1">שיעור 2.4, דוגמה 1</LessonLink>, <LessonLink id="2.4" anchor="ex-2-4-3">שיעור 2.4, דוגמה 3</LessonLink>, <LessonLink id="2.4" anchor="ex-2-4-5">שיעור 2.4, דוגמה 5</LessonLink>.
+
+### סנדוויץ', ואפסה כפול חסומה
+
+- **איך מזהים:** $\sin n$, $(-1)^n$, $\lfloor\cdot\rfloor$ או סכום של $n$ מחוברים בתוך הסדרה; "אין לגורם גבול".
+- **המתכון:** גורם חסום כפול גורם ששואף לאפס: משפט 2.5.4, עם החסם המפורש ($|\sin x|\le1$ היא עובדה מבית הספר). סכום של $n$ מחוברים: חוסמים כל מחובר בקטן ובגדול שבהם, כופלים ב-$n$, ומראים ששני החסמים שואפים לאותו גבול (משפט 2.5.3). ערך שלם: $x-1<\lfloor x\rfloor\le x$.
+- **המלכודת:** חסמים עם גבולות שונים; חסם מצד אחד; משפט 2.4.2 על גורם שאין לו גבול; "כל מחובר שואף לאפס ולכן הסכום".
+- **דוגמאות פתורות:** <LessonLink id="2.5" anchor="ex-2-5-1">שיעור 2.5, דוגמה 1</LessonLink>, <LessonLink id="2.5" anchor="ex-2-5-3">שיעור 2.5, דוגמה 3</LessonLink>, <LessonLink id="2.5" anchor="ex-2-5-6">שיעור 2.5, דוגמה 6</LessonLink>.
+
+### גבולות אינסופיים ומיון של סדרה
+
+- **איך מזהים:** "הוכיחו ש-$a_n\to\infty$", "לאן הסדרה שואפת", "מיינו לפי פרמטר", צורות כמו $\infty-\infty$.
+- **המתכון:** מההגדרה: חוסמים את $a_n$ **מלמטה** בביטוי פשוט שעובר כל $M$, ובוחרים $N$ בנוסחה של $M$. בעזרת משפטים: משפט 2.6.4 (סכום עם חסומה מלרע, מכפלה עם גורם $\ge c>0$, השוואה), טענה 2.6.3 להופכי, ומסקנה 2.6.6 לפולינומים. בצורה לא מוגדרת מפשטים קודם. למיון: מתכנסת, $\pm\infty$, או מתבדרת סתם, וכל קביעה עם הוכחה.
+- **המלכודת:** "לא חסומה ולכן שואפת לאינסוף"; הופכי של סדרה ששואפת לאפס בלי סימן קבוע; לתת ערך לצורה לא מוגדרת.
+- **דוגמאות פתורות:** <LessonLink id="2.6" anchor="ex-2-6-1">שיעור 2.6, דוגמה 1</LessonLink>, <LessonLink id="2.6" anchor="ex-2-6-3">שיעור 2.6, דוגמה 3</LessonLink>, <LessonLink id="2.6" anchor="ex-2-6-5">שיעור 2.6, דוגמה 5</LessonLink>.
+
+### סדרה רקורסיבית
+
+- **איך מזהים:** $a_1$ נתון ו-$a_{n+1}=f(a_n)$; "הוכיחו שהסדרה מתכנסת ומצאו את גבולה".
+- **המתכון:** (1) מחשבים כמה איברים ומנסחים השערה; (2) מוכיחים חסמים באינדוקציה; (3) מוכיחים מונוטוניות, בהפרש $a_{n+1}-a_n$ ובחסמים; (4) משפט 2.7.1 נותן התכנסות; (5) רק עכשיו עוברים לגבול ברקורסיה (טענה 2.7.3), ובוחרים את הפתרון לפי החסמים (מסקנה 2.5.2). לשורש עוברים לגבול בצורה הריבועית. סדרה שאינה מונוטונית: המקומות הזוגיים והאי-זוגיים בנפרד, או סדרה מכווצת (מסקנה 2.10.8).
+- **המלכודת:** לפתור $L=f(L)$ לפני שהוכחה התכנסות; להתעלם מהאיבר הראשון; לבחור פתרון בלי נימוק.
+- **דוגמאות פתורות:** <LessonLink id="2.1" anchor="ex-2-1-4">שיעור 2.1, דוגמה 4</LessonLink>, <LessonLink id="2.7" anchor="ex-2-7-3">שיעור 2.7, דוגמה 3</LessonLink>, <LessonLink id="2.7" anchor="ex-2-7-6">שיעור 2.7, דוגמה 6</LessonLink>.
+
+### חזקות, עצרות ושורשים n-יים
+
+- **איך מזהים:** $q^n$, $n!$, $n^n$, $\sqrt[n]{\cdots}$, $n^k$ מול $a^n$, צורות כמו $\left(1+\frac1n\right)^{n+k}$.
+- **המתכון:** עצרות וחזקות: מבחן המנה (משפט 2.8.4), בודקים ש-$a_n>0$ ושהגבול של המנה אינו $1$. שורש $n$-י של סכום: מוציאים את המחובר הדומיננטי וחוסמים בסנדוויץ' עם טענות 2.8.2 ו-2.8.3. מנה של כמה סוגי גדילה: מחלקים בגורם הגדול ביותר לפי הסולם (מסקנה 2.8.7). צורת אחד בחזקת אינסוף: מעבירים לצורה של $e_n$ (מסקנה 2.7.7).
+- **המלכודת:** מסקנה ממנה ששואפת ל-$1$; $q^n\to0$ עם $q\le-1$; לבלבל בין הגבול של המנה לגבול של הסדרה; להשוות לפי האיברים הראשונים.
+- **דוגמאות פתורות:** <LessonLink id="2.8" anchor="ex-2-8-1">שיעור 2.8, דוגמה 1</LessonLink>, <LessonLink id="2.8" anchor="ex-2-8-3">שיעור 2.8, דוגמה 3</LessonLink>, <LessonLink id="2.7" anchor="ex-2-7-5">שיעור 2.7, דוגמה 5</LessonLink>.
+
+### גבולות חלקיים ותת-סדרות
+
+- **איך מזהים:** "מצאו את כל הגבולות החלקיים והוכיחו שאין אחרים", סדרה שמתנהגת לפי שארית של $n$, "הוכיחו שיש תת-סדרה מתכנסת".
+- **המתכון:** מפצלים את המקומות למחלקות שמכסות את $\mathbb N$ (זוגי ואי-זוגי, שארית בחלוקה ב-$3$), ומוצאים את הגבול של כל תת-סדרה: אלה גבולות חלקיים. אין אחרים: לכל $L$ אחר בוחרים $\varepsilon$ כך שרק מספר סופי של מקומות בכל מחלקה קרוב ל-$L$ (משפט 2.9.5). קיום תת-סדרה מתכנסת: חסימות ומשפט 2.9.8.
+- **המלכודת:** לבלבל בין ערך שמתקבל פעם אחת לבין גבול חלקי; לשכוח מחלקה של מקומות; להפעיל את בולצאנו-ויירשטראס על סדרה לא חסומה.
+- **דוגמאות פתורות:** <LessonLink id="2.9" anchor="ex-2-9-1">שיעור 2.9, דוגמה 1</LessonLink>, <LessonLink id="2.9" anchor="ex-2-9-3">שיעור 2.9, דוגמה 3</LessonLink>, <LessonLink id="2.9" anchor="ex-2-9-5">שיעור 2.9, דוגמה 5</LessonLink>.
+
+### התכנסות בלי לדעת את הגבול: קושי
+
+- **איך מזהים:** סכומים חלקיים $\sum_{k=1}^n b_k$, "הוכיחו שהסדרה מתכנסת" כשאין מועמד לגבול, "הוכיחו שאינה סדרת קושי".
+- **המתכון:** קושי: חוסמים $|a_m-a_n|$ לכל $m>n>N$, לרוב בסכום טלסקופי או הנדסי של הפרשים עוקבים (טענה 2.10.7); רקורסיה מכווצת: מסקנה 2.10.8. לא קושי: מוצאים $\varepsilon$ אחד וזוג $m=2n$, $n$ שרחוקים זה מזה לפחות $\varepsilon$ (טענה 2.10.6), ואז הסדרה מתבדרת; אם היא גם עולה, היא שואפת לאינסוף.
+- **המלכודת:** להסתפק ב-$a_{n+1}-a_n\to0$, או ב-$a_{n+p}-a_n\to0$ ל-$p$ קבוע; $N$ שתלוי ב-$p$.
+- **דוגמאות פתורות:** <LessonLink id="2.10" anchor="ex-2-10-1">שיעור 2.10, דוגמה 1</LessonLink>, <LessonLink id="2.10" anchor="ex-2-10-3">שיעור 2.10, דוגמה 3</LessonLink>, <LessonLink id="2.10" anchor="ex-2-10-5">שיעור 2.10, דוגמה 5</LessonLink>.
+
+### הוכיחו או הפריכו
+
+- **איך מזהים:** טענה כללית על "כל סדרה ש...": חסימות, מונוטוניות, מכפלות, תת-סדרות.
+- **המתכון:** קודם בודקים את הטענה על הסדרות הקטנות של הפרק: $(-1)^n$, $\frac1n$, $n$, $n^{(-1)^n}$, $\frac{(-1)^n}n$, $\sqrt n$, $H_n$. אם אחת מהן מפריכה, מוכיחים שהיא מקיימת את ההנחות ולא את המסקנה. אם לא, מחפשים את המשפט שהטענה היא מקרה פרטי שלו, או את ההנחה שחסרה בו.
+- **המלכודת:** להפריך בלי להוכיח את התכונות של הדוגמה הנגדית; להוכיח מקרה פרטי במקום הטענה.
+- **דוגמאות פתורות:** <LessonLink id="2.3" anchor="ex-2-3-2">שיעור 2.3, דוגמה 2</LessonLink>, <LessonLink id="2.4" anchor="ex-2-4-4">שיעור 2.4, דוגמה 4</LessonLink>, <LessonLink id="2.7" anchor="ex-2-7-1">שיעור 2.7, דוגמה 1</LessonLink>.
+
+## רשימת בדיקה לפני מבחן
+
+- [ ] אנחנו כותבים בכמתים את הגדרת הגבול, את השלילה שלה, את ההגדרה של שאיפה לאינסוף, של סדרת קושי ושל גבול חלקי, ויודעים מה משתנה כשמחליפים את סדר הכמתים.
+- [ ] אנחנו מוכיחים גבול מההגדרה עם הערכה מלמעלה ו-$N$ מפורש, ומוצאים את ה-$N$ הקטן ביותר ל-$\varepsilon$ מספרי.
+- [ ] אנחנו מוכיחים ש-$(-1)^n$ מתבדרת, ויודעים לפחות ארבע דרכים להוכיח התבדרות.
+- [ ] אנחנו יודעים לנסח במדויק, עם כל ההנחות, ולהוכיח את משפט 2.3.1, משפט 2.3.3, משפטים 2.4.2 ו-2.4.4, משפט 2.5.3, משפט 2.7.1, משפט 2.8.4, למה 2.9.7, משפט 2.9.8 ומשפט 2.10.5.
+- [ ] לכל משפט בפרק אנחנו יודעים דוגמה נגדית שמראה שכל הנחה נחוצה, ושההפך אינו נכון: חסומה ולא מתכנסת, הפרשים עוקבים ששואפים לאפס, סנדוויץ' עם גבולות שונים, מבחן המנה עם $q=1$.
+- [ ] אנחנו מחשבים גבולות בחשבון גבולות, וכותבים בכל צעד את הכלל ואת ההנחות שלו; כופלים בצמוד, גם בשורש שלישי.
+- [ ] אנחנו מבחינים בין מתכנסת, שואפת ל-$\pm\infty$ ומתבדרת סתם, ויודעים דוגמה לכל משבצת בטבלה של שיעור 2.6.
+- [ ] אנחנו מוכיחים התכנסות של סדרה רקורסיבית: חסמים ומונוטוניות באינדוקציה, משפט 2.7.1, ורק אחר כך משוואת הנקודה הקבועה.
+- [ ] אנחנו יודעים איך מגדירים את $e$, למה הגבול קיים, ולמה $2<e<3$.
+- [ ] אנחנו משתמשים בגבולות $q^n$, $\sqrt[n]a$, $\sqrt[n]n$, במבחן המנה, במבחן השורש ובסולם קצבי הגדילה, ובודקים את ההנחות שלהם.
+- [ ] אנחנו מוצאים את כל הגבולות החלקיים של סדרה ומוכיחים שאין אחרים.
+- [ ] אנחנו יודעים איפה אקסיומת השלמות נכנסת בפרק, ולמה משפט 2.7.1, משפט 2.9.8 ומשפט 2.10.5 נכשלים ב-$\mathbb Q$.
+- [ ] אנחנו מוכיחים שסדרה היא סדרת קושי בסכום טלסקופי או הנדסי, ושהסכומים ההרמוניים אינם סדרת קושי.
+- [ ] פתרנו את שאלות החזרה ואת שאלות המבחן של הפרק, וחזרנו לכל שאלה שטעינו בה בביטחון.

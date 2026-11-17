@@ -1,0 +1,7 @@
+---
+/** Lesson-2.7 figure: <Spread figure={Cobweb} figureProps={{…}}>. */
+import Cobweb, { type CobwebProps } from './Cobweb';
+type Props = CobwebProps;
+---
+
+<Cobweb client:visible {...Astro.props} />

@@ -13,3 +13,18 @@
     אי-שוויון $|a_n-L|\le b_n$ עם ביטוי פשוט $b_n$ ששואף לאפס, כמו $\frac{C}{n}$. בהוכחה מההגדרה בוחרים $N$
     כך ש-$b_n<\varepsilon$ לכל $n>N$, ואז גם $|a_n-L|<\varepsilon$.
   lesson: '2.3'
+- id: limit-notation
+  term: הגבול של הסדרה
+  en: the limit of a sequence
+  symbol: '\lim_{n\to\infty} a_n'
+  definition: >-
+    אם הסדרה מתכנסת, המספר היחיד $L$ שהיא שואפת אליו (יחידות הגבול, משפט 2.3.1). הכתיב
+    $\lim_{n\to\infty}a_n$ מוגדר רק לסדרה מתכנסת.
+  lesson: '2.3'
+- id: eventually-constant
+  term: קבועה החל ממקום מסוים
+  en: eventually constant
+  definition: >-
+    סדרה שיש לה $N\in\mathbb{N}$ ומספר $c$ כך ש-$a_n=c$ לכל $n>N$. סדרה כזו שואפת ל-$c$; סדרה מתכנסת של
+    מספרים שלמים היא תמיד כזו (טענה 2.3.7).
+  lesson: '2.1'

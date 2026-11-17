@@ -1,0 +1,481 @@
+# Workbook of lesson 2.8 — useful limits.
+# Objectives (src/course.ts):
+#   OBJ-2.8-1  the limits of ⁿ√n, ⁿ√a and qⁿ, with proofs
+#   OBJ-2.8-2  the ratio test for sequences: convergence to 0 or divergence to ∞
+#   OBJ-2.8-3  compare growth rates: logarithm, power, exponential, factorial (ln as known from school)
+# Every number below was recomputed by a command (src/math/growth.ts, BigInt for the exact crossings).
+lesson: '2.8'
+practice:
+  - id: W-2.8-01
+    level: basic
+    objectives: [OBJ-2.8-1]
+    prompt: >-
+      הוכיחו ש-$\sqrt[n]{3n+5}\to1$.
+    answer: '$1\le\sqrt[n]{3n+5}\le\sqrt[n]8\cdot\sqrt[n]n$, ושני הקצוות שואפים ל-$1$.'
+    solution:
+      - kind: idea
+        text: >-
+          סנדוויץ'. חוסמים את $3n+5$ בין קבוע לבין קבוע כפול $n$, כי את השורש ה-$n$-י של שניהם אנחנו מכירים
+          (טענות 2.8.2 ו-2.8.3).
+      - kind: step
+        text: >-
+          לכל $n\in\mathbb N$: $3n+5\ge1$, וגם $5\le5n$, ולכן $3n+5\le8n$.
+      - kind: theorem
+        text: >-
+          השורש ה-$n$-י שומר על סדר בין מספרים אי-שליליים (טענה 1.7.5 (ג)), ושורש של מכפלה הוא מכפלת השורשים
+          (טענה 1.7.5 (ב)):
+
+          $$1=\sqrt[n]1\le\sqrt[n]{3n+5}\le\sqrt[n]{8n}=\sqrt[n]8\cdot\sqrt[n]n$$
+      - kind: step
+        text: >-
+          לפי טענה 2.8.2 $\sqrt[n]8\to1$, לפי טענה 2.8.3 $\sqrt[n]n\to1$, ולפי משפט 2.4.2 המכפלה שואפת ל-$1$. הצד
+          השמאלי הוא הסדרה הקבועה $1$. לפי כלל הסנדוויץ' (משפט 2.5.3) $\sqrt[n]{3n+5}\to1$.
+      - kind: check
+        text: >-
+          $\sqrt[10]{35}\approx1.427$, והחסם העליון $\sqrt[10]{80}\approx1.550$; $\sqrt[100]{305}\approx1.059$ והחסם
+          $\approx1.069$. שניהם יורדים לעבר $1$.
+      - kind: result
+        text: '$\sqrt[n]{3n+5}\to1$.'
+
+  - id: W-2.8-02
+    level: basic
+    objectives: [OBJ-2.8-1]
+    prompt: >-
+      חשבו את הגבולות, והוכיחו כל שלב:
+
+      (א) $5\left(\frac23\right)^n+(-0.9)^n$.
+
+      (ב) $\frac{3^n+1}{3^{n+1}-2^n}$.
+
+      (ג) $\sqrt[n]{0.001}$. הראו גם ש-$0\le1-\sqrt[n]{0.001}\le\frac{999}{n}$.
+    answer: '(א) $0$. (ב) $\frac13$. (ג) $1$.'
+    solution:
+      - kind: step
+        text: >-
+          (א) $\left|\frac23\right|<1$ ו-$|-0.9|<1$, ולפי טענה 2.8.1 (א) $\left(\frac23\right)^n\to0$ ו-$(-0.9)^n\to0$.
+          לפי משפט 2.4.1 הסכום שואף ל-$5\cdot0+0=0$.
+      - kind: idea
+        text: >-
+          (ב) מחלקים מונה ומכנה ב-$3^n$, המעריכית עם הבסיס הגדול ביותר. כל השאר הופך ל-$q^n$ עם $|q|<1$.
+      - kind: computation
+        text: >-
+          $$\frac{3^n+1}{3^{n+1}-2^n}=\frac{1+\left(\frac13\right)^n}{3-\left(\frac23\right)^n}$$
+
+          (למה 1.7.5ב: $\frac{3^{n+1}}{3^n}=3$ ו-$\frac{2^n}{3^n}=\left(\frac23\right)^n$.) המונה שואף ל-$1$ והמכנה
+          ל-$3\ne0$ (טענה 2.8.1 (א), משפט 2.4.1), ולפי משפט 2.4.4 הגבול $\frac13$.
+      - kind: step
+        text: >-
+          (ג) לפי טענה 2.8.2 עם $a=0.001>0$: $\sqrt[n]{0.001}\to1$.
+      - kind: computation
+        text: >-
+          לחסם: $\sqrt[n]{0.001}=\frac1{\sqrt[n]{1000}}$ (טענה 1.7.5 (ב)). לפי ההוכחה של טענה 2.8.2, עם $a=1000$:
+          $0<\sqrt[n]{1000}-1\le\frac{999}n$. לכן
+
+          $$0\le1-\sqrt[n]{0.001}=\frac{\sqrt[n]{1000}-1}{\sqrt[n]{1000}}\le\sqrt[n]{1000}-1\le\frac{999}{n},$$
+
+          כי $\sqrt[n]{1000}\ge1$.
+      - kind: check
+        text: >-
+          ב-(ב): $n=1$ נותן $\frac47\approx0.571$, $n=5$ בערך $0.350$, $n=20$ בערך $0.33337$. ב-(ג) החסם גס: עבור
+          $n=1000$ הוא נותן $0.999$, ואילו $1-\sqrt[1000]{0.001}\approx0.0069$. אבל הוא מספיק כדי להוכיח את הגבול.
+      - kind: result
+        text: '(א) $0$. (ב) $\frac13$. (ג) $1$, עם $0\le1-\sqrt[n]{0.001}\le\frac{999}n$.'
+
+  - id: W-2.8-03
+    level: basic
+    qualitative: true
+    objectives: [OBJ-2.8-2]
+    prompt: >-
+      לכל אחת מהסדרות, חשבו את גבול המנה $\frac{a_{n+1}}{a_n}$. במקום שמבחן המנה מכריע, הוכיחו בעזרתו לאן הסדרה
+      שואפת; במקום שאינו מכריע, הסבירו למה, וקבעו את הגבול בדרך אחרת.
+
+      (א) $\frac{7^n}{n!}$. (ב) $n^5$. (ג) $\frac{3^n}{n^3}$.
+    answer: '(א) המנה $\to0$, הסדרה $\to0$. (ב) המנה $\to1$, המבחן לא מכריע; $n^5\to\infty$. (ג) המנה $\to3$, הסדרה $\to\infty$.'
+    solution:
+      - kind: theorem
+        text: >-
+          משפט 2.8.4: לסדרה חיובית, מנה ששואפת ל-$q<1$ נותנת $a_n\to0$, ומנה ששואפת ל-$q>1$ נותנת $a_n\to\infty$;
+          $q=1$ אינו מכריע.
+      - kind: computation
+        text: >-
+          (א) $\frac{7^{n+1}}{(n+1)!}\cdot\frac{n!}{7^n}=\frac7{n+1}\to0<1$, ולכן $\frac{7^n}{n!}\to0$.
+      - kind: computation
+        text: >-
+          (ב) $\frac{(n+1)^5}{n^5}=\left(1+\frac1n\right)^5\to1$ (מסקנה 2.4.5). המבחן אינו מכריע: אותו $q=1$ יש גם
+          ל-$\frac1{n^5}$, ששואפת לאפס. את $n^5\to\infty$ נותנת מסקנה 2.6.6 (א).
+      - kind: computation
+        text: >-
+          (ג) $\frac{3^{n+1}}{(n+1)^3}\cdot\frac{n^3}{3^n}=3\left(\frac{n}{n+1}\right)^3\to3>1$, ולכן
+          $\frac{3^n}{n^3}\to\infty$.
+      - kind: check
+        text: >-
+          ב-(ג) האיברים הראשונים יורדים: $3$, $\frac98$, $1$, ואז $\frac{81}{64}$: הסדרה מתחילה לעלות מ-$n=3$.
+          זה לא סותר: המבחן מדבר על הזנב.
+      - kind: result
+        text: '(א) $0$. (ב) המבחן לא מכריע, והגבול $\infty$. (ג) $\infty$.'
+
+  - id: W-2.8-04
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.8-1]
+    prompt: >-
+      הוכיחו או הפריכו:
+
+      (א) אם $a_n>0$ לכל $n$ ו-$a_n\to5$, אז $\sqrt[n]{a_n}\to1$.
+
+      (ב) אם $a_n>0$ לכל $n$ ו-$a_n\to0$, אז $\sqrt[n]{a_n}\to0$.
+
+      (ג) אם $a_n\ge1$ לכל $n$, אז $\sqrt[n]{a_n}\to1$.
+    answer: '(א) נכון. (ב) לא נכון: $a_n=\frac1n$. (ג) לא נכון: $a_n=2^n$.'
+    solution:
+      - kind: idea
+        text: >-
+          (א) סדרה ששואפת לגבול חיובי נמצאת מאיזה מקום בין שני קבועים חיוביים, והשורש ה-$n$-י של קבועים שואף
+          ל-$1$. ב-(ב) וב-(ג) מחפשים סדרה שהשורש ה-$n$-י שלה ידוע.
+      - kind: step
+        text: >-
+          (א) לפי טענה 2.2.15 (א),(ב) עם $\frac52<5$ ועם $10>5$, ולפי טענה 2.2.3 (ג), יש $N$ כך ש-$\frac52<a_n<10$
+          לכל $n>N$. לפי טענה 1.7.5 (ג), $\sqrt[n]{\frac52}<\sqrt[n]{a_n}<\sqrt[n]{10}$ לכל $n>N$.
+      - kind: step
+        text: >-
+          לפי טענה 2.8.2 שני הקצוות שואפים ל-$1$, ולפי כלל הסנדוויץ' (משפט 2.5.3, שמספיק לו אי-שוויון מ-$N$
+          והלאה) $\sqrt[n]{a_n}\to1$.
+      - kind: step
+        text: >-
+          (ב) $a_n=\frac1n>0$ ו-$\frac1n\to0$. אבל $\sqrt[n]{\frac1n}=\frac1{\sqrt[n]n}\to1$ (טענה 1.7.5 (ב), טענה
+          2.8.3, משפט 2.4.4), לא $0$.
+      - kind: step
+        text: >-
+          (ג) $a_n=2^n\ge1$, ו-$\sqrt[n]{2^n}=2$ לכל $n$ (יחידות השורש, משפט 1.7.2), ולכן $\sqrt[n]{a_n}\to2\ne1$.
+      - kind: check
+        text: >-
+          ב-(א) מה שעבד הוא החסם מלמטה בקבוע **חיובי**; ב-(ב) אין חסם כזה, וב-(ג) אין חסם מלמעלה בקבוע כפול חזקה
+          של $n$. ב-(ב) המסקנה הנכונה הפוכה למה שהטענה אמרה: השורש ה-$n$-י של $\frac1n$ **עולה** לעבר $1$.
+      - kind: result
+        text: '(א) נכון. (ב) לא נכון ($\frac1n$). (ג) לא נכון ($2^n$).'
+
+  - id: W-2.8-05
+    level: mid
+    objectives: [OBJ-2.8-2]
+    prompt: >-
+      נגדיר $a_1=1$ ו-$a_{n+1}=\frac{n+3}{2n+1}\,a_n$ לכל $n\in\mathbb N$.
+
+      (א) הוכיחו ש-$a_n>0$ לכל $n$ וש-$a_n\to0$.
+
+      (ב) מאיזה $n$ הסדרה יורדת ממש? מהו האיבר הגדול ביותר שלה?
+    answer: '(א) מבחן המנה: $\frac{a_{n+1}}{a_n}=\frac{n+3}{2n+1}\to\frac12$. (ב) $a_{n+1}<a_n$ לכל $n\ge3$; הגדול ביותר $a_2=a_3=\frac43$.'
+    solution:
+      - kind: step
+        text: >-
+          (א) $a_n>0$ באינדוקציה: $a_1=1>0$, ואם $a_n>0$ אז $a_{n+1}$ הוא מכפלה של $a_n$ במספר חיובי
+          $\frac{n+3}{2n+1}$.
+      - kind: computation
+        text: >-
+          לכן המנה מוגדרת: $\frac{a_{n+1}}{a_n}=\frac{n+3}{2n+1}$, מנה של פולינומים מאותה מעלה, ולפי מסקנה 2.4.7 היא
+          שואפת ל-$\frac12<1$. לפי משפט 2.8.4 (א) $a_n\to0$.
+      - kind: computation
+        text: >-
+          (ב) $\frac{n+3}{2n+1}<1\iff n+3<2n+1\iff n>2$ (כפל ב-$2n+1>0$). עבור $n=2$ המנה בדיוק $1$, ועבור $n=1$ היא
+          $\frac43$.
+      - kind: step
+        text: >-
+          כופלים ב-$a_n>0$: $a_{n+1}<a_n$ לכל $n\ge3$, $a_3=a_2$, ו-$a_2=\frac43a_1>a_1$. לכן $a_2=a_3=\frac43$ גדולים
+          מכל שאר האיברים: $a_1=1$, ו-$a_n<a_3$ לכל $n\ge4$ (טענה 2.1.8 על הסדרה היורדת ממש מ-$n=3$).
+      - kind: check
+        text: >-
+          $a_4=\frac67\cdot\frac43=\frac87\approx1.143$, $a_5\approx0.889$, $a_{13}\approx0.0276$.
+      - kind: result
+        text: '(א) $a_n\to0$. (ב) יורדת ממש מ-$n=3$; המקסימום $\frac43$, ב-$n=2$ וב-$n=3$.'
+
+  - id: W-2.8-06
+    level: mid
+    objectives: [OBJ-2.8-3]
+    prompt: >-
+      (א) הוכיחו ש-$n!\ll\left(\frac n2\right)^n$, כלומר $\frac{2^n\,n!}{n^n}\to0$, בלי להשתמש במספר $e$.
+
+      (ב) הוכיחו ש-$\frac{n!-3^n}{n!+n^3\,2^n}\to1$.
+    answer: '(א) המנה היא $\frac{2}{(1+1/n)^n}\le\frac89$ לכל $n\ge2$. (ב) מחלקים ב-$n!$.'
+    solution:
+      - kind: computation
+        text: >-
+          (א) נסמן $x_n=\frac{2^n\,n!}{n^n}>0$. אז
+
+          $$\frac{x_{n+1}}{x_n}=\frac{2^{n+1}(n+1)!}{(n+1)^{n+1}}\cdot\frac{n^n}{2^n\,n!}=\frac{2\,n^n}{(n+1)^n}=\frac{2}{e_n},\qquad e_n=\left(1+\frac1n\right)^n .$$
+      - kind: idea
+        text: >-
+          בלי $e$: צורת אי-השוויון של מבחן המנה (משפט 2.8.4 (ד)) צריכה רק $r<1$ קבוע מעל המנות. מספיק חסם
+          מלמטה על $e_n$ שגדול מ-$2$.
+      - kind: step
+        text: >-
+          לפי משפט 2.7.4 $(e_n)$ עולה, ו-$e_2=\frac94$. לכן $e_n\ge\frac94$ לכל $n\ge2$, והמנה $\frac2{e_n}\le\frac89$
+          לכל $n>1$. לפי משפט 2.8.4 (ד) עם $r=\frac89$ ו-$n_0=1$: $x_n\to0$.
+      - kind: idea
+        text: >-
+          (ב) מחלקים מונה ומכנה במחובר הגדול ביותר בסולם, $n!$.
+      - kind: computation
+        text: >-
+          $$\frac{n!-3^n}{n!+n^3\,2^n}=\frac{1-\frac{3^n}{n!}}{1+\frac{n^3}{2^n}\cdot\frac{4^n}{n!}}$$
+
+          (כי $n^3\,2^n=\frac{n^3}{2^n}\cdot4^n$, לפי מסקנה 0.5.7.) לפי מסקנה
+          2.8.5 (ב) $\frac{3^n}{n!}\to0$ ו-$\frac{4^n}{n!}\to0$, ולפי מסקנה 2.8.5 (א) $\frac{n^3}{2^n}\to0$. לפי משפטים
+          2.4.1, 2.4.2, 2.4.4 הגבול $\frac{1-0}{1+0\cdot0}=1$.
+      - kind: check
+        text: >-
+          (א) $x_1=x_2=2$, $x_3\approx1.78$, $x_{10}\approx0.372$, $x_{50}\approx3.9\cdot10^{-6}$. (ב) ב-$n=5$ הביטוי
+          שלילי (בערך $-0.030$, כי $5!=120<243=3^5$), ב-$n=10$ בערך $0.767$, ב-$n=20$ כבר $0.99999999$.
+      - kind: result
+        text: '(א) $n!\ll\left(\frac n2\right)^n$. (ב) $1$.'
+
+  - id: W-2.8-07
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.8-3]
+    prompt: >-
+      לסדרות עם איברים חיוביים, $x_n\ll y_n$ פירושו $\frac{x_n}{y_n}\to0$. הוכיחו או הפריכו:
+
+      (א) אם $x_n\ll y_n$ ו-$y_n\ll z_n$, אז $x_n\ll z_n$.
+
+      (ב) אם $x_n\ll y_n$, אז $x_n^2\ll y_n$.
+
+      (ג) אם $x_n\ll y_n$, אז $y_n\to\infty$.
+
+      (ד) אם $x_n\ll y_n$, אז יש $N$ כך ש-$x_n<y_n$ לכל $n>N$; אבל לא בהכרח לכל $n$.
+    answer: '(א) נכון. (ב) לא: $x_n=n$, $y_n=n^2$. (ג) לא: $\frac1{n^2}\ll\frac1n$. (ד) נכון; $n^{10}\ll1.1^n$ ו-$100^{10}>1.1^{100}$.'
+    solution:
+      - kind: step
+        text: >-
+          (א) $\frac{x_n}{z_n}=\frac{x_n}{y_n}\cdot\frac{y_n}{z_n}\to0\cdot0=0$ (משפט 2.4.2). זו מסקנה 2.8.7 (ו).
+      - kind: step
+        text: >-
+          (ב) $x_n=n$, $y_n=n^2$: $\frac n{n^2}=\frac1n\to0$, ולכן $n\ll n^2$. אבל $\frac{x_n^2}{y_n}=\frac{n^2}{n^2}=1$,
+          שאינו שואף ל-$0$.
+      - kind: step
+        text: >-
+          (ג) $x_n=\frac1{n^2}$, $y_n=\frac1n$: $\frac{x_n}{y_n}=\frac1n\to0$, אבל $y_n\to0$. ההגדרה של $\ll$ מדברת על
+          מנה, לא על גדילה לאינסוף.
+      - kind: step
+        text: >-
+          (ד) $\frac{x_n}{y_n}\to0<1$, ולפי טענה 2.2.15 (ב) יש $N$ כך ש-$\frac{x_n}{y_n}<1$ לכל $n>N$; כופלים
+          ב-$y_n>0$. ולא לכל $n$: $n^{10}\ll1.1^n$ לפי מסקנה 2.8.5 (א), ובכל זאת $100^{10}=10^{20}>1.1^{100}\approx13{,}781$.
+      - kind: check
+        text: >-
+          ב-(ד) ה-$N$ הקטן ביותר עבור $n^{10}$ ו-$1.1^n$ הוא $685$: $1.1^n>n^{10}$ בדיוק כש-$n=1$ או $n\ge686$ (בדיקה
+          בשלמים, $11^n>10^n\cdot n^{10}$).
+      - kind: result
+        text: '(א) נכון. (ב) לא נכון. (ג) לא נכון. (ד) נכון, ורק מאיזה מקום.'
+
+  - id: W-2.8-08
+    level: exam
+    objectives: [OBJ-2.8-2, OBJ-2.8-1]
+    prompt: >-
+      תהי $(a_n)$ סדרה עם $a_n>0$, ונניח ש-$\frac{a_{n+1}}{a_n}\to q$, עם $q>0$.
+
+      (א) הוכיחו ש-$\sqrt[n]{a_n}\to q$.
+
+      (ב) הסיקו ש-$\sqrt[n]{\binom{2n}{n}}\to4$.
+    answer: '(א) מ-$N$ מסוים $C_1(q-\varepsilon)^n\le a_n\le C_2(q+\varepsilon)^n$, ו-$\sqrt[n]{C_i}\to1$. (ב) המנה של $\binom{2n}n$ היא $\frac{(2n+2)(2n+1)}{(n+1)^2}\to4$.'
+    solution:
+      - kind: idea
+        text: >-
+          כמו בהוכחת מבחן המנה: מאיזה מקום המנה בין $q-\varepsilon$ ל-$q+\varepsilon$, ולכן $a_n$ בין קבוע כפול
+          $(q-\varepsilon)^n$ לקבוע כפול $(q+\varepsilon)^n$. השורש ה-$n$-י מוחץ את הקבועים ל-$1$ (טענה 2.8.2).
+      - kind: step
+        text: >-
+          (א) יהי $\varepsilon>0$, ונגדיר $\delta=\min\left(\frac\varepsilon2,\ \frac q2\right)>0$, כך ש-$q-\delta>0$.
+          לפי ההגדרה יש $N$ כך ש-$q-\delta<\frac{a_{k+1}}{a_k}<q+\delta$ לכל $k>N$.
+      - kind: step
+        text: >-
+          באינדוקציה, כמו בהוכחת משפט 2.8.4 (ד): לכל $n>N$,
+          $a_{N+1}(q-\delta)^{n-N-1}\le a_n\le a_{N+1}(q+\delta)^{n-N-1}$, כלומר $C_1(q-\delta)^n\le a_n\le C_2(q+\delta)^n$
+          עם $C_1=a_{N+1}(q-\delta)^{-N-1}>0$ ו-$C_2=a_{N+1}(q+\delta)^{-N-1}>0$.
+      - kind: step
+        text: >-
+          לפי טענה 1.7.5 (ב),(ג): $\sqrt[n]{C_1}\,(q-\delta)\le\sqrt[n]{a_n}\le\sqrt[n]{C_2}\,(q+\delta)$ לכל $n>N$.
+          לפי טענה 2.8.2 ומשפט 2.4.1 הצד הימני שואף ל-$q+\delta$ והשמאלי ל-$q-\delta$.
+      - kind: step
+        text: >-
+          לפי טענה 2.2.15, עם $q+\delta<q+2\delta$ ועם $q-\delta>q-2\delta$, יש $N'\ge N$ כך שלכל $n>N'$
+          $q-2\delta<\sqrt[n]{a_n}<q+2\delta$. כיוון ש-$2\delta\le\varepsilon$, $\left|\sqrt[n]{a_n}-q\right|<\varepsilon$
+          לכל $n>N'$. לכן $\sqrt[n]{a_n}\to q$.
+      - kind: computation
+        text: >-
+          (ב) $a_n=\binom{2n}n=\frac{(2n)!}{(n!)^2}>0$, ו-
+
+          $$\frac{a_{n+1}}{a_n}=\frac{(2n+2)!}{((n+1)!)^2}\cdot\frac{(n!)^2}{(2n)!}=\frac{(2n+2)(2n+1)}{(n+1)^2}=\frac{2(2n+1)}{n+1}\to4$$
+
+          (מסקנה 2.4.7). לפי (א) עם $q=4>0$: $\sqrt[n]{\binom{2n}n}\to4$.
+      - kind: check
+        text: >-
+          $\sqrt[10]{\binom{20}{10}}\approx3.362$, $\sqrt[100]{\binom{200}{100}}\approx3.887$,
+          $\sqrt[1000]{\binom{2000}{1000}}\approx3.984$: מתקרב ל-$4$ מלמטה, לאט. ההנחה $q>0$ שימשה כדי ש-$q-\delta>0$,
+          כך שהחזקות והשורשים מוגדרים.
+      - kind: result
+        text: '(א) $\sqrt[n]{a_n}\to q$. (ב) $\sqrt[n]{\binom{2n}n}\to4$.'
+
+  - id: W-2.8-09
+    level: exam
+    objectives: [OBJ-2.8-3, OBJ-2.8-2]
+    prompt: >-
+      נגדיר $a_n=\frac{n^{10}}{1.1^n}$.
+
+      (א) הוכיחו ש-$a_n\to0$.
+
+      (ב) הוכיחו ש-$a_{n+1}<a_n$ אם ורק אם $\left(1+\frac1n\right)^{10}<1.1$, ומצאו את ה-$n$ שבו $a_n$ מקבלת את
+      ערכה הגדול ביותר. (מותר לבדוק במחשב את אי-השוויון בשלמים $10(n+1)^{10}<11\,n^{10}$ לכמה ערכים של $n$, אבל
+      נמקו למה התשובה נכונה לכל $n$.)
+
+      (ג) $a_{105}\approx7.3\cdot10^{15}$. האם זה סותר את (א)?
+    answer: '(א) המנה $\to\frac1{1.1}<1$. (ב) המקסימום ב-$n=105$. (ג) לא: גבול נקבע בזנב.'
+    solution:
+      - kind: computation
+        text: >-
+          (א) $\frac{a_{n+1}}{a_n}=\left(1+\frac1n\right)^{10}\cdot\frac1{1.1}\to\frac1{1.1}<1$ (מסקנה 2.4.5), ולפי
+          משפט 2.8.4 (א) $a_n\to0$. (זו מסקנה 2.8.5 (א) עם $k=10$, $a=1.1$.)
+      - kind: step
+        text: >-
+          (ב) $a_n>0$, ולכן $a_{n+1}<a_n$ אם ורק אם $\frac{a_{n+1}}{a_n}<1$, אם ורק אם $\left(1+\frac1n\right)^{10}<1.1$.
+      - kind: step
+        text: >-
+          הסדרה $\left(1+\frac1n\right)^{10}$ יורדת ממש: $1+\frac1n$ יורדת ממש וחיובית, ולפי למה 1.7.1 (א) גם חזקתה
+          העשירית. לכן הקבוצה של ה-$n$ שבהם אי-השוויון מתקיים היא זנב: אם הוא מתקיים ב-$n$, הוא מתקיים בכל $m>n$.
+      - kind: computation
+        text: >-
+          בשלמים, $\left(\frac{n+1}{n}\right)^{10}<\frac{11}{10}\iff10(n+1)^{10}<11\,n^{10}$. בדיקה: ב-$n=104$ אגף שמאל
+          גדול יותר (המנה $\approx1.00038$), וב-$n=105$ קטן יותר (המנה $\approx0.99948$).
+      - kind: step
+        text: >-
+          לכן $a_{n+1}>a_n$ לכל $n\le104$ (שם המנה גדולה מ-$1$, שוב לפי המונוטוניות), ו-$a_{n+1}<a_n$ לכל $n\ge105$.
+          כלומר $a_1<a_2<\dots<a_{105}$ ו-$a_{105}>a_{106}>\dots$: המקסימום ב-$n=105$.
+      - kind: step
+        text: >-
+          (ג) לא. הגבול מדבר רק על הזנב: לכל $\varepsilon>0$ יש $N$ שאחריו $a_n<\varepsilon$. ה-$N$ הזה יכול להיות
+          גדול מאוד: האיברים יורדים מ-$n=105$, אבל בזנב $a_n<1$ רק מ-$n=686$ ($a_n<1$ אם ורק אם $1.1^n>n^{10}$, כלומר $n=1$ או $n\ge686$; בדיקה בשלמים), וזה לא משנה את הגבול.
+      - kind: check
+        text: >-
+          $\log_{10}a_{105}=10\log_{10}105-105\log_{10}1.1\approx15.87$, כלומר $a_{105}\approx7.34\cdot10^{15}$.
+      - kind: result
+        text: '(א) $a_n\to0$. (ב) המקסימום ב-$n=105$. (ג) אין סתירה.'
+
+  - id: W-2.8-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-2.8-2]
+    prompt: >-
+      נגדיר $p_n=\frac{1}{4^n}\binom{2n}{n}$.
+
+      (א) הראו שמבחן המנה אינו מכריע לגבי $p_n$.
+
+      (ב) הוכיחו באינדוקציה ש-$p_n^2\le\frac1{2n+1}$ לכל $n\in\mathbb N$.
+
+      (ג) הוכיחו ש-$p_n\to0$.
+    answer: '(א) המנה $\frac{2n+1}{2n+2}\to1$. (ב) הצעד שקול ל-$(2n+1)(2n+3)\le(2n+2)^2$. (ג) $0<p_n\le\frac1{\sqrt{2n+1}}\to0$.'
+    solution:
+      - kind: computation
+        text: >-
+          (א) $p_n>0$, ו-
+
+          $$\frac{p_{n+1}}{p_n}=\frac{(2n+2)(2n+1)}{(n+1)^2}\cdot\frac{4^n}{4^{n+1}}=\frac{2(2n+1)}{4(n+1)}=\frac{2n+1}{2n+2}\to1 .$$
+
+          לפי משפט 2.8.4 (ג), $q=1$ אינו מכריע. (וכל מנה קטנה מ-$1$, אבל לפי ההערות למשפט, גם זה לא מספיק.)
+      - kind: step
+        text: >-
+          (ב) **בסיס:** $p_1=\frac{2}{4}=\frac12$, ו-$\frac14\le\frac13$. **צעד:** נניח $p_n^2\le\frac1{2n+1}$. לפי (א),
+          $p_{n+1}^2=p_n^2\cdot\frac{(2n+1)^2}{(2n+2)^2}\le\frac{2n+1}{(2n+2)^2}$.
+      - kind: computation
+        text: >-
+          נשאר להראות $\frac{2n+1}{(2n+2)^2}\le\frac1{2n+3}$. כופלים ב-$(2n+2)^2(2n+3)>0$: זה שקול
+          ל-$(2n+1)(2n+3)\le(2n+2)^2$, כלומר $4n^2+8n+3\le4n^2+8n+4$, וזה נכון.
+      - kind: step
+        text: >-
+          (ג) לפי (ב) וטענה 1.7.5 (ג): $0<p_n\le\frac1{\sqrt{2n+1}}\le\frac1{\sqrt n}$ (כי $2n+1>n$). לפי מסקנה 2.2.14 (ג)
+          וטענה 2.2.13 $p_n\to0$.
+      - kind: check
+        text: >-
+          $p_1=0.5$, $p_2=0.375$, $p_3=0.3125$, $p_{10}\approx0.1762$, והחסם $\frac1{\sqrt{21}}\approx0.2182$. מבחן
+          המנה שתק, ובכל זאת הסדרה שואפת לאפס: המבחן הוא תנאי מספיק בלבד.
+      - kind: result
+        text: '(א) $q=1$: לא מכריע. (ב) $p_n^2\le\frac1{2n+1}$. (ג) $p_n\to0$.'
+challenge:
+  - id: W-2.8-c1
+    stars: 1
+    objectives: [OBJ-2.8-3, OBJ-2.8-2]
+    prompt: >-
+      הוכיחו שהסדרה $\sqrt[n]{n!}$ אינה חסומה (ולכן, כיוון שהיא חיובית, אינה מתכנסת).
+
+      רמז: הראו קודם שלכל $C>0$, $\frac{C^n}{n!}\to0$.
+    answer: 'לכל $M>0$, $\frac{M^n}{n!}<1$ מאיזה $n$, כלומר $\sqrt[n]{n!}>M$.'
+    solution:
+      - kind: idea
+        text: >-
+          "אינה חסומה" פירושו שלכל $M$ יש איבר מעליו. השורש ה-$n$-י של $n!$ גדול מ-$M$ בדיוק כש-$n!>M^n$, ולפי
+          הסולם $M^n\ll n!$.
+      - kind: step
+        text: >-
+          הרמז: לכל $C>0$, $\frac{C^{n+1}}{(n+1)!}\cdot\frac{n!}{C^n}=\frac{C}{n+1}\to0<1$, ולפי משפט 2.8.4 (א)
+          $\frac{C^n}{n!}\to0$. (זו מסקנה 2.8.5 (ב).)
+      - kind: step
+        text: >-
+          יהי $M>0$. לפי הרמז עם $C=M$ ולפי טענה 2.2.15 (ב) (עם המספר $1>0$), יש $N$ כך ש-$\frac{M^n}{n!}<1$, כלומר
+          $M^n<n!$, לכל $n>N$.
+      - kind: step
+        text: >-
+          לפי טענה 1.7.5 (ג) (שורש $n$-י שומר על סדר) ויחידות השורש, $M=\sqrt[n]{M^n}<\sqrt[n]{n!}$ לכל $n>N$. זה
+          נכון לכל $M>0$, ולפי טענה 2.6.1א (א) $\sqrt[n]{n!}\to\infty$. בפרט הסדרה אינה חסומה מלעיל (טענה 2.6.2 (ב)),
+          ולפי משפט 2.3.3 היא מתבדרת.
+      - kind: check
+        text: >-
+          $\sqrt[5]{5!}\approx2.605$, $\sqrt[10]{10!}\approx4.529$, $\sqrt[20]{20!}\approx8.304$, $\sqrt[100]{100!}\approx37.99$.
+          היא גדלה, אבל לאט: לפי תרגיל W-2.8-08 (א) עם $a_n=\frac{n!}{n^n}$, $\frac{\sqrt[n]{n!}}{n}\to\frac1e$.
+      - kind: result
+        text: '$\sqrt[n]{n!}\to\infty$; בפרט היא אינה חסומה.'
+    source:
+      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Volume I (HTML edition), Section 2.2'
+      year: 2026
+      problem: 'Exercise 2.2.16'
+      url: 'https://www.jirka.org/ra/html/sec_factslimsseqs.html#sec_factslimsseqs-7-16'
+      verified: '2026-11-17'
+      adapted: true
+
+  - id: W-2.8-c2
+    stars: 1
+    objectives: [OBJ-2.8-2]
+    prompt: >-
+      תהי $(x_n)$ סדרה ויהי $x\in\mathbb R$, כך ש-$x_n\ne x$ לכל $n$, ונניח שהגבול
+      $L=\lim_{n\to\infty}\frac{|x_{n+1}-x|}{|x_n-x|}$ קיים ו-$L<1$.
+
+      (א) הוכיחו ש-$x_n\to x$.
+
+      (ב) הראו שההפך אינו נכון: מצאו סדרה עם $x_n\to x$ ו-$x_n\ne x$ שעבורה הגבול $L$ קיים ושווה ל-$1$.
+
+      (ג) השתמשו ב-(א) כדי להוכיח ש-$x_n=2+\frac{(-1)^n}{3^n}$ שואפת ל-$2$.
+    answer: '(א) מבחן המנה על $|x_n-x|$. (ב) $x_n=\frac1n$, $x=0$. (ג) $L=\frac13$.'
+    solution:
+      - kind: idea
+        text: >-
+          הסדרה $b_n=|x_n-x|$ חיובית, והנתון הוא בדיוק שהמנה שלה שואפת ל-$L<1$. מבחן המנה נותן $b_n\to0$, וזה
+          $x_n\to x$.
+      - kind: step
+        text: >-
+          (א) $b_n=|x_n-x|>0$ כי $x_n\ne x$, ו-$\frac{b_{n+1}}{b_n}\to L<1$. לפי משפט 2.8.4 (א) $b_n\to0$, ולפי טענה
+          2.2.10 ($a_n\to L$ אם ורק אם $|a_n-L|\to0$) $x_n\to x$.
+      - kind: step
+        text: >-
+          (ב) $x_n=\frac1n$, $x=0$: $x_n\ne0$, $x_n\to0$, ו-$\frac{|x_{n+1}|}{|x_n|}=\frac n{n+1}\to1$. כלומר התנאי של
+          (א) מספיק ואינו הכרחי, בדיוק כמו מבחן המנה.
+      - kind: computation
+        text: >-
+          (ג) $x_n-2=\frac{(-1)^n}{3^n}\ne0$, ו-$\frac{|x_{n+1}-2|}{|x_n-2|}=\frac{3^n}{3^{n+1}}=\frac13$ לכל $n$. לפי (א)
+          עם $L=\frac13<1$: $x_n\to2$.
+      - kind: check
+        text: >-
+          $x_1\approx1.667$, $x_2\approx2.111$, $x_3\approx1.963$: מתקרבת ל-$2$ משני הצדדים, והמרחק קטן פי $3$ בכל
+          צעד.
+      - kind: result
+        text: '(א) $x_n\to x$. (ב) $\frac1n$. (ג) $x_n\to2$.'
+    source:
+      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Volume I (HTML edition), Section 2.2'
+      year: 2026
+      problem: 'Exercise 2.2.9'
+      url: 'https://www.jirka.org/ra/html/sec_factslimsseqs.html#sec_factslimsseqs-7-9'
+      verified: '2026-11-17'
+      adapted: true

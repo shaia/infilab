@@ -1,0 +1,484 @@
+# Workbook of lesson 2.5 — limits and inequalities.
+# Objectives (src/course.ts):
+#   OBJ-2.5-1  prove and use the squeeze theorem
+#   OBJ-2.5-2  limits keep weak inequalities; an example where a strict one is lost
+#   OBJ-2.5-3  a null sequence times a bounded sequence tends to 0, and its uses
+# sin and cos are used only through |sin x| ≤ 1, |cos x| ≤ 1 (a school fact, proved in lesson 3.2).
+# Every number below was recomputed by a command (npx tsx), 2026-11-17.
+lesson: '2.5'
+practice:
+  - id: W-2.5-01
+    level: basic
+    objectives: [OBJ-2.5-3]
+    prompt: >-
+      הוכיחו ש-$\frac{n\cos(3n)+2}{n^2+1}\to0$. מותר להשתמש בעובדה מבית הספר $|\cos x|\le1$ לכל $x\in\mathbb{R}$ (מוכח בשיעור 3.2).
+    answer: >-
+      מפרקים ל-$\frac{n}{n^2+1}\cdot\cos(3n)+\frac{2}{n^2+1}$: המחובר הראשון הוא סדרה אפסה כפול סדרה חסומה, והשני
+      שואף ל-$0$.
+    solution:
+      - kind: idea
+        text: >-
+          על $\cos(3n)$ אנחנו יודעים רק שהיא חסומה. לכן מבודדים אותה כגורם, ומוודאים שהגורם השני שואף לאפס: זה
+          המצב של משפט 2.5.4.
+      - kind: step
+        text: >-
+          לכל $n$:
+          $$\frac{n\cos(3n)+2}{n^2+1}=\frac{n}{n^2+1}\cdot\cos(3n)+\frac{2}{n^2+1}.$$
+      - kind: step
+        text: >-
+          $\frac{n}{n^2+1}\to0$: לכל $n$, $n^2+1>n^2$, ולכן $0<\frac{n}{n^2+1}<\frac{n}{n^2}=\frac1n$. לפי טענה 2.2.13
+          עם $C=1$ ו-$b_n=\frac1n$, $\frac{n}{n^2+1}\to0$. (אפשר גם לפי מסקנה 2.4.7: מעלת המונה קטנה ממעלת המכנה.)
+      - kind: theorem
+        text: >-
+          $|\cos(3n)|\le1$ לכל $n$, ולכן $(\cos(3n))$ חסומה. לפי משפט 2.5.4,
+          $\frac{n}{n^2+1}\cdot\cos(3n)\to0$.
+      - kind: step
+        text: >-
+          $0<\frac{2}{n^2+1}<\frac{2}{n^2}\le\frac2n$ (כי $n^2\ge n$), ולפי טענה 2.2.13 עם $C=2$,
+          $\frac{2}{n^2+1}\to0$. לפי משפט 2.4.1 הסכום שואף ל-$0+0=0$.
+      - kind: check
+        text: >-
+          ההוכחה נותנת גם חסם מפורש: $|n\cos(3n)+2|\le n+2\le3n$, ולכן ערכו המוחלט של האיבר לכל היותר $\frac3n$.
+          למשל $a_1\approx0.505<3$, ו-$a_{1000}\approx-0.00097$, שערכו המוחלט קטן מ-$0.003$.
+      - kind: result
+        text: 'הסדרה שואפת ל-$0$, בלי שנדע דבר על הגבול של $\cos(3n)$.'
+
+  - id: W-2.5-02
+    level: basic
+    qualitative: true
+    objectives: [OBJ-2.5-2]
+    prompt: >-
+      נתון ש-$a_n\to L$.
+
+      (א) הוכיחו: אם $-1\le a_n\le3$ לכל $n>50$, אז $L\in[-1,3]$.
+
+      (ב) הפריכו: אם $-1<a_n<3$ לכל $n$, אז $-1<L<3$.
+
+      (ג) תחת ההנחה של (ב), מהי קבוצת כל הערכים האפשריים של $L$?
+    answer: >-
+      (א) נכון, לפי מסקנה 2.5.2 (ג). (ב) לא נכון: $a_n=3-\frac1n$ נמצאת בקטע הפתוח ושואפת ל-$3$. (ג) הקטע הסגור
+      $[-1,3]$.
+    solution:
+      - kind: theorem
+        text: >-
+          (א) מסקנה 2.5.2 (ג) עם $\alpha=-1$, $\beta=3$ ו-$n_0=50$: אם $a_n\in[-1,3]$ לכל $n>50$, אז
+          $L\in[-1,3]$. חמישים האיברים הראשונים לא משנים דבר.
+      - kind: step
+        text: >-
+          (ב) $a_n=3-\frac1n$. לכל $n$, $0<\frac1n\le1$, ולכן $2\le a_n<3$, ובפרט $-1<a_n<3$. אבל
+          $a_n-3=-\frac1n\to0$ (מסקנה 2.2.14 (א) עם $c=-1$), ולפי טענה 2.2.10 $a_n\to3$. הגבול $3$ אינו בקטע הפתוח.
+      - kind: step
+        text: >-
+          (ג) ההנחה של (ב) נותנת $a_n\in[-1,3]$ לכל $n$, ובפרט לכל $n>50$, ולפי (א) $L\in[-1,3]$. כל ערך כזה מתקבל: $3$ לפי (ב); $-1$ דרך
+          $a_n=-1+\frac1{n+1}$, שנמצאת ב-$\left(-1,-\frac12\right]$ ושואפת ל-$-1$ (טענה 2.2.13 עם $\frac1{n+1}<\frac1n$);
+          וכל $c$ עם $-1<c<3$ דרך הסדרה הקבועה $c$.
+      - kind: check
+        text: >-
+          בדוגמה של (ב): $a_1=2$, $a_2=2.5$, $a_3\approx2.667$, כולם מתחת ל-$3$. בדוגמה של $-1$: $a_1=-0.5$,
+          $a_2\approx-0.667$, $a_3=-0.75$, כולם מעל $-1$.
+      - kind: result
+        text: >-
+          גבולות שומרים על אי-שוויון חלש: הגבול נמצא בקטע **הסגור** $[-1,3]$, וכל נקודה בו אפשרית, כולל הקצוות.
+
+  - id: W-2.5-03
+    level: basic
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      הוכיחו בעזרת כלל הסנדוויץ' ש-$\frac{\lfloor\sqrt n\rfloor}{\sqrt n}\to1$.
+    answer: '$1-\frac{1}{\sqrt n}<\frac{\lfloor\sqrt n\rfloor}{\sqrt n}\le1$, ושני החסמים שואפים ל-$1$.'
+    solution:
+      - kind: idea
+        text: >-
+          הערך השלם רחוק מהמספר עצמו פחות מ-$1$ (טענה 1.6.6). אחרי חלוקה ב-$\sqrt n$, המרחק קטן מ-$\frac1{\sqrt n}$.
+      - kind: step
+        text: >-
+          לפי טענה 1.6.6 עם $\sqrt n$: $\sqrt n-1<\lfloor\sqrt n\rfloor\le\sqrt n$. מחלקים ב-$\sqrt n>0$, וכיוון
+          אי-השוויונות נשמר:
+          $$1-\frac1{\sqrt n}<\frac{\lfloor\sqrt n\rfloor}{\sqrt n}\le1 .$$
+      - kind: theorem
+        text: >-
+          $\frac1{\sqrt n}\to0$ (מסקנה 2.2.14 (ג)), ולפי משפט 2.4.1 $1-\frac1{\sqrt n}\to1$. הסדרה הקבועה $1$
+          שואפת ל-$1$. לפי כלל הסנדוויץ' (משפט 2.5.3, עם $n_0=1$), $\frac{\lfloor\sqrt n\rfloor}{\sqrt n}\to1$.
+      - kind: check
+        text: >-
+          $n=3$: $\frac{1}{\sqrt3}\approx0.577$, בין $1-\frac1{\sqrt3}\approx0.423$ ל-$1$. $n=99$:
+          $\frac{9}{\sqrt{99}}\approx0.905$, בין $\approx0.899$ ל-$1$. בריבועים, כמו $n=100$, האיבר שווה ל-$1$ בדיוק.
+      - kind: result
+        text: '$\frac{\lfloor\sqrt n\rfloor}{\sqrt n}\to1$.'
+
+  - id: W-2.5-04
+    level: mid
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      נגדיר
+      $$T_n=\sum_{k=1}^{n}\frac{k}{n^2+k}=\frac{1}{n^2+1}+\frac{2}{n^2+2}+\dots+\frac{n}{n^2+n}.$$
+
+      (א) הסבירו למה אי אפשר להסיק את הגבול מכך שכל מחובר קטן או שווה ל-$\frac1n$.
+
+      (ב) הוכיחו ש-$T_n\to\frac12$.
+    answer: >-
+      (א) מספר המחוברים גדל עם $n$, ולכן חשבון הגבולות לא חל. (ב)
+      $\frac12\le T_n\le\frac{n(n+1)}{2(n^2+1)}$, ושני החסמים שואפים ל-$\frac12$.
+    solution:
+      - kind: step
+        text: >-
+          (א) נכון שכל מחובר קטן: $\frac{k}{n^2+k}\le\frac{n}{n^2}=\frac1n$. אבל יש $n$ מחוברים, והחסם הזה נותן רק
+          $T_n\le n\cdot\frac1n=1$. משפט 2.4.1 מדבר על מספר **קבוע** של סדרות, ולכן לא נובע ש-$T_n\to0$; ובאמת,
+          כפי שנראה, $T_n\to\frac12$.
+      - kind: idea
+        text: >-
+          מחליפים את המכנה $n^2+k$ בקטן ובגדול ביותר מבין המכנים, ואז המונים $1,2,\dots,n$ מסתכמים בנוסחה של
+          טענה 0.5.8.
+      - kind: step
+        text: >-
+          לכל $1\le k\le n$: $n^2+1\le n^2+k\le n^2+n$, ולכן, כי $k>0$ והמכנים חיוביים,
+          $$\frac{k}{n^2+n}\le\frac{k}{n^2+k}\le\frac{k}{n^2+1}.$$
+      - kind: computation
+        text: >-
+          מחברים על $k=1,\dots,n$ ומשתמשים ב-$\sum_{k=1}^{n}k=\frac{n(n+1)}{2}$ (טענה 0.5.8):
+          $$\frac{n(n+1)}{2(n^2+n)}\le T_n\le\frac{n(n+1)}{2(n^2+1)}.$$
+          החסם התחתון שווה בדיוק ל-$\frac12$, כי $n^2+n=n(n+1)$.
+      - kind: theorem
+        text: >-
+          החסם העליון הוא $\frac{n^2+n}{2n^2+2}$, מנה של פולינומים מאותה מעלה עם מקדמים מובילים $1$ ו-$2$; לפי
+          מסקנה 2.4.7 הוא שואף ל-$\frac12$. לפי כלל הסנדוויץ', $T_n\to\frac12$.
+      - kind: check
+        text: >-
+          $T_1=\frac12$, $T_2=\frac15+\frac26=\frac{8}{15}\approx0.533$, $T_{10}\approx0.5143$, בין $0.5$ לחסם העליון
+          $\frac{110}{202}\approx0.5446$.
+      - kind: result
+        text: '$T_n\to\frac12$.'
+
+  - id: W-2.5-05
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.5-2]
+    prompt: >-
+      נתון ש-$a_n\to a$ ו-$b_n\to b$.
+
+      (א) הוכיחו: אם $a_n\le b_n$ עבור אינסוף מקומות $n$ (לא בהכרח מאיזה מקום והלאה), אז $a\le b$.
+
+      (ב) הוכיחו: אם $a_n<b_n$ עבור אינסוף מקומות וגם $a_n>b_n$ עבור אינסוף מקומות, אז $a=b$.
+
+      (ג) הפריכו: אם $a_n\le b_n$ עבור אינסוף מקומות, אז $a_n\le b_n$ לכל $n$ מאיזה מקום והלאה.
+    answer: >-
+      (א) בשלילה, דרך משפט 2.5.1 (ב). (ב) מ-(א) פעמיים. (ג) $a_n=\frac{(-1)^n}{n}$, $b_n=0$.
+    solution:
+      - kind: idea
+        text: >-
+          אם $a>b$, משפט 2.5.1 (ב) נותן $N$ שאחריו **כל** האיברים מקיימים $b_n<a_n$. אבל קבוצה אינסופית של מקומות
+          אינה נגמרת לפני $N$.
+      - kind: step
+        text: >-
+          (א) נניח בשלילה ש-$a>b$. לפי משפט 2.5.1 (ב), כשהתפקידים מוחלפים, יש $N$ כך ש-$b_n<a_n$ לכל $n>N$.
+      - kind: step
+        text: >-
+          הקבוצה $I=\{n:\ a_n\le b_n\}$ אינסופית. לפי למה 2.2.6, קבוצה של טבעיים שכל איבריה קטנים או שווים ל-$N$
+          היא סופית; לכן יש $n\in I$ עם $n>N$. במקום הזה $a_n\le b_n$ וגם $b_n<a_n$: סתירה לחוק השלישייה. לכן
+          $a\le b$.
+      - kind: step
+        text: >-
+          (ב) $a_n<b_n$ באינסוף מקומות, ובפרט $a_n\le b_n$ שם; לפי (א), $a\le b$. $b_n<a_n$ באינסוף מקומות; לפי
+          (א) עם התפקידים מוחלפים, $b\le a$. לכן $a=b$.
+      - kind: step
+        text: >-
+          (ג) $a_n=\frac{(-1)^n}{n}$ ו-$b_n=0$. במקומות האי-זוגיים $a_n=-\frac1n<0=b_n$, אינסוף מקומות. אבל בכל
+          מקום זוגי $a_n=\frac1n>0=b_n$, ולכן אחרי כל $N$ יש מקום ($2N$) שבו $a_n>b_n$. ושני הגבולות $0$:
+          $|a_n|=\frac1n$, וטענה 2.2.13.
+      - kind: check
+        text: >-
+          $a_1=-1$, $a_2=0.5$, $a_3\approx-0.333$, $a_4=0.25$: הסימן מתחלף. זו גם דוגמה ל-(ב): הסדר מתחלף אינסוף
+          פעמים, והגבולות שווים.
+      - kind: result
+        text: >-
+          (א) ו-(ב) נכונים: לשמירה על אי-שוויון חלש מספיקים אינסוף מקומות. (ג) לא נכון.
+
+  - id: W-2.5-06
+    level: mid
+    qualitative: true
+    objectives: [OBJ-2.5-3]
+    prompt: >-
+      הוכיחו או הפריכו.
+
+      (א) אם $a_n\to0$ ו-$|b_n|\le5$ לכל $n>100$, אז $a_nb_n\to0$.
+
+      (ב) אם $a_n\to0$ ו-$a_nb_n\to0$, אז $(b_n)$ חסומה.
+
+      (ג) אם $a_n\to2$ ו-$(b_n)$ חסומה, אז $(a_nb_n)$ מתכנסת.
+    answer: >-
+      (א) נכון. (ב) לא נכון: $a_n=\frac1{n^2}$, $b_n=n$. (ג) לא נכון: $a_n=2$, $b_n=(-1)^n$.
+    solution:
+      - kind: step
+        text: >-
+          (א) לפי טענה 2.1.5 (ב), חסם מאיזה מקום מספיק: $(b_n)$ חסומה. לפי משפט 2.5.4, $a_nb_n\to0$.
+      - kind: step
+        text: >-
+          (ב) $a_n=\frac1{n^2}\to0$ (מסקנה 2.2.14 (ב)) ו-$b_n=n$. המכפלה $\frac1n\to0$. אבל $(n)$ אינה חסומה מלעיל
+          (טענה 2.1.6). משפט 2.5.4 הוא תנאי מספיק, לא הכרחי.
+      - kind: step
+        text: >-
+          (ג) $a_n=2$ ו-$b_n=(-1)^n$, חסומה. נניח בשלילה ש-$a_nb_n=2(-1)^n\to M$. לפי משפט 2.4.1 (כפל בקבוע
+          $\frac12$), $(-1)^n\to\frac M2$, בסתירה למסקנה 2.3.5.
+      - kind: check
+        text: >-
+          ב-(ג) הבעיה היא שהגבול של $a_n$ אינו $0$: חסימות של $b_n$ "נבלעת" רק בגורם ששואף לאפס. ב-(ב):
+          $a_1b_1=1$, $a_2b_2=\frac12$, $a_3b_3=\frac13$.
+      - kind: result
+        text: '(א) נכון; (ב) ו-(ג) לא נכונים.'
+
+  - id: W-2.5-07
+    level: mid
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      (א) הוכיחו בעזרת כלל הסנדוויץ', בלי טענה 2.5.5: אם $a_n\to L$ ו-$b_n\to L$, אז $\max(a_n,b_n)\to L$.
+      רמז: $a_n\le\max(a_n,b_n)\le a_n+|a_n-b_n|$.
+
+      (ב) הפריכו: אם $a_n\to L$ ו-$\max(a_n,b_n)\to L$, אז $(b_n)$ מתכנסת.
+    answer: >-
+      (א) החסם התחתון $a_n\to L$ והעליון $a_n+|a_n-b_n|\to L+0$. (ב) $a_n=1$, $b_n=(-1)^n$.
+    solution:
+      - kind: step
+        text: >-
+          (א) נוכיח את הרמז. אם $a_n\ge b_n$, אז $\max(a_n,b_n)=a_n$, ו-$a_n\le a_n\le a_n+|a_n-b_n|$ כי ערך מוחלט
+          אינו שלילי. אם $a_n<b_n$, אז $\max(a_n,b_n)=b_n>a_n$, ו-$b_n=a_n+(b_n-a_n)=a_n+|a_n-b_n|$.
+      - kind: theorem
+        text: >-
+          לפי משפט 2.4.1, $a_n-b_n\to L-L=0$, ולפי טענה 2.2.10 $|a_n-b_n|\to0$. שוב לפי משפט 2.4.1,
+          $a_n+|a_n-b_n|\to L$. לפי כלל הסנדוויץ', $\max(a_n,b_n)\to L$.
+      - kind: step
+        text: >-
+          (ב) $a_n=1$ ו-$b_n=(-1)^n$. לכל $n$, $b_n\le1$, ולכן $\max(a_n,b_n)=1\to1$, וגם $a_n\to1$. אבל
+          $(-1)^n$ מתבדרת (מסקנה 2.3.5).
+      - kind: check
+        text: >-
+          ב-(א) הנחנו שהגבולות **שווים**; עם גבולות שונים טענה 2.5.5 נותנת $\max(a_n,b_n)\to\max(a,b)$, והחסם העליון
+          של הרמז שואף ל-$a+|a-b|$, שהוא בדיוק $\max(a,b)$ רק כש-$a\le b$.
+      - kind: result
+        text: '(א) $\max(a_n,b_n)\to L$. (ב) לא נכון: $\max(1,(-1)^n)=1$ מתכנסת ו-$(-1)^n$ לא.'
+
+  - id: W-2.5-08
+    level: exam
+    objectives: [OBJ-2.5-3, OBJ-2.5-1]
+    prompt: >-
+      נגדיר
+      $$a_n=\frac{n^2\sin n+3n^3}{n^3+n\cos^2 n}.$$
+      מותר להשתמש בעובדה מבית הספר: $|\sin x|\le1$ ו-$|\cos x|\le1$ לכל $x$ (מוכח בשיעור 3.2).
+
+      (א) הוכיחו ש-$a_n\to3$.
+
+      (ב) הוכיחו ש-$|a_n-3|\le\frac4n$ לכל $n$, ותנו $N$ מפורש לכל $\varepsilon>0$. איזה $N$ מתקבל עבור
+      $\varepsilon=0.1$?
+    answer: >-
+      (א) מחלקים ב-$n^3$ ומשתמשים במשפט 2.5.4 ובמשפט 2.4.4. (ב) $N=\left\lceil\frac4\varepsilon\right\rceil$;
+      עבור $\varepsilon=0.1$, $N=40$.
+    solution:
+      - kind: idea
+        text: >-
+          הגורמים $\sin n$ ו-$\cos^2 n$ חסומים, ומוכפלים בחזקות נמוכות של $n$. אחרי חלוקה ב-$n^3$ הם נשארים כפול
+          סדרה אפסה, ומשפט 2.5.4 מעלים אותם.
+      - kind: step
+        text: >-
+          (א) המכנה חיובי: $\cos^2 n\ge0$, ולכן $n^3+n\cos^2n\ge n^3>0$. מחלקים מונה ומכנה ב-$n^3$:
+          $$a_n=\frac{\frac{\sin n}{n}+3}{1+\frac{\cos^2 n}{n^2}}.$$
+      - kind: theorem
+        text: >-
+          $(\sin n)$ חסומה ו-$\frac1n\to0$, ולכן לפי משפט 2.5.4 $\frac{\sin n}{n}\to0$. $0\le\cos^2n\le1$, ולכן
+          $(\cos^2 n)$ חסומה, ו-$\frac1{n^2}\to0$ (מסקנה 2.2.14 (ב)); לפי משפט 2.5.4 $\frac{\cos^2n}{n^2}\to0$.
+      - kind: step
+        text: >-
+          לפי משפט 2.4.1 המונה שואף ל-$3$ והמכנה ל-$1\ne0$, ולפי משפט 2.4.4 $a_n\to\frac31=3$.
+      - kind: computation
+        text: >-
+          (ב)
+          $$a_n-3=\frac{n^2\sin n+3n^3-3n^3-3n\cos^2n}{n^3+n\cos^2n}=\frac{n\sin n-3\cos^2n}{n^2+\cos^2n}.$$
+      - kind: step
+        text: >-
+          המונה: לפי אי-שוויון המשולש, $|n\sin n-3\cos^2n|\le n|\sin n|+3\cos^2n\le n+3\le4n$ (כי $n\ge1$). המכנה:
+          $n^2+\cos^2n\ge n^2>0$. לכן $|a_n-3|\le\frac{4n}{n^2}=\frac4n$.
+      - kind: step
+        text: >-
+          יהי $\varepsilon>0$ ו-$N=\left\lceil\frac4\varepsilon\right\rceil\in\mathbb{N}$ (למה 2.2.17). לכל $n>N$,
+          $n>\frac4\varepsilon$, ולכן $|a_n-3|\le\frac4n<\varepsilon$. עבור $\varepsilon=0.1$: $N=40$.
+      - kind: check
+        text: >-
+          $a_1\approx2.973$, $a_{10}\approx2.925$, $a_{100}\approx2.9947$. חישוב על כל $n\le10^5$ מאשר
+          $|a_n-3|\le\frac4n$. ה-$N$ הקטן ביותר עבור $\varepsilon=0.1$ הוא רק $8$ (לפי חישוב עד $n=2\cdot10^5$, עדות
+          בלבד), והנוסחה נותנת $40$: מותר, ההגדרה מבקשת $N$ מתאים כלשהו.
+      - kind: result
+        text: '(א) $a_n\to3$. (ב) $|a_n-3|\le\frac4n$, $N=\left\lceil\frac4\varepsilon\right\rceil$, ו-$N=40$ עבור $\varepsilon=0.1$.'
+
+  - id: W-2.5-09
+    level: exam
+    objectives: [OBJ-2.5-2]
+    prompt: >-
+      תהי $(a_n)$ סדרה עולה ($a_n\le a_{n+1}$ לכל $n$) עם $a_n\to L$.
+
+      (א) הוכיחו ש-$a_n\le L$ לכל $n$.
+
+      (ב) הוכיחו שאם $(a_n)$ עולה ממש, אז $a_n<L$ לכל $n$.
+
+      (ג) הפריכו: אם $a_n\to L$ ו-$a_n\le L$ לכל $n$, אז $(a_n)$ עולה.
+    answer: >-
+      (א) מקבעים $m$ ומשתמשים במסקנה 2.5.2 (א). (ב) $a_m<a_{m+1}\le L$. (ג) $a_n=1-\frac{2+(-1)^n}{n}$.
+    solution:
+      - kind: idea
+        text: >-
+          מקבעים מקום $m$. כל האיברים שאחריו גדולים או שווים ל-$a_m$, ולכן גם הגבול: אי-שוויון חלש עובר לגבול.
+      - kind: step
+        text: >-
+          (א) יהי $m\in\mathbb{N}$. לפי טענה 2.1.8, $a_m\le a_n$ לכל $n>m$. לפי מסקנה 2.5.2 (א), עם $c=a_m$ ו-$n_0=m$,
+          $L\ge a_m$. $m$ היה כלשהו, ולכן $a_n\le L$ לכל $n$.
+      - kind: step
+        text: >-
+          (ב) יהי $m$. הסדרה עולה ממש, ולכן $a_m<a_{m+1}$, ולפי (א) עם $m+1$, $a_{m+1}\le L$. לכן $a_m<L$.
+      - kind: step
+        text: >-
+          (ג) $a_n=1-\frac{2+(-1)^n}{n}$. לכל $n$, $2+(-1)^n\ge1>0$, ולכן $a_n<1$. וגם
+          $\left|a_n-1\right|=\frac{2+(-1)^n}{n}\le\frac3n$, ולפי טענה 2.2.13 $a_n\to1$. אבל $a_1=1-\frac11=0$ ו-$a_2=1-\frac32=-\frac12<a_1$:
+          הסדרה אינה עולה.
+      - kind: check
+        text: >-
+          ב-(ב) המעבר מחלש לחזק לא בא מהגבול (שאינו שומר על אי-שוויון חזק), אלא מצעד אחד קדימה בתוך הסדרה. ב-(ג):
+          $a_3=\frac23$, $a_4=\frac14$, שוב ירידה.
+      - kind: result
+        text: '(א) $a_n\le L$; (ב) $a_n<L$ בסדרה עולה ממש; (ג) לא נכון.'
+
+  - id: W-2.5-10
+    level: exam
+    qualitative: true
+    objectives: [OBJ-2.5-1]
+    prompt: >-
+      נתון ש-$a_n\le b_n\le c_n$ לכל $n$, ו-$c_n-a_n\to0$.
+
+      (א) הפריכו: $(b_n)$ מתכנסת.
+
+      (ב) הוכיחו: $b_n-a_n\to0$.
+
+      (ג) הוכיחו: אם בנוסף $(a_n)$ מתכנסת, אז $(b_n)$ מתכנסת לאותו גבול.
+    answer: >-
+      (א) $a_n=b_n=n$, $c_n=n+\frac1n$. (ב) $0\le b_n-a_n\le c_n-a_n$ וסנדוויץ'. (ג) $c_n=a_n+(c_n-a_n)\to a$ וסנדוויץ'.
+    solution:
+      - kind: idea
+        text: >-
+          "המרחק בין החסמים שואף לאפס" אינו "החסמים מתכנסים לאותו גבול": החסמים יכולים לברוח יחד. מה שכן נכון הוא
+          על **ההפרשים**, ושם יש סנדוויץ'.
+      - kind: step
+        text: >-
+          (א) $a_n=b_n=n$ ו-$c_n=n+\frac1n$. אז $a_n\le b_n\le c_n$, ו-$c_n-a_n=\frac1n\to0$. אבל $(n)$ אינה חסומה
+          מלעיל (טענה 2.1.6), ולכן מתבדרת (משפט 2.3.3).
+      - kind: step
+        text: >-
+          (ב) מחסירים $a_n$ מכל אגפי $a_n\le b_n\le c_n$: $0\le b_n-a_n\le c_n-a_n$. הסדרה הקבועה $0$ שואפת ל-$0$,
+          ו-$c_n-a_n\to0$ לפי הנתון. לפי כלל הסנדוויץ', $b_n-a_n\to0$.
+      - kind: step
+        text: >-
+          (ג) נניח $a_n\to a$. לפי משפט 2.4.1, $c_n=a_n+(c_n-a_n)\to a+0=a$. עכשיו לשני החסמים אותו גבול, ולפי כלל
+          הסנדוויץ' $b_n\to a$.
+      - kind: check
+        text: >-
+          ב-(א) כל ההנחות מתקיימות חוץ מהתכנסות החסמים, וזו בדיוק ההנחה של משפט 2.5.3 שחסרה. ב-(ג) אפשר גם לפי
+          (ב): $b_n=a_n+(b_n-a_n)\to a+0$.
+      - kind: result
+        text: '(א) לא נכון; (ב) $b_n-a_n\to0$; (ג) $b_n\to\lim a_n$.'
+challenge:
+  - id: W-2.5-c1
+    stars: 1
+    objectives: [OBJ-2.5-1, OBJ-2.5-2]
+    prompt: >-
+      תהי $A\subseteq\mathbb{R}$ קבוצה לא ריקה וחסומה מלעיל, ויהי $a_0$ חסם מלעיל של $A$. הוכיחו:
+      $a_0=\sup A$ אם ורק אם קיימת סדרה $(a_n)$ של איברי $A$ עם $a_n\to a_0$.
+    answer: >-
+      ($\Rightarrow$) בוחרים $a_n\in A$ עם $a_0-\frac1n<a_n\le a_0$ וסנדוויץ'. ($\Leftarrow$) לכל $\varepsilon>0$ הזנב
+      של $a_n$ גדול מ-$a_0-\varepsilon$, ומשפט 1.4.8.
+    solution:
+      - kind: idea
+        text: >-
+          אפיון האפסילון של הסופרמום (משפט 1.4.8) אומר: לכל $\varepsilon>0$ יש איבר של $A$ מעל $a_0-\varepsilon$.
+          עם $\varepsilon=\frac1n$ זו סדרה כלואה בין $a_0-\frac1n$ ל-$a_0$. בכיוון השני, הזנב של סדרה ששואפת ל-$a_0$
+          נכנס לכל סביבה של $a_0$.
+      - kind: step
+        text: >-
+          ($\Rightarrow$) נניח $a_0=\sup A$. לכל $n\in\mathbb{N}$, לפי משפט 1.4.8 עם $\varepsilon=\frac1n$, יש איבר של
+          $A$ שגדול מ-$a_0-\frac1n$; נבחר אחד כזה ונקרא לו $a_n$. כיוון ש-$a_0$ חסם מלעיל, $a_n\le a_0$. לכן
+          $$a_0-\frac1n<a_n\le a_0 .$$
+      - kind: theorem
+        text: >-
+          $a_0-\frac1n\to a_0$ (מסקנה 2.2.14 (א) ומשפט 2.4.1), והסדרה הקבועה $a_0$ שואפת ל-$a_0$. לפי כלל הסנדוויץ',
+          $a_n\to a_0$.
+      - kind: step
+        text: >-
+          ($\Leftarrow$) נניח ש-$a_n\in A$ ו-$a_n\to a_0$. יהי $\varepsilon>0$. כיוון ש-$a_0-\varepsilon<a_0$, לפי
+          טענה 2.2.15 (א) יש $N$ כך ש-$a_n>a_0-\varepsilon$ לכל $n>N$; בפרט $a_{N+1}\in A$ ו-$a_{N+1}>a_0-\varepsilon$.
+          $a_0$ חסם מלעיל, ולכן לפי משפט 1.4.8 $a_0=\sup A$.
+      - kind: check
+        text: >-
+          ההנחה "$a_0$ חסם מלעיל" נחוצה ב-($\Leftarrow$): $A=[0,1]$ ו-$a_n=\frac1n\in A$ שואפת ל-$0\ne\sup A=1$.
+          ובלי ההנחה הזו נשאר רק, לפי מסקנה 2.5.2 (ב), שגבול של סדרה ב-$A$ אינו גדול מ-$\sup A$. דוגמה
+          ל-($\Rightarrow$): $A=[0,1)$, $\sup A=1$, ו-$a_n=1-\frac1{n+1}\in A$ שואפת ל-$1\notin A$.
+      - kind: result
+        text: >-
+          חסם מלעיל $a_0$ הוא הסופרמום של $A$ אם ורק אם הוא גבול של סדרה של איברי $A$.
+    source:
+      name: 'MIT OpenCourseWare 18.100A Real Analysis (Fall 2020), Assignment 4'
+      year: 2020
+      problem: 'Problem 6'
+      url: 'https://ocw.mit.edu/courses/18-100a-real-analysis-fall-2020/mit18_100af20_hw4.pdf'
+      verified: '2026-11-17'
+      adapted: true
+
+  - id: W-2.5-c2
+    stars: 1
+    objectives: [OBJ-2.5-2]
+    prompt: >-
+      תהי $(x_n)$ סדרה מונוטונית ומתכנסת, ונניח שיש $k\in\mathbb{N}$ כך ש-$\lim x_n=x_k$: הגבול הוא אחד מאיברי
+      הסדרה.
+
+      (א) הוכיחו ש-$x_n=x_k$ לכל $n\ge k$.
+
+      (ב) הפריכו את הטענה בלי ההנחה שהסדרה מונוטונית.
+
+      (ג) הסיקו: סדרה עולה ממש ומתכנסת אינה מקבלת את הגבול שלה אף פעם.
+    answer: >-
+      (א) לסדרה עולה: $x_k\le x_n$ ממונוטוניות ו-$x_n\le\lim x_m=x_k$ משמירה על אי-שוויון חלש. (ב) $x_1=0$
+      ו-$x_n=\frac1n$ לכל $n\ge2$. (ג) אילו $\lim x_n=x_k$, לפי (א) $x_{k+1}=x_k$, בסתירה ל-$x_k<x_{k+1}$.
+    solution:
+      - kind: idea
+        text: >-
+          בסדרה עולה כל איבר קטן או שווה לגבול: מקבעים מקום $n$, וכל האיברים שאחריו גדולים או שווים ל-$x_n$; גבול
+          שומר על אי-שוויון חלש. אם הגבול הוא $x_k$, אז מ-$k$ והלאה האיברים כלואים בין $x_k$ ל-$x_k$.
+      - kind: step
+        text: >-
+          (א) נניח קודם ש-$(x_n)$ עולה, ונסמן $L=\lim x_n=x_k$. יהי $n\in\mathbb{N}$. לפי טענה 2.1.8, $x_n\le x_m$ לכל
+          $m>n$, ולפי מסקנה 2.5.2 (א) (עם $c=x_n$ ו-$n_0=n$) $x_n\le L$. כלומר $x_n\le x_k$ לכל $n$.
+      - kind: step
+        text: >-
+          מצד שני, לכל $n\ge k$ לפי טענה 2.1.8 (או $n=k$) $x_k\le x_n$. יחד: $x_k\le x_n\le x_k$, ולכן $x_n=x_k$ לכל
+          $n\ge k$.
+      - kind: step
+        text: >-
+          אם $(x_n)$ יורדת, הסדרה $(-x_n)$ עולה ($x_{n+1}\le x_n$ גורר $-x_n\le-x_{n+1}$, טענה 1.2.2 (ג)), שואפת ל-$-L=-x_k$ (משפט 2.4.1), והגבול הזה הוא האיבר
+          ה-$k$ שלה. לפי המקרה הקודם $-x_n=-x_k$, כלומר $x_n=x_k$, לכל $n\ge k$.
+      - kind: step
+        text: >-
+          (ב) $x_1=0$ ו-$x_n=\frac1n$ לכל $n\ge2$. הסדרה שואפת ל-$0$ (היא שונה מ-$\frac1n$ רק במקום הראשון, מסקנה
+          2.2.12 (ב)), ו-$0=x_1$. אבל $x_2=\frac12\ne0$. היא אינה מונוטונית: $x_1<x_2$ ו-$x_2>x_3$.
+      - kind: step
+        text: >-
+          (ג) תהי $(x_n)$ עולה ממש ומתכנסת, ונניח בשלילה ש-$\lim x_n=x_k$. לפי (א) $x_{k+1}=x_k$, אבל הסדרה עולה
+          ממש, ולכן $x_k<x_{k+1}$: סתירה.
+      - kind: check
+        text: >-
+          איפה השתמשנו בכל הנחה: המונוטוניות נתנה את שני אי-השוויונות $x_n\le L$ ו-$x_k\le x_n$; ההתכנסות נתנה את
+          $L$; והשמירה על אי-שוויון **חלש** היא כל מה שצריך, כי $x_n<L$ אינו נכון כאן. דוגמה ל-(א): הסדרה
+          $\min\left(n,3\right)$, כלומר $1,2,3,3,3,\dots$, עולה, שואפת ל-$3=x_3$, וקבועה מ-$n=3$.
+      - kind: result
+        text: >-
+          (א) בסדרה מונוטונית שמקבלת את גבולה במקום $k$, כל האיברים מ-$k$ והלאה שווים לגבול. (ב) בלי מונוטוניות לא.
+          (ג) סדרה עולה ממש ומתכנסת אינה מקבלת את הגבול שלה.
+    source:
+      name: 'Jiří Lebl, Basic Analysis I: Introduction to Real Analysis, Volume I (version 6.3)'
+      year: 2026
+      problem: 'Exercise 2.1.13'
+      url: 'https://www.jirka.org/ra/realanal.pdf'
+      verified: '2026-11-17'
+      adapted: true

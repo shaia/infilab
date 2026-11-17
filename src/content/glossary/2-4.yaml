@@ -3,7 +3,7 @@
   term: חשבון גבולות
   en: algebra of limits
   definition: >-
-    הכללים: אם $a_n\to a$ ו-$b_n\to b$, אז $a_n\pm b_n\to a\pm b$, $a_nb_n\to ab$, ואם גם $b\ne0$ (ו-$b_n\ne0$)
+    הכללים: אם $a_n\to a$ ו-$b_n\to b$, אז $a_n\pm b_n\to a\pm b$, $a_nb_n\to ab$, ואם גם $b\ne0$ (המנה מוגדרת מ-$N$ מסוים והלאה)
     אז $\frac{a_n}{b_n}\to\frac ab$. כל כלל מניח ששני הגבולות קיימים.
   lesson: '2.4'
 - id: conjugate
@@ -12,4 +12,12 @@
   definition: >-
     הצמוד של $\sqrt x-\sqrt y$ הוא $\sqrt x+\sqrt y$. כופלים ומחלקים בו כדי להפוך הפרש של שורשים למנה:
     $\sqrt x-\sqrt y = \frac{x-y}{\sqrt x+\sqrt y}$.
+  lesson: '2.4'
+- id: leading-coefficient
+  term: מקדם מוביל
+  en: leading coefficient
+  definition: >-
+    בפולינום $p(x)=\alpha_dx^d+\dots+\alpha_1x+\alpha_0$ עם $\alpha_d\ne0$, המספר $d$ הוא המעלה של $p$, והמקדם
+    $\alpha_d$ של החזקה הגבוהה ביותר הוא המקדם המוביל. בגבול של מנת פולינומים ב-$n$ המעלות והמקדמים המובילים
+    קובעים את התוצאה.
   lesson: '2.4'

@@ -173,7 +173,7 @@ questions:
         misconception: MC-indeterminate-form-value
       - text: '$\infty\cdot\infty$'
         feedback: >-
-          זו צורה מוגדרת: מ-$N$ מסוים $a_n>1$, ואז $a_nb_n>b_n\to\infty$. המכפלה תמיד שואפת לאינסוף.
+          זו צורה מוגדרת: מ-$N$ מסוים $a_n>1$ וגם $b_n>0$, ואז $a_nb_n>b_n\to\infty$. המכפלה תמיד שואפת לאינסוף.
         misconception: MC-indeterminate-form-value
     explanation: >-
       כדי להראות שצורה לא מוגדרת מספיקות שתי דוגמאות עם תוצאות שונות. כדי להראות שהיא מוגדרת צריך הוכחה

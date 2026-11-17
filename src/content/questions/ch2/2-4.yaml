@@ -106,7 +106,7 @@ questions:
       - id: away
         label: 'כי $b\ne0$, יש $N_1$ כך ש-$|b_n-b|<\frac{|b|}{2}$ לכל $n>N_1$, ולכן $|b_n|\ge|b|-|b-b_n|>\frac{|b|}{2}$.'
       - id: bound
-        label: 'לכל $n>N_1$: $\left|\frac1{b_n}-\frac1b\right| = \frac{|b-b_n|}{|b_n|\,|b|}<\frac{2}{|b|^2}\,|b_n-b|$.'
+        label: 'לכל $n>N_1$: $\left|\frac1{b_n}-\frac1b\right| = \frac{|b-b_n|}{|b_n|\,|b|}\le\frac{2}{|b|^2}\,|b_n-b|$.'
       - id: eps
         label: 'יהי $\varepsilon>0$. יש $N_2$ כך ש-$|b_n-b|<\frac{\varepsilon|b|^2}{2}$ לכל $n>N_2$.'
       - id: done

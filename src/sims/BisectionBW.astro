@@ -1,0 +1,7 @@
+---
+/** Lesson-2.9 figure: <Spread figure={BisectionBW} figureProps={{…}}>. */
+import BisectionBW, { type BisectionBWProps } from './BisectionBW';
+type Props = BisectionBWProps;
+---
+
+<BisectionBW client:visible {...Astro.props} />

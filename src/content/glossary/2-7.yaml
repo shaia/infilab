@@ -21,3 +21,19 @@
   definition: >-
     הגבול של הסדרה $\left(1+\frac1n\right)^n$, שעולה וחסומה על ידי 3 ולכן מתכנסת. $e\approx 2.71828$.
   lesson: '2.7'
+- id: cobweb-diagram
+  term: דיאגרמת קורי עכביש
+  en: cobweb diagram
+  definition: >-
+    ציור של סדרה רקורסיבית $a_{n+1}=f(a_n)$: על הגרף של $y=f(x)$ ועל הישר $y=x$ עוברים מ-$(a_1,a_1)$ אנכית אל
+    הגרף, לנקודה $(a_1,a_2)$, ואופקית בחזרה אל הישר, לנקודה $(a_2,a_2)$, וחוזר חלילה. הציור מראה איברים
+    ראשונים בלבד, ולכן הוא עדות ולא הוכחה.
+  lesson: '2.7'
+- id: heron-method
+  term: שיטת הרון
+  en: Heron's method (Babylonian method)
+  symbol: 'a_{n+1}=\frac12\left(a_n+\frac{c}{a_n}\right)'
+  definition: >-
+    קירוב של $\sqrt c$ (עבור $c>0$) בסדרה רקורסיבית: מתחילים מ-$a_1>0$ וממצעים את $a_n$ עם $\frac{c}{a_n}$.
+    מאי-שוויון הממוצעים $a_n\ge\sqrt c$ לכל $n\ge2$, והסדרה יורדת מ-$n=2$ ושואפת ל-$\sqrt c$.
+  lesson: '2.7'

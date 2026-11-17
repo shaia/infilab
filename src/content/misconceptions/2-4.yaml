@@ -6,7 +6,7 @@
   truth: >-
     צריך $n$ שבו שתי ההבטחות תקפות, ולכן $N\ge N_1$ וגם $N\ge N_2$: הבחירה הטבעית היא $\max(N_1,N_2)$. כל $N$
     גדול ממנו גם עובד.
-  remedy: { lesson: '2.4', label: 'הוכחת כלל הסכום' }
+  remedy: { lesson: '2.4', anchor: 'sum-theorem', label: 'הוכחת כלל הסכום' }
 
 - id: MC-quotient-rule-no-hypothesis
   title: משתמשים בכלל המנה כשגבול המכנה הוא אפס
@@ -15,7 +15,7 @@
   truth: >-
     כלל המנה דורש $b\ne0$. כש-$b = 0$ הכלל לא אומר כלום, והמנה יכולה להתכנס לכל מספר, לא להיות חסומה, או
     להתנודד: $\frac{5/n}{1/n} = 5$, $\frac{1/n}{1/n^2} = n$, $\frac{(-1)^n/n}{1/n} = (-1)^n$.
-  remedy: { lesson: '2.4', label: 'כלל המנה ומה הוא דורש' }
+  remedy: { lesson: '2.4', anchor: 'quotient-theorem', label: 'כלל המנה ומה הוא דורש' }
 
 - id: MC-rational-wrong-terms
   title: בגבול של מנת פולינומים מסתכלים על האיברים הלא נכונים
@@ -25,7 +25,7 @@
   truth: >-
     כש-$n$ גדל, האיברים מהחזקה הגבוהה ביותר קובעים. מחלקים מונה ומכנה בחזקה המובילה של המכנה, ואז כל שאר
     האיברים הופכים לסדרות ששואפות לאפס.
-  remedy: { lesson: '2.4', label: 'גבול של מנת פולינומים' }
+  remedy: { lesson: '2.4', anchor: 'rational-limits', label: 'גבול של מנת פולינומים' }
 
 - id: MC-root-difference-zero
   title: חושבים שהפרש של שני ביטויים גדולים שואף לאפס
@@ -34,7 +34,7 @@
   truth: >-
     כללי הגבול לא חלים על סדרות לא חסומות, וההפרש יכול לשאוף לכל דבר: $\sqrt{n^2+3n}-n\to\frac32$. כופלים
     בצמוד והופכים את ההפרש למנה שאפשר לחשב.
-  remedy: { lesson: '2.4', label: 'כפל בצמוד' }
+  remedy: { lesson: '2.4', anchor: 'conjugate-method', label: 'כפל בצמוד' }
 
 - id: MC-root-of-difference
   title: מוציאים שורש מהפרש איבר-איבר
@@ -43,7 +43,7 @@
   truth: >-
     שורש אינו פועל על חיבור וחיסור איבר-איבר: $\sqrt2-\sqrt1\approx0.414\ne1$. מה שכן נכון הוא
     $\sqrt{x}-\sqrt{y} = \frac{x-y}{\sqrt x+\sqrt y}$, וזה הכפל בצמוד.
-  remedy: { lesson: '2.4', label: 'כפל בצמוד' }
+  remedy: { lesson: '2.4', anchor: 'conjugate-method', label: 'כפל בצמוד' }
 
 - id: MC-limit-rules-on-divergent
   title: מפעילים את כללי הגבול על סדרות שאין להן גבול
@@ -52,7 +52,7 @@
   truth: >-
     כל כלל מניח ששני הגבולות קיימים (ולמנה גם שגבול המכנה שונה מאפס), ורק אז מסיק. כשהם לא קיימים, קודם משנים
     את צורת הביטוי: מחלקים בחזקה המובילה, כופלים בצמוד, או משתמשים בכלל אחר.
-  remedy: { lesson: '2.4', label: 'מתי חשבון הגבולות לא חל' }
+  remedy: { lesson: '2.4', anchor: 'rules-fail', label: 'מתי חשבון הגבולות לא חל' }
 
 - id: MC-sum-converges-parts-converge
   title: חושבים שאם סכום מתכנס, כל מחובר מתכנס
@@ -61,7 +61,7 @@
   truth: >-
     כלל הסכום הולך בכיוון אחד. $(-1)^n$ ו-$-(-1)^n$ מתבדרות וסכומן 0. מה שנכון: אם $a_n$ וגם $a_n+b_n$
     מתכנסות, אז $b_n$ מתכנסת.
-  remedy: { lesson: '2.4', label: 'מתי חשבון הגבולות לא חל' }
+  remedy: { lesson: '2.4', anchor: 'rules-fail', label: 'מתי חשבון הגבולות לא חל' }
 
 - id: MC-product-converges-factor-converges
   title: חושבים שאם מכפלה מתכנסת, אחד הגורמים מתכנס
@@ -69,7 +69,7 @@
     אם $a_nb_n$ מתכנסת, אז לפחות אחת מהסדרות $a_n$, $b_n$ מתכנסת.
   truth: >-
     $a_n = b_n = (-1)^n$ מתבדרות, ומכפלתן 1. אם ידוע ש-$b_n\to b\ne0$, אז כן $a_n = \frac{a_nb_n}{b_n}$ מתכנסת.
-  remedy: { lesson: '2.4', label: 'מתי חשבון הגבולות לא חל' }
+  remedy: { lesson: '2.4', anchor: 'rules-fail', label: 'מתי חשבון הגבולות לא חל' }
 
 - id: MC-null-times-anything
   title: חושבים שגורם ששואף לאפס מאפס כל מכפלה
@@ -78,4 +78,4 @@
   truth: >-
     זה נכון כש-$b_n$ חסומה (שיעור 2.5), אבל לא באופן כללי: $\frac1n\cdot n^2 = n$, ו-$n\left(\sqrt{n^2+1}-n\right)\to\frac12$.
     כשהגורם השני אינו חסום, צריך לחשב.
-  remedy: { lesson: '2.4', label: 'מתי חשבון הגבולות לא חל' }
+  remedy: { lesson: '2.4', anchor: 'product-theorem', label: 'כלל המכפלה, ולמה הוא צריך חסם' }

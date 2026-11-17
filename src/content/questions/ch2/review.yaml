@@ -12,7 +12,7 @@ questions:
     choices:
       - text: '$\sin n$'
         correct: true
-        feedback: 'נכון: $|\sin n|\le1$ לכל $n$.'
+        feedback: 'נכון: $|\sin n|\le1$ לכל $n$ (עובדה מבית הספר; מוכח בשיעור 3.2).'
       - text: '$\frac{n}{n+1}$'
         correct: true
         feedback: >-
@@ -202,7 +202,8 @@ questions:
         feedback: >-
           זה $a_2$. הסדרה ממשיכה לעלות: $a_3=1.75$, $a_4=1.875$.
     explanation: >-
-      כאן אפשר גם לכתוב נוסחה מפורשת ולהוכיח אותה באינדוקציה: $a_n=2-\frac{1}{2^{n-1}}$, ומזה $a_n\to2$ מיד.
+      כאן אפשר גם לכתוב נוסחה מפורשת ולהוכיח אותה באינדוקציה: $a_n=2-\frac{1}{2^{n-1}}$. לפי אי-שוויון ברנולי
+      $2^{n-1}\ge n$, ולכן $0<2-a_n\le\frac1n$, ומזה $a_n\to2$ לפי טענה 2.2.13.
     hints:
       - 'חזרו לשיעור 2.7: המתכון לסדרה רקורסיבית, ולשיעור 2.1: הוכחה של חסימות ומונוטוניות.'
 
@@ -386,7 +387,7 @@ questions:
         correct: true
         feedback: >-
           נכון. $\left(1+\frac1n\right)^{n^2}=\left[\left(1+\frac1n\right)^n\right]^n\ge2^n$, כי
-          $\left(1+\frac1n\right)^n\ge2$ (הסדרה עולה ו-$b_1=2$). ו-$2^n\to\infty$.
+          $\left(1+\frac1n\right)^n\ge2$ (הסדרה עולה לפי משפט 2.7.4, והאיבר הראשון שלה $2$). ו-$2^n\to\infty$.
       - text: '$e$'
         feedback: >-
           $\left(1+\frac1n\right)^n\to e$, אבל כאן המעריך הוא $n^2$, גדול פי $n$. החזקה היא בערך $e^n$, לא $e$.
@@ -397,4 +398,4 @@ questions:
           ל-$2^n$.
         misconception: MC-one-power-infinity-is-one
     hints:
-      - 'חזרו לשיעור 2.7: הסדרה $\left(1+\frac1n\right)^n$ עולה, ולשיעור 2.6: חסימה מלמטה בסדרה ששואפת לאינסוף.'
+      - 'חזרו לשיעור 2.7: הסדרה $\left(1+\frac1n\right)^n$ עולה, ולשיעור 2.6: חסימה מלמטה בסדרה ששואפת לאינסוף; ש-$2^n\to\infty$ הוא טענה 2.8.1.'

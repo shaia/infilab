@@ -1,0 +1,24 @@
+- id: v-2-3-unique
+  youtubeId: JfAycF5DJak
+  title: Limits are unique
+  channel: Dr Peyam
+  lang: en
+  captions: []
+  start: 0
+  minutes: 8
+  why: >-
+    לפי תיאור הסרטון: הוכחה שלסדרה מתכנסת יש גבול אחד בלבד. בזמן הצפייה, נסו לזהות איזה $\varepsilon$ נבחר
+    ואיך שני הגבולות נפגשים באי-שוויון אחד, והשוו להוכחת משפט 2.3.1.
+  verified: 2026-11-17
+- id: v-2-3-bounded
+  youtubeId: KpSvZW2wXk0
+  title: Convergent sequences are bounded
+  channel: Dr Peyam
+  lang: en
+  captions: []
+  start: 0
+  minutes: 7
+  why: >-
+    לפי תיאור הסרטון: הוכחה שכל סדרה מתכנסת חסומה, תוצאה שמשתמשים בה שוב ושוב באנליזה. בזמן הצפייה, חפשו איך
+    החסם מטפל בזנב ואיך במספר הסופי של האיברים הראשונים, והשוו לחסם המפורש של משפט 2.3.3.
+  verified: 2026-11-17

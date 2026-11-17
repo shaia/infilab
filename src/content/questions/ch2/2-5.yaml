@@ -225,7 +225,8 @@ questions:
     qualitative: true
     level: basic
     prompt: >-
-      מה הגבול של $\frac{\sin n}{n}$?
+      מה הגבול של $\frac{\sin n}{n}$? מותר להשתמש בעובדה $|\sin x|\le1$ לכל $x$ ממשי (עובדה מבית הספר; מוכח
+      בשיעור 3.2).
     choices:
       - text: '0'
         correct: true
@@ -242,8 +243,8 @@ questions:
           בדיוק. אין צורך לדעת אם ל-$\sin n$ יש גבול: מספיק שהיא חסומה.
       - text: 'לפי כלל המכפלה: $\lim\frac1n\cdot\lim\sin n = 0\cdot\lim\sin n = 0$'
         feedback: >-
-          כלל המכפלה דורש ששני הגבולות יהיו קיימים, ו-$\lim\sin n$ אינו קיים. התשובה נכונה, אבל מסיבה אחרת:
-          החסימות של $\sin n$.
+          כלל המכפלה דורש ששני הגבולות יהיו קיימים, ולא הוכחנו שלסדרה $\sin n$ יש גבול. התשובה נכונה, אבל
+          מסיבה אחרת: החסימות של $\sin n$.
         misconception: MC-limit-rules-on-divergent
       - text: '$\frac1n\to0$, וגורם ששואף לאפס מאפס כל מכפלה'
         feedback: >-
@@ -306,7 +307,8 @@ questions:
     objectives: [OBJ-2.5-3]
     level: mid
     prompt: >-
-      חשבו את $\displaystyle\lim_{n\to\infty}\frac{5n^3+n^2\cos n}{2n^3+7}$. (אפשר לכתוב שבר.)
+      חשבו את $\displaystyle\lim_{n\to\infty}\frac{5n^3+n^2\cos n}{2n^3+7}$. (אפשר לכתוב שבר.) מותר להשתמש
+      בעובדה $|\cos x|\le1$ לכל $x$ ממשי (עובדה מבית הספר; מוכח בשיעור 3.2).
     answer: 2.5
     tolerance: 0.001
     correctFeedback: >-
