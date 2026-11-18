@@ -58,6 +58,24 @@ test.describe('every page', () => {
         cw: document.documentElement.clientWidth,
       }));
       expect(sw).toBeLessThanOrEqual(cw);
+      // inline math never wraps (global.css), so one wider than its line hangs into the padding. It may still fit the
+      // viewport here and widen the page on CI, whose Linux fonts set KaTeX ~2% wider: a 336px formula in a 300px
+      // list item passed on Windows and failed the publish. Judge each formula against its own line, not the page.
+      // Phones only: on desktop a long chain may overhang into the wide margin (lesson.css scrolls it only ≤640px).
+      const narrow = (page.viewportSize()?.width ?? 0) <= 640;
+      const overhangs = !narrow ? [] : await page.evaluate(() =>
+        [...document.querySelectorAll('main .katex')].flatMap((k) => {
+          if (k.closest('.katex-display')) return [];
+          let box = k.parentElement!;
+          for (let a: HTMLElement | null = box; a && a !== document.body; a = a.parentElement)
+            if (getComputedStyle(a).overflowX !== 'visible') return []; // a scroller holds it
+          while (getComputedStyle(box).display.startsWith('inline')) box = box.parentElement!;
+          const w = k.getBoundingClientRect().width;
+          const line = box.clientWidth - parseFloat(getComputedStyle(box).paddingLeft) - parseFloat(getComputedStyle(box).paddingRight);
+          return w > line + 0.5 ? [`${Math.round(w)}px in ${Math.round(line)}px: ${k.querySelector('annotation')?.textContent}`] : [];
+        }),
+      );
+      expect(overhangs, 'inline formulas wider than their line: split them or move them to display math').toEqual([]);
     });
 
     test(`${path} has no dead internal links`, async ({ page, request }) => {
